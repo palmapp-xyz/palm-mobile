@@ -1,0 +1,154 @@
+{
+  "project_info": {
+    "project_number": "219711213585",
+    "project_id": "oedi-a1953",
+    "storage_bucket": "oedi-a1953.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219711213585:android:d45d73410c505ab09121b0",
+        "android_client_info": {
+          "package_name": "com.oedimobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4jpDAajLp257F8NX3hJRg1uPLVEIswLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "219711213585-18qak5u2rfk19ke9l22cda9m547hud0l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "palm.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219711213585:android:5e36688c962dd2489121b0",
+        "android_client_info": {
+          "package_name": "com.palmmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4jpDAajLp257F8NX3hJRg1uPLVEIswLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "219711213585-18qak5u2rfk19ke9l22cda9m547hud0l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "palm.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219711213585:android:e669ced3174079059121b0",
+        "android_client_info": {
+          "package_name": "oedi.social"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4jpDAajLp257F8NX3hJRg1uPLVEIswLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "219711213585-18qak5u2rfk19ke9l22cda9m547hud0l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "palm.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219711213585:android:7b65a6add2f45c239121b0",
+        "android_client_info": {
+          "package_name": "palm.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4jpDAajLp257F8NX3hJRg1uPLVEIswLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219711213585-jbh4v83epv4f4hidm3fr9e99i38nne51.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "219711213585-18qak5u2rfk19ke9l22cda9m547hud0l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "palm.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
