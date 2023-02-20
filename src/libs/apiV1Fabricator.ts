@@ -13,17 +13,17 @@ export default {
   [ApiEnum.ASSETS]: {
     get: ({
       userAddress,
-      serviceNetworkId,
+      connectedNetworkId,
       limit,
       cursor,
     }: {
       userAddress: ContractAddr
-      serviceNetworkId: number
+      connectedNetworkId: number
       limit?: number
       cursor?: string
     }): ApiParamFabricated =>
       `/v1/api/evm-api-proxy/${userAddress}/nft?chain=${utils.hexValue(
-        serviceNetworkId
+        connectedNetworkId
       )}&limit=${limit || 30}${
         cursor ? `&cursor=${cursor}` : ''
       }` as ApiParamFabricated,
@@ -31,17 +31,17 @@ export default {
   [ApiEnum.COLLECTIONS]: {
     get: ({
       userAddress,
-      serviceNetworkId,
+      connectedNetworkId,
       limit,
       cursor,
     }: {
       userAddress: ContractAddr
-      serviceNetworkId: number
+      connectedNetworkId: number
       limit?: number
       cursor?: string
     }): ApiParamFabricated =>
       `/v1/api/evm-api-proxy/${userAddress}/nft/collections?chain=${utils.hexValue(
-        serviceNetworkId
+        connectedNetworkId
       )}&limit=${limit || 10}${
         cursor ? `&cursor=${cursor}` : ''
       }` as ApiParamFabricated,

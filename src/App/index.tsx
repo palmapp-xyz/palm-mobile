@@ -16,10 +16,10 @@ import {
   NotificationService,
   SetSendbirdSDK,
 } from '../libs/sendbird'
-import useAppearance from '../hooks/useAppearance'
 import { Routes, navigationActions } from '../libs/navigation'
-import { ErrorInfoScreen } from '../screens'
+import useAppearance from '../hooks/useAppearance'
 
+import { ErrorInfoScreen } from '../screens'
 import AppProvider from './AppProvider'
 import Navigation from '../Navigation'
 
@@ -28,7 +28,6 @@ const APP_ID = Config.SENDBIRD_APP_ID || ''
 const App = (): ReactElement => {
   const { scheme } = useAppearance()
   const isLightTheme = scheme === 'light'
-
   return (
     <AppProvider>
       <SendbirdUIKitContainer
