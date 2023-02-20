@@ -136,6 +136,8 @@ const useApi = (): UseApiReturn => {
 
       throw new Error(fetchRes.statusText)
     } catch (error) {
+      console.log("error : ', ", error)
+
       const errMsg = handleErrorMessage(error)
       return {
         success: false,

@@ -42,7 +42,6 @@ const useMoralisRequestMessage = ({
             },
           }
         )
-
         if (fetchResult.success) {
           return fetchResult.data.result
         }

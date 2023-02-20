@@ -23,7 +23,6 @@ const useSign4Auth = (): UseSign4AuthReturn => {
   const onPress = async (): Promise<void> => {
     try {
       const pKey = await getPkey()
-
       const account = web3.eth.accounts.privateKeyToAccount(pKey)
       const signature = account.sign(signMessage).signature
 
