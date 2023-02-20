@@ -39,8 +39,8 @@ export const onNotificationAndroid: (event: Event) => Promise<void> = async ({
     const sendbird = parseSendbirdNotification(detail.notification.data as any)
     runAfterAppReady(async (_, actions) => {
       const channelUrl = sendbird.channel.channel_url
-      if (Routes.Home === navigationRef.getCurrentRoute()?.name) {
-        actions.push(Routes.GroupChannelTabs, { channelUrl })
+      if (Routes.HomeTabs === navigationRef.getCurrentRoute()?.name) {
+        actions.push(Routes.GroupChannelList, { channelUrl })
       } else {
         actions.navigate(Routes.GroupChannel, { channelUrl })
       }
@@ -61,8 +61,8 @@ export const onForegroundIOS = (): (() => void) => {
       const sendbird = parseSendbirdNotification(data)
       runAfterAppReady(async (_, actions) => {
         const channelUrl = sendbird.channel.channel_url
-        if (Routes.Home === navigationRef.getCurrentRoute()?.name) {
-          actions.push(Routes.GroupChannelTabs, { channelUrl })
+        if (Routes.HomeTabs === navigationRef.getCurrentRoute()?.name) {
+          actions.push(Routes.GroupChannelList, { channelUrl })
         } else {
           actions.navigate(Routes.GroupChannel, { channelUrl })
         }

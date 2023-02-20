@@ -1,6 +1,6 @@
 export * from './uikit-app'
 export * from './account'
-export { default as SignInScreen } from './SignInScreen'
-export { default as HomeScreen } from './HomeScreen'
 export { default as ErrorInfoScreen } from './ErrorInfoScreen'
 export { default as Web3AuthScreen } from './Web3AuthScreen'
+export { default as HomeTabs } from './HomeTabs'
+export { default as SettingScreen } from './SettingScreen'

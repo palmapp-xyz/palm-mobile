@@ -16,6 +16,6 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     paddingHorizontal: 10,
-    height: 40,
+    height: 50,
   },
 })

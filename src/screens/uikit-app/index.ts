@@ -1,4 +1,3 @@
-export { default as GroupChannelTabs } from './GroupChannelTabs'
 export { default as GroupChannelScreen } from './GroupChannelScreen'
 export { default as GroupChannelSettingsScreen } from './GroupChannelSettingsScreen'
 export { default as GroupChannelCreateScreen } from './GroupChannelCreateScreen'

@@ -4,8 +4,16 @@ import {
 } from 'react-native-keychain'
 import { KeyChainEnum } from 'types'
 
-export const savePkey = async (privateKey: string): Promise<void> => {
+export const savePkey = async (
+  privateKey: string,
+  pKeyPwd: string
+): Promise<void> => {
   await setInternetCredentials(KeyChainEnum.PK, KeyChainEnum.PK, privateKey)
+  await setInternetCredentials(
+    KeyChainEnum.PK_PWD,
+    KeyChainEnum.PK_PWD,
+    pKeyPwd
+  )
 }
 
 export const getPkey = async (): Promise<string> => {
@@ -14,14 +22,6 @@ export const getPkey = async (): Promise<string> => {
     return res.password
   }
   return ''
-}
-
-export const savePkeyPwd = async (pKeyPwd: string): Promise<void> => {
-  await setInternetCredentials(
-    KeyChainEnum.PK_PWD,
-    KeyChainEnum.PK_PWD,
-    pKeyPwd
-  )
 }
 
 export const getPkeyPwd = async (): Promise<string> => {

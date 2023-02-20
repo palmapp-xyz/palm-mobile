@@ -106,7 +106,7 @@ export type ApiResponse = {
   [ApiEnum.MORALIS_AUTH_ISSUE_TOKEN]: Override<{
     POST: {
       result: {
-        token: string
+        idToken: string
       }
     }
   }>

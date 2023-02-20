@@ -5,15 +5,17 @@ import { useTotalUnreadMessageCount } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { Icon, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
 
-import { useAppNavigation } from '../../../hooks/useAppNavigation'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+
 import GroupChannelListScreen from './GroupChannelListScreen'
-import SettingsScreen from './SettingsScreen'
+import MyPageScreen from './MyPageScreen'
+import FeedScreen from './FeedScreen'
 
 const Tab = createBottomTabNavigator()
 
-const GroupChannelTabs = (): ReactElement => {
-  const { params } = useAppNavigation<Routes.GroupChannelTabs>()
+const HomeTabs = (): ReactElement => {
+  const { params } = useAppNavigation<Routes.HomeTabs>()
 
   const { colors, typography } = useUIKitTheme()
   const { sdk } = useSendbirdChat()
@@ -21,12 +23,20 @@ const GroupChannelTabs = (): ReactElement => {
 
   return (
     <Tab.Navigator
-      initialRouteName={Routes.GroupChannelList}
+      initialRouteName={Routes.Feed}
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarLabelStyle: typography.caption2,
       }}>
+      <Tab.Screen
+        name={Routes.Feed}
+        component={FeedScreen}
+        options={{
+          tabBarLabel: 'Feed',
+          tabBarIcon: ({ color }) => <Icon icon={'members'} color={color} />,
+        }}
+      />
       <Tab.Screen
         name={Routes.GroupChannelList}
         component={GroupChannelListScreen}
@@ -41,17 +51,15 @@ const GroupChannelTabs = (): ReactElement => {
         }}
       />
       <Tab.Screen
-        name={Routes.Settings}
-        component={SettingsScreen}
+        name={Routes.MyPage}
+        component={MyPageScreen}
         options={{
-          tabBarLabel: 'My settings',
-          tabBarIcon: ({ color }) => (
-            <Icon icon={'settings-filled'} color={color} />
-          ),
+          tabBarLabel: 'MyPage',
+          tabBarIcon: ({ color }) => <Icon icon={'user'} color={color} />,
         }}
       />
     </Tab.Navigator>
   )
 }
 
-export default GroupChannelTabs
+export default HomeTabs

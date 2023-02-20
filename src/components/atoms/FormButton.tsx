@@ -5,15 +5,25 @@ type FormButtonProps = {
   children: string
   disabled?: boolean
   onPress: () => void
+  figure?: 'primary' | 'error'
 }
 
 const FormButton = ({
   children,
   disabled,
   onPress,
+  figure = 'primary',
 }: FormButtonProps): ReactElement => {
+  const mainColor = figure === 'primary' ? '#2960FF' : '#F84F4F'
+
   return (
-    <Pressable style={styles.container} disabled={disabled} onPress={onPress}>
+    <Pressable
+      style={[
+        styles.container,
+        { backgroundColor: disabled ? 'gray' : mainColor },
+      ]}
+      disabled={disabled}
+      onPress={onPress}>
       <Text style={styles.text}>{children}</Text>
     </Pressable>
   )
@@ -25,9 +35,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingVertical: 15,
     borderRadius: 20,
-    backgroundColor: '#2960FF',
   },
   text: {
     fontSize: 16,

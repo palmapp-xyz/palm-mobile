@@ -1,14 +1,9 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-import {
-  Button,
-  Text,
-  TextInput,
-} from '@sendbird/uikit-react-native-foundation'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Text, TextInput } from '@sendbird/uikit-react-native-foundation'
 
-import { ErrorMessage } from 'components'
-import useNewAccount from 'hooks/page/useNewAccount'
+import { Container, ErrorMessage, FormButton } from 'components'
+import useNewAccount from 'hooks/page/account/useNewAccount'
 
 const NewAccountScreen = (): ReactElement => {
   const {
@@ -23,35 +18,33 @@ const NewAccountScreen = (): ReactElement => {
   } = useNewAccount()
 
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <View>
-          <Text>New Account</Text>
-          <Text>Private key</Text>
-          <Text>{privateKey}</Text>
+    <Container style={styles.container}>
+      <View>
+        <Text>New Account</Text>
+        <Text>Private key</Text>
+        <Text>{privateKey}</Text>
 
-          <Text>Password</Text>
-          <TextInput
-            value={password}
-            onChangeText={setPassword}
-            textContentType="password"
-            secureTextEntry
-          />
+        <Text>Password</Text>
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          textContentType="password"
+          secureTextEntry
+        />
 
-          <Text>Confirm Password</Text>
-          <TextInput
-            value={passwordConfirm}
-            onChangeText={setPasswordConfirm}
-            textContentType="password"
-            secureTextEntry
-          />
-          <ErrorMessage message={passwordConfirmErrMsg} />
-        </View>
-        <Button disabled={!isValidForm} onPress={onClickConfirm}>
-          Create
-        </Button>
+        <Text>Confirm Password</Text>
+        <TextInput
+          value={passwordConfirm}
+          onChangeText={setPasswordConfirm}
+          textContentType="password"
+          secureTextEntry
+        />
+        <ErrorMessage message={passwordConfirmErrMsg} />
       </View>
-    </SafeAreaView>
+      <FormButton disabled={!isValidForm} onPress={onClickConfirm}>
+        Create
+      </FormButton>
+    </Container>
   )
 }
 
@@ -61,6 +54,5 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
   },
 })

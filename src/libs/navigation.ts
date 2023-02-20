@@ -9,18 +9,20 @@ import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
 
 import { GetSendbirdSDK } from './sendbird'
-import { authManager } from './authentication'
 
 export enum Routes {
-  Web3Auth = 'Web3Auth',
-  SignIn = 'SignIn',
-  Home = 'Home',
   MainAccount = 'MainAccount',
   NewAccount = 'NewAccount',
   RecoverAccount = 'RecoverAccount',
+  Web3Auth = 'Web3Auth',
 
-  GroupChannelTabs = 'GroupChannelTabs',
+  Sign4Auth = 'Sign4Auth',
+
+  HomeTabs = 'HomeTabs',
+  Feed = 'Feed',
+  MyPage = 'MyPage',
   GroupChannelList = 'GroupChannelList',
+
   GroupChannel = 'GroupChannel',
 
   GroupChannelSettings = 'GroupChannelSettings',
@@ -34,17 +36,13 @@ export enum Routes {
 
   GroupChannelCreate = 'GroupChannelCreate',
   GroupChannelInvite = 'GroupChannelInvite',
-  Settings = 'Settings',
+  Setting = 'Setting',
   FileViewer = 'FileViewer',
 }
 
-export type RouteParamsUnion =
+type AuthRouteParamsUnion =
   | {
       route: Routes.Web3Auth
-      params: undefined
-    }
-  | {
-      route: Routes.SignIn
       params: undefined
     }
   | {
@@ -60,19 +58,29 @@ export type RouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.Home
+      route: Routes.Sign4Auth
+      params: undefined
+    }
+
+type MainRouteParamsUnion =
+  | {
+      route: Routes.HomeTabs
       params: undefined
     }
   | {
-      route: Routes.GroupChannelTabs
-      params: { channelUrl?: string } | undefined
+      route: Routes.Feed
+      params: undefined
+    }
+  | {
+      route: Routes.MyPage
+      params: undefined
     }
   | {
       route: Routes.GroupChannelList
       params: { channelUrl?: string } | undefined
     }
   | {
-      route: Routes.Settings
+      route: Routes.Setting
       params: undefined
     }
   | {
@@ -126,6 +134,8 @@ export type RouteParamsUnion =
         deleteMessage: () => Promise<void>
       }
     }
+
+export type RouteParamsUnion = AuthRouteParamsUnion | MainRouteParamsUnion
 
 type ExtractParams<R extends Routes, U extends RouteParamsUnion> = U extends {
   route: R
@@ -181,11 +191,7 @@ export const runAfterAppReady = (
   callback: (sdk: SendbirdChatSDK, actions: typeof navigationActions) => void
 ): void => {
   const id = setInterval(async () => {
-    if (
-      navigationRef.isReady() &&
-      authManager.hasAuthentication() &&
-      GetSendbirdSDK()
-    ) {
+    if (navigationRef.isReady() && GetSendbirdSDK()) {
       const sdk = GetSendbirdSDK()
       if (sdk.connectionState === 'OPEN') {
         clearInterval(id)

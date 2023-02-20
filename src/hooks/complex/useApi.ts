@@ -118,7 +118,6 @@ const useApi = (): UseApiReturn => {
     useFormData?: boolean
   }): Promise<ApiFetchResult<ApiResponse[T]['POST']>> => {
     setIsFetchingPostApiStore(true)
-
     try {
       const apiUrl = `${apiPath}${path}`
 
