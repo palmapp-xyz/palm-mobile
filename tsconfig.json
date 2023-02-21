@@ -8,7 +8,12 @@
       "store/*": ["./src/store/*"],
       "types": ["./src/types"],
       "consts": ["./src/consts"],
-      "components": ["./src/components"]
-    }
+      "components": ["./src/components"],
+    },
+    "types": [
+      "react-native",
+      "jest",
+      "styled-components-react-native",
+    ],
   }
 }

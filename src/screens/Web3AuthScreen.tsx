@@ -13,7 +13,7 @@ const Web3AuthScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
 
   const { loading, login } = useWeb3Auth(async () =>
-    navigation.navigate(Routes.SignIn)
+    navigation.navigate(Routes.Sign4Auth)
   )
   const { colors } = useUIKitTheme()
 
@@ -32,8 +32,7 @@ const Web3AuthScreen = (): ReactElement => {
         variant={'contained'}
         onPress={async (): Promise<void> => {
           await login(async () => {
-            navigation.navigate(Routes.SignIn)
-            // navigation.navigate(Routes.SignIn, { credential: cred })
+            navigation.navigate(Routes.Sign4Auth)
           })
         }}>
         {'Wen3Auth'}
