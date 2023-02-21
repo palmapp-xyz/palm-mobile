@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "ios:pod-install": "cd ios; pod install --repo-update;",
-    "ios:clean": "watchman watch-del '/Users/denniswon/oedi/oedi-mobile' ; watchman watch-project '/Users/denniswon/oedi/oedi-mobile'",
+    "ios:clean": "watchman watch-del $PWD ; watchman watch-project $PWD",
     "postinstall": "node_modules/.bin/rn-nodeify --install crypto,http,https,assert,url,stream,events --hack"
   },
   "dependencies": {
