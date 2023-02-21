@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, Pressable, Text } from 'react-native'
+import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 
 type FormButtonProps = {
   children: string
   disabled?: boolean
   onPress: () => void
   figure?: 'primary' | 'error'
+  size?: 'sm' | 'md'
 }
 
 const FormButton = ({
@@ -13,19 +14,23 @@ const FormButton = ({
   disabled,
   onPress,
   figure = 'primary',
+  size = 'md',
 }: FormButtonProps): ReactElement => {
   const mainColor = figure === 'primary' ? '#2960FF' : '#F84F4F'
 
+  const paddingVertical = size === 'md' ? 15 : 10
+  const fontSize = size === 'md' ? 16 : 14
+
   return (
-    <Pressable
+    <TouchableOpacity
       style={[
         styles.container,
-        { backgroundColor: disabled ? 'gray' : mainColor },
+        { backgroundColor: disabled ? 'gray' : mainColor, paddingVertical },
       ]}
       disabled={disabled}
       onPress={onPress}>
-      <Text style={styles.text}>{children}</Text>
-    </Pressable>
+      <Text style={[styles.text, { fontSize }]}>{children}</Text>
+    </TouchableOpacity>
   )
 }
 
@@ -35,11 +40,10 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 15,
     borderRadius: 20,
+    paddingHorizontal: 10,
   },
   text: {
-    fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
   },

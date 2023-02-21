@@ -6,3 +6,4 @@ export { default as FormButton } from './atoms/FormButton'
 export { default as ErrorMessage } from './atoms/ErrorMessage'
 
 export { default as MoralisNftCard } from './molecules/MoralisNftCard'
+export { default as NftRenderer } from './molecules/NftRenderer'
