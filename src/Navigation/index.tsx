@@ -31,6 +31,7 @@ import {
 import FileViewerScreen from '../screens/uikit-app/FileViewerScreen'
 import useAuth from 'hooks/independent/useAuth'
 import Sign4AuthScreen from '../screens/Sign4AuthScreen'
+import PostTxResult from './PostTxResult'
 
 const Navigation = (): ReactElement => {
   const { user } = useAuth()
@@ -140,6 +141,7 @@ const Navigation = (): ReactElement => {
           </>
         )}
       </RootStack.Navigator>
+      <PostTxResult />
     </NavigationContainer>
   )
 }

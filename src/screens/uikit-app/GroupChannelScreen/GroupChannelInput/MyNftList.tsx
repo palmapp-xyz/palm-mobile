@@ -1,5 +1,11 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Text,
+} from 'react-native'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
@@ -25,7 +31,10 @@ const MyNftList = ({
           <Icon icon={'arrow-left'} size={24} />
         </TouchableOpacity>
 
-        <FormButton size="sm" onPress={useGcInputReturn.onClickNextStep}>
+        <FormButton
+          disabled={!useGcInputReturn.selectedNft}
+          size="sm"
+          onPress={useGcInputReturn.onClickNextStep}>
           {useGcInputReturn.stepAfterSelectNft}
         </FormButton>
       </Row>
@@ -40,12 +49,13 @@ const MyNftList = ({
           return (
             <TouchableOpacity
               style={{
-                height: 100,
+                height: 120,
                 width: 100,
                 borderColor: selected ? 'blue' : 'gray',
                 borderWidth: selected ? 1 : 0,
                 borderRadius: 20,
                 padding: 10,
+                paddingBottom: 20,
               }}
               onPress={(): void => {
                 useGcInputReturn.setSelectedNft(item)
@@ -54,6 +64,7 @@ const MyNftList = ({
                 nftContract={item.token_address}
                 tokenId={item.token_id}
               />
+              <Text style={{ textAlign: 'center' }}>ID : {item.token_id}</Text>
             </TouchableOpacity>
           )
         }}

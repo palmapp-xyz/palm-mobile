@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-type FormButtonProps = {
+export type FormButtonProps = {
   children: string
   disabled?: boolean
-  onPress: () => void
+  onPress?: () => void
   figure?: 'primary' | 'error'
   size?: 'sm' | 'md'
 }

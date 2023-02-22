@@ -1,7 +1,7 @@
 import { TransactionReceipt } from 'web3-core'
 
 export enum PostTxStatus {
-  POST = 'POST',
+  // POST = 'POST',
   BROADCAST = 'BROADCAST',
   DONE = 'DONE',
   ERROR = 'ERROR',
@@ -11,9 +11,9 @@ export enum PostTxStatus {
 type StreamReady = {
   status: PostTxStatus.READY
 }
-type StreamPost = {
-  status: PostTxStatus.POST
-}
+// type StreamPost = {
+//   status: PostTxStatus.POST
+// }
 type StreamBroadcast = {
   status: PostTxStatus.BROADCAST
   transactionHash: string
@@ -29,7 +29,7 @@ type StreamError = {
 
 export type StreamResultType =
   | StreamReady
-  | StreamPost
+  // | StreamPost
   | StreamBroadcast
   | StreamDone
   | StreamError

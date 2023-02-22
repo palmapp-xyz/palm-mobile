@@ -1,4 +1,3 @@
-import Web3 from 'web3'
 import { useSetRecoilState } from 'recoil'
 import _ from 'lodash'
 
@@ -12,6 +11,8 @@ import {
   PostTxStatus,
   pToken,
 } from 'types'
+import useWeb3 from './useWeb3'
+import { getPkey } from 'libs/account'
 
 type UsePostTxReturn = {
   postTx: (props: {
@@ -26,6 +27,7 @@ export const usePostTx = ({
   contractAddress: ContractAddr
 }): UsePostTxReturn => {
   const { user } = useAuth()
+  const { web3 } = useWeb3()
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const postTx = async ({
@@ -43,13 +45,15 @@ export const usePostTx = ({
       }
     }
 
-    setPostTxResult({ status: PostTxStatus.POST })
+    // setPostTxResult({ status: PostTxStatus.POST })
     if (user) {
       try {
         const userAddress = user.address
-        const signer = new Web3()
+        const pkey = await getPkey()
+        const account = web3.eth.accounts.privateKeyToAccount(pkey)
+        web3.eth.accounts.wallet.add(account)
 
-        const receipt = await signer.eth
+        const receipt = await web3.eth
           .sendTransaction({
             from: userAddress,
             to: contractAddress,
