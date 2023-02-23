@@ -1,23 +1,30 @@
 import { NftSwapV4 } from '@traderxyz/nft-swap-sdk'
 import { ethers } from 'ethers'
-import { useMemo } from 'react'
+import { useQuery } from 'react-query'
 
 import useNetwork from 'hooks/complex/useNetwork'
-import useWeb3 from 'hooks/complex/useWeb3'
+import { getPkey } from 'libs/account'
+import { QueryKeyEnum } from 'types'
 
 export type UseZxReturn = { nftSwapSdk?: NftSwapV4 }
 
 const useZx = (): UseZxReturn => {
-  const { connectedNetworkId } = useNetwork()
-  const { web3 } = useWeb3()
+  const { connectedNetworkParam, connectedNetworkId } = useNetwork()
 
-  const nftSwapSdk = useMemo(() => {
-    try {
-      const provider = new ethers.providers.Web3Provider(web3.givenProvider)
+  const { data: nftSwapSdk } = useQuery(
+    [QueryKeyEnum.ZX_SWAP_SDK_V4, connectedNetworkParam, connectedNetworkId],
+    async () => {
+      try {
+        const pKey = await getPkey()
 
-      return new NftSwapV4(provider, provider.getSigner(), connectedNetworkId)
-    } catch {}
-  }, [connectedNetworkId, web3])
+        const provider = new ethers.providers.JsonRpcProvider(
+          connectedNetworkParam.rpcUrls[0]
+        )
+        const signer = new ethers.Wallet(pKey, provider)
+        return new NftSwapV4(provider, signer, connectedNetworkId)
+      } catch {}
+    }
+  )
 
   return { nftSwapSdk }
 }

@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 
+import { useQueryClient } from 'react-query'
+
 // import { UTIL } from 'consts'
 
 import { ApiEnum, ContractAddr, Moralis, PostTxStatus } from 'types'
@@ -11,46 +13,22 @@ import usePostTxStatusEffect, {
   EffectListType,
 } from 'hooks/independent/usePostTxStatusEffect'
 
-import { GroupChannel } from '@sendbird/chat/groupChannel'
-import { ItemType } from 'react-native-dropdown-picker'
-import { useSetRecoilState } from 'recoil'
-import groupChannelStore from 'store/groupChannelStore'
-import { useQueryClient } from 'react-query'
-
 export type UseSendNftReturn = {
   isPosting: boolean
-  receiverList: ItemType<string>[]
-  setReceiverList: React.Dispatch<React.SetStateAction<ItemType<string>[]>>
-  receiver: ContractAddr
-  setReceiver: React.Dispatch<React.SetStateAction<ContractAddr>>
   onClickConfirm: () => Promise<void>
   isValidForm: boolean
 }
 
 const useSendNft = ({
   selectedNft,
-  channel,
+  receiver,
 }: {
   selectedNft: Moralis.NftItem
-  channel: GroupChannel
+  receiver: ContractAddr
 }): UseSendNftReturn => {
-  const setVisibleModal = useSetRecoilState(groupChannelStore.visibleModal)
-
   const [isPosting, setIsPosting] = useState(false)
 
   const { user } = useAuth()
-  const initReceiverList: ItemType<string>[] = useMemo(
-    () =>
-      channel.members
-        .filter(x => x.userId !== user?.address)
-        .map(x => ({
-          label: x.nickname,
-          value: x.userId,
-        })),
-    [channel.members, user?.address]
-  )
-  const [receiverList, setReceiverList] = useState(initReceiverList)
-  const [receiver, setReceiver] = useState<ContractAddr>('' as ContractAddr)
 
   const { transferFromData } = useNft({
     nftContract: selectedNft?.token_address,
@@ -70,7 +48,6 @@ const useSendNft = ({
         tokenId: selectedNft.token_id,
       })
 
-      setVisibleModal(undefined)
       postTx({ data })
     }
   }
@@ -117,10 +94,6 @@ const useSendNft = ({
 
   return {
     isPosting,
-    receiverList,
-    setReceiverList,
-    receiver,
-    setReceiver,
     onClickConfirm,
     isValidForm,
   }

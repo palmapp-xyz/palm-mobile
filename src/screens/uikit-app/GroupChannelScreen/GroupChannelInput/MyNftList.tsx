@@ -32,7 +32,7 @@ const MyNftList = ({
         </TouchableOpacity>
 
         <FormButton
-          disabled={!useGcInputReturn.selectedNft}
+          disabled={useGcInputReturn.selectedNftList.length < 1}
           size="sm"
           onPress={useGcInputReturn.onClickNextStep}>
           {useGcInputReturn.stepAfterSelectNft}
@@ -45,7 +45,8 @@ const MyNftList = ({
         style={{ paddingHorizontal: 20 }}
         contentContainerStyle={{ gap: 10 }}
         renderItem={({ item }): ReactElement => {
-          const selected = useGcInputReturn.selectedNft === item
+          const selected = useGcInputReturn.selectedNftList.includes(item)
+
           return (
             <TouchableOpacity
               style={{
@@ -58,7 +59,15 @@ const MyNftList = ({
                 paddingBottom: 20,
               }}
               onPress={(): void => {
-                useGcInputReturn.setSelectedNft(item)
+                if (useGcInputReturn.stepAfterSelectNft === 'share') {
+                  useGcInputReturn.setSelectedNftList(valOrUpdater =>
+                    selected
+                      ? valOrUpdater.filter(x => x !== item)
+                      : [...valOrUpdater, item]
+                  )
+                } else {
+                  useGcInputReturn.setSelectedNftList([item])
+                }
               }}>
               <NftRenderer
                 nftContract={item.token_address}

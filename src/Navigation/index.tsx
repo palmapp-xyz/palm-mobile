@@ -27,10 +27,13 @@ import {
   RecoverAccountScreen,
   HomeTabs,
   SettingScreen,
+  ZxNftDetailScreen,
+  SendNftScreen,
+  SellNftScreen,
 } from '../screens'
 import FileViewerScreen from '../screens/uikit-app/FileViewerScreen'
 import useAuth from 'hooks/independent/useAuth'
-import Sign4AuthScreen from '../screens/Sign4AuthScreen'
+// import Sign4AuthScreen from '../screens/Sign4AuthScreen'
 import PostTxResult from './PostTxResult'
 
 const Navigation = (): ReactElement => {
@@ -50,9 +53,18 @@ const Navigation = (): ReactElement => {
       ref={navigationRef}
       theme={isLightTheme ? DefaultTheme : DarkTheme}>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        {user?.accessToken ? (
+        {user ? (
           <>
             <RootStack.Screen name={Routes.HomeTabs} component={HomeTabs} />
+
+            <RootStack.Screen
+              name={Routes.ZxNftDetail}
+              component={ZxNftDetailScreen}
+            />
+
+            <RootStack.Screen name={Routes.SendNft} component={SendNftScreen} />
+
+            <RootStack.Screen name={Routes.SellNft} component={SellNftScreen} />
 
             <RootStack.Screen name={Routes.Setting} component={SettingScreen} />
             <RootStack.Screen
@@ -103,7 +115,6 @@ const Navigation = (): ReactElement => {
               name={Routes.GroupChannelInvite}
               component={GroupChannelInviteScreen}
             />
-
             <RootStack.Group
               screenOptions={{
                 animation: 'slide_from_bottom',
@@ -115,12 +126,12 @@ const Navigation = (): ReactElement => {
               />
             </RootStack.Group>
           </>
-        ) : user ? (
-          <RootStack.Screen
-            name={Routes.MainAccount}
-            component={Sign4AuthScreen}
-          />
         ) : (
+          // ) : user ? (
+          //   <RootStack.Screen
+          //     name={Routes.MainAccount}
+          //     component={Sign4AuthScreen}
+          //   />
           <>
             <RootStack.Screen
               name={Routes.MainAccount}

@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleProp, View, ViewStyle } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Container = ({
@@ -10,14 +10,10 @@ const Container = ({
   style?: StyleProp<ViewStyle>
 }): ReactElement => {
   return (
-    <SafeAreaView>
-      <View style={[styles.container, style]}>{children}</View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={style}>{children}</View>
     </SafeAreaView>
   )
 }
 
 export default Container
-
-const styles = StyleSheet.create({
-  container: { padding: 20 },
-})

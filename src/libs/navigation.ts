@@ -7,6 +7,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
+import { ContractAddr } from 'types'
 
 import { GetSendbirdSDK } from './sendbird'
 
@@ -20,8 +21,13 @@ export enum Routes {
 
   HomeTabs = 'HomeTabs',
   Feed = 'Feed',
+  NftList = 'NftList',
   MyPage = 'MyPage',
   GroupChannelList = 'GroupChannelList',
+
+  ZxNftDetail = 'ZxNftDetail',
+  SellNft = 'SellNft',
+  SendNft = 'SendNft',
 
   GroupChannel = 'GroupChannel',
 
@@ -72,12 +78,28 @@ type MainRouteParamsUnion =
       params: undefined
     }
   | {
+      route: Routes.NftList
+      params: undefined
+    }
+  | {
       route: Routes.MyPage
       params: undefined
     }
   | {
       route: Routes.GroupChannelList
       params: { channelUrl?: string } | undefined
+    }
+  | {
+      route: Routes.ZxNftDetail
+      params: { nonce: string }
+    }
+  | {
+      route: Routes.SellNft
+      params: undefined
+    }
+  | {
+      route: Routes.SendNft
+      params: { receiver: ContractAddr }
     }
   | {
       route: Routes.Setting

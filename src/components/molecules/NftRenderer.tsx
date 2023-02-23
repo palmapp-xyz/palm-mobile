@@ -20,6 +20,7 @@ const NftRenderer = ({
     [QueryKeyEnum.NFT_TOKEN_URI, nftContract, tokenId],
     async () => {
       const tokenUri = await tokenURI({ tokenId })
+
       if (tokenUri) {
         return nftUriFetcher(tokenUri)
       }

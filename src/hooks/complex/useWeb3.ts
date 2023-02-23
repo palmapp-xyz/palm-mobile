@@ -1,4 +1,3 @@
-import 'react-native-get-random-values'
 import Web3 from 'web3'
 import { useMemo } from 'react'
 

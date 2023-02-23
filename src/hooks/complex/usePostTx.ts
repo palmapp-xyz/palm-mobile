@@ -45,7 +45,7 @@ export const usePostTx = ({
       }
     }
 
-    // setPostTxResult({ status: PostTxStatus.POST })
+    setPostTxResult({ status: PostTxStatus.POST })
     if (user) {
       try {
         const userAddress = user.address
