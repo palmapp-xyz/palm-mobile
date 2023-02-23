@@ -18,14 +18,14 @@ import {
   useIIFE,
 } from '@sendbird/uikit-utils'
 import useMentionTextInput from '@sendbird/uikit-react-native/src/hooks/useMentionTextInput'
-
-import EditInput from './EditInput'
-import SendInput from './SendInput'
 import {
   GroupChannelContexts,
   GroupChannelProps,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
+
+import EditInput from './EditInput'
+import SendInput from './SendInput'
 import BottomMenu from './BottomMenu'
 import MyNftList from './MyNftList'
 import useGcInput from 'hooks/page/groupChannel/useGcInput'

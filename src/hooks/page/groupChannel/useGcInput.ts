@@ -5,6 +5,8 @@ import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 
 import { Moralis } from 'types'
 import { nftUriFetcher } from 'libs/nft'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import groupChannelStore from 'store/groupChannelStore'
 
 export type UseGcInputReturn = {
   openBottomMenu: boolean
@@ -24,7 +26,10 @@ const useGcInput = ({
   onSendFileMessage: (file: FileType) => Promise<void>
 }): UseGcInputReturn => {
   const [openBottomMenu, setOpenBottomMenu] = useState(false)
-  const [selectedNft, setSelectedNft] = useState<Moralis.NftItem>()
+  const [selectedNft, setSelectedNft] = useRecoilState(
+    groupChannelStore.selectedNft
+  )
+  const setVisibleModal = useSetRecoilState(groupChannelStore.visibleModal)
   const [stepAfterSelectNft, setStepAfterSelectNft] =
     useState<StepAfterSelectNftType>()
 
@@ -37,7 +42,7 @@ const useGcInput = ({
 
         // Image compression
         if (
-          false === imgInfo.type.includes('svg') &&
+          imgInfo.type.includes('svg') === false &&
           isImage(imgInfo.uri, imgInfo.type) &&
           shouldCompressImage(imgInfo.uri, true)
         ) {
@@ -55,6 +60,9 @@ const useGcInput = ({
         }
 
         onSendFileMessage(imgInfo)
+      } else if (stepAfterSelectNft === 'sell') {
+      } else if (stepAfterSelectNft === 'send') {
+        setVisibleModal('send')
       }
     } else {
       // Should not be clickable this button without selectedNft

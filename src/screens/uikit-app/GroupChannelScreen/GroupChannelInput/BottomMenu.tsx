@@ -22,12 +22,16 @@ const BottomMenu = ({
       },
       {
         icon: 'photo',
-        onPress: (): void => {},
-        title: 'List NFT',
+        onPress: (): void => {
+          useGcInputReturn.setStepAfterSelectNft('sell')
+        },
+        title: 'Sell NFT',
       },
       {
         icon: 'unarchive',
-        onPress: (): void => {},
+        onPress: (): void => {
+          useGcInputReturn.setStepAfterSelectNft('send')
+        },
         title: 'Send NFT',
       },
     ],
