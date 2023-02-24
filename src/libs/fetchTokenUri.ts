@@ -22,13 +22,16 @@ export const fetchNftImage = async ({
   if (metadata) {
     const metadataJson = UTIL.jsonTryParse<{
       image?: string
+      image_url?: string
       image_data?: string // svg+xml
     }>(metadata)
     if (metadataJson?.image) {
       return decodeURI(metadataJson.image)
+    } else if (metadataJson?.image_url) {
+      return decodeURI(metadataJson.image_url)
     } else if (metadataJson?.image_data) {
       return `data:image/svg+xml;base64,${base64.encode(
-        decodeURI(metadataJson?.image_data)
+        metadataJson?.image_data
       )}`
     }
   }

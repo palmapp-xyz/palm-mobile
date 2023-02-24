@@ -176,8 +176,8 @@ export const MediaRenderer = ({
           xlinkHref={videoOrImageSrc.url}
           x={0}
           y={0}
-          height={300}
-          width={300}
+          height={height}
+          width={width}
         />
       </Svg>
     )
