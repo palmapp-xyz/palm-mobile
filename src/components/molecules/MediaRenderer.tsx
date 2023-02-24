@@ -3,10 +3,10 @@ import {
   StyleProp,
   FlexStyle,
   View,
-  StyleSheet,
   Linking,
   Image,
   ViewStyle,
+  StyleSheet,
 } from 'react-native'
 import Svg, { SvgUri, Image as SvgImage } from 'react-native-svg'
 import Video from 'react-native-video'
@@ -38,27 +38,6 @@ export interface MediaRendererProps extends SharedMediaProps {
   alt?: string
 }
 
-const styles = StyleSheet.create({
-  video: {
-    height: '100%',
-    width: '100%',
-    zIndex: 1,
-    opacity: 1,
-  },
-  container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#fff',
-    color: 'rgb(138, 147, 155)',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    flexWrap: 'nowrap',
-  },
-})
-
 const VideoPlayer = ({
   src,
   style,
@@ -73,7 +52,6 @@ const VideoPlayer = ({
         repeat={true}
         muted={true}
         resizeMode={'contain'}
-        style={styles.video}
         audioOnly={audioOnly}
       />
     </View>
@@ -100,7 +78,6 @@ const IframePlayer = ({
 }
 
 const StyledText = styled.Text`
-  textdecoration: 'underline';
   color: 'rgb(138, 147, 155)';
 `
 
@@ -112,21 +89,17 @@ const LinkPlayer = ({
   style,
 }: MediaRendererProps): ReactElement => {
   return (
-    <View style={[{ position: 'relative', width, height }, style]}>
-      <View style={styles.container}>
-        <View style={styles.card}>
-          <Icons.CarbonDocumentUnknown width={150} height={150} />
-          <StyledText
-            onPress={async (): Promise<void> => {
-              const canOpen = !!src && (await Linking.canOpenURL(src))
-              if (canOpen) {
-                Linking.openURL(src)
-              }
-            }}>
-            {alt || 'File'}
-          </StyledText>
-        </View>
-      </View>
+    <View style={[{ ...styles.container, width, height }, style]}>
+      <Icons.CarbonDocumentUnknown width={50} height={50} />
+      <StyledText
+        onPress={async (): Promise<void> => {
+          const canOpen = !!src && (await Linking.canOpenURL(src))
+          if (canOpen) {
+            Linking.openURL(src)
+          }
+        }}>
+        {alt || 'File'}
+      </StyledText>
     </View>
   )
 }
@@ -167,7 +140,14 @@ export const MediaRenderer = ({
         source={{ uri: videoOrImageSrc.url }}
       />
     ) : (
-      <Icons.CarbonDocumentUnknown width={150} height={150} />
+      // <Icons.CarbonDocumentUnknown width={150} height={150} />
+      <LinkPlayer
+        width={width}
+        height={height}
+        style={style}
+        src={videoOrImageSrc.url}
+        alt={alt}
+      />
     )
   } else if (videoOrImageSrc.url?.startsWith('data:image/svg+xml')) {
     return (
@@ -215,5 +195,21 @@ export const MediaRenderer = ({
       />
     )
   }
-  return <LinkPlayer style={style} src={videoOrImageSrc.url} alt={alt} />
+  return (
+    <LinkPlayer
+      width={width}
+      height={height}
+      style={style}
+      src={videoOrImageSrc.url}
+      alt={alt}
+    />
+  )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
