@@ -11,6 +11,11 @@
       "consts": ["./consts"],
       "components": ["./components"]
     },
-    "types": ["react-native", "jest", "styled-components-react-native"]
+    "types": [
+      "react-native",
+      "jest",
+      "styled-components-react-native",
+    ],
+    "esModuleInterop": true,
   }
 }

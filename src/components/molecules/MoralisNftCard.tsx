@@ -4,6 +4,7 @@ import { Text, View } from 'react-native'
 import { Moralis, QueryKeyEnum } from 'types'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { fetchNftImage } from 'libs/fetchTokenUri'
+import { MediaRenderer } from './MediaRenderer'
 
 const MoralisNftCard = ({ item }: { item: Moralis.NftItem }): ReactElement => {
   const { data: uri } = useReactQuery(
@@ -13,7 +14,13 @@ const MoralisNftCard = ({ item }: { item: Moralis.NftItem }): ReactElement => {
 
   return (
     <View style={{ rowGap: 5 }}>
-      <Text>{`Img : ${uri}`}</Text>
+      <MediaRenderer
+        src={typeof uri === 'string' ? uri : `${uri}`}
+        alt={`${item.name}:${item.token_id}`}
+        width={150}
+        height={150}
+        style={{ marginBottom: 6 }}
+      />
       <Text>{`ID : ${item.token_id}`}</Text>
       <Text>{item.name}</Text>
     </View>

@@ -11,7 +11,7 @@ export type UseSettingReturn = {
 
 const defaultSetting: SettingStorageType = {
   themeMode: 'dark',
-  network: ChainNetworkEnum.GOERLI,
+  network: ChainNetworkEnum.ETHEREUM,
 }
 
 const useSetting = (): UseSettingReturn => {

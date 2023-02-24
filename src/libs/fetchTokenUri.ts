@@ -1,18 +1,15 @@
 import { UTIL } from 'consts'
+import base64 from 'react-native-base64'
+import { resolveIpfsUri } from './ipfs'
 
 export const fixURL = (uri: string): string => {
   if (uri.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
-    uri = uri.replace(
-      'https://ipfs.moralis.io:2053/ipfs/',
-      'https://gateway.ipfscdn.io/ipfs/'
-    )
-  } else if (uri.startsWith('ipfs://')) {
-    uri = uri.replace('ipfs://', 'https://gateway.ipfscdn.io/ipfs/')
+    uri = uri.replace('https://ipfs.moralis.io:2053/ipfs/', 'ipfs://')
   } else if (uri.match(/^[a-zA-Z0-9_]+$/)) {
     // uri is just ipfs cid
-    uri = `https://gateway.ipfscdn.io/ipfs/${uri}`
+    uri = `ipfs://${uri}`
   }
-  return uri
+  return resolveIpfsUri(uri) || uri
 }
 
 export const fetchNftImage = async ({
@@ -23,24 +20,32 @@ export const fetchNftImage = async ({
   tokenUri: string
 }): Promise<string> => {
   if (metadata) {
-    const metadataJson = UTIL.jsonTryParse<{ image: string }>(metadata)
-    if (metadataJson) {
-      return metadataJson.image
+    const metadataJson = UTIL.jsonTryParse<{
+      image?: string
+      image_data?: string // svg+xml
+    }>(metadata)
+    if (metadataJson?.image) {
+      return decodeURI(metadataJson.image)
+    } else if (metadataJson?.image_data) {
+      return `data:image/svg+xml;base64,${base64.encode(
+        decodeURI(metadataJson?.image_data)
+      )}`
     }
   }
 
-  try {
-    const fetched = await fetch(fixURL(tokenUri))
-    let blob = await fetched.blob()
-    if (blob.type.includes('image')) {
-      return tokenUri
+  if (tokenUri) {
+    try {
+      const fetched = await fetch(fixURL(tokenUri))
+      const jsonData = await fetched.json()
+      if (jsonData?.image) {
+        return decodeURI(jsonData.image)
+      } else if (jsonData?.image_url) {
+        return decodeURI(jsonData.image_url)
+      }
+    } catch (e) {
+      console.error('fetchTokenUri failed: ', tokenUri, e)
     }
+  }
 
-    const blobText = await blob.text()
-    const jsonData = UTIL.jsonTryParse<{ image: string }>(blobText)
-    if (jsonData && jsonData.image) {
-      return jsonData.image
-    }
-  } catch {}
   return require('../assets/no_img.png')
 }

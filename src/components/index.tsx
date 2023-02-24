@@ -8,6 +8,7 @@ export { default as FormModal } from './atoms/FormModal'
 export { default as FormImage } from './atoms/FormImage'
 export { default as ErrorMessage } from './atoms/ErrorMessage'
 export { default as LinkExplorer } from './atoms/LinkExplorer'
+export { default as Icons } from './atoms/Icons'
 
 export { default as MoralisNftCard } from './molecules/MoralisNftCard'
 export { default as NftRenderer } from './molecules/NftRenderer'
