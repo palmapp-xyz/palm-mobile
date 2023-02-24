@@ -1,3 +1,6 @@
+import { useSetRecoilState } from 'recoil'
+import postTxStore from 'store/postTxStore'
+import { PostTxStatus } from 'types'
 import useZx from './useZx'
 
 export type UseZxCancelNftReturn = {
@@ -6,6 +9,7 @@ export type UseZxCancelNftReturn = {
 
 const useZxCancelNft = (): UseZxCancelNftReturn => {
   const { nftSwapSdk } = useZx()
+  const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const onClickConfirm = async ({
     nonce,
@@ -13,10 +17,20 @@ const useZxCancelNft = (): UseZxCancelNftReturn => {
     nonce: string
   }): Promise<void> => {
     if (nftSwapSdk) {
+      setPostTxResult({
+        status: PostTxStatus.POST,
+      })
       const fillTx = await nftSwapSdk.cancelOrder(nonce, 'ERC721')
-      console.log(fillTx)
+      setPostTxResult({
+        status: PostTxStatus.BROADCAST,
+        transactionHash: fillTx.hash,
+      })
+
       const txReceipt = await fillTx.wait()
-      console.log(txReceipt)
+      setPostTxResult({
+        status: PostTxStatus.DONE,
+        value: txReceipt,
+      })
     }
   }
   return { onClickConfirm }

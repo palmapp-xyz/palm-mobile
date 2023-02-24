@@ -74,7 +74,6 @@ const formatAmountP = (
   }
 ): string => {
   const demicrofyValue = toBn(demicrofyP(value))
-  option = option || { toFix: 2 }
   const strValue =
     option?.toFix !== undefined
       ? eraseDecimal(

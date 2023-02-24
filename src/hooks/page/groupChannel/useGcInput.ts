@@ -5,16 +5,19 @@ import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 
 import { Moralis } from 'types'
 import { nftUriFetcher } from 'libs/nft'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import groupChannelStore from 'store/groupChannelStore'
+import { SetterOrUpdater, useRecoilState } from 'recoil'
+import selectNftStore from 'store/selectNftStore'
+import _ from 'lodash'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 
 export type UseGcInputReturn = {
   openBottomMenu: boolean
   setOpenBottomMenu: (value: boolean) => void
   stepAfterSelectNft?: StepAfterSelectNftType
   setStepAfterSelectNft: (value?: StepAfterSelectNftType) => void
-  selectedNft?: Moralis.NftItem
-  setSelectedNft: (value?: Moralis.NftItem) => void
+  selectedNftList: Moralis.NftItem[]
+  setSelectedNftList: SetterOrUpdater<Moralis.NftItem[]>
   onClickNextStep: () => Promise<void>
 }
 
@@ -25,44 +28,49 @@ const useGcInput = ({
 }: {
   onSendFileMessage: (file: FileType) => Promise<void>
 }): UseGcInputReturn => {
+  const { navigation } = useAppNavigation<Routes.GroupChannel>()
   const [openBottomMenu, setOpenBottomMenu] = useState(false)
-  const [selectedNft, setSelectedNft] = useRecoilState(
-    groupChannelStore.selectedNft
+  const [selectedNftList, setSelectedNftList] = useRecoilState(
+    selectNftStore.selectedNftList
   )
-  const setVisibleModal = useSetRecoilState(groupChannelStore.visibleModal)
   const [stepAfterSelectNft, setStepAfterSelectNft] =
     useState<StepAfterSelectNftType>()
 
   const { mediaService } = usePlatformService()
 
   const onClickNextStep = async (): Promise<void> => {
-    if (selectedNft) {
+    if (selectedNftList.length > 0) {
       if (stepAfterSelectNft === 'share') {
-        const imgInfo = await nftUriFetcher(selectedNft.token_uri)
+        await Promise.all(
+          _.forEach(selectedNftList, async item => {
+            const imgInfo = await nftUriFetcher(item.token_uri)
 
-        // Image compression
-        if (
-          imgInfo.type.includes('svg') === false &&
-          isImage(imgInfo.uri, imgInfo.type) &&
-          shouldCompressImage(imgInfo.uri, true)
-        ) {
-          await SBUUtils.safeRun(async () => {
-            const compressed = await mediaService.compressImage({
-              uri: imgInfo.uri,
-              compressionRate: 0.7,
-            })
+            // Image compression
+            if (
+              imgInfo.type.includes('svg') === false &&
+              isImage(imgInfo.uri, imgInfo.type) &&
+              shouldCompressImage(imgInfo.uri, true)
+            ) {
+              await SBUUtils.safeRun(async () => {
+                const compressed = await mediaService.compressImage({
+                  uri: imgInfo.uri,
+                  compressionRate: 0.7,
+                })
 
-            if (compressed) {
-              imgInfo.uri = compressed.uri
-              imgInfo.size = compressed.size
+                if (compressed) {
+                  imgInfo.uri = compressed.uri
+                  imgInfo.size = compressed.size
+                }
+              })
             }
-          })
-        }
 
-        onSendFileMessage(imgInfo)
+            onSendFileMessage(imgInfo)
+          })
+        )
+        setSelectedNftList([])
       } else if (stepAfterSelectNft === 'sell') {
-      } else if (stepAfterSelectNft === 'send') {
-        setVisibleModal('send')
+        // TODO : able to include group channel url
+        navigation.navigate(Routes.SellNft)
       }
     } else {
       // Should not be clickable this button without selectedNft
@@ -77,8 +85,8 @@ const useGcInput = ({
     setOpenBottomMenu,
     stepAfterSelectNft,
     setStepAfterSelectNft,
-    selectedNft,
-    setSelectedNft,
+    selectedNftList,
+    setSelectedNftList,
     onClickNextStep,
   }
 }

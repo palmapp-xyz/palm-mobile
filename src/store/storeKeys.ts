@@ -10,8 +10,7 @@ export default {
     isFetchingPutApi: 'fetchApi_isFetchingPutApi',
     isFetchingDelApi: 'fetchApi_isFetchingDelApi',
   },
-  groupChannel: {
-    selectedNft: 'groupChannel_selectedNft',
-    visibleModal: 'groupChannel_visibleModal',
+  selectNft: {
+    selectedNftList: 'selectNft_selectedNftList',
   },
 }

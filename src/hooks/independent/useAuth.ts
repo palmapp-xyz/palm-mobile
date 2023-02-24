@@ -32,7 +32,7 @@ const useAuth = (): UseAuthReturn => {
     setUser({ address: account.address as ContractAddr })
 
     await savePkey(privateKey, password)
-    await connect(account.address, { nickname: account.address })
+    await connect(account.address)
   }
 
   const login = async ({
@@ -46,7 +46,7 @@ const useAuth = (): UseAuthReturn => {
         const privateKey = await getPkey()
         const account = web3.eth.accounts.privateKeyToAccount(privateKey)
         setUser({ address: account.address as ContractAddr })
-        await connect(account.address, { nickname: account.address })
+        await connect(account.address)
         return { success: true }
       } else {
         return { success: false, errMsg: 'Invalid password' }

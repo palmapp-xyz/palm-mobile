@@ -50,16 +50,16 @@ const TxStatusMini = ({
         <Icon icon="close" size={20} />
       </TouchableOpacity>
       <Card style={styles.card}>
-        {/* {postTxResult.status === PostTxStatus.POST && (
+        {postTxResult.status === PostTxStatus.POST && (
           <>
             <View style={styles.iconBox}>
               <FormImage source={images.loading} size={30} />
             </View>
             <StyledTextBox>
-              <StatusText>Wait wallet...</StatusText>
+              <StatusText>Posting...</StatusText>
             </StyledTextBox>
           </>
-        )} */}
+        )}
 
         {postTxResult.status === PostTxStatus.BROADCAST && (
           <>
@@ -82,15 +82,19 @@ const TxStatusMini = ({
             <View style={styles.iconBox}>
               <Icon icon="done" size={30} color="green" />
             </View>
-            <StyledTextBox>
-              <LinkExplorer
-                type="tx"
-                address={postTxResult.value.transactionHash}>
-                <Text style={{ color: 'blue' }}>
-                  {UTIL.truncate(postTxResult.value.transactionHash, [4, 4])}
-                </Text>
-              </LinkExplorer>
-            </StyledTextBox>
+            {postTxResult.value ? (
+              <StyledTextBox>
+                <LinkExplorer
+                  type="tx"
+                  address={postTxResult.value.transactionHash}>
+                  <Text style={{ color: 'blue' }}>
+                    {UTIL.truncate(postTxResult.value.transactionHash, [4, 4])}
+                  </Text>
+                </LinkExplorer>
+              </StyledTextBox>
+            ) : (
+              <Text>Done</Text>
+            )}
           </>
         )}
 
@@ -126,11 +130,13 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   card: {
+    minWidth: 100,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
     padding: 20,
     paddingBottom: 10,
     borderRadius: 20,
+    alignItems: 'center',
   },
   iconBox: {
     alignItems: 'center',

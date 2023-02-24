@@ -8,8 +8,12 @@ import { UTIL } from 'consts'
 
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useAuth from 'hooks/independent/useAuth'
-import { ContractAddr, QueryKeyEnum, Token } from 'types'
+import { ContractAddr, PostTxStatus, QueryKeyEnum, Token } from 'types'
 import useZx from './useZx'
+import { useSetRecoilState } from 'recoil'
+import postTxStore from 'store/postTxStore'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 
 export type UseZxSellNftReturn = {
   isApproved: boolean
@@ -26,7 +30,10 @@ const useZxSellNft = ({
   nftContract: ContractAddr
   tokenId: string
 }): UseZxSellNftReturn => {
+  const { navigation } = useAppNavigation()
   const { nftSwapSdk } = useZx()
+  const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
+
   const { user } = useAuth()
   const [price, setPrice] = useState<Token>('' as Token)
 
@@ -47,10 +54,10 @@ const useZxSellNft = ({
         amount: UTIL.microfyP(price),
         type: 'ERC20',
       } as UserFacingERC20AssetDataSerializedV4),
-    [nftContract, price]
+    [price]
   )
 
-  const { data: isApproved = false } = useReactQuery(
+  const { data: isApproved = false, refetch: refetchIsApprove } = useReactQuery(
     [QueryKeyEnum.NFT_APPROVED, nftContract, user?.address],
     async () => {
       if (user && nftSwapSdk) {
@@ -65,26 +72,60 @@ const useZxSellNft = ({
 
   const onClickApprove = async (): Promise<void> => {
     if (user && nftSwapSdk) {
-      const approvalTx = await nftSwapSdk.approveTokenOrNftByAsset(
-        nftToSwap,
-        user.address
-      )
-      const approvalTxReceipt = await approvalTx.wait()
-      console.log('approvalTxReceipt : ', approvalTxReceipt)
+      try {
+        setPostTxResult({
+          status: PostTxStatus.POST,
+        })
+        const approvalTx = await nftSwapSdk.approveTokenOrNftByAsset(
+          nftToSwap,
+          user.address
+        )
+        setPostTxResult({
+          status: PostTxStatus.BROADCAST,
+          transactionHash: approvalTx.hash,
+        })
+
+        const approvalTxReceipt = await approvalTx.wait()
+        setPostTxResult({
+          status: PostTxStatus.DONE,
+          value: approvalTxReceipt,
+        })
+      } catch (error) {
+        setPostTxResult({
+          status: PostTxStatus.ERROR,
+          error,
+        })
+      }
+      refetchIsApprove()
     }
   }
 
   const onClickConfirm = async (): Promise<void> => {
     if (user && nftSwapSdk) {
-      const order = nftSwapSdk.buildOrder(nftToSwap, priceOfNft, user.address)
-      // Sign the order (User A signs since they are initiating the trade)
-      const signedOrder = await nftSwapSdk.signOrder(order)
-      console.log('signedOrder : ', signedOrder)
-      const postOrder = await nftSwapSdk.postOrder(
-        signedOrder,
-        nftSwapSdk.chainId
-      )
-      console.log('postOrder : ', postOrder)
+      try {
+        setPostTxResult({
+          status: PostTxStatus.POST,
+        })
+        const order = nftSwapSdk.buildOrder(nftToSwap, priceOfNft, user.address)
+
+        // Sign the order (User A signs since they are initiating the trade)
+        const signedOrder = await nftSwapSdk.signOrder(order)
+
+        const postOrder = await nftSwapSdk.postOrder(
+          signedOrder,
+          nftSwapSdk.chainId
+        )
+
+        setPostTxResult({ status: PostTxStatus.DONE })
+        navigation.replace(Routes.ZxNftDetail, {
+          nonce: postOrder.order.nonce,
+        })
+      } catch (error) {
+        setPostTxResult({
+          status: PostTxStatus.ERROR,
+          error,
+        })
+      }
     }
   }
   return { onClickApprove, onClickConfirm, isApproved, price, setPrice }

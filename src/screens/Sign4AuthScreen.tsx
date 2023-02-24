@@ -38,7 +38,8 @@ export default Sign4AuthScreen
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    flex: 1,
+    padding: 20,
     justifyContent: 'space-between',
   },
   signMessageBox: {

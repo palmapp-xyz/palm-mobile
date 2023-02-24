@@ -1,7 +1,5 @@
-import { TransactionReceipt } from 'web3-core'
-
 export enum PostTxStatus {
-  // POST = 'POST',
+  POST = 'POST',
   BROADCAST = 'BROADCAST',
   DONE = 'DONE',
   ERROR = 'ERROR',
@@ -11,16 +9,18 @@ export enum PostTxStatus {
 type StreamReady = {
   status: PostTxStatus.READY
 }
-// type StreamPost = {
-//   status: PostTxStatus.POST
-// }
+type StreamPost = {
+  status: PostTxStatus.POST
+}
 type StreamBroadcast = {
   status: PostTxStatus.BROADCAST
   transactionHash: string
 }
 type StreamDone = {
   status: PostTxStatus.DONE
-  value: TransactionReceipt
+  value?: {
+    transactionHash: string
+  }
 }
 type StreamError = {
   status: PostTxStatus.ERROR
@@ -29,7 +29,7 @@ type StreamError = {
 
 export type StreamResultType =
   | StreamReady
-  // | StreamPost
+  | StreamPost
   | StreamBroadcast
   | StreamDone
   | StreamError
@@ -37,7 +37,9 @@ export type StreamResultType =
 export type PostTxReturn =
   | {
       success: true
-      receipt: TransactionReceipt
+      receipt: {
+        transactionHash: string
+      }
     }
   | {
       success: false

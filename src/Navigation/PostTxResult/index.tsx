@@ -5,19 +5,29 @@ import { PostTxStatus } from 'types'
 import usePostTxStatusEffect from 'hooks/independent/usePostTxStatusEffect'
 import TxStatus from './TxStatus'
 import TxStatusMini from './TxStatusMini'
+import postTxStore from 'store/postTxStore'
+import { useSetRecoilState } from 'recoil'
 
 const PostTxResult = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
+  const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const onClickClose = (): void => {
     setIsOpen(false)
+    setMinimized(false)
+    setPostTxResult({ status: PostTxStatus.READY })
   }
 
   const effectList = useMemo(
     () => [
       {
-        when: [PostTxStatus.BROADCAST, PostTxStatus.DONE, PostTxStatus.ERROR],
+        when: [
+          PostTxStatus.POST,
+          PostTxStatus.BROADCAST,
+          PostTxStatus.DONE,
+          PostTxStatus.ERROR,
+        ],
         action: (): void => setIsOpen(true),
       },
     ],

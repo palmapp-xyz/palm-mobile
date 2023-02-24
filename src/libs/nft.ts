@@ -1,23 +1,40 @@
-import { UTIL } from 'consts'
+import axios from 'axios'
+
+const imageFetcher = async (
+  imgUri: string
+): Promise<{ uri: string; size: number; name: string; type: string }> => {
+  const fetched = await fetch(imgUri)
+  let type = fetched.headers.get('Content-Type') || ''
+  const blob = await fetched.blob()
+
+  return {
+    uri: imgUri,
+    type,
+    size: blob.size,
+    name: 'file',
+  }
+}
 
 export const nftUriFetcher = async (
   tokenUri: string
 ): Promise<{ uri: string; size: number; name: string; type: string }> => {
-  const fetched = await fetch(tokenUri)
-  const type = fetched.headers.get('Content-Type') || ''
-  const blob = await fetched.blob()
-  const size = blob.size
-  const name = 'file'
+  try {
+    const fetched = await imageFetcher(tokenUri)
 
-  if (type.includes('image')) {
-    return { uri: tokenUri, type, size, name }
+    if (fetched.type.includes('image')) {
+      return fetched
+    } else if (fetched.type.includes('json')) {
+      const axiosData = await axios.get(tokenUri)
+
+      const jsonData = axiosData.data
+      if (jsonData && jsonData.image) {
+        return imageFetcher(jsonData.image)
+      }
+    }
+  } catch (error) {
+    console.log('nftUriFetcher error : ', error)
   }
 
-  const blobText = await fetched.text()
-  const jsonData = UTIL.jsonTryParse<{ image: string }>(blobText)
-  if (jsonData && jsonData.image) {
-    return { uri: jsonData.image, type, size, name }
-  }
   return {
     uri: '',
     type: '',

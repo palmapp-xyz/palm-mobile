@@ -65,17 +65,17 @@ const TxStatus = ({
           <Icon icon="ban" size={20} />
         </TouchableOpacity>
         <View>
-          {/* {postTxResult.status === PostTxStatus.POST && (
+          {postTxResult.status === PostTxStatus.POST && (
             <>
               <View style={styles.iconBox}>
                 <FormImage source={images.loading} size={60} />
               </View>
               <StyledTextBox>
-                <StatusText>Waiting for wallet</StatusText>
+                <StatusText>Posting...</StatusText>
               </StyledTextBox>
               <FormButton onPress={onPressClose}>Close</FormButton>
             </>
-          )} */}
+          )}
 
           {postTxResult.status === PostTxStatus.BROADCAST && (
             <>
@@ -97,12 +97,14 @@ const TxStatus = ({
               <View style={styles.iconBox}>
                 <Icon icon="done" size={60} color="green" />
               </View>
-              <StyledTextBox>
-                <LinkExplorer
-                  type="tx"
-                  address={postTxResult.value.transactionHash}
-                />
-              </StyledTextBox>
+              {postTxResult.value && (
+                <StyledTextBox>
+                  <LinkExplorer
+                    type="tx"
+                    address={postTxResult.value.transactionHash}
+                  />
+                </StyledTextBox>
+              )}
               <FormButton onPress={onPressClose}>Success</FormButton>
             </>
           )}

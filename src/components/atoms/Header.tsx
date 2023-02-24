@@ -82,7 +82,10 @@ const HeaderTitle = ({
   ...props
 }: TextProps): ReactElement => {
   return (
-    <Text {...props} numberOfLines={1} style={style}>
+    <Text
+      {...props}
+      numberOfLines={1}
+      style={[style, { fontSize: 19, color: 'black' }]}>
       {children}
     </Text>
   )
@@ -117,12 +120,16 @@ const HeaderButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 12,
     borderBottomWidth: 1,
-    height: 50,
+    borderBottomColor: '#eeeeee',
+    height: 56,
+    justifyContent: 'center',
+    backgroundColor: 'white',
   },
   header: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     flex: 1,
