@@ -10,6 +10,8 @@
     "bundle": "bundle install",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "ios:build": "npm run bundle; npm run ios:pod-install",
+    "ios:build-clean": "npm run ios:clean; npm run bundle; npm run ios:pod-install",
     "ios:pod-install": "cd ios; pod install --repo-update;",
     "ios:clean": "watchman watch-del $PWD ; watchman watch-project $PWD",
     "postinstall": "node_modules/.bin/rn-nodeify --install crypto,http,https,assert,url,stream,events --hack"
