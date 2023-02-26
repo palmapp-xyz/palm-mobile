@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "libs/*": ["./libs/*"],
+      "hooks/*": ["./hooks/*"],
+      "store/*": ["./store/*"],
+      "assets/*": ["./assets/*"],
+      "types": ["./types"],
+      "consts": ["./consts"],
+      "components": ["./components"]
+    },
+    "types": [
+      "react-native",
+      "jest",
+      "styled-components-react-native",
+    ],
+    "esModuleInterop": true,
+  }
+}
