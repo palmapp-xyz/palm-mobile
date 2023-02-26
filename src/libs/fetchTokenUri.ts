@@ -1,6 +1,6 @@
 import { UTIL } from 'consts'
-import base64 from 'react-native-base64'
 import { resolveIpfsUri } from './ipfs'
+import { unescape } from './utils'
 
 export const fixURL = (uri: string): string => {
   if (uri.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
@@ -25,14 +25,10 @@ export const fetchNftImage = async ({
       image_url?: string
       image_data?: string // svg+xml
     }>(metadata)
-    if (metadataJson?.image) {
-      return decodeURI(metadataJson.image)
-    } else if (metadataJson?.image_url) {
-      return decodeURI(metadataJson.image_url)
-    } else if (metadataJson?.image_data) {
-      return `data:image/svg+xml;base64,${base64.encode(
-        metadataJson?.image_data
-      )}`
+    const ret =
+      metadataJson?.image || metadataJson?.image_url || metadataJson?.image_data
+    if (ret) {
+      return unescape(ret)
     }
   }
 
@@ -40,10 +36,9 @@ export const fetchNftImage = async ({
     try {
       const fetched = await fetch(fixURL(tokenUri))
       const jsonData = await fetched.json()
-      if (jsonData?.image) {
-        return decodeURI(jsonData.image)
-      } else if (jsonData?.image_url) {
-        return decodeURI(jsonData.image_url)
+      const ret = jsonData?.image || jsonData?.image_url || jsonData?.image_data
+      if (ret) {
+        return unescape(ret)
       }
     } catch (e) {
       console.error('fetchTokenUri failed: ', tokenUri, e)
