@@ -1,20 +1,14 @@
 import React, { ReactElement } from 'react'
-import {
-  StyleProp,
-  FlexStyle,
-  View,
-  Linking,
-  Image,
-  ViewStyle,
-  StyleSheet,
-} from 'react-native'
-import Svg, { SvgUri, Image as SvgImage } from 'react-native-svg'
+import { StyleProp, FlexStyle, View, Image, ViewStyle } from 'react-native'
+
 import Video from 'react-native-video'
-import { WebView } from 'react-native-webview'
-import styled from 'styled-components/native'
-import { Icons } from 'components'
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
+import IframePlayer from './IframeRenderer'
+import SvgRenderer from './SvgRenderer'
+import { isValidHttpUrl } from 'libs/utils'
+import FallbackMediaRenderer from './FallbackMediaRenderer'
+import VideoRenderer from './VideoRenderer'
 
 export interface SharedMediaProps {
   style?: StyleProp<ViewStyle>
@@ -36,72 +30,6 @@ export interface MediaRendererProps extends SharedMediaProps {
    * The alt text for the media.
    */
   alt?: string
-}
-
-const VideoPlayer = ({
-  src,
-  style,
-  width,
-  height,
-  audioOnly,
-}: MediaRendererProps & { audioOnly?: boolean }): ReactElement => {
-  return (
-    <View style={[{ position: 'relative', width, height }, style]}>
-      <Video
-        source={{ uri: src ?? undefined }}
-        repeat={true}
-        muted={true}
-        resizeMode={'contain'}
-        audioOnly={audioOnly}
-      />
-    </View>
-  )
-}
-
-const IframePlayer = ({
-  src,
-  width,
-  height,
-  style,
-  ...restProps
-}: MediaRendererProps): ReactElement => {
-  return (
-    <View
-      style={[{ position: 'relative', width, height }, style]}
-      {...restProps}>
-      <WebView
-        source={{ html: "<iFrame src='" + src + "' />" }}
-        originWhitelist={['*']}
-      />
-    </View>
-  )
-}
-
-const StyledText = styled.Text`
-  color: 'rgb(138, 147, 155)';
-`
-
-const LinkPlayer = ({
-  src,
-  alt,
-  width,
-  height,
-  style,
-}: MediaRendererProps): ReactElement => {
-  return (
-    <View style={[{ ...styles.container, width, height }, style]}>
-      <Icons.CarbonDocumentUnknown width={50} height={50} />
-      <StyledText
-        onPress={async (): Promise<void> => {
-          const canOpen = !!src && (await Linking.canOpenURL(src))
-          if (canOpen) {
-            Linking.openURL(src)
-          }
-        }}>
-        {alt || 'File'}
-      </StyledText>
-    </View>
-  )
 }
 
 /**
@@ -132,44 +60,22 @@ export const MediaRenderer = ({
   height,
 }: MediaRendererProps): ReactElement => {
   const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
-  if (!videoOrImageSrc.mimeType) {
-    return videoOrImageSrc.url?.includes('://') ? (
-      <Image
+
+  if (videoOrImageSrc.mimeType?.includes('svg')) {
+    return (
+      <SvgRenderer
         alt={alt}
-        style={{ width, height }}
-        source={{ uri: videoOrImageSrc.url }}
-      />
-    ) : (
-      // <Icons.CarbonDocumentUnknown width={150} height={150} />
-      <LinkPlayer
+        style={style}
         width={width}
         height={height}
-        style={style}
-        src={videoOrImageSrc.url}
-        alt={alt}
+        mediaType={videoOrImageSrc}
       />
-    )
-  } else if (videoOrImageSrc.url?.startsWith('data:image/svg+xml')) {
-    return (
-      <Svg width={width} height={height} style={style}>
-        <SvgImage
-          xlinkHref={videoOrImageSrc.url}
-          x={0}
-          y={0}
-          height={height}
-          width={width}
-        />
-      </Svg>
-    )
-  } else if (videoOrImageSrc.mimeType === 'image/svg+xml') {
-    return (
-      <SvgUri width={width} height={height} uri={videoOrImageSrc.url || null} />
     )
   } else if (videoOrImageSrc.mimeType === 'text/html') {
     return <IframePlayer style={style} src={videoOrImageSrc.url} />
   } else if (shouldRenderVideoTag(videoOrImageSrc.mimeType)) {
     return (
-      <VideoPlayer
+      <VideoRenderer
         style={style}
         width={width}
         height={height}
@@ -178,7 +84,7 @@ export const MediaRenderer = ({
     )
   } else if (shouldRenderAudioTag(videoOrImageSrc.mimeType)) {
     return (
-      <VideoPlayer
+      <VideoRenderer
         audioOnly={true}
         style={style}
         width={width}
@@ -186,7 +92,10 @@ export const MediaRenderer = ({
         src={videoOrImageSrc.url}
       />
     )
-  } else if (videoOrImageSrc.mimeType.startsWith('image/')) {
+  } else if (
+    videoOrImageSrc.mimeType?.startsWith('image/') ||
+    isValidHttpUrl(videoOrImageSrc.url)
+  ) {
     return (
       <Image
         alt={alt}
@@ -195,8 +104,9 @@ export const MediaRenderer = ({
       />
     )
   }
+
   return (
-    <LinkPlayer
+    <FallbackMediaRenderer
       width={width}
       height={height}
       style={style}
@@ -205,11 +115,3 @@ export const MediaRenderer = ({
     />
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})

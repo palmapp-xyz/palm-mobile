@@ -1,4 +1,5 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
+import { URL } from 'react-native-url-polyfill'
 
 export const getContrastColor = (
   color:
@@ -47,4 +48,47 @@ export const findColorNameFromPalette = (
     return 'NOT_FOUND'
   }
   return color[0]
+}
+
+export const isValidHttpUrl = (src: string | undefined): boolean => {
+  if (!src) {
+    return false
+  }
+
+  let url
+  try {
+    url = new URL(src)
+  } catch (_) {
+    return false
+  }
+  return url.protocol === 'http:' || url.protocol === 'https:'
+}
+
+export const replaceAll = (
+  str: string,
+  search: string,
+  replace: string
+): string => {
+  const searchRegExp = new RegExp(search, 'g')
+  return str.replace(searchRegExp, replace)
+}
+
+export const unescape = (src: string): string => {
+  return replaceAll(
+    replaceAll(
+      replaceAll(
+        replaceAll(
+          replaceAll(replaceAll(src, '%23', '#'), '%2b', '+'),
+          '%3c',
+          '<'
+        ),
+        '%3e',
+        '>'
+      ),
+      '%2c',
+      ','
+    ),
+    '%3b',
+    ';'
+  )
 }
