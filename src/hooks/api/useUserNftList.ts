@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import _ from 'lodash'
 import { useInfiniteQuery } from 'react-query'
 
@@ -28,6 +28,7 @@ const useUserNftList = ({
     data,
     fetchNextPage,
     hasNextPage = false,
+    refetch,
   } = useInfiniteQuery(
     [ApiEnum.ASSETS, userAddress],
     async ({ pageParam = '' }) => {
@@ -61,6 +62,10 @@ const useUserNftList = ({
     () => _.flatten(data?.pages.map(x => x.result)),
     [data]
   )
+
+  useEffect(() => {
+    refetch()
+  }, [])
 
   return { nftList, fetchNextPage, hasNextPage }
 }

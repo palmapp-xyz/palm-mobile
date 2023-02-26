@@ -29,6 +29,7 @@ import SendInput from './SendInput'
 import BottomMenu from './BottomMenu'
 import MyNftList from './MyNftList'
 import useGcInput from 'hooks/page/groupChannel/useGcInput'
+import SelectReceiverModal from './SelectReceiverModal'
 
 const AUTO_FOCUS = Platform.select({
   ios: false,
@@ -48,10 +49,6 @@ const GET_INPUT_KEY = (shouldReset: boolean): string =>
 
 // TODO: Refactor 'Edit' mode to clearly
 const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
-  const useGcInputReturn = useGcInput({
-    onSendFileMessage: props.onSendFileMessage,
-  })
-
   const { top, left, right, bottom } = useSafeAreaInsets()
 
   const { features, mentionManager } = useSendbirdChat()
@@ -61,6 +58,11 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
     setMessageToEdit,
     keyboardAvoidOffset = 0,
   } = useContext(GroupChannelContexts.Fragment)
+
+  const useGcInputReturn = useGcInput({
+    onSendFileMessage: props.onSendFileMessage,
+    channel,
+  })
 
   const chatAvailableState = getGroupChannelChatAvailableState(channel)
   const mentionAvailable =
@@ -180,6 +182,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           mentionedUsers={mentionedUsers}
         />
       )}
+      <SelectReceiverModal useGcInputReturn={useGcInputReturn} />
     </>
   )
 }

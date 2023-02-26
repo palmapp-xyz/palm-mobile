@@ -6,7 +6,9 @@ const FormModal = (props: ModalProps): ReactElement => {
 
   return (
     <Modal {...rest}>
-      <SafeAreaView style={{ flex: 1 }}>{children}</SafeAreaView>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'transparent' }}>
+        {children}
+      </SafeAreaView>
     </Modal>
   )
 }

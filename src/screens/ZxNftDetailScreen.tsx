@@ -10,7 +10,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
 import useZxCancelNft from 'hooks/zx/useZxCancelNft'
 import useZxBuyNft from 'hooks/zx/useZxBuyNft'
-import { Routes } from 'libs/navigation'
+import { navigationRef, Routes } from 'libs/navigation'
 import useZxOrder from 'hooks/zx/useZxOrder'
 
 const Contents = ({ selectedNft }: { selectedNft: zx.order }): ReactElement => {
@@ -58,8 +58,16 @@ const Contents = ({ selectedNft }: { selectedNft: zx.order }): ReactElement => {
             isMine
               ? await onClickCancel({ nonce: selectedNft.order.nonce })
               : await onClickBuy({ order: selectedNft.order })
-            navigation.goBack()
             queryClient.removeQueries([QueryKeyEnum.ZX_ORDERS])
+
+            const currRoute = navigationRef.getCurrentRoute()
+            if (
+              Routes.ZxNftDetail === currRoute?.name &&
+              // @ts-ignore
+              selectedNft.order.nonce === currRoute?.params?.nonce
+            ) {
+              navigation.goBack()
+            }
           }}>
           {isMine ? 'Cancel' : 'Buy'}
         </SubmitButton>

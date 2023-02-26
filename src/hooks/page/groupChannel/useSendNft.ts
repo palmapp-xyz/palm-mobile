@@ -12,6 +12,8 @@ import useAuth from 'hooks/independent/useAuth'
 import usePostTxStatusEffect, {
   EffectListType,
 } from 'hooks/independent/usePostTxStatusEffect'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { navigationRef, Routes } from 'libs/navigation'
 
 export type UseSendNftReturn = {
   isPosting: boolean
@@ -26,6 +28,8 @@ const useSendNft = ({
   selectedNft: Moralis.NftItem
   receiver: ContractAddr
 }): UseSendNftReturn => {
+  const { navigation } = useAppNavigation()
+
   const [isPosting, setIsPosting] = useState(false)
 
   const { user } = useAuth()
@@ -54,12 +58,12 @@ const useSendNft = ({
 
   const effectList: EffectListType = useMemo(
     () => [
-      // {
-      //   when: [PostTxStatus.POST],
-      //   action: (): void => {
-      //     setIsPosting(true)
-      //   },
-      // },
+      {
+        when: [PostTxStatus.POST],
+        action: (): void => {
+          setIsPosting(true)
+        },
+      },
       {
         when: [PostTxStatus.BROADCAST],
         action: async (act): Promise<void> => {
@@ -82,9 +86,15 @@ const useSendNft = ({
       },
       {
         when: [PostTxStatus.DONE, PostTxStatus.ERROR],
-        action: (): void => {
+        action: (act): void => {
           setIsPosting(false)
           queyrClient.removeQueries([ApiEnum.ASSETS])
+
+          if (act.status === PostTxStatus.DONE) {
+            if (Routes.SendNft === navigationRef.getCurrentRoute()?.name) {
+              navigation.goBack()
+            }
+          }
         },
       },
     ],
