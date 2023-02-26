@@ -16,7 +16,7 @@ const MainAccountScreen = (): ReactElement => {
       <View style={{ flex: 1, justifyContent: 'center' }}>
         <Text style={{ fontSize: 40, textAlign: 'center' }}>Palm</Text>
       </View>
-      <View style={{ flex: 2, padding: 20, justifyContent: 'space-between' }}>
+      <View style={{ flex: 2, padding: 10, justifyContent: 'space-between' }}>
         {hasStoredKey && (
           <View style={{ rowGap: 10 }}>
             <FormInput

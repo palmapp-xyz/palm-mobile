@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react'
 import { Linking, Text, TouchableOpacity } from 'react-native'
 
-import { UTIL } from 'consts'
+import { COLOR, UTIL } from 'consts'
 
 import useExplorer from 'hooks/complex/useExplorer'
 
@@ -22,7 +22,7 @@ const LinkExplorer = ({
         Linking.openURL(getLink({ address, type }))
       }}>
       {children || (
-        <Text style={{ color: 'blue' }}>
+        <Text style={{ color: COLOR.primary._400 }}>
           {UTIL.truncate(address, [10, 10])}
         </Text>
       )}
