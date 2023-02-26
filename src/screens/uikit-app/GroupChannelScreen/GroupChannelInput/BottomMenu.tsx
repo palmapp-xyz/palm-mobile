@@ -1,8 +1,9 @@
 import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, Text, Pressable, FlatList, View } from 'react-native'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import { COLOR } from 'consts'
 
 const NUM_COLUMNS = 4
 
@@ -14,21 +15,21 @@ const BottomMenu = ({
   const menuList = useMemo(
     () => [
       {
-        icon: 'reply',
+        icon: 'ios-images',
         onPress: (): void => {
           useGcInputReturn.setStepAfterSelectNft('share')
         },
-        title: 'Show NFT',
+        title: 'Share NFT',
       },
       {
-        icon: 'photo',
+        icon: 'ios-duplicate',
         onPress: (): void => {
           useGcInputReturn.setStepAfterSelectNft('sell')
         },
         title: 'Sell NFT',
       },
       {
-        icon: 'unarchive',
+        icon: 'ios-document-attach-sharp',
         onPress: (): void => {
           useGcInputReturn.setStepAfterSelectNft('send')
         },
@@ -48,7 +49,9 @@ const BottomMenu = ({
         renderItem={({ item }): ReactElement => {
           return (
             <Pressable style={styles.itemBox} onPress={item.onPress}>
-              <Icon color={'#2960FF'} icon={item.icon as any} size={24} />
+              <View style={styles.iconBox}>
+                <Icon color={COLOR.primary._400} name={item.icon} size={30} />
+              </View>
               <Text style={{ fontSize: 12 }}>{item.title}</Text>
             </Pressable>
           )
@@ -64,7 +67,7 @@ export default BottomMenu
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingHorizontal: 20,
     columnGap: 20,
     height: 200,
   },
@@ -73,7 +76,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
     rowGap: 10,
-    backgroundColor: 'white',
     alignItems: 'center',
+  },
+  iconBox: {
+    padding: 20,
+    backgroundColor: COLOR.primary._100,
+    borderRadius: 15,
   },
 })

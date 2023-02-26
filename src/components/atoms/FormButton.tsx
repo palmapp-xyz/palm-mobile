@@ -1,3 +1,4 @@
+import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 
@@ -16,7 +17,7 @@ const FormButton = ({
   figure = 'primary',
   size = 'md',
 }: FormButtonProps): ReactElement => {
-  const mainColor = figure === 'primary' ? '#2960FF' : '#F84F4F'
+  const mainColor = figure === 'primary' ? COLOR.primary._400 : '#F84F4F'
 
   const paddingVertical = size === 'md' ? 15 : 10
   const fontSize = size === 'md' ? 16 : 14
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
+    borderRadius: 15,
     paddingHorizontal: 10,
   },
   text: {

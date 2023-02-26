@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-
+import Icon from 'react-native-vector-icons/Ionicons'
 import { MentionType } from '@sendbird/chat/message'
 import {
-  Icon,
   TextInput,
   createStyleSheet,
   useToast,
@@ -25,6 +24,7 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import { COLOR } from 'consts'
 
 type SendInputProps = GroupChannelProps['Input'] & {
   text: string
@@ -82,14 +82,9 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
         }}
         disabled={disabled}>
         <Icon
-          color={
-            disabled
-              ? colors.ui.input.default.disabled.highlight
-              : colors.ui.input.default.active.highlight
-          }
-          icon={openBottomMenu ? 'close' : 'add'}
-          size={24}
-          containerStyle={styles.iconAttach}
+          color={disabled ? COLOR.primary._100 : COLOR.primary._400}
+          name={openBottomMenu ? 'close-circle' : 'add-circle'}
+          size={30}
         />
       </TouchableOpacity>
       <TextInput
@@ -119,9 +114,8 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
                 ? colors.ui.input.default.disabled.highlight
                 : colors.ui.input.default.active.highlight
             }
-            icon={'send'}
+            name={'send'}
             size={24}
-            containerStyle={styles.iconSend}
           />
         </TouchableOpacity>
       )}
@@ -143,10 +137,7 @@ const styles = createStyleSheet({
     maxHeight: 36 * Platform.select({ ios: 2.5, default: 2 }),
     borderRadius: 20,
   },
-  iconAttach: {
-    marginRight: 8,
-    padding: 4,
-  },
+
   iconSend: {
     marginLeft: 4,
     padding: 4,

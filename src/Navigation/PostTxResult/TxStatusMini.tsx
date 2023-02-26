@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 
-import { UTIL } from 'consts'
+import { COLOR, UTIL } from 'consts'
 import images from 'assets/images'
 
 import postTxStore from 'store/postTxStore'
@@ -69,7 +69,7 @@ const TxStatusMini = ({
             <StyledTextBox>
               <StatusText>Pending TX...</StatusText>
               <LinkExplorer type="tx" address={postTxResult.transactionHash}>
-                <Text style={{ color: 'blue' }}>
+                <Text style={{ color: COLOR.primary._400 }}>
                   {UTIL.truncate(postTxResult.transactionHash, [4, 4])}
                 </Text>
               </LinkExplorer>
@@ -87,7 +87,7 @@ const TxStatusMini = ({
                 <LinkExplorer
                   type="tx"
                   address={postTxResult.value.transactionHash}>
-                  <Text style={{ color: 'blue' }}>
+                  <Text style={{ color: COLOR.primary._400 }}>
                     {UTIL.truncate(postTxResult.value.transactionHash, [4, 4])}
                   </Text>
                 </LinkExplorer>

@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
 import { useQueryClient } from 'react-query'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-import { UTIL } from 'consts'
+import { COLOR, UTIL } from 'consts'
 import { QueryKeyEnum, zx } from 'types'
 import { Container, Header, NftRenderer, SubmitButton } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -84,10 +84,10 @@ const ZxNftDetailScreen = (): ReactElement => {
     <Container style={styles.container}>
       <Header
         title="Trader.xyz NFT"
-        left={<Icon icon={'arrow-left'} />}
-        onPressLeft={(): void => {
-          navigation.goBack()
-        }}
+        left={
+          <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
+        }
+        onPressLeft={navigation.goBack}
       />
       {order && <Contents selectedNft={order} />}
     </Container>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   imageBox: { width: '100%' },
   info: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     justifyContent: 'space-between',
   },
   infoDetails: { rowGap: 10 },

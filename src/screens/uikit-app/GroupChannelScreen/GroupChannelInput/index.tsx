@@ -30,6 +30,7 @@ import BottomMenu from './BottomMenu'
 import MyNftList from './MyNftList'
 import useGcInput from 'hooks/page/groupChannel/useGcInput'
 import SelectReceiverModal from './SelectReceiverModal'
+import { COLOR } from 'consts'
 
 const AUTO_FOCUS = Platform.select({
   ios: false,
@@ -123,14 +124,14 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
   return (
     <>
       <KeyboardAvoidingView
-        style={{ position: 'relative' }}
+        style={{ position: 'relative', backgroundColor: COLOR.primary._100 }}
         keyboardVerticalOffset={-bottom + keyboardAvoidOffset}
         behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}>
         <View
           style={{
             paddingLeft: left,
             paddingRight: right,
-            backgroundColor: '#F4F6F9',
+            backgroundColor: 'white',
             borderTopRightRadius: 20,
             borderTopLeftRadius: 20,
           }}>

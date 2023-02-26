@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-import {
-  Button,
-  Text,
-  TextInput,
-} from '@sendbird/uikit-react-native-foundation'
+import { Text, TextInput } from '@sendbird/uikit-react-native-foundation'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-import { Container, ErrorMessage } from 'components'
+import { COLOR } from 'consts'
+import { Container, ErrorMessage, FormButton, Header } from 'components'
 import useRecoverAccount from 'hooks/page/account/useRecoverAccount'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
@@ -21,34 +20,44 @@ const RecoverAccountScreen = (): ReactElement => {
     isValidForm,
     onClickConfirm,
   } = useRecoverAccount()
+  const { navigation } = useAppNavigation()
 
   return (
     <Container style={styles.container}>
-      <View>
-        <Text>Recover Account</Text>
-        <Text>Private key</Text>
-        <TextInput value={privateKey} onChangeText={setPrivateKey} />
+      <Header
+        title="Recover"
+        left={
+          <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
+        }
+        onPressLeft={navigation.goBack}
+      />
+      <View style={styles.body}>
+        <View>
+          <Text>Recover Account</Text>
+          <Text>Private key</Text>
+          <TextInput value={privateKey} onChangeText={setPrivateKey} />
 
-        <Text>Password</Text>
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          textContentType="password"
-          secureTextEntry
-        />
+          <Text>Password</Text>
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            textContentType="password"
+            secureTextEntry
+          />
 
-        <Text>Confirm Password</Text>
-        <TextInput
-          value={passwordConfirm}
-          onChangeText={setPasswordConfirm}
-          textContentType="password"
-          secureTextEntry
-        />
-        <ErrorMessage message={passwordConfirmErrMsg} />
+          <Text>Confirm Password</Text>
+          <TextInput
+            value={passwordConfirm}
+            onChangeText={setPasswordConfirm}
+            textContentType="password"
+            secureTextEntry
+          />
+          <ErrorMessage message={passwordConfirmErrMsg} />
+        </View>
+        <FormButton disabled={!isValidForm} onPress={onClickConfirm}>
+          Recover
+        </FormButton>
       </View>
-      <Button disabled={!isValidForm} onPress={onClickConfirm}>
-        Recover
-      </Button>
     </Container>
   )
 }
@@ -56,9 +65,10 @@ const RecoverAccountScreen = (): ReactElement => {
 export default RecoverAccountScreen
 
 const styles = StyleSheet.create({
-  container: {
+  container: { flex: 1 },
+  body: {
+    padding: 10,
     flex: 1,
-    padding: 20,
     justifyContent: 'space-between',
   },
 })

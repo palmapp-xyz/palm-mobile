@@ -9,9 +9,11 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 
 import GroupChannelInput from './GroupChannelInput'
+import GroupChannelMessageList from './GroupChannelMessageList'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
+  MessageList: GroupChannelMessageList,
 })
 
 const GroupChannelScreen = (): ReactElement => {

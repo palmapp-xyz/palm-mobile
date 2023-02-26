@@ -2,6 +2,7 @@ import { useRecoilValue } from 'recoil'
 import React, { ReactElement } from 'react'
 import { Text, View } from 'react-native'
 
+import { COLOR } from 'consts'
 import { PostTxStatus } from 'types'
 import postTxStore from 'store/postTxStore'
 import FormButton, { FormButtonProps } from 'components/atoms/FormButton'
@@ -14,7 +15,7 @@ const SubmitButton = (props: FormButtonProps): ReactElement => {
     <View>
       <FormButton disabled>Waiting for pending TX</FormButton>
       <LinkExplorer address={postTxResult.transactionHash} type="tx">
-        <Text style={{ color: 'blue', paddingLeft: 10 }}>
+        <Text style={{ color: COLOR.primary._400, paddingLeft: 10 }}>
           Link to pending TX
         </Text>
       </LinkExplorer>
