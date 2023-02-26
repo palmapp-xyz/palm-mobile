@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import React, { ReactElement } from 'react'
 import Config from 'react-native-config'
+
 import { SendbirdUIKitContainer } from '@sendbird/uikit-react-native'
 import {
   DarkUIKitTheme,

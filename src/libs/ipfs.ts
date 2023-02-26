@@ -20,12 +20,19 @@ export async function resolveMimeType(
   if (!url) {
     return undefined
   }
+
+  if (url?.startsWith('data:image/svg+xml;base64')) {
+    return 'data:image/svg+xml;base64'
+  } else if (url?.startsWith('data:image/svg+xml') || url?.startsWith('<svg')) {
+    return 'data:image/svg+xml'
+  }
+
   const mimeType = mime.getType(url)
   if (mimeType) {
     return mimeType
   }
 
-  if (url?.startsWith('data:image/svg+xml') || url?.endsWith('.svg')) {
+  if (url?.endsWith('.svg')) {
     return 'image/svg+xml'
   } else if (url?.endsWith('.jpg') || url?.endsWith('.jpeg')) {
     return 'image/jpeg'

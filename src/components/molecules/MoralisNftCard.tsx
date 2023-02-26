@@ -1,28 +1,48 @@
 import React, { ReactElement } from 'react'
-import { Text, View } from 'react-native'
+import { Text, useWindowDimensions, View } from 'react-native'
 
 import { Moralis, QueryKeyEnum } from 'types'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { MediaRenderer } from './MediaRenderer'
+import ErrorBoundary from 'components/atoms/ErrorBoundary'
+import FallbackMediaRenderer from './FallbackMediaRenderer'
 
 const MoralisNftCard = ({ item }: { item: Moralis.NftItem }): ReactElement => {
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions()
+  const isLandscape = windowWidth > windowHeight
+
+  const rowGap = 5
+  const dim = windowWidth / (isLandscape ? 4 : 2) - rowGap * 5
+
   const { data: uri } = useReactQuery(
     [QueryKeyEnum.MORALIS_NFT_IMAGE, item.token_address, item.token_id],
     () => fetchNftImage({ metadata: item.metadata, tokenUri: item.token_uri })
   )
 
-  return (
-    <View style={{ rowGap: 5 }}>
-      <MediaRenderer
-        src={typeof uri === 'string' ? uri : `${uri}`}
-        alt={`${item.name}:${item.token_id}`}
-        width={150}
-        height={150}
-        style={{ marginBottom: 6 }}
-      />
+  const props = {
+    src: typeof uri === 'string' ? uri : `${uri}`,
+    alt: `${item.name}:${item.token_id}`,
+    width: dim,
+    height: dim,
+    style: { marginBottom: 6 },
+  }
+
+  const fallback = (
+    <View>
+      <FallbackMediaRenderer {...props} />
       <Text>{`ID : ${item.token_id}`}</Text>
       <Text>{item.name}</Text>
+    </View>
+  )
+
+  return (
+    <View style={{ rowGap }}>
+      <ErrorBoundary fallback={fallback}>
+        <MediaRenderer {...props} />
+        <Text>{`ID : ${item.token_id}`}</Text>
+        <Text>{item.name}</Text>
+      </ErrorBoundary>
     </View>
   )
 }
