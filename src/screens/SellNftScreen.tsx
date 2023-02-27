@@ -33,7 +33,7 @@ const Contents = ({
     <View style={styles.body}>
       <View>
         <Row style={{ paddingBottom: 10 }}>
-          <View style={{ width: 100, height: 100 }}>
+          <View style={{ width: 100, height: 100, marginEnd: 10 }}>
             <NftRenderer
               nftContract={selectedNft.token_address}
               tokenId={selectedNft.token_id}

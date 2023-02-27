@@ -59,7 +59,6 @@ export const MediaRenderer = ({
   height,
 }: MediaRendererProps): ReactElement => {
   const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
-
   if (videoOrImageSrc.mimeType?.includes('svg')) {
     return (
       <SvgRenderer

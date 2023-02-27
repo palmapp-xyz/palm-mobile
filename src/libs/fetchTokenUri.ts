@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { UTIL } from 'consts'
 import { resolveIpfsUri } from './ipfs'
 import { unescape } from './utils'
@@ -43,10 +44,11 @@ export const fetchNftImage = async ({
         return fixedUrl
       }
 
-      const jsonData = await fetched.json()
+      const axiosData = await axios.get(fixedUrl)
+      const jsonData = axiosData.data
       const ret = jsonData?.image || jsonData?.image_url || jsonData?.image_data
       if (ret) {
-        return unescape(ret)
+        return unescape(fixURL(ret))
       }
     } catch (e) {
       console.error('fetchTokenUri failed: ', metadata, tokenUri, e)
