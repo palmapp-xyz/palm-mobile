@@ -23,7 +23,7 @@ const MoralisNftCard = ({
   const isLandscape = windowWidth > windowHeight
 
   const rowGap = 5
-  const dim = windowWidth / (isLandscape ? 4 : 2) - rowGap * 5
+  const dim = windowWidth / (isLandscape ? 4 : 2) - rowGap * 7
 
   const { data: uri } = useReactQuery(
     [QueryKeyEnum.MORALIS_NFT_IMAGE, item.token_address, item.token_id],
