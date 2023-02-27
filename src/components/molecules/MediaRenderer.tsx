@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
-import { StyleProp, FlexStyle, View, Image, ViewStyle } from 'react-native'
+import { StyleProp, FlexStyle, Image, ImageStyle } from 'react-native'
 
-import Video from 'react-native-video'
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
 import IframePlayer from './IframeRenderer'
@@ -11,7 +10,7 @@ import FallbackMediaRenderer from './FallbackMediaRenderer'
 import VideoRenderer from './VideoRenderer'
 
 export interface SharedMediaProps {
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ImageStyle>
   width?: FlexStyle['width']
   height?: FlexStyle['height']
 }
@@ -99,7 +98,7 @@ export const MediaRenderer = ({
     return (
       <Image
         alt={alt}
-        style={{ width, height }}
+        style={[{ width, height }, style]}
         source={{ uri: videoOrImageSrc.url }}
       />
     )
