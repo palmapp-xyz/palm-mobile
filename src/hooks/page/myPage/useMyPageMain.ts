@@ -1,24 +1,23 @@
-import { Moralis, pToken, User } from 'types'
+import { pToken, User } from 'types'
 
-import useUserNftList from 'hooks/api/useUserNftList'
+import useUserNftList, { UseUserNftListReturn } from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useWeb3 from 'hooks/complex/useWeb3'
 
 export type UseMyPageMainReturn = {
   user?: User
-  nftList: Moralis.NftItem[]
   balance: pToken
+  useMyNftListReturn: UseUserNftListReturn
 }
 
 const useMyPageMain = (): UseMyPageMainReturn => {
   const { user } = useAuth()
   const { web3 } = useWeb3()
 
-  const { nftList } = useUserNftList({
+  const useMyNftListReturn = useUserNftList({
     userAddress: user?.address,
   })
-
   const { data = '0' } = useReactQuery(
     ['getBalance'],
     async () => {
@@ -30,7 +29,7 @@ const useMyPageMain = (): UseMyPageMainReturn => {
       enabled: !!user?.address,
     }
   )
-  return { user, nftList, balance: data as pToken }
+  return { user, balance: data as pToken, useMyNftListReturn }
 }
 
 export default useMyPageMain

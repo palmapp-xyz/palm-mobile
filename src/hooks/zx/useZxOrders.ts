@@ -6,6 +6,8 @@ import { QueryKeyEnum, zx } from 'types'
 
 export type UseZxOrdersReturn = {
   orderList: zx.order[]
+  refetch: () => void
+  isFetching: boolean
 }
 
 const useZxOrders = (): UseZxOrdersReturn => {
@@ -13,16 +15,17 @@ const useZxOrders = (): UseZxOrdersReturn => {
 
   const extApi = `https://api.trader.xyz/orderbook/orders?chainId=${connectedNetworkId}&nftType=erc721&erc20Token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
-  const { data: orderList = [] } = useReactQuery(
-    [QueryKeyEnum.ZX_ORDERS, connectedNetworkId],
-    async () => {
-      const fetchRes: AxiosResponse<{ orders: zx.order[] }, any> =
-        await axios.get(extApi)
-      return fetchRes.data.orders
-    }
-  )
+  const {
+    data: orderList = [],
+    refetch,
+    isFetching,
+  } = useReactQuery([QueryKeyEnum.ZX_ORDERS, connectedNetworkId], async () => {
+    const fetchRes: AxiosResponse<{ orders: zx.order[] }, any> =
+      await axios.get(extApi)
+    return fetchRes.data.orders
+  })
 
-  return { orderList }
+  return { orderList, refetch, isFetching }
 }
 
 export default useZxOrders
