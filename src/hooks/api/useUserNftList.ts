@@ -12,6 +12,8 @@ export type UseUserNftListReturn = {
   nftList: Moralis.NftItem[]
   fetchNextPage: () => void
   hasNextPage: boolean
+  refetch: () => void
+  isRefetching: boolean
 }
 
 const useUserNftList = ({
@@ -29,6 +31,7 @@ const useUserNftList = ({
     fetchNextPage,
     hasNextPage = false,
     refetch,
+    isRefetching,
   } = useInfiniteQuery(
     [ApiEnum.ASSETS, userAddress],
     async ({ pageParam = '' }) => {
@@ -67,7 +70,7 @@ const useUserNftList = ({
     refetch()
   }, [])
 
-  return { nftList, fetchNextPage, hasNextPage }
+  return { nftList, fetchNextPage, hasNextPage, refetch, isRefetching }
 }
 
 export default useUserNftList
