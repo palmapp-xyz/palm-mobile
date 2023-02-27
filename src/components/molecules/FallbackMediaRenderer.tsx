@@ -8,6 +8,7 @@ import { MediaRendererProps } from './MediaRenderer'
 
 const StyledText = styled.Text`
   color: 'rgb(138, 147, 155)';
+  margin-top: 10px;
 `
 
 const FallbackMediaRenderer = ({
@@ -16,24 +17,27 @@ const FallbackMediaRenderer = ({
   width,
   height,
   style,
-}: MediaRendererProps): ReactElement => {
+  hideAlt,
+}: MediaRendererProps & { hideAlt?: boolean }): ReactElement => {
   return (
-    <View style={[{ ...styles.container, width, height }, style]}>
-      <Icons.CarbonDocumentUnknown
-        width={50}
-        height={50}
-        style={{ marginBottom: 10 }}
-      />
-      <StyledText
-        numberOfLines={1}
-        onPress={async (): Promise<void> => {
-          const canOpen = !!src && (await Linking.canOpenURL(src))
-          if (canOpen) {
-            Linking.openURL(src)
-          }
-        }}>
-        {alt || 'File'}
-      </StyledText>
+    <View
+      style={[
+        { ...styles.container, minWidth: width, minHeight: height },
+        style,
+      ]}>
+      <Icons.CarbonDocumentUnknown width={'50%'} height={'50%'} />
+      {!hideAlt && (
+        <StyledText
+          numberOfLines={1}
+          onPress={async (): Promise<void> => {
+            const canOpen = !!src && (await Linking.canOpenURL(src))
+            if (canOpen) {
+              Linking.openURL(src)
+            }
+          }}>
+          {alt || 'File'}
+        </StyledText>
+      )}
     </View>
   )
 }

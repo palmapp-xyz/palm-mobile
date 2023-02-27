@@ -9,7 +9,7 @@ import {
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
-import { FormButton, NftRenderer, Row } from 'components'
+import { FormButton, MoralisNftCard, Row } from 'components'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
 
@@ -50,13 +50,13 @@ const MyNftList = ({
           return (
             <TouchableOpacity
               style={{
-                height: 120,
+                height: 100,
                 width: 100,
                 borderColor: selected ? 'blue' : 'gray',
                 borderWidth: selected ? 1 : 0,
                 borderRadius: 20,
                 padding: 10,
-                paddingBottom: 20,
+                paddingBottom: 30,
               }}
               onPress={(): void => {
                 if (useGcInputReturn.stepAfterSelectNft === 'share') {
@@ -69,11 +69,12 @@ const MyNftList = ({
                   useGcInputReturn.setSelectedNftList([item])
                 }
               }}>
-              <NftRenderer
-                nftContract={item.token_address}
-                tokenId={item.token_id}
+              <MoralisNftCard
+                item={item}
+                width={80}
+                height={80}
+                hideAlt={true}
               />
-              <Text style={{ textAlign: 'center' }}>ID : {item.token_id}</Text>
             </TouchableOpacity>
           )
         }}

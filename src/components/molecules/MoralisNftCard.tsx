@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Text, useWindowDimensions, View } from 'react-native'
+import { FlexStyle, Text, useWindowDimensions, View } from 'react-native'
 
 import { Moralis, QueryKeyEnum } from 'types'
 import useReactQuery from 'hooks/complex/useReactQuery'
@@ -8,7 +8,17 @@ import { MediaRenderer } from './MediaRenderer'
 import ErrorBoundary from 'components/atoms/ErrorBoundary'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
 
-const MoralisNftCard = ({ item }: { item: Moralis.NftItem }): ReactElement => {
+const MoralisNftCard = ({
+  item,
+  width,
+  height,
+  hideAlt,
+}: {
+  item: Moralis.NftItem
+  width?: FlexStyle['width']
+  height?: FlexStyle['height']
+  hideAlt?: boolean
+}): ReactElement => {
   const { width: windowWidth, height: windowHeight } = useWindowDimensions()
   const isLandscape = windowWidth > windowHeight
 
@@ -23,9 +33,10 @@ const MoralisNftCard = ({ item }: { item: Moralis.NftItem }): ReactElement => {
   const props = {
     src: typeof uri === 'string' ? uri : `${uri}`,
     alt: `${item.name}:${item.token_id}`,
-    width: dim,
-    height: dim,
+    width: width || dim,
+    height: height || dim,
     style: { marginBottom: 6 },
+    hideAlt,
   }
 
   const fallback = (
