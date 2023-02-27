@@ -78,7 +78,10 @@ const useZxSellNft = ({
         })
         const approvalTx = await nftSwapSdk.approveTokenOrNftByAsset(
           nftToSwap,
-          user.address
+          user.address,
+          {
+            gasLimit: 10000000,
+          }
         )
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
