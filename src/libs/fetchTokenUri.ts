@@ -1,19 +1,7 @@
 import axios from 'axios'
 import { UTIL } from 'consts'
-import { resolveIpfsUri } from './ipfs'
+import { fixIpfsURL } from './ipfs'
 import { unescape } from './utils'
-
-export const fixURL = (uri: string): string => {
-  if (uri.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
-    uri = uri.replace('https://ipfs.moralis.io:2053/ipfs/', 'ipfs://')
-  } else if (uri.startsWith('https://ipfs.io/ipfs/')) {
-    uri = uri.replace('https://ipfs.io/ipfs/', 'ipfs://')
-  } else if (uri.match(/^[a-zA-Z0-9_]+$/)) {
-    // uri is just ipfs cid
-    uri = `ipfs://${uri}`
-  }
-  return resolveIpfsUri(uri) || uri
-}
 
 export const fetchNftImage = async ({
   metadata,
@@ -31,13 +19,13 @@ export const fetchNftImage = async ({
     const ret =
       metadataJson?.image || metadataJson?.image_url || metadataJson?.image_data
     if (ret) {
-      return unescape(fixURL(ret))
+      return unescape(fixIpfsURL(ret))
     }
   }
 
   if (tokenUri) {
     try {
-      const fixedUrl = fixURL(tokenUri)
+      const fixedUrl = fixIpfsURL(tokenUri)
       const fetched = await fetch(fixedUrl)
       const blob = await fetched.blob()
       if (blob.type.startsWith('image')) {
@@ -48,7 +36,7 @@ export const fetchNftImage = async ({
       const jsonData = axiosData.data
       const ret = jsonData?.image || jsonData?.image_url || jsonData?.image_data
       if (ret) {
-        return unescape(fixURL(ret))
+        return unescape(fixIpfsURL(ret))
       }
     } catch (e) {
       console.error('fetchTokenUri failed: ', metadata, tokenUri, e)
