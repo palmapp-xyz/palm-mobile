@@ -83,7 +83,7 @@ const ZxNftDetailScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title="Trader.xyz NFT"
+        title="Buy NFT"
         left={
           <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
         }
