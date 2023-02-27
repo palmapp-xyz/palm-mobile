@@ -8,7 +8,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 
 const NftListScreen = (): ReactElement => {
-  const { orderList } = useZxOrders()
+  const { orderList, refetch, isFetching } = useZxOrders()
   const { navigation } = useAppNavigation()
 
   return (
@@ -19,6 +19,8 @@ const NftListScreen = (): ReactElement => {
           data={orderList}
           keyExtractor={(_, index): string => `orderList-${index}`}
           numColumns={2}
+          refreshing={isFetching}
+          onRefresh={refetch}
           style={{ paddingHorizontal: 20 }}
           contentContainerStyle={{ gap: 10 }}
           columnWrapperStyle={{ gap: 10 }}
