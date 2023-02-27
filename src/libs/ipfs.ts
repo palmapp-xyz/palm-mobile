@@ -50,3 +50,15 @@ export async function resolveMimeType(
   // we failed to resolve the mime type, return null
   return undefined
 }
+
+export const fixIpfsURL = (uri: string): string => {
+  if (uri.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
+    uri = uri.replace('https://ipfs.moralis.io:2053/ipfs/', 'ipfs://')
+  } else if (uri.startsWith('https://ipfs.io/ipfs/')) {
+    uri = uri.replace('https://ipfs.io/ipfs/', 'ipfs://')
+  } else if (uri.match(/^[a-zA-Z0-9_]+$/)) {
+    // uri is just ipfs cid
+    uri = `ipfs://${uri}`
+  }
+  return resolveIpfsUri(uri) || uri
+}
