@@ -21,7 +21,9 @@ const useZxBuyNft = (): UseZxBuyNftReturn => {
         setPostTxResult({
           status: PostTxStatus.POST,
         })
-        const fillTx = await nftSwapSdk.fillSignedOrder(order)
+        const fillTx = await nftSwapSdk.fillSignedOrder(order, undefined, {
+          gasLimit: 10000000,
+        })
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
           transactionHash: fillTx.hash,
