@@ -4,7 +4,6 @@ import { SendbirdMessage } from '@sendbird/uikit-utils'
 
 import {
   createGroupChannelFragment,
-  MessageRenderer,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
@@ -13,9 +12,10 @@ import { Routes } from 'libs/navigation'
 
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
-import { Text, View } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
+import { MediaRenderer } from 'components/molecules/MediaRenderer'
+import MessageRenderer from 'components/molecules/MessageRenderer'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
@@ -64,20 +64,6 @@ const GroupChannelScreen = (): ReactElement => {
           currentUserId?: string | undefined
           enableMessageGrouping: boolean
         }): ReactElement | null => {
-          if (props.message.customType) {
-            return (
-              <TouchableWithoutFeedback
-                onPress={props.onPress}
-                onLongPress={props.onLongPress}>
-                <View>
-                  <Text>{`Message: ${props.message.messageId} (${props.message.messageType})`}</Text>
-                  <Text>{`Message custom type: ${props.message.customType}`}</Text>
-                  <Text>{`Message is UserMsg? ${props.message.isUserMessage()}`}</Text>
-                  <Text>{`Message is FileMsg? ${props.message.isFileMessage()}`}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            )
-          }
           return <MessageRenderer {...props} />
         }}
       />

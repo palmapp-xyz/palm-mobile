@@ -1,31 +1,30 @@
+import { FileMessageCreateParams } from '@sendbird/chat/message'
 import axios from 'axios'
 import { fixIpfsURL } from './ipfs'
 
-const blobFetch = async (
-  imgUri: string
-): Promise<{ uri: string; size: number; name: string; type: string }> => {
+const blobFetch = async (imgUri: string): Promise<FileMessageCreateParams> => {
   const uri = fixIpfsURL(imgUri)
   const fetched = await fetch(uri)
   let type = fetched.headers.get('Content-Type') || ''
   const blob = await fetched.blob()
 
   return {
-    uri,
-    type,
-    size: blob.size,
-    name: 'file',
+    fileUrl: uri,
+    mimeType: type,
+    fileSize: blob.size,
+    fileName: 'file',
   }
 }
 
 export const nftUriFetcher = async (
   tokenUri: string
-): Promise<{ uri: string; size: number; name: string; type: string }> => {
+): Promise<FileMessageCreateParams> => {
   try {
     const fetched = await blobFetch(tokenUri)
 
-    if (fetched.type.includes('image')) {
+    if (fetched.mimeType?.includes('image')) {
       return fetched
-    } else if (fetched.type.includes('json')) {
+    } else if (fetched.mimeType?.includes('json')) {
       const axiosData = await axios.get(fixIpfsURL(tokenUri))
 
       const jsonData = axiosData.data
@@ -38,9 +37,9 @@ export const nftUriFetcher = async (
   }
 
   return {
-    uri: '',
-    type: '',
-    size: 0,
-    name: '',
+    fileUrl: '',
+    fileName: '',
+    fileSize: 0,
+    mimeType: '',
   }
 }

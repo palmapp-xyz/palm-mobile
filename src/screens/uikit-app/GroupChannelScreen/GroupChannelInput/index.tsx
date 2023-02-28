@@ -61,7 +61,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
   } = useContext(GroupChannelContexts.Fragment)
 
   const useGcInputReturn = useGcInput({
-    onSendFileMessage: props.onSendFileMessage,
+    ...props,
     channel,
   })
 
