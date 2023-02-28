@@ -20,6 +20,7 @@ import {
   createNativeNotificationService,
 } from '@sendbird/uikit-react-native'
 import { Logger, SendbirdChatSDK } from '@sendbird/uikit-utils'
+import { nftUriFetcher } from './nft'
 
 const APP_ID = Config.APP_ID || ''
 
