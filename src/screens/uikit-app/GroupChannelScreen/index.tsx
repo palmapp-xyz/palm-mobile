@@ -16,7 +16,6 @@ import GroupChannelMessageList from './GroupChannelMessageList'
 import { Text, View } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
-import { UserMessage } from '@sendbird/chat/message'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
