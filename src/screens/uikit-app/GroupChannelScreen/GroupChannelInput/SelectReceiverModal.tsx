@@ -13,11 +13,14 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { ContractAddr } from 'types'
 import { UTIL } from 'consts'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 
 const SelectReceiverModal = ({
   useGcInputReturn,
+  channel,
 }: {
   useGcInputReturn: UseGcInputReturn
+  channel: GroupChannel
 }): ReactElement => {
   const { navigation } = useAppNavigation()
 
@@ -39,6 +42,7 @@ const SelectReceiverModal = ({
                     useGcInputReturn.setOpenSelectReceiver(false)
                     navigation.navigate(Routes.SendNft, {
                       receiver: item.userId as ContractAddr,
+                      channelUrl: channel.url,
                     })
                   }}>
                   <Text style={{ fontSize: 20 }} numberOfLines={1}>

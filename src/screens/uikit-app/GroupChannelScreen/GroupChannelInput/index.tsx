@@ -183,7 +183,10 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           mentionedUsers={mentionedUsers}
         />
       )}
-      <SelectReceiverModal useGcInputReturn={useGcInputReturn} />
+      <SelectReceiverModal
+        useGcInputReturn={useGcInputReturn}
+        channel={channel}
+      />
     </>
   )
 }

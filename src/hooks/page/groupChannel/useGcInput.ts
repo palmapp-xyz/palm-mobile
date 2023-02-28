@@ -77,6 +77,7 @@ const useGcInput = ({
           if (target) {
             navigation.navigate(Routes.SendNft, {
               receiver: target.userId as ContractAddr,
+              channelUrl: channel.url,
             })
           } else {
             Alert.alert('No one to receive NFT here')

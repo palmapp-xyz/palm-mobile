@@ -99,7 +99,7 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.SendNft
-      params: { receiver: ContractAddr }
+      params: { receiver: ContractAddr; channelUrl?: string }
     }
   | {
       route: Routes.Setting
