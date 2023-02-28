@@ -1,7 +1,10 @@
 import React, { ReactElement } from 'react'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { SendbirdMessage } from '@sendbird/uikit-utils'
+
 import {
   createGroupChannelFragment,
+  MessageRenderer,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
@@ -10,6 +13,10 @@ import { Routes } from 'libs/navigation'
 
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
+import { Text, View } from 'react-native'
+import { TouchableWithoutFeedback } from 'react-native'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
+import { UserMessage } from '@sendbird/chat/message'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
@@ -47,6 +54,32 @@ const GroupChannelScreen = (): ReactElement => {
         onPressHeaderRight={(): void => {
           // Navigate to group channel settings
           navigation.push(Routes.GroupChannelSettings, params)
+        }}
+        renderMessage={(props: {
+          message: SendbirdMessage
+          prevMessage?: SendbirdMessage | undefined
+          nextMessage?: SendbirdMessage | undefined
+          onPress?: (() => void) | undefined
+          onLongPress?: (() => void) | undefined
+          channel: GroupChannel
+          currentUserId?: string | undefined
+          enableMessageGrouping: boolean
+        }): ReactElement | null => {
+          if (props.message.customType) {
+            return (
+              <TouchableWithoutFeedback
+                onPress={props.onPress}
+                onLongPress={props.onLongPress}>
+                <View>
+                  <Text>{`Message: ${props.message.messageId} (${props.message.messageType})`}</Text>
+                  <Text>{`Message custom type: ${props.message.customType}`}</Text>
+                  <Text>{`Message is UserMsg? ${props.message.isUserMessage()}`}</Text>
+                  <Text>{`Message is FileMsg? ${props.message.isFileMessage()}`}</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            )
+          }
+          return <MessageRenderer {...props} />
         }}
       />
     </>
