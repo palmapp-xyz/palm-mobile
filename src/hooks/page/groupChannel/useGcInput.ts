@@ -4,7 +4,10 @@ import _ from 'lodash'
 import { SetterOrUpdater, useRecoilState } from 'recoil'
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
 import { isImage, shouldCompressImage } from '@sendbird/uikit-utils'
-import { FileType, usePlatformService } from '@sendbird/uikit-react-native'
+import {
+  usePlatformService,
+  GroupChannelProps,
+} from '@sendbird/uikit-react-native'
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 
 import { ContractAddr, Moralis } from 'types'
@@ -30,10 +33,8 @@ export type UseGcInputReturn = {
 type StepAfterSelectNftType = 'share' | 'send' | 'sell'
 
 const useGcInput = ({
-  onSendFileMessage,
   channel,
-}: {
-  onSendFileMessage: (file: FileType) => Promise<void>
+}: GroupChannelProps['Input'] & {
   channel: GroupChannel
 }): UseGcInputReturn => {
   const { user } = useAuth()
@@ -62,24 +63,30 @@ const useGcInput = ({
 
             // Image compression
             if (
-              imgInfo.type.includes('svg') === false &&
-              isImage(imgInfo.uri, imgInfo.type) &&
-              shouldCompressImage(imgInfo.uri, true)
+              imgInfo.fileUrl &&
+              imgInfo.mimeType?.includes('svg') === false &&
+              isImage(imgInfo.fileUrl, imgInfo.mimeType) &&
+              shouldCompressImage(imgInfo.fileUrl, true)
             ) {
               await SBUUtils.safeRun(async () => {
+                if (!imgInfo.fileUrl) {
+                  return
+                }
                 const compressed = await mediaService.compressImage({
-                  uri: imgInfo.uri,
+                  uri: imgInfo.fileUrl,
                   compressionRate: 0.7,
                 })
 
                 if (compressed) {
-                  imgInfo.uri = compressed.uri
-                  imgInfo.size = compressed.size
+                  imgInfo.fileUrl = compressed.uri
+                  imgInfo.fileSize = compressed.size
                 }
               })
             }
 
-            onSendFileMessage(imgInfo)
+            imgInfo.customType = 'share'
+            imgInfo.data = imgInfo.fileUrl
+            channel.sendFileMessage(imgInfo)
           })
         )
         setSelectedNftList([])
