@@ -9,6 +9,8 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
   const fileType = props.message.customType
   if (fileType === 'share') {
     return <MediaRenderer src={props.message.data} width={200} height={200} />
+  } else if (fileType === 'sell') {
+    return <MediaRenderer src={props.message.data} width={300} height={300} />
   }
   return <FileMessage {...props} />
 }

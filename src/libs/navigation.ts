@@ -95,7 +95,7 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.SellNft
-      params: undefined
+      params: { channelUrl: string }
     }
   | {
       route: Routes.SendNft

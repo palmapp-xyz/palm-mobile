@@ -11,7 +11,7 @@ import {
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 
 import { ContractAddr, Moralis } from 'types'
-import { nftUriFetcher } from 'libs/nft'
+import { getNftMessageParam, nftUriFetcher } from 'libs/nft'
 import selectNftStore from 'store/selectNftStore'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -59,31 +59,10 @@ const useGcInput = ({
       if (stepAfterSelectNft === 'share') {
         await Promise.all(
           _.forEach(selectedNftList, async item => {
-            const imgInfo = await nftUriFetcher(item.token_uri)
-
-            // Image compression
-            if (
-              imgInfo.fileUrl &&
-              imgInfo.mimeType?.includes('svg') === false &&
-              isImage(imgInfo.fileUrl, imgInfo.mimeType) &&
-              shouldCompressImage(imgInfo.fileUrl, true)
-            ) {
-              await SBUUtils.safeRun(async () => {
-                if (!imgInfo.fileUrl) {
-                  return
-                }
-                const compressed = await mediaService.compressImage({
-                  uri: imgInfo.fileUrl,
-                  compressionRate: 0.7,
-                })
-
-                if (compressed) {
-                  imgInfo.fileUrl = compressed.uri
-                  imgInfo.fileSize = compressed.size
-                }
-              })
-            }
-
+            const imgInfo = await getNftMessageParam({
+              mediaService,
+              uri: item.token_uri,
+            })
             imgInfo.customType = 'share'
             imgInfo.data = imgInfo.fileUrl
             channel.sendFileMessage(imgInfo)
@@ -91,8 +70,7 @@ const useGcInput = ({
         )
         setSelectedNftList([])
       } else if (stepAfterSelectNft === 'sell') {
-        // TODO : able to include group channel url
-        navigation.navigate(Routes.SellNft)
+        navigation.navigate(Routes.SellNft, { channelUrl: channel.url })
       } else if (stepAfterSelectNft === 'send') {
         if (channel.members.length < 3) {
           const target = channel.members.find(x => x.userId !== user?.address)
