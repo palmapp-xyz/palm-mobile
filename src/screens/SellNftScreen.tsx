@@ -22,7 +22,7 @@ import {
   usePlatformService,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
-import { getNftMessageParam, nftUriFetcher } from 'libs/nft'
+import { getNftMessageParam } from 'libs/nft'
 
 const Contents = ({
   channelUrl,

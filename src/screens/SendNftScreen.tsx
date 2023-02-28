@@ -10,18 +10,43 @@ import { Header, SubmitButton, Container, NftRenderer, Row } from 'components'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import {
+  usePlatformService,
+  useSendbirdChat,
+} from '@sendbird/uikit-react-native'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { getNftMessageParam } from 'libs/nft'
 
 const Contents = ({
   selectedNft,
   receiver,
+  channelUrl,
 }: {
   selectedNft: Moralis.NftItem
   receiver: ContractAddr
+  channelUrl?: string
 }): ReactElement => {
   const { isPosting, isValidForm, onClickConfirm } = useSendNft({
     selectedNft,
     receiver,
   })
+
+  const { mediaService } = usePlatformService()
+  const { sdk } = useSendbirdChat()
+  const { channel } = useGroupChannel(sdk, channelUrl ?? receiver)
+
+  const onSubmit = async (token_uri: string): Promise<void> => {
+    if (!channel) {
+      return
+    }
+    const imgInfo = await getNftMessageParam({
+      mediaService,
+      uri: token_uri,
+    })
+    imgInfo.customType = 'send'
+    imgInfo.data = imgInfo.fileUrl
+    channel.sendFileMessage(imgInfo)
+  }
 
   return (
     <View style={styles.body}>
@@ -45,7 +70,10 @@ const Contents = ({
       </View>
       <SubmitButton
         disabled={isPosting || !isValidForm}
-        onPress={onClickConfirm}>
+        onPress={(): void => {
+          onClickConfirm()
+          onSubmit(selectedNft.token_uri)
+        }}>
         Send
       </SubmitButton>
     </View>
@@ -65,7 +93,11 @@ const SendNftScreen = (): ReactElement => {
         onPressLeft={navigation.goBack}
       />
       {selectedNftList.length > 0 && (
-        <Contents selectedNft={selectedNftList[0]} receiver={params.receiver} />
+        <Contents
+          selectedNft={selectedNftList[0]}
+          receiver={params.receiver}
+          channelUrl={params.channelUrl}
+        />
       )}
     </Container>
   )
