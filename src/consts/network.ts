@@ -23,8 +23,8 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
     chainId: toHex(chainId[ChainNetworkEnum.GOERLI]),
     chainName: 'Goerli',
     rpcUrls: [
-      `https://eth-goerli.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY}` ||
-        'https://ethereum-goerli-rpc.allthatnode.com',
+      'https://ethereum-goerli-rpc.allthatnode.com',
+      `https://eth-goerli.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY}`,
     ],
     nativeCurrency: {
       name: 'Goerli ETH',

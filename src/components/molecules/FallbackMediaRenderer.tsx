@@ -4,7 +4,7 @@ import { View, Linking, StyleSheet } from 'react-native'
 import Icons from 'components/atoms/Icons'
 import styled from 'styled-components/native'
 
-import { MediaRendererProps } from './MediaRenderer'
+import { MediaRendererProps } from '../atoms/MediaRenderer'
 
 const StyledText = styled.Text`
   color: 'rgb(138, 147, 155)';

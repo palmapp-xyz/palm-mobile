@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR, UTIL } from 'consts'
 
 import { Routes } from 'libs/navigation'
-import { Card, Container, FormImage, MoralisNftCard, Row } from 'components'
+import { Card, Container, FormImage, MoralisNftRenderer, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import useSetting from 'hooks/independent/useSetting'
@@ -94,9 +94,11 @@ const MyPageScreen = (): ReactElement => {
             scrollEnabled={false}
             renderItem={({ item }): ReactElement => {
               return (
-                <View
-                  style={{ flex: 1, backgroundColor: 'white', padding: 10 }}>
-                  <MoralisNftCard item={item} />
+                <View style={{ borderRadius: 10, flex: 1 }}>
+                  <MoralisNftRenderer item={item} width="100%" height={150} />
+                  <View style={styles.nftTitle}>
+                    <Text>{`#${item.token_id}`}</Text>
+                  </View>
                 </View>
               )
             }}
@@ -114,10 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.primary._100,
   },
   header: {},
-  body: {
-    gap: 10,
-    padding: 10,
-  },
+  body: { gap: 10, padding: 10 },
   profileImgBox: {
     borderRadius: 999,
     alignSelf: 'center',
@@ -127,5 +126,15 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: 'white',
     borderRadius: 5,
+  },
+  nftTitle: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    margin: 10,
+    alignSelf: 'center',
+    bottom: 0,
   },
 })

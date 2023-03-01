@@ -9,9 +9,10 @@ import {
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
-import { FormButton, MoralisNftCard, Row } from 'components'
+import { FormButton, MoralisNftRenderer, Row } from 'components'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
+import { COLOR } from 'consts'
 
 const MyNftList = ({
   useGcInputReturn,
@@ -42,7 +43,7 @@ const MyNftList = ({
         data={nftList}
         keyExtractor={(_, index): string => `nftList-${index}`}
         horizontal
-        style={{ paddingHorizontal: 20 }}
+        style={{ paddingHorizontal: 10 }}
         contentContainerStyle={{ gap: 10 }}
         renderItem={({ item }): ReactElement => {
           const selected = useGcInputReturn.selectedNftList.includes(item)
@@ -50,13 +51,11 @@ const MyNftList = ({
           return (
             <TouchableOpacity
               style={{
+                borderColor: selected ? COLOR.primary._400 : COLOR.primary._100,
+                borderWidth: 1,
+                borderRadius: 10,
                 height: 100,
-                width: 100,
-                borderColor: selected ? 'blue' : 'gray',
-                borderWidth: selected ? 1 : 0,
-                borderRadius: 20,
-                padding: 10,
-                paddingBottom: 30,
+                overflow: 'hidden',
               }}
               onPress={(): void => {
                 if (useGcInputReturn.stepAfterSelectNft === 'share') {
@@ -69,12 +68,17 @@ const MyNftList = ({
                   useGcInputReturn.setSelectedNftList([item])
                 }
               }}>
-              <MoralisNftCard
-                item={item}
-                width={80}
-                height={80}
-                hideAlt={true}
-              />
+              <View style={{ padding: 5 }}>
+                <MoralisNftRenderer
+                  item={item}
+                  width={100}
+                  height="100%"
+                  hideAlt={true}
+                />
+              </View>
+              <View style={styles.nftTitle}>
+                <Text style={{ fontSize: 10 }}>{`#${item.token_id}`}</Text>
+              </View>
             </TouchableOpacity>
           )
         }}
@@ -102,5 +106,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 12,
+  },
+  nftTitle: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    margin: 10,
+    alignSelf: 'center',
+    bottom: 0,
   },
 })

@@ -4,7 +4,13 @@ import { useQueryClient } from 'react-query'
 
 // import { UTIL } from 'consts'
 
-import { ApiEnum, ContractAddr, Moralis, PostTxStatus } from 'types'
+import {
+  ApiEnum,
+  ContractAddr,
+  Moralis,
+  PostTxReturn,
+  PostTxStatus,
+} from 'types'
 import usePostTx from 'hooks/complex/usePostTx'
 import useNft from 'hooks/contract/useNft'
 import useAuth from 'hooks/independent/useAuth'
@@ -17,7 +23,7 @@ import { navigationRef, Routes } from 'libs/navigation'
 
 export type UseSendNftReturn = {
   isPosting: boolean
-  onClickConfirm: () => Promise<void>
+  onClickConfirm: () => Promise<PostTxReturn | undefined>
   isValidForm: boolean
 }
 
@@ -44,7 +50,7 @@ const useSendNft = ({
 
   const isValidForm = !!receiver
 
-  const onClickConfirm = async (): Promise<void> => {
+  const onClickConfirm = async (): Promise<PostTxReturn | undefined> => {
     if (user?.address) {
       const data = transferFromData({
         from: user.address,
@@ -52,7 +58,7 @@ const useSendNft = ({
         tokenId: selectedNft.token_id,
       })
 
-      postTx({ data })
+      return postTx({ data })
     }
   }
 
