@@ -35,7 +35,7 @@ const MoralisNftCard = ({
     alt: `${item.name}:${item.token_id}`,
     width: width || dim,
     height: height || dim,
-    style: { marginBottom: 6 },
+    style: { marginBottom: 10 },
     hideAlt,
   }
 

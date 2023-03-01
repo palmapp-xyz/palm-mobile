@@ -24,6 +24,8 @@ import {
 } from '@sendbird/uikit-react-native'
 import { getNftMessageParam } from 'libs/nft'
 
+import firestore from '@react-native-firebase/firestore'
+
 const Contents = ({
   channelUrl,
   selectedNft,
@@ -40,7 +42,7 @@ const Contents = ({
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
 
-  const onSubmit = async (token_uri: string): Promise<void> => {
+  const onSubmit = async (token_uri: string, nonce?: string): Promise<void> => {
     if (!channel) {
       return
     }
@@ -51,6 +53,29 @@ const Contents = ({
     imgInfo.customType = 'sell'
     imgInfo.data = imgInfo.fileUrl
     channel.sendFileMessage(imgInfo)
+
+    try {
+      const channelDoc = await firestore()
+        .collection('channels')
+        .doc(channel.url)
+        .get()
+      // add the non-existing (if not exists) channel to firestore
+      if (!channelDoc.exists) {
+        await firestore()
+          .collection('channels')
+          .doc(channel.url)
+          .set({ url: channel.url, channelType: channel.channelType })
+      }
+      // add the new listing item to the corresponding channel doc firestore
+      await firestore()
+        .collection('channels')
+        .doc(channel.url)
+        .collection('listings')
+        .doc(nonce)
+        .set({ nonce })
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -80,10 +105,10 @@ const Contents = ({
       {isApproved ? (
         <SubmitButton
           disabled={!price}
-          onPress={(): void => {
+          onPress={async (): Promise<void> => {
             Keyboard.dismiss()
-            onClickConfirm()
-            onSubmit(selectedNft.token_uri)
+            const nonce = await onClickConfirm()
+            onSubmit(selectedNft.token_uri, nonce)
           }}>
           List up to sell
         </SubmitButton>

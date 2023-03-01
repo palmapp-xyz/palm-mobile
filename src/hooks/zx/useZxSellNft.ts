@@ -18,7 +18,7 @@ import { Routes } from 'libs/navigation'
 export type UseZxSellNftReturn = {
   isApproved: boolean
   onClickApprove: () => Promise<void>
-  onClickConfirm: () => Promise<void>
+  onClickConfirm: () => Promise<string | undefined>
   price: Token
   setPrice: (value: Token) => void
 }
@@ -103,7 +103,8 @@ const useZxSellNft = ({
     }
   }
 
-  const onClickConfirm = async (): Promise<void> => {
+  const onClickConfirm = async (): Promise<string | undefined> => {
+    let nonce
     if (user && nftSwapSdk) {
       try {
         setPostTxResult({
@@ -118,6 +119,7 @@ const useZxSellNft = ({
           signedOrder,
           nftSwapSdk.chainId
         )
+        nonce = postOrder.order.nonce
 
         setPostTxResult({ status: PostTxStatus.DONE })
         navigation.replace(Routes.ZxNftDetail, {
@@ -130,6 +132,7 @@ const useZxSellNft = ({
         })
       }
     }
+    return nonce
   }
   return { onClickApprove, onClickConfirm, isApproved, price, setPrice }
 }
