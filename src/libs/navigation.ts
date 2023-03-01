@@ -29,6 +29,7 @@ export enum Routes {
   ZxNftDetail = 'ZxNftDetail',
   SellNft = 'SellNft',
   SendNft = 'SendNft',
+  ChannelListings = 'ChannelListings',
 
   GroupChannel = 'GroupChannel',
 
@@ -105,6 +106,10 @@ type MainRouteParamsUnion =
   | {
       route: Routes.SendNft
       params: { receiver: ContractAddr; channelUrl?: string }
+    }
+  | {
+      route: Routes.ChannelListings
+      params: { channelUrl: string }
     }
   | {
       route: Routes.Setting

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import {
   UserFacingERC721AssetDataSerializedV4,
   UserFacingERC20AssetDataSerializedV4,
+  SignedNftOrderV4Serialized,
 } from '@traderxyz/nft-swap-sdk'
 
 import { UTIL } from 'consts'
@@ -18,7 +19,7 @@ import { Routes } from 'libs/navigation'
 export type UseZxSellNftReturn = {
   isApproved: boolean
   onClickApprove: () => Promise<void>
-  onClickConfirm: () => Promise<string>
+  onClickConfirm: () => Promise<SignedNftOrderV4Serialized | undefined>
   price: Token
   setPrice: (value: Token) => void
 }
@@ -100,7 +101,9 @@ const useZxSellNft = ({
     }
   }
 
-  const onClickConfirm = async (): Promise<string> => {
+  const onClickConfirm = async (): Promise<
+    SignedNftOrderV4Serialized | undefined
+  > => {
     if (user && nftSwapSdk) {
       try {
         setPostTxResult({
@@ -121,7 +124,7 @@ const useZxSellNft = ({
           nonce: postOrder.order.nonce,
         })
 
-        return postOrder.order.nonce
+        return postOrder.order
       } catch (error) {
         setPostTxResult({
           status: PostTxStatus.ERROR,
@@ -129,7 +132,7 @@ const useZxSellNft = ({
         })
       }
     }
-    return ''
+    return undefined
   }
   return { onClickApprove, onClickConfirm, isApproved, price, setPrice }
 }
