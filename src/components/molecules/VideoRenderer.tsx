@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react'
 import { View } from 'react-native'
 import Video from 'react-native-video'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { MediaRendererProps } from './MediaRenderer'
+import { MediaRendererProps } from '../atoms/MediaRenderer'
 import { usePlatformService } from '@sendbird/uikit-react-native'
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 

@@ -16,6 +16,8 @@ import {
 } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { getNftMessageParam } from 'libs/nft'
+import { stringifySendFileData } from 'libs/sendbird'
+import useAuth from 'hooks/independent/useAuth'
 
 const Contents = ({
   selectedNft,
@@ -26,6 +28,7 @@ const Contents = ({
   receiver: ContractAddr
   channelUrl?: string
 }): ReactElement => {
+  const { user } = useAuth()
   const { isPosting, isValidForm, onClickConfirm } = useSendNft({
     selectedNft,
     receiver,
@@ -36,15 +39,20 @@ const Contents = ({
   const { channel } = useGroupChannel(sdk, channelUrl ?? receiver)
 
   const onSubmit = async (token_uri: string): Promise<void> => {
-    if (!channel) {
+    if (!channel || !user) {
       return
     }
+
     const imgInfo = await getNftMessageParam({
       mediaService,
       uri: token_uri,
     })
-    imgInfo.customType = 'send'
-    imgInfo.data = imgInfo.fileUrl
+    imgInfo.data = stringifySendFileData({
+      type: 'send',
+      selectedNft,
+      from: user.address,
+      to: receiver,
+    })
     channel.sendFileMessage(imgInfo)
   }
 
@@ -70,9 +78,11 @@ const Contents = ({
       </View>
       <SubmitButton
         disabled={isPosting || !isValidForm}
-        onPress={(): void => {
-          onClickConfirm()
-          onSubmit(selectedNft.token_uri)
+        onPress={async (): Promise<void> => {
+          const res = await onClickConfirm()
+          if (res?.success) {
+            onSubmit(selectedNft.token_uri)
+          }
         }}>
         Send
       </SubmitButton>

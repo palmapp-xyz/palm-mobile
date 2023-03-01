@@ -18,7 +18,7 @@ import { Routes } from 'libs/navigation'
 export type UseZxSellNftReturn = {
   isApproved: boolean
   onClickApprove: () => Promise<void>
-  onClickConfirm: () => Promise<string | undefined>
+  onClickConfirm: () => Promise<string>
   price: Token
   setPrice: (value: Token) => void
 }
@@ -78,10 +78,7 @@ const useZxSellNft = ({
         })
         const approvalTx = await nftSwapSdk.approveTokenOrNftByAsset(
           nftToSwap,
-          user.address,
-          {
-            gasLimit: 10000000,
-          }
+          user.address
         )
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
@@ -103,8 +100,7 @@ const useZxSellNft = ({
     }
   }
 
-  const onClickConfirm = async (): Promise<string | undefined> => {
-    let nonce
+  const onClickConfirm = async (): Promise<string> => {
     if (user && nftSwapSdk) {
       try {
         setPostTxResult({
@@ -119,12 +115,13 @@ const useZxSellNft = ({
           signedOrder,
           nftSwapSdk.chainId
         )
-        nonce = postOrder.order.nonce
 
         setPostTxResult({ status: PostTxStatus.DONE })
         navigation.replace(Routes.ZxNftDetail, {
           nonce: postOrder.order.nonce,
         })
+
+        return postOrder.order.nonce
       } catch (error) {
         setPostTxResult({
           status: PostTxStatus.ERROR,
@@ -132,7 +129,7 @@ const useZxSellNft = ({
         })
       }
     }
-    return nonce
+    return ''
   }
   return { onClickApprove, onClickConfirm, isApproved, price, setPrice }
 }

@@ -4,7 +4,7 @@ import base64 from 'react-native-base64'
 
 import { MediaType } from 'types'
 
-import { MediaRendererProps } from './MediaRenderer'
+import { MediaRendererProps } from '../atoms/MediaRenderer'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
 
 const SvgRenderer = ({

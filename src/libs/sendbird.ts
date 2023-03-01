@@ -20,7 +20,8 @@ import {
   createNativeNotificationService,
 } from '@sendbird/uikit-react-native'
 import { Logger, SendbirdChatSDK } from '@sendbird/uikit-utils'
-import { nftUriFetcher } from './nft'
+import { SbNftDataType } from 'types/sendbird'
+import { UTIL } from 'consts'
 
 const APP_ID = Config.APP_ID || ''
 
@@ -110,4 +111,12 @@ if (__DEV__) {
   }
 
   require('promise/setimmediate/rejection-tracking').enable(opts)
+}
+
+export const stringifySendFileData = (data: SbNftDataType): string => {
+  return JSON.stringify(data)
+}
+
+export const parseSendFileData = (data: string): SbNftDataType | undefined => {
+  return UTIL.jsonTryParse<SbNftDataType>(data)
 }

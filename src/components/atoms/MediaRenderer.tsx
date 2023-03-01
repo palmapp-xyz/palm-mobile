@@ -3,11 +3,11 @@ import { StyleProp, FlexStyle, Image, ImageStyle } from 'react-native'
 
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
-import IframePlayer from './IframeRenderer'
-import SvgRenderer from './SvgRenderer'
+import IframePlayer from '../molecules/IframeRenderer'
+import SvgRenderer from '../molecules/SvgRenderer'
 import { isValidHttpUrl } from 'libs/utils'
-import FallbackMediaRenderer from './FallbackMediaRenderer'
-import VideoRenderer from './VideoRenderer'
+import FallbackMediaRenderer from '../molecules/FallbackMediaRenderer'
+import VideoRenderer from '../molecules/VideoRenderer'
 
 export interface SharedMediaProps {
   style?: StyleProp<ImageStyle>
@@ -51,7 +51,7 @@ export interface MediaRendererProps extends SharedMediaProps {
  *
  * You can try switching out the `src` prop to different types of URLs and media types to explore the possibilities.
  */
-export const MediaRenderer = ({
+const MediaRenderer = ({
   src,
   alt,
   style,
@@ -113,3 +113,5 @@ export const MediaRenderer = ({
     />
   )
 }
+
+export default MediaRenderer
