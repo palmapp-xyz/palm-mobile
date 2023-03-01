@@ -1,6 +1,8 @@
 export enum QueryKeyEnum {
   ROUTE_PARAMS = 'ROUTE_PARAMS',
 
+  ETH_USD_PRICE = 'ETH_USD_PRICE',
+
   TX_INFO = 'TX_INFO',
 
   KLAY_BALANCE = 'KLAY_BALANCE',

@@ -6,7 +6,7 @@ import useNft from 'hooks/contract/useNft'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import ErrorBoundary from 'components/atoms/ErrorBoundary'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
-import { MediaRenderer } from './MediaRenderer'
+import MediaRenderer from '../atoms/MediaRenderer'
 import { FlexStyle } from 'react-native'
 
 const NftRenderer = ({

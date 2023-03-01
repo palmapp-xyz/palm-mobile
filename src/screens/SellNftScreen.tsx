@@ -3,7 +3,7 @@ import { Keyboard, StyleSheet, Text, View } from 'react-native'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 import { useRecoilValue } from 'recoil'
 
-import { UTIL } from 'consts'
+import { COLOR, UTIL } from 'consts'
 import { Moralis, Token } from 'types'
 import {
   Header,
@@ -23,6 +23,7 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { getNftMessageParam } from 'libs/nft'
+import { stringifySendFileData } from 'libs/sendbird'
 
 import firestore from '@react-native-firebase/firestore'
 
@@ -42,7 +43,7 @@ const Contents = ({
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
 
-  const onSubmit = async (token_uri: string, nonce?: string): Promise<void> => {
+  const onSubmit = async (token_uri: string, nonce: string): Promise<void> => {
     if (!channel) {
       return
     }
@@ -50,8 +51,7 @@ const Contents = ({
       mediaService,
       uri: token_uri,
     })
-    imgInfo.customType = 'sell'
-    imgInfo.data = imgInfo.fileUrl
+    imgInfo.data = stringifySendFileData({ type: 'sell', selectedNft, nonce })
     channel.sendFileMessage(imgInfo)
 
     try {
@@ -96,34 +96,54 @@ const Contents = ({
         <Text style={{ fontSize: 20 }}>Price</Text>
         <FormInput
           keyboardType="number-pad"
+          maxLength={10}
           value={price}
           onChangeText={(value): void => {
             setPrice(value as Token)
           }}
         />
       </View>
-      {isApproved ? (
-        <SubmitButton
-          disabled={!price}
-          onPress={async (): Promise<void> => {
-            Keyboard.dismiss()
-            const nonce = await onClickConfirm()
-            onSubmit(selectedNft.token_uri, nonce)
-          }}>
-          List up to sell
-        </SubmitButton>
-      ) : (
-        <View>
-          <SubmitButton
-            onPress={(): void => {
-              Keyboard.dismiss()
-              onClickApprove()
+      <View>
+        <Row style={{ paddingBottom: 10 }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: isApproved ? COLOR.gray._700 : COLOR.primary._400,
             }}>
-            Approve
+            1. Approve
+          </Text>
+          <Text>{' -> '}</Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: isApproved ? COLOR.primary._400 : COLOR.gray._700,
+            }}>
+            2. Listing
+          </Text>
+        </Row>
+        {isApproved ? (
+          <SubmitButton
+            disabled={!price}
+            onPress={async (): Promise<void> => {
+              Keyboard.dismiss()
+              const nonce = await onClickConfirm()
+              onSubmit(selectedNft.token_uri, nonce)
+            }}>
+            List up to sell
           </SubmitButton>
-          <Text>Approve to sell item</Text>
-        </View>
-      )}
+        ) : (
+          <View>
+            <SubmitButton
+              onPress={(): void => {
+                Keyboard.dismiss()
+                onClickApprove()
+              }}>
+              Approve
+            </SubmitButton>
+            <Text>Approve to sell item</Text>
+          </View>
+        )}
+      </View>
     </View>
   )
 }

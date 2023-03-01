@@ -1,18 +1,35 @@
 import FileMessage, {
   FileMessageProps,
 } from '@sendbird/uikit-react-native/src/components/MessageRenderer/FileMessage'
-import { MediaRenderer } from './MediaRenderer'
-
 import React, { ReactElement } from 'react'
 import { Text, View } from 'react-native'
-
 import {
   createStyleSheet,
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
+
+import { parseSendFileData } from 'libs/sendbird'
+import { MediaRenderer } from 'components'
+
+import SellNftMessage from './SellNftMessage'
+import ShareNftMessage from './ShareNftMessage'
+import SendNftMessage from './SendNftMessage'
+
 const NftMessage = (props: FileMessageProps): ReactElement => {
   const { colors } = useUIKitTheme()
   const { message, children, variant } = props
+  const parsedData = parseSendFileData(message.data || '')
+  if (parsedData) {
+    switch (parsedData.type) {
+      case 'sell':
+        return <SellNftMessage data={parsedData} />
+      case 'share':
+        return <ShareNftMessage data={parsedData} />
+      case 'send':
+        return <SendNftMessage data={parsedData} />
+    }
+  }
+
   if (!message.customType) {
     return <FileMessage {...props} />
   }

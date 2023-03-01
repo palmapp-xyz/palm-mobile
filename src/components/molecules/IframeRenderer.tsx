@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { View } from 'react-native'
 import WebView from 'react-native-webview'
-import { MediaRendererProps } from './MediaRenderer'
+import { MediaRendererProps } from '../atoms/MediaRenderer'
 
 const IframePlayer = ({
   src,

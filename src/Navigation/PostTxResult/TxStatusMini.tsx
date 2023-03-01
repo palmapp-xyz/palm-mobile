@@ -118,7 +118,7 @@ export default TxStatusMini
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 70,
+    top: 120,
     right: 0,
     zIndex: 1,
     cursor: 'zoom-in',
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 20,
     alignItems: 'center',
+    backgroundColor: COLOR.primary._100,
   },
   iconBox: {
     alignItems: 'center',

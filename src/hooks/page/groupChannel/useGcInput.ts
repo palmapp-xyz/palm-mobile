@@ -3,19 +3,18 @@ import { Alert } from 'react-native'
 import _ from 'lodash'
 import { SetterOrUpdater, useRecoilState } from 'recoil'
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
-import { isImage, shouldCompressImage } from '@sendbird/uikit-utils'
 import {
   usePlatformService,
   GroupChannelProps,
 } from '@sendbird/uikit-react-native'
-import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 
 import { ContractAddr, Moralis } from 'types'
-import { getNftMessageParam, nftUriFetcher } from 'libs/nft'
+import { getNftMessageParam } from 'libs/nft'
 import selectNftStore from 'store/selectNftStore'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
+import { stringifySendFileData } from 'libs/sendbird'
 
 export type UseGcInputReturn = {
   receiverList: Member[]
@@ -63,8 +62,10 @@ const useGcInput = ({
               mediaService,
               uri: item.token_uri,
             })
-            imgInfo.customType = 'share'
-            imgInfo.data = imgInfo.fileUrl
+            imgInfo.data = stringifySendFileData({
+              type: 'share',
+              selectedNft: item,
+            })
             channel.sendFileMessage(imgInfo)
           })
         )
