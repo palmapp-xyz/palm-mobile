@@ -96,7 +96,7 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.NftDetail
-      params: { nftContract: string; tokenId: string }
+      params: { nftContract: ContractAddr; tokenId: string }
     }
   | {
       route: Routes.SellNft

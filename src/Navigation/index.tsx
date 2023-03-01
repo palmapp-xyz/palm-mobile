@@ -30,6 +30,7 @@ import {
   ZxNftDetailScreen,
   SendNftScreen,
   SellNftScreen,
+  NftDetailScreen,
 } from '../screens'
 import FileViewerScreen from '../screens/uikit-app/FileViewerScreen'
 import useAuth from 'hooks/independent/useAuth'
@@ -60,6 +61,10 @@ const Navigation = (): ReactElement => {
             <RootStack.Screen
               name={Routes.ZxNftDetail}
               component={ZxNftDetailScreen}
+            />
+            <RootStack.Screen
+              name={Routes.NftDetail}
+              component={NftDetailScreen}
             />
 
             <RootStack.Screen name={Routes.SendNft} component={SendNftScreen} />
