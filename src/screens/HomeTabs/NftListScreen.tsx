@@ -38,9 +38,9 @@ const NftListScreen = (): ReactElement => {
               return (
                 <TouchableOpacity
                   style={{
+                    alignItems: 'center',
                     flex: 1,
-                    backgroundColor: 'white',
-                    height: 100,
+                    justifyContent: 'center',
                   }}
                   onPress={async (): Promise<void> => {
                     navigation.navigate(Routes.ZxNftDetail, {
@@ -50,6 +50,8 @@ const NftListScreen = (): ReactElement => {
                   <NftRenderer
                     tokenId={item.order.erc721TokenId}
                     nftContract={item.order.erc721Token}
+                    width={150}
+                    height={150}
                   />
                 </TouchableOpacity>
               )

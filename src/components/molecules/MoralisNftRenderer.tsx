@@ -40,7 +40,11 @@ const MoralisNftRenderer = ({
   const fallback = <FallbackMediaRenderer {...props} />
 
   return (
-    <View>
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <ErrorBoundary fallback={fallback}>
         <MediaRenderer {...props} />
       </ErrorBoundary>

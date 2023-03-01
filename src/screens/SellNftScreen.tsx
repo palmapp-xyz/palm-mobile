@@ -24,6 +24,7 @@ import {
 } from '@sendbird/uikit-react-native'
 import { getNftMessageParam } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
+import { SignedNftOrderV4Serialized } from '@traderxyz/nft-swap-sdk'
 
 import firestore from '@react-native-firebase/firestore'
 
@@ -43,15 +44,22 @@ const Contents = ({
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
 
-  const onSubmit = async (token_uri: string, nonce: string): Promise<void> => {
-    if (!channel) {
+  const onSubmit = async (
+    token_uri: string,
+    order: SignedNftOrderV4Serialized | undefined
+  ): Promise<void> => {
+    if (!channel || !order) {
       return
     }
     const imgInfo = await getNftMessageParam({
       mediaService,
       uri: token_uri,
     })
-    imgInfo.data = stringifySendFileData({ type: 'sell', selectedNft, nonce })
+    imgInfo.data = stringifySendFileData({
+      type: 'sell',
+      selectedNft,
+      nonce: order.nonce,
+    })
     channel.sendFileMessage(imgInfo)
 
     try {
@@ -59,7 +67,7 @@ const Contents = ({
         .collection('channels')
         .doc(channel.url)
         .get()
-      // add the non-existing (if not exists) channel to firestore
+      // legacy: add the non-existing (if not exists) channel to firestore
       if (!channelDoc.exists) {
         await firestore()
           .collection('channels')
@@ -71,8 +79,8 @@ const Contents = ({
         .collection('channels')
         .doc(channel.url)
         .collection('listings')
-        .doc(nonce)
-        .set({ nonce })
+        .doc(order.nonce)
+        .set(order)
     } catch (e) {
       console.error(e)
     }
@@ -126,8 +134,8 @@ const Contents = ({
             disabled={!price}
             onPress={async (): Promise<void> => {
               Keyboard.dismiss()
-              const nonce = await onClickConfirm()
-              onSubmit(selectedNft.token_uri, nonce)
+              const order = await onClickConfirm()
+              onSubmit(selectedNft.token_uri, order)
             }}>
             List up to sell
           </SubmitButton>

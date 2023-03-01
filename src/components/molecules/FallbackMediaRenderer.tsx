@@ -19,13 +19,11 @@ const FallbackMediaRenderer = ({
   style,
   hideAlt,
 }: MediaRendererProps & { hideAlt?: boolean }): ReactElement => {
+  const dim =
+    typeof width === 'number' ? width : typeof height === 'number' ? height : 50
   return (
-    <View
-      style={[
-        { ...styles.container, minWidth: width, minHeight: height },
-        style,
-      ]}>
-      <Icons.CarbonDocumentUnknown width={'50%'} height={'50%'} />
+    <View style={[{ ...styles.container, width: dim, height: dim }, style]}>
+      <Icons.CarbonDocumentUnknown width={dim / 2} height={dim / 2} />
       {!hideAlt && (
         <StyledText
           numberOfLines={1}
@@ -46,7 +44,6 @@ export default FallbackMediaRenderer
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

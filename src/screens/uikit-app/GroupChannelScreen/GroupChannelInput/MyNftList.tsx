@@ -44,7 +44,10 @@ const MyNftList = ({
         keyExtractor={(_, index): string => `nftList-${index}`}
         horizontal
         style={{ paddingHorizontal: 10 }}
-        contentContainerStyle={{ gap: 10 }}
+        contentContainerStyle={{
+          gap: 10,
+          paddingTop: 20,
+        }}
         renderItem={({ item }): ReactElement => {
           const selected = useGcInputReturn.selectedNftList.includes(item)
 
@@ -54,7 +57,7 @@ const MyNftList = ({
                 borderColor: selected ? COLOR.primary._400 : COLOR.primary._100,
                 borderWidth: 1,
                 borderRadius: 10,
-                height: 100,
+                height: 150,
                 overflow: 'hidden',
               }}
               onPress={(): void => {
@@ -71,7 +74,7 @@ const MyNftList = ({
               <View style={{ padding: 5 }}>
                 <MoralisNftRenderer
                   item={item}
-                  width={100}
+                  width={150}
                   height="100%"
                   hideAlt={true}
                 />

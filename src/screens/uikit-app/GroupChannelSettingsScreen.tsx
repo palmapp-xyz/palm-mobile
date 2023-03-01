@@ -6,8 +6,12 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
+import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
+
 import { useAppNavigation } from '../../hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { COLOR } from 'consts'
 
 const GroupChannelSettingsFragment = createGroupChannelSettingsFragment()
 const GroupChannelSettingsScreen = (): ReactElement => {
@@ -41,6 +45,17 @@ const GroupChannelSettingsScreen = (): ReactElement => {
       onPressMenuNotification={(): void => {
         // Navigate to group channel notifications
         navigation.navigate(Routes.GroupChannelNotifications, params)
+      }}
+      menuItemsCreator={(items: MenuBarProps[]): MenuBarProps[] => {
+        items.unshift({
+          icon: 'archive',
+          name: 'Listings',
+          actionItem: <Icon name={'chevron-forward-outline'} size={28} />,
+          onPress: () => {
+            navigation.navigate(Routes.ChannelListings, params)
+          },
+        })
+        return items
       }}
     />
   )
