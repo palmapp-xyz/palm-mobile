@@ -16,9 +16,9 @@ import {
 
 import { Routes, navigationRef, runAfterAppReady } from './navigation'
 
-const channelId = 'default'
+const channelUrl = 'default'
 Notifee.createChannel({
-  id: channelId,
+  id: channelUrl,
   name: 'Default Channel',
   importance: 4,
 })
@@ -97,7 +97,7 @@ messaging().setBackgroundMessageHandler(
         body: sendbird.message,
         data: message.data,
         android: {
-          channelId,
+          channelUrl,
           importance: 4,
           // smallIcon: 'drawable/icon_push_lollipop',
           largeIcon:

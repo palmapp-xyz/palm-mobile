@@ -34,7 +34,14 @@ const SvgRenderer = ({
   }
 
   if (mediaType.mimeType === 'image/svg+xml') {
-    return <SvgUri width={width} height={height} uri={mediaType.url || null} />
+    return (
+      <SvgUri
+        width={width}
+        height={height}
+        style={style}
+        uri={mediaType.url || null}
+      />
+    )
   }
 
   let xml

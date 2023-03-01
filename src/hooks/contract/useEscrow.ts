@@ -11,22 +11,22 @@ import useNetwork from 'hooks/complex/useNetwork'
 export type UseNftReturn = {
   escrowContract: ContractAddr
   getNftsByChannel: (props: {
-    channelId: string
+    channelUrl: string
   }) => Promise<Escrow.Nft[] | undefined>
   sellNftData: (props: {
     nftContract: ContractAddr
     tokenId: string
     price: pToken
-    channelId: string
+    channelUrl: string
     whitelist: ContractAddr[]
   }) => EncodedTxData | undefined
   buyNftData: (props: {
-    channelId: string
+    channelUrl: string
     nftContract: ContractAddr
     tokenId: string
   }) => EncodedTxData | undefined
   withdrawNftData: (props: {
-    channelId: string
+    channelUrl: string
     nftContract: ContractAddr
     tokenId: string
   }) => EncodedTxData | undefined
@@ -42,54 +42,54 @@ const useEscrow = (): UseNftReturn => {
   })
 
   const getNftsByChannel = async ({
-    channelId,
+    channelUrl,
   }: {
-    channelId: string
+    channelUrl: string
   }): Promise<Escrow.Nft[] | undefined> =>
-    callMethod<Escrow.Nft[]>('getNftsByChannel', [channelId])
+    callMethod<Escrow.Nft[]>('getNftsByChannel', [channelUrl])
 
   const sellNftData = ({
     nftContract,
     tokenId,
     price,
-    channelId,
+    channelUrl,
     whitelist,
   }: {
     nftContract: ContractAddr
     tokenId: string
     price: pToken
-    channelId: string
+    channelUrl: string
     whitelist: ContractAddr[]
   }): EncodedTxData | undefined =>
     getEncodedTxData('sellNft', [
       nftContract,
       tokenId,
       price,
-      channelId,
+      channelUrl,
       whitelist,
     ])
 
   const buyNftData = ({
-    channelId,
+    channelUrl,
     nftContract,
     tokenId,
   }: {
-    channelId: string
+    channelUrl: string
     nftContract: ContractAddr
     tokenId: string
   }): EncodedTxData | undefined =>
-    getEncodedTxData('buyNft', [channelId, nftContract, tokenId])
+    getEncodedTxData('buyNft', [channelUrl, nftContract, tokenId])
 
   const withdrawNftData = ({
-    channelId,
+    channelUrl,
     nftContract,
     tokenId,
   }: {
-    channelId: string
+    channelUrl: string
     nftContract: ContractAddr
     tokenId: string
   }): EncodedTxData | undefined =>
-    getEncodedTxData('withdrawNft', [channelId, nftContract, tokenId])
+    getEncodedTxData('withdrawNft', [channelUrl, nftContract, tokenId])
 
   return {
     escrowContract,
