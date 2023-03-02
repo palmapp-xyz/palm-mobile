@@ -1,13 +1,11 @@
 import React, { ReactElement } from 'react'
 
-import { ContractAddr, QueryKeyEnum } from 'types'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import useNft from 'hooks/contract/useNft'
-import { fetchNftImage } from 'libs/fetchTokenUri'
+import { ContractAddr } from 'types'
 import ErrorBoundary from 'components/atoms/ErrorBoundary'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
 import MediaRenderer from '../atoms/MediaRenderer'
 import { FlexStyle } from 'react-native'
+import useNftImage from 'hooks/independent/useNftImage'
 
 const NftRenderer = ({
   nftContract,
@@ -20,17 +18,10 @@ const NftRenderer = ({
   width?: FlexStyle['width']
   height?: FlexStyle['height']
 }): ReactElement => {
-  const { tokenURI } = useNft({ nftContract })
-
-  const { data: uri = '' } = useReactQuery(
-    [QueryKeyEnum.NFT_TOKEN_URI, nftContract, tokenId],
-    async () => {
-      const tokenUri = await tokenURI({ tokenId })
-      if (tokenUri) {
-        return fetchNftImage({ tokenUri })
-      }
-    }
-  )
+  const { uri } = useNftImage({
+    nftContract,
+    tokenId,
+  })
 
   const props = {
     src: typeof uri === 'string' ? uri : `${uri}`,
