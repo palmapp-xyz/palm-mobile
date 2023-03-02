@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useRecoilValue } from 'recoil'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { UTIL } from 'consts'
 import { ContractAddr, Moralis } from 'types'
@@ -10,12 +12,7 @@ import { Header, SubmitButton, Container, NftRenderer, Row } from 'components'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import {
-  usePlatformService,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { getNftMessageParam } from 'libs/nft'
+import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import useAuth from 'hooks/independent/useAuth'
 
@@ -34,7 +31,6 @@ const Contents = ({
     receiver,
   })
 
-  const { mediaService } = usePlatformService()
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl ?? receiver)
 
@@ -43,10 +39,7 @@ const Contents = ({
       return
     }
 
-    const imgInfo = await getNftMessageParam({
-      mediaService,
-      uri: token_uri,
-    })
+    const imgInfo = await nftUriFetcher(token_uri)
     imgInfo.data = stringifySendFileData({
       type: 'send',
       selectedNft,

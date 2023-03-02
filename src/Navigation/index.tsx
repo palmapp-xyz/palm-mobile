@@ -29,7 +29,7 @@ import {
   SettingScreen,
   ZxNftDetailScreen,
   SendNftScreen,
-  SellNftScreen,
+  ListNftScreen,
   NftDetailScreen,
   ChannelListingsScreen,
 } from '../screens'
@@ -74,7 +74,7 @@ const Navigation = (): ReactElement => {
 
             <RootStack.Screen name={Routes.SendNft} component={SendNftScreen} />
 
-            <RootStack.Screen name={Routes.SellNft} component={SellNftScreen} />
+            <RootStack.Screen name={Routes.ListNft} component={ListNftScreen} />
 
             <RootStack.Screen name={Routes.Setting} component={SettingScreen} />
             <RootStack.Screen

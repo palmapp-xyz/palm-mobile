@@ -1,12 +1,12 @@
 import React, { ReactElement, useState, useMemo } from 'react'
+import { useSetRecoilState } from 'recoil'
 
 import { PostTxStatus } from 'types'
 
 import usePostTxStatusEffect from 'hooks/independent/usePostTxStatusEffect'
+import postTxStore from 'store/postTxStore'
 import TxStatus from './TxStatus'
 import TxStatusMini from './TxStatusMini'
-import postTxStore from 'store/postTxStore'
-import { useSetRecoilState } from 'recoil'
 
 const PostTxResult = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false)

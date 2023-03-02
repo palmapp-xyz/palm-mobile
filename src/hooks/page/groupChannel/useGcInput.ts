@@ -3,16 +3,13 @@ import { Alert } from 'react-native'
 import _ from 'lodash'
 import { SetterOrUpdater, useRecoilState } from 'recoil'
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
-import {
-  usePlatformService,
-  GroupChannelProps,
-} from '@sendbird/uikit-react-native'
+import { GroupChannelProps } from '@sendbird/uikit-react-native'
 
 import { ContractAddr, Moralis } from 'types'
-import { getNftMessageParam } from 'libs/nft'
 import selectNftStore from 'store/selectNftStore'
-import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { nftUriFetcher } from 'libs/nft'
+import { Routes } from 'libs/navigation'
 import useAuth from 'hooks/independent/useAuth'
 import { stringifySendFileData } from 'libs/sendbird'
 
@@ -29,7 +26,7 @@ export type UseGcInputReturn = {
   onClickNextStep: () => Promise<void>
 }
 
-type StepAfterSelectNftType = 'share' | 'send' | 'sell'
+type StepAfterSelectNftType = 'share' | 'send' | 'list'
 
 const useGcInput = ({
   channel,
@@ -46,8 +43,6 @@ const useGcInput = ({
   const [stepAfterSelectNft, setStepAfterSelectNft] =
     useState<StepAfterSelectNftType>()
 
-  const { mediaService } = usePlatformService()
-
   const receiverList = useMemo(
     () => channel.members.filter(x => x.userId !== user?.address) || [],
     [channel.members]
@@ -58,10 +53,7 @@ const useGcInput = ({
       if (stepAfterSelectNft === 'share') {
         await Promise.all(
           _.forEach(selectedNftList, async item => {
-            const imgInfo = await getNftMessageParam({
-              mediaService,
-              uri: item.token_uri,
-            })
+            const imgInfo = await nftUriFetcher(item.token_uri)
             imgInfo.data = stringifySendFileData({
               type: 'share',
               selectedNft: item,
@@ -70,8 +62,8 @@ const useGcInput = ({
           })
         )
         setSelectedNftList([])
-      } else if (stepAfterSelectNft === 'sell') {
-        navigation.navigate(Routes.SellNft, { channelUrl: channel.url })
+      } else if (stepAfterSelectNft === 'list') {
+        navigation.navigate(Routes.ListNft, { channelUrl: channel.url })
       } else if (stepAfterSelectNft === 'send') {
         if (channel.members.length < 3) {
           const target = channel.members.find(x => x.userId !== user?.address)

@@ -1,7 +1,4 @@
 import { FileMessageCreateParams } from '@sendbird/chat/message'
-import { MediaServiceInterface } from '@sendbird/uikit-react-native'
-import { isImage, shouldCompressImage } from '@sendbird/uikit-utils'
-import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 
 import axios from 'axios'
 import { fixIpfsURL } from './ipfs'
@@ -46,40 +43,4 @@ export const nftUriFetcher = async (
     fileSize: 0,
     mimeType: '',
   }
-}
-
-export const getNftMessageParam = async ({
-  mediaService,
-  uri,
-}: {
-  mediaService?: MediaServiceInterface
-  uri: string
-}): Promise<FileMessageCreateParams> => {
-  const img = await nftUriFetcher(uri)
-
-  // Image compression
-  if (
-    mediaService &&
-    img.fileUrl &&
-    img.mimeType?.includes('svg') === false &&
-    isImage(img.fileUrl, img.mimeType) &&
-    shouldCompressImage(img.fileUrl, true)
-  ) {
-    await SBUUtils.safeRun(async () => {
-      if (!img.fileUrl) {
-        return
-      }
-      const compressed = await mediaService.compressImage({
-        uri: img.fileUrl,
-        compressionRate: 0.7,
-      })
-
-      if (compressed) {
-        img.fileUrl = compressed.uri
-        img.fileSize = compressed.size
-      }
-    })
-  }
-
-  return img
 }

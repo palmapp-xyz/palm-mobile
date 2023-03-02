@@ -27,7 +27,7 @@ export enum Routes {
 
   NftDetail = 'NftDetail',
   ZxNftDetail = 'ZxNftDetail',
-  SellNft = 'SellNft',
+  ListNft = 'ListNft',
   SendNft = 'SendNft',
   ChannelListings = 'ChannelListings',
 
@@ -100,7 +100,7 @@ type MainRouteParamsUnion =
       params: { nftContract: ContractAddr; tokenId: string }
     }
   | {
-      route: Routes.SellNft
+      route: Routes.ListNft
       params: { channelUrl: string }
     }
   | {

@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR, UTIL } from 'consts'
 
-import { pToken, SbSellNftDataType } from 'types'
+import { pToken, SbListNftDataType } from 'types'
 import useZxOrder from 'hooks/zx/useZxOrder'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useNftImage from 'hooks/independent/useNftImage'
@@ -15,10 +15,10 @@ import useNftImage from 'hooks/independent/useNftImage'
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
 
-const SellNftMessage = ({
+const ListNftMessage = ({
   data,
 }: {
-  data: SbSellNftDataType
+  data: SbListNftDataType
 }): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
@@ -103,7 +103,7 @@ const SellNftMessage = ({
   )
 }
 
-export default SellNftMessage
+export default ListNftMessage
 
 const styles = StyleSheet.create({
   container: { backgroundColor: 'white', width: 240 },
