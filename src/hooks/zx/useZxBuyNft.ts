@@ -1,3 +1,4 @@
+import { ethers } from 'ethers'
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
 import { PostTxStatus, zx } from 'types'
@@ -22,7 +23,8 @@ const useZxBuyNft = (): UseZxBuyNftReturn => {
           status: PostTxStatus.POST,
         })
         const fillTx = await nftSwapSdk.fillSignedOrder(order, undefined, {
-          gasLimit: 10000000,
+          gasLimit: 8000000,
+          gasPrice: ethers.utils.parseUnits('90', 'gwei'),
         })
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
