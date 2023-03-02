@@ -2,8 +2,8 @@ import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, Text, Pressable, FlatList, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import { COLOR } from 'consts'
+import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 
 const NUM_COLUMNS = 4
 
@@ -24,9 +24,9 @@ const BottomMenu = ({
       {
         icon: 'ios-duplicate',
         onPress: (): void => {
-          useGcInputReturn.setStepAfterSelectNft('sell')
+          useGcInputReturn.setStepAfterSelectNft('list')
         },
-        title: 'Sell NFT',
+        title: 'List NFT',
       },
       {
         icon: 'ios-document-attach-sharp',

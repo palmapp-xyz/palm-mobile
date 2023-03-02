@@ -2,6 +2,10 @@ import React, { ReactElement } from 'react'
 import { Keyboard, StyleSheet, Text, View } from 'react-native'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 import { useRecoilValue } from 'recoil'
+import { SignedNftOrderV4Serialized } from '@traderxyz/nft-swap-sdk'
+import firestore from '@react-native-firebase/firestore'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 import { COLOR, UTIL } from 'consts'
 import { Moralis, Token } from 'types'
@@ -13,20 +17,12 @@ import {
   Row,
   NftRenderer,
 } from 'components'
-import useZxSellNft from 'hooks/zx/useZxSellNft'
+import useZxListNft from 'hooks/zx/useZxListNft'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import selectNftStore from 'store/selectNftStore'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import {
-  usePlatformService,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-import { getNftMessageParam } from 'libs/nft'
+import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
-import { SignedNftOrderV4Serialized } from '@traderxyz/nft-swap-sdk'
-
-import firestore from '@react-native-firebase/firestore'
 
 const Contents = ({
   channelUrl,
@@ -36,11 +32,10 @@ const Contents = ({
   selectedNft: Moralis.NftItem
 }): ReactElement => {
   const { price, setPrice, isApproved, onClickApprove, onClickConfirm } =
-    useZxSellNft({
+    useZxListNft({
       nftContract: selectedNft.token_address,
       tokenId: selectedNft.token_id,
     })
-  const { mediaService } = usePlatformService()
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
 
@@ -51,12 +46,9 @@ const Contents = ({
     if (!channel || !order) {
       return
     }
-    const imgInfo = await getNftMessageParam({
-      mediaService,
-      uri: token_uri,
-    })
+    const imgInfo = await nftUriFetcher(token_uri)
     imgInfo.data = stringifySendFileData({
-      type: 'sell',
+      type: 'list',
       selectedNft,
       nonce: order.nonce,
       ethAmount: UTIL.microfyP(price),
@@ -156,15 +148,15 @@ const Contents = ({
   )
 }
 
-const SellNftScreentsx = (): ReactElement => {
-  const { params, navigation } = useAppNavigation<Routes.SellNft>()
+const ListNftScreen = (): ReactElement => {
+  const { params, navigation } = useAppNavigation<Routes.ListNft>()
 
   const selectedNftList = useRecoilValue(selectNftStore.selectedNftList)
 
   return (
     <Container style={{ flex: 1 }}>
       <Header
-        title="Sell NFT"
+        title="List NFT"
         left={<Icon icon={'close'} />}
         onPressLeft={navigation.goBack}
       />
@@ -178,7 +170,7 @@ const SellNftScreentsx = (): ReactElement => {
   )
 }
 
-export default SellNftScreentsx
+export default ListNftScreen
 
 const styles = StyleSheet.create({
   body: {

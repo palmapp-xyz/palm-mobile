@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { SendbirdMessage } from '@sendbird/uikit-utils'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 
 import {
   createGroupChannelFragment,
@@ -12,8 +13,7 @@ import { Routes } from 'libs/navigation'
 
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
-import MessageRenderer from 'components/molecules/MessageRenderer'
+import { MessageRenderer } from 'components'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
@@ -34,24 +34,6 @@ const GroupChannelScreen = (): ReactElement => {
       <GroupChannelFragment
         channel={channel}
         onPressMediaMessage={(fileMessage, deleteMessage): void => {
-          const nftMessageData = JSON.parse(fileMessage.data || '')
-          if (fileMessage.customType === 'sell' && nftMessageData.nonce) {
-            navigation.navigate(Routes.ZxNftDetail, {
-              nonce: nftMessageData.nonce,
-            })
-            return
-          } else if (
-            fileMessage.customType &&
-            nftMessageData.nft_contract &&
-            nftMessageData.token_id
-          ) {
-            navigation.navigate(Routes.NftDetail, {
-              nftContract: nftMessageData.nft_contract,
-              tokenId: nftMessageData.token_id,
-            })
-            return
-          }
-
           // Navigate to media viewer
           navigation.navigate(Routes.FileViewer, {
             serializedFileMessage: fileMessage.serialize(),

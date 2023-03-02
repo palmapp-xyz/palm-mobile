@@ -16,7 +16,7 @@ import postTxStore from 'store/postTxStore'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 
-export type UseZxSellNftReturn = {
+export type UseZxListNftReturn = {
   isApproved: boolean
   onClickApprove: () => Promise<void>
   onClickConfirm: () => Promise<SignedNftOrderV4Serialized | undefined>
@@ -24,13 +24,13 @@ export type UseZxSellNftReturn = {
   setPrice: (value: Token) => void
 }
 
-const useZxSellNft = ({
+const useZxListNft = ({
   nftContract,
   tokenId,
 }: {
   nftContract: ContractAddr
   tokenId: string
-}): UseZxSellNftReturn => {
+}): UseZxListNftReturn => {
   const { navigation } = useAppNavigation()
   const { nftSwapSdk } = useZx()
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
@@ -137,4 +137,4 @@ const useZxSellNft = ({
   return { onClickApprove, onClickConfirm, isApproved, price, setPrice }
 }
 
-export default useZxSellNft
+export default useZxListNft

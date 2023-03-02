@@ -5,7 +5,7 @@ import { zx } from './zx'
 
 export type SbNftDataType =
   | SbBuyNftDataType
-  | SbSellNftDataType
+  | SbListNftDataType
   | SbSendNftDataType
   | SbShareNftDataType
 
@@ -15,8 +15,8 @@ export type SbBuyNftDataType = {
   buyer: ContractAddr
 }
 
-export type SbSellNftDataType = {
-  type: 'sell'
+export type SbListNftDataType = {
+  type: 'list'
   selectedNft: Moralis.NftItem
   nonce: string
   ethAmount: pToken
