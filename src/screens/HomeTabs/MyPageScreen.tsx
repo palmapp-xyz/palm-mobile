@@ -15,16 +15,28 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR, UTIL } from 'consts'
 
 import { Routes } from 'libs/navigation'
-import { Card, Container, FormImage, MoralisNftRenderer, Row } from 'components'
+import {
+  Card,
+  Container,
+  MediaRenderer,
+  MoralisNftRenderer,
+  Row,
+} from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import useSetting from 'hooks/independent/useSetting'
 import images from 'assets/images'
+import NftItemMenu from 'components/molecules/NftItemMenu'
+import { Moralis } from 'types'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { fetchNftImage } from 'libs/fetchTokenUri'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
   const { user, useMyNftListReturn, balance } = useMyPageMain()
   const { setting } = useSetting()
+  const { currentUser, setCurrentUser, updateCurrentUserInfo } =
+    useSendbirdChat()
 
   return (
     <ScrollView
@@ -49,9 +61,10 @@ const MyPageScreen = (): ReactElement => {
               </Pressable>
             </View>
             <View style={styles.profileImgBox}>
-              <FormImage
-                source={images.profile_temp}
-                size={100}
+              <MediaRenderer
+                src={currentUser?.plainProfileUrl || images.profile_temp}
+                width={100}
+                height={100}
                 style={{ borderRadius: 50 }}
               />
             </View>
@@ -93,23 +106,44 @@ const MyPageScreen = (): ReactElement => {
             contentContainerStyle={{ gap: 10 }}
             columnWrapperStyle={{ gap: 10 }}
             scrollEnabled={false}
-            renderItem={({ item }): ReactElement => {
-              return (
-                <TouchableWithoutFeedback onPress={() => {
+            renderItem={({ item }): ReactElement => (
+              <TouchableWithoutFeedback
+                onPress={(): void => {
                   navigation.navigate(Routes.NftDetail, {
                     nftContract: item.token_address,
                     tokenId: item.token_id,
                   })
                 }}>
-                  <View style={{ borderRadius: 10, flex: 1 }}>
-                    <MoralisNftRenderer item={item} width="100%" height={150} />
-                    <View style={styles.nftTitle}>
-                      <Text>{`#${item.token_id}`}</Text>
-                    </View>
-                  </View>
-                </TouchableWithoutFeedback>
-              )
-            }}
+                <View style={{ borderRadius: 10, flex: 1 }}>
+                  <MoralisNftRenderer item={item} width={'100%'} height={180} />
+                  <NftItemMenu
+                    item={item}
+                    triggerComponent={
+                      <View style={styles.nftTitle}>
+                        <Text>{`#${item.token_id}`}</Text>
+                      </View>
+                    }
+                    onSelect={async (
+                      selectedItem: Moralis.NftItem,
+                      selectedOption: string
+                    ): Promise<void> => {
+                      try {
+                        if (selectedOption === 'set_nft_profile') {
+                          const url = await fetchNftImage({
+                            metadata: selectedItem.metadata,
+                            tokenUri: selectedItem.token_uri,
+                          })
+                          const me = await updateCurrentUserInfo(undefined, url)
+                          setCurrentUser(me)
+                        }
+                      } catch (e) {
+                        console.error(e, selectedItem, selectedOption)
+                      }
+                    }}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )}
           />
         </View>
       </Container>
@@ -144,5 +178,6 @@ const styles = StyleSheet.create({
     margin: 10,
     alignSelf: 'center',
     bottom: 0,
+    flex: 1,
   },
 })
