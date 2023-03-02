@@ -11,7 +11,7 @@ import {
 import { parseSendFileData } from 'libs/sendbird'
 import { MediaRenderer } from 'components'
 
-import SellNftMessage from './SellNftMessage'
+import ListNftMessage from './ListNftMessage'
 import ShareNftMessage from './ShareNftMessage'
 import SendNftMessage from './SendNftMessage'
 import BuyNftMessage from './BuyNftMessage'
@@ -22,8 +22,8 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
   const parsedData = parseSendFileData(message.data || '')
   if (parsedData) {
     switch (parsedData.type) {
-      case 'sell':
-        return <SellNftMessage data={parsedData} />
+      case 'list':
+        return <ListNftMessage data={parsedData} />
       case 'share':
         return <ShareNftMessage data={parsedData} />
       case 'send':

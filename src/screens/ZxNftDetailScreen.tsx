@@ -2,10 +2,7 @@ import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import Icon from 'react-native-vector-icons/Ionicons'
-import {
-  usePlatformService,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { COLOR, UTIL } from 'consts'
@@ -17,7 +14,7 @@ import useZxCancelNft from 'hooks/zx/useZxCancelNft'
 import useZxBuyNft from 'hooks/zx/useZxBuyNft'
 import { navigationRef, Routes } from 'libs/navigation'
 import useZxOrder from 'hooks/zx/useZxOrder'
-import { getNftMessageParam } from 'libs/nft'
+import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import useMoralisNftImage from 'hooks/independent/useNftImage'
 
@@ -40,7 +37,6 @@ const Contents = ({
 
   const queryClient = useQueryClient()
 
-  const { mediaService } = usePlatformService()
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl || '')
 
@@ -77,13 +73,8 @@ const Contents = ({
               await onClickCancel({ nonce: selectedNft.order.nonce })
             } else {
               await onClickBuy({ order: selectedNft.order })
-              console.log('aaaa')
               if (channel && uri && user) {
-                console.log('bbbb')
-                const imgInfo = await getNftMessageParam({
-                  mediaService,
-                  uri,
-                })
+                const imgInfo = await nftUriFetcher(uri)
                 imgInfo.data = stringifySendFileData({
                   type: 'buy',
                   selectedNft,
