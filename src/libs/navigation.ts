@@ -93,7 +93,7 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.ZxNftDetail
-      params: { nonce: string }
+      params: { nonce: string; channelUrl?: string }
     }
   | {
       route: Routes.NftDetail

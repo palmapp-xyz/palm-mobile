@@ -3,59 +3,39 @@ import { StyleSheet, Text, View } from 'react-native'
 import FormButton from 'components/atoms/FormButton'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR, UTIL } from 'consts'
 
-import { SbSendNftDataType } from 'types'
+import { SbBuyNftDataType } from 'types'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
-import Row from '../../atoms/Row'
-import LinkExplorer from 'components/atoms/LinkExplorer'
 import useNftImage from 'hooks/independent/useNftImage'
 
-const SendNftMessage = ({
-  data,
-}: {
-  data: SbSendNftDataType
-}): ReactElement => {
+const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
 
   const item = data.selectedNft
   const { uri } = useNftImage({
-    nftContract: item.token_address,
-    tokenId: item.token_id,
-    metadata: item.metadata,
+    nftContract: item.nftToken,
+    tokenId: item.nftTokenId,
   })
 
   return (
     <View style={styles.container}>
       <MediaRenderer src={uri} width={'100%'} height={150} />
       <View style={styles.body}>
-        <Row style={{ alignItems: 'center', columnGap: 5 }}>
-          <Icon
-            name="ios-shield-checkmark"
-            color={COLOR.primary._400}
-            size={20}
-          />
-          <Text
-            numberOfLines={2}
-            style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
-        </Row>
-        <View>
-          <LinkExplorer type="account" address={data.from}>
-            <Text>{`from : ${UTIL.truncate(data.from)}`}</Text>
-          </LinkExplorer>
-          <LinkExplorer type="account" address={data.to}>
-            <Text>{`to : ${UTIL.truncate(data.to)}`}</Text>
-          </LinkExplorer>
-        </View>
+        <Text
+          numberOfLines={2}
+          style={{
+            color: 'black',
+          }}>{`${UTIL.truncate(data.buyer)} bought #${item.nftTokenId}`}</Text>
+
         <FormButton
           size="sm"
           onPress={(): void => {
             navigation.navigate(Routes.NftDetail, {
-              nftContract: item.token_address,
-              tokenId: item.token_id,
+              nftContract: item.nftToken,
+              tokenId: item.nftTokenId,
             })
           }}>
           Details
@@ -65,7 +45,7 @@ const SendNftMessage = ({
   )
 }
 
-export default SendNftMessage
+export default BuyNftMessage
 
 const styles = StyleSheet.create({
   container: { backgroundColor: 'white', width: 240 },

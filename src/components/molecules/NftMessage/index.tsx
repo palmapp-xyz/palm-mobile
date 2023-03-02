@@ -14,6 +14,7 @@ import { MediaRenderer } from 'components'
 import SellNftMessage from './SellNftMessage'
 import ShareNftMessage from './ShareNftMessage'
 import SendNftMessage from './SendNftMessage'
+import BuyNftMessage from './BuyNftMessage'
 
 const NftMessage = (props: FileMessageProps): ReactElement => {
   const { colors } = useUIKitTheme()
@@ -27,6 +28,8 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
         return <ShareNftMessage data={parsedData} />
       case 'send':
         return <SendNftMessage data={parsedData} />
+      case 'buy':
+        return <BuyNftMessage data={parsedData} />
     }
   }
 

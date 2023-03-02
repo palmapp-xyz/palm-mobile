@@ -7,11 +7,10 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR, UTIL } from 'consts'
 
-import { pToken, QueryKeyEnum, SbSellNftDataType } from 'types'
-import { fetchNftImage } from 'libs/fetchTokenUri'
+import { pToken, SbSellNftDataType } from 'types'
 import useZxOrder from 'hooks/zx/useZxOrder'
 import useEthPrice from 'hooks/independent/useEthPrice'
-import useReactQuery from 'hooks/complex/useReactQuery'
+import useNftImage from 'hooks/independent/useNftImage'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
@@ -21,19 +20,35 @@ const SellNftMessage = ({
 }: {
   data: SbSellNftDataType
 }): ReactElement => {
-  const { navigation } = useAppNavigation()
+  const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
   const item = data.selectedNft
-  const { data: uri } = useReactQuery(
-    [QueryKeyEnum.MORALIS_NFT_IMAGE, item.token_address, item.token_id],
-    () => fetchNftImage({ metadata: item.metadata, tokenUri: item.token_uri })
-  )
+  const { uri } = useNftImage({
+    nftContract: item.token_address,
+    tokenId: item.token_id,
+    metadata: item.metadata,
+  })
+
   const { order } = useZxOrder({ nonce: data.nonce })
   const { getEthPrice } = useEthPrice()
 
   return (
     <View style={styles.container}>
       <MediaRenderer src={uri} width={'100%'} height={150} />
+      {!order && (
+        <View
+          style={{
+            position: 'absolute',
+            backgroundColor: COLOR.error,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            borderRadius: 5,
+            margin: 5,
+            right: 0,
+          }}>
+          <Text style={{ color: 'white' }}>Sold</Text>
+        </View>
+      )}
       <View style={styles.body}>
         <Row style={{ alignItems: 'center', columnGap: 5 }}>
           <Icon
@@ -45,38 +60,37 @@ const SellNftMessage = ({
             numberOfLines={2}
             style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
         </Row>
-        {order && (
-          <View style={styles.priceBox}>
-            <Row style={styles.priceRow}>
-              <Text>ETH</Text>
-              <Text
-                style={{
-                  color: COLOR.primary._400,
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                }}>
-                {UTIL.formatAmountP(
-                  (order.order.erc20TokenAmount || '0') as pToken
-                )}
-              </Text>
-            </Row>
-            <Row style={styles.priceRow}>
-              <Text>Price</Text>
-              <Text style={{ fontSize: 12 }}>
-                $
-                {UTIL.formatAmountP(
-                  getEthPrice(order.order.erc20TokenAmount || ('0' as pToken)),
-                  { toFix: 0 }
-                )}
-              </Text>
-            </Row>
-          </View>
-        )}
+        <View style={styles.priceBox}>
+          <Row style={styles.priceRow}>
+            <Text>ETH</Text>
+            <Text
+              style={{
+                color: COLOR.primary._400,
+                fontSize: 16,
+                fontWeight: 'bold',
+              }}>
+              {UTIL.formatAmountP((data.ethAmount || '0') as pToken)}
+            </Text>
+          </Row>
+          <Row style={styles.priceRow}>
+            <Text>Price</Text>
+            <Text style={{ fontSize: 12 }}>
+              $
+              {UTIL.formatAmountP(
+                getEthPrice(data.ethAmount || ('0' as pToken)),
+                { toFix: 0 }
+              )}
+            </Text>
+          </Row>
+        </View>
         <FormButton
           size="sm"
           onPress={(): void => {
             order
-              ? navigation.navigate(Routes.ZxNftDetail, { nonce: data.nonce })
+              ? navigation.navigate(Routes.ZxNftDetail, {
+                  nonce: data.nonce,
+                  channelUrl: params.channelUrl,
+                })
               : navigation.navigate(Routes.NftDetail, {
                   nftContract: item.token_address,
                   tokenId: item.token_id,

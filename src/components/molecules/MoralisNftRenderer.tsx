@@ -1,12 +1,11 @@
 import React, { ReactElement } from 'react'
 import { FlexStyle, useWindowDimensions, View } from 'react-native'
 
-import { Moralis, QueryKeyEnum } from 'types'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { fetchNftImage } from 'libs/fetchTokenUri'
+import { Moralis } from 'types'
 import MediaRenderer from '../atoms/MediaRenderer'
 import ErrorBoundary from '../atoms/ErrorBoundary'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
+import useNftImage from 'hooks/independent/useNftImage'
 
 const MoralisNftRenderer = ({
   item,
@@ -24,11 +23,11 @@ const MoralisNftRenderer = ({
 
   const dim = windowWidth / (isLandscape ? 4 : 2)
 
-  const { data: uri } = useReactQuery(
-    [QueryKeyEnum.MORALIS_NFT_IMAGE, item.token_address, item.token_id],
-    () => fetchNftImage({ metadata: item.metadata, tokenUri: item.token_uri })
-  )
-
+  const { uri } = useNftImage({
+    nftContract: item.token_address,
+    tokenId: item.token_id,
+    metadata: item.metadata,
+  })
   const props = {
     src: typeof uri === 'string' ? uri : `${uri}`,
     alt: `${item.name}:${item.token_id}`,
