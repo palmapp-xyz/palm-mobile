@@ -2,18 +2,32 @@ import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import Icon from 'react-native-vector-icons/Ionicons'
+import {
+  usePlatformService,
+  useSendbirdChat,
+} from '@sendbird/uikit-react-native'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { COLOR, UTIL } from 'consts'
 import { QueryKeyEnum, zx } from 'types'
-import { Container, Header, NftRenderer, SubmitButton } from 'components'
+import { Container, Header, MediaRenderer, SubmitButton } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
 import useZxCancelNft from 'hooks/zx/useZxCancelNft'
 import useZxBuyNft from 'hooks/zx/useZxBuyNft'
 import { navigationRef, Routes } from 'libs/navigation'
 import useZxOrder from 'hooks/zx/useZxOrder'
+import { getNftMessageParam } from 'libs/nft'
+import { stringifySendFileData } from 'libs/sendbird'
+import useMoralisNftImage from 'hooks/independent/useNftImage'
 
-const Contents = ({ selectedNft }: { selectedNft: zx.order }): ReactElement => {
+const Contents = ({
+  selectedNft,
+  channelUrl,
+}: {
+  selectedNft: zx.order
+  channelUrl?: string
+}): ReactElement => {
   const { user } = useAuth()
   const isMine =
     selectedNft.order.maker.toLocaleLowerCase() ===
@@ -26,15 +40,19 @@ const Contents = ({ selectedNft }: { selectedNft: zx.order }): ReactElement => {
 
   const queryClient = useQueryClient()
 
+  const { mediaService } = usePlatformService()
+  const { sdk } = useSendbirdChat()
+  const { channel } = useGroupChannel(sdk, channelUrl || '')
+
+  const { uri } = useMoralisNftImage({
+    nftContract: selectedNft.nftToken,
+    tokenId: selectedNft.nftTokenId,
+  })
+
   return (
     <View style={styles.body}>
       <View style={styles.imageBox}>
-        <View style={{ height: 250 }}>
-          <NftRenderer
-            tokenId={selectedNft.order.erc721TokenId}
-            nftContract={selectedNft.order.erc721Token}
-          />
-        </View>
+        <MediaRenderer src={uri} width={'100%'} height={250} />
       </View>
       <View style={styles.info}>
         <View style={styles.infoDetails}>
@@ -55,9 +73,25 @@ const Contents = ({ selectedNft }: { selectedNft: zx.order }): ReactElement => {
         </View>
         <SubmitButton
           onPress={async (): Promise<void> => {
-            isMine
-              ? await onClickCancel({ nonce: selectedNft.order.nonce })
-              : await onClickBuy({ order: selectedNft.order })
+            if (isMine) {
+              await onClickCancel({ nonce: selectedNft.order.nonce })
+            } else {
+              await onClickBuy({ order: selectedNft.order })
+              console.log('aaaa')
+              if (channel && uri && user) {
+                console.log('bbbb')
+                const imgInfo = await getNftMessageParam({
+                  mediaService,
+                  uri,
+                })
+                imgInfo.data = stringifySendFileData({
+                  type: 'buy',
+                  selectedNft,
+                  buyer: user.address,
+                })
+                channel.sendFileMessage(imgInfo)
+              }
+            }
             queryClient.removeQueries([QueryKeyEnum.ZX_ORDERS])
 
             const currRoute = navigationRef.getCurrentRoute()
@@ -89,7 +123,7 @@ const ZxNftDetailScreen = (): ReactElement => {
         }
         onPressLeft={navigation.goBack}
       />
-      {order && <Contents selectedNft={order} />}
+      {order && <Contents selectedNft={order} channelUrl={params.channelUrl} />}
     </Container>
   )
 }

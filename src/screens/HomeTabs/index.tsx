@@ -35,7 +35,7 @@ const HomeTabs = (): ReactElement => {
 
   return (
     <Tab.Navigator
-      initialRouteName={Routes.Feed}
+      initialRouteName={Routes.GroupChannelList}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,

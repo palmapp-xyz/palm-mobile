@@ -7,12 +7,11 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR } from 'consts'
 
-import { QueryKeyEnum, SbShareNftDataType } from 'types'
-import { fetchNftImage } from 'libs/fetchTokenUri'
-import useReactQuery from 'hooks/complex/useReactQuery'
+import { SbShareNftDataType } from 'types'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
+import useNftImage from 'hooks/independent/useNftImage'
 
 const ShareNftMessage = ({
   data,
@@ -22,10 +21,11 @@ const ShareNftMessage = ({
   const { navigation } = useAppNavigation()
 
   const item = data.selectedNft
-  const { data: uri } = useReactQuery(
-    [QueryKeyEnum.MORALIS_NFT_IMAGE, item.token_address, item.token_id],
-    () => fetchNftImage({ metadata: item.metadata, tokenUri: item.token_uri })
-  )
+  const { uri } = useNftImage({
+    nftContract: item.token_address,
+    tokenId: item.token_id,
+    metadata: item.metadata,
+  })
 
   return (
     <View style={styles.container}>

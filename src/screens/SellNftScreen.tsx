@@ -59,6 +59,7 @@ const Contents = ({
       type: 'sell',
       selectedNft,
       nonce: order.nonce,
+      ethAmount: UTIL.microfyP(price),
     })
     channel.sendFileMessage(imgInfo)
 
@@ -103,7 +104,6 @@ const Contents = ({
         </Row>
         <Text style={{ fontSize: 20 }}>Price</Text>
         <FormInput
-          keyboardType="number-pad"
           maxLength={10}
           value={price}
           onChangeText={(value): void => {
