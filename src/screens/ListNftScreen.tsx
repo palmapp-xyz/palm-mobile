@@ -23,6 +23,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import selectNftStore from 'store/selectNftStore'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
+import useFsChannel from 'hooks/firestore/useFsChannel'
 
 const Contents = ({
   channelUrl,
@@ -39,11 +40,13 @@ const Contents = ({
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
 
+  const { fsChannel } = useFsChannel({ channelUrl })
+
   const onSubmit = async (
     token_uri: string,
     order: SignedNftOrderV4Serialized | undefined
   ): Promise<void> => {
-    if (!channel || !order) {
+    if (!channel || !order || !fsChannel) {
       return
     }
     const imgInfo = await nftUriFetcher(token_uri)
@@ -56,21 +59,8 @@ const Contents = ({
     channel.sendFileMessage(imgInfo)
 
     try {
-      const channelDoc = await firestore()
-        .collection('channels')
-        .doc(channel.url)
-        .get()
-      // legacy: add the non-existing (if not exists) channel to firestore
-      if (!channelDoc.exists) {
-        await firestore()
-          .collection('channels')
-          .doc(channel.url)
-          .set({ url: channel.url, channelType: channel.channelType })
-      }
       // add the new listing item to the corresponding channel doc firestore
-      await firestore()
-        .collection('channels')
-        .doc(channel.url)
+      await fsChannel
         .collection('listings')
         .doc(order.nonce)
         .set({ order, status: 'active' })

@@ -11,7 +11,6 @@ import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
 import { useAppNavigation } from '../../hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { COLOR } from 'consts'
 
 const GroupChannelSettingsFragment = createGroupChannelSettingsFragment()
 const GroupChannelSettingsScreen = (): ReactElement => {
@@ -47,6 +46,17 @@ const GroupChannelSettingsScreen = (): ReactElement => {
         navigation.navigate(Routes.GroupChannelNotifications, params)
       }}
       menuItemsCreator={(items: MenuBarProps[]): MenuBarProps[] => {
+        if (channel.myRole === 'operator') {
+          items.unshift({
+            icon: 'ban',
+            name: 'Token Gating',
+            actionItem: <Icon name={'chevron-forward-outline'} size={28} />,
+            onPress: () => {
+              navigation.navigate(Routes.ChannelTokenGating, params)
+            },
+          })
+        }
+
         items.unshift({
           icon: 'archive',
           name: 'Listings',
