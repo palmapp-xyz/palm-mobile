@@ -1,12 +1,16 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { ReactElement, useState } from 'react'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
+import firestore from '@react-native-firebase/firestore'
 
-import { COLOR } from 'consts'
-import { ContractAddr } from 'types'
+import { COLOR, UTIL } from 'consts'
+import { ContractAddr, FbListing } from 'types'
 import { Container, Header, NftRenderer } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import useNft from 'hooks/contract/useNft'
+import useAuth from 'hooks/independent/useAuth'
 
 const Contents = ({
   nftContract,
@@ -15,6 +19,47 @@ const Contents = ({
   nftContract: ContractAddr
   tokenId: string
 }): ReactElement => {
+  const { ownerOf } = useNft({ nftContract })
+  const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
+  const { user } = useAuth()
+
+  const isMine =
+    tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
+
+  const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
+    []
+  )
+
+  useAsyncEffect(async (): Promise<void> => {
+    const owner = await ownerOf({ tokenId })
+    setTokenOwner(owner)
+
+    const activeListings: FbListing[] = []
+    try {
+      await firestore()
+        .collection('listings')
+        .doc(nftContract)
+        .collection('orders')
+        .get()
+        .then(ordersSnapshot => {
+          ordersSnapshot.forEach(orderSnapshot => {
+            const listing = orderSnapshot.data() as FbListing
+            if (
+              listing.order &&
+              listing.status === 'active' &&
+              listing.channelUrl
+            ) {
+              activeListings.push(listing)
+            }
+          })
+        })
+
+      setActiveListedChannels(activeListings)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [nftContract, tokenId])
+
   return (
     <View style={styles.body}>
       <View style={styles.imageBox}>
@@ -24,14 +69,32 @@ const Contents = ({
       </View>
       <View style={styles.info}>
         <View style={styles.infoDetails}>
+          {tokenOwner && (
+            <View>
+              <Text style={styles.headText}>Owner</Text>
+              <Text>{isMine ? 'Mine' : UTIL.truncate(tokenOwner)}</Text>
+            </View>
+          )}
           <View>
-            <Text>Token Contract</Text>
+            <Text style={styles.headText}>Token Contract</Text>
             <Text>{nftContract}</Text>
           </View>
           <View>
-            <Text>Token ID</Text>
+            <Text style={styles.headText}>Token ID</Text>
             <Text>{tokenId}</Text>
           </View>
+          {isMine && (
+            <View>
+              <Text style={styles.headText}>Active Listings</Text>
+              <FlatList
+                data={activeListedChannels}
+                keyExtractor={(_, index): string => `active-listing-${index}`}
+                renderItem={({ item }): ReactElement => {
+                  return <Text>{item.channelUrl}</Text>
+                }}
+              />
+            </View>
+          )}
         </View>
       </View>
     </View>
@@ -70,4 +133,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   infoDetails: { rowGap: 10 },
+  headText: {
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
 })

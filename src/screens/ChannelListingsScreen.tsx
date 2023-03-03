@@ -17,7 +17,7 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import firestore from '@react-native-firebase/firestore'
-import { zx } from 'types'
+import { FbListing, zx } from 'types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 
@@ -56,9 +56,9 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {
-            const order = documentSnapshot.data() as zx.order['order']
-            if (order) {
-              orders.push(order)
+            const listing = documentSnapshot.data() as FbListing
+            if (listing.order && listing.status === 'active') {
+              orders.push(listing.order)
             }
           })
         })

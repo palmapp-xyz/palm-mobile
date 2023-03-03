@@ -10,6 +10,7 @@ export type UseNftReturn = {
     owner: ContractAddr
     operator: ContractAddr
   }) => Promise<boolean | undefined>
+  ownerOf: (props: { tokenId: string }) => Promise<ContractAddr | undefined>
   balanceOf: (props: { owner: ContractAddr }) => Promise<string | undefined>
   tokenOfOwnerByIndex: (props: {
     owner: ContractAddr
@@ -44,6 +45,16 @@ const useNft = ({
     operator: ContractAddr
   }): Promise<boolean | undefined> =>
     callMethod<boolean>('isApprovedForAll', [owner, operator])
+
+  /**
+   * @returns owner of
+   */
+  const ownerOf = async ({
+    tokenId,
+  }: {
+    tokenId: string
+  }): Promise<ContractAddr | undefined> =>
+    callMethod<ContractAddr>('ownerOf', [tokenId])
 
   /**
    * @returns token amount
@@ -95,6 +106,7 @@ const useNft = ({
 
   return {
     isApprovedForAll,
+    ownerOf,
     balanceOf,
     tokenOfOwnerByIndex,
     tokenURI,
