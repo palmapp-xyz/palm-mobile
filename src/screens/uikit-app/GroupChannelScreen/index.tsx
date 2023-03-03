@@ -1,36 +1,77 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect, useMemo } from 'react'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { SendbirdMessage } from '@sendbird/uikit-utils'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
+import { useQuery } from 'react-query'
+import { Alert, View } from 'react-native'
 
 import {
   createGroupChannelFragment,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
-import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 
+import { ContractAddr, QueryKeyEnum } from 'types'
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
 import { MessageRenderer } from 'components'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import useNft from 'hooks/contract/useNft'
+import useAuth from 'hooks/independent/useAuth'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
   MessageList: GroupChannelMessageList,
 })
 
+const HasGatingToken = ({
+  gatingToken,
+}: {
+  gatingToken: ContractAddr
+}): ReactElement => {
+  const { navigation } = useAppNavigation()
+  const { user } = useAuth()
+  const { balanceOf } = useNft({ nftContract: gatingToken })
+  const { data: balance } = useQuery(
+    [QueryKeyEnum.NFT_TOKEN_BALANCE_OF],
+    async () => {
+      if (user) {
+        return balanceOf({ owner: user.address })
+      }
+    }
+  )
+
+  useEffect(() => {
+    if (balance === '0') {
+      Alert.alert(`You don't have ${gatingToken}`)
+      navigation.goBack()
+    }
+  }, [balance])
+
+  return <View />
+}
+
 const GroupChannelScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, params.channelUrl)
+
+  const { fsChannelField } = useFsChannel({ channelUrl: params.channelUrl })
+  const gatingToken = useMemo(
+    () => fsChannelField?.gatingToken,
+    [fsChannelField]
+  )
+
   if (!channel) {
     return <></>
   }
 
   return (
     <>
+      {gatingToken && <HasGatingToken gatingToken={gatingToken} />}
       <GroupChannelFragment
         channel={channel}
         onPressMediaMessage={(fileMessage, deleteMessage): void => {

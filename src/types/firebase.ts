@@ -1,4 +1,5 @@
 import { ChannelType } from '@sendbird/chat'
+import { ContractAddr } from './contracts'
 import { zx } from './zx'
 
 export type FbListingState = 'active' | 'completed' | 'cancelled'
@@ -9,8 +10,13 @@ export type FbListing = {
   channelUrl?: string
 }
 
-export type FbChannel = {
+export type FbChannelField = {
   url: string
   channelType: ChannelType
-  listings: FbListing
+  gatingToken?: ContractAddr
+}
+
+export enum FirestoreKeyEnum {
+  Channel = 'Channel',
+  ChannelField = 'ChannelField',
 }

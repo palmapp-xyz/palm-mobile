@@ -32,6 +32,7 @@ import {
   ListNftScreen,
   NftDetailScreen,
   ChannelListingsScreen,
+  ChannelTokenGatingScreen,
 } from '../screens'
 import FileViewerScreen from '../screens/uikit-app/FileViewerScreen'
 import useAuth from 'hooks/independent/useAuth'
@@ -70,6 +71,10 @@ const Navigation = (): ReactElement => {
             <RootStack.Screen
               name={Routes.ChannelListings}
               component={ChannelListingsScreen}
+            />
+            <RootStack.Screen
+              name={Routes.ChannelTokenGating}
+              component={ChannelTokenGatingScreen}
             />
 
             <RootStack.Screen name={Routes.SendNft} component={SendNftScreen} />

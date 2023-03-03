@@ -12,46 +12,30 @@ import { Container, Header, NftRenderer } from 'components'
 
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import firestore from '@react-native-firebase/firestore'
 import { FbListing, zx } from 'types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
+import useFsChannel from 'hooks/firestore/useFsChannel'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ChannelListings>()
 
-  const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl)
-
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [orderList, setOrderList] = useState<zx.order['order'][]>([])
 
+  const { fsChannel } = useFsChannel({ channelUrl })
+
   useAsyncEffect(async () => {
-    if (!channel) {
+    if (!fsChannel) {
       return
     }
 
     try {
-      const channelDoc = await firestore()
-        .collection('channels')
-        .doc(channel.url)
-        .get()
-      // legacy: add the non-existing (if not exists) channel to firestore
-      if (!channelDoc.exists) {
-        await firestore()
-          .collection('channels')
-          .doc(channel.url)
-          .set({ url: channel.url, channelType: channel.channelType })
-      }
       // add the new listing item to the corresponding channel doc firestore
       const orders: zx.order['order'][] = []
-      await firestore()
-        .collection('channels')
-        .doc(channel.url)
+      await fsChannel
         .collection('listings')
         .get()
         .then(querySnapshot => {
@@ -67,7 +51,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
     } catch (e) {
       console.error(e)
     }
-  }, [channel, isFetching])
+  }, [fsChannel, isFetching])
 
   return (
     <ScrollView
