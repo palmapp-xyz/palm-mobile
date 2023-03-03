@@ -73,7 +73,15 @@ const Contents = ({
         .doc(channel.url)
         .collection('listings')
         .doc(order.nonce)
-        .set(order)
+        .set({ order, status: 'active' })
+
+      // also add to listings collection for keeping track of listed channels for the nft
+      await firestore()
+        .collection('listings')
+        .doc(selectedNft.token_address)
+        .collection('orders')
+        .doc(order.nonce)
+        .set({ order, channelUrl, status: 'active' })
     } catch (e) {
       console.error(e)
     }
@@ -99,6 +107,9 @@ const Contents = ({
           maxLength={10}
           value={price}
           onChangeText={(value): void => {
+            if (!value) {
+              return
+            }
             setPrice(value as Token)
           }}
         />

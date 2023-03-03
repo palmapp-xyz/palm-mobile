@@ -1,12 +1,14 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { ReactElement, useState } from 'react'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
+import firestore from '@react-native-firebase/firestore'
 
 import { COLOR, UTIL } from 'consts'
-import { QueryKeyEnum, zx } from 'types'
+import { FbListing, QueryKeyEnum, zx } from 'types'
 import { Container, Header, MediaRenderer, SubmitButton } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
@@ -31,9 +33,9 @@ const Contents = ({
     user?.address.toLocaleLowerCase()
   const { navigation } = useAppNavigation()
 
-  const { onClickConfirm: onClickCancel } = useZxCancelNft()
+  const { onClickConfirm: onClickCancel } = useZxCancelNft(channelUrl ?? '')
 
-  const { onClickConfirm: onClickBuy } = useZxBuyNft()
+  const { onClickConfirm: onClickBuy } = useZxBuyNft(channelUrl ?? '')
 
   const queryClient = useQueryClient()
 
@@ -45,6 +47,37 @@ const Contents = ({
     tokenId: selectedNft.nftTokenId,
   })
 
+  const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
+    []
+  )
+
+  useAsyncEffect(async () => {
+    const activeListings: FbListing[] = []
+    try {
+      await firestore()
+        .collection('listings')
+        .doc(selectedNft.nftToken)
+        .collection('orders')
+        .get()
+        .then(ordersSnapshot => {
+          ordersSnapshot.forEach(orderSnapshot => {
+            const listing = orderSnapshot.data() as FbListing
+            if (
+              listing.order &&
+              listing.status === 'active' &&
+              listing.channelUrl
+            ) {
+              activeListings.push(listing)
+            }
+          })
+        })
+
+      setActiveListedChannels(activeListings)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [selectedNft])
+
   return (
     <View style={styles.body}>
       <View style={styles.imageBox}>
@@ -53,24 +86,36 @@ const Contents = ({
       <View style={styles.info}>
         <View style={styles.infoDetails}>
           <View>
-            <Text>Owner</Text>
+            <Text style={styles.headText}>Owner</Text>
             <Text>
               {isMine ? 'Mine' : UTIL.truncate(selectedNft.order.maker)}
             </Text>
           </View>
           <View>
-            <Text>Token</Text>
+            <Text style={styles.headText}>Token</Text>
             <Text>{selectedNft.order.erc721Token}</Text>
           </View>
           <View>
-            <Text>Price</Text>
+            <Text style={styles.headText}>Price</Text>
             <Text>{UTIL.formatAmountP(selectedNft.erc20TokenAmount)} ETH</Text>
           </View>
+          {isMine && (
+            <View>
+              <Text style={styles.headText}>Active Listings</Text>
+              <FlatList
+                data={activeListedChannels}
+                keyExtractor={(_, index): string => `active-listing-${index}`}
+                renderItem={({ item }): ReactElement => {
+                  return <Text>{item.channelUrl}</Text>
+                }}
+              />
+            </View>
+          )}
         </View>
         <SubmitButton
           onPress={async (): Promise<void> => {
             if (isMine) {
-              await onClickCancel({ nonce: selectedNft.order.nonce })
+              await onClickCancel({ order: selectedNft.order })
             } else {
               await onClickBuy({ order: selectedNft.order })
               if (channel && uri && user) {
@@ -134,4 +179,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   infoDetails: { rowGap: 10 },
+  headText: {
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
 })
