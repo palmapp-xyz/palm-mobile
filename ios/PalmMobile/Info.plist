@@ -70,5 +70,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>appcenter-cfbf892f-d28b-48b0-ac41-c652904513d3</string>
+		</array>
+	</dict>
+	</array>
 </dict>
 </plist>
