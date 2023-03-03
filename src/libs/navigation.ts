@@ -30,6 +30,7 @@ export enum Routes {
   ListNft = 'ListNft',
   SendNft = 'SendNft',
   ChannelListings = 'ChannelListings',
+  ChannelTokenGating = 'ChannelTokenGating',
 
   GroupChannel = 'GroupChannel',
 
@@ -109,6 +110,10 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.ChannelListings
+      params: { channelUrl: string }
+    }
+  | {
+      route: Routes.ChannelTokenGating
       params: { channelUrl: string }
     }
   | {
