@@ -54,6 +54,7 @@ target 'PalmMobile' do
   pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary"
   pod 'Permission-PhotoLibraryAddOnly', :path => "#{permissions_path}/PhotoLibraryAddOnly"
 
+  pod 'AppCenter/Distribute'
   
   target 'PalmMobileTests' do
     inherit! :complete

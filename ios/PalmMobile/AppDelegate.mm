@@ -3,6 +3,13 @@
 
 #import <React/RCTBundleURLProvider.h>
 
+#import <AppCenterReactNative.h>
+#import <AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNativeCrashes.h>
+
+#import "AppCenter/AppCenter.h"
+#import "AppCenterDistribute/AppCenterDistribute.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -13,7 +20,13 @@
   self.initialProps = @{};
 
   [FIRApp configure];
+  
+  [AppCenterReactNative register];
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
 
+  [MSACAppCenter start:@"cfbf892f-d28b-48b0-ac41-c652904513d3" withServices:@[[MSACDistribute class]]];
+  
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
