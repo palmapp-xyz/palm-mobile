@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   profileImgBox: {
     borderRadius: 999,
     alignSelf: 'center',
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: 'white',
   },
   settingIcon: {

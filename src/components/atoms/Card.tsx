@@ -9,5 +9,5 @@ const Card = (props: ViewProps): ReactElement => {
 export default Card
 
 const styles = StyleSheet.create({
-  container: { padding: 30, borderRadius: 40, backgroundColor: 'white' },
+  container: { padding: 30, borderRadius: 30, backgroundColor: 'white' },
 })

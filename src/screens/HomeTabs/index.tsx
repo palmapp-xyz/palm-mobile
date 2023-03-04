@@ -11,8 +11,8 @@ import { Routes } from 'libs/navigation'
 
 import GroupChannelListScreen from './GroupChannelListScreen'
 import MyPageScreen from './MyPageScreen'
-import FeedScreen from './FeedScreen'
-import NftListScreen from './NftListScreen'
+// import FeedScreen from './FeedScreen'
+// import NftListScreen from './NftListScreen'
 import LensFriendsScreen from './LensFriendsScreen'
 
 const Tab = createBottomTabNavigator()
@@ -41,21 +41,21 @@ const HomeTabs = (): ReactElement => {
         headerShown: false,
         tabBarShowLabel: false,
       }}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name={Routes.Feed}
         component={FeedScreen}
         options={{ tabBarIcon: TabIcon({ name: 'ios-people' }) }}
-      />
+      /> */}
       <Tab.Screen
         name={Routes.LensFriends}
         component={LensFriendsScreen}
-        options={{ tabBarIcon: TabIcon({ name: 'ios-search' }) }}
+        options={{ tabBarIcon: TabIcon({ name: 'ios-people' }) }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={Routes.NftList}
         component={NftListScreen}
         options={{ tabBarIcon: TabIcon({ name: 'ios-images' }) }}
-      />
+      /> */}
       <Tab.Screen
         name={Routes.GroupChannelList}
         component={GroupChannelListScreen}
