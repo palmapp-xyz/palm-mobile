@@ -18,7 +18,6 @@ import {
 
 import MessageContainer from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageContainer'
 import MessageDateSeparator from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageDateSeparator'
-import MessageIncomingAvatar from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageIncomingAvatar'
 import MessageIncomingSenderName from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageIncomingSenderName'
 import MessageOutgoingStatus from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageOutgoingStatus'
 import MessageTime from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageTime'
@@ -29,6 +28,7 @@ import UnknownMessage from '@sendbird/uikit-react-native/src/components/MessageR
 
 import { DEFAULT_LONG_PRESS_DELAY } from '@sendbird/uikit-react-native/src/constants'
 import NftMessage from './NftMessage'
+import MessageIncomingAvatar from './MessageIncomingAvatar'
 
 type MessageStyleVariant = 'outgoing' | 'incoming'
 export type MessageRendererInterface<
