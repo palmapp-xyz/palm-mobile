@@ -1,8 +1,7 @@
 import React, { ReactElement, useEffect, useMemo } from 'react'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useQuery } from 'react-query'
-import { Alert, View } from 'react-native'
-
+import { View } from 'react-native'
 import {
   createGroupChannelFragment,
   useSendbirdChat,
@@ -29,7 +28,7 @@ const HasGatingToken = ({
 }: {
   gatingToken: ContractAddr
 }): ReactElement => {
-  const { navigation } = useAppNavigation()
+  const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
   const { user } = useAuth()
   const { balanceOf } = useNft({ nftContract: gatingToken })
   const { data: balance } = useQuery(
@@ -43,8 +42,10 @@ const HasGatingToken = ({
 
   useEffect(() => {
     if (balance === '0') {
-      Alert.alert(`You don't have ${gatingToken}`)
-      navigation.goBack()
+      navigation.replace(Routes.TokenGatingInfo, {
+        channelUrl: params.channelUrl,
+        gatingToken,
+      })
     }
   }, [balance])
 
@@ -53,7 +54,6 @@ const HasGatingToken = ({
 
 const GroupChannelScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
-
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, params.channelUrl)
 
@@ -63,7 +63,7 @@ const GroupChannelScreen = (): ReactElement => {
     [fsChannelField]
   )
 
-  if (!channel) {
+  if (!channel || !fsChannelField) {
     return <></>
   }
 

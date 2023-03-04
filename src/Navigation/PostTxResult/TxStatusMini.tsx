@@ -41,14 +41,18 @@ const TxStatusMini = ({
       onPress={(): void => {
         setMinimized(false)
       }}>
-      <TouchableOpacity
-        style={styles.closeBtn}
-        onPress={(e): void => {
-          onPressClose()
-          e.stopPropagation()
-        }}>
-        <Icon icon="close" size={20} />
-      </TouchableOpacity>
+      {[PostTxStatus.POST, PostTxStatus.BROADCAST].includes(
+        postTxResult.status
+      ) === false && (
+        <TouchableOpacity
+          style={styles.closeBtn}
+          onPress={(e): void => {
+            onPressClose()
+            e.stopPropagation()
+          }}>
+          <Icon icon="close" size={20} />
+        </TouchableOpacity>
+      )}
       <Card style={styles.card}>
         {postTxResult.status === PostTxStatus.POST && (
           <>
@@ -133,11 +137,14 @@ const styles = StyleSheet.create({
     minWidth: 100,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-    padding: 20,
+    padding: 16,
     paddingBottom: 10,
     borderRadius: 20,
     alignItems: 'center',
     backgroundColor: COLOR.primary._100,
+    borderWidth: 2,
+    borderColor: COLOR.primary._300,
+    borderRightWidth: 0,
   },
   iconBox: {
     alignItems: 'center',
