@@ -9,7 +9,7 @@ export type UseLensReturn = {
   sign: () => Promise<TrueOrErrReturn>
 }
 
-const UseLens = (): UseLensReturn => {
+const useLens = (): UseLensReturn => {
   const { signer } = useWeb3()
   const { query, mutate } = useApolloClient()
 
@@ -21,6 +21,7 @@ const UseLens = (): UseLensReturn => {
           query: lens.challenge,
           variables: { address: signer.address },
         })
+
         /* ask the user to sign a message with the challenge info returned from the server */
         const signature = signer.sign(
           challengeInfo.data.challenge.text
@@ -54,4 +55,4 @@ const UseLens = (): UseLensReturn => {
   return { sign }
 }
 
-export default UseLens
+export default useLens

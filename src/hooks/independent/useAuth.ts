@@ -29,9 +29,9 @@ const useAuth = (): UseAuthReturn => {
     password: string
   }): Promise<void> => {
     const account = web3.eth.accounts.privateKeyToAccount(privateKey)
-    setUser({ address: account.address as ContractAddr })
-
     await savePkey(privateKey, password)
+
+    setUser({ address: account.address as ContractAddr })
     await connect(account.address)
   }
 
