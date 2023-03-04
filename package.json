@@ -17,6 +17,7 @@
     "postinstall": "node_modules/.bin/rn-nodeify --install crypto,http,https,assert,url,stream,events --hack"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.9",
     "@bam.tech/react-native-image-resizer": "^3.0.5",
     "@ethersproject/shims": "^5.7.0",
     "@notifee/react-native": "^7.4.0",
@@ -51,6 +52,7 @@
     "date-fns": "^2.29.3",
     "ethers": "^5.7.1",
     "events": "^1.1.1",
+    "graphql": "^16.6.0",
     "he": "^1.2.0",
     "https-browserify": "^0.0.1",
     "mime": "^3.0.0",

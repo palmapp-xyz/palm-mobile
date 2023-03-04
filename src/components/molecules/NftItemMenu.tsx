@@ -1,9 +1,7 @@
 import { COLOR } from 'consts'
 import React, { ReactElement, useState } from 'react'
-import { Alert, StyleProp, StyleSheet, ViewStyle } from 'react-native'
 import {
   Menu,
-  MenuProvider,
   MenuOptions,
   MenuOption,
   MenuTrigger,
