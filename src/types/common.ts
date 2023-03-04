@@ -15,8 +15,8 @@ export type ItemListType<T = string> = {
   value: T
 }[]
 
-export type TrueOrErrReturn =
-  | { success: true }
+export type TrueOrErrReturn<T = string> =
+  | { success: true; value: T }
   | { success: false; errMsg: string }
 
 export type FontType =
