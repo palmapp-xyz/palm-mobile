@@ -1,6 +1,12 @@
 import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
-import { StyleSheet, TouchableOpacity, Text } from 'react-native'
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  StyleProp,
+  ViewStyle,
+} from 'react-native'
 
 export type FormButtonProps = {
   children: string
@@ -8,6 +14,7 @@ export type FormButtonProps = {
   onPress?: () => void
   figure?: 'primary' | 'error'
   size?: 'sm' | 'md'
+  containerStyle?: StyleProp<ViewStyle>
 }
 
 const FormButton = ({
@@ -16,6 +23,7 @@ const FormButton = ({
   onPress,
   figure = 'primary',
   size = 'md',
+  containerStyle,
 }: FormButtonProps): ReactElement => {
   const mainColor = figure === 'primary' ? COLOR.primary._400 : '#F84F4F'
 
@@ -26,7 +34,11 @@ const FormButton = ({
     <TouchableOpacity
       style={[
         styles.container,
-        { backgroundColor: disabled ? 'gray' : mainColor, paddingVertical },
+        {
+          backgroundColor: disabled ? COLOR.gray._200 : mainColor,
+          paddingVertical,
+        },
+        containerStyle,
       ]}
       disabled={disabled}
       onPress={onPress}>
