@@ -5,14 +5,16 @@ import {
   createGroupChannelSettingsFragment,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
-
 import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
-
-import { useAppNavigation } from '../../hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-const GroupChannelSettingsFragment = createGroupChannelSettingsFragment()
+import { useAppNavigation } from '../../../hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
+import GroupChannelSettingsInfo from './GroupChannelSettingsInfo'
+
+const GroupChannelSettingsFragment = createGroupChannelSettingsFragment({
+  Info: GroupChannelSettingsInfo,
+})
 const GroupChannelSettingsScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannelSettings>()
 

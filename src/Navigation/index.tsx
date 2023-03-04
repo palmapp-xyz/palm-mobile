@@ -34,6 +34,7 @@ import {
   ChannelListingsScreen,
   ChannelTokenGatingScreen,
   SignWithLens,
+  UserProfileScreen,
 } from '../screens'
 import FileViewerScreen from '../screens/uikit-app/FileViewerScreen'
 import useAuth from 'hooks/independent/useAuth'
@@ -76,6 +77,11 @@ const Navigation = (): ReactElement => {
             <RootStack.Screen
               name={Routes.ChannelTokenGating}
               component={ChannelTokenGatingScreen}
+            />
+
+            <RootStack.Screen
+              name={Routes.UserProfile}
+              component={UserProfileScreen}
             />
 
             <RootStack.Screen name={Routes.SendNft} component={SendNftScreen} />

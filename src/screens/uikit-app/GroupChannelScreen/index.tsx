@@ -1,7 +1,5 @@
 import React, { ReactElement, useEffect, useMemo } from 'react'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { SendbirdMessage } from '@sendbird/uikit-utils'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useQuery } from 'react-query'
 import { Alert, View } from 'react-native'
 
@@ -93,18 +91,9 @@ const GroupChannelScreen = (): ReactElement => {
           // Navigate to group channel settings
           navigation.push(Routes.GroupChannelSettings, params)
         }}
-        renderMessage={(props: {
-          message: SendbirdMessage
-          prevMessage?: SendbirdMessage | undefined
-          nextMessage?: SendbirdMessage | undefined
-          onPress?: (() => void) | undefined
-          onLongPress?: (() => void) | undefined
-          channel: GroupChannel
-          currentUserId?: string | undefined
-          enableMessageGrouping: boolean
-        }): ReactElement | null => {
-          return <MessageRenderer {...props} />
-        }}
+        renderMessage={(props): ReactElement | null => (
+          <MessageRenderer {...props} />
+        )}
       />
     </>
   )

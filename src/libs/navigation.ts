@@ -25,6 +25,7 @@ export enum Routes {
   MyPage = 'MyPage',
   GroupChannelList = 'GroupChannelList',
 
+  UserProfile = 'UserProfile',
   NftDetail = 'NftDetail',
   ZxNftDetail = 'ZxNftDetail',
   ListNft = 'ListNft',
@@ -87,6 +88,14 @@ type MainRouteParamsUnion =
   | {
       route: Routes.MyPage
       params: undefined
+    }
+  | {
+      route: Routes.UserProfile
+      params: {
+        address: ContractAddr // sendbird user id
+        plainProfileUrl: string
+        nickName: string
+      }
     }
   | {
       route: Routes.GroupChannelList
