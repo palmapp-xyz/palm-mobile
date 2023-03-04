@@ -5,11 +5,11 @@ import { lens } from 'libs/lens'
 import { TrueOrErrReturn } from 'types'
 import _ from 'lodash'
 
-export type UseSignWithLensReturn = {
+export type UseLensReturn = {
   sign: () => Promise<TrueOrErrReturn>
 }
 
-const useSignWithLens = (): UseSignWithLensReturn => {
+const UseLens = (): UseLensReturn => {
   const { signer } = useWeb3()
   const { query, mutate } = useApolloClient()
 
@@ -54,4 +54,4 @@ const useSignWithLens = (): UseSignWithLensReturn => {
   return { sign }
 }
 
-export default useSignWithLens
+export default UseLens

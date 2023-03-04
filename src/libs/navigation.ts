@@ -21,6 +21,7 @@ export enum Routes {
 
   HomeTabs = 'HomeTabs',
   Feed = 'Feed',
+  LensFriends = 'LensFriends',
   NftList = 'NftList',
   MyPage = 'MyPage',
   GroupChannelList = 'GroupChannelList',
@@ -79,6 +80,10 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.Feed
+      params: undefined
+    }
+  | {
+      route: Routes.LensFriends
       params: undefined
     }
   | {

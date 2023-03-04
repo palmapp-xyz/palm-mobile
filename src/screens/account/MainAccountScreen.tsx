@@ -26,7 +26,7 @@ const MainAccountScreen = (): ReactElement => {
               secureTextEntry
             />
             <FormButton disabled={!isValidForm} onPress={onClickConfirm}>
-              Login
+              Sign In With Lens
             </FormButton>
           </View>
         )}

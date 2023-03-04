@@ -23,7 +23,11 @@ import useAppearance from '../hooks/useAppearance'
 import { ErrorInfoScreen } from '../screens'
 import AppProvider from './AppProvider'
 import Navigation from '../Navigation'
-import { MenuProvider } from 'react-native-popup-menu'
+import {
+  LensProvider,
+  Theme,
+  Environment,
+} from '@lens-protocol/react-native-lens-ui-kit'
 
 const APP_ID = Config.SENDBIRD_APP_ID || ''
 
@@ -31,7 +35,7 @@ const App = (): ReactElement => {
   const { scheme } = useAppearance()
   const isLightTheme = scheme === 'light'
   return (
-    <MenuProvider>
+    <LensProvider environment={Environment.testnet} theme={Theme.light}>
       <AppProvider>
         <SendbirdUIKitContainer
           appId={APP_ID}
@@ -67,7 +71,7 @@ const App = (): ReactElement => {
           <Navigation />
         </SendbirdUIKitContainer>
       </AppProvider>
-    </MenuProvider>
+    </LensProvider>
   )
 }
 

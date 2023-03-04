@@ -2,6 +2,7 @@ import React, { ReactElement, ReactNode } from 'react'
 import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { MenuProvider } from 'react-native-popup-menu'
 
 const queryClient = new QueryClient()
 
@@ -15,7 +16,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
     <ApolloProvider client={client}>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <MenuProvider>{children}</MenuProvider>
         </QueryClientProvider>
       </RecoilRoot>
     </ApolloProvider>
