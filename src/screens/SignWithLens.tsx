@@ -2,13 +2,13 @@ import React, { ReactElement, useEffect } from 'react'
 import { Alert, StyleSheet, Text, View } from 'react-native'
 
 import { Container } from 'components'
-import useSignWithLens from 'hooks/independent/useSignWithLens'
+import useLens from 'hooks/independent/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import LensLogo from 'assets/LensLogo'
 
 const SignWithLens = (): ReactElement => {
   const { setAccToken, logout } = useAuth()
-  const { sign } = useSignWithLens()
+  const { sign } = useLens()
 
   useEffect(() => {
     sign()
