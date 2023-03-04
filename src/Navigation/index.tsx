@@ -33,6 +33,7 @@ import {
   NftDetailScreen,
   ChannelListingsScreen,
   ChannelTokenGatingScreen,
+  SignWithLens,
 } from '../screens'
 import FileViewerScreen from '../screens/uikit-app/FileViewerScreen'
 import useAuth from 'hooks/independent/useAuth'
@@ -56,7 +57,7 @@ const Navigation = (): ReactElement => {
       ref={navigationRef}
       theme={isLightTheme ? DefaultTheme : DarkTheme}>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
+        {user?.accessToken ? (
           <>
             <RootStack.Screen name={Routes.HomeTabs} component={HomeTabs} />
 
@@ -141,12 +142,12 @@ const Navigation = (): ReactElement => {
               />
             </RootStack.Group>
           </>
+        ) : user ? (
+          <RootStack.Screen
+            name={Routes.MainAccount}
+            component={SignWithLens}
+          />
         ) : (
-          // ) : user ? (
-          //   <RootStack.Screen
-          //     name={Routes.MainAccount}
-          //     component={Sign4AuthScreen}
-          //   />
           <>
             <RootStack.Screen
               name={Routes.MainAccount}

@@ -47,7 +47,7 @@ const useAuth = (): UseAuthReturn => {
         const account = web3.eth.accounts.privateKeyToAccount(privateKey)
         setUser({ address: account.address as ContractAddr })
         await connect(account.address)
-        return { success: true }
+        return { success: true, value: '' }
       } else {
         return { success: false, errMsg: 'Invalid password' }
       }
