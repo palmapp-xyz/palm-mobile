@@ -35,6 +35,7 @@ export enum Routes {
   ChannelTokenGating = 'ChannelTokenGating',
 
   GroupChannel = 'GroupChannel',
+  TokenGatingInfo = 'TokenGatingInfo',
 
   GroupChannelSettings = 'GroupChannelSettings',
   GroupChannelNotifications = 'GroupChannelNotifications',
@@ -141,6 +142,10 @@ type MainRouteParamsUnion =
   | {
       route: Routes.GroupChannel
       params: { channelUrl: string }
+    }
+  | {
+      route: Routes.TokenGatingInfo
+      params: { channelUrl: string; gatingToken: ContractAddr }
     }
   | {
       route: Routes.GroupChannelSettings

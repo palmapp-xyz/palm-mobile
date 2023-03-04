@@ -6,6 +6,7 @@ import { ContractAddr, EncodedTxData } from 'types'
 import useContract from 'hooks/complex/useContract'
 
 export type UseNftReturn = {
+  name: () => Promise<string | undefined>
   isApprovedForAll: (props: {
     owner: ContractAddr
     operator: ContractAddr
@@ -36,6 +37,9 @@ const useNft = ({
     abi: abi as AbiItem[],
     contractAddress: nftContract,
   })
+
+  const name = async (): Promise<string | undefined> =>
+    callMethod<string>('name')
 
   const isApprovedForAll = async ({
     owner,
@@ -105,6 +109,7 @@ const useNft = ({
     getEncodedTxData('transferFrom', [from, to, tokenId])
 
   return {
+    name,
     isApprovedForAll,
     ownerOf,
     balanceOf,

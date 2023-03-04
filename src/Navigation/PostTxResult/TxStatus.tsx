@@ -73,7 +73,6 @@ const TxStatus = ({
               <StyledTextBox>
                 <StatusText>Posting...</StatusText>
               </StyledTextBox>
-              <FormButton onPress={onPressClose}>Close</FormButton>
             </>
           )}
 
@@ -89,7 +88,6 @@ const TxStatus = ({
                   address={postTxResult.transactionHash}
                 />
               </StyledTextBox>
-              <FormButton onPress={onPressClose}>Close</FormButton>
             </>
           )}
           {postTxResult.status === PostTxStatus.DONE && (
