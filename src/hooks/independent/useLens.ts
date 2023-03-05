@@ -3,18 +3,27 @@ import _ from 'lodash'
 import { useApolloClient } from '@apollo/client'
 
 import useWeb3 from 'hooks/complex/useWeb3'
-import { lens } from 'libs/lens'
-import { TrueOrErrReturn } from 'types'
+import { lens, lensResponse } from 'libs/lens'
+import { QueryKeyEnum, TrueOrErrReturn } from 'types'
+import useReactQuery from 'hooks/complex/useReactQuery'
 
 export type UseLensReturn = {
   signer?: Account
   sign: () => Promise<TrueOrErrReturn>
+  defaultProfile?: lensResponse.DefaultProfile
+  getProfile: (profileId: string) => Promise<lensResponse.Profile>
+  getDefaultProfile: () => Promise<lensResponse.DefaultProfile | undefined>
 }
 
 const useLens = (): UseLensReturn => {
   const { signer } = useWeb3()
   const { query, mutate } = useApolloClient()
-
+  const { data: defaultProfile } = useReactQuery(
+    [QueryKeyEnum.LENS_DEFAULT_PROFILE, signer?.address],
+    async () => {
+      return getDefaultProfile()
+    }
+  )
   const sign = async (): Promise<TrueOrErrReturn> => {
     if (signer) {
       try {
@@ -54,7 +63,29 @@ const useLens = (): UseLensReturn => {
     return { success: false, errMsg: 'No user' }
   }
 
-  return { signer, sign }
+  const getProfile = async (
+    profileId: string
+  ): Promise<lensResponse.Profile> => {
+    const profile = await query<lensResponse.Profile>({
+      query: lens.profile,
+      variables: { profileId },
+    })
+    return profile.data
+  }
+
+  const getDefaultProfile = async (): Promise<
+    lensResponse.DefaultProfile | undefined
+  > => {
+    if (signer) {
+      const profile = await query<lensResponse.DefaultProfile>({
+        query: lens.defaultProfile,
+        variables: { address: signer.address },
+      })
+      return profile.data
+    }
+  }
+
+  return { signer, sign, defaultProfile, getProfile, getDefaultProfile }
 }
 
 export default useLens

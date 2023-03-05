@@ -30,6 +30,8 @@ import NftItemMenu from 'components/molecules/NftItemMenu'
 import { Moralis, pToken } from 'types'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import useEthPrice from 'hooks/independent/useEthPrice'
+import useLens from 'hooks/independent/useLens'
+import { useQuery } from 'react-query'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -38,6 +40,9 @@ const MyPageScreen = (): ReactElement => {
     useSendbirdChat()
 
   const { getEthPrice } = useEthPrice()
+  const { getProfile } = useLens()
+
+  const { data: lensProfile } = useQuery(['getProfile'], () => getProfile('0'))
 
   return (
     <ScrollView
@@ -142,10 +147,7 @@ const MyPageScreen = (): ReactElement => {
                 borderColor: COLOR.gray._400,
                 borderRadius: 20,
               }}>
-              <Text>
-                Hello, Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist. Hello,
-                Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist.
-              </Text>
+              <Text>{lensProfile?.profile.bio}</Text>
             </View>
           </Card>
         </ImageBackground>
