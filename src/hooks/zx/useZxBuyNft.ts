@@ -6,11 +6,16 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus, zx } from 'types'
+import { PostTxStatus, TrueOrErrReturn, zx } from 'types'
 import useZx from './useZx'
+import _ from 'lodash'
 
 export type UseZxBuyNftReturn = {
-  onClickConfirm: ({ order }: { order: zx.order['order'] }) => Promise<void>
+  onClickConfirm: ({
+    order,
+  }: {
+    order: zx.order['order']
+  }) => Promise<TrueOrErrReturn>
 }
 
 const useZxBuyNft = (channelUrl: string): UseZxBuyNftReturn => {
@@ -24,7 +29,7 @@ const useZxBuyNft = (channelUrl: string): UseZxBuyNftReturn => {
     order,
   }: {
     order: zx.order['order']
-  }): Promise<void> => {
+  }): Promise<TrueOrErrReturn> => {
     if (nftSwapSdk) {
       try {
         setPostTxResult({
@@ -64,13 +69,16 @@ const useZxBuyNft = (channelUrl: string): UseZxBuyNftReturn => {
         } catch (e) {
           console.error(e)
         }
+        return { success: true, value: '' }
       } catch (error) {
         setPostTxResult({
           status: PostTxStatus.ERROR,
           error,
         })
+        return { success: false, errMsg: _.toString(error) }
       }
     }
+    return { success: false, errMsg: 'No swap sdk' }
   }
   return { onClickConfirm }
 }

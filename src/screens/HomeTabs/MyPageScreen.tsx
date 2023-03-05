@@ -33,7 +33,7 @@ import useEthPrice from 'hooks/independent/useEthPrice'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { user, useMyNftListReturn, balance } = useMyPageMain()
+  const { user, useMyNftListReturn, useMyBalanceReturn } = useMyPageMain()
   const { currentUser, setCurrentUser, updateCurrentUserInfo } =
     useSendbirdChat()
 
@@ -46,6 +46,7 @@ const MyPageScreen = (): ReactElement => {
           refreshing={useMyNftListReturn.isRefetching}
           onRefresh={(): void => {
             useMyNftListReturn.refetch()
+            useMyBalanceReturn.refetch()
           }}
         />
       }>
@@ -120,13 +121,17 @@ const MyPageScreen = (): ReactElement => {
                     color: COLOR.primary._400,
                     fontWeight: 'bold',
                   }}>
-                  {UTIL.formatAmountP(balance, { toFix: 4 })} ETH
+                  {UTIL.formatAmountP(useMyBalanceReturn.balance, { toFix: 4 })}{' '}
+                  ETH
                 </Text>
                 <Text style={{ fontSize: 12 }}>
                   $
-                  {UTIL.formatAmountP(getEthPrice(balance || ('0' as pToken)), {
-                    toFix: 0,
-                  })}
+                  {UTIL.formatAmountP(
+                    getEthPrice(useMyBalanceReturn.balance || ('0' as pToken)),
+                    {
+                      toFix: 0,
+                    }
+                  )}
                 </Text>
               </View>
             </Row>

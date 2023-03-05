@@ -1,12 +1,14 @@
-import { pToken, User } from 'types'
+import { User } from 'types'
 
 import useUserNftList, { UseUserNftListReturn } from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
-import useUserBalance from 'hooks/independent/useUserBalance'
+import useUserBalance, {
+  UseUserBalanceReturn,
+} from 'hooks/independent/useUserBalance'
 
 export type UseMyPageMainReturn = {
   user?: User
-  balance: pToken
+  useMyBalanceReturn: UseUserBalanceReturn
   useMyNftListReturn: UseUserNftListReturn
 }
 
@@ -17,9 +19,9 @@ const useMyPageMain = (): UseMyPageMainReturn => {
     userAddress: user?.address,
   })
 
-  const { balance } = useUserBalance({ address: user?.address })
+  const useMyBalanceReturn = useUserBalance({ address: user?.address })
 
-  return { user, balance, useMyNftListReturn }
+  return { user, useMyBalanceReturn, useMyNftListReturn }
 }
 
 export default useMyPageMain

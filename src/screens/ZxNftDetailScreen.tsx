@@ -117,8 +117,8 @@ const Contents = ({
             if (isMine) {
               await onClickCancel({ order: selectedNft.order })
             } else {
-              await onClickBuy({ order: selectedNft.order })
-              if (channel && uri && user) {
+              const buyRes = await onClickBuy({ order: selectedNft.order })
+              if (channel && uri && user && buyRes.success) {
                 const imgInfo = await nftUriFetcher(uri)
                 imgInfo.data = stringifySendFileData({
                   type: 'buy',

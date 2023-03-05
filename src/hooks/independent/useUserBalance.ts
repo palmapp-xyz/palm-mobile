@@ -4,6 +4,7 @@ import { ContractAddr, pToken, QueryKeyEnum } from 'types'
 
 export type UseUserBalanceReturn = {
   balance: pToken
+  refetch: () => void
 }
 
 const useUserBalance = ({
@@ -12,7 +13,7 @@ const useUserBalance = ({
   address?: ContractAddr
 }): UseUserBalanceReturn => {
   const { web3 } = useWeb3()
-  const { data = '0' } = useReactQuery(
+  const { data = '0', refetch } = useReactQuery(
     [QueryKeyEnum.ETH_BALANCE, address],
     async () => {
       if (address) {
@@ -25,6 +26,7 @@ const useUserBalance = ({
   )
   return {
     balance: data as pToken,
+    refetch,
   }
 }
 

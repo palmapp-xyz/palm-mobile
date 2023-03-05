@@ -36,7 +36,7 @@ const UserProfileScreen = (): ReactElement => {
   const useUserNftListReturn = useUserNftList({
     userAddress,
   })
-  const { balance } = useUserBalance({ address: userAddress })
+  const { balance, refetch } = useUserBalance({ address: userAddress })
 
   const { getEthPrice } = useEthPrice()
   return (
@@ -46,6 +46,7 @@ const UserProfileScreen = (): ReactElement => {
           refreshing={useUserNftListReturn.isRefetching}
           onRefresh={(): void => {
             useUserNftListReturn.refetch()
+            refetch()
           }}
         />
       }>
