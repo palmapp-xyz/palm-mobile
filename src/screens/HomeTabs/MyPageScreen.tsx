@@ -18,7 +18,6 @@ import { COLOR, UTIL } from 'consts'
 import { Routes } from 'libs/navigation'
 import {
   Card,
-  Container,
   FormButton,
   MediaRenderer,
   MoralisNftRenderer,
@@ -39,6 +38,7 @@ const MyPageScreen = (): ReactElement => {
     useSendbirdChat()
 
   const { getEthPrice } = useEthPrice()
+
   return (
     <ScrollView
       refreshControl={
@@ -49,7 +49,7 @@ const MyPageScreen = (): ReactElement => {
           }}
         />
       }>
-      <Container style={styles.container}>
+      <View style={styles.container}>
         <ImageBackground
           blurRadius={10}
           imageStyle={{
@@ -69,7 +69,7 @@ const MyPageScreen = (): ReactElement => {
               onPress={(): void => {
                 navigation.navigate(Routes.Setting)
               }}>
-              <Icon name={'settings'} size={24} />
+              <Icon name={'settings-outline'} size={24} />
             </Pressable>
           </View>
           <View style={styles.profileImgBox}>
@@ -96,71 +96,53 @@ const MyPageScreen = (): ReactElement => {
               <Text style={{ color: 'black' }}>{currentUser?.nickname}</Text>
             </Card>
           </View>
-          <View
+          <Card
             style={{
-              paddingHorizontal: 10,
+              marginHorizontal: 10,
+              padding: 20,
+              rowGap: 20,
               marginBottom: -30,
-              alignItems: 'center',
-              width: '100%',
             }}>
-            <Card style={{ width: '100%', padding: 20, rowGap: 20 }}>
-              <Row
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  backgroundColor: COLOR.primary._100,
-                  padding: 20,
-                  borderRadius: 20,
-                }}>
-                <Row style={{ alignItems: 'center', columnGap: 10 }}>
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: 'white',
-                      width: 40,
-                      height: 40,
-                      borderRadius: 999,
-                    }}>
-                    <Icon name="wallet" color={COLOR.primary._400} size={20} />
-                  </View>
-                  <View>
-                    <Text style={{ color: 'black' }}>Wallet</Text>
-                    <Text>{UTIL.truncate(user?.address || '')}</Text>
-                  </View>
-                </Row>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: COLOR.primary._400,
-                      fontWeight: 'bold',
-                    }}>
-                    {UTIL.formatAmountP(balance, { toFix: 4 })} ETH
-                  </Text>
-                  <Text style={{ fontSize: 12 }}>
-                    $
-                    {UTIL.formatAmountP(
-                      getEthPrice(balance || ('0' as pToken)),
-                      { toFix: 0 }
-                    )}
-                  </Text>
+            <Row style={styles.walletBalanceBox}>
+              <Row style={{ alignItems: 'center', columnGap: 10 }}>
+                <View style={styles.walletIconBox}>
+                  <Icon name="wallet" color={COLOR.primary._400} size={20} />
+                </View>
+                <View>
+                  <Text style={{ color: 'black' }}>Wallet</Text>
+                  <Text>{UTIL.truncate(user?.address || '')}</Text>
                 </View>
               </Row>
-              <View
-                style={{
-                  padding: 20,
-                  borderWidth: 1,
-                  borderColor: COLOR.gray._400,
-                  borderRadius: 20,
-                }}>
-                <Text>
-                  Hello, Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist.
-                  Hello, Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist.
+              <View style={{ alignItems: 'flex-end' }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: COLOR.primary._400,
+                    fontWeight: 'bold',
+                  }}>
+                  {UTIL.formatAmountP(balance, { toFix: 4 })} ETH
+                </Text>
+                <Text style={{ fontSize: 12 }}>
+                  $
+                  {UTIL.formatAmountP(getEthPrice(balance || ('0' as pToken)), {
+                    toFix: 0,
+                  })}
                 </Text>
               </View>
-            </Card>
-          </View>
+            </Row>
+            <View
+              style={{
+                padding: 20,
+                borderWidth: 1,
+                borderColor: COLOR.gray._400,
+                borderRadius: 20,
+              }}>
+              <Text>
+                Hello, Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist. Hello,
+                Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist.
+              </Text>
+            </View>
+          </Card>
         </ImageBackground>
         <View style={styles.body}>
           <Row
@@ -226,7 +208,7 @@ const MyPageScreen = (): ReactElement => {
             )}
           />
         </View>
-      </Container>
+      </View>
     </ScrollView>
   )
 }
@@ -237,15 +219,28 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.primary._100,
   },
-  topSection: {
-    marginBottom: 30,
-  },
+  topSection: { marginBottom: 30, paddingTop: 40 },
   body: { gap: 10, padding: 10 },
   profileImgBox: {
     borderRadius: 999,
     alignSelf: 'center',
     borderWidth: 4,
     borderColor: 'white',
+  },
+  walletBalanceBox: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: COLOR.primary._100,
+    padding: 20,
+    borderRadius: 20,
+  },
+  walletIconBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    width: 40,
+    height: 40,
+    borderRadius: 999,
   },
   settingIcon: {
     margin: 10,
