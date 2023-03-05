@@ -27,7 +27,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
         <MediaRenderer src={uri} width={'100%'} height={150} />
       </EthLogoWrapper>
       <View style={styles.body}>
-        <Text style={{ color: COLOR.primary._400 }}>Buy NFT</Text>
+        <Text style={{ color: COLOR.primary._400 }}>Bought NFT</Text>
         <Text
           numberOfLines={2}
           style={{
