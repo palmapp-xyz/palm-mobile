@@ -19,6 +19,7 @@ import useZxOrder from 'hooks/zx/useZxOrder'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import useMoralisNftImage from 'hooks/independent/useNftImage'
+import GroupChannelItem from 'components/GroupChannelItem'
 
 const Contents = ({
   selectedNft,
@@ -101,14 +102,20 @@ const Contents = ({
           </View>
           {isMine && (
             <View>
-              <Text style={styles.headText}>Active Listings</Text>
-              <FlatList
-                data={activeListedChannels}
-                keyExtractor={(_, index): string => `active-listing-${index}`}
-                renderItem={({ item }): ReactElement => {
-                  return <Text>{item.channelUrl}</Text>
-                }}
-              />
+              <Text style={styles.headText}>
+                Active Listings ({activeListedChannels.length})
+              </Text>
+              {activeListedChannels.length > 0 ? (
+                <FlatList
+                  data={activeListedChannels}
+                  keyExtractor={(_, index): string => `active-listing-${index}`}
+                  renderItem={({ item }): ReactElement => {
+                    return <GroupChannelItem channelUrl={item.channelUrl} />
+                  }}
+                />
+              ) : (
+                <Text>None</Text>
+              )}
             </View>
           )}
         </View>

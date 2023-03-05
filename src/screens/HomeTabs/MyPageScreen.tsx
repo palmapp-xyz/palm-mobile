@@ -163,7 +163,7 @@ const MyPageScreen = (): ReactElement => {
               Owned List
             </FormButton>
             <FormButton containerStyle={{ flex: 1 }} size="sm" disabled>
-              Activate
+              Activities
             </FormButton>
           </Row>
           <FlatList

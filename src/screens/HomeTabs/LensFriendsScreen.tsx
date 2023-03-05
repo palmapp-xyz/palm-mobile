@@ -7,16 +7,32 @@ import {
   ExtendedProfile,
   Search,
 } from '@lens-protocol/react-native-lens-ui-kit'
+import { Routes } from 'libs/navigation'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 const LensFriendsScreen = (): ReactElement => {
+  const { navigation } = useAppNavigation<Routes.LensFriends>()
+  const { sdk } = useSendbirdChat()
+
   const onFollowPress = (
     profile: ExtendedProfile,
     profiles: ExtendedProfile[]
   ): void => {
     console.log(profile, profiles)
   }
-  const onProfilePress = (profile: ExtendedProfile): ExtendedProfile => {
-    console.log(profile)
+  const onProfilePress = async (
+    profile: ExtendedProfile
+  ): Promise<ExtendedProfile> => {
+    const channelUrl = profile.ownedBy
+    try {
+      const channel = await sdk.groupChannel.getChannel(channelUrl)
+      if (channel) {
+        navigation.navigate(Routes.GroupChannel, { channelUrl })
+      }
+    } catch (e) {
+      console.error(e)
+    }
     return profile
   }
 
