@@ -9,6 +9,7 @@ import {
   ScrollView,
   RefreshControl,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
@@ -32,6 +33,7 @@ import { fetchNftImage } from 'libs/fetchTokenUri'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useLens from 'hooks/independent/useLens'
 import { useQuery } from 'react-query'
+import { fixIpfsURL } from 'libs/ipfs'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -40,11 +42,15 @@ const MyPageScreen = (): ReactElement => {
     useSendbirdChat()
 
   const { getEthPrice } = useEthPrice()
-  const { getProfile } = useLens()
+  const { getDefaultProfile } = useLens()
 
-  const { data: lensProfile } = useQuery(['getProfile'], () =>
-    getProfile('0x01')
+  const { data: lensProfile } = useQuery(['getDefaultProfile'], () =>
+    getDefaultProfile()
   )
+
+  const profileImg =
+    fixIpfsURL(lensProfile?.defaultProfile.picture.original.url ?? '') ||
+    currentUser?.plainProfileUrl
 
   return (
     <ScrollView
@@ -65,11 +71,7 @@ const MyPageScreen = (): ReactElement => {
             borderBottomRightRadius: 30,
             borderBottomLeftRadius: 30,
           }}
-          source={
-            currentUser?.plainProfileUrl
-              ? { uri: currentUser?.plainProfileUrl }
-              : images.profile_temp
-          }
+          source={profileImg ? { uri: profileImg } : images.profile_temp}
           style={styles.topSection}>
           <View style={{ alignItems: 'flex-end' }}>
             <Pressable
@@ -82,7 +84,7 @@ const MyPageScreen = (): ReactElement => {
           </View>
           <View style={styles.profileImgBox}>
             <MediaRenderer
-              src={currentUser?.plainProfileUrl || images.profile_temp}
+              src={profileImg || images.profile_temp}
               width={100}
               height={100}
               style={{ borderRadius: 50 }}
@@ -101,7 +103,9 @@ const MyPageScreen = (): ReactElement => {
                 paddingVertical: 10,
                 alignItems: 'center',
               }}>
-              <Text style={{ color: 'black' }}>{currentUser?.nickname}</Text>
+              <Text style={{ color: 'black' }}>
+                {lensProfile?.defaultProfile.handle || currentUser?.nickname}
+              </Text>
             </Card>
           </View>
           <Card
@@ -142,6 +146,40 @@ const MyPageScreen = (): ReactElement => {
                 </Text>
               </View>
             </Row>
+            {lensProfile?.defaultProfile.attributes.length && (
+              <View
+                style={{
+                  padding: 6,
+                }}>
+                <FlatList
+                  data={lensProfile?.defaultProfile.attributes}
+                  keyExtractor={(_, index): string =>
+                    `profile-attribute-${index}`
+                  }
+                  horizontal
+                  contentContainerStyle={{
+                    gap: 20,
+                    marginHorizontal: '5%',
+                  }}
+                  renderItem={({
+                    item,
+                  }: {
+                    item: { key: string; value: string }
+                  }): ReactElement | null =>
+                    item.key === 'app' ? null : (
+                      <View
+                        style={{
+                          marginHorizontal: 15,
+                          alignItems: 'center',
+                        }}>
+                        <Text style={styles.attribute}>{item.key}</Text>
+                        <Text>{item.value}</Text>
+                      </View>
+                    )
+                  }
+                />
+              </View>
+            )}
             <View
               style={{
                 padding: 20,
@@ -149,7 +187,10 @@ const MyPageScreen = (): ReactElement => {
                 borderColor: COLOR.gray._400,
                 borderRadius: 20,
               }}>
-              <Text>{lensProfile?.profile.bio}</Text>
+              <Text>
+                {lensProfile?.defaultProfile.bio ||
+                  'Tell us something about you!'}
+              </Text>
             </View>
           </Card>
         </ImageBackground>
@@ -267,5 +308,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: 0,
     flex: 1,
+  },
+  attribute: {
+    fontWeight: 'bold',
+    marginBottom: 6,
   },
 })
