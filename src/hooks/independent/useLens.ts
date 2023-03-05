@@ -1,11 +1,13 @@
-import useWeb3 from 'hooks/complex/useWeb3'
-
+import { Account } from 'web3-core'
+import _ from 'lodash'
 import { useApolloClient } from '@apollo/client'
+
+import useWeb3 from 'hooks/complex/useWeb3'
 import { lens } from 'libs/lens'
 import { TrueOrErrReturn } from 'types'
-import _ from 'lodash'
 
 export type UseLensReturn = {
+  signer?: Account
   sign: () => Promise<TrueOrErrReturn>
 }
 
@@ -52,7 +54,7 @@ const useLens = (): UseLensReturn => {
     return { success: false, errMsg: 'No user' }
   }
 
-  return { sign }
+  return { signer, sign }
 }
 
 export default useLens

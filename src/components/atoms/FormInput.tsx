@@ -11,11 +11,12 @@ export default FormInput
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'gray',
-    borderRadius: 999,
+    borderColor: 'white',
+    borderRadius: 15,
     borderStyle: 'solid',
     borderWidth: 1,
     paddingHorizontal: 10,
     height: 50,
+    backgroundColor: 'white',
   },
 })

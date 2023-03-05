@@ -8,23 +8,24 @@ import LensLogo from 'assets/LensLogo'
 
 const SignWithLens = (): ReactElement => {
   const { setAccToken, logout } = useAuth()
-  const { sign } = useLens()
+  const { sign, signer } = useLens()
 
   useEffect(() => {
-    sign()
-      .then(res => {
-        if (res.success) {
-          setAccToken(res.value)
-        } else {
-          Alert.alert(res.errMsg)
+    signer &&
+      sign()
+        .then(res => {
+          if (res.success) {
+            setAccToken(res.value)
+          } else {
+            Alert.alert(res.errMsg)
+            logout()
+          }
+        })
+        .catch(err => {
+          Alert.alert(err)
           logout()
-        }
-      })
-      .catch(err => {
-        Alert.alert(err)
-        logout()
-      })
-  }, [])
+        })
+  }, [signer])
 
   return (
     <Container style={styles.container}>

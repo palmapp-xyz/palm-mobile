@@ -6,6 +6,7 @@ import {
   Text,
   StyleProp,
   ViewStyle,
+  TextStyle,
 } from 'react-native'
 
 export type FormButtonProps = {
@@ -15,6 +16,7 @@ export type FormButtonProps = {
   figure?: 'primary' | 'error'
   size?: 'sm' | 'md'
   containerStyle?: StyleProp<ViewStyle>
+  textStyle?: StyleProp<TextStyle>
 }
 
 const FormButton = ({
@@ -24,6 +26,7 @@ const FormButton = ({
   figure = 'primary',
   size = 'md',
   containerStyle,
+  textStyle,
 }: FormButtonProps): ReactElement => {
   const mainColor = figure === 'primary' ? COLOR.primary._400 : '#F84F4F'
 
@@ -42,7 +45,7 @@ const FormButton = ({
       ]}
       disabled={disabled}
       onPress={onPress}>
-      <Text style={[styles.text, { fontSize }]}>{children}</Text>
+      <Text style={[styles.text, { fontSize }, textStyle]}>{children}</Text>
     </TouchableOpacity>
   )
 }
