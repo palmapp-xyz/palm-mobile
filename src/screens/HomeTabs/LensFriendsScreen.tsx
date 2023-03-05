@@ -9,20 +9,38 @@ import {
 } from '@lens-protocol/react-native-lens-ui-kit'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useConnection } from '@sendbird/uikit-react-native'
+import useAuth from 'hooks/independent/useAuth'
+import useSendbird from 'hooks/sendbird/useSendbird'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
-  const { sdk } = useSendbirdChat()
+  const { connect } = useConnection()
+  const { user } = useAuth()
+  const { createGroupChatIfNotExist } = useSendbird()
 
-  const goToProfileChat = async (channelUrl: string): Promise<void> => {
-    try {
-      const channel = await sdk.groupChannel.getChannel(channelUrl)
-      if (channel) {
-        navigation.navigate(Routes.GroupChannel, { channelUrl })
-      }
-    } catch (e) {
-      console.error(e)
+  const goToProfileChat = async (
+    channelUrl: string,
+    nickname?: string | null
+  ): Promise<void> => {
+    if (user) {
+      connect(channelUrl, { nickname: nickname || undefined })
+        .then(() => {
+          connect(user?.address)
+            .then(() => {
+              createGroupChatIfNotExist(
+                channelUrl,
+                [user?.address],
+                (channel: GroupChannel) =>
+                  navigation.navigate(Routes.GroupChannel, {
+                    channelUrl: channel.url,
+                  })
+              )
+            })
+            .catch(e => console.error(e))
+        })
+        .catch(e => console.error(e))
     }
   }
 
@@ -30,12 +48,12 @@ const LensFriendsScreen = (): ReactElement => {
     profile: ExtendedProfile,
     _profiles: ExtendedProfile[]
   ): Promise<void> => {
-    await goToProfileChat(profile.ownedBy)
+    await goToProfileChat(profile.ownedBy, profile.name)
   }
   const onProfilePress = async (
     profile: ExtendedProfile
   ): Promise<ExtendedProfile> => {
-    await goToProfileChat(profile.ownedBy)
+    await goToProfileChat(profile.ownedBy, profile.name)
     return profile
   }
 

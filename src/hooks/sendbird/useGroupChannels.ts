@@ -1,7 +1,7 @@
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannelList } from '@sendbird/uikit-chat-hooks'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
-import useAuth from './independent/useAuth'
+import useAuth from '../independent/useAuth'
 
 export type useGroupChannelsReturn = {
   loading: boolean

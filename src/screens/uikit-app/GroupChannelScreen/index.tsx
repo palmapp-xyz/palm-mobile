@@ -29,6 +29,7 @@ const HasGatingToken = ({
   gatingToken: ContractAddr
 }): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
+
   const { user } = useAuth()
   const { balanceOf } = useNft({ nftContract: gatingToken })
   const { data: balance } = useQuery(
@@ -55,6 +56,7 @@ const HasGatingToken = ({
 const GroupChannelScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
   const { sdk } = useSendbirdChat()
+
   const { channel } = useGroupChannel(sdk, params.channelUrl)
 
   const { fsChannelField } = useFsChannel({ channelUrl: params.channelUrl })

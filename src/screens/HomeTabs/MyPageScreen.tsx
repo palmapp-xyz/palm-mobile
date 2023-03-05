@@ -42,7 +42,9 @@ const MyPageScreen = (): ReactElement => {
   const { getEthPrice } = useEthPrice()
   const { getProfile } = useLens()
 
-  const { data: lensProfile } = useQuery(['getProfile'], () => getProfile('0'))
+  const { data: lensProfile } = useQuery(['getProfile'], () =>
+    getProfile('0x01')
+  )
 
   return (
     <ScrollView

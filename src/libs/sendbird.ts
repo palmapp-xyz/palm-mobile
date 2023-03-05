@@ -22,6 +22,10 @@ import {
 import { Logger, SendbirdChatSDK } from '@sendbird/uikit-utils'
 import { SbNftDataType } from 'types/sendbird'
 import { UTIL } from 'consts'
+import {
+  GroupChannel,
+  GroupChannelCreateParams,
+} from '@sendbird/chat/groupChannel'
 
 const APP_ID = Config.APP_ID || ''
 
