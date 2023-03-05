@@ -6,6 +6,7 @@ import { QueryKeyEnum, zx } from 'types'
 
 export type UseZxOrderReturn = {
   order?: zx.order
+  isLoading: boolean
 }
 
 const useZxOrder = ({ nonce }: { nonce: string }): UseZxOrderReturn => {
@@ -13,7 +14,7 @@ const useZxOrder = ({ nonce }: { nonce: string }): UseZxOrderReturn => {
 
   const extApi = `https://api.trader.xyz/orderbook/orders?chainId=${connectedNetworkId}&nftType=erc721&erc20Token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&nonce=${nonce}`
 
-  const { data: order } = useReactQuery(
+  const { data: order, isLoading } = useReactQuery(
     [QueryKeyEnum.ZX_ORDER, connectedNetworkId, nonce],
     async () => {
       const fetchRes: AxiosResponse<{ orders: zx.order[] }, any> =
@@ -22,7 +23,7 @@ const useZxOrder = ({ nonce }: { nonce: string }): UseZxOrderReturn => {
     }
   )
 
-  return { order }
+  return { order, isLoading }
 }
 
 export default useZxOrder

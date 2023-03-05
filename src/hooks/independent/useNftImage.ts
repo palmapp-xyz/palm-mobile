@@ -28,13 +28,17 @@ const useNftImage = ({
     }
   )
 
-  const { data: uri } = useReactQuery(
+  const { data: uri, isLoading } = useReactQuery(
     [QueryKeyEnum.MORALIS_NFT_IMAGE, tokenUri, metadata],
     () => fetchNftImage({ metadata, tokenUri }),
     { enabled: !!tokenUri }
   )
 
-  return { uri }
+  return {
+    uri: isLoading
+      ? 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=024'
+      : uri,
+  }
 }
 
 export default useNftImage

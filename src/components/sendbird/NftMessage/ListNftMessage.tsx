@@ -30,7 +30,7 @@ const ListNftMessage = ({
     metadata: item.metadata,
   })
 
-  const { order } = useZxOrder({ nonce: data.nonce })
+  const { order, isLoading } = useZxOrder({ nonce: data.nonce })
   const { getEthPrice } = useEthPrice()
 
   return (
@@ -38,7 +38,7 @@ const ListNftMessage = ({
       <EthLogoWrapper>
         <MediaRenderer src={uri} width={'100%'} height={150} />
       </EthLogoWrapper>
-      {!order && (
+      {isLoading === false && !order && (
         <View
           style={{
             position: 'absolute',
