@@ -15,16 +15,7 @@ const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
   const { sdk } = useSendbirdChat()
 
-  const onFollowPress = (
-    profile: ExtendedProfile,
-    profiles: ExtendedProfile[]
-  ): void => {
-    console.log(profile, profiles)
-  }
-  const onProfilePress = async (
-    profile: ExtendedProfile
-  ): Promise<ExtendedProfile> => {
-    const channelUrl = profile.ownedBy
+  const goToProfileChat = async (channelUrl: string): Promise<void> => {
     try {
       const channel = await sdk.groupChannel.getChannel(channelUrl)
       if (channel) {
@@ -33,6 +24,18 @@ const LensFriendsScreen = (): ReactElement => {
     } catch (e) {
       console.error(e)
     }
+  }
+
+  const onFollowPress = async (
+    profile: ExtendedProfile,
+    _profiles: ExtendedProfile[]
+  ): Promise<void> => {
+    await goToProfileChat(profile.ownedBy)
+  }
+  const onProfilePress = async (
+    profile: ExtendedProfile
+  ): Promise<ExtendedProfile> => {
+    await goToProfileChat(profile.ownedBy)
     return profile
   }
 
