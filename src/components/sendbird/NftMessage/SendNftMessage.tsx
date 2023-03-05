@@ -11,8 +11,9 @@ import { SbSendNftDataType } from 'types'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
-import LinkExplorer from 'components/atoms/LinkExplorer'
+import LinkExplorer from '../../atoms/LinkExplorer'
 import useNftImage from 'hooks/independent/useNftImage'
+import EthLogoWrapper from '../../molecules/EthLogoWrapper'
 
 const SendNftMessage = ({
   data,
@@ -30,7 +31,9 @@ const SendNftMessage = ({
 
   return (
     <View style={styles.container}>
-      <MediaRenderer src={uri} width={'100%'} height={150} />
+      <EthLogoWrapper>
+        <MediaRenderer src={uri} width={'100%'} height={150} />
+      </EthLogoWrapper>
       <View style={styles.body}>
         <Row style={{ alignItems: 'center', columnGap: 5 }}>
           <Icon
@@ -43,6 +46,7 @@ const SendNftMessage = ({
             style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
         </Row>
         <View>
+          <Text style={{ color: COLOR.primary._400 }}>Send NFT</Text>
           <LinkExplorer type="account" address={data.from}>
             <Text>{`from : ${UTIL.truncate(data.from)}`}</Text>
           </LinkExplorer>

@@ -10,6 +10,7 @@ import { SbBuyNftDataType } from 'types'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
 import useNftImage from 'hooks/independent/useNftImage'
+import EthLogoWrapper from '../../molecules/EthLogoWrapper'
 
 const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -22,8 +23,11 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
 
   return (
     <View style={styles.container}>
-      <MediaRenderer src={uri} width={'100%'} height={150} />
+      <EthLogoWrapper>
+        <MediaRenderer src={uri} width={'100%'} height={150} />
+      </EthLogoWrapper>
       <View style={styles.body}>
+        <Text style={{ color: COLOR.primary._400 }}>Buy NFT</Text>
         <Text
           numberOfLines={2}
           style={{

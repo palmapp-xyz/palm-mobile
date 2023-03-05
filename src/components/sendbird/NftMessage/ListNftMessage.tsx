@@ -14,6 +14,7 @@ import useNftImage from 'hooks/independent/useNftImage'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
+import EthLogoWrapper from '../../molecules/EthLogoWrapper'
 
 const ListNftMessage = ({
   data,
@@ -34,7 +35,9 @@ const ListNftMessage = ({
 
   return (
     <View style={styles.container}>
-      <MediaRenderer src={uri} width={'100%'} height={150} />
+      <EthLogoWrapper>
+        <MediaRenderer src={uri} width={'100%'} height={150} />
+      </EthLogoWrapper>
       {!order && (
         <View
           style={{

@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import FormButton from 'components/atoms/FormButton'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -9,9 +8,11 @@ import { COLOR } from 'consts'
 
 import { SbShareNftDataType } from 'types'
 
+import useNftImage from 'hooks/independent/useNftImage'
+import FormButton from '../../atoms/FormButton'
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
-import useNftImage from 'hooks/independent/useNftImage'
+import EthLogoWrapper from '../../molecules/EthLogoWrapper'
 
 const ShareNftMessage = ({
   data,
@@ -29,7 +30,14 @@ const ShareNftMessage = ({
 
   return (
     <View style={styles.container}>
-      <MediaRenderer src={uri} width={'100%'} height={150} />
+      <EthLogoWrapper>
+        <MediaRenderer
+          src={uri}
+          width={'100%'}
+          height={150}
+          style={{ borderRadius: 10 }}
+        />
+      </EthLogoWrapper>
       <View style={styles.body}>
         <Row style={{ alignItems: 'center', columnGap: 5 }}>
           <Icon
@@ -38,9 +46,9 @@ const ShareNftMessage = ({
             size={20}
           />
           <Text
-            numberOfLines={2}
             style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
         </Row>
+        <Text style={{ color: COLOR.primary._400 }}>Share NFT</Text>
 
         <FormButton
           size="sm"
@@ -60,8 +68,14 @@ const ShareNftMessage = ({
 export default ShareNftMessage
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: 'white', width: 240 },
-  body: { padding: 10, gap: 10 },
+  container: {
+    backgroundColor: 'white',
+    width: 240,
+    padding: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  body: { paddingTop: 10, gap: 10 },
   priceBox: {
     backgroundColor: COLOR.primary._50,
     padding: 10,
