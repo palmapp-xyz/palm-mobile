@@ -28,12 +28,15 @@ import {
   Theme,
   Environment,
 } from '@lens-protocol/react-native-lens-ui-kit'
+import { LogBox } from 'react-native'
 
 const APP_ID = Config.SENDBIRD_APP_ID || ''
 
 const App = (): ReactElement => {
   const { scheme } = useAppearance()
   const isLightTheme = scheme === 'light'
+
+  LogBox.ignoreAllLogs()
   return (
     <LensProvider environment={Environment.testnet} theme={Theme.light}>
       <AppProvider>

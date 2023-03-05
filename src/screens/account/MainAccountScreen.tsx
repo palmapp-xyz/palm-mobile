@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react'
 import {
   ImageBackground,
-  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,7 +11,14 @@ import { COLOR } from 'consts'
 
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { Container, FormButton, FormInput, Row } from 'components'
+
+import {
+  Container,
+  FormButton,
+  FormInput,
+  Row,
+  KeyboardAvoidingView,
+} from 'components'
 import useMainAccount from 'hooks/page/account/useMainAccount'
 import images from 'assets/images'
 
