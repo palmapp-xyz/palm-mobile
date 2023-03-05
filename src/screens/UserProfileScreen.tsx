@@ -28,6 +28,10 @@ import useUserNftList from 'hooks/api/useUserNftList'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import { pToken } from 'types'
+import useLens from 'hooks/independent/useLens'
+import { useQuery } from 'react-query'
+import { fixIpfsURL } from 'libs/ipfs'
+import images from 'assets/images'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
@@ -39,6 +43,18 @@ const UserProfileScreen = (): ReactElement => {
   const { balance, refetch } = useUserBalance({ address: userAddress })
 
   const { getEthPrice } = useEthPrice()
+
+  const { getDefaultProfile } = useLens()
+
+  const { data: lensProfile } = useQuery(
+    [`getDefaultProfile-${userAddress}`],
+    () => getDefaultProfile(userAddress)
+  )
+
+  const profileImg =
+    fixIpfsURL(lensProfile?.defaultProfile?.picture?.original?.url ?? '') ||
+    params.plainProfileUrl
+
   return (
     <ScrollView
       refreshControl={
@@ -65,11 +81,11 @@ const UserProfileScreen = (): ReactElement => {
             borderBottomRightRadius: 30,
             borderBottomLeftRadius: 30,
           }}
-          source={{ uri: params.plainProfileUrl }}
+          source={profileImg ? { uri: profileImg } : images.profile_temp}
           style={styles.topSection}>
           <View style={styles.profileImgBox}>
             <MediaRenderer
-              src={params.plainProfileUrl}
+              src={profileImg || images.profile_temp}
               width={100}
               height={100}
               style={{ borderRadius: 50 }}
@@ -125,6 +141,40 @@ const UserProfileScreen = (): ReactElement => {
                 </Text>
               </View>
             </Row>
+            {lensProfile?.defaultProfile?.attributes?.length && (
+              <View
+                style={{
+                  padding: 6,
+                }}>
+                <FlatList
+                  data={lensProfile.defaultProfile.attributes}
+                  keyExtractor={(_, index): string =>
+                    `profile-attribute-${index}`
+                  }
+                  horizontal
+                  contentContainerStyle={{
+                    gap: 20,
+                    marginHorizontal: '5%',
+                  }}
+                  renderItem={({
+                    item,
+                  }: {
+                    item: { key: string; value: string }
+                  }): ReactElement | null =>
+                    item.key === 'app' ? null : (
+                      <View
+                        style={{
+                          marginHorizontal: 15,
+                          alignItems: 'center',
+                        }}>
+                        <Text style={styles.attribute}>{item.key}</Text>
+                        <Text>{item.value}</Text>
+                      </View>
+                    )
+                  }
+                />
+              </View>
+            )}
             <View
               style={{
                 padding: 20,
@@ -133,8 +183,8 @@ const UserProfileScreen = (): ReactElement => {
                 borderRadius: 20,
               }}>
               <Text>
-                Hello, Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist. Hello,
-                Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist.
+                {lensProfile?.defaultProfile?.bio ||
+                  'Hello, Everybody! 👋 I’m Bitcoin OG. And NFT Maximalist.'}
               </Text>
             </View>
           </Card>
@@ -228,5 +278,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: 0,
     flex: 1,
+  },
+  attribute: {
+    fontWeight: 'bold',
+    marginBottom: 6,
   },
 })

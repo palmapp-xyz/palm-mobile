@@ -9,7 +9,6 @@ import {
   ScrollView,
   RefreshControl,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
@@ -44,8 +43,9 @@ const MyPageScreen = (): ReactElement => {
   const { getEthPrice } = useEthPrice()
   const { getDefaultProfile } = useLens()
 
-  const { data: lensProfile } = useQuery(['getDefaultProfile'], () =>
-    getDefaultProfile()
+  const { data: lensProfile } = useQuery(
+    [`getDefaultProfile-${user?.address}`],
+    () => getDefaultProfile(user?.address ?? '')
   )
 
   const profileImg =
