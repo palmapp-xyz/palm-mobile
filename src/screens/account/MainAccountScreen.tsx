@@ -2,7 +2,6 @@ import React, { ReactElement, useState } from 'react'
 import {
   ImageBackground,
   KeyboardAvoidingView,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,26 +15,17 @@ import { Routes } from 'libs/navigation'
 import { Container, FormButton, FormInput, Row } from 'components'
 import useMainAccount from 'hooks/page/account/useMainAccount'
 import images from 'assets/images'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
-const KEYBOARD_AVOID_VIEW_BEHAVIOR = Platform.select({
-  ios: 'padding' as const,
-  default: undefined,
-})
 
 const MainAccountScreen = (): ReactElement => {
   const [isSecondPage, setIsSecondPage] = useState(true)
   const { navigation } = useAppNavigation()
-  const { bottom } = useSafeAreaInsets()
   const { hasStoredKey, password, setPassword, isValidForm, onClickConfirm } =
     useMainAccount()
 
   return (
     <ImageBackground source={images.splash} style={{ flex: 1 }}>
       <Container style={styles.container}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={bottom}
-          behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}>
+        <KeyboardAvoidingView>
           <View
             style={{
               backgroundColor: '#ffffff99',

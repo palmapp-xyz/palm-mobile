@@ -10,6 +10,7 @@ export { default as ErrorMessage } from './atoms/ErrorMessage'
 export { default as LinkExplorer } from './atoms/LinkExplorer'
 export { default as Icons } from './atoms/Icons'
 export { default as MediaRenderer } from './atoms/MediaRenderer'
+export { default as KeyboardAvoidingView } from './atoms/KeyboardAvoidingView'
 
 export { default as MoralisNftRenderer } from './molecules/MoralisNftRenderer'
 export { default as NftRenderer } from './molecules/NftRenderer'

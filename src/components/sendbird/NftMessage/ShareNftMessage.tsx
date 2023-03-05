@@ -48,7 +48,6 @@ const ShareNftMessage = ({
           <Text
             style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
         </Row>
-        <Text style={{ color: COLOR.primary._400 }}>Share NFT</Text>
 
         <FormButton
           size="sm"
