@@ -7,7 +7,7 @@ import { MenuProvider } from 'react-native-popup-menu'
 const queryClient = new QueryClient()
 
 const client = new ApolloClient({
-  uri: 'https://api.lens.dev',
+  uri: 'https://api-mumbai.lens.dev/',
   cache: new InMemoryCache(),
 })
 
