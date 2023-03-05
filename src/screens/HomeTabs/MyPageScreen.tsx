@@ -49,7 +49,7 @@ const MyPageScreen = (): ReactElement => {
   )
 
   const profileImg =
-    fixIpfsURL(lensProfile?.defaultProfile.picture.original.url ?? '') ||
+    fixIpfsURL(lensProfile?.defaultProfile?.picture?.original?.url ?? '') ||
     currentUser?.plainProfileUrl
 
   return (
@@ -104,7 +104,7 @@ const MyPageScreen = (): ReactElement => {
                 alignItems: 'center',
               }}>
               <Text style={{ color: 'black' }}>
-                {lensProfile?.defaultProfile.handle || currentUser?.nickname}
+                {lensProfile?.defaultProfile?.handle || currentUser?.nickname}
               </Text>
             </Card>
           </View>
@@ -146,13 +146,13 @@ const MyPageScreen = (): ReactElement => {
                 </Text>
               </View>
             </Row>
-            {lensProfile?.defaultProfile.attributes.length && (
+            {lensProfile?.defaultProfile?.attributes.length && (
               <View
                 style={{
                   padding: 6,
                 }}>
                 <FlatList
-                  data={lensProfile?.defaultProfile.attributes}
+                  data={lensProfile.defaultProfile.attributes}
                   keyExtractor={(_, index): string =>
                     `profile-attribute-${index}`
                   }
@@ -188,7 +188,7 @@ const MyPageScreen = (): ReactElement => {
                 borderRadius: 20,
               }}>
               <Text>
-                {lensProfile?.defaultProfile.bio ||
+                {lensProfile?.defaultProfile?.bio ||
                   'Tell us something about you!'}
               </Text>
             </View>
