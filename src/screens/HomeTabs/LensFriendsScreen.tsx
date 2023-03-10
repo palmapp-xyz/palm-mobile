@@ -16,8 +16,7 @@ import useSendbird from 'hooks/sendbird/useSendbird'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import useLens from 'hooks/independent/useLens'
 import { useQuery } from 'react-query'
-import { fixIpfsURL } from 'libs/ipfs'
-import { fetchNftImage } from 'libs/fetchTokenUri'
+import { getProfileImgFromLensProfile } from 'libs/lens'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
@@ -39,13 +38,8 @@ const LensFriendsScreen = (): ReactElement => {
       return
     }
     await connect(profile.ownedBy)
-    const profileImg =
-      profile.picture?.__typename === 'MediaSet'
-        ? fixIpfsURL(profile.picture.original.url)
-        : profile.picture?.__typename === 'NftImage'
-        ? await fetchNftImage({ tokenUri: profile.picture.uri })
-        : undefined
-    await updateCurrentUserInfo(profile.name || profile.handle, profileImg)
+    const profileImg = await getProfileImgFromLensProfile(profile)
+    await updateCurrentUserInfo(profile.handle, profileImg)
     await connect(user?.address)
   }
 

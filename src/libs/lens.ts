@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client'
+import { ExtendedProfile } from '@lens-protocol/react-native-lens-ui-kit'
 import { ContractAddr } from 'types'
+import { fetchNftImage } from './fetchTokenUri'
+import { fixIpfsURL } from './ipfs'
 
 export namespace lens {
   export const challenge = gql`
@@ -273,4 +276,16 @@ export namespace lensResponse {
       // followModule: null
     }
   }
+}
+
+export const getProfileImgFromLensProfile = async (
+  profile: ExtendedProfile
+): Promise<string | undefined> => {
+  const profileImg =
+    profile.picture?.__typename === 'MediaSet'
+      ? fixIpfsURL(profile.picture.original.url)
+      : profile.picture?.__typename === 'NftImage'
+      ? await fetchNftImage({ tokenUri: profile.picture.uri })
+      : undefined
+  return profileImg
 }

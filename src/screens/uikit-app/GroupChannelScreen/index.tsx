@@ -10,6 +10,7 @@ import {
 import { Routes } from 'libs/navigation'
 
 import { ContractAddr, QueryKeyEnum } from 'types'
+import GroupChannelHeader from './GroupChannelHeader'
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
 import { MessageRenderer } from 'components'
@@ -20,6 +21,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
+  Header: GroupChannelHeader,
   MessageList: GroupChannelMessageList,
 })
 
