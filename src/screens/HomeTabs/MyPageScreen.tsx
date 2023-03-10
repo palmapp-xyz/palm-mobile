@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAsyncLayoutEffect } from '@sendbird/uikit-utils'
 
 import { COLOR, UTIL } from 'consts'
 
@@ -51,6 +52,17 @@ const MyPageScreen = (): ReactElement => {
   const profileImg =
     fixIpfsURL(lensProfile?.defaultProfile?.picture?.original?.url ?? '') ||
     currentUser?.plainProfileUrl
+
+  useAsyncLayoutEffect(async () => {
+    const lensProfileImg = fixIpfsURL(
+      lensProfile?.defaultProfile?.picture?.original?.url ?? ''
+    )
+    const me = await updateCurrentUserInfo(
+      lensProfile?.defaultProfile?.handle,
+      lensProfileImg
+    )
+    setCurrentUser(me)
+  }, [lensProfile, user])
 
   return (
     <ScrollView

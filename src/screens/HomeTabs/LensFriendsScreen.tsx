@@ -5,42 +5,66 @@ import { Container } from 'components'
 
 import {
   ExtendedProfile,
+  ProfileMetadata,
   Search,
 } from '@lens-protocol/react-native-lens-ui-kit'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { useConnection } from '@sendbird/uikit-react-native'
+import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import useAuth from 'hooks/independent/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
+import useLens from 'hooks/independent/useLens'
+import { useQuery } from 'react-query'
+import { fixIpfsURL } from 'libs/ipfs'
+import { fetchNftImage } from 'libs/fetchTokenUri'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
   const { connect } = useConnection()
   const { user } = useAuth()
   const { createGroupChatIfNotExist } = useSendbird()
+  const { updateCurrentUserInfo } = useSendbirdChat()
+  const { getDefaultProfile } = useLens()
 
-  const goToProfileChat = async (
-    channelUrl: string,
-    nickname?: string | null
+  const { data: lensProfile } = useQuery(
+    [`getDefaultProfile-${user?.address}`],
+    () => getDefaultProfile(user?.address ?? '')
+  )
+
+  const createSendbirdUserFromProfile = async (
+    profile: ExtendedProfile
   ): Promise<void> => {
-    if (user) {
-      connect(channelUrl, { nickname: nickname || undefined })
-        .then(() => {
-          connect(user?.address)
-            .then(() => {
-              createGroupChatIfNotExist(
-                channelUrl,
-                [user?.address],
-                (channel: GroupChannel) =>
-                  navigation.navigate(Routes.GroupChannel, {
-                    channelUrl: channel.url,
-                  })
-              )
-            })
-            .catch(e => console.error(e))
-        })
-        .catch(e => console.error(e))
+    if (!user) {
+      return
+    }
+    await connect(profile.ownedBy)
+    const profileImg =
+      profile.picture?.__typename === 'MediaSet'
+        ? fixIpfsURL(profile.picture.original.url)
+        : profile.picture?.__typename === 'NftImage'
+        ? await fetchNftImage({ tokenUri: profile.picture.uri })
+        : undefined
+    await updateCurrentUserInfo(profile.name || profile.handle, profileImg)
+    await connect(user?.address)
+  }
+
+  const goToProfileChat = async (profile: ExtendedProfile): Promise<void> => {
+    if (!user) {
+      return
+    }
+    try {
+      await createSendbirdUserFromProfile(profile)
+      await createGroupChatIfNotExist(
+        profile.ownedBy,
+        [user?.address],
+        (channel: GroupChannel) =>
+          navigation.navigate(Routes.GroupChannel, {
+            channelUrl: channel.url,
+          })
+      )
+    } catch (e) {
+      console.error(e)
     }
   }
 
@@ -48,18 +72,21 @@ const LensFriendsScreen = (): ReactElement => {
     profile: ExtendedProfile,
     _profiles: ExtendedProfile[]
   ): Promise<void> => {
-    await goToProfileChat(profile.ownedBy, profile.name)
+    await goToProfileChat(profile)
   }
   const onProfilePress = async (
     profile: ExtendedProfile
   ): Promise<ExtendedProfile> => {
-    await goToProfileChat(profile.ownedBy, profile.name)
+    await goToProfileChat(profile)
     return profile
   }
 
   const props = {
     onFollowPress,
     onProfilePress,
+    signedInUser: lensProfile
+      ? (lensProfile as unknown as ProfileMetadata)
+      : undefined,
   }
 
   return (
