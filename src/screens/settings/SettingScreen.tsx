@@ -5,12 +5,12 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 import { Container, Header, Row } from 'components'
 import useAuth from 'hooks/independent/useAuth'
-import useSetting from 'hooks/independent/useSetting'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import NetworkOptions from './NetworkOptions'
+import ThemeOptions from './ThemeOptions'
 
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()
-  const { setting } = useSetting()
   const { navigation } = useAppNavigation()
 
   return (
@@ -23,25 +23,33 @@ const SettingScreen = (): ReactElement => {
         onPressLeft={navigation.goBack}
       />
       <View style={styles.body}>
-        <TouchableOpacity
-          onPress={(): void => {
-            console.log('change network')
-          }}
-          style={styles.itemGroup}>
-          <TouchableOpacity style={styles.item}>
-            <Text>Change Network</Text>
-            <Row>
-              <Text style={{ color: COLOR.primary._400 }}>
-                {setting.network}
-              </Text>
-              <Icon
-                name="ios-chevron-forward"
-                color={COLOR.gray._800}
-                size={20}
-              />
-            </Row>
-          </TouchableOpacity>
-        </TouchableOpacity>
+        <View
+          style={[
+            styles.itemGroup,
+            {
+              paddingVertical: 16,
+              paddingHorizontal: 20,
+              justifyContent: 'space-between',
+              gap: 10,
+            },
+          ]}>
+          <Text>Change Network</Text>
+          <NetworkOptions />
+        </View>
+
+        <View
+          style={[
+            styles.itemGroup,
+            {
+              paddingVertical: 16,
+              paddingHorizontal: 20,
+              justifyContent: 'space-between',
+              gap: 10,
+            },
+          ]}>
+          <Text>Change Theme</Text>
+          <ThemeOptions />
+        </View>
 
         <View style={styles.itemGroup}>
           <TouchableOpacity
@@ -62,18 +70,6 @@ const SettingScreen = (): ReactElement => {
             <Text>Push Notifications</Text>
             <Row>
               <Switch />
-            </Row>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.itemGroup}>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={(): void => {
-              console.log('change network')
-            }}>
-            <Text>Change Network</Text>
-            <Row>
-              <Text>{setting.network}</Text>
             </Row>
           </TouchableOpacity>
         </View>
@@ -139,7 +135,7 @@ export default SettingScreen
 
 const styles = StyleSheet.create({
   container: {},
-  body: { padding: 10, rowGap: 10 },
+  body: { padding: 10, rowGap: 20 },
   itemGroup: { backgroundColor: 'white', borderRadius: 15 },
   item: {
     paddingVertical: 16,

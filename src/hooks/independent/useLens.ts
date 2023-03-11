@@ -26,11 +26,13 @@ const useLens = (): UseLensReturn => {
           query: lens.challenge,
           variables: { address: signer.address },
         })
+        console.log('challengeInfo', challengeInfo)
 
         /* ask the user to sign a message with the challenge info returned from the server */
         const signature = signer.sign(
           challengeInfo.data.challenge.text
         ).signature
+        console.log('signature', signature)
 
         /* authenticate the user */
         const authData = await mutate<{
@@ -42,6 +44,7 @@ const useLens = (): UseLensReturn => {
             signature,
           },
         })
+        console.log('authData', authData)
 
         /* if user authentication is successful, you will receive an accessToken and refreshToken */
         if (authData.data?.authenticate.accessToken) {

@@ -13,8 +13,8 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
     chainId: toHex(chainId[ChainNetworkEnum.ETHEREUM]),
     chainName: 'Mainnet',
     rpcUrls: [
-      Config.ALCHEMY_API_KEY
-        ? `https://eth-mainnet.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY}`
+      Config.ALCHEMY_API_KEY_ETHEREUM
+        ? `https://eth-mainnet.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY_ETHEREUM}`
         : 'https://ethereum.publicnode.com',
     ],
     nativeCurrency: { name: 'ETH', decimals: 18, symbol: 'ETH' },
@@ -24,8 +24,8 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
     chainId: toHex(chainId[ChainNetworkEnum.GOERLI]),
     chainName: 'Goerli',
     rpcUrls: [
-      Config.ALCHEMY_API_KEY
-        ? `https://eth-goerli.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY}`
+      Config.ALCHEMY_API_KEY_GOERLI
+        ? `https://eth-goerli.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY_GOERLI}`
         : 'https://ethereum-goerli-rpc.allthatnode.com',
     ],
     nativeCurrency: {

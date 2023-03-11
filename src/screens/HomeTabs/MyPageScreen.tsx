@@ -244,7 +244,7 @@ const MyPageScreen = (): ReactElement => {
                     item={item}
                     triggerComponent={
                       <View style={styles.nftTitle}>
-                        <Text>{`#${item.token_id}`}</Text>
+                        <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
                       </View>
                     }
                     onSelect={async (

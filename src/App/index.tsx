@@ -23,14 +23,12 @@ import useAppearance from '../hooks/useAppearance'
 import { ErrorInfoScreen } from '../screens'
 import AppProvider from './AppProvider'
 import Navigation from '../Navigation'
-import {
-  LensProvider,
-  Theme,
-  Environment,
-} from '@lens-protocol/react-native-lens-ui-kit'
 import { LogBox } from 'react-native'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const APP_ID = Config.SENDBIRD_APP_ID || ''
+
+const queryClient = new QueryClient()
 
 const App = (): ReactElement => {
   const { scheme } = useAppearance()
@@ -38,7 +36,7 @@ const App = (): ReactElement => {
 
   LogBox.ignoreAllLogs()
   return (
-    <LensProvider environment={Environment.testnet} theme={Theme.light}>
+    <QueryClientProvider client={queryClient}>
       <AppProvider>
         <SendbirdUIKitContainer
           appId={APP_ID}
@@ -74,7 +72,7 @@ const App = (): ReactElement => {
           <Navigation />
         </SendbirdUIKitContainer>
       </AppProvider>
-    </LensProvider>
+    </QueryClientProvider>
   )
 }
 

@@ -32,6 +32,7 @@ const useMainAccount = (): UseMainAccountReturn => {
   const onClickConfirm = async (): Promise<void> => {
     const res = await login({ password })
     if (res.success === false) {
+      console.error('useMainAccount:onClickConfirm', res.errMsg)
       alert({ message: res.errMsg })
     }
   }

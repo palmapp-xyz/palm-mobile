@@ -17,15 +17,17 @@ const SignWithLens = (): ReactElement => {
           if (res.success) {
             setAccToken(res.value)
           } else {
+            console.error('SignWithLens:setAccToken', res.errMsg)
             Alert.alert(res.errMsg)
             logout()
           }
         })
         .catch(err => {
+          console.error('SignWithLens:sign', err)
           Alert.alert(err)
           logout()
         })
-  }, [signer])
+  }, [signer?.address])
 
   return (
     <Container style={styles.container}>
