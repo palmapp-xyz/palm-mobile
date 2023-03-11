@@ -1,7 +1,7 @@
 import { COLOR, NETWORK } from 'consts'
 import useSetting from 'hooks/independent/useSetting'
 import React, { ReactElement, useEffect, useState } from 'react'
-import DropDownPicker from 'react-native-dropdown-picker'
+import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
 import { ChainNetworkEnum } from 'types'
 
 const NetworkOptions = (): ReactElement => {
@@ -11,17 +11,23 @@ const NetworkOptions = (): ReactElement => {
   const [value, setValue] = useState<ChainNetworkEnum>(setting.network)
 
   const options = Object.keys(NETWORK.chainId).map(chain => {
-    return { label: chain, value: chain }
+    return { label: chain, value: chain } as ItemType<ChainNetworkEnum>
   })
-  const [items, setItems] = useState(options)
+  const [items, setItems] = useState<ItemType<ChainNetworkEnum>[]>(options)
+
+  const onChangeValue = (selected: ChainNetworkEnum | null): void => {
+    if (!selected || setting.network === selected) {
+      return
+    }
+    setting.network = selected
+    updateSetting(setting)
+  }
 
   useEffect(() => {
     if (setting.network !== value) {
-      setting.network = value
-      updateSetting(setting)
       setValue(setting.network)
     }
-  }, [value])
+  }, [setting])
 
   return (
     <DropDownPicker
@@ -32,6 +38,7 @@ const NetworkOptions = (): ReactElement => {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
+      onChangeValue={onChangeValue}
       listMode="MODAL"
     />
   )

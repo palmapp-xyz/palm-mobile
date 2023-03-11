@@ -1,7 +1,7 @@
 import { COLOR } from 'consts'
 import useSetting from 'hooks/independent/useSetting'
 import React, { ReactElement, useEffect, useState } from 'react'
-import DropDownPicker from 'react-native-dropdown-picker'
+import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
 import { ThemeModeType } from 'types'
 
 const ThemeOptions = (): ReactElement => {
@@ -10,18 +10,24 @@ const ThemeOptions = (): ReactElement => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState<ThemeModeType>(setting.themeMode)
 
-  const [items, setItems] = useState([
+  const [items, setItems] = useState<ItemType<ThemeModeType>[]>([
     { label: 'light', value: 'light' },
     { label: 'dark', value: 'dark' },
   ])
 
+  const onChangeValue = (selected: ThemeModeType | null): void => {
+    if (!selected || setting.themeMode === selected) {
+      return
+    }
+    setting.themeMode = selected
+    updateSetting(setting)
+  }
+
   useEffect(() => {
     if (setting.themeMode !== value) {
-      setting.themeMode = value
-      updateSetting(setting)
       setValue(setting.themeMode)
     }
-  }, [value])
+  }, [setting])
 
   return (
     <DropDownPicker
@@ -32,6 +38,7 @@ const ThemeOptions = (): ReactElement => {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
+      onChangeValue={onChangeValue}
       listMode="MODAL"
     />
   )
