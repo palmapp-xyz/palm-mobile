@@ -29,9 +29,9 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import { pToken } from 'types'
 import useLens from 'hooks/independent/useLens'
-import { useQuery } from 'react-query'
 import { fixIpfsURL } from 'libs/ipfs'
 import images from 'assets/images'
+import useReactQuery from 'hooks/complex/useReactQuery'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
@@ -46,8 +46,8 @@ const UserProfileScreen = (): ReactElement => {
 
   const { getDefaultProfile } = useLens()
 
-  const { data: lensProfile } = useQuery(
-    [`getDefaultProfile-${userAddress}`],
+  const { data: lensProfile } = useReactQuery(
+    ['getDefaultProfile', userAddress],
     () => getDefaultProfile(userAddress)
   )
 

@@ -17,9 +17,9 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { getProfileImgFromLensProfile } from 'libs/lens'
 import useLens from 'hooks/independent/useLens'
-import { useQuery } from 'react-query'
 import useAuth from 'hooks/independent/useAuth'
 import { ExtendedProfile } from '@lens-protocol/react-native-lens-ui-kit'
+import useReactQuery from 'hooks/complex/useReactQuery'
 
 const GroupChannelHeader = ({
   onPressHeaderLeft,
@@ -37,7 +37,7 @@ const GroupChannelHeader = ({
   const userId = channel.members.find(
     member => member.userId !== user?.address
   )?.userId
-  const { data } = useQuery([`getDefaultProfile-${userId}`], () =>
+  const { data } = useReactQuery(['getDefaultProfile', userId], () =>
     getDefaultProfile(userId || '')
   )
 

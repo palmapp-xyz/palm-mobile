@@ -33,7 +33,7 @@ const useUserNftList = ({
     refetch,
     isRefetching,
   } = useInfiniteQuery(
-    [ApiEnum.ASSETS, userAddress],
+    [ApiEnum.ASSETS, userAddress, connectedNetworkId],
     async ({ pageParam = '' }) => {
       if (userAddress) {
         const path = apiV1Fabricator[ApiEnum.ASSETS].get({

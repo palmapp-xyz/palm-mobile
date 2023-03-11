@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect, useMemo } from 'react'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useQuery } from 'react-query'
 import { View } from 'react-native'
 import {
   createGroupChannelFragment,
@@ -18,6 +17,7 @@ import useFsChannel from 'hooks/firestore/useFsChannel'
 import useNft from 'hooks/contract/useNft'
 import useAuth from 'hooks/independent/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useReactQuery from 'hooks/complex/useReactQuery'
 
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
@@ -34,7 +34,7 @@ const HasGatingToken = ({
 
   const { user } = useAuth()
   const { balanceOf } = useNft({ nftContract: gatingToken })
-  const { data: balance } = useQuery(
+  const { data: balance } = useReactQuery(
     [QueryKeyEnum.NFT_TOKEN_BALANCE_OF],
     async () => {
       if (user) {

@@ -32,8 +32,8 @@ import { Moralis, pToken } from 'types'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useLens from 'hooks/independent/useLens'
-import { useQuery } from 'react-query'
 import { fixIpfsURL } from 'libs/ipfs'
+import useReactQuery from 'hooks/complex/useReactQuery'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -44,8 +44,8 @@ const MyPageScreen = (): ReactElement => {
   const { getEthPrice } = useEthPrice()
   const { getDefaultProfile } = useLens()
 
-  const { data: lensProfile } = useQuery(
-    [`getDefaultProfile-${user?.address}`],
+  const { data: lensProfile } = useReactQuery(
+    ['getDefaultProfile', user?.address],
     () => getDefaultProfile(user?.address ?? '')
   )
 
