@@ -3,16 +3,15 @@ import _ from 'lodash'
 import { useApolloClient } from '@apollo/client'
 
 import useWeb3 from 'hooks/complex/useWeb3'
-import { lens, lensResponse } from 'libs/lens'
 import { TrueOrErrReturn } from 'types'
+import { lens } from '../../graphql/lens'
+import { Profile } from '__generated__/graphql'
 
 export type UseLensReturn = {
   signer?: Account
   sign: () => Promise<TrueOrErrReturn>
-  getProfile: (profileId: string) => Promise<lensResponse.Profile>
-  getDefaultProfile: (
-    address: string
-  ) => Promise<lensResponse.DefaultProfile | undefined>
+  getProfile: (profileId: string) => Promise<Profile>
+  getDefaultProfile: (address: string) => Promise<Profile | undefined>
 }
 
 const useLens = (): UseLensReturn => {
@@ -60,24 +59,22 @@ const useLens = (): UseLensReturn => {
     return { success: false, errMsg: 'No user' }
   }
 
-  const getProfile = async (
-    profileId: string
-  ): Promise<lensResponse.Profile> => {
-    const profile = await query<lensResponse.Profile>({
+  const getProfile = async (profileId: string): Promise<Profile> => {
+    const profile = await query<lens.Profile>({
       query: lens.profile,
       variables: { profileId },
     })
-    return profile.data
+    return profile.data.profile
   }
 
   const getDefaultProfile = async (
     address: string
-  ): Promise<lensResponse.DefaultProfile | undefined> => {
-    const profile = await query<lensResponse.DefaultProfile>({
+  ): Promise<Profile | undefined> => {
+    const profile = await query<lens.DefaultProfile>({
       query: lens.defaultProfile,
       variables: { address },
     })
-    return profile.data
+    return profile.data.defaultProfile
   }
 
   return { signer, sign, getProfile, getDefaultProfile }

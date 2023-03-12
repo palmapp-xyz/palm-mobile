@@ -9,7 +9,8 @@
       "assets/*": ["./assets/*"],
       "types": ["./types"],
       "consts": ["./consts"],
-      "components": ["./components"]
+      "components": ["./components"],
+      "graphql": ["./graphql/*"]
     },
     "types": [
       "react-native",
@@ -17,5 +18,6 @@
       "styled-components-react-native",
     ],
     "esModuleInterop": true,
+    "noImplicitAny": false,
   }
 }

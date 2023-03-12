@@ -27,8 +27,6 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
             const sender = message.sender
             navigation.navigate(Routes.UserProfile, {
               address: sender.userId as ContractAddr,
-              plainProfileUrl: sender.plainProfileUrl,
-              nickName: sender.nickname,
             })
           }}>
           <Avatar size={26} uri={message.sender?.profileUrl} />

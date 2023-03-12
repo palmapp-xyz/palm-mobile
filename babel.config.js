@@ -14,6 +14,7 @@ module.exports = function (api) {
         types: './src/types',
         consts: './src/consts',
         components: './src/components',
+        graphql: './src/graphql',
       },
     },
   ]

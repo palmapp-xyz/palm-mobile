@@ -24,7 +24,7 @@ export default {
     }): ApiParamFabricated =>
       `/v1/api/evm-api-proxy/${userAddress}/nft?chain=${utils.hexValue(
         connectedNetworkId
-      )}&limit=${limit || 30}${
+      )}&limit=${limit || 10}${
         cursor ? `&cursor=${cursor}` : ''
       }` as ApiParamFabricated,
   },
