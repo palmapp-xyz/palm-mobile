@@ -51,7 +51,6 @@ const UserProfileScreen = (): ReactElement => {
       numColumns={2}
       contentContainerStyle={{ gap: 10 }}
       columnWrapperStyle={{ gap: 10 }}
-      scrollEnabled={false}
       renderItem={({ item }): ReactElement => (
         <TouchableWithoutFeedback
           onPress={(): void => {

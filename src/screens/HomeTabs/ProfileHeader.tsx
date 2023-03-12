@@ -31,14 +31,13 @@ const ProfileHeader = ({
   balance?: pToken
 }): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { currentUser, setCurrentUser, updateCurrentUserInfo } =
-    useSendbirdChat()
+  const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { user } = useMyPageMain()
   const { getEthPrice } = useEthPrice()
 
-  const [profileImg, setProfileImg] = useState<string | undefined>(
-    currentUser?.plainProfileUrl
-  )
+  const isMe = user && profile && user.address === profile.ownedBy
+
+  const [profileImg, setProfileImg] = useState<string | undefined>()
 
   useAsyncLayoutEffect(async () => {
     const res = await getProfileImgFromLensProfile(profile)
@@ -48,7 +47,7 @@ const ProfileHeader = ({
   }, [profile])
 
   useAsyncLayoutEffect(async () => {
-    if (profileImg) {
+    if (profileImg && isMe) {
       const me = await updateCurrentUserInfo(profile?.handle, profileImg)
       setCurrentUser(me)
     }
@@ -65,15 +64,27 @@ const ProfileHeader = ({
         }}
         source={profileImg ? { uri: profileImg } : images.profile_temp}
         style={styles.topSection}>
-        <View style={{ alignItems: 'flex-end' }}>
-          <Pressable
-            style={styles.settingIcon}
-            onPress={(): void => {
-              navigation.navigate(Routes.Setting)
-            }}>
-            <Icon name={'settings-outline'} size={24} />
-          </Pressable>
-        </View>
+        {isMe ? (
+          <View style={{ alignItems: 'flex-end' }}>
+            <Pressable
+              style={styles.headerButton}
+              onPress={(): void => {
+                navigation.navigate(Routes.Setting)
+              }}>
+              <Icon name={'settings-outline'} size={24} />
+            </Pressable>
+          </View>
+        ) : (
+          <View style={{ alignItems: 'flex-start' }}>
+            <Pressable
+              style={styles.headerButton}
+              onPress={(): void => {
+                navigation.goBack()
+              }}>
+              <Icon name="ios-chevron-back" color={COLOR.gray._800} size={24} />
+            </Pressable>
+          </View>
+        )}
         <View style={styles.profileImgBox}>
           <MediaRenderer
             src={profileImg || images.profile_temp}
@@ -95,9 +106,7 @@ const ProfileHeader = ({
               paddingVertical: 10,
               alignItems: 'center',
             }}>
-            <Text style={{ color: 'black' }}>
-              {profile?.handle || currentUser?.nickname}
-            </Text>
+            <Text style={{ color: 'black' }}>{profile?.handle}</Text>
           </Card>
         </View>
         <Card
@@ -114,7 +123,7 @@ const ProfileHeader = ({
               </View>
               <View>
                 <Text style={{ color: 'black' }}>Wallet</Text>
-                <Text>{UTIL.truncate(user?.address || '')}</Text>
+                <Text>{UTIL.truncate(profile?.ownedBy || '')}</Text>
               </View>
             </Row>
             <View style={{ alignItems: 'flex-end' }}>
@@ -233,7 +242,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 999,
   },
-  settingIcon: {
+  headerButton: {
     margin: 10,
     padding: 5,
     backgroundColor: 'white',
