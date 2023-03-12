@@ -14,10 +14,11 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import useLens from 'hooks/independent/useLens'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import ProfileHeader from './HomeTabs/ProfileHeader'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
   const userAddress = params.address
-
+  const { sdk } = useSendbirdChat()
   const useUserNftListReturn = useUserNftList({
     userAddress,
   })
