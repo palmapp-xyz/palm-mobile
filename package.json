@@ -15,7 +15,7 @@
     "ios:build": "npm run bundle; npm run ios:pod-install",
     "ios:build-clean": "npm run bundle; npm run ios:pod-install; npm run ios:clean",
     "ios:pod-install": "cd ios; pod install --repo-update;",
-    "ios:clean": "watchman watch-del $PWD ; watchman watch-project $PWD",
+    "clean": "watchman watch-del $PWD ; watchman watch-project $PWD",
     "postinstall": "node_modules/.bin/rn-nodeify --install crypto,http,https,assert,url,stream,events --hack"
   },
   "dependencies": {

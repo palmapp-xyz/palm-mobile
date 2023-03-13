@@ -33,7 +33,7 @@ const useUserNftList = ({
     refetch,
     isRefetching,
   } = useInfiniteQuery(
-    [ApiEnum.ASSETS, userAddress],
+    [ApiEnum.ASSETS, userAddress, connectedNetworkId],
     async ({ pageParam = '' }) => {
       if (userAddress) {
         const path = apiV1Fabricator[ApiEnum.ASSETS].get({
@@ -57,7 +57,7 @@ const useUserNftList = ({
     },
     {
       getNextPageParam: lastPage => lastPage.cursor,
-      keepPreviousData: true,
+      keepPreviousData: false,
     }
   )
 
@@ -68,7 +68,7 @@ const useUserNftList = ({
 
   useEffect(() => {
     refetch()
-  }, [])
+  }, [connectedNetworkId])
 
   return { nftList, fetchNextPage, hasNextPage, refetch, isRefetching }
 }

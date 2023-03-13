@@ -4,7 +4,7 @@ import { useApolloClient } from '@apollo/client'
 
 import useWeb3 from 'hooks/complex/useWeb3'
 import { TrueOrErrReturn } from 'types'
-import { lens } from '../../graphql/lens'
+import { lens } from '../../graphqls/lens'
 import { Profile } from '__generated__/graphql'
 
 export type UseLensReturn = {

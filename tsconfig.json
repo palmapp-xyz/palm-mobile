@@ -10,7 +10,7 @@
       "types": ["./types"],
       "consts": ["./consts"],
       "components": ["./components"],
-      "graphql": ["./graphql/*"]
+      "graphqls": ["./graphqls/*"]
     },
     "types": [
       "react-native",
