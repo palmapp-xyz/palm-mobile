@@ -92,3 +92,11 @@ export const unescape = (src: string): string => {
     ';'
   )
 }
+
+export const formatHex = (str: string): string => {
+  let ret = str.trim()
+  if (!ret.startsWith('0x')) {
+    ret = `0x${ret}`
+  }
+  return ret
+}

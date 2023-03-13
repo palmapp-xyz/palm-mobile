@@ -7,6 +7,7 @@ import { savePkey, getPkeyPwd, getPkey } from 'libs/account'
 import appStore from 'store/appStore'
 
 import { ContractAddr, TrueOrErrReturn, User } from 'types'
+import { formatHex } from 'libs/utils'
 
 export type UseAuthReturn = {
   user?: User
@@ -28,7 +29,7 @@ const useAuth = (): UseAuthReturn => {
     privateKey: string
     password: string
   }): Promise<void> => {
-    const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+    const account = web3.eth.accounts.privateKeyToAccount(formatHex(privateKey))
     await savePkey(privateKey, password)
 
     await connect(account.address)
