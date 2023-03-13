@@ -26,16 +26,16 @@ import { Profile } from '__generated__/graphql'
 const ProfileHeader = ({
   profile,
   balance,
+  isMyPage,
 }: {
   profile?: Profile
   balance?: pToken
+  isMyPage: boolean
 }): ReactElement => {
   const { navigation } = useAppNavigation()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { user } = useMyPageMain()
   const { getEthPrice } = useEthPrice()
-
-  const isMe = user && profile && user.address === profile.ownedBy
 
   const [profileImg, setProfileImg] = useState<string | undefined>()
 
@@ -47,7 +47,7 @@ const ProfileHeader = ({
   }, [profile])
 
   useAsyncLayoutEffect(async () => {
-    if (profileImg && isMe) {
+    if (profileImg && isMyPage) {
       const me = await updateCurrentUserInfo(profile?.handle, profileImg)
       setCurrentUser(me)
     }
@@ -64,7 +64,7 @@ const ProfileHeader = ({
         }}
         source={profileImg ? { uri: profileImg } : images.profile_temp}
         style={styles.topSection}>
-        {isMe ? (
+        {isMyPage ? (
           <View style={{ alignItems: 'flex-end' }}>
             <Pressable
               style={styles.headerButton}

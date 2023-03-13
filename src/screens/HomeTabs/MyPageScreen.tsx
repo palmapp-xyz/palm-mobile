@@ -33,7 +33,11 @@ const MyPageScreen = (): ReactElement => {
   )
 
   const profileHeader = (
-    <ProfileHeader profile={profile} balance={useMyBalanceReturn?.balance} />
+    <ProfileHeader
+      isMyPage
+      profile={profile}
+      balance={useMyBalanceReturn?.balance}
+    />
   )
 
   return (

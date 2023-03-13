@@ -37,8 +37,6 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { scheme } = useAppearance()
   const isLightTheme = scheme === 'light'
 
-  console.log(setting)
-
   const lensEnv =
     setting.network === ChainNetworkEnum.ETHEREUM
       ? Environment.mainnet
@@ -56,8 +54,6 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
     setting.network === ChainNetworkEnum.ETHEREUM
       ? Config.SENDBIRD_APP_ID_ETHEREUM
       : Config.SENDBIRD_APP_ID_GOERLI
-
-  console.log(APP_ID)
 
   return (
     <LensProvider
