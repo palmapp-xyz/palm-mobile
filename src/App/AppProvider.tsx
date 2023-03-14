@@ -35,6 +35,7 @@ import { ChainNetworkEnum } from 'types'
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()
   const { scheme } = useAppearance()
+
   const isLightTheme = scheme === 'light'
 
   const lensEnv =
@@ -47,6 +48,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
       setting.network === ChainNetworkEnum.ETHEREUM
         ? Config.LENS_API_ETHEREUM
         : Config.LENS_API_GOERLI,
+
     cache: new InMemoryCache(),
   })
 

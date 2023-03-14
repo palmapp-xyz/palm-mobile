@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useCallback } from 'react'
 import {
   StyleSheet,
   Text,
@@ -12,32 +12,22 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
-import useLens from 'hooks/independent/useLens'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import ProfileHeader from './ProfileHeader'
-import { MoralisNftRenderer } from 'components'
-import NftItemMenu from 'components/molecules/NftItemMenu'
+import ProfileHeader from '../../components/ProfileHeader'
+import { MoralisNftRenderer, NftItemMenu } from 'components'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { Moralis } from 'types'
+import useLensProfile from 'hooks/lens/useLensProfile'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
   const { user, useMyNftListReturn, useMyBalanceReturn } = useMyPageMain()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
 
-  const { getDefaultProfile } = useLens()
+  const useLensProfileReturn = useLensProfile({ userAddress: user?.address })
 
-  const { data: profile } = useReactQuery(
-    ['getDefaultProfile', user?.address],
-    () => getDefaultProfile(user?.address ?? '')
-  )
-
-  const profileHeader = (
-    <ProfileHeader
-      isMyPage
-      profile={profile}
-      balance={useMyBalanceReturn?.balance}
-    />
+  const profileHeader = useCallback(
+    () => <ProfileHeader isMyPage userAddress={user?.address} />,
+    [user?.address]
   )
 
   return (
@@ -48,6 +38,7 @@ const MyPageScreen = (): ReactElement => {
           onRefresh={(): void => {
             useMyNftListReturn.refetch()
             useMyBalanceReturn.refetch()
+            useLensProfileReturn.refetch()
           }}
         />
       }

@@ -16,5 +16,6 @@ export { default as MoralisNftRenderer } from './molecules/MoralisNftRenderer'
 export { default as NftRenderer } from './molecules/NftRenderer'
 export { default as SubmitButton } from './molecules/SubmitButton'
 export { default as EthLogoWrapper } from './molecules/EthLogoWrapper'
+export { default as NftItemMenu } from './molecules/NftItemMenu'
 
 export { default as MessageRenderer } from './sendbird/MessageRenderer'

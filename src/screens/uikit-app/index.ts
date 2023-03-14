@@ -10,3 +10,4 @@ export { default as GroupChannelMutedMembersScreen } from './GroupChannelMutedMe
 export { default as GroupChannelBannedUsersScreen } from './GroupChannelBannedUsersScreen'
 export { default as GroupChannelNotificationsScreen } from './GroupChannelNotificationsScreen'
 export { default as TokenGatingInfoScreen } from './TokenGatingInfoScreen'
+export { default as FileViewerScreen } from './FileViewerScreen'

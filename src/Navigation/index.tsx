@@ -3,44 +3,22 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
 import React, { ReactElement, useEffect } from 'react'
 
-import { RootStack } from '../libs/sendbird'
-import useAppearance from '../hooks/useAppearance'
-import { Routes, navigationRef } from '../libs/navigation'
-import { onForegroundAndroid, onForegroundIOS } from '../libs/notification'
-import {
-  GroupChannelBannedUsersScreen,
-  GroupChannelCreateScreen,
-  GroupChannelInviteScreen,
-  GroupChannelMembersScreen,
-  GroupChannelModerationScreen,
-  GroupChannelMutedMembersScreen,
-  GroupChannelNotificationsScreen,
-  GroupChannelOperatorsScreen,
-  GroupChannelRegisterOperatorScreen,
-  GroupChannelScreen,
-  GroupChannelSettingsScreen,
-  Web3AuthScreen,
-  MainAccountScreen,
-  NewAccountScreen,
-  RecoverAccountScreen,
-  HomeTabs,
-  SettingScreen,
-  ZxNftDetailScreen,
-  SendNftScreen,
-  ListNftScreen,
-  NftDetailScreen,
-  ChannelListingsScreen,
-  ChannelTokenGatingScreen,
-  SignWithLens,
-  UserProfileScreen,
-  TokenGatingInfoScreen,
-} from '../screens'
-import FileViewerScreen from '../screens/uikit-app/FileViewerScreen'
+import useAppearance from 'hooks/useAppearance'
 import useAuth from 'hooks/independent/useAuth'
-// import Sign4AuthScreen from '../screens/Sign4AuthScreen'
+
+import { Routes, navigationRef } from 'libs/navigation'
+import { onForegroundAndroid, onForegroundIOS } from 'libs/notification'
+
+import { SignWithLens } from '../screens'
 import PostTxResult from './PostTxResult'
+import MainNavigator from './MainNavigator'
+import AuthNavigator from './AuthNavigator'
+
+const RootStack = createNativeStackNavigator()
 
 const Navigation = (): ReactElement => {
   const { user } = useAuth()
@@ -60,125 +38,14 @@ const Navigation = (): ReactElement => {
       theme={isLightTheme ? DefaultTheme : DarkTheme}>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         {user?.accessToken ? (
-          <>
-            <RootStack.Screen name={Routes.HomeTabs} component={HomeTabs} />
-
-            <RootStack.Screen
-              name={Routes.ZxNftDetail}
-              component={ZxNftDetailScreen}
-            />
-            <RootStack.Screen
-              name={Routes.NftDetail}
-              component={NftDetailScreen}
-            />
-            <RootStack.Screen
-              name={Routes.ChannelListings}
-              component={ChannelListingsScreen}
-            />
-            <RootStack.Screen
-              name={Routes.ChannelTokenGating}
-              component={ChannelTokenGatingScreen}
-            />
-
-            <RootStack.Screen
-              name={Routes.UserProfile}
-              component={UserProfileScreen}
-            />
-
-            <RootStack.Screen name={Routes.SendNft} component={SendNftScreen} />
-
-            <RootStack.Screen name={Routes.ListNft} component={ListNftScreen} />
-
-            <RootStack.Screen name={Routes.Setting} component={SettingScreen} />
-            <RootStack.Group>
-              <RootStack.Screen
-                name={Routes.GroupChannel}
-                component={GroupChannelScreen}
-              />
-              <RootStack.Screen
-                name={Routes.TokenGatingInfo}
-                component={TokenGatingInfoScreen}
-              />
-            </RootStack.Group>
-            <RootStack.Group>
-              <RootStack.Screen
-                name={Routes.GroupChannelSettings}
-                component={GroupChannelSettingsScreen}
-              />
-              <RootStack.Screen
-                name={Routes.GroupChannelNotifications}
-                component={GroupChannelNotificationsScreen}
-              />
-              <RootStack.Screen
-                name={Routes.GroupChannelMembers}
-                component={GroupChannelMembersScreen}
-              />
-              <RootStack.Screen
-                name={Routes.GroupChannelModeration}
-                component={GroupChannelModerationScreen}
-              />
-              <RootStack.Screen
-                name={Routes.GroupChannelMutedMembers}
-                component={GroupChannelMutedMembersScreen}
-              />
-              <RootStack.Screen
-                name={Routes.GroupChannelBannedUsers}
-                component={GroupChannelBannedUsersScreen}
-              />
-              <RootStack.Group>
-                <RootStack.Screen
-                  name={Routes.GroupChannelOperators}
-                  component={GroupChannelOperatorsScreen}
-                />
-                <RootStack.Screen
-                  name={Routes.GroupChannelRegisterOperator}
-                  component={GroupChannelRegisterOperatorScreen}
-                />
-              </RootStack.Group>
-            </RootStack.Group>
-            <RootStack.Screen
-              name={Routes.GroupChannelCreate}
-              component={GroupChannelCreateScreen}
-            />
-            <RootStack.Screen
-              name={Routes.GroupChannelInvite}
-              component={GroupChannelInviteScreen}
-            />
-            <RootStack.Group
-              screenOptions={{
-                animation: 'slide_from_bottom',
-                headerShown: false,
-              }}>
-              <RootStack.Screen
-                name={Routes.FileViewer}
-                component={FileViewerScreen}
-              />
-            </RootStack.Group>
-          </>
+          <RootStack.Screen name={Routes.HomeTabs} component={MainNavigator} />
         ) : user ? (
+          <RootStack.Screen name="SignWithLens" component={SignWithLens} />
+        ) : (
           <RootStack.Screen
             name={Routes.MainAccount}
-            component={SignWithLens}
+            component={AuthNavigator}
           />
-        ) : (
-          <>
-            <RootStack.Screen
-              name={Routes.MainAccount}
-              component={MainAccountScreen}
-            />
-            <RootStack.Screen
-              name={Routes.NewAccount}
-              component={NewAccountScreen}
-            />
-            <RootStack.Screen
-              name={Routes.RecoverAccount}
-              component={RecoverAccountScreen}
-            />
-            <RootStack.Screen
-              name={Routes.Web3Auth}
-              component={Web3AuthScreen}
-            />
-          </>
         )}
       </RootStack.Navigator>
       <PostTxResult />

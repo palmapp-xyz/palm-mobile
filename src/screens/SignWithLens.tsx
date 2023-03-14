@@ -2,32 +2,31 @@ import React, { ReactElement, useEffect } from 'react'
 import { Alert, StyleSheet, Text, View } from 'react-native'
 
 import { Container } from 'components'
-import useLens from 'hooks/independent/useLens'
+import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import LensLogo from 'assets/LensLogo'
 
 const SignWithLens = (): ReactElement => {
   const { setAccToken, logout } = useAuth()
-  const { sign, signer } = useLens()
+  const { sign } = useLens()
 
   useEffect(() => {
-    signer &&
-      sign()
-        .then(res => {
-          if (res.success) {
-            setAccToken(res.value)
-          } else {
-            console.error('SignWithLens:setAccToken', res.errMsg)
-            Alert.alert(res.errMsg)
-            logout()
-          }
-        })
-        .catch(err => {
-          console.error('SignWithLens:sign', err)
-          Alert.alert(err)
+    sign()
+      .then(res => {
+        if (res.success) {
+          setAccToken(res.value)
+        } else {
+          console.error('SignWithLens:setAccToken', res.errMsg)
+          Alert.alert(res.errMsg)
           logout()
-        })
-  }, [signer?.address])
+        }
+      })
+      .catch(err => {
+        console.error('SignWithLens:sign', err)
+        Alert.alert(err)
+        logout()
+      })
+  }, [])
 
   return (
     <Container style={styles.container}>

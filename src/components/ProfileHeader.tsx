@@ -12,24 +12,23 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncLayoutEffect } from '@sendbird/uikit-utils'
 
 import { COLOR, UTIL } from 'consts'
+import { ContractAddr, pToken } from 'types'
+import images from 'assets/images'
 
 import { Routes } from 'libs/navigation'
-import { Card, FormButton, MediaRenderer, Row } from 'components'
+import { Card, FormButton, FormImage, MediaRenderer, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
-import images from 'assets/images'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import { getProfileImgFromLensProfile } from 'libs/lens'
-import { pToken } from 'types'
-import { Profile } from '__generated__/graphql'
+import useUserBalance from 'hooks/independent/useUserBalance'
+import useLensProfile from 'hooks/lens/useLensProfile'
 
 const ProfileHeader = ({
-  profile,
-  balance,
+  userAddress,
   isMyPage,
 }: {
-  profile?: Profile
-  balance?: pToken
+  userAddress?: ContractAddr
   isMyPage: boolean
 }): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -37,7 +36,11 @@ const ProfileHeader = ({
   const { user } = useMyPageMain()
   const { getEthPrice } = useEthPrice()
 
+  const { profile } = useLensProfile({ userAddress })
+
   const [profileImg, setProfileImg] = useState<string | undefined>()
+
+  const { balance } = useUserBalance({ address: userAddress })
 
   useAsyncLayoutEffect(async () => {
     const res = await getProfileImgFromLensProfile(profile)
@@ -86,26 +89,23 @@ const ProfileHeader = ({
           </View>
         )}
         <View style={styles.profileImgBox}>
-          <MediaRenderer
-            src={profileImg || images.profile_temp}
-            width={100}
-            height={100}
-            style={{ borderRadius: 50 }}
-          />
+          {profileImg ? (
+            <MediaRenderer
+              src={profileImg}
+              width={100}
+              height={100}
+              style={{ borderRadius: 50 }}
+            />
+          ) : (
+            <FormImage
+              source={images.profile_temp}
+              size={100}
+              style={{ borderRadius: 50 }}
+            />
+          )}
         </View>
-        <View
-          style={{
-            padding: 20,
-            alignItems: 'center',
-            width: '100%',
-          }}>
-          <Card
-            style={{
-              width: 160,
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-              alignItems: 'center',
-            }}>
+        <View style={styles.profileNicknameBox}>
+          <Card style={styles.profileNicknameCard}>
             <Text style={{ color: 'black' }}>{profile?.handle}</Text>
           </Card>
         </View>
@@ -123,7 +123,7 @@ const ProfileHeader = ({
               </View>
               <View>
                 <Text style={{ color: 'black' }}>Wallet</Text>
-                <Text>{UTIL.truncate(profile?.ownedBy || '')}</Text>
+                <Text>{UTIL.truncate(userAddress || '')}</Text>
               </View>
             </Row>
             <View style={{ alignItems: 'flex-end' }}>
@@ -146,7 +146,7 @@ const ProfileHeader = ({
               </Text>
             </View>
           </Row>
-          {profile?.attributes?.length && (
+          {!!profile?.attributes?.length && (
             <View
               style={{
                 padding: 6,
@@ -226,6 +226,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderWidth: 4,
     borderColor: 'white',
+  },
+  profileNicknameBox: {
+    padding: 20,
+    alignItems: 'center',
+    width: '100%',
+  },
+  profileNicknameCard: {
+    width: 180,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    alignItems: 'center',
   },
   walletBalanceBox: {
     alignItems: 'center',

@@ -27,6 +27,7 @@ export enum Routes {
   GroupChannelList = 'GroupChannelList',
 
   UserProfile = 'UserProfile',
+  CreateLensProfile = 'CreateLensProfile',
   NftDetail = 'NftDetail',
   ZxNftDetail = 'ZxNftDetail',
   ListNft = 'ListNft',
@@ -77,6 +78,10 @@ type AuthRouteParamsUnion =
 type MainRouteParamsUnion =
   | {
       route: Routes.HomeTabs
+      params: undefined
+    }
+  | {
+      route: Routes.CreateLensProfile
       params: undefined
     }
   | {

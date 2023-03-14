@@ -2,7 +2,6 @@ import * as ImageResizer from '@bam.tech/react-native-image-resizer'
 import { CameraRoll } from '@react-native-camera-roll/camera-roll'
 import Clipboard from '@react-native-clipboard/clipboard'
 import RNFBMessaging from '@react-native-firebase/messaging'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import axios, { AxiosInstance } from 'axios'
 import { Platform, StatusBar } from 'react-native'
 import * as CreateThumbnail from '@skqksh/react-native-create-thumbnail'
@@ -30,7 +29,6 @@ export const GetSendbirdSDK = (): SendbirdChatSDK => AppSendbirdSDK
 export const SetSendbirdSDK = (sdk: SendbirdChatSDK): SendbirdChatSDK =>
   (AppSendbirdSDK = sdk)
 
-export const RootStack = createNativeStackNavigator()
 export const ClipboardService = createNativeClipboardService(Clipboard)
 export const NotificationService = createNativeNotificationService({
   messagingModule: RNFBMessaging,

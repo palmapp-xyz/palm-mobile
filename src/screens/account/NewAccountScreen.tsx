@@ -10,6 +10,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 
 const NewAccountScreen = (): ReactElement => {
   const {
+    address,
     privateKey,
     password,
     setPassword,
@@ -31,8 +32,8 @@ const NewAccountScreen = (): ReactElement => {
         onPressLeft={navigation.goBack}
       />
       <View style={styles.body}>
-        <View>
-          <Text>New Account</Text>
+        <View style={{ rowGap: 10 }}>
+          <Text style={{ fontWeight: 'bold' }}>{address}</Text>
           <Text>Private key</Text>
           <Text>{privateKey}</Text>
 

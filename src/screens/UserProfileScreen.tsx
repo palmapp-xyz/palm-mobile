@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useCallback } from 'react'
 import {
   FlatList,
   View,
@@ -11,9 +11,7 @@ import { MoralisNftRenderer } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useUserBalance from 'hooks/independent/useUserBalance'
-import useLens from 'hooks/independent/useLens'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import ProfileHeader from './HomeTabs/ProfileHeader'
+import ProfileHeader from '../components/ProfileHeader'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
@@ -21,19 +19,13 @@ const UserProfileScreen = (): ReactElement => {
   const useUserNftListReturn = useUserNftList({
     userAddress,
   })
-  const { balance, refetch: balanceRefetch } = useUserBalance({
+  const { refetch: balanceRefetch } = useUserBalance({
     address: userAddress,
   })
 
-  const { getDefaultProfile } = useLens()
-
-  const { data: profile } = useReactQuery(
-    ['getDefaultProfile', userAddress],
-    () => getDefaultProfile(userAddress)
-  )
-
-  const profileHeader = (
-    <ProfileHeader isMyPage={false} profile={profile} balance={balance} />
+  const profileHeader = useCallback(
+    () => <ProfileHeader isMyPage={false} userAddress={userAddress} />,
+    [userAddress]
   )
 
   return (

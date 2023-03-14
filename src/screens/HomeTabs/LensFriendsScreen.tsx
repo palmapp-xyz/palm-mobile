@@ -14,7 +14,7 @@ import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import useAuth from 'hooks/independent/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
-import useLens from 'hooks/independent/useLens'
+import useLens from 'hooks/lens/useLens'
 import { getProfileImgFromLensProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
 

@@ -10,14 +10,10 @@
       "types": ["./types"],
       "consts": ["./consts"],
       "components": ["./components"],
-      "graphqls": ["./graphqls/*"]
+      "graphqls/*": ["./graphqls/*"]
     },
-    "types": [
-      "react-native",
-      "jest",
-      "styled-components-react-native",
-    ],
+    "types": ["react-native", "jest", "styled-components-react-native"],
     "esModuleInterop": true,
-    "noImplicitAny": false,
+    "noImplicitAny": false
   }
 }

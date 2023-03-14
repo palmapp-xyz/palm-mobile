@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react'
 import useWeb3 from 'hooks/complex/useWeb3'
 import useAuth from 'hooks/independent/useAuth'
+import { ContractAddr } from 'types'
 
 export type UseNewAccountReturn = {
+  address: ContractAddr
   privateKey: string
   password: string
   setPassword: (value: string) => void
@@ -17,7 +19,9 @@ const useNewAccount = (): UseNewAccountReturn => {
   const { web3 } = useWeb3()
 
   const { register } = useAuth()
-  const privateKey = useMemo(() => web3.eth.accounts.create().privateKey, [])
+  const created = useMemo(() => web3.eth.accounts.create(), [])
+  const address = created.address as ContractAddr
+  const privateKey = created.privateKey
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const passwordConfirmErrMsg = useMemo(() => {
@@ -34,6 +38,7 @@ const useNewAccount = (): UseNewAccountReturn => {
   }
 
   return {
+    address,
     privateKey,
     password,
     setPassword,

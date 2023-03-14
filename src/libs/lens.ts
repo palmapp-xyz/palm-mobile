@@ -1,4 +1,4 @@
-import { Profile } from '__generated__/graphql'
+import { Profile } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { fixIpfsURL } from './ipfs'
 
 export const getProfileImgFromLensProfile = async (
