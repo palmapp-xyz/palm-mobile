@@ -1,21 +1,25 @@
 import React, { ReactElement, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
-import { Container, FormButton } from 'components'
+import { Container, FormButton, FormInput } from 'components'
 import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
+import { COLOR } from 'consts'
 
 const CreateLensProfileScreen = (): ReactElement => {
   const { user } = useAuth()
   const { createProfile } = useLens()
+
   const [isFetching, setIsFetching] = useState(false)
+  const [handle, setHandle] = useState('')
 
-  const handle = `palm${user?.address.slice(-10).toLocaleLowerCase()}`
-
-  const { refetch } = useLensProfile({
+  const { refetch, loading } = useLensProfile({
     userAddress: user?.address,
   })
+
+  const { alert } = useAlert()
 
   const onClickConfirm = async (): Promise<void> => {
     try {
@@ -25,26 +29,37 @@ const CreateLensProfileScreen = (): ReactElement => {
       })
       await refetch()
     } catch (error) {
-      console.log(
+      setIsFetching(false)
+      console.error(
         'createProfile, onClickConfirm',
         JSON.stringify(error, null, 2)
       )
+      alert({ message: JSON.stringify(error, null, 2) })
     }
   }
 
   return (
     <Container style={styles.container}>
-      <View style={styles.body}>
-        <View style={{ paddingTop: 30, alignItems: 'center' }}>
-          <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
-            {"You don't have any lens Profile \n\nClick button to mint\n"}
-          </Text>
-          <Text style={{ fontWeight: 'bold' }}>Handle : {handle}</Text>
+      {loading ? (
+        <View style={[styles.body]}>
+          <ActivityIndicator size="large" color={COLOR.primary._100} />
         </View>
-        <FormButton disabled={isFetching} onPress={onClickConfirm}>
-          Mint Profile NFT
-        </FormButton>
-      </View>
+      ) : (
+        <View style={styles.body}>
+          <View style={{ paddingTop: 30, alignItems: 'center' }}>
+            <Text style={styles.text}>{"You don't have any lens Profile"}</Text>
+          </View>
+          <Text style={styles.text}>Choose Username:</Text>
+          <FormInput
+            value={handle}
+            onChangeText={setHandle}
+            textContentType="username"
+          />
+          <FormButton disabled={isFetching || loading} onPress={onClickConfirm}>
+            Mint Profile NFT
+          </FormButton>
+        </View>
+      )}
     </Container>
   )
 }
@@ -52,6 +67,15 @@ const CreateLensProfileScreen = (): ReactElement => {
 export default CreateLensProfileScreen
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  body: { flex: 1, padding: 10, justifyContent: 'space-between' },
+  container: { flex: 1, justifyContent: 'center' },
+  body: {
+    gap: 20,
+    padding: 10,
+    justifyContent: 'space-between',
+  },
+  text: {
+    color: 'black',
+    fontSize: 16,
+    textAlign: 'center',
+  },
 })

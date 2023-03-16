@@ -38,7 +38,7 @@ const SignWithLens = (): ReactElement => {
           justifyContent: 'center',
         }}>
         <LensLogo />
-        <Text style={{ fontSize: 16 }}>Signing with Lens...</Text>
+        <Text style={{ fontSize: 16 }}>Signing in with Lens...</Text>
       </View>
     </Container>
   )
