@@ -6,6 +6,7 @@ import {
   View,
   TouchableWithoutFeedback,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
@@ -17,6 +18,7 @@ import { MoralisNftRenderer, NftItemMenu } from 'components'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { Moralis } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'
+import { COLOR } from 'consts'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -28,6 +30,16 @@ const MyPageScreen = (): ReactElement => {
   const profileHeader = useCallback(
     () => <ProfileHeader isMyPage userAddress={user?.address} />,
     [user?.address]
+  )
+
+  const footer = (
+    <View style={[styles.footer]}>
+      {useMyNftListReturn.isLoading ? (
+        <ActivityIndicator size="large" color={COLOR.primary._50} />
+      ) : useMyNftListReturn.nftList.length === 0 ? (
+        <Text style={styles.text}>{'The user has no NFTs yet.'}</Text>
+      ) : null}
+    </View>
   )
 
   return (
@@ -43,6 +55,7 @@ const MyPageScreen = (): ReactElement => {
         />
       }
       ListHeaderComponent={profileHeader}
+      ListFooterComponent={footer}
       data={useMyNftListReturn.nftList}
       keyExtractor={(_, index): string => `nftList-${index}`}
       numColumns={2}
@@ -100,6 +113,18 @@ const MyPageScreen = (): ReactElement => {
 export default MyPageScreen
 
 const styles = StyleSheet.create({
+  footer: {
+    flex: 1,
+    height: 150,
+    justifyContent: 'center',
+    gap: 20,
+    padding: 10,
+  },
+  text: {
+    color: 'black',
+    fontSize: 16,
+    textAlign: 'center',
+  },
   nftTitle: {
     position: 'absolute',
     backgroundColor: 'white',

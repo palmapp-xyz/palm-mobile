@@ -14,6 +14,7 @@ export type UseUserNftListReturn = {
   hasNextPage: boolean
   refetch: () => void
   isRefetching: boolean
+  isLoading: boolean
 }
 
 const useUserNftList = ({
@@ -32,6 +33,7 @@ const useUserNftList = ({
     hasNextPage = false,
     refetch,
     isRefetching,
+    isLoading,
   } = useInfiniteQuery(
     [ApiEnum.ASSETS, userAddress, connectedNetworkId],
     async ({ pageParam = '' }) => {
@@ -70,7 +72,14 @@ const useUserNftList = ({
     refetch()
   }, [connectedNetworkId])
 
-  return { nftList, fetchNextPage, hasNextPage, refetch, isRefetching }
+  return {
+    nftList,
+    fetchNextPage,
+    hasNextPage,
+    refetch,
+    isRefetching,
+    isLoading,
+  }
 }
 
 export default useUserNftList
