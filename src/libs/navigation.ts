@@ -12,7 +12,12 @@ import { ContractAddr } from 'types'
 import { GetSendbirdSDK } from './sendbird'
 
 export enum Routes {
+  MainNavigator = 'MainNavigator',
+  AuthNavigator = 'AuthNavigator',
+
   MainAccount = 'MainAccount',
+  AuthMenu = 'AuthMenu',
+  Login = 'Login',
   NewAccount = 'NewAccount',
   RecoverAccount = 'RecoverAccount',
   Web3Auth = 'Web3Auth',
@@ -60,6 +65,14 @@ type AuthRouteParamsUnion =
     }
   | {
       route: Routes.MainAccount
+      params: undefined
+    }
+  | {
+      route: Routes.AuthMenu
+      params: undefined
+    }
+  | {
+      route: Routes.Login
       params: undefined
     }
   | {
@@ -194,7 +207,17 @@ type MainRouteParamsUnion =
       }
     }
 
-export type RouteParamsUnion = AuthRouteParamsUnion | MainRouteParamsUnion
+export type RouteParamsUnion =
+  | {
+      route: Routes.MainNavigator
+      params: undefined
+    }
+  | {
+      route: Routes.AuthNavigator
+      params: undefined
+    }
+  | AuthRouteParamsUnion
+  | MainRouteParamsUnion
 
 type ExtractParams<R extends Routes, U extends RouteParamsUnion> = U extends {
   route: R

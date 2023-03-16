@@ -38,12 +38,15 @@ const Navigation = (): ReactElement => {
       theme={isLightTheme ? DefaultTheme : DarkTheme}>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         {user?.accessToken ? (
-          <RootStack.Screen name={Routes.HomeTabs} component={MainNavigator} />
+          <RootStack.Screen
+            name={Routes.MainNavigator}
+            component={MainNavigator}
+          />
         ) : user ? (
           <RootStack.Screen name="SignWithLens" component={SignWithLens} />
         ) : (
           <RootStack.Screen
-            name={Routes.MainAccount}
+            name={Routes.AuthNavigator}
             component={AuthNavigator}
           />
         )}
