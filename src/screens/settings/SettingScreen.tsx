@@ -6,8 +6,8 @@ import { COLOR } from 'consts'
 import { Container, Header, Row } from 'components'
 import useAuth from 'hooks/independent/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import NetworkOptions from './NetworkOptions'
 import ThemeOptions from './ThemeOptions'
+import NetworkOptions from 'components/molecules/NetworkOptions'
 
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()

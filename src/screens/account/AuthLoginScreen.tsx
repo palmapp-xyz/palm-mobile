@@ -13,6 +13,7 @@ import {
 } from 'components'
 import useAuthLogin from 'hooks/page/account/useAuthLogin'
 import { Routes } from 'libs/navigation'
+import NetworkOptions from 'components/molecules/NetworkOptions'
 
 const AuthLoginScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -39,6 +40,8 @@ const AuthLoginScreen = (): ReactElement => {
           <FormButton disabled={!isValidForm} onPress={onClickConfirm}>
             Sign In With Lens
           </FormButton>
+          <Text>Change Network</Text>
+          <NetworkOptions />
         </View>
       </KeyboardAvoidingView>
     </AuthBody>
