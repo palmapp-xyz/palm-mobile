@@ -24,18 +24,22 @@ const CreateLensProfileScreen = (): ReactElement => {
   const onClickConfirm = async (): Promise<void> => {
     try {
       setIsFetching(true)
-      await createProfile({
+      const res = await createProfile({
         handle,
       })
-      await refetch()
+      if (res.success) {
+        await refetch()
+      } else {
+        throw new Error(res.errMsg)
+      }
     } catch (error) {
-      setIsFetching(false)
       console.error(
         'createProfile, onClickConfirm',
         JSON.stringify(error, null, 2)
       )
       alert({ message: JSON.stringify(error, null, 2) })
     }
+    setIsFetching(false)
   }
 
   return (

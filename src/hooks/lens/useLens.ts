@@ -33,7 +33,7 @@ export type UseLensReturn = {
   getDefaultProfile: (address: string) => Promise<Profile | undefined>
   createProfile: (
     request: CreateProfileRequest
-  ) => Promise<CreateProfileMutation['createProfile'] | undefined>
+  ) => Promise<TrueOrErrReturn<CreateProfileMutation['createProfile']>>
 }
 
 const useLens = (): UseLensReturn => {
@@ -151,14 +151,27 @@ const useLens = (): UseLensReturn => {
 
   const createProfile = async (
     request: CreateProfileRequest
-  ): Promise<CreateProfileMutation['createProfile'] | undefined> => {
+  ): Promise<TrueOrErrReturn<CreateProfileMutation['createProfile']>> => {
     const fetchRes = await mutate({
       mutation: CreateProfileDocument,
       variables: { request },
       refetchQueries: [{ query: ProfilesDocument }, { query: ProfileDocument }],
     })
 
-    return fetchRes.data?.createProfile
+    /* if user authentication is successful, you will receive an accessToken and refreshToken */
+    if (fetchRes.data?.createProfile.__typename === 'RelayerResult') {
+      return {
+        success: true,
+        value: fetchRes.data?.createProfile,
+      }
+    } else {
+      return {
+        success: false,
+        errMsg:
+          fetchRes.data?.createProfile?.reason ||
+          'Failed to create Lens profile',
+      }
+    }
   }
 
   return {
