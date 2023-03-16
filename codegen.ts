@@ -4,10 +4,10 @@ const config: CodegenConfig = {
   schema: 'https://api-mumbai.lens.dev',
   documents: ['src/graphqls/**/*'],
   generates: {
-    './src/__generated__/': {
+    './src/graphqls/__generated__/': {
       preset: 'client',
       presetConfig: {
-        gqlTagName: 'gql',
+        gqlTagName: 'graphql',
       },
     },
   },

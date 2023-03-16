@@ -66,3 +66,5 @@ yarn-error.log
 android/app/debug.keystore
 android/app/release.keystore
 android/app/release/app-release.aab
+
+**/__generated__/*
