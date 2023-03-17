@@ -18,12 +18,12 @@ const useSign4Auth = (): UseSign4AuthReturn => {
   })
 
   const { postApi } = useApi()
-  const { web3 } = useWeb3()
+  const { web3Eth } = useWeb3()
 
   const onPress = async (): Promise<void> => {
     try {
       const pKey = await getPkey()
-      const account = web3.eth.accounts.privateKeyToAccount(pKey)
+      const account = web3Eth.eth.accounts.privateKeyToAccount(pKey)
       const signature = account.sign(signMessage).signature
 
       const fetchRes = await postApi<ApiEnum.MORALIS_AUTH_ISSUE_TOKEN>({

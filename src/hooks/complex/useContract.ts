@@ -21,9 +21,9 @@ const useContract = ({
   contractAddress: ContractAddr
   abi: AbiItem[]
 }): UseContractReturn => {
-  const { web3 } = useWeb3()
+  const { web3Eth } = useWeb3()
 
-  const contract = web3 && new web3.eth.Contract(abi, contractAddress)
+  const contract = web3Eth && new web3Eth.eth.Contract(abi, contractAddress)
 
   const getEncodedTxData = useCallback(
     (methodName: string, params?: any) => {
@@ -31,14 +31,14 @@ const useContract = ({
         x => x.name === methodName
       )
 
-      if (jsonInterface && web3) {
-        return web3.eth.abi.encodeFunctionCall(
+      if (jsonInterface && web3Eth) {
+        return web3Eth.eth.abi.encodeFunctionCall(
           jsonInterface,
           params
         ) as EncodedTxData
       }
     },
-    [contract, web3]
+    [contract, web3Eth]
   )
 
   const callMethod = async <R>(

@@ -23,6 +23,7 @@ import useEthPrice from 'hooks/independent/useEthPrice'
 import { getProfileImgFromLensProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import useLensProfile from 'hooks/lens/useLensProfile'
+import useKlayPrice from 'hooks/independent/useKlayPrice'
 
 const ProfileHeader = ({
   userAddress,
@@ -35,12 +36,12 @@ const ProfileHeader = ({
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { user } = useMyPageMain()
   const { getEthPrice } = useEthPrice()
-
+  const { getKlayPrice } = useKlayPrice()
   const { profile } = useLensProfile({ userAddress })
 
   const [profileImg, setProfileImg] = useState<string | undefined>()
 
-  const { balance } = useUserBalance({ address: userAddress })
+  const { ethBalance, klayBalance } = useUserBalance({ address: userAddress })
 
   useAsyncLayoutEffect(async () => {
     const res = await getProfileImgFromLensProfile(profile)
@@ -126,24 +127,51 @@ const ProfileHeader = ({
                 <Text>{UTIL.truncate(userAddress || '')}</Text>
               </View>
             </Row>
-            <View style={{ alignItems: 'flex-end' }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: COLOR.primary._400,
-                  fontWeight: 'bold',
-                }}>
-                {UTIL.formatAmountP(balance || ('0' as pToken), {
-                  toFix: 4,
-                })}{' '}
-                ETH
-              </Text>
-              <Text style={{ fontSize: 12 }}>
-                $
-                {UTIL.formatAmountP(getEthPrice(balance || ('0' as pToken)), {
-                  toFix: 0,
-                })}
-              </Text>
+            <View>
+              <View style={{ alignItems: 'flex-end' }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: COLOR.primary._400,
+                    fontWeight: 'bold',
+                  }}>
+                  {UTIL.formatAmountP(ethBalance || ('0' as pToken), {
+                    toFix: 4,
+                  })}{' '}
+                  ETH
+                </Text>
+                <Text style={{ fontSize: 12 }}>
+                  $
+                  {UTIL.formatAmountP(
+                    getEthPrice(ethBalance || ('0' as pToken)),
+                    {
+                      toFix: 0,
+                    }
+                  )}
+                </Text>
+              </View>
+              <View style={{ alignItems: 'flex-end' }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: COLOR.primary._400,
+                    fontWeight: 'bold',
+                  }}>
+                  {UTIL.formatAmountP(klayBalance || ('0' as pToken), {
+                    toFix: 4,
+                  })}{' '}
+                  KLAY
+                </Text>
+                <Text style={{ fontSize: 12 }}>
+                  $
+                  {UTIL.formatAmountP(
+                    getKlayPrice(klayBalance || ('0' as pToken)),
+                    {
+                      toFix: 0,
+                    }
+                  )}
+                </Text>
+              </View>
             </View>
           </Row>
           {!!profile?.attributes?.length && (

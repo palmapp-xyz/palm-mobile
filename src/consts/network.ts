@@ -4,8 +4,10 @@ import { AddEthereumChainParameter, ChainNetworkEnum } from 'types'
 import Config from 'react-native-config'
 
 const chainId: Record<ChainNetworkEnum, number> = {
-  [ChainNetworkEnum.ETHEREUM]: 0x1,
-  [ChainNetworkEnum.GOERLI]: 0x5,
+  [ChainNetworkEnum.ETHEREUM]: 1,
+  [ChainNetworkEnum.GOERLI]: 5,
+  [ChainNetworkEnum.CYPRESS]: 8217,
+  [ChainNetworkEnum.BAOBAB]: 1001,
 }
 
 const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
@@ -34,6 +36,20 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
       decimals: 18,
     },
     blockExplorerUrls: ['https://goerli.etherscan.io'],
+  },
+  [ChainNetworkEnum.CYPRESS]: {
+    chainId: toHex(chainId[ChainNetworkEnum.CYPRESS]),
+    chainName: 'Klaytn Cypress',
+    rpcUrls: ['https://public-node-api.klaytnapi.com/v1/cypress'],
+    nativeCurrency: { name: 'Klaytn Token', decimals: 18, symbol: 'KLAY' },
+    blockExplorerUrls: ['https://scope.klaytn.com'],
+  },
+  [ChainNetworkEnum.BAOBAB]: {
+    chainId: toHex(chainId[ChainNetworkEnum.BAOBAB]),
+    chainName: 'Klaytn Baobab',
+    rpcUrls: ['https://api.baobab.klaytn.net:8651'],
+    nativeCurrency: { name: 'Klaytn Token', decimals: 18, symbol: 'KLAY' },
+    blockExplorerUrls: ['https://baobab.scope.klaytn.com/'],
   },
 }
 

@@ -16,10 +16,10 @@ export type UseNewAccountReturn = {
 }
 
 const useNewAccount = (): UseNewAccountReturn => {
-  const { web3 } = useWeb3()
+  const { web3Eth } = useWeb3()
 
   const { register } = useAuth()
-  const created = useMemo(() => web3.eth.accounts.create(), [])
+  const created = useMemo(() => web3Eth.eth.accounts.create(), [])
   const address = created.address as ContractAddr
   const privateKey = created.privateKey
   const [password, setPassword] = useState('')

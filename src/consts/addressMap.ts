@@ -7,6 +7,12 @@ const contractMap: Record<ChainNetworkEnum, ContractMap> = {
   [ChainNetworkEnum.GOERLI]: {
     escrow: '0x43692EE081A8823F22D476052BB80DF29C3AA1ED' as ContractAddr,
   },
+  [ChainNetworkEnum.CYPRESS]: {
+    escrow: '' as ContractAddr,
+  },
+  [ChainNetworkEnum.BAOBAB]: {
+    escrow: '' as ContractAddr,
+  },
 }
 
 export default { contractMap }

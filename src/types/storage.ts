@@ -1,4 +1,3 @@
-import { ChainNetworkEnum } from './network'
 import { ThemeModeType } from './theme'
 
 export enum KeyChainEnum {
@@ -12,5 +11,5 @@ export enum LocalStorageKey {
 
 export type SettingStorageType = {
   themeMode: ThemeModeType
-  network: ChainNetworkEnum
+  network: 'mainnet' | 'testnet'
 }

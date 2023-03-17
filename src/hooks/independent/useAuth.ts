@@ -19,7 +19,7 @@ export type UseAuthReturn = {
 
 const useAuth = (): UseAuthReturn => {
   const [user, setUser] = useRecoilState(appStore.user)
-  const { web3 } = useWeb3()
+  const { web3Eth } = useWeb3()
   const { connect, disconnect } = useConnection()
 
   const register = async ({
@@ -29,7 +29,9 @@ const useAuth = (): UseAuthReturn => {
     privateKey: string
     password: string
   }): Promise<void> => {
-    const account = web3.eth.accounts.privateKeyToAccount(formatHex(privateKey))
+    const account = web3Eth.eth.accounts.privateKeyToAccount(
+      formatHex(privateKey)
+    )
     await savePkey(privateKey, password)
 
     await connect(account.address)
@@ -45,7 +47,7 @@ const useAuth = (): UseAuthReturn => {
       const savedPwd = await getPkeyPwd()
       if (savedPwd === password) {
         const privateKey = await getPkey()
-        const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+        const account = web3Eth.eth.accounts.privateKeyToAccount(privateKey)
         await connect(account.address)
         setUser({ address: account.address as ContractAddr })
         return { success: true, value: '' }

@@ -30,7 +30,6 @@ import {
 import { ErrorInfoScreen } from '../screens'
 import useAppearance from 'hooks/useAppearance'
 import useSetting from 'hooks/independent/useSetting'
-import { ChainNetworkEnum } from 'types'
 
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()
@@ -39,13 +38,11 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const isLightTheme = scheme === 'light'
 
   const lensEnv =
-    setting.network === ChainNetworkEnum.ETHEREUM
-      ? Environment.mainnet
-      : Environment.testnet
+    setting.network === 'mainnet' ? Environment.mainnet : Environment.testnet
 
   const client = new ApolloClient({
     uri:
-      setting.network === ChainNetworkEnum.ETHEREUM
+      setting.network === 'mainnet'
         ? Config.LENS_API_ETHEREUM
         : Config.LENS_API_GOERLI,
 
@@ -53,7 +50,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   })
 
   const APP_ID =
-    setting.network === ChainNetworkEnum.ETHEREUM
+    setting.network === 'mainnet'
       ? Config.SENDBIRD_APP_ID_ETHEREUM
       : Config.SENDBIRD_APP_ID_GOERLI
 

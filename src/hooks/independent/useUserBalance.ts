@@ -3,7 +3,8 @@ import useWeb3 from 'hooks/complex/useWeb3'
 import { ContractAddr, pToken, QueryKeyEnum } from 'types'
 
 export type UseUserBalanceReturn = {
-  balance: pToken
+  ethBalance: pToken
+  klayBalance: pToken
   refetch: () => void
 }
 
@@ -12,20 +13,37 @@ const useUserBalance = ({
 }: {
   address?: ContractAddr
 }): UseUserBalanceReturn => {
-  const { web3 } = useWeb3()
-  const { data = '0', refetch } = useReactQuery(
+  const { web3Eth, web3Klaytn } = useWeb3()
+  const { data: ethBalance = '0', refetch: refetchEth } = useReactQuery(
     [QueryKeyEnum.ETH_BALANCE, address],
     async () => {
       if (address) {
-        return web3.eth.getBalance(address)
+        return web3Eth.eth.getBalance(address)
       }
     },
     {
       enabled: !!address,
     }
   )
+  const { data: klayBalance = '0', refetch: refetchKlay } = useReactQuery(
+    [QueryKeyEnum.KLAY_BALANCE, address],
+    async () => {
+      if (address) {
+        return web3Klaytn.eth.getBalance(address)
+      }
+    },
+    {
+      enabled: !!address,
+    }
+  )
+
+  const refetch = async (): Promise<void> => {
+    await Promise.all([refetchEth(), refetchKlay()])
+  }
+
   return {
-    balance: data as pToken,
+    ethBalance: ethBalance as pToken,
+    klayBalance: klayBalance as pToken,
     refetch,
   }
 }
