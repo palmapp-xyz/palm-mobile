@@ -6,6 +6,7 @@ import { NETWORK } from 'consts'
 import useSetting from 'hooks/independent/useSetting'
 import { getPkey } from 'libs/account'
 import { ChainNetworkEnum } from 'types'
+import { isMainnet } from 'libs/utils'
 
 type UseWeb3Return = {
   web3Eth: Web3
@@ -15,22 +16,22 @@ type UseWeb3Return = {
 
 const useWeb3 = (): UseWeb3Return => {
   const { setting } = useSetting()
-  const isMainnet = setting.network === 'mainnet'
+  const mainnet = isMainnet(setting.network)
 
   const { web3Eth, web3Klaytn } = useMemo(
     () => ({
       web3Eth: new Web3(
         NETWORK.chainParam[
-          isMainnet ? ChainNetworkEnum.ETHEREUM : ChainNetworkEnum.GOERLI
+          mainnet ? ChainNetworkEnum.ETHEREUM : ChainNetworkEnum.GOERLI
         ].rpcUrls[0]
       ),
       web3Klaytn: new Web3(
         NETWORK.chainParam[
-          isMainnet ? ChainNetworkEnum.CYPRESS : ChainNetworkEnum.BAOBAB
+          mainnet ? ChainNetworkEnum.CYPRESS : ChainNetworkEnum.BAOBAB
         ].rpcUrls[0]
       ),
     }),
-    [isMainnet]
+    [mainnet]
   )
 
   const getSigner = async (): Promise<Account | undefined> => {

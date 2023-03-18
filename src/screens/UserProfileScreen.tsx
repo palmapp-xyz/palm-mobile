@@ -12,6 +12,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import ProfileHeader from '../components/ProfileHeader'
+import ProfileFooter from 'components/ProfileFooter'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
@@ -28,6 +29,11 @@ const UserProfileScreen = (): ReactElement => {
     [userAddress]
   )
 
+  const profileFooter = useCallback(
+    () => <ProfileFooter useUserNftListReturn={useUserNftListReturn} />,
+    [userAddress]
+  )
+
   return (
     <FlatList
       refreshControl={
@@ -40,6 +46,7 @@ const UserProfileScreen = (): ReactElement => {
         />
       }
       ListHeaderComponent={profileHeader}
+      ListFooterComponent={profileFooter}
       data={useUserNftListReturn.nftList}
       keyExtractor={(_, index): string => `nftList-${index}`}
       numColumns={2}

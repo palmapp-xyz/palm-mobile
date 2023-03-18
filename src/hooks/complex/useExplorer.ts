@@ -9,12 +9,31 @@ export type UseExplorerReturn = {
 
 const useExplorer = (): UseExplorerReturn => {
   const { setting } = useSetting()
-  const networkPath =
-    setting.network !== ChainNetworkEnum.ETHEREUM ? `${setting.network}.` : ''
-
+  let networkPath
+  let endpoint
+  switch (setting.network) {
+    case ChainNetworkEnum.ETHEREUM:
+      endpoint = 'etherscan'
+      networkPath = ''
+      break
+    case ChainNetworkEnum.GOERLI:
+      endpoint = 'etherscan'
+      networkPath = 'goerli'
+      break
+    case ChainNetworkEnum.CYPRESS:
+      endpoint = 'klaytnfinder'
+      networkPath = ''
+      break
+    case ChainNetworkEnum.BAOBAB:
+      endpoint = 'klaytnfinder'
+      networkPath = 'baobad'
+      break
+    default:
+      break
+  }
   const getLink = useCallback(
     ({ address, type }: { address: string; type: 'tx' | 'account' }): string =>
-      `https://${networkPath}etherscan.io/${type}/${address}`,
+      `https://${networkPath}${endpoint}.io/${type}/${address}`,
     [networkPath]
   )
 

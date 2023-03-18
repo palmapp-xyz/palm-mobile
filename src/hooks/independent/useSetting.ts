@@ -4,7 +4,7 @@ import RNRestart from 'react-native-restart'
 
 import { UTIL } from 'consts'
 
-import { LocalStorageKey, SettingStorageType } from 'types'
+import { ChainNetworkEnum, LocalStorageKey, SettingStorageType } from 'types'
 import { useEffect, useState } from 'react'
 
 export type UseSettingReturn = {
@@ -14,7 +14,7 @@ export type UseSettingReturn = {
 
 const defaultSetting: SettingStorageType = {
   themeMode: 'light',
-  network: 'testnet',
+  network: ChainNetworkEnum.ETHEREUM,
 }
 
 const useSetting = (): UseSettingReturn => {

@@ -18,10 +18,9 @@ const useNetwork = (): {
     return ADDRESS_MAP.contractMap[setting.network]
   }, [setting.network])
 
-  const connectedNetworkId = useMemo(
-    () => NETWORK.chainId[setting.network],
-    [setting.network]
-  )
+  const connectedNetworkId = useMemo(() => {
+    return NETWORK.chainId[setting.network]
+  }, [setting.network])
   const connectedNetworkParam = useMemo(
     () => NETWORK.chainParam[setting.network],
     [setting.network]

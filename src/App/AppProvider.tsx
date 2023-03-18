@@ -30,6 +30,7 @@ import {
 import { ErrorInfoScreen } from '../screens'
 import useAppearance from 'hooks/useAppearance'
 import useSetting from 'hooks/independent/useSetting'
+import { isMainnet } from 'libs/utils'
 
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()
@@ -37,22 +38,21 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
 
   const isLightTheme = scheme === 'light'
 
-  const lensEnv =
-    setting.network === 'mainnet' ? Environment.mainnet : Environment.testnet
+  const lensEnv = isMainnet(setting.network)
+    ? Environment.mainnet
+    : Environment.testnet
 
   const client = new ApolloClient({
-    uri:
-      setting.network === 'mainnet'
-        ? Config.LENS_API_ETHEREUM
-        : Config.LENS_API_GOERLI,
+    uri: isMainnet(setting.network)
+      ? Config.LENS_API_ETHEREUM
+      : Config.LENS_API_GOERLI,
 
     cache: new InMemoryCache(),
   })
 
-  const APP_ID =
-    setting.network === 'mainnet'
-      ? Config.SENDBIRD_APP_ID_ETHEREUM
-      : Config.SENDBIRD_APP_ID_GOERLI
+  const APP_ID = isMainnet(setting.network)
+    ? Config.SENDBIRD_APP_ID_ETHEREUM
+    : Config.SENDBIRD_APP_ID_GOERLI
 
   return (
     <LensProvider

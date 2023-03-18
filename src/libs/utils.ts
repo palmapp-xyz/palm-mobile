@@ -1,5 +1,7 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
+import { NETWORK } from 'consts'
 import { URL } from 'react-native-url-polyfill'
+import { ChainNetworkEnum } from 'types'
 
 export const getContrastColor = (
   color:
@@ -99,4 +101,15 @@ export const formatHex = (str: string): string => {
     ret = `0x${ret}`
   }
   return ret
+}
+
+export const isMainnet = (
+  chain: ChainNetworkEnum | string | number
+): boolean => {
+  return (
+    chain === ChainNetworkEnum.ETHEREUM ||
+    chain === ChainNetworkEnum.CYPRESS ||
+    Number(chain) === NETWORK.chainId.ETHEREUM ||
+    Number(chain) === NETWORK.chainId.CYPRESS
+  )
 }
