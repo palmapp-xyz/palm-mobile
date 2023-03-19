@@ -17,6 +17,7 @@ export namespace Moralis {
     last_token_uri_sync: string
     last_metadata_sync: string
     minter_address: ContractAddr
+    chainId?: string
   }
 
   export enum Status {
@@ -27,7 +28,6 @@ export namespace Moralis {
   export enum NftType {
     ERC721 = 'ERC721',
     ERC1155 = 'ERC1155',
-    KIP17 = 'KIP17',
   }
 
   export type NftCollection = {

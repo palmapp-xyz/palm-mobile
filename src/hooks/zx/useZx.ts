@@ -4,12 +4,15 @@ import { useQuery } from 'react-query'
 
 import useNetwork from 'hooks/complex/useNetwork'
 import { getPkey } from 'libs/account'
-import { QueryKeyEnum } from 'types'
+import { QueryKeyEnum, SupportedNetworkEnum } from 'types'
 
 export type UseZxReturn = { nftSwapSdk?: NftSwapV4 }
 
 const useZx = (): UseZxReturn => {
-  const { connectedNetworkParam, connectedNetworkId } = useNetwork()
+  const { connectedNetworkParams, connectedNetworkIds } = useNetwork()
+  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
+  const connectedNetworkParam =
+    connectedNetworkParams[SupportedNetworkEnum.ETHEREUM]
 
   const { data: nftSwapSdk } = useQuery(
     [QueryKeyEnum.ZX_SWAP_SDK_V4, connectedNetworkParam, connectedNetworkId],

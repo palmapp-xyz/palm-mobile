@@ -21,12 +21,13 @@ export default {
       connectedNetworkId: number
       limit?: number
       cursor?: string
-    }): ApiParamFabricated =>
-      `/v1/api/evm-api-proxy/${userAddress}/nft?chain=${utils.hexValue(
+    }): ApiParamFabricated => {
+      return `/v1/api/evm-api-proxy/${userAddress}/nft?chain=${utils.hexValue(
         connectedNetworkId
       )}&limit=${limit || 10}${
         cursor ? `&cursor=${cursor}` : ''
-      }` as ApiParamFabricated,
+      }` as ApiParamFabricated
+    },
   },
   [ApiEnum.COLLECTIONS]: {
     get: ({

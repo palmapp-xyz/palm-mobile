@@ -1,6 +1,11 @@
 import { toHex } from 'web3-utils'
 
-import { AddEthereumChainParameter, ChainNetworkEnum } from 'types'
+import {
+  AddEthereumChainParameter,
+  ChainNetworkEnum,
+  NetworkSettingEnum,
+  SupportedNetworkEnum,
+} from 'types'
 import Config from 'react-native-config'
 
 const chainId: Record<ChainNetworkEnum, number> = {
@@ -10,6 +15,22 @@ const chainId: Record<ChainNetworkEnum, number> = {
   [ChainNetworkEnum.BAOBAB]: 1001,
   [ChainNetworkEnum.POLYGON]: 137,
   [ChainNetworkEnum.MUMBAI]: 80001,
+}
+
+const chainIds: Record<
+  NetworkSettingEnum,
+  Record<SupportedNetworkEnum, number>
+> = {
+  [NetworkSettingEnum.MAINNET]: {
+    [SupportedNetworkEnum.ETHEREUM]: chainId[ChainNetworkEnum.ETHEREUM],
+    [SupportedNetworkEnum.KLAYTN]: chainId[ChainNetworkEnum.CYPRESS],
+    [SupportedNetworkEnum.POLYGON]: chainId[ChainNetworkEnum.POLYGON],
+  },
+  [NetworkSettingEnum.TESTNET]: {
+    [SupportedNetworkEnum.ETHEREUM]: chainId[ChainNetworkEnum.GOERLI],
+    [SupportedNetworkEnum.KLAYTN]: chainId[ChainNetworkEnum.BAOBAB],
+    [SupportedNetworkEnum.POLYGON]: chainId[ChainNetworkEnum.MUMBAI],
+  },
 }
 
 const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
@@ -77,7 +98,25 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
   },
 }
 
+const chainParams: Record<
+  NetworkSettingEnum,
+  Record<SupportedNetworkEnum, AddEthereumChainParameter>
+> = {
+  [NetworkSettingEnum.MAINNET]: {
+    [SupportedNetworkEnum.ETHEREUM]: chainParam[ChainNetworkEnum.ETHEREUM],
+    [SupportedNetworkEnum.KLAYTN]: chainParam[ChainNetworkEnum.CYPRESS],
+    [SupportedNetworkEnum.POLYGON]: chainParam[ChainNetworkEnum.POLYGON],
+  },
+  [NetworkSettingEnum.TESTNET]: {
+    [SupportedNetworkEnum.ETHEREUM]: chainParam[ChainNetworkEnum.GOERLI],
+    [SupportedNetworkEnum.KLAYTN]: chainParam[ChainNetworkEnum.BAOBAB],
+    [SupportedNetworkEnum.POLYGON]: chainParam[ChainNetworkEnum.MUMBAI],
+  },
+}
+
 export default {
   chainId,
   chainParam,
+  chainIds,
+  chainParams,
 }

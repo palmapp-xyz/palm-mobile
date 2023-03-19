@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import _ from 'lodash'
 import { useInfiniteQuery } from 'react-query'
 
-import { ApiEnum, ContractAddr, Moralis } from 'types'
+import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
 import useNetwork from '../complex/useNetwork'
 import useApi from '../complex/useApi'
@@ -24,7 +24,8 @@ const useUserNftList = ({
   userAddress?: ContractAddr
   limit?: number
 }): UseUserNftListReturn => {
-  const { connectedNetworkId } = useNetwork()
+  const { connectedNetworkIds } = useNetwork()
+  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
   const { getApi } = useApi()
 
   const {
