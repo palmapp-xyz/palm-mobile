@@ -4,7 +4,13 @@ import { AbiItem } from 'web3-utils'
 
 import escrow from '../../abi/Escrow.json'
 
-import { ContractAddr, EncodedTxData, Escrow, pToken } from 'types'
+import {
+  ContractAddr,
+  EncodedTxData,
+  Escrow,
+  SupportedNetworkEnum,
+  pToken,
+} from 'types'
 import useContract from 'hooks/complex/useContract'
 import useNetwork from 'hooks/complex/useNetwork'
 
@@ -32,9 +38,13 @@ export type UseNftReturn = {
   }) => EncodedTxData | undefined
 }
 
-const useEscrow = (): UseNftReturn => {
+const useEscrow = ({
+  chain,
+}: {
+  chain: SupportedNetworkEnum
+}): UseNftReturn => {
   const { contractMap } = useNetwork()
-  const escrowContract = useMemo(() => contractMap.escrow, [contractMap])
+  const escrowContract = useMemo(() => contractMap[chain].escrow, [contractMap])
 
   const { callMethod, getEncodedTxData } = useContract({
     abi: escrow as AbiItem[],

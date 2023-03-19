@@ -6,3 +6,14 @@ export enum ChainNetworkEnum {
   POLYGON = 'POLYGON',
   MUMBAI = 'MUMBAI',
 }
+
+export enum SupportedNetworkEnum {
+  ETHEREUM = 'ETHEREUM',
+  KLAYTN = 'KLAYTN',
+  POLYGON = 'POLYGON',
+}
+
+export enum NetworkSettingEnum {
+  MAINNET = 'MAINNET',
+  TESTNET = 'TESTNET',
+}
