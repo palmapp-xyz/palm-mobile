@@ -1,4 +1,4 @@
-import { ApiEnum, ContractAddr } from 'types'
+import { ApiEnum, ContractAddr, SupportedNetworkEnum } from 'types'
 
 import useNetwork from '../complex/useNetwork'
 import useApi from '../complex/useApi'
@@ -16,7 +16,9 @@ const useMoralisRequestMessage = ({
   userAddress?: ContractAddr
 }): UseMoralisRequestMessageReturn => {
   const { postApi } = useApi()
-  const { connectedNetworkParam } = useNetwork()
+  const { connectedNetworkParams } = useNetwork()
+  const connectedNetworkParam =
+    connectedNetworkParams[SupportedNetworkEnum.ETHEREUM]
 
   const {
     data = {

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 
 import useNetwork from '../complex/useNetwork'
 import useReactQuery from 'hooks/complex/useReactQuery'
-import { QueryKeyEnum, zx } from 'types'
+import { QueryKeyEnum, SupportedNetworkEnum, zx } from 'types'
 
 export type UseZxOrdersReturn = {
   orderList: zx.order[]
@@ -11,7 +11,8 @@ export type UseZxOrdersReturn = {
 }
 
 const useZxOrders = (): UseZxOrdersReturn => {
-  const { connectedNetworkId } = useNetwork()
+  const { connectedNetworkIds } = useNetwork()
+  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
 
   const extApi = `https://api.trader.xyz/orderbook/orders?chainId=${connectedNetworkId}&nftType=erc721&erc20Token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 

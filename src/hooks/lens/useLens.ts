@@ -7,13 +7,9 @@ import {
   QueryOptions,
   useApolloClient,
 } from '@apollo/client'
-import {
-  Profile,
-  UpdateProfileImageRequest,
-} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 
 import useWeb3 from 'hooks/complex/useWeb3'
-import { TrueOrErrReturn } from 'types'
+import { ContractAddr, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
 import {
   AuthenticateDocument,
   ChallengeDocument,
@@ -28,10 +24,15 @@ import {
   ProfileQueryRequest,
   ProfilesDocument,
   NftOwnershipChallengeRequest,
-  CreateSetProfileImageUriTypedDataMutation,
   CreateSetProfileImageUriTypedDataDocument,
+  Profile,
+  UpdateProfileImageRequest,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
+import useNetwork from 'hooks/complex/useNetwork'
+import { utils } from 'ethers'
+import useLensHub from './useLensHub'
+import useEthers from 'hooks/complex/useEthers'
 
 export type UseLensReturn = {
   signer?: Account
@@ -46,18 +47,20 @@ export type UseLensReturn = {
     request: NftOwnershipChallengeRequest
   ) => Promise<NftOwnershipChallengeResult>
   updateProfileImage: (
-    request: UpdateProfileImageRequest
-  ) => Promise<
-    TrueOrErrReturn<
-      CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
-    >
-  >
+    profileId: string,
+    contractAddress: ContractAddr,
+    tokenId: string
+  ) => Promise<TrueOrErrReturn<string>>
 }
 
 const useLens = (): UseLensReturn => {
   const { getSigner } = useWeb3()
+  const { signedTypeData, getSigner: getEthersSigner } = useEthers()
   const { user } = useAuth()
   const { query: aQuery, mutate: aMutate } = useApolloClient()
+  const { connectedNetworkIds } = useNetwork()
+  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.POLYGON]
+  const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
 
   const query = <
     T = any,
@@ -203,35 +206,84 @@ const useLens = (): UseLensReturn => {
   }
 
   const updateProfileImage = async (
-    request: UpdateProfileImageRequest
-  ): Promise<
-    TrueOrErrReturn<
-      CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
-    >
-  > => {
-    try {
-      const fetchRes = await mutate({
-        mutation: CreateSetProfileImageUriTypedDataDocument,
-        variables: { request },
-        refetchQueries: [
-          { query: ProfilesDocument },
-          { query: ProfileDocument },
-        ],
-      })
+    profileId: string,
+    contractAddress: ContractAddr,
+    tokenId: string
+  ): Promise<TrueOrErrReturn<string>> => {
+    const signer = await getEthersSigner(SupportedNetworkEnum.POLYGON)
+    if (signer) {
+      try {
+        // prove ownership of the nft
+        const challengeInfo = await nftOwnershipChallenge({
+          ethereumAddress: signer.address,
+          nfts: [
+            {
+              contractAddress,
+              tokenId,
+              chainId: connectedNetworkId,
+            },
+          ],
+        })
 
-      if (fetchRes.data?.createSetProfileImageURITypedData) {
+        // sign the text with the wallet
+        /* ask the user to sign a message with the challenge info returned from the server */
+        const challengeSignature = await signer.signMessage(challengeInfo.text)
+
+        const request: UpdateProfileImageRequest = {
+          profileId,
+          nftData: {
+            id: challengeInfo.id,
+            signature: challengeSignature,
+          },
+        }
+
+        const result = await mutate({
+          mutation: CreateSetProfileImageUriTypedDataDocument,
+          variables: { request },
+          refetchQueries: [
+            { query: ProfilesDocument },
+            { query: ProfileDocument },
+          ],
+        })
+
+        const typedData =
+          result.data!.createSetProfileImageURITypedData!.typedData
+        console.log('set profile image uri nft: typedData', typedData)
+
+        const signature = await signedTypeData(
+          SupportedNetworkEnum.POLYGON,
+          typedData.domain,
+          typedData.types,
+          typedData.value
+        )
+        console.log('set profile image uri nft: signature', signature)
+
+        const { v, r, s } = utils.splitSignature(signature!)
+
+        const tx = await lensHub!.setProfileImageURIWithSig({
+          profileId: typedData.value.profileId,
+          imageURI: typedData.value.imageURI,
+          sig: {
+            v,
+            r,
+            s,
+            deadline: typedData.value.deadline,
+          },
+        })
+        console.log('set profile image uri normal: tx hash', tx.hash)
+
         return {
           success: true,
-          value: fetchRes.data?.createSetProfileImageURITypedData,
+          value: tx.hash,
         }
+      } catch (error) {
+        return { success: false, errMsg: JSON.stringify(error, null, 2) }
       }
-    } catch (error) {
-      return { success: false, errMsg: JSON.stringify(error, null, 2) }
     }
 
     return {
       success: false,
-      errMsg: 'Failed createSetProfileImageURITypedData',
+      errMsg: 'No user',
     }
   }
 
