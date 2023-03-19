@@ -3,4 +3,6 @@ export enum ChainNetworkEnum {
   GOERLI = 'GOERLI',
   CYPRESS = 'CYPRESS',
   BAOBAB = 'BAOBAB',
+  // POLYGON = 'POLYGON',
+  // MUMBAI = 'MUMBAI',
 }

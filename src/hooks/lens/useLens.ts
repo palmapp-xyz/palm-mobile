@@ -7,7 +7,10 @@ import {
   QueryOptions,
   useApolloClient,
 } from '@apollo/client'
-import { Profile } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
+import {
+  Profile,
+  UpdateProfileImageRequest,
+} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 
 import useWeb3 from 'hooks/complex/useWeb3'
 import { TrueOrErrReturn } from 'types'
@@ -17,11 +20,16 @@ import {
   CreateProfileDocument,
   CreateProfileMutation,
   CreateProfileRequest,
+  NftOwnershipChallengeDocument,
+  NftOwnershipChallengeResult,
   DefaultProfileDocument,
   PaginatedProfileResult,
   ProfileDocument,
   ProfileQueryRequest,
   ProfilesDocument,
+  NftOwnershipChallengeRequest,
+  CreateSetProfileImageUriTypedDataMutation,
+  CreateSetProfileImageUriTypedDataDocument,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
 
@@ -34,6 +42,16 @@ export type UseLensReturn = {
   createProfile: (
     request: CreateProfileRequest
   ) => Promise<TrueOrErrReturn<CreateProfileMutation['createProfile']>>
+  nftOwnershipChallenge: (
+    request: NftOwnershipChallengeRequest
+  ) => Promise<NftOwnershipChallengeResult>
+  updateProfileImage: (
+    request: UpdateProfileImageRequest
+  ) => Promise<
+    TrueOrErrReturn<
+      CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
+    >
+  >
 }
 
 const useLens = (): UseLensReturn => {
@@ -174,12 +192,57 @@ const useLens = (): UseLensReturn => {
     }
   }
 
+  const nftOwnershipChallenge = async (
+    request: NftOwnershipChallengeRequest
+  ): Promise<NftOwnershipChallengeResult> => {
+    const fetchRes = await query({
+      query: NftOwnershipChallengeDocument,
+      variables: { request },
+    })
+    return fetchRes.data.nftOwnershipChallenge as NftOwnershipChallengeResult
+  }
+
+  const updateProfileImage = async (
+    request: UpdateProfileImageRequest
+  ): Promise<
+    TrueOrErrReturn<
+      CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
+    >
+  > => {
+    try {
+      const fetchRes = await mutate({
+        mutation: CreateSetProfileImageUriTypedDataDocument,
+        variables: { request },
+        refetchQueries: [
+          { query: ProfilesDocument },
+          { query: ProfileDocument },
+        ],
+      })
+
+      if (fetchRes.data?.createSetProfileImageURITypedData) {
+        return {
+          success: true,
+          value: fetchRes.data?.createSetProfileImageURITypedData,
+        }
+      }
+    } catch (error) {
+      return { success: false, errMsg: JSON.stringify(error, null, 2) }
+    }
+
+    return {
+      success: false,
+      errMsg: 'Failed createSetProfileImageURITypedData',
+    }
+  }
+
   return {
     sign,
     getProfiles,
     getProfile,
     getDefaultProfile,
     createProfile,
+    nftOwnershipChallenge,
+    updateProfileImage,
   }
 }
 
