@@ -108,8 +108,10 @@ export const isMainnet = (
 ): boolean => {
   return (
     chain === ChainNetworkEnum.ETHEREUM ||
+    chain === ChainNetworkEnum.POLYGON ||
     chain === ChainNetworkEnum.CYPRESS ||
     Number(chain) === NETWORK.chainId.ETHEREUM ||
+    Number(chain) === NETWORK.chainId.POLYGON ||
     Number(chain) === NETWORK.chainId.CYPRESS
   )
 }

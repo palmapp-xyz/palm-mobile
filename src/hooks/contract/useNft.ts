@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils'
 
-import abi from '../../abi/Nft.json'
+import nft from '../../abi/Nft.json'
 
 import { ContractAddr, EncodedTxData } from 'types'
 import useContract from 'hooks/complex/useContract'
@@ -34,7 +34,7 @@ const useNft = ({
   nftContract: ContractAddr
 }): UseNftReturn => {
   const { callMethod, getEncodedTxData } = useContract({
-    abi: abi as AbiItem[],
+    abi: nft as AbiItem[],
     contractAddress: nftContract,
   })
 

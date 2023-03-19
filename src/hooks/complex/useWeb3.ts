@@ -11,6 +11,7 @@ import { isMainnet } from 'libs/utils'
 type UseWeb3Return = {
   web3Eth: Web3
   web3Klaytn: Web3
+  web3Polygon: Web3
   getSigner: () => Promise<Account | undefined>
 }
 
@@ -18,7 +19,7 @@ const useWeb3 = (): UseWeb3Return => {
   const { setting } = useSetting()
   const mainnet = isMainnet(setting.network)
 
-  const { web3Eth, web3Klaytn } = useMemo(
+  const { web3Eth, web3Klaytn, web3Polygon } = useMemo(
     () => ({
       web3Eth: new Web3(
         NETWORK.chainParam[
@@ -28,6 +29,11 @@ const useWeb3 = (): UseWeb3Return => {
       web3Klaytn: new Web3(
         NETWORK.chainParam[
           mainnet ? ChainNetworkEnum.CYPRESS : ChainNetworkEnum.BAOBAB
+        ].rpcUrls[0]
+      ),
+      web3Polygon: new Web3(
+        NETWORK.chainParam[
+          mainnet ? ChainNetworkEnum.POLYGON : ChainNetworkEnum.MUMBAI
         ].rpcUrls[0]
       ),
     }),
@@ -44,6 +50,7 @@ const useWeb3 = (): UseWeb3Return => {
   return {
     web3Eth,
     web3Klaytn,
+    web3Polygon,
     getSigner,
   }
 }

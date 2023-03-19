@@ -9,6 +9,6 @@ export interface AddEthereumChainParameter {
     decimals: 18
   }
   rpcUrls: string[]
-  blockExplorerUrls?: string[]
+  blockExplorerUrls: string[]
   iconUrls?: string[] // Currently ignored.
 }

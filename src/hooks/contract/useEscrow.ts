@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { AbiItem } from 'web3-utils'
 
-import abi from '../../abi/Escrow.json'
+import escrow from '../../abi/Escrow.json'
 
 import { ContractAddr, EncodedTxData, Escrow, pToken } from 'types'
 import useContract from 'hooks/complex/useContract'
@@ -37,7 +37,7 @@ const useEscrow = (): UseNftReturn => {
   const escrowContract = useMemo(() => contractMap.escrow, [contractMap])
 
   const { callMethod, getEncodedTxData } = useContract({
-    abi: abi as AbiItem[],
+    abi: escrow as AbiItem[],
     contractAddress: escrowContract,
   })
 
