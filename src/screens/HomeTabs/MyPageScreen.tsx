@@ -15,10 +15,11 @@ import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import ProfileHeader from '../../components/ProfileHeader'
 import { MoralisNftRenderer, NftItemMenu } from 'components'
 import { fetchNftImage } from 'libs/fetchTokenUri'
-import { Moralis } from 'types'
+import { Moralis, SupportedNetworkEnum } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import ProfileFooter from 'components/ProfileFooter'
 import useLens from 'hooks/lens/useLens'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -75,6 +76,11 @@ const MyPageScreen = (): ReactElement => {
           <View style={{ borderRadius: 10, flex: 1 }}>
             <MoralisNftRenderer item={item} width={'100%'} height={180} />
             <NftItemMenu
+              chainId={
+                item.chainId
+                  ? chainIdToSupportedNetworkEnum(item.chainId)
+                  : undefined
+              }
               item={item}
               triggerComponent={
                 <View style={styles.nftTitle}>
@@ -91,7 +97,8 @@ const MyPageScreen = (): ReactElement => {
                       const res = await updateProfileImage(
                         useLensProfileReturn.profile.id,
                         selectedItem.token_address,
-                        selectedItem.token_id
+                        selectedItem.token_id,
+                        SupportedNetworkEnum.ETHEREUM
                       )
                       if (res.success) {
                         const txHash = res.value

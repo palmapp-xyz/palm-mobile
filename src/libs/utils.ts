@@ -1,7 +1,11 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
 import { NETWORK } from 'consts'
 import { URL } from 'react-native-url-polyfill'
-import { ChainNetworkEnum, NetworkSettingEnum } from 'types'
+import {
+  ChainNetworkEnum,
+  NetworkSettingEnum,
+  SupportedNetworkEnum,
+} from 'types'
 
 export const getContrastColor = (
   color:
@@ -115,4 +119,19 @@ export const isMainnet = (
     Number(chain) === NETWORK.chainId.POLYGON ||
     Number(chain) === NETWORK.chainId.CYPRESS
   )
+}
+
+export const chainIdToSupportedNetworkEnum = (
+  chain: string
+): SupportedNetworkEnum | undefined => {
+  return Number(chain) === NETWORK.chainId[ChainNetworkEnum.ETHEREUM] ||
+    Number(chain) === NETWORK.chainId[ChainNetworkEnum.GOERLI]
+    ? SupportedNetworkEnum.ETHEREUM
+    : Number(chain) === NETWORK.chainId[ChainNetworkEnum.CYPRESS] ||
+      Number(chain) === NETWORK.chainId[ChainNetworkEnum.BAOBAB]
+    ? SupportedNetworkEnum.KLAYTN
+    : Number(chain) === NETWORK.chainId[ChainNetworkEnum.POLYGON] ||
+      Number(chain) === NETWORK.chainId[ChainNetworkEnum.MUMBAI]
+    ? SupportedNetworkEnum.POLYGON
+    : undefined
 }

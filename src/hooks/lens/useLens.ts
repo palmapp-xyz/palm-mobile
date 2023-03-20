@@ -58,7 +58,8 @@ export type UseLensReturn = {
   updateProfileImage: (
     profileId: string,
     contractAddress: ContractAddr,
-    tokenId: string
+    tokenId: string,
+    chainId: SupportedNetworkEnum
   ) => Promise<TrueOrErrReturn<string>>
 }
 
@@ -70,7 +71,6 @@ const useLens = (): UseLensReturn => {
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.POLYGON]
 
   const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
 
@@ -220,16 +220,17 @@ const useLens = (): UseLensReturn => {
   const updateProfileImage = async (
     profileId: string,
     contractAddress: ContractAddr,
-    tokenId: string
+    tokenId: string,
+    chainId: SupportedNetworkEnum
   ): Promise<TrueOrErrReturn<string>> => {
-    const signer = await getEthersSigner(SupportedNetworkEnum.POLYGON)
+    const signer = await getEthersSigner(chainId)
     if (signer && lensHub) {
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
         })
         console.log(
-          `setting profile image uri nft signer ${signer.address} contract ${contractAddress} tokenId ${tokenId} chainId ${connectedNetworkId}`
+          `setting profile image uri nft signer ${signer.address} contract ${contractAddress} tokenId ${tokenId} chainId ${connectedNetworkIds[chainId]}`
         )
         // prove ownership of the nft
         const challengeInfo = await nftOwnershipChallenge({
@@ -238,7 +239,7 @@ const useLens = (): UseLensReturn => {
             {
               contractAddress,
               tokenId,
-              chainId: connectedNetworkId,
+              chainId: connectedNetworkIds[chainId],
             },
           ],
         })
@@ -290,7 +291,8 @@ const useLens = (): UseLensReturn => {
               s,
               deadline: typedData.value.deadline,
             },
-          }
+          },
+          { gasLimit: 8000000, gasPrice: utils.parseUnits('90', 'gwei') }
         )
         console.log('set profile image uri normal: tx hash', tx.hash)
 
