@@ -18,6 +18,7 @@ import { fetchNftImage } from 'libs/fetchTokenUri'
 import { Moralis } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import ProfileFooter from 'components/ProfileFooter'
+import useLens from 'hooks/lens/useLens'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -25,6 +26,7 @@ const MyPageScreen = (): ReactElement => {
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
 
   const useLensProfileReturn = useLensProfile({ userAddress: user?.address })
+  const { updateProfileImage } = useLens()
 
   const profileHeader = useCallback(
     () => <ProfileHeader isMyPage userAddress={user?.address} />,
@@ -85,6 +87,19 @@ const MyPageScreen = (): ReactElement => {
               ): Promise<void> => {
                 try {
                   if (selectedOption === 'set_nft_profile') {
+                    if (useLensProfileReturn.profile) {
+                      const res = await updateProfileImage(
+                        useLensProfileReturn.profile.id,
+                        selectedItem.token_address,
+                        selectedItem.token_id
+                      )
+                      if (res.success) {
+                        const txHash = res.value
+                        console.log(`updateProfileImage tx hash ${txHash}`)
+                      } else {
+                        console.error(`updateProfileImage error ${res.errMsg}`)
+                      }
+                    }
                     const url = await fetchNftImage({
                       metadata: selectedItem.metadata,
                       tokenUri: selectedItem.token_uri,

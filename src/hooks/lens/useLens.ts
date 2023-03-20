@@ -9,7 +9,12 @@ import {
 } from '@apollo/client'
 
 import useWeb3 from 'hooks/complex/useWeb3'
-import { ContractAddr, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
+import {
+  ContractAddr,
+  PostTxStatus,
+  SupportedNetworkEnum,
+  TrueOrErrReturn,
+} from 'types'
 import {
   AuthenticateDocument,
   ChallengeDocument,
@@ -31,8 +36,12 @@ import {
 import useAuth from '../independent/useAuth'
 import useNetwork from 'hooks/complex/useNetwork'
 import { utils } from 'ethers'
+import { TransactionResponse } from '@ethersproject/providers'
 import useLensHub from './useLensHub'
 import useEthers from 'hooks/complex/useEthers'
+import { useSetRecoilState } from 'recoil'
+import postTxStore from 'store/postTxStore'
+import _ from 'lodash'
 
 export type UseLensReturn = {
   signer?: Account
@@ -58,8 +67,11 @@ const useLens = (): UseLensReturn => {
   const { signedTypeData, getSigner: getEthersSigner } = useEthers()
   const { user } = useAuth()
   const { query: aQuery, mutate: aMutate } = useApolloClient()
+  const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
+
   const { connectedNetworkIds } = useNetwork()
   const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.POLYGON]
+
   const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
 
   const query = <
@@ -211,8 +223,14 @@ const useLens = (): UseLensReturn => {
     tokenId: string
   ): Promise<TrueOrErrReturn<string>> => {
     const signer = await getEthersSigner(SupportedNetworkEnum.POLYGON)
-    if (signer) {
+    if (signer && lensHub) {
       try {
+        setPostTxResult({
+          status: PostTxStatus.POST,
+        })
+        console.log(
+          `setting profile image uri nft signer ${signer.address} contract ${contractAddress} tokenId ${tokenId} chainId ${connectedNetworkId}`
+        )
         // prove ownership of the nft
         const challengeInfo = await nftOwnershipChallenge({
           ethereumAddress: signer.address,
@@ -224,6 +242,8 @@ const useLens = (): UseLensReturn => {
             },
           ],
         })
+
+        console.log('nftOwnershipChallenge challengeInfo', challengeInfo)
 
         // sign the text with the wallet
         /* ask the user to sign a message with the challenge info returned from the server */
@@ -260,24 +280,41 @@ const useLens = (): UseLensReturn => {
 
         const { v, r, s } = utils.splitSignature(signature!)
 
-        const tx = await lensHub!.setProfileImageURIWithSig({
-          profileId: typedData.value.profileId,
-          imageURI: typedData.value.imageURI,
-          sig: {
-            v,
-            r,
-            s,
-            deadline: typedData.value.deadline,
-          },
-        })
+        const tx: TransactionResponse = await lensHub.setProfileImageURIWithSig(
+          {
+            profileId: typedData.value.profileId,
+            imageURI: typedData.value.imageURI,
+            sig: {
+              v,
+              r,
+              s,
+              deadline: typedData.value.deadline,
+            },
+          }
+        )
         console.log('set profile image uri normal: tx hash', tx.hash)
+
+        setPostTxResult({
+          status: PostTxStatus.BROADCAST,
+          transactionHash: tx.hash!,
+        })
+
+        const txReceipt = await tx.wait()
+        setPostTxResult({
+          status: PostTxStatus.DONE,
+          value: txReceipt,
+        })
 
         return {
           success: true,
           value: tx.hash,
         }
       } catch (error) {
-        return { success: false, errMsg: JSON.stringify(error, null, 2) }
+        setPostTxResult({
+          status: PostTxStatus.ERROR,
+          error,
+        })
+        return { success: false, errMsg: _.toString(error) }
       }
     }
 
