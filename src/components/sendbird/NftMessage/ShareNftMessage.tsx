@@ -6,13 +6,14 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR } from 'consts'
 
-import { SbShareNftDataType } from 'types'
+import { SbShareNftDataType, SupportedNetworkEnum } from 'types'
 
 import useNftImage from 'hooks/independent/useNftImage'
 import FormButton from '../../atoms/FormButton'
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
-import EthLogoWrapper from '../../molecules/EthLogoWrapper'
+import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const ShareNftMessage = ({
   data,
@@ -30,14 +31,18 @@ const ShareNftMessage = ({
 
   return (
     <View style={styles.container}>
-      <EthLogoWrapper>
+      <ChainLogoWrapper
+        chain={
+          chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+          SupportedNetworkEnum.ETHEREUM
+        }>
         <MediaRenderer
           src={uri}
           width={'100%'}
           height={150}
           style={{ borderRadius: 10 }}
         />
-      </EthLogoWrapper>
+      </ChainLogoWrapper>
       <View style={styles.body}>
         <Row style={{ alignItems: 'center', columnGap: 5 }}>
           <Icon

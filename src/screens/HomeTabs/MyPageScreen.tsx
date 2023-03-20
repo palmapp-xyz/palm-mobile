@@ -13,7 +13,12 @@ import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import ProfileHeader from '../../components/ProfileHeader'
-import { MoralisNftRenderer, NftItemMenu } from 'components'
+import {
+  ChainLogoWrapper,
+  MediaRenderer,
+  MoralisNftRenderer,
+  NftItemMenu,
+} from 'components'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { Moralis, SupportedNetworkEnum } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'
@@ -74,51 +79,59 @@ const MyPageScreen = (): ReactElement => {
             })
           }}>
           <View style={{ borderRadius: 10, flex: 1 }}>
-            <MoralisNftRenderer item={item} width={'100%'} height={180} />
-            <NftItemMenu
-              chainId={
-                item.chainId
-                  ? chainIdToSupportedNetworkEnum(item.chainId)
-                  : undefined
-              }
-              item={item}
-              triggerComponent={
-                <View style={styles.nftTitle}>
-                  <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
-                </View>
-              }
-              onSelect={async (
-                selectedItem: Moralis.NftItem,
-                selectedOption: string
-              ): Promise<void> => {
-                try {
-                  if (selectedOption === 'set_nft_profile') {
-                    if (useLensProfileReturn.profile) {
-                      const res = await updateProfileImage(
-                        useLensProfileReturn.profile.id,
-                        selectedItem.token_address,
-                        selectedItem.token_id,
-                        SupportedNetworkEnum.ETHEREUM
-                      )
-                      if (res.success) {
-                        const txHash = res.value
-                        console.log(`updateProfileImage tx hash ${txHash}`)
-                      } else {
-                        console.error(`updateProfileImage error ${res.errMsg}`)
-                      }
-                    }
-                    const url = await fetchNftImage({
-                      metadata: selectedItem.metadata,
-                      tokenUri: selectedItem.token_uri,
-                    })
-                    const me = await updateCurrentUserInfo(undefined, url)
-                    setCurrentUser(me)
-                  }
-                } catch (e) {
-                  console.error(e, selectedItem, selectedOption)
+            <ChainLogoWrapper
+              chain={
+                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                SupportedNetworkEnum.ETHEREUM
+              }>
+              <MoralisNftRenderer item={item} width={'100%'} height={180} />
+              <NftItemMenu
+                chainId={
+                  item.chainId
+                    ? chainIdToSupportedNetworkEnum(item.chainId)
+                    : undefined
                 }
-              }}
-            />
+                item={item}
+                triggerComponent={
+                  <View style={styles.nftTitle}>
+                    <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
+                  </View>
+                }
+                onSelect={async (
+                  selectedItem: Moralis.NftItem,
+                  selectedOption: string
+                ): Promise<void> => {
+                  try {
+                    if (selectedOption === 'set_nft_profile') {
+                      if (useLensProfileReturn.profile) {
+                        const res = await updateProfileImage(
+                          useLensProfileReturn.profile.id,
+                          selectedItem.token_address,
+                          selectedItem.token_id,
+                          SupportedNetworkEnum.ETHEREUM
+                        )
+                        if (res.success) {
+                          const txHash = res.value
+                          console.log(`updateProfileImage tx hash ${txHash}`)
+                        } else {
+                          console.error(
+                            `updateProfileImage error ${res.errMsg}`
+                          )
+                        }
+                      }
+                      const url = await fetchNftImage({
+                        metadata: selectedItem.metadata,
+                        tokenUri: selectedItem.token_uri,
+                      })
+                      const me = await updateCurrentUserInfo(undefined, url)
+                      setCurrentUser(me)
+                    }
+                  } catch (e) {
+                    console.error(e, selectedItem, selectedOption)
+                  }
+                }}
+              />
+            </ChainLogoWrapper>
           </View>
         </TouchableWithoutFeedback>
       )}

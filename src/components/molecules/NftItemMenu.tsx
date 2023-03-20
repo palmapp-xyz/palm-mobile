@@ -59,7 +59,11 @@ const NftItemMenu = ({
         }}>
         <MenuOption
           text={`Set as NFT profile ${
-            disabled ? ' (Unsupported for this Network)' : ''
+            disabled
+              ? setting.network === NetworkSettingEnum.MAINNET
+                ? ' (Only Ethereum and Polygon NFTs Supported)'
+                : '(Only Mumbai NFTs supported)'
+              : ''
           }`}
           value={'set_nft_profile'}
           disabled={disabled}

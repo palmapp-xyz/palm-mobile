@@ -9,7 +9,7 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR, UTIL } from 'consts'
-import { Moralis, QueryKeyEnum, Token } from 'types'
+import { Moralis, QueryKeyEnum, SupportedNetworkEnum, Token } from 'types'
 import {
   Header,
   SubmitButton,
@@ -17,7 +17,7 @@ import {
   Container,
   Row,
   NftRenderer,
-  EthLogoWrapper,
+  ChainLogoWrapper,
   KeyboardAvoidingView,
 } from 'components'
 import useZxListNft from 'hooks/zx/useZxListNft'
@@ -29,6 +29,7 @@ import { stringifySendFileData } from 'libs/sendbird'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useNft from 'hooks/contract/useNft'
 import useReactQuery from 'hooks/complex/useReactQuery'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const Contents = ({
   channelUrl,
@@ -96,12 +97,16 @@ const Contents = ({
         <View style={{ paddingHorizontal: 20 }}>
           <Row style={{ paddingBottom: 10 }}>
             <View style={{ width: 100, height: 100, marginEnd: 10 }}>
-              <EthLogoWrapper>
+              <ChainLogoWrapper
+                chain={
+                  chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+                  SupportedNetworkEnum.ETHEREUM
+                }>
                 <NftRenderer
                   nftContract={selectedNft.token_address}
                   tokenId={selectedNft.token_id}
                 />
-              </EthLogoWrapper>
+              </ChainLogoWrapper>
             </View>
             <View style={{ rowGap: 10 }}>
               <Text style={{ fontSize: 16, fontWeight: 'bold' }}>

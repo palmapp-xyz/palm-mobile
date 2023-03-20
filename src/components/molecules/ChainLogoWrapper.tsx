@@ -3,23 +3,35 @@ import { StyleSheet, View } from 'react-native'
 
 import images from 'assets/images'
 import FormImage from 'components/atoms/FormImage'
+import { SupportedNetworkEnum } from 'types'
 
-const EthLogoWrapper = ({
+const ChainLogoWrapper = ({
+  chain,
   children,
 }: {
+  chain: SupportedNetworkEnum
   children: ReactNode
 }): ReactElement => {
   return (
     <View style={styles.container}>
       {children}
       <View style={styles.imgBox}>
-        <FormImage source={images.eth_logo} size={20} />
+        <FormImage
+          source={
+            chain === SupportedNetworkEnum.POLYGON
+              ? images.matic_logo
+              : chain === SupportedNetworkEnum.KLAYTN
+              ? images.klay_logo
+              : images.eth_logo
+          }
+          size={20}
+        />
       </View>
     </View>
   )
 }
 
-export default EthLogoWrapper
+export default ChainLogoWrapper
 
 const styles = StyleSheet.create({
   container: { position: 'relative' },

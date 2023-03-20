@@ -6,11 +6,12 @@ import { Routes } from 'libs/navigation'
 
 import { COLOR, UTIL } from 'consts'
 
-import { SbBuyNftDataType } from 'types'
+import { SbBuyNftDataType, SupportedNetworkEnum } from 'types'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
 import useNftImage from 'hooks/independent/useNftImage'
-import EthLogoWrapper from '../../molecules/EthLogoWrapper'
+import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -23,9 +24,13 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
 
   return (
     <View style={styles.container}>
-      <EthLogoWrapper>
+      <ChainLogoWrapper
+        chain={
+          chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+          SupportedNetworkEnum.ETHEREUM
+        }>
         <MediaRenderer src={uri} width={'100%'} height={150} />
-      </EthLogoWrapper>
+      </ChainLogoWrapper>
       <View style={styles.body}>
         <Text style={{ color: COLOR.primary._400 }}>Bought NFT</Text>
         <Text

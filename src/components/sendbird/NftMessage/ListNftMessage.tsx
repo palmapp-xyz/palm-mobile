@@ -7,14 +7,15 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR, UTIL } from 'consts'
 
-import { pToken, SbListNftDataType } from 'types'
+import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
 import useZxOrder from 'hooks/zx/useZxOrder'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useNftImage from 'hooks/independent/useNftImage'
 
 import MediaRenderer from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
-import EthLogoWrapper from '../../molecules/EthLogoWrapper'
+import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const ListNftMessage = ({
   data,
@@ -35,9 +36,13 @@ const ListNftMessage = ({
 
   return (
     <View style={styles.container}>
-      <EthLogoWrapper>
+      <ChainLogoWrapper
+        chain={
+          chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+          SupportedNetworkEnum.ETHEREUM
+        }>
         <MediaRenderer src={uri} width={'100%'} height={150} />
-      </EthLogoWrapper>
+      </ChainLogoWrapper>
       {isLoading === false && !order && (
         <View
           style={{
