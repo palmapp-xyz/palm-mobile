@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import {
   StyleSheet,
   View,
@@ -14,6 +14,7 @@ import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
 import { COLOR } from 'consts'
 import { SupportedNetworkEnum } from 'types'
+import SupportedNetworkRow from 'components/molecules/SupportedNetworkRow'
 
 const MyNftList = ({
   useGcInputReturn,
@@ -21,9 +22,13 @@ const MyNftList = ({
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
   const { user } = useAuth()
+  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
+    SupportedNetworkEnum.ETHEREUM
+  )
+
   const { nftList } = useUserNftList({
     userAddress: user?.address,
-    selectedNetwork: SupportedNetworkEnum.ETHEREUM,
+    selectedNetwork,
   })
 
   return useGcInputReturn.stepAfterSelectNft ? (
@@ -43,6 +48,15 @@ const MyNftList = ({
           {useGcInputReturn.stepAfterSelectNft}
         </FormButton>
       </Row>
+      <SupportedNetworkRow
+        selectedNetwork={selectedNetwork}
+        onNetworkSelected={setSelectedNetwork}
+      />
+      {nftList.length === 0 && (
+        <View style={styles.footer}>
+          <Text style={styles.text}>{'The user has no NFTs yet.'}</Text>
+        </View>
+      )}
       <FlatList
         data={nftList}
         keyExtractor={(_, index): string => `nftList-${index}`}
@@ -50,7 +64,7 @@ const MyNftList = ({
         style={{ paddingHorizontal: 10 }}
         contentContainerStyle={{
           gap: 10,
-          paddingTop: 20,
+          paddingTop: 10,
         }}
         renderItem={({ item }): ReactElement => {
           const selected = useGcInputReturn.selectedNftList.includes(item)
@@ -123,5 +137,16 @@ const styles = StyleSheet.create({
     margin: 10,
     alignSelf: 'center',
     bottom: 0,
+  },
+  footer: {
+    flex: 1,
+    justifyContent: 'center',
+    gap: 20,
+    padding: 10,
+  },
+  text: {
+    color: 'gray',
+    fontSize: 12,
+    textAlign: 'center',
   },
 })

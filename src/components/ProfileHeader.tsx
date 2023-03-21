@@ -25,6 +25,7 @@ import { getProfileImgFromLensProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
+import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 
 const ProfileHeader = ({
   userAddress,
@@ -238,18 +239,10 @@ const ProfileHeader = ({
             Activities
           </FormButton>
         </Row>
-        <Row style={styles.rowButtons}>
-          {Object.values(SupportedNetworkEnum).map(
-            (network: SupportedNetworkEnum) => (
-              <FormButton
-                containerStyle={{ flex: 1 }}
-                size="sm"
-                onPress={(): void => onNetworkSelected?.(network)}>
-                {network}
-              </FormButton>
-            )
-          )}
-        </Row>
+        <SupportedNetworkRow
+          selectedNetwork={selectedNetwork}
+          onNetworkSelected={onNetworkSelected}
+        />
       </View>
     </View>
   )

@@ -13,7 +13,7 @@ export type FormButtonProps = {
   children: string
   disabled?: boolean
   onPress?: () => void
-  figure?: 'primary' | 'error'
+  figure?: 'primary' | 'secondary' | 'error'
   size?: 'sm' | 'md'
   containerStyle?: StyleProp<ViewStyle>
   textStyle?: StyleProp<TextStyle>
@@ -28,7 +28,12 @@ const FormButton = ({
   containerStyle,
   textStyle,
 }: FormButtonProps): ReactElement => {
-  const mainColor = figure === 'primary' ? COLOR.primary._400 : '#F84F4F'
+  const mainColor =
+    figure === 'primary'
+      ? COLOR.primary._400
+      : figure === 'secondary'
+      ? COLOR.gray._200
+      : '#F84F4F'
 
   const paddingVertical = size === 'md' ? 15 : 10
   const fontSize = size === 'md' ? 16 : 14
