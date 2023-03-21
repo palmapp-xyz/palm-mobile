@@ -6,6 +6,7 @@ import {
   View,
   Pressable,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
@@ -106,9 +107,14 @@ const ProfileHeader = ({
           )}
         </View>
         <View style={styles.profileNicknameBox}>
-          <Card style={styles.profileNicknameCard}>
-            <Text style={{ color: 'black' }}>{profile?.handle}</Text>
-          </Card>
+          <TouchableOpacity
+            onPress={(): void => {
+              navigation.navigate(Routes.UpdateLensProfile)
+            }}>
+            <Card style={styles.profileNicknameCard}>
+              <Text style={{ color: 'black' }}>{profile?.handle}</Text>
+            </Card>
+          </TouchableOpacity>
         </View>
         <Card
           style={{

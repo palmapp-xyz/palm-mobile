@@ -7,6 +7,9 @@ import {
   QueryOptions,
   useApolloClient,
 } from '@apollo/client'
+import _ from 'lodash'
+import { useSetRecoilState } from 'recoil'
+import { utils } from 'ethers'
 
 import useWeb3 from 'hooks/complex/useWeb3'
 import {
@@ -32,16 +35,24 @@ import {
   CreateSetProfileImageUriTypedDataDocument,
   Profile,
   UpdateProfileImageRequest,
+  CreatePublicSetProfileMetadataUriRequest,
+  CreateSetProfileMetadataViaDispatcherDocument,
+  CreateSetProfileMetadataViaDispatcherMutation,
+  CreateSetProfileMetadataTypedDataDocument,
+  CreateSetProfileMetadataTypedDataMutation,
+  BroadcastDocument,
+  BroadcastMutation,
+  BroadcastRequest,
+  HasTxHashBeenIndexedDocument,
+  HasTxHashBeenIndexedQuery,
+  HasTxHashBeenIndexedRequest,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
 import useNetwork from 'hooks/complex/useNetwork'
-import { utils } from 'ethers'
 import { TransactionResponse } from '@ethersproject/providers'
 import useLensHub from './useLensHub'
 import useEthers from 'hooks/complex/useEthers'
-import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
-import _ from 'lodash'
 
 export type UseLensReturn = {
   signer?: Account
@@ -61,6 +72,29 @@ export type UseLensReturn = {
     tokenId: string,
     chainId: SupportedNetworkEnum
   ) => Promise<TrueOrErrReturn<string>>
+  createSetProfileMetadataViaDispatcherRequest: (
+    request: CreatePublicSetProfileMetadataUriRequest
+  ) => Promise<
+    CreateSetProfileMetadataViaDispatcherMutation['createSetProfileMetadataViaDispatcher']
+  >
+  signCreateSetProfileMetadataTypedData: (
+    request: CreatePublicSetProfileMetadataUriRequest
+  ) => Promise<{
+    result: CreateSetProfileMetadataTypedDataMutation['createSetProfileMetadataTypedData']
+    signature?: string | undefined
+  }>
+  broadcastRequest: (
+    request: BroadcastRequest
+  ) => Promise<BroadcastMutation['broadcast']>
+  pollUntilIndexed: (
+    input:
+      | {
+          txHash: string
+        }
+      | {
+          txId: string
+        }
+  ) => Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
 }
 
 const useLens = (): UseLensReturn => {
@@ -326,6 +360,127 @@ const useLens = (): UseLensReturn => {
     }
   }
 
+  const createSetProfileMetadataViaDispatcherRequest = async (
+    request: CreatePublicSetProfileMetadataUriRequest
+  ): Promise<
+    CreateSetProfileMetadataViaDispatcherMutation['createSetProfileMetadataViaDispatcher']
+  > => {
+    const result = await mutate({
+      mutation: CreateSetProfileMetadataViaDispatcherDocument,
+      variables: {
+        request,
+      },
+    })
+
+    return result.data!.createSetProfileMetadataViaDispatcher
+  }
+
+  const createSetProfileMetadataTypedData = async (
+    request: CreatePublicSetProfileMetadataUriRequest
+  ): Promise<
+    CreateSetProfileMetadataTypedDataMutation['createSetProfileMetadataTypedData']
+  > => {
+    const result = await mutate({
+      mutation: CreateSetProfileMetadataTypedDataDocument,
+      variables: {
+        request,
+      },
+    })
+
+    return result.data!.createSetProfileMetadataTypedData
+  }
+
+  const signCreateSetProfileMetadataTypedData = async (
+    request: CreatePublicSetProfileMetadataUriRequest
+  ): Promise<{
+    result: CreateSetProfileMetadataTypedDataMutation['createSetProfileMetadataTypedData']
+    signature?: string
+  }> => {
+    const result = await createSetProfileMetadataTypedData(request)
+    console.log('create profile metadata: createCommentTypedData', result)
+
+    const typedData = result.typedData
+    console.log('create profile metadata: typedData', typedData)
+
+    const signature = await signedTypeData(
+      SupportedNetworkEnum.POLYGON,
+      typedData.domain,
+      typedData.types,
+      typedData.value
+    )
+    console.log('create profile metadata: signature', signature)
+
+    return { result, signature }
+  }
+
+  const broadcastRequest = async (
+    request: BroadcastRequest
+  ): Promise<BroadcastMutation['broadcast']> => {
+    const result = await mutate({
+      mutation: BroadcastDocument,
+      variables: {
+        request,
+      },
+    })
+
+    return result.data!.broadcast
+  }
+
+  const hasTxBeenIndexed = async (
+    request: HasTxHashBeenIndexedRequest
+  ): Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']> => {
+    const result = await query({
+      query: HasTxHashBeenIndexedDocument,
+      variables: {
+        request,
+      },
+      fetchPolicy: 'network-only',
+    })
+
+    return result.data.hasTxHashBeenIndexed
+  }
+
+  const pollUntilIndexed = async (
+    input: { txHash: string } | { txId: string }
+  ): Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']> => {
+    while (true) {
+      const response = await hasTxBeenIndexed(input)
+      console.log('pool until indexed: result', response)
+
+      if (response.__typename === 'TransactionIndexedResult') {
+        console.log('pool until indexed: indexed', response.indexed)
+        console.log(
+          'pool until metadataStatus: metadataStatus',
+          response.metadataStatus
+        )
+
+        console.log(response.metadataStatus)
+        if (response.metadataStatus) {
+          if (response.metadataStatus.status === 'SUCCESS') {
+            return response
+          }
+
+          if (response.metadataStatus.status === 'METADATA_VALIDATION_FAILED') {
+            throw new Error(response.metadataStatus.status)
+          }
+        } else {
+          if (response.indexed) {
+            return response
+          }
+        }
+
+        console.log(
+          'pool until indexed: sleep for 1500 milliseconds then try again'
+        )
+        // sleep for a second before trying again
+        await new Promise(resolve => setTimeout(resolve, 1500))
+      } else {
+        // it got reverted and failed!
+        throw new Error(response.reason)
+      }
+    }
+  }
+
   return {
     sign,
     getProfiles,
@@ -334,6 +489,10 @@ const useLens = (): UseLensReturn => {
     createProfile,
     nftOwnershipChallenge,
     updateProfileImage,
+    createSetProfileMetadataViaDispatcherRequest,
+    signCreateSetProfileMetadataTypedData,
+    broadcastRequest,
+    pollUntilIndexed,
   }
 }
 

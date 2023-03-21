@@ -13,12 +13,7 @@ import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import ProfileHeader from '../../components/ProfileHeader'
-import {
-  ChainLogoWrapper,
-  MediaRenderer,
-  MoralisNftRenderer,
-  NftItemMenu,
-} from 'components'
+import { ChainLogoWrapper, MoralisNftRenderer, NftItemMenu } from 'components'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { Moralis, SupportedNetworkEnum } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'

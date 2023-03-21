@@ -33,6 +33,7 @@ export enum Routes {
 
   UserProfile = 'UserProfile',
   CreateLensProfile = 'CreateLensProfile',
+  UpdateLensProfile = 'UpdateLensProfile',
   NftDetail = 'NftDetail',
   ZxNftDetail = 'ZxNftDetail',
   ListNft = 'ListNft',
@@ -95,6 +96,10 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.CreateLensProfile
+      params: undefined
+    }
+  | {
+      route: Routes.UpdateLensProfile
       params: undefined
     }
   | {

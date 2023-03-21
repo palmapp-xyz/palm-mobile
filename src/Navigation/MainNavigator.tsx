@@ -26,6 +26,7 @@ import {
   TokenGatingInfoScreen,
   FileViewerScreen,
   CreateLensProfileScreen,
+  UpdateLensProfileScreen,
 } from '../screens'
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
@@ -69,6 +70,10 @@ const MainNavigator = (): ReactElement => {
           <MainStack.Screen
             name={Routes.UserProfile}
             component={UserProfileScreen}
+          />
+          <MainStack.Screen
+            name={Routes.UpdateLensProfile}
+            component={UpdateLensProfileScreen}
           />
           <MainStack.Screen name={Routes.SendNft} component={SendNftScreen} />
           <MainStack.Screen name={Routes.ListNft} component={ListNftScreen} />

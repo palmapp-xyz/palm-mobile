@@ -7,7 +7,6 @@ import { ChainNetworkEnum, SupportedNetworkEnum } from 'types'
 import { isMainnet } from 'libs/utils'
 import { TypedDataDomain, Wallet, ethers } from 'ethers'
 import _ from 'lodash'
-import { Maybe } from '@toruslabs/openlogin'
 
 type UseEthersReturn = {
   providers: Record<SupportedNetworkEnum, ethers.providers.JsonRpcProvider>
