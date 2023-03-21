@@ -9,6 +9,7 @@ import {
   EncodedTxData,
   PostTxReturn,
   PostTxStatus,
+  SupportedNetworkEnum,
   pToken,
 } from 'types'
 import useWeb3 from './useWeb3'
@@ -23,8 +24,10 @@ type UsePostTxReturn = {
 
 export const usePostTx = ({
   contractAddress,
+  chain,
 }: {
   contractAddress: ContractAddr
+  chain: SupportedNetworkEnum
 }): UsePostTxReturn => {
   const { user } = useAuth()
   const { web3Eth } = useWeb3()
@@ -45,7 +48,7 @@ export const usePostTx = ({
       }
     }
 
-    setPostTxResult({ status: PostTxStatus.POST })
+    setPostTxResult({ status: PostTxStatus.POST, chain })
     if (user) {
       try {
         const userAddress = user.address
@@ -65,12 +68,14 @@ export const usePostTx = ({
             setPostTxResult({
               status: PostTxStatus.BROADCAST,
               transactionHash,
+              chain,
             })
           })
 
         setPostTxResult({
           status: PostTxStatus.DONE,
           value: receipt,
+          chain,
         })
         return {
           success: true,
@@ -80,6 +85,7 @@ export const usePostTx = ({
         setPostTxResult({
           status: PostTxStatus.ERROR,
           error: error?.message ? error.message : JSON.stringify(error),
+          chain,
         })
         return {
           success: false,
@@ -89,7 +95,7 @@ export const usePostTx = ({
       }
     } else {
       const message = 'Not logged in'
-      setPostTxResult({ status: PostTxStatus.ERROR, error: message })
+      setPostTxResult({ status: PostTxStatus.ERROR, error: message, chain })
       return {
         success: false,
         message,

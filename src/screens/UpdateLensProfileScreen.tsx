@@ -8,7 +8,10 @@ import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
 
-import { CreatePublicSetProfileMetadataUriRequest } from 'graphqls/__generated__/graphql'
+import {
+  CreatePublicSetProfileMetadataUriRequest,
+  TransactionReceipt,
+} from 'graphqls/__generated__/graphql'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 
 const UpdateLensProfileScreen = (): ReactElement => {
@@ -104,7 +107,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
     const logs =
       indexedResult.txReceipt &&
       'logs' in indexedResult?.txReceipt &&
-      indexedResult.txReceipt.logs
+      (indexedResult.txReceipt as TransactionReceipt).logs
 
     console.log('create profile metadata: logs', logs)
     refetch()

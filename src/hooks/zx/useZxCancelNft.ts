@@ -5,7 +5,7 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus, zx } from 'types'
+import { PostTxStatus, SupportedNetworkEnum, zx } from 'types'
 import useZx from './useZx'
 
 export type UseZxCancelNftReturn = {
@@ -27,17 +27,20 @@ const useZxCancelNft = (channelUrl: string): UseZxCancelNftReturn => {
     if (nftSwapSdk) {
       setPostTxResult({
         status: PostTxStatus.POST,
+        chain: SupportedNetworkEnum.ETHEREUM,
       })
       const fillTx = await nftSwapSdk.cancelOrder(order.nonce, 'ERC721')
       setPostTxResult({
         status: PostTxStatus.BROADCAST,
         transactionHash: fillTx.hash,
+        chain: SupportedNetworkEnum.ETHEREUM,
       })
 
       const txReceipt = await fillTx.wait()
       setPostTxResult({
         status: PostTxStatus.DONE,
         value: txReceipt,
+        chain: SupportedNetworkEnum.ETHEREUM,
       })
 
       try {

@@ -262,6 +262,7 @@ const useLens = (): UseLensReturn => {
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
+          chain: chainId,
         })
         console.log(
           `setting profile image uri nft signer ${signer.address} contract ${contractAddress} tokenId ${tokenId} chainId ${connectedNetworkIds[chainId]}`
@@ -333,12 +334,14 @@ const useLens = (): UseLensReturn => {
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
           transactionHash: tx.hash!,
+          chain: chainId,
         })
 
         const txReceipt = await tx.wait()
         setPostTxResult({
           status: PostTxStatus.DONE,
           value: txReceipt,
+          chain: chainId,
         })
 
         return {
@@ -349,6 +352,7 @@ const useLens = (): UseLensReturn => {
         setPostTxResult({
           status: PostTxStatus.ERROR,
           error,
+          chain: chainId,
         })
         return { success: false, errMsg: _.toString(error) }
       }

@@ -20,7 +20,7 @@ const PostTxResult = ({
   const onClickClose = (): void => {
     setIsOpen(false)
     setMinimized(false)
-    setPostTxResult({ status: PostTxStatus.READY })
+    setPostTxResult({ status: PostTxStatus.READY, chain: network })
   }
 
   const effectList = useMemo(

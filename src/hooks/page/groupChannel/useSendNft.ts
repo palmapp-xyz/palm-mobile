@@ -10,6 +10,7 @@ import {
   Moralis,
   PostTxReturn,
   PostTxStatus,
+  SupportedNetworkEnum,
 } from 'types'
 import usePostTx from 'hooks/complex/usePostTx'
 import useNft from 'hooks/contract/useNft'
@@ -20,6 +21,7 @@ import usePostTxStatusEffect, {
 } from 'hooks/independent/usePostTxStatusEffect'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { navigationRef, Routes } from 'libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 export type UseSendNftReturn = {
   isPosting: boolean
@@ -44,7 +46,12 @@ const useSendNft = ({
     nftContract: selectedNft?.token_address,
   })
 
-  const { postTx } = usePostTx({ contractAddress: selectedNft.token_address })
+  const { postTx } = usePostTx({
+    contractAddress: selectedNft.token_address,
+    chain:
+      chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+      SupportedNetworkEnum.ETHEREUM,
+  })
 
   const queyrClient = useQueryClient()
 

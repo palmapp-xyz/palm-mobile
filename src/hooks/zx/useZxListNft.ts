@@ -9,7 +9,13 @@ import { UTIL } from 'consts'
 
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useAuth from 'hooks/independent/useAuth'
-import { ContractAddr, PostTxStatus, QueryKeyEnum, Token } from 'types'
+import {
+  ContractAddr,
+  PostTxStatus,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+  Token,
+} from 'types'
 import useZx from './useZx'
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
@@ -76,6 +82,7 @@ const useZxListNft = ({
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
         const approvalTx = await nftSwapSdk.approveTokenOrNftByAsset(
           nftToSwap,
@@ -84,16 +91,19 @@ const useZxListNft = ({
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
           transactionHash: approvalTx.hash,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
 
         const approvalTxReceipt = await approvalTx.wait()
         setPostTxResult({
           status: PostTxStatus.DONE,
           value: approvalTxReceipt,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
       } catch (error) {
         setPostTxResult({
           status: PostTxStatus.ERROR,
+          chain: SupportedNetworkEnum.ETHEREUM,
           error,
         })
       }
@@ -108,6 +118,7 @@ const useZxListNft = ({
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
         const order = nftSwapSdk.buildOrder(nftToSwap, priceOfNft, user.address)
 
@@ -119,7 +130,10 @@ const useZxListNft = ({
           nftSwapSdk.chainId
         )
 
-        setPostTxResult({ status: PostTxStatus.DONE })
+        setPostTxResult({
+          status: PostTxStatus.DONE,
+          chain: SupportedNetworkEnum.ETHEREUM,
+        })
         navigation.replace(Routes.ZxNftDetail, {
           nonce: postOrder.order.nonce,
         })
@@ -129,6 +143,7 @@ const useZxListNft = ({
         setPostTxResult({
           status: PostTxStatus.ERROR,
           error,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
       }
     }

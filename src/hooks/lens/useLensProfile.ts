@@ -20,7 +20,6 @@ const useLensProfile = ({
   userAddress?: ContractAddr
 }): UseLensProfileReturn => {
   const { getProfiles, getDefaultProfile } = useLens()
-  //userAddress = '0x6C77a5a88C0AE712BAeABE12FeA81532060dcBf5' as ContractAddr
   const useProfilesReturn = useQuery(
     [QueryKeyEnum.LENS_PROFILES, userAddress],
     async () => {

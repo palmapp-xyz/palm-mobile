@@ -6,7 +6,7 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus, TrueOrErrReturn, zx } from 'types'
+import { PostTxStatus, SupportedNetworkEnum, TrueOrErrReturn, zx } from 'types'
 import useZx from './useZx'
 import _ from 'lodash'
 
@@ -34,6 +34,7 @@ const useZxBuyNft = (channelUrl: string): UseZxBuyNftReturn => {
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
         const fillTx = await nftSwapSdk.fillSignedOrder(order, undefined, {
           gasLimit: 8000000,
@@ -42,12 +43,14 @@ const useZxBuyNft = (channelUrl: string): UseZxBuyNftReturn => {
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
           transactionHash: fillTx.hash,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
 
         const txReceipt = await fillTx.wait()
         setPostTxResult({
           status: PostTxStatus.DONE,
           value: txReceipt,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
 
         try {
@@ -74,6 +77,7 @@ const useZxBuyNft = (channelUrl: string): UseZxBuyNftReturn => {
         setPostTxResult({
           status: PostTxStatus.ERROR,
           error,
+          chain: SupportedNetworkEnum.ETHEREUM,
         })
         return { success: false, errMsg: _.toString(error) }
       }
