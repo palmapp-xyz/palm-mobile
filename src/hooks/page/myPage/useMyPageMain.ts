@@ -1,4 +1,4 @@
-import { User } from 'types'
+import { SupportedNetworkEnum, User } from 'types'
 
 import useUserNftList, { UseUserNftListReturn } from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
@@ -12,11 +12,16 @@ export type UseMyPageMainReturn = {
   useMyNftListReturn: UseUserNftListReturn
 }
 
-const useMyPageMain = (): UseMyPageMainReturn => {
+const useMyPageMain = ({
+  selectedNetwork,
+}: {
+  selectedNetwork: SupportedNetworkEnum
+}): UseMyPageMainReturn => {
   const { user } = useAuth()
 
   const useMyNftListReturn = useUserNftList({
     userAddress: user?.address,
+    selectedNetwork,
   })
 
   const useMyBalanceReturn = useUserBalance({ address: user?.address })

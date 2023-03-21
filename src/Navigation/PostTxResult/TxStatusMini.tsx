@@ -14,7 +14,7 @@ import { COLOR, UTIL } from 'consts'
 import images from 'assets/images'
 
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus } from 'types'
+import { PostTxStatus, SupportedNetworkEnum } from 'types'
 
 import { FormImage, Card, LinkExplorer } from 'components'
 
@@ -30,9 +30,11 @@ const StatusText = ({ children }: { children: string }): ReactElement => {
 const TxStatusMini = ({
   onPressClose,
   setMinimized,
+  network,
 }: {
   onPressClose: () => void
   setMinimized: React.Dispatch<React.SetStateAction<boolean>>
+  network: SupportedNetworkEnum
 }): ReactElement => {
   const postTxResult = useRecoilValue(postTxStore.postTxResult)
   return (
@@ -72,7 +74,10 @@ const TxStatusMini = ({
             </View>
             <StyledTextBox>
               <StatusText>Pending TX...</StatusText>
-              <LinkExplorer type="tx" address={postTxResult.transactionHash}>
+              <LinkExplorer
+                type="tx"
+                address={postTxResult.transactionHash}
+                network={network}>
                 <Text style={{ color: COLOR.primary._400 }}>
                   {UTIL.truncate(postTxResult.transactionHash, [4, 4])}
                 </Text>
@@ -90,7 +95,8 @@ const TxStatusMini = ({
               <StyledTextBox>
                 <LinkExplorer
                   type="tx"
-                  address={postTxResult.value.transactionHash}>
+                  address={postTxResult.value.transactionHash}
+                  network={network}>
                   <Text style={{ color: COLOR.primary._400 }}>
                     {UTIL.truncate(postTxResult.value.transactionHash, [4, 4])}
                   </Text>

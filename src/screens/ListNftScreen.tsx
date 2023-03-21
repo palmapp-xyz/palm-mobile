@@ -187,6 +187,7 @@ const Contents = ({
                 </Row>
               </View>
               <SubmitButton
+                network={SupportedNetworkEnum.ETHEREUM}
                 containerStyle={{ borderRadius: 0 }}
                 disabled={!price}
                 onPress={async (): Promise<void> => {
@@ -205,6 +206,7 @@ const Contents = ({
                 </Text>
               </View>
               <SubmitButton
+                network={SupportedNetworkEnum.ETHEREUM}
                 containerStyle={{ borderRadius: 0 }}
                 onPress={(): void => {
                   Keyboard.dismiss()

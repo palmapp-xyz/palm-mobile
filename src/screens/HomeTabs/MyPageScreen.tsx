@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react'
+import React, { ReactElement, useCallback, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -19,18 +19,31 @@ import { Moralis, SupportedNetworkEnum } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import ProfileFooter from 'components/ProfileFooter'
 import useLens from 'hooks/lens/useLens'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { user, useMyNftListReturn, useMyBalanceReturn } = useMyPageMain()
+
+  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
+    SupportedNetworkEnum.ETHEREUM
+  )
+
+  const { user, useMyNftListReturn, useMyBalanceReturn } = useMyPageMain({
+    selectedNetwork,
+  })
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
 
   const useLensProfileReturn = useLensProfile({ userAddress: user?.address })
   const { updateProfileImage } = useLens()
 
   const profileHeader = useCallback(
-    () => <ProfileHeader isMyPage userAddress={user?.address} />,
+    () => (
+      <ProfileHeader
+        isMyPage
+        userAddress={user?.address}
+        selectedNetwork={selectedNetwork}
+        onNetworkSelected={setSelectedNetwork}
+      />
+    ),
     [user?.address]
   )
 
@@ -38,6 +51,31 @@ const MyPageScreen = (): ReactElement => {
     () => <ProfileFooter useUserNftListReturn={useMyNftListReturn} />,
     [useMyNftListReturn]
   )
+
+  const doUpdateProfileImage = async (
+    selectedItem: Moralis.NftItem
+  ): Promise<void> => {
+    if (useLensProfileReturn.profile) {
+      const res = await updateProfileImage(
+        useLensProfileReturn.profile.id,
+        selectedItem.token_address,
+        selectedItem.token_id,
+        selectedNetwork
+      )
+      if (res.success) {
+        const txHash = res.value
+        console.log(`updateProfileImage tx hash ${txHash}`)
+      } else {
+        console.error(`updateProfileImage error ${res.errMsg}`)
+      }
+    }
+    const url = await fetchNftImage({
+      metadata: selectedItem.metadata,
+      tokenUri: selectedItem.token_uri,
+    })
+    const me = await updateCurrentUserInfo(undefined, url)
+    setCurrentUser(me)
+  }
 
   return (
     <FlatList
@@ -74,18 +112,10 @@ const MyPageScreen = (): ReactElement => {
             })
           }}>
           <View style={{ borderRadius: 10, flex: 1 }}>
-            <ChainLogoWrapper
-              chain={
-                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-                SupportedNetworkEnum.ETHEREUM
-              }>
+            <ChainLogoWrapper chain={selectedNetwork}>
               <MoralisNftRenderer item={item} width={'100%'} height={180} />
               <NftItemMenu
-                chainId={
-                  item.chainId
-                    ? chainIdToSupportedNetworkEnum(item.chainId)
-                    : undefined
-                }
+                chainId={selectedNetwork}
                 item={item}
                 triggerComponent={
                   <View style={styles.nftTitle}>
@@ -98,28 +128,7 @@ const MyPageScreen = (): ReactElement => {
                 ): Promise<void> => {
                   try {
                     if (selectedOption === 'set_nft_profile') {
-                      if (useLensProfileReturn.profile) {
-                        const res = await updateProfileImage(
-                          useLensProfileReturn.profile.id,
-                          selectedItem.token_address,
-                          selectedItem.token_id,
-                          SupportedNetworkEnum.ETHEREUM
-                        )
-                        if (res.success) {
-                          const txHash = res.value
-                          console.log(`updateProfileImage tx hash ${txHash}`)
-                        } else {
-                          console.error(
-                            `updateProfileImage error ${res.errMsg}`
-                          )
-                        }
-                      }
-                      const url = await fetchNftImage({
-                        metadata: selectedItem.metadata,
-                        tokenUri: selectedItem.token_uri,
-                      })
-                      const me = await updateCurrentUserInfo(undefined, url)
-                      setCurrentUser(me)
+                      await doUpdateProfileImage(selectedItem)
                     }
                   } catch (e) {
                     console.error(e, selectedItem, selectedOption)

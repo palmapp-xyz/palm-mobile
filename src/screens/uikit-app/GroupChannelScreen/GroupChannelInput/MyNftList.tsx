@@ -13,6 +13,7 @@ import { FormButton, MoralisNftRenderer, Row } from 'components'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
 import { COLOR } from 'consts'
+import { SupportedNetworkEnum } from 'types'
 
 const MyNftList = ({
   useGcInputReturn,
@@ -20,7 +21,10 @@ const MyNftList = ({
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
   const { user } = useAuth()
-  const { nftList } = useUserNftList({ userAddress: user?.address })
+  const { nftList } = useUserNftList({
+    userAddress: user?.address,
+    selectedNetwork: SupportedNetworkEnum.ETHEREUM,
+  })
 
   return useGcInputReturn.stepAfterSelectNft ? (
     <View style={styles.container}>

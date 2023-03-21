@@ -30,13 +30,13 @@ const SendNftMessage = ({
     metadata: item.metadata,
   })
 
+  const chain =
+    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    SupportedNetworkEnum.ETHEREUM
+
   return (
     <View style={styles.container}>
-      <ChainLogoWrapper
-        chain={
-          chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-          SupportedNetworkEnum.ETHEREUM
-        }>
+      <ChainLogoWrapper chain={chain}>
         <MediaRenderer src={uri} width={'100%'} height={150} />
       </ChainLogoWrapper>
       <View style={styles.body}>
@@ -52,10 +52,10 @@ const SendNftMessage = ({
         </Row>
         <View>
           <Text style={{ color: COLOR.primary._400 }}>Send NFT</Text>
-          <LinkExplorer type="account" address={data.from}>
+          <LinkExplorer type="account" address={data.from} network={chain}>
             <Text>{`from : ${UTIL.truncate(data.from)}`}</Text>
           </LinkExplorer>
-          <LinkExplorer type="account" address={data.to}>
+          <LinkExplorer type="account" address={data.to} network={chain}>
             <Text>{`to : ${UTIL.truncate(data.to)}`}</Text>
           </LinkExplorer>
         </View>

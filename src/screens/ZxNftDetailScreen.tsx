@@ -8,7 +8,7 @@ import { useAsyncEffect } from '@sendbird/uikit-utils'
 import firestore from '@react-native-firebase/firestore'
 
 import { COLOR, UTIL } from 'consts'
-import { FbListing, QueryKeyEnum, zx } from 'types'
+import { FbListing, QueryKeyEnum, SupportedNetworkEnum, zx } from 'types'
 import { Container, Header, MediaRenderer, SubmitButton } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
@@ -120,6 +120,7 @@ const Contents = ({
           )}
         </View>
         <SubmitButton
+          network={SupportedNetworkEnum.ETHEREUM}
           onPress={async (): Promise<void> => {
             if (isMine) {
               await onClickCancel({ order: selectedNft.order })

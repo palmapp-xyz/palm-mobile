@@ -6,7 +6,7 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { UTIL } from 'consts'
-import { ContractAddr, Moralis } from 'types'
+import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 import selectNftStore from 'store/selectNftStore'
 import { Header, SubmitButton, Container, NftRenderer, Row } from 'components'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'
@@ -70,6 +70,7 @@ const Contents = ({
         </View>
       </View>
       <SubmitButton
+        network={SupportedNetworkEnum.ETHEREUM}
         disabled={isPosting || !isValidForm}
         onPress={async (): Promise<void> => {
           const res = await onClickConfirm()

@@ -13,7 +13,7 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncLayoutEffect } from '@sendbird/uikit-utils'
 
 import { COLOR, UTIL } from 'consts'
-import { ContractAddr, pToken } from 'types'
+import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 import images from 'assets/images'
 
 import { Routes } from 'libs/navigation'
@@ -29,13 +29,17 @@ import useKlayPrice from 'hooks/independent/useKlayPrice'
 const ProfileHeader = ({
   userAddress,
   isMyPage,
+  selectedNetwork,
+  onNetworkSelected,
 }: {
   userAddress?: ContractAddr
   isMyPage: boolean
+  selectedNetwork: SupportedNetworkEnum
+  onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
 }): ReactElement => {
   const { navigation } = useAppNavigation()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
-  const { user } = useMyPageMain()
+  const { user } = useMyPageMain({ selectedNetwork })
   const { getEthPrice } = useEthPrice()
   const { getKlayPrice } = useKlayPrice()
   const { profile } = useLensProfile({ userAddress })
@@ -226,21 +230,25 @@ const ProfileHeader = ({
         </Card>
       </ImageBackground>
       <View style={styles.body}>
-        <Row
-          style={{
-            width: '100%',
-            backgroundColor: 'white',
-            alignSelf: 'flex-start',
-            padding: 5,
-            borderRadius: 10,
-            columnGap: 10,
-          }}>
+        <Row style={styles.rowButtons}>
           <FormButton containerStyle={{ flex: 1 }} size="sm">
             Owned List
           </FormButton>
           <FormButton containerStyle={{ flex: 1 }} size="sm" disabled>
             Activities
           </FormButton>
+        </Row>
+        <Row style={styles.rowButtons}>
+          {Object.values(SupportedNetworkEnum).map(
+            (network: SupportedNetworkEnum) => (
+              <FormButton
+                containerStyle={{ flex: 1 }}
+                size="sm"
+                onPress={(): void => onNetworkSelected?.(network)}>
+                {network}
+              </FormButton>
+            )
+          )}
         </Row>
       </View>
     </View>
@@ -296,5 +304,13 @@ const styles = StyleSheet.create({
   attribute: {
     fontWeight: 'bold',
     marginBottom: 6,
+  },
+  rowButtons: {
+    width: '100%',
+    backgroundColor: 'white',
+    alignSelf: 'flex-start',
+    padding: 5,
+    borderRadius: 10,
+    columnGap: 10,
   },
 })

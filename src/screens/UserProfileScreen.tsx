@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react'
+import React, { ReactElement, useCallback, useState } from 'react'
 import {
   FlatList,
   View,
@@ -13,19 +13,33 @@ import useUserNftList from 'hooks/api/useUserNftList'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import ProfileHeader from '../components/ProfileHeader'
 import ProfileFooter from 'components/ProfileFooter'
+import { SupportedNetworkEnum } from 'types'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
   const userAddress = params.address
+
+  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
+    SupportedNetworkEnum.ETHEREUM
+  )
+
   const useUserNftListReturn = useUserNftList({
     userAddress,
+    selectedNetwork,
   })
   const { refetch: balanceRefetch } = useUserBalance({
     address: userAddress,
   })
 
   const profileHeader = useCallback(
-    () => <ProfileHeader isMyPage={false} userAddress={userAddress} />,
+    () => (
+      <ProfileHeader
+        isMyPage={false}
+        userAddress={userAddress}
+        selectedNetwork={selectedNetwork}
+        onNetworkSelected={setSelectedNetwork}
+      />
+    ),
     [userAddress]
   )
 

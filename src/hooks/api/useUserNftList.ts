@@ -18,14 +18,16 @@ export type UseUserNftListReturn = {
 }
 
 const useUserNftList = ({
+  selectedNetwork,
   userAddress,
   limit,
 }: {
+  selectedNetwork: SupportedNetworkEnum
   userAddress?: ContractAddr
   limit?: number
 }): UseUserNftListReturn => {
   const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
+  const connectedNetworkId = connectedNetworkIds[selectedNetwork]
   const { getApi } = useApi()
 
   const {

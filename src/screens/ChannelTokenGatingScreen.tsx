@@ -21,7 +21,7 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
-import { ContractAddr, QueryKeyEnum } from 'types'
+import { ContractAddr, QueryKeyEnum, SupportedNetworkEnum } from 'types'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useFsChannel from 'hooks/firestore/useFsChannel'
@@ -68,7 +68,10 @@ const ChannelTokenGatingScreen = (): ReactElement => {
     channelUrl: params.channelUrl,
   })
 
-  const { nftList } = useUserNftList({ userAddress: user?.address })
+  const { nftList } = useUserNftList({
+    userAddress: user?.address,
+    selectedNetwork: SupportedNetworkEnum.ETHEREUM,
+  })
   const groupedNftList = useMemo(
     () =>
       _.map(

@@ -17,6 +17,7 @@ import { SignWithLens } from '../screens'
 import PostTxResult from './PostTxResult'
 import MainNavigator from './MainNavigator'
 import AuthNavigator from './AuthNavigator'
+import { SupportedNetworkEnum } from 'types'
 
 const RootStack = createNativeStackNavigator()
 
@@ -51,7 +52,7 @@ const Navigation = (): ReactElement => {
           />
         )}
       </RootStack.Navigator>
-      <PostTxResult />
+      <PostTxResult network={SupportedNetworkEnum.ETHEREUM} />
     </NavigationContainer>
   )
 }
