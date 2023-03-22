@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { StyleProp, FlexStyle, Image, ImageStyle, View } from 'react-native'
+import { StyleProp, FlexStyle, Image, ImageStyle } from 'react-native'
 
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
@@ -9,7 +9,6 @@ import { isValidHttpUrl } from 'libs/utils'
 import FallbackMediaRenderer from '../molecules/FallbackMediaRenderer'
 import VideoRenderer from '../molecules/VideoRenderer'
 import * as Progress from 'react-native-progress'
-import { COLOR } from 'consts'
 import Card from './Card'
 
 export interface SharedMediaProps {

@@ -1,5 +1,11 @@
 import React, { ReactElement, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import firestore from '@react-native-firebase/firestore'
@@ -23,6 +29,7 @@ const Contents = ({
   const { ownerOf } = useNft({ nftContract })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
   const { user } = useAuth()
+  const size = useWindowDimensions()
 
   const isMine =
     tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
@@ -64,9 +71,11 @@ const Contents = ({
   return (
     <View style={styles.body}>
       <View style={styles.imageBox}>
-        <View style={{ height: 250 }}>
-          <NftRenderer tokenId={tokenId} nftContract={nftContract} />
-        </View>
+        <NftRenderer
+          tokenId={tokenId}
+          nftContract={nftContract}
+          style={{ flex: 1 }}
+        />
       </View>
       <View style={styles.info}>
         <View style={styles.infoDetails}>
@@ -133,7 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-  imageBox: { width: '100%' },
+  imageBox: { width: '100%', height: 250, marginVertical: 10 },
   info: {
     flex: 1,
     padding: 10,

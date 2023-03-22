@@ -1,5 +1,5 @@
 import React, { ErrorInfo, ReactElement, ReactNode } from 'react'
-import { Text, View } from 'react-native'
+import { ImageStyle, StyleProp, Text, View } from 'react-native'
 
 type ErrorBoundaryState = {
   error?: Error
@@ -8,6 +8,7 @@ type ErrorBoundaryState = {
 export type ErrorBoundaryProps = {
   children: ReactNode
   fallback?: ReactElement
+  style?: StyleProp<ImageStyle>
 }
 
 class ErrorBoundary extends React.Component<
@@ -35,13 +36,16 @@ class ErrorBoundary extends React.Component<
       return (
         this.props.fallback || (
           <View
-            style={{
-              width: '100%',
-              height: '100%',
-              alignItems: 'center',
-              flex: 1,
-              justifyContent: 'center',
-            }}>
+            style={[
+              {
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                flex: 1,
+                justifyContent: 'center',
+              },
+              this.props.style,
+            ]}>
             <Text>Something happened!</Text>
             <Text>{this.state.error.toString()}</Text>
           </View>

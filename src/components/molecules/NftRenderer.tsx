@@ -4,7 +4,7 @@ import { ContractAddr } from 'types'
 import ErrorBoundary from 'components/atoms/ErrorBoundary'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
 import MediaRenderer from '../atoms/MediaRenderer'
-import { FlexStyle } from 'react-native'
+import { FlexStyle, ImageStyle, StyleProp } from 'react-native'
 import useNftImage from 'hooks/independent/useNftImage'
 
 const NftRenderer = ({
@@ -12,11 +12,15 @@ const NftRenderer = ({
   tokenId,
   width,
   height,
+  style,
+  containerStyle,
 }: {
   nftContract: ContractAddr
   tokenId: string
   width?: FlexStyle['width']
   height?: FlexStyle['height']
+  style?: StyleProp<ImageStyle>
+  containerStyle?: StyleProp<ImageStyle>
 }): ReactElement => {
   const { loading, uri, metadata } = useNftImage({
     nftContract,
@@ -30,12 +34,13 @@ const NftRenderer = ({
     height: height || '100%',
     loading,
     metadata,
+    style,
   }
 
   const fallback = <FallbackMediaRenderer {...props} />
 
   return (
-    <ErrorBoundary fallback={fallback}>
+    <ErrorBoundary fallback={fallback} style={containerStyle}>
       <MediaRenderer {...props} />
     </ErrorBoundary>
   )
