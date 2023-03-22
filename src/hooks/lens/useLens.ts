@@ -7,17 +7,9 @@ import {
   QueryOptions,
   useApolloClient,
 } from '@apollo/client'
-import _ from 'lodash'
-import { useSetRecoilState } from 'recoil'
-import { utils } from 'ethers'
 
 import useWeb3 from 'hooks/complex/useWeb3'
-import {
-  ContractAddr,
-  PostTxStatus,
-  SupportedNetworkEnum,
-  TrueOrErrReturn,
-} from 'types'
+import { SupportedNetworkEnum, TrueOrErrReturn } from 'types'
 import {
   AuthenticateDocument,
   ChallengeDocument,
@@ -46,13 +38,12 @@ import {
   HasTxHashBeenIndexedDocument,
   HasTxHashBeenIndexedQuery,
   HasTxHashBeenIndexedRequest,
+  CreateSetProfileImageUriTypedDataMutation,
+  CreateSetProfileImageUriViaDispatcherDocument,
+  CreateSetProfileImageUriViaDispatcherMutation,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
-import useNetwork from 'hooks/complex/useNetwork'
-import { TransactionResponse } from '@ethersproject/providers'
-import useLensHub from './useLensHub'
 import useEthers from 'hooks/complex/useEthers'
-import postTxStore from 'store/postTxStore'
 
 export type UseLensReturn = {
   signer?: Account
@@ -66,12 +57,6 @@ export type UseLensReturn = {
   nftOwnershipChallenge: (
     request: NftOwnershipChallengeRequest
   ) => Promise<NftOwnershipChallengeResult>
-  updateProfileImage: (
-    profileId: string,
-    contractAddress: ContractAddr,
-    tokenId: string,
-    chainId: SupportedNetworkEnum
-  ) => Promise<TrueOrErrReturn<string>>
   createSetProfileMetadataViaDispatcherRequest: (
     request: CreatePublicSetProfileMetadataUriRequest
   ) => Promise<
@@ -95,18 +80,30 @@ export type UseLensReturn = {
           txId: string
         }
   ) => Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
+  createSetProfileImageURITypedData: (
+    request: UpdateProfileImageRequest
+  ) => Promise<
+    | CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
+    | undefined
+  >
+  signCreateSetProfileImageUriTypedData: (
+    request: UpdateProfileImageRequest
+  ) => Promise<{
+    result: CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
+    signature?: string | undefined
+  }>
+  createSetProfileUriViaDispatcherRequest: (
+    request: UpdateProfileImageRequest
+  ) => Promise<
+    CreateSetProfileImageUriViaDispatcherMutation['createSetProfileImageURIViaDispatcher']
+  >
 }
 
 const useLens = (): UseLensReturn => {
   const { getSigner } = useWeb3()
-  const { signedTypeData, getSigner: getEthersSigner } = useEthers()
+  const { signedTypeData } = useEthers()
   const { user } = useAuth()
   const { query: aQuery, mutate: aMutate } = useApolloClient()
-  const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
-
-  const { connectedNetworkIds } = useNetwork()
-
-  const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
 
   const query = <
     T = any,
@@ -251,117 +248,18 @@ const useLens = (): UseLensReturn => {
     return fetchRes.data.nftOwnershipChallenge as NftOwnershipChallengeResult
   }
 
-  const updateProfileImage = async (
-    profileId: string,
-    contractAddress: ContractAddr,
-    tokenId: string,
-    chainId: SupportedNetworkEnum
-  ): Promise<TrueOrErrReturn<string>> => {
-    const signer = await getEthersSigner(chainId)
-    if (signer && lensHub) {
-      try {
-        setPostTxResult({
-          status: PostTxStatus.POST,
-          chain: chainId,
-        })
-        console.log(
-          `setting profile image uri nft signer ${signer.address} contract ${contractAddress} tokenId ${tokenId} chainId ${connectedNetworkIds[chainId]}`
-        )
-        // prove ownership of the nft
-        const challengeInfo = await nftOwnershipChallenge({
-          ethereumAddress: signer.address,
-          nfts: [
-            {
-              contractAddress,
-              tokenId,
-              chainId: connectedNetworkIds[chainId],
-            },
-          ],
-        })
-
-        console.log('nftOwnershipChallenge challengeInfo', challengeInfo)
-
-        // sign the text with the wallet
-        /* ask the user to sign a message with the challenge info returned from the server */
-        const challengeSignature = await signer.signMessage(challengeInfo.text)
-
-        const request: UpdateProfileImageRequest = {
-          profileId,
-          nftData: {
-            id: challengeInfo.id,
-            signature: challengeSignature,
-          },
-        }
-
-        const result = await mutate({
-          mutation: CreateSetProfileImageUriTypedDataDocument,
-          variables: { request },
-          refetchQueries: [
-            { query: ProfilesDocument },
-            { query: ProfileDocument },
-          ],
-        })
-
-        const typedData =
-          result.data!.createSetProfileImageURITypedData!.typedData
-        console.log('set profile image uri nft: typedData', typedData)
-
-        const signature = await signedTypeData(
-          SupportedNetworkEnum.POLYGON,
-          typedData.domain,
-          typedData.types,
-          typedData.value
-        )
-        console.log('set profile image uri nft: signature', signature)
-
-        const { v, r, s } = utils.splitSignature(signature!)
-
-        const tx: TransactionResponse = await lensHub.setProfileImageURIWithSig(
-          {
-            profileId: typedData.value.profileId,
-            imageURI: typedData.value.imageURI,
-            sig: {
-              v,
-              r,
-              s,
-              deadline: typedData.value.deadline,
-            },
-          },
-          { gasLimit: 8000000, gasPrice: utils.parseUnits('90', 'gwei') }
-        )
-        console.log('set profile image uri normal: tx hash', tx.hash)
-
-        setPostTxResult({
-          status: PostTxStatus.BROADCAST,
-          transactionHash: tx.hash!,
-          chain: chainId,
-        })
-
-        const txReceipt = await tx.wait()
-        setPostTxResult({
-          status: PostTxStatus.DONE,
-          value: txReceipt,
-          chain: chainId,
-        })
-
-        return {
-          success: true,
-          value: tx.hash,
-        }
-      } catch (error) {
-        setPostTxResult({
-          status: PostTxStatus.ERROR,
-          error,
-          chain: chainId,
-        })
-        return { success: false, errMsg: _.toString(error) }
-      }
-    }
-
-    return {
-      success: false,
-      errMsg: 'No user',
-    }
+  const createSetProfileImageURITypedData = async (
+    request: UpdateProfileImageRequest
+  ): Promise<
+    | CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
+    | undefined
+  > => {
+    const fetchRes = await mutate({
+      mutation: CreateSetProfileImageUriTypedDataDocument,
+      variables: { request },
+      refetchQueries: [{ query: ProfilesDocument }, { query: ProfileDocument }],
+    })
+    return fetchRes.data?.createSetProfileImageURITypedData
   }
 
   const createSetProfileMetadataViaDispatcherRequest = async (
@@ -484,6 +382,61 @@ const useLens = (): UseLensReturn => {
       }
     }
   }
+  const createSetProfileImageUriTypedData = async (
+    request: UpdateProfileImageRequest
+  ): Promise<
+    CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
+  > => {
+    const result = await mutate({
+      mutation: CreateSetProfileImageUriTypedDataDocument,
+      variables: {
+        request,
+      },
+    })
+
+    return result.data!.createSetProfileImageURITypedData
+  }
+
+  const signCreateSetProfileImageUriTypedData = async (
+    request: UpdateProfileImageRequest
+  ): Promise<{
+    result: CreateSetProfileImageUriTypedDataMutation['createSetProfileImageURITypedData']
+    signature?: string
+  }> => {
+    const result = await createSetProfileImageUriTypedData(request)
+    console.log(
+      'set profile image uri: createSetProfileImageUriTypedData',
+      result
+    )
+
+    const typedData = result.typedData
+    console.log('set profile image uri: typedData', typedData)
+
+    const signature = await signedTypeData(
+      SupportedNetworkEnum.POLYGON,
+      typedData.domain,
+      typedData.types,
+      typedData.value
+    )
+    console.log('set profile image uri: signature', signature)
+
+    return { result, signature }
+  }
+
+  const createSetProfileUriViaDispatcherRequest = async (
+    request: UpdateProfileImageRequest
+  ): Promise<
+    CreateSetProfileImageUriViaDispatcherMutation['createSetProfileImageURIViaDispatcher']
+  > => {
+    const result = await mutate({
+      mutation: CreateSetProfileImageUriViaDispatcherDocument,
+      variables: {
+        request,
+      },
+    })
+
+    return result.data!.createSetProfileImageURIViaDispatcher
+  }
 
   return {
     sign,
@@ -492,11 +445,13 @@ const useLens = (): UseLensReturn => {
     getDefaultProfile,
     createProfile,
     nftOwnershipChallenge,
-    updateProfileImage,
     createSetProfileMetadataViaDispatcherRequest,
     signCreateSetProfileMetadataTypedData,
     broadcastRequest,
     pollUntilIndexed,
+    createSetProfileImageURITypedData,
+    signCreateSetProfileImageUriTypedData,
+    createSetProfileUriViaDispatcherRequest,
   }
 }
 

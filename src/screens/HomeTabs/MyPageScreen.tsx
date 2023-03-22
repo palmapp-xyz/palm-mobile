@@ -10,16 +10,18 @@ import {
 } from 'react-native'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
+import { Moralis, SupportedNetworkEnum } from 'types'
 import { Routes } from 'libs/navigation'
+import { fetchNftImage } from 'libs/fetchTokenUri'
+
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
-import ProfileHeader from '../../components/ProfileHeader'
-import { ChainLogoWrapper, MoralisNftRenderer, NftItemMenu } from 'components'
-import { fetchNftImage } from 'libs/fetchTokenUri'
-import { Moralis, SupportedNetworkEnum } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'
+import useUpdateLensProfileImage from 'hooks/lens/useUpdateLensProfileImage'
+
+import { ChainLogoWrapper, MoralisNftRenderer, NftItemMenu } from 'components'
+import ProfileHeader from 'components/ProfileHeader'
 import ProfileFooter from 'components/ProfileFooter'
-import useLens from 'hooks/lens/useLens'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -37,7 +39,7 @@ const MyPageScreen = (): ReactElement => {
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
 
   const useLensProfileReturn = useLensProfile({ userAddress: user?.address })
-  const { updateProfileImage } = useLens()
+  const { updateProfileImage } = useUpdateLensProfileImage()
 
   const profileHeader = useCallback(
     () => (
@@ -60,18 +62,16 @@ const MyPageScreen = (): ReactElement => {
     selectedItem: Moralis.NftItem
   ): Promise<void> => {
     if (useLensProfileReturn.profile) {
-      const res = await updateProfileImage(
-        useLensProfileReturn.profile.id,
-        selectedItem.token_address,
-        selectedItem.token_id,
-        selectedNetwork
-      )
-      if (res.success) {
-        const txHash = res.value
-        console.log(`updateProfileImage tx hash ${txHash}`)
-      } else {
-        console.error(`updateProfileImage error ${res.errMsg}`)
-      }
+      await updateProfileImage({
+        profileId: useLensProfileReturn.profile.id,
+        url: selectedItem.token_uri,
+      })
+      // if (res.success) {
+      //   const txHash = res.value
+      //   console.log(`updateProfileImage tx hash ${txHash}`)
+      // } else {
+      //   console.error(`updateProfileImage error ${res.errMsg}`)
+      // }
     }
     const { image } = await fetchNftImage({
       metadata: selectedItem.metadata,
