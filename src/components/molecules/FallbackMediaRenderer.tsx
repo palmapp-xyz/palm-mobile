@@ -5,6 +5,7 @@ import Icons from 'components/atoms/Icons'
 import styled from 'styled-components/native'
 
 import { MediaRendererProps } from '../atoms/MediaRenderer'
+import Card from 'components/atoms/Card'
 
 const StyledText = styled.Text`
   color: 'rgb(138, 147, 155)';
@@ -22,7 +23,9 @@ const FallbackMediaRenderer = ({
   const dim =
     typeof width === 'number' ? width : typeof height === 'number' ? height : 50
   return (
-    <View style={[{ ...styles.container, width: dim, height: dim }, style]}>
+    <Card
+      center={true}
+      style={[style, { width: dim, height: dim, padding: 0 }]}>
       <Icons.CarbonDocumentUnknown width={dim / 2} height={dim / 2} />
       {!hideAlt && (
         <StyledText
@@ -36,15 +39,8 @@ const FallbackMediaRenderer = ({
           {alt || 'File'}
         </StyledText>
       )}
-    </View>
+    </Card>
   )
 }
 
 export default FallbackMediaRenderer
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})

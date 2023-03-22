@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { StyleProp, FlexStyle, Image, ImageStyle } from 'react-native'
+import { StyleProp, FlexStyle, Image, ImageStyle, View } from 'react-native'
 
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
@@ -10,6 +10,7 @@ import FallbackMediaRenderer from '../molecules/FallbackMediaRenderer'
 import VideoRenderer from '../molecules/VideoRenderer'
 import * as Progress from 'react-native-progress'
 import { COLOR } from 'consts'
+import Card from './Card'
 
 export interface SharedMediaProps {
   style?: StyleProp<ImageStyle>
@@ -66,8 +67,13 @@ const MediaRenderer = ({
   loading,
 }: MediaRendererProps): ReactElement => {
   const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
+
   if (loading) {
-    return <Progress.CircleSnail color={COLOR.primary._100} />
+    return (
+      <Card center={true} style={[style, { width, height }]}>
+        <Progress.Pie size={20} indeterminate={true} />
+      </Card>
+    )
   }
 
   if (videoOrImageSrc.mimeType?.includes('svg')) {

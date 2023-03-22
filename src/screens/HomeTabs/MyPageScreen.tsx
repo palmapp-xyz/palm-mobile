@@ -6,6 +6,7 @@ import {
   View,
   TouchableWithoutFeedback,
   RefreshControl,
+  useWindowDimensions,
 } from 'react-native'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
@@ -26,6 +27,9 @@ const MyPageScreen = (): ReactElement => {
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
   )
+
+  const gap = 4
+  const size = useWindowDimensions()
 
   const { user, useMyNftListReturn, useMyBalanceReturn } = useMyPageMain({
     selectedNetwork,
@@ -94,8 +98,8 @@ const MyPageScreen = (): ReactElement => {
       data={useMyNftListReturn.nftList}
       keyExtractor={(_, index): string => `nftList-${index}`}
       numColumns={2}
-      contentContainerStyle={{ gap: 10 }}
-      columnWrapperStyle={{ gap: 10 }}
+      contentContainerStyle={{ gap }}
+      columnWrapperStyle={{ gap }}
       onEndReached={(): void => {
         if (useMyNftListReturn.hasNextPage) {
           useMyNftListReturn.fetchNextPage()
@@ -113,7 +117,11 @@ const MyPageScreen = (): ReactElement => {
           }}>
           <View style={{ borderRadius: 10, flex: 1 }}>
             <ChainLogoWrapper chain={selectedNetwork}>
-              <MoralisNftRenderer item={item} width={'100%'} height={180} />
+              <MoralisNftRenderer
+                item={item}
+                width={'100%'}
+                height={(size.width - gap) / 2.0}
+              />
               <NftItemMenu
                 chainId={selectedNetwork}
                 item={item}
