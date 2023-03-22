@@ -6,7 +6,7 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { COLOR } from 'consts'
 
-import { Container, FormImage, Header, Row } from 'components'
+import { ChainLogoWrapper, Container, FormImage, Header, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import useNft from 'hooks/contract/useNft'
@@ -15,19 +15,30 @@ import { QueryKeyEnum } from 'types'
 import useNftImage from 'hooks/independent/useNftImage'
 import images from 'assets/images'
 import useAuth from 'hooks/independent/useAuth'
+import MediaRenderer, {
+  MediaRendererProps,
+} from 'components/atoms/MediaRenderer'
 
 const TokenGatingInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.TokenGatingInfo>()
   const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, params.channelUrl)
-  const nftContract = params.gatingToken
+  const { gatingToken: nftContract, chain, channelUrl } = params
+  const { channel } = useGroupChannel(sdk, channelUrl)
   const { name } = useNft({ nftContract })
 
   const { data: tokenName = '' } = useReactQuery(
     [QueryKeyEnum.NFT_TOKEN_NAME, nftContract],
     async () => name()
   )
-  const { uri } = useNftImage({ nftContract, tokenId: '1' })
+  const { loading, uri, metadata } = useNftImage({ nftContract, tokenId: '1' })
+  const mediaProps: MediaRendererProps = {
+    src: uri,
+    width: '100%',
+    height: 150,
+    loading,
+    metadata,
+  }
+
   const { user } = useAuth()
   const membersWithoutMe = useMemo(
     () => channel?.members.filter(x => x.userId !== user?.address) || [],
@@ -63,7 +74,9 @@ const TokenGatingInfoScreen = (): ReactElement => {
             borderRadius: 999,
             borderColor: COLOR.primary._50,
           }}>
-          <FormImage source={{ uri }} size={120} />
+          <ChainLogoWrapper chain={chain}>
+            <MediaRenderer {...mediaProps} width={120} height={120} />
+          </ChainLogoWrapper>
         </View>
         <Text
           style={{
@@ -83,7 +96,9 @@ const TokenGatingInfoScreen = (): ReactElement => {
         </Row>
         <Text style={{ fontSize: 16 }}>Entry requirement</Text>
         <Row style={{ alignItems: 'center', columnGap: 10 }}>
-          <FormImage source={{ uri }} size={24} />
+          <ChainLogoWrapper chain={chain}>
+            <MediaRenderer {...mediaProps} width={24} height={24} />
+          </ChainLogoWrapper>
           <Text>{nftContract}</Text>
         </Row>
         <View style={{ backgroundColor: COLOR.gray._300, padding: 10 }}>

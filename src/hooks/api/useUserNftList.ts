@@ -7,6 +7,7 @@ import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 import useNetwork from '../complex/useNetwork'
 import useApi from '../complex/useApi'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
+import useSetting from 'hooks/independent/useSetting'
 
 export type UseUserNftListReturn = {
   nftList: Moralis.NftItem[]
@@ -26,6 +27,7 @@ const useUserNftList = ({
   userAddress?: ContractAddr
   limit?: number
 }): UseUserNftListReturn => {
+  const { setting } = useSetting()
   const { connectedNetworkIds } = useNetwork()
   const connectedNetworkId = connectedNetworkIds[selectedNetwork]
   const { getApi } = useApi()

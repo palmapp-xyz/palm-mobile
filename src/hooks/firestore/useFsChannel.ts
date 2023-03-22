@@ -5,13 +5,21 @@ import firestore, {
 } from '@react-native-firebase/firestore'
 
 import useReactQuery from 'hooks/complex/useReactQuery'
-import { ContractAddr, FbChannelField, FirestoreKeyEnum } from 'types'
+import {
+  ContractAddr,
+  FbChannelField,
+  FirestoreKeyEnum,
+  SupportedNetworkEnum,
+} from 'types'
 import { useMemo, useState } from 'react'
 
 export type UseFsChannelReturn = {
   fsChannel?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
   fsChannelField?: FbChannelField
-  updateGatingToken: (gatingToken: ContractAddr) => Promise<void>
+  updateGatingToken: (
+    gatingToken: ContractAddr,
+    chain: SupportedNetworkEnum
+  ) => Promise<void>
   isFetching: boolean
 }
 
@@ -70,10 +78,11 @@ const useFsChannel = ({
   )
 
   const updateGatingToken = async (
-    gatingToken: ContractAddr
+    gatingToken: ContractAddr,
+    chain: SupportedNetworkEnum
   ): Promise<void> => {
     setIsUpdating(true)
-    await fsChannel?.update({ gatingToken })
+    await fsChannel?.update({ gatingToken, gatingTokenChain: chain })
     refetchField()
     setIsUpdating(false)
   }

@@ -8,7 +8,7 @@ import { COLOR, UTIL } from 'consts'
 
 import { SbBuyNftDataType, SupportedNetworkEnum } from 'types'
 
-import MediaRenderer from '../../atoms/MediaRenderer'
+import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
 import useNftImage from 'hooks/independent/useNftImage'
 import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
@@ -17,10 +17,18 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
 
   const item = data.selectedNft
-  const { uri } = useNftImage({
+  const { loading, uri, metadata } = useNftImage({
     nftContract: item.nftToken,
     tokenId: item.nftTokenId,
   })
+
+  const mediaProps: MediaRendererProps = {
+    src: uri,
+    width: '100%',
+    height: 150,
+    loading,
+    metadata,
+  }
 
   return (
     <View style={styles.container}>
@@ -29,7 +37,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
           chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
           SupportedNetworkEnum.ETHEREUM
         }>
-        <MediaRenderer src={uri} width={'100%'} height={150} />
+        <MediaRenderer {...mediaProps} />
       </ChainLogoWrapper>
       <View style={styles.body}>
         <Text style={{ color: COLOR.primary._400 }}>Bought NFT</Text>

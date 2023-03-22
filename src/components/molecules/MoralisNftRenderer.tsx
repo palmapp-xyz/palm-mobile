@@ -23,7 +23,7 @@ const MoralisNftRenderer = ({
 
   const dim = windowWidth / (isLandscape ? 4 : 2)
 
-  const { uri } = useNftImage({
+  const { loading, uri, metadata } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
     metadata: item.metadata,
@@ -34,6 +34,8 @@ const MoralisNftRenderer = ({
     width: width || dim,
     height: height || dim,
     hideAlt,
+    loading,
+    metadata,
   }
 
   const fallback = <FallbackMediaRenderer {...props} />

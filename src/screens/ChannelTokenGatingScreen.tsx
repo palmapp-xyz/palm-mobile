@@ -13,9 +13,9 @@ import { utils } from 'ethers'
 import { COLOR } from 'consts'
 
 import {
+  ChainLogoWrapper,
   Container,
   FormButton,
-  FormImage,
   FormInput,
   Header,
   MoralisNftRenderer,
@@ -30,10 +30,15 @@ import useAuth from 'hooks/independent/useAuth'
 import useNftImage from 'hooks/independent/useNftImage'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
+import MediaRenderer, {
+  MediaRendererProps,
+} from 'components/atoms/MediaRenderer'
 
 const GatingToken = ({
+  chain,
   nftContract,
 }: {
+  chain: SupportedNetworkEnum
   nftContract: ContractAddr
 }): ReactElement => {
   const { name } = useNft({ nftContract })
@@ -41,11 +46,21 @@ const GatingToken = ({
     [QueryKeyEnum.NFT_TOKEN_NAME, nftContract],
     name
   )
-  const { uri } = useNftImage({ nftContract, tokenId: '1' })
+  const { loading, uri, metadata } = useNftImage({ nftContract, tokenId: '1' })
+
+  const mediaProps: MediaRendererProps = {
+    src: uri,
+    width: 40,
+    height: 40,
+    loading,
+    metadata,
+  }
 
   return (
     <Row style={{ alignItems: 'center', columnGap: 10 }}>
-      <FormImage source={{ uri }} size={40} />
+      <ChainLogoWrapper chain={chain}>
+        <MediaRenderer {...mediaProps} />
+      </ChainLogoWrapper>
       <Text style={{ fontSize: 24 }}>{tokenName}</Text>
     </Row>
   )
@@ -54,10 +69,13 @@ const GatingToken = ({
 const ChannelTokenGatingScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelTokenGating>()
   const { user } = useAuth()
-  const [editGatingToken, setEditGatingToken] = useState('' as ContractAddr)
+  const [editGatingToken, setEditGatingToken] = useState<{
+    contract: ContractAddr
+    chain: SupportedNetworkEnum
+  }>({ contract: '' as ContractAddr, chain: SupportedNetworkEnum.ETHEREUM })
   const editGatingTokenErrMsg = useMemo(() => {
     if (editGatingToken) {
-      if (utils.isAddress(editGatingToken) === false) {
+      if (utils.isAddress(editGatingToken.contract) === false) {
         return 'Invalid address'
       }
     }
@@ -101,7 +119,10 @@ const ChannelTokenGatingScreen = (): ReactElement => {
             }}>
             <Text>Gating Token</Text>
             {fsChannelField?.gatingToken ? (
-              <GatingToken nftContract={fsChannelField?.gatingToken} />
+              <GatingToken
+                chain={SupportedNetworkEnum.ETHEREUM}
+                nftContract={fsChannelField?.gatingToken}
+              />
             ) : (
               <Text>None</Text>
             )}
@@ -109,9 +130,12 @@ const ChannelTokenGatingScreen = (): ReactElement => {
           <View style={{ marginBottom: 10 }}>
             <Text>Selected NFT</Text>
             <FormInput
-              value={editGatingToken}
+              value={editGatingToken.contract}
               onChangeText={(value): void => {
-                setEditGatingToken(value as ContractAddr)
+                setEditGatingToken({
+                  ...editGatingToken,
+                  contract: value as ContractAddr,
+                })
               }}
             />
           </View>
@@ -130,7 +154,10 @@ const ChannelTokenGatingScreen = (): ReactElement => {
               <TouchableOpacity
                 style={{ flex: 1 / 2 }}
                 onPress={(): void => {
-                  setEditGatingToken(item.token_address)
+                  setEditGatingToken({
+                    contract: item.token_address,
+                    chain: SupportedNetworkEnum.ETHEREUM,
+                  })
                 }}>
                 <View style={{ borderRadius: 10, flex: 1 }}>
                   <MoralisNftRenderer item={item} width={'100%'} height={180} />
@@ -143,7 +170,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
           <FormButton
             disabled={isFetching}
             onPress={(): void => {
-              updateGatingToken(editGatingToken)
+              updateGatingToken(editGatingToken.contract, editGatingToken.chain)
             }}>
             Confirm
           </FormButton>

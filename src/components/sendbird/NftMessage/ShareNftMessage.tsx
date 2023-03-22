@@ -10,7 +10,7 @@ import { SbShareNftDataType, SupportedNetworkEnum } from 'types'
 
 import useNftImage from 'hooks/independent/useNftImage'
 import FormButton from '../../atoms/FormButton'
-import MediaRenderer from '../../atoms/MediaRenderer'
+import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
 import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
@@ -23,11 +23,20 @@ const ShareNftMessage = ({
   const { navigation } = useAppNavigation()
 
   const item = data.selectedNft
-  const { uri } = useNftImage({
+  const { loading, uri, metadata } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
     metadata: item.metadata,
   })
+
+  const mediaProps: MediaRendererProps = {
+    src: uri,
+    width: '100%',
+    height: 150,
+    loading,
+    metadata,
+    style: { borderRadius: 10 },
+  }
 
   return (
     <View style={styles.container}>
@@ -36,12 +45,7 @@ const ShareNftMessage = ({
           chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
           SupportedNetworkEnum.ETHEREUM
         }>
-        <MediaRenderer
-          src={uri}
-          width={'100%'}
-          height={150}
-          style={{ borderRadius: 10 }}
-        />
+        <MediaRenderer {...mediaProps} />
       </ChainLogoWrapper>
       <View style={styles.body}>
         <Row style={{ alignItems: 'center', columnGap: 5 }}>

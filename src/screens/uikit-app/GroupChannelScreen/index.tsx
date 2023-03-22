@@ -8,7 +8,7 @@ import {
 
 import { Routes } from 'libs/navigation'
 
-import { ContractAddr, QueryKeyEnum } from 'types'
+import { ContractAddr, QueryKeyEnum, SupportedNetworkEnum } from 'types'
 import GroupChannelHeader from './GroupChannelHeader'
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
@@ -26,8 +26,10 @@ const GroupChannelFragment = createGroupChannelFragment({
 })
 
 const HasGatingToken = ({
+  chain,
   gatingToken,
 }: {
+  chain: SupportedNetworkEnum
   gatingToken: ContractAddr
 }): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
@@ -48,6 +50,7 @@ const HasGatingToken = ({
       navigation.replace(Routes.TokenGatingInfo, {
         channelUrl: params.channelUrl,
         gatingToken,
+        chain,
       })
     }
   }, [balance])
@@ -62,8 +65,11 @@ const GroupChannelScreen = (): ReactElement => {
   const { channel } = useGroupChannel(sdk, params.channelUrl)
 
   const { fsChannelField } = useFsChannel({ channelUrl: params.channelUrl })
-  const gatingToken = useMemo(
-    () => fsChannelField?.gatingToken,
+  const { gatingToken, gatingTokenChain } = useMemo(
+    () => ({
+      gatingToken: fsChannelField?.gatingToken,
+      gatingTokenChain: fsChannelField?.gatingTokenChain,
+    }),
     [fsChannelField]
   )
 
@@ -73,7 +79,12 @@ const GroupChannelScreen = (): ReactElement => {
 
   return (
     <>
-      {gatingToken && <HasGatingToken gatingToken={gatingToken} />}
+      {gatingToken && (
+        <HasGatingToken
+          chain={gatingTokenChain ?? SupportedNetworkEnum.ETHEREUM}
+          gatingToken={gatingToken}
+        />
+      )}
       <GroupChannelFragment
         channel={channel}
         onPressMediaMessage={(fileMessage, deleteMessage): void => {

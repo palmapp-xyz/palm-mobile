@@ -44,7 +44,7 @@ const MyPageScreen = (): ReactElement => {
         onNetworkSelected={setSelectedNetwork}
       />
     ),
-    [user?.address]
+    [user?.address, selectedNetwork]
   )
 
   const profileFooter = useCallback(
@@ -69,11 +69,11 @@ const MyPageScreen = (): ReactElement => {
         console.error(`updateProfileImage error ${res.errMsg}`)
       }
     }
-    const url = await fetchNftImage({
+    const { image } = await fetchNftImage({
       metadata: selectedItem.metadata,
       tokenUri: selectedItem.token_uri,
     })
-    const me = await updateCurrentUserInfo(undefined, url)
+    const me = await updateCurrentUserInfo(undefined, image)
     setCurrentUser(me)
   }
 

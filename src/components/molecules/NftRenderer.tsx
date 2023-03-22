@@ -18,7 +18,7 @@ const NftRenderer = ({
   width?: FlexStyle['width']
   height?: FlexStyle['height']
 }): ReactElement => {
-  const { uri } = useNftImage({
+  const { loading, uri, metadata } = useNftImage({
     nftContract,
     tokenId,
   })
@@ -28,6 +28,8 @@ const NftRenderer = ({
     alt: `${nftContract}:${tokenId}`,
     width: width || '100%',
     height: height || '100%',
+    loading,
+    metadata,
   }
 
   const fallback = <FallbackMediaRenderer {...props} />

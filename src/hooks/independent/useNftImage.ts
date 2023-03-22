@@ -5,7 +5,9 @@ import { fetchNftImage } from 'libs/fetchTokenUri'
 import { ContractAddr, QueryKeyEnum } from 'types'
 
 export type UseNftImageReturn = {
+  loading: boolean
   uri?: string
+  metadata?: string
 }
 
 const useNftImage = ({
@@ -28,16 +30,16 @@ const useNftImage = ({
     }
   )
 
-  const { data: uri, isLoading } = useReactQuery(
+  const { data, isLoading } = useReactQuery(
     [QueryKeyEnum.MORALIS_NFT_IMAGE, tokenUri, metadata],
     () => fetchNftImage({ metadata, tokenUri }),
-    { enabled: !!tokenUri }
+    { enabled: !!tokenUri || !!metadata }
   )
 
   return {
-    uri: isLoading
-      ? 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=024'
-      : uri,
+    loading: isLoading,
+    uri: data?.image,
+    metadata,
   }
 }
 

@@ -8,6 +8,8 @@ import SvgRenderer from '../molecules/SvgRenderer'
 import { isValidHttpUrl } from 'libs/utils'
 import FallbackMediaRenderer from '../molecules/FallbackMediaRenderer'
 import VideoRenderer from '../molecules/VideoRenderer'
+import * as Progress from 'react-native-progress'
+import { COLOR } from 'consts'
 
 export interface SharedMediaProps {
   style?: StyleProp<ImageStyle>
@@ -29,6 +31,10 @@ export interface MediaRendererProps extends SharedMediaProps {
    * The alt text for the media.
    */
   alt?: string
+
+  loading?: boolean
+
+  metadata?: string
 }
 
 /**
@@ -57,8 +63,13 @@ const MediaRenderer = ({
   style,
   width,
   height,
+  loading,
 }: MediaRendererProps): ReactElement => {
   const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
+  if (loading) {
+    return <Progress.CircleSnail color={COLOR.primary._100} />
+  }
+
   if (videoOrImageSrc.mimeType?.includes('svg')) {
     return (
       <SvgRenderer

@@ -20,6 +20,7 @@ const SupportedNetworkRow = ({
         {Object.values(SupportedNetworkEnum).map(
           (network: SupportedNetworkEnum) => (
             <FormButton
+              key={network}
               containerStyle={{
                 flex: 1,
               }}

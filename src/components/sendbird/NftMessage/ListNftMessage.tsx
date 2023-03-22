@@ -12,7 +12,7 @@ import useZxOrder from 'hooks/zx/useZxOrder'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useNftImage from 'hooks/independent/useNftImage'
 
-import MediaRenderer from '../../atoms/MediaRenderer'
+import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
 import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
@@ -25,7 +25,7 @@ const ListNftMessage = ({
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
   const item = data.selectedNft
-  const { uri } = useNftImage({
+  const { loading, uri, metadata } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
     metadata: item.metadata,
@@ -34,6 +34,14 @@ const ListNftMessage = ({
   const { order, isLoading } = useZxOrder({ nonce: data.nonce })
   const { getEthPrice } = useEthPrice()
 
+  const mediaProps: MediaRendererProps = {
+    src: uri,
+    width: '100%',
+    height: 150,
+    loading,
+    metadata,
+  }
+
   return (
     <View style={styles.container}>
       <ChainLogoWrapper
@@ -41,7 +49,7 @@ const ListNftMessage = ({
           chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
           SupportedNetworkEnum.ETHEREUM
         }>
-        <MediaRenderer src={uri} width={'100%'} height={150} />
+        <MediaRenderer {...mediaProps} />
       </ChainLogoWrapper>
       {isLoading === false && !order && (
         <View

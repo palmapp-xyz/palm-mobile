@@ -3,13 +3,18 @@ import { UTIL } from 'consts'
 import { fixIpfsURL } from './ipfs'
 import { unescape } from './utils'
 
+export type FetchNftImageReturn = {
+  image: string
+  metadata: string | null
+}
+
 export const fetchNftImage = async ({
   metadata,
   tokenUri,
 }: {
   metadata?: string
   tokenUri: string
-}): Promise<string> => {
+}): Promise<FetchNftImageReturn> => {
   if (metadata) {
     const metadataJson = UTIL.jsonTryParse<{
       image?: string
@@ -19,7 +24,7 @@ export const fetchNftImage = async ({
     const ret =
       metadataJson?.image || metadataJson?.image_url || metadataJson?.image_data
     if (ret) {
-      return unescape(fixIpfsURL(ret))
+      return { image: unescape(fixIpfsURL(ret)), metadata }
     }
   }
 
@@ -29,19 +34,22 @@ export const fetchNftImage = async ({
       const fetched = await fetch(fixedUrl)
       const blob = await fetched.blob()
       if (blob.type.startsWith('image')) {
-        return fixedUrl
+        return { image: fixedUrl, metadata: await blob.text() }
       }
 
       const axiosData = await axios.get(fixedUrl)
       const jsonData = axiosData.data
       const ret = jsonData?.image || jsonData?.image_url || jsonData?.image_data
       if (ret) {
-        return unescape(fixIpfsURL(ret))
+        return {
+          image: unescape(fixIpfsURL(ret)),
+          metadata: JSON.stringify(jsonData),
+        }
       }
     } catch (e) {
       console.error('fetchTokenUri failed: ', metadata, tokenUri, e)
     }
   }
 
-  return require('../assets/no_img.png')
+  return { image: require('../assets/no_img.png'), metadata: null }
 }

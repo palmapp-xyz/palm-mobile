@@ -9,7 +9,7 @@ import { COLOR, UTIL } from 'consts'
 
 import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
 
-import MediaRenderer from '../../atoms/MediaRenderer'
+import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
 import Row from '../../atoms/Row'
 import LinkExplorer from '../../atoms/LinkExplorer'
 import useNftImage from 'hooks/independent/useNftImage'
@@ -24,11 +24,19 @@ const SendNftMessage = ({
   const { navigation } = useAppNavigation()
 
   const item = data.selectedNft
-  const { uri } = useNftImage({
+  const { loading, uri, metadata } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
     metadata: item.metadata,
   })
+
+  const mediaProps: MediaRendererProps = {
+    src: uri,
+    width: '100%',
+    height: 150,
+    loading,
+    metadata,
+  }
 
   const chain =
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
@@ -37,7 +45,7 @@ const SendNftMessage = ({
   return (
     <View style={styles.container}>
       <ChainLogoWrapper chain={chain}>
-        <MediaRenderer src={uri} width={'100%'} height={150} />
+        <MediaRenderer {...mediaProps} />
       </ChainLogoWrapper>
       <View style={styles.body}>
         <Row style={{ alignItems: 'center', columnGap: 5 }}>
