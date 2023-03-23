@@ -87,22 +87,22 @@ const Contents = ({
         <View style={styles.info}>
           <View style={styles.infoDetails}>
             {tokenOwner && (
-              <View>
+              <View style={styles.item}>
                 <Text style={styles.headText}>Owner</Text>
                 <Text>{tokenOwner}</Text>
               </View>
             )}
-            <View>
+            <View style={styles.item}>
               <Text style={styles.headText}>Token Contract</Text>
               <Text>{nftContract}</Text>
             </View>
-            <View>
+            <View style={styles.item}>
               <Text style={styles.headText}>Token ID</Text>
               <Text>{tokenId}</Text>
             </View>
-            <NftMetadata metadata={metadata} />
+            <NftMetadata metadata={metadata} style={styles.item} />
             {isMine && (
-              <View>
+              <View style={styles.item}>
                 <Text style={styles.headText}>
                   Active Listings ({activeListedChannels.length})
                 </Text>
@@ -155,6 +155,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   imageBox: { width: '100%', height: 250, marginVertical: 10 },
+  item: {
+    marginVertical: 3,
+  },
   info: {
     flex: 1,
     padding: 10,

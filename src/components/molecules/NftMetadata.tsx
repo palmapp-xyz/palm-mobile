@@ -16,9 +16,11 @@ import NftAttributes from './NftAttributes'
 const NftMetadata = ({
   metadata,
   style,
+  containerStyle,
 }: {
   metadata: Maybe<string>
   style?: StyleProp<ImageStyle>
+  containerStyle?: StyleProp<ImageStyle>
 }): ReactElement => {
   const metadataJson = useMemo(() => {
     const r = UTIL.jsonTryParse(metadata || '')
@@ -32,14 +34,14 @@ const NftMetadata = ({
     <FlatList
       data={Object.values(metadataJson)}
       keyExtractor={(_item, index): string => `nft-metadata-${index}`}
-      contentContainerStyle={[styles.container, style]}
+      contentContainerStyle={[styles.container, containerStyle]}
       renderItem={({ item, index }): ReactElement | null => {
         if (item === null) {
           return null
         }
         const key = Object.keys(metadataJson)[index]
         return (
-          <View>
+          <View style={style}>
             <Text style={styles.headText}>{_.capitalize(key)}</Text>
             {typeof item === 'object' ? (
               <NftAttributes
