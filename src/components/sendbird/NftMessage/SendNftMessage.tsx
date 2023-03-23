@@ -60,10 +60,10 @@ const SendNftMessage = ({
         </Row>
         <View>
           <Text style={{ color: COLOR.primary._400 }}>Send NFT</Text>
-          <LinkExplorer type="account" address={data.from} network={chain}>
+          <LinkExplorer type="address" address={data.from} network={chain}>
             <Text>{`from : ${UTIL.truncate(data.from)}`}</Text>
           </LinkExplorer>
-          <LinkExplorer type="account" address={data.to} network={chain}>
+          <LinkExplorer type="address" address={data.to} network={chain}>
             <Text>{`to : ${UTIL.truncate(data.to)}`}</Text>
           </LinkExplorer>
         </View>
@@ -73,6 +73,7 @@ const SendNftMessage = ({
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
+              chain,
             })
           }}>
           Details

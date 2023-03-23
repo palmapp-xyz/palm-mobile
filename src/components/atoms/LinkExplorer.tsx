@@ -13,7 +13,7 @@ const LinkExplorer = ({
   network,
 }: {
   address: string
-  type: 'tx' | 'account'
+  type: 'tx' | 'address'
   children?: ReactNode
   network: SupportedNetworkEnum
 }): ReactElement => {

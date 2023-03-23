@@ -14,6 +14,7 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import ProfileHeader from '../components/ProfileHeader'
 import ProfileFooter from 'components/ProfileFooter'
 import { SupportedNetworkEnum } from 'types'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
@@ -72,6 +73,9 @@ const UserProfileScreen = (): ReactElement => {
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
+              chain:
+                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                SupportedNetworkEnum.ETHEREUM,
             })
           }}>
           <View style={{ borderRadius: 10, flex: 1 }}>

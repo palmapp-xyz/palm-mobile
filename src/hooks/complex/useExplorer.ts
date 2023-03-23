@@ -5,7 +5,7 @@ import { NETWORK } from 'consts'
 import { SupportedNetworkEnum } from 'types'
 
 export type UseExplorerReturn = {
-  getLink: (props: { address: string; type: 'tx' | 'account' }) => string
+  getLink: (props: { address: string; type: 'tx' | 'address' }) => string
 }
 
 const useExplorer = (network: SupportedNetworkEnum): UseExplorerReturn => {
@@ -13,8 +13,8 @@ const useExplorer = (network: SupportedNetworkEnum): UseExplorerReturn => {
   const endpoint =
     NETWORK.chainParams[setting.network]?.[network]?.blockExplorerUrls[0]
   const getLink = useCallback(
-    ({ address, type }: { address: string; type: 'tx' | 'account' }): string =>
-      `https://${endpoint}/${type}/${address}`,
+    ({ address, type }: { address: string; type: 'tx' | 'address' }): string =>
+      `${endpoint}/${type}/${address}`,
     [setting.network]
   )
 

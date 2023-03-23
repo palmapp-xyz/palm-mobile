@@ -42,13 +42,13 @@ const ListNftMessage = ({
     metadata,
   }
 
+  const chain: SupportedNetworkEnum =
+    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    SupportedNetworkEnum.ETHEREUM
+
   return (
     <View style={styles.container}>
-      <ChainLogoWrapper
-        chain={
-          chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-          SupportedNetworkEnum.ETHEREUM
-        }>
+      <ChainLogoWrapper chain={chain}>
         <MediaRenderer {...mediaProps} />
       </ChainLogoWrapper>
       {isLoading === false && !order && (
@@ -110,6 +110,7 @@ const ListNftMessage = ({
               : navigation.navigate(Routes.NftDetail, {
                   nftContract: item.token_address,
                   tokenId: item.token_id,
+                  chain,
                 })
           }}>
           Details

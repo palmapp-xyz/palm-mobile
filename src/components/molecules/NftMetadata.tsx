@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native'
 import NftAttributes from './NftAttributes'
+import LinkRenderer from './LinkRenderer'
 
 const NftMetadata = ({
   metadata,
@@ -48,8 +49,10 @@ const NftMetadata = ({
                 attributes={item}
                 style={{ flex: 1, width: '100%' }}
               />
+            ) : typeof item === 'string' && item.includes('://') ? (
+              <LinkRenderer src={item} />
             ) : (
-              <Text>{typeof item === 'string' ? item : String(item)}</Text>
+              <Text>String(item)</Text>
             )}
           </View>
         )

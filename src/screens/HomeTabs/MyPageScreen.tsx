@@ -20,6 +20,7 @@ import { Moralis, SupportedNetworkEnum } from 'types'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import ProfileFooter from 'components/ProfileFooter'
 import useLens from 'hooks/lens/useLens'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -113,6 +114,9 @@ const MyPageScreen = (): ReactElement => {
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
+              chain:
+                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                SupportedNetworkEnum.ETHEREUM,
             })
           }}>
           <View style={{ borderRadius: 10, flex: 1 }}>

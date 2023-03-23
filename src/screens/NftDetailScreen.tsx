@@ -5,8 +5,8 @@ import { useAsyncEffect } from '@sendbird/uikit-utils'
 import firestore from '@react-native-firebase/firestore'
 
 import { COLOR } from 'consts'
-import { ContractAddr, FbListing } from 'types'
-import { Container, Header } from 'components'
+import { ContractAddr, FbListing, SupportedNetworkEnum } from 'types'
+import { Container, Header, LinkExplorer } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import useNft from 'hooks/contract/useNft'
@@ -20,9 +20,11 @@ import NftMediaRenderer from 'components/molecules/NftMediaRenderer'
 const Contents = ({
   nftContract,
   tokenId,
+  chain,
 }: {
   nftContract: ContractAddr
   tokenId: string
+  chain: SupportedNetworkEnum
 }): ReactElement => {
   const { ownerOf } = useNft({ nftContract })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
@@ -89,12 +91,20 @@ const Contents = ({
             {tokenOwner && (
               <View style={styles.item}>
                 <Text style={styles.headText}>Owner</Text>
-                <Text>{tokenOwner}</Text>
+                <LinkExplorer
+                  type="address"
+                  address={tokenOwner}
+                  network={chain}
+                />
               </View>
             )}
             <View style={styles.item}>
               <Text style={styles.headText}>Token Contract</Text>
-              <Text>{nftContract}</Text>
+              <LinkExplorer
+                type="address"
+                address={nftContract}
+                network={chain}
+              />
             </View>
             <View style={styles.item}>
               <Text style={styles.headText}>Token ID</Text>
@@ -141,7 +151,11 @@ const NftDetailScreen = (): ReactElement => {
         }
         onPressLeft={navigation.goBack}
       />
-      <Contents nftContract={params.nftContract} tokenId={params.tokenId} />
+      <Contents
+        nftContract={params.nftContract}
+        tokenId={params.tokenId}
+        chain={params.chain}
+      />
     </Container>
   )
 }

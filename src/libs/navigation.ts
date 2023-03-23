@@ -134,7 +134,11 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.NftDetail
-      params: { nftContract: ContractAddr; tokenId: string }
+      params: {
+        nftContract: ContractAddr
+        tokenId: string
+        chain: SupportedNetworkEnum
+      }
     }
   | {
       route: Routes.ListNft

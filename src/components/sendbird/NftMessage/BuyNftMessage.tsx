@@ -30,13 +30,13 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
     metadata,
   }
 
+  const chain: SupportedNetworkEnum =
+    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    SupportedNetworkEnum.ETHEREUM
+
   return (
     <View style={styles.container}>
-      <ChainLogoWrapper
-        chain={
-          chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-          SupportedNetworkEnum.ETHEREUM
-        }>
+      <ChainLogoWrapper chain={chain}>
         <MediaRenderer {...mediaProps} />
       </ChainLogoWrapper>
       <View style={styles.body}>
@@ -53,6 +53,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.nftToken,
               tokenId: item.nftTokenId,
+              chain,
             })
           }}>
           Details
