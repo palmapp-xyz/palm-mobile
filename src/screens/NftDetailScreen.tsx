@@ -1,23 +1,21 @@
 import React, { ReactElement, useState } from 'react'
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-} from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import firestore from '@react-native-firebase/firestore'
 
-import { COLOR, UTIL } from 'consts'
+import { COLOR } from 'consts'
 import { ContractAddr, FbListing } from 'types'
-import { Container, Header, NftRenderer } from 'components'
+import { Container, Header } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import useNft from 'hooks/contract/useNft'
 import useAuth from 'hooks/independent/useAuth'
 import GroupChannelItem from 'components/GroupChannelItem'
+import NftMetadata from 'components/molecules/NftMetadata'
+import useNftImage from 'hooks/independent/useNftImage'
+import { MediaRendererProps } from 'components/atoms/MediaRenderer'
+import NftMediaRenderer from 'components/molecules/NftMediaRenderer'
 
 const Contents = ({
   nftContract,
@@ -29,7 +27,6 @@ const Contents = ({
   const { ownerOf } = useNft({ nftContract })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
   const { user } = useAuth()
-  const size = useWindowDimensions()
 
   const isMine =
     tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
@@ -37,6 +34,19 @@ const Contents = ({
   const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
     []
   )
+
+  const { loading, uri, metadata } = useNftImage({
+    nftContract,
+    tokenId,
+  })
+
+  const nftRenderProps: MediaRendererProps = {
+    src: uri,
+    alt: `${nftContract}:${tokenId}`,
+    loading,
+    metadata,
+    style: { flex: 1 },
+  }
 
   useAsyncEffect(async (): Promise<void> => {
     const owner = await ownerOf({ tokenId })
@@ -69,51 +79,53 @@ const Contents = ({
   }, [nftContract, tokenId])
 
   return (
-    <View style={styles.body}>
-      <View style={styles.imageBox}>
-        <NftRenderer
-          tokenId={tokenId}
-          nftContract={nftContract}
-          style={{ flex: 1 }}
-        />
-      </View>
-      <View style={styles.info}>
-        <View style={styles.infoDetails}>
-          {tokenOwner && (
+    <ScrollView>
+      <View style={styles.body}>
+        <View style={styles.imageBox}>
+          <NftMediaRenderer {...nftRenderProps} />
+        </View>
+        <View style={styles.info}>
+          <View style={styles.infoDetails}>
+            {tokenOwner && (
+              <View>
+                <Text style={styles.headText}>Owner</Text>
+                <Text>{tokenOwner}</Text>
+              </View>
+            )}
             <View>
-              <Text style={styles.headText}>Owner</Text>
-              <Text>{isMine ? 'Mine' : UTIL.truncate(tokenOwner)}</Text>
+              <Text style={styles.headText}>Token Contract</Text>
+              <Text>{nftContract}</Text>
             </View>
-          )}
-          <View>
-            <Text style={styles.headText}>Token Contract</Text>
-            <Text>{nftContract}</Text>
-          </View>
-          <View>
-            <Text style={styles.headText}>Token ID</Text>
-            <Text>{tokenId}</Text>
-          </View>
-          {isMine && (
             <View>
-              <Text style={styles.headText}>
-                Active Listings ({activeListedChannels.length})
-              </Text>
-              {activeListedChannels.length > 0 ? (
-                <FlatList
-                  data={activeListedChannels}
-                  keyExtractor={(_, index): string => `active-listing-${index}`}
-                  renderItem={({ item }): ReactElement => {
-                    return <GroupChannelItem channelUrl={item.channelUrl} />
-                  }}
-                />
-              ) : (
-                <Text>None</Text>
-              )}
+              <Text style={styles.headText}>Token ID</Text>
+              <Text>{tokenId}</Text>
             </View>
-          )}
+            <NftMetadata metadata={metadata} />
+            {isMine && (
+              <View>
+                <Text style={styles.headText}>
+                  Active Listings ({activeListedChannels.length})
+                </Text>
+                {activeListedChannels.length > 0 ? (
+                  <FlatList
+                    scrollEnabled={false}
+                    data={activeListedChannels}
+                    keyExtractor={(_, index): string =>
+                      `active-listing-${index}`
+                    }
+                    renderItem={({ item }): ReactElement => {
+                      return <GroupChannelItem channelUrl={item.channelUrl} />
+                    }}
+                  />
+                ) : (
+                  <Text>None</Text>
+                )}
+              </View>
+            )}
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 

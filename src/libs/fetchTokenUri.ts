@@ -2,17 +2,18 @@ import axios from 'axios'
 import { UTIL } from 'consts'
 import { fixIpfsURL } from './ipfs'
 import { unescape } from './utils'
+import { Maybe } from '@toruslabs/openlogin'
 
 export type FetchNftImageReturn = {
   image: string
-  metadata: string | null
+  metadata: Maybe<string>
 }
 
 export const fetchNftImage = async ({
   metadata,
   tokenUri,
 }: {
-  metadata?: string
+  metadata?: Maybe<string>
   tokenUri: string
 }): Promise<FetchNftImageReturn> => {
   if (metadata) {

@@ -1,3 +1,4 @@
+import { Maybe } from '@toruslabs/openlogin'
 import { UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
@@ -7,7 +8,7 @@ import { ContractAddr, QueryKeyEnum } from 'types'
 export type UseNftImageReturn = {
   loading: boolean
   uri?: string
-  metadata?: string
+  metadata?: Maybe<string>
 }
 
 const useNftImage = ({
@@ -17,7 +18,7 @@ const useNftImage = ({
 }: {
   nftContract: ContractAddr
   tokenId: string
-  metadata?: string
+  metadata?: Maybe<string>
 }): UseNftImageReturn => {
   const { tokenURI } = useNft({ nftContract })
   const { data: tokenUri = '' } = useReactQuery(
@@ -39,7 +40,7 @@ const useNftImage = ({
   return {
     loading: isLoading,
     uri: data?.image,
-    metadata,
+    metadata: data?.metadata,
   }
 }
 

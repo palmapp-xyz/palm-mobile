@@ -10,6 +10,7 @@ import FallbackMediaRenderer from '../molecules/FallbackMediaRenderer'
 import VideoRenderer from '../molecules/VideoRenderer'
 import * as Progress from 'react-native-progress'
 import Card from './Card'
+import { Maybe } from '@toruslabs/openlogin'
 
 export interface SharedMediaProps {
   style?: StyleProp<ImageStyle>
@@ -34,7 +35,7 @@ export interface MediaRendererProps extends SharedMediaProps {
 
   loading?: boolean
 
-  metadata?: string
+  metadata?: Maybe<string>
 }
 
 /**
