@@ -1,9 +1,17 @@
 import { useMemo, useState } from 'react'
+import { validateMnemonic } from 'bip39'
+
 import useAuth from 'hooks/independent/useAuth'
+import { generateEvmHdAccount } from 'libs/account'
 
 export type UseRecoverAccountReturn = {
+  usePkey: boolean
+  setUsePkey: (value: boolean) => void
   privateKey: string
   setPrivateKey: (value: string) => void
+  mnemonic: string
+  setMnemonic: (value: string) => void
+  mnemonicErrMsg: string
   password: string
   setPassword: (value: string) => void
   passwordConfirm: string
@@ -15,7 +23,17 @@ export type UseRecoverAccountReturn = {
 
 const useRecoverAccount = (): UseRecoverAccountReturn => {
   const { register } = useAuth()
+  const [usePkey, setUsePkey] = useState(false)
+
   const [privateKey, setPrivateKey] = useState('')
+  const [mnemonic, setMnemonic] = useState<string>('')
+  const mnemonicErrMsg = useMemo(() => {
+    if (usePkey === false && mnemonic && validateMnemonic(mnemonic) === false) {
+      return 'Invalid mnemonic'
+    }
+    return ''
+  }, [mnemonic, usePkey])
+
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const passwordConfirmErrMsg = useMemo(() => {
@@ -25,15 +43,25 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     return ''
   }, [password, passwordConfirm])
 
-  const isValidForm = !!password && !passwordConfirmErrMsg
+  const isValidForm = !!password && !passwordConfirmErrMsg && !mnemonicErrMsg
 
   const onClickConfirm = async (): Promise<void> => {
-    register({ privateKey, password })
+    if (usePkey) {
+      register({ privateKey, password })
+    } else {
+      const wallet = await generateEvmHdAccount(mnemonic)
+      register({ privateKey: wallet.privateKey, password })
+    }
   }
 
   return {
+    usePkey,
+    setUsePkey,
     privateKey,
     setPrivateKey,
+    mnemonic,
+    setMnemonic,
+    mnemonicErrMsg,
     password,
     setPassword,
     passwordConfirm,

@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from '@sendbird/uikit-react-native-foundation'
 import Icon from 'react-native-vector-icons/Ionicons'
+import Clipboard from '@react-native-clipboard/clipboard'
 
 import { COLOR } from 'consts'
 import { AuthBody, ErrorMessage, FormButton, Row, FormInput } from 'components'
@@ -11,7 +12,7 @@ import { Routes } from 'libs/navigation'
 
 const NewAccountScreen = (): ReactElement => {
   const {
-    privateKey,
+    mnemonic,
     password,
     setPassword,
     passwordConfirm,
@@ -21,27 +22,22 @@ const NewAccountScreen = (): ReactElement => {
     onClickConfirm,
   } = useNewAccount()
   const { navigation } = useAppNavigation()
-
   return (
     <AuthBody>
       <View style={styles.pkInfo}>
         <Text style={{ fontWeight: 'bold' }}>Private key</Text>
         <Row style={styles.pkBox}>
           <View style={{ flex: 1, paddingVertical: 10 }}>
-            <Text style={{ color: 'white', fontSize: 12 }}>{privateKey}</Text>
+            <Text style={{ color: 'white', fontSize: 12 }}>{mnemonic}</Text>
           </View>
-          <View
-            style={{
-              width: 30,
-              borderColor: 'white',
-              borderLeftWidth: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginLeft: 10,
-              paddingLeft: 10,
+          <TouchableOpacity
+            style={styles.copyBox}
+            onPress={(): void => {
+              Alert.alert('Copied')
+              Clipboard.setString(mnemonic)
             }}>
             <Icon name="copy-outline" color="white" size={16} />
-          </View>
+          </TouchableOpacity>
         </Row>
         <Text style={{ fontSize: 12 }}>
           Copy your Privatekey and keep it in a safe place. It will allow you to
@@ -102,6 +98,15 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10,
     marginBottom: 20,
+  },
+  copyBox: {
+    width: 30,
+    borderColor: 'white',
+    borderLeftWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+    paddingLeft: 10,
   },
   pkBox: {
     backgroundColor: COLOR.primary._400,

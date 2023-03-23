@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from '@sendbird/uikit-react-native-foundation'
 
 import { AuthBody, ErrorMessage, FormButton, Row, FormInput } from 'components'
@@ -10,8 +10,13 @@ import { COLOR } from 'consts'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
+    usePkey,
+    setUsePkey,
     privateKey,
     setPrivateKey,
+    mnemonic,
+    setMnemonic,
+    mnemonicErrMsg,
     password,
     setPassword,
     passwordConfirm,
@@ -26,12 +31,48 @@ const RecoverAccountScreen = (): ReactElement => {
     <AuthBody>
       <View style={{ gap: 10 }}>
         <Text style={{ fontWeight: 'bold' }}>Recover Account</Text>
-        <FormInput
-          placeholder="Private key"
-          value={privateKey}
-          onChangeText={setPrivateKey}
-        />
-
+        <Row style={{ gap: 10 }}>
+          <TouchableOpacity
+            style={[
+              styles.tabItem,
+              {
+                backgroundColor: usePkey ? COLOR.gray._400 : COLOR.primary._400,
+              },
+            ]}
+            onPress={(): void => {
+              setUsePkey(false)
+            }}>
+            <Text style={{ color: 'white' }}>Mnemonic</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.tabItem,
+              {
+                backgroundColor: usePkey ? COLOR.primary._400 : COLOR.gray._400,
+              },
+            ]}
+            onPress={(): void => {
+              setUsePkey(true)
+            }}>
+            <Text style={{ color: 'white' }}>Private Key</Text>
+          </TouchableOpacity>
+        </Row>
+        {usePkey ? (
+          <FormInput
+            placeholder="Private key"
+            value={privateKey}
+            onChangeText={setPrivateKey}
+          />
+        ) : (
+          <View>
+            <FormInput
+              placeholder="Mnemonic"
+              value={mnemonic}
+              onChangeText={setMnemonic}
+            />
+            <ErrorMessage message={mnemonicErrMsg} />
+          </View>
+        )}
         <FormInput
           placeholder="Password"
           value={password}
@@ -78,6 +119,7 @@ const RecoverAccountScreen = (): ReactElement => {
 export default RecoverAccountScreen
 
 const styles = StyleSheet.create({
+  tabItem: { padding: 10, borderRadius: 10 },
   btnGroup: { marginHorizontal: -20, paddingTop: 20, marginBottom: -30 },
   btn: { borderRadius: 0 },
 })

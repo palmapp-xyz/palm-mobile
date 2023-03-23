@@ -1,11 +1,13 @@
-import { useMemo, useState } from 'react'
-import useWeb3 from 'hooks/complex/useWeb3'
+import { useEffect, useMemo, useState } from 'react'
+import { generateMnemonic } from 'bip39'
+import { Wallet } from 'ethers'
+
 import useAuth from 'hooks/independent/useAuth'
-import { ContractAddr } from 'types'
+import { generateEvmHdAccount } from 'libs/account'
 
 export type UseNewAccountReturn = {
-  address: ContractAddr
-  privateKey: string
+  mnemonic: string
+  wallet?: Wallet
   password: string
   setPassword: (value: string) => void
   passwordConfirm: string
@@ -16,12 +18,9 @@ export type UseNewAccountReturn = {
 }
 
 const useNewAccount = (): UseNewAccountReturn => {
-  const { web3Eth } = useWeb3()
-
   const { register } = useAuth()
-  const created = useMemo(() => web3Eth.eth.accounts.create(), [])
-  const address = created.address as ContractAddr
-  const privateKey = created.privateKey
+  const mnemonic = useMemo(() => generateMnemonic(128), [])
+  const [wallet, setWallet] = useState<Wallet>()
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const passwordConfirmErrMsg = useMemo(() => {
@@ -34,12 +33,20 @@ const useNewAccount = (): UseNewAccountReturn => {
   const isValidForm = !!password && !passwordConfirmErrMsg
 
   const onClickConfirm = async (): Promise<void> => {
-    register({ privateKey, password })
+    if (wallet) {
+      register({ privateKey: wallet.privateKey, password })
+    }
   }
 
+  useEffect(() => {
+    generateEvmHdAccount(mnemonic).then(res => {
+      setWallet(res)
+    })
+  }, [mnemonic])
+
   return {
-    address,
-    privateKey,
+    mnemonic,
+    wallet,
     password,
     setPassword,
     passwordConfirm,

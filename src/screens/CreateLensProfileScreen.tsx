@@ -27,6 +27,7 @@ const CreateLensProfileScreen = (): ReactElement => {
       const res = await createProfile({
         handle,
       })
+
       if (res.success) {
         await refetch()
       } else {

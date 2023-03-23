@@ -1,3 +1,5 @@
+import { utils, Wallet } from 'ethers'
+import { mnemonicToSeed } from 'ethers/lib/utils'
 import {
   getInternetCredentials,
   setInternetCredentials,
@@ -30,4 +32,15 @@ export const getPkeyPwd = async (): Promise<string> => {
     return res.password
   }
   return ''
+}
+
+export const generateEvmHdAccount = async (
+  mnemonic: string
+): Promise<Wallet> => {
+  const derivationPath = "m/44'/60'/0'/0/0"
+  const seed = await mnemonicToSeed(mnemonic)
+  const hdNode = utils.HDNode.fromSeed(seed)
+  const derivedHdNode = hdNode.derivePath(derivationPath)
+
+  return new Wallet(derivedHdNode)
 }
