@@ -2,7 +2,7 @@ import { AbiItem } from 'web3-utils'
 
 import nft from '../../abi/Nft.json'
 
-import { ContractAddr, EncodedTxData } from 'types'
+import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
 import useContract from 'hooks/complex/useContract'
 
 export type UseNftReturn = {
@@ -30,12 +30,15 @@ export type UseNftReturn = {
 
 const useNft = ({
   nftContract,
+  chain,
 }: {
   nftContract: ContractAddr
+  chain: SupportedNetworkEnum
 }): UseNftReturn => {
   const { callMethod, getEncodedTxData } = useContract({
     abi: nft as AbiItem[],
     contractAddress: nftContract,
+    chain,
   })
 
   const name = async (): Promise<string | undefined> =>

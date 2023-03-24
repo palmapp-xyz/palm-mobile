@@ -17,14 +17,17 @@ const useMyPageMain = ({
 }: {
   selectedNetwork: SupportedNetworkEnum
 }): UseMyPageMainReturn => {
-  const { user } = useAuth()
+  const { user } = useAuth(selectedNetwork)
 
   const useMyNftListReturn = useUserNftList({
     userAddress: user?.address,
     selectedNetwork,
   })
 
-  const useMyBalanceReturn = useUserBalance({ address: user?.address })
+  const useMyBalanceReturn = useUserBalance({
+    address: user?.address,
+    chain: selectedNetwork,
+  })
 
   return { user, useMyBalanceReturn, useMyNftListReturn }
 }

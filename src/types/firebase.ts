@@ -8,6 +8,7 @@ export type FbListingState = 'active' | 'completed' | 'cancelled'
 export type FbListing = {
   order: zx.order['order']
   status: FbListingState
+  chain: SupportedNetworkEnum
   channelUrl?: string
 }
 

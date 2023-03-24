@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* PalmMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PalmMobileTests.m */; };
+		03408C468B7447549D22364E /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1D6787CFB49B44618FF12DA0 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */; };
 		2044379988C09E1BAB174A60 /* libPods-PalmMobile-PalmMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844DE788858875DAF5570881 /* libPods-PalmMobile-PalmMobileTests.a */; };
+		3356C06B76EF482083562269 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */; };
+		358FF5CF220842269540FAA5 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
 		4022CA4929B46B9F00335C68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4022CA4829B46B9F00335C68 /* Assets.xcassets */; };
 		402FB58429AB042700FD4051 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57429AB042700FD4051 /* AntDesign.ttf */; };
 		402FB58629AB042700FD4051 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57629AB042700FD4051 /* Ionicons.ttf */; };
 		4092583429A341C70003D8B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4092583329A341C70003D8B0 /* GoogleService-Info.plist */; };
+		57D86DB640134D39A9A5FAEE /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */; };
 		5F3822904E2E005889A4CE20 /* libPods-PalmMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D232DD4CBB6695299D6E316F /* libPods-PalmMobile.a */; };
 		6D22850329CA754400414E02 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6D22850229CA754400414E02 /* fonts */; };
 		6D83288C29B26CD400719DA9 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		57D86DB640134D39A9A5FAEE /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */; };
-		1D6787CFB49B44618FF12DA0 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */; };
-		3356C06B76EF482083562269 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */; };
-		03408C468B7447549D22364E /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */; };
-		358FF5CF220842269540FAA5 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,10 +47,15 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PalmMobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PalmMobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PalmMobile/main.m; sourceTree = "<group>"; };
+		242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Medium.ttf"; path = "../assets/fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; };
+		29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-SemiBold.ttf"; path = "../assets/fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
 		4022CA4829B46B9F00335C68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		402FB57429AB042700FD4051 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
 		402FB57629AB042700FD4051 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 		4092583329A341C70003D8B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PalmMobile/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Bold.ttf"; path = "../assets/fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; };
+		4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
+		67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Regular.ttf"; path = "../assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; };
 		6D22850229CA754400414E02 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../assets/fonts; sourceTree = "<group>"; };
 		6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PalmMobile/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		6F9691225B3C76124AD38739 /* Pods-PalmMobile-PalmMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmMobile-PalmMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -61,11 +66,6 @@
 		D232DD4CBB6695299D6E316F /* libPods-PalmMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE5F761958FB0EB9C65A2DBC /* Pods-PalmMobile-PalmMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmMobile-PalmMobileTests.release.xcconfig"; path = "Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-Bold.ttf"; path = "../assets/fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-Light.ttf"; path = "../assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-Medium.ttf"; path = "../assets/fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-Regular.ttf"; path = "../assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; name = "SpaceGrotesk-SemiBold.ttf"; path = "../assets/fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +139,19 @@
 			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
+		43A1445587C14A76B94228F0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */,
+				4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */,
+				242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */,
+				67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */,
+				29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,19 +198,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		43A1445587C14A76B94228F0 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */,
-				4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */,
-				242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */,
-				67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */,
-				29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 

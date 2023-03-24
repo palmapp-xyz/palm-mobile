@@ -13,12 +13,13 @@ import {
   TransactionReceipt,
 } from 'graphqls/__generated__/graphql'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { SupportedNetworkEnum } from 'types'
 
 const UpdateLensProfileScreen = (): ReactElement => {
   const [isFetching, setIsFetching] = useState(false)
 
   const { navigation } = useAppNavigation()
-  const { user } = useAuth()
+  const { user } = useAuth(SupportedNetworkEnum.ETHEREUM)
   const {
     createSetProfileMetadataViaDispatcherRequest,
     signCreateSetProfileMetadataTypedData,

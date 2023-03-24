@@ -30,6 +30,7 @@ const UserProfileScreen = (): ReactElement => {
   })
   const { refetch: balanceRefetch } = useUserBalance({
     address: userAddress,
+    chain: SupportedNetworkEnum.ETHEREUM,
   })
 
   const profileHeader = useCallback(

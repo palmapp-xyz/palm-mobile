@@ -49,6 +49,7 @@ const useEscrow = ({
   const { callMethod, getEncodedTxData } = useContract({
     abi: escrow as AbiItem[],
     contractAddress: escrowContract,
+    chain,
   })
 
   const getNftsByChannel = async ({

@@ -41,12 +41,16 @@ const GatingToken = ({
   chain: SupportedNetworkEnum
   nftContract: ContractAddr
 }): ReactElement => {
-  const { name } = useNft({ nftContract })
+  const { name } = useNft({ nftContract, chain })
   const { data: tokenName = '' } = useReactQuery(
-    [QueryKeyEnum.NFT_TOKEN_NAME, nftContract],
+    [QueryKeyEnum.NFT_TOKEN_NAME, nftContract, chain],
     name
   )
-  const { loading, uri, metadata } = useNftImage({ nftContract, tokenId: '1' })
+  const { loading, uri, metadata } = useNftImage({
+    nftContract,
+    tokenId: '1',
+    chain,
+  })
 
   const mediaProps: MediaRendererProps = {
     src: uri,

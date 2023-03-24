@@ -44,6 +44,9 @@ const useSendNft = ({
 
   const { transferFromData } = useNft({
     nftContract: selectedNft?.token_address,
+    chain:
+      chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+      SupportedNetworkEnum.ETHEREUM,
   })
 
   const { postTx } = usePostTx({

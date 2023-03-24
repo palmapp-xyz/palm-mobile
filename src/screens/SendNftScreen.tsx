@@ -15,15 +15,18 @@ import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import useAuth from 'hooks/independent/useAuth'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const Contents = ({
   selectedNft,
   receiver,
   channelUrl,
+  chain,
 }: {
   selectedNft: Moralis.NftItem
   receiver: ContractAddr
   channelUrl?: string
+  chain: SupportedNetworkEnum
 }): ReactElement => {
   const { user } = useAuth()
   const { isPosting, isValidForm, onClickConfirm } = useSendNft({
@@ -57,6 +60,7 @@ const Contents = ({
             <NftRenderer
               nftContract={selectedNft.token_address}
               tokenId={selectedNft.token_id}
+              chain={chain}
             />
           </View>
           <View style={{ rowGap: 10 }}>
@@ -70,7 +74,7 @@ const Contents = ({
         </View>
       </View>
       <SubmitButton
-        network={SupportedNetworkEnum.ETHEREUM}
+        network={chain}
         disabled={isPosting || !isValidForm}
         onPress={async (): Promise<void> => {
           const res = await onClickConfirm()
@@ -88,6 +92,10 @@ const SendNftScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.SendNft>()
 
   const selectedNftList = useRecoilValue(selectNftStore.selectedNftList)
+  const selectedNft = selectedNftList[0]!
+  const chain: SupportedNetworkEnum =
+    chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+    SupportedNetworkEnum.ETHEREUM
 
   return (
     <Container style={styles.container}>
@@ -101,6 +109,7 @@ const SendNftScreen = (): ReactElement => {
           selectedNft={selectedNftList[0]}
           receiver={params.receiver}
           channelUrl={params.channelUrl}
+          chain={chain}
         />
       )}
     </Container>

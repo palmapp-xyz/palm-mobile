@@ -34,10 +34,10 @@ const HasGatingToken = ({
 }): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
-  const { user } = useAuth()
-  const { balanceOf } = useNft({ nftContract: gatingToken })
+  const { user } = useAuth(chain)
+  const { balanceOf } = useNft({ nftContract: gatingToken, chain })
   const { data: balance } = useReactQuery(
-    [QueryKeyEnum.NFT_TOKEN_BALANCE_OF],
+    [QueryKeyEnum.NFT_TOKEN_BALANCE_OF, chain],
     async () => {
       if (user) {
         return balanceOf({ owner: user.address })

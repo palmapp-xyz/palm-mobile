@@ -30,7 +30,7 @@ export const usePostTx = ({
   chain: SupportedNetworkEnum
 }): UsePostTxReturn => {
   const { user } = useAuth()
-  const { web3Eth } = useWeb3()
+  const { web3 } = useWeb3(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const postTx = async ({
@@ -53,10 +53,10 @@ export const usePostTx = ({
       try {
         const userAddress = user.address
         const pkey = await getPkey()
-        const account = web3Eth.eth.accounts.privateKeyToAccount(pkey)
-        web3Eth.eth.accounts.wallet.add(account)
+        const account = web3.eth.accounts.privateKeyToAccount(pkey)
+        web3.eth.accounts.wallet.add(account)
 
-        const receipt = await web3Eth.eth
+        const receipt = await web3.eth
           .sendTransaction({
             from: userAddress,
             to: contractAddress,

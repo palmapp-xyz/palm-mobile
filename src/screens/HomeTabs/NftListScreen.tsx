@@ -13,9 +13,15 @@ import { Container, Header, NftRenderer } from 'components'
 import useZxOrders from 'hooks/zx/useZxOrders'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import { SupportedNetworkEnum } from 'types'
 
-const NftListScreen = (): ReactElement => {
-  const { orderList, refetch, isFetching } = useZxOrders()
+const NftListScreen = ({
+  chain,
+}: {
+  chain: SupportedNetworkEnum
+}): ReactElement => {
+  const { orderList, refetch, isFetching } = useZxOrders(chain)
   const { navigation } = useAppNavigation()
 
   return (
@@ -45,6 +51,9 @@ const NftListScreen = (): ReactElement => {
                   onPress={async (): Promise<void> => {
                     navigation.navigate(Routes.ZxNftDetail, {
                       nonce: item.order.nonce,
+                      chain:
+                        chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                        SupportedNetworkEnum.ETHEREUM,
                     })
                   }}>
                   <NftRenderer
@@ -52,6 +61,7 @@ const NftListScreen = (): ReactElement => {
                     nftContract={item.order.erc721Token}
                     width={150}
                     height={150}
+                    chain={chain}
                   />
                 </TouchableOpacity>
               )

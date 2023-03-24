@@ -130,7 +130,11 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.ZxNftDetail
-      params: { nonce: string; channelUrl?: string }
+      params: {
+        nonce: string
+        channelUrl?: string
+        chain: SupportedNetworkEnum
+      }
     }
   | {
       route: Routes.NftDetail
@@ -146,7 +150,10 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.SendNft
-      params: { receiver: ContractAddr; channelUrl?: string }
+      params: {
+        receiver: ContractAddr
+        channelUrl?: string
+      }
     }
   | {
       route: Routes.ChannelListings

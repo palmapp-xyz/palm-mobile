@@ -10,9 +10,9 @@ export type UseZxOrdersReturn = {
   isFetching: boolean
 }
 
-const useZxOrders = (): UseZxOrdersReturn => {
+const useZxOrders = (chain: SupportedNetworkEnum): UseZxOrdersReturn => {
   const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
+  const connectedNetworkId = connectedNetworkIds[chain]
 
   const extApi = `https://api.trader.xyz/orderbook/orders?chainId=${connectedNetworkId}&nftType=erc721&erc20Token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 

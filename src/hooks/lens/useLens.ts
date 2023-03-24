@@ -98,7 +98,7 @@ export type UseLensReturn = {
 }
 
 const useLens = (): UseLensReturn => {
-  const { getSigner } = useWeb3()
+  const { getSigner } = useWeb3(SupportedNetworkEnum.ETHEREUM)
   const { signedTypeData, getSigner: getEthersSigner } = useEthers()
   const { user } = useAuth()
   const { query: aQuery, mutate: aMutate } = useApolloClient()

@@ -14,7 +14,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { FbListing, zx } from 'types'
+import { FbListing } from 'types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
@@ -23,7 +23,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ChannelListings>()
 
   const [isFetching, setIsFetching] = useState<boolean>(true)
-  const [orderList, setOrderList] = useState<zx.order['order'][]>([])
+  const [channelListings, setChannelListings] = useState<FbListing[]>([])
 
   const { fsChannel } = useFsChannel({ channelUrl })
 
@@ -34,7 +34,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
 
     try {
       // add the new listing item to the corresponding channel doc firestore
-      const orders: zx.order['order'][] = []
+      const listings: FbListing[] = []
       await fsChannel
         .collection('listings')
         .get()
@@ -42,11 +42,11 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
           querySnapshot.forEach(documentSnapshot => {
             const listing = documentSnapshot.data() as FbListing
             if (listing.order && listing.status === 'active') {
-              orders.push(listing.order)
+              listings.push(listing)
             }
           })
         })
-      setOrderList(orders)
+      setChannelListings(listings)
       setIsFetching(false)
     } catch (e) {
       console.error(e)
@@ -66,14 +66,14 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
       <Container style={styles.container}>
         <View style={styles.body}>
           <FlatList
-            data={orderList}
-            keyExtractor={(_, index): string => `orderList-${index}`}
+            data={channelListings}
+            keyExtractor={(_, index): string => `listing-${index}`}
             numColumns={2}
             scrollEnabled={false}
             style={{ paddingHorizontal: 20 }}
             contentContainerStyle={{ gap: 10 }}
             columnWrapperStyle={{ gap: 10 }}
-            renderItem={({ item: order }): ReactElement => {
+            renderItem={({ item: listing }): ReactElement => {
               return (
                 <TouchableOpacity
                   style={{
@@ -83,14 +83,16 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
                   }}
                   onPress={async (): Promise<void> => {
                     navigation.navigate(Routes.ZxNftDetail, {
-                      nonce: order.nonce,
+                      nonce: listing.order.nonce,
+                      chain: listing.chain,
                     })
                   }}>
                   <NftRenderer
-                    tokenId={order.erc721TokenId}
-                    nftContract={order.erc721Token}
+                    tokenId={listing.order.erc721TokenId}
+                    nftContract={listing.order.erc721Token}
                     width={150}
                     height={150}
+                    chain={listing.chain}
                   />
                 </TouchableOpacity>
               )

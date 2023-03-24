@@ -58,6 +58,7 @@ const useLensContract = (
   const { callMethod, getEncodedTxData } = useContract({
     abi: lensHub as AbiItem[],
     contractAddress: lensHubContract!,
+    chain,
   })
 
   const getProfileMetadataURI = async ({

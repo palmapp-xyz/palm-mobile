@@ -12,8 +12,11 @@ export type UseZxCancelNftReturn = {
   onClickConfirm: ({ order }: { order: zx.order['order'] }) => Promise<void>
 }
 
-const useZxCancelNft = (channelUrl: string): UseZxCancelNftReturn => {
-  const { nftSwapSdk } = useZx()
+const useZxCancelNft = (
+  channelUrl: string,
+  chain: SupportedNetworkEnum
+): UseZxCancelNftReturn => {
+  const { nftSwapSdk } = useZx(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const { sdk } = useSendbirdChat()

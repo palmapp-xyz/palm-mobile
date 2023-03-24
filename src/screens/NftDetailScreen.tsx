@@ -26,9 +26,9 @@ const Contents = ({
   tokenId: string
   chain: SupportedNetworkEnum
 }): ReactElement => {
-  const { ownerOf } = useNft({ nftContract })
+  const { ownerOf } = useNft({ nftContract, chain })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
-  const { user } = useAuth()
+  const { user } = useAuth(chain)
 
   const isMine =
     tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
@@ -40,6 +40,7 @@ const Contents = ({
   const { loading, uri, metadata } = useNftImage({
     nftContract,
     tokenId,
+    chain,
   })
 
   const nftRenderProps: MediaRendererProps = {

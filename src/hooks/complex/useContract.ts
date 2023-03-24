@@ -2,7 +2,7 @@ import { AbiItem } from 'web3-utils'
 import { Contract } from 'web3-eth-contract'
 import { useCallback } from 'react'
 
-import { ContractAddr, EncodedTxData } from 'types'
+import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
 import useWeb3 from './useWeb3'
 
 type UseContractReturn = {
@@ -17,13 +17,15 @@ type UseContractReturn = {
 const useContract = ({
   contractAddress,
   abi,
+  chain,
 }: {
   contractAddress: ContractAddr
   abi: AbiItem[]
+  chain: SupportedNetworkEnum
 }): UseContractReturn => {
-  const { web3Eth } = useWeb3()
+  const { web3 } = useWeb3(chain)
 
-  const contract = web3Eth && new web3Eth.eth.Contract(abi, contractAddress)
+  const contract = web3 && new web3.eth.Contract(abi, contractAddress)
 
   const getEncodedTxData = useCallback(
     (methodName: string, params?: any) => {
@@ -31,14 +33,14 @@ const useContract = ({
         x => x.name === methodName
       )
 
-      if (jsonInterface && web3Eth) {
-        return web3Eth.eth.abi.encodeFunctionCall(
+      if (jsonInterface && web3) {
+        return web3.eth.abi.encodeFunctionCall(
           jsonInterface,
           params
         ) as EncodedTxData
       }
     },
-    [contract, web3Eth]
+    [contract, web3]
   )
 
   const callMethod = async <R>(

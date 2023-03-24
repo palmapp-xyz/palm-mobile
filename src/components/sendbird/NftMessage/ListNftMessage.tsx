@@ -25,13 +25,18 @@ const ListNftMessage = ({
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
   const item = data.selectedNft
+  const chain =
+    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    SupportedNetworkEnum.ETHEREUM
+
   const { loading, uri, metadata } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
     metadata: item.metadata,
+    chain,
   })
 
-  const { order, isLoading } = useZxOrder({ nonce: data.nonce })
+  const { order, isLoading } = useZxOrder({ nonce: data.nonce, chain })
   const { getEthPrice } = useEthPrice()
 
   const mediaProps: MediaRendererProps = {
@@ -41,10 +46,6 @@ const ListNftMessage = ({
     loading,
     metadata,
   }
-
-  const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-    SupportedNetworkEnum.ETHEREUM
 
   return (
     <View style={styles.container}>
@@ -106,6 +107,10 @@ const ListNftMessage = ({
               ? navigation.navigate(Routes.ZxNftDetail, {
                   nonce: data.nonce,
                   channelUrl: params.channelUrl,
+                  chain:
+                    chainIdToSupportedNetworkEnum(
+                      item.chainId || data.selectedNft.chainId || '0x1'
+                    ) || SupportedNetworkEnum.ETHEREUM,
                 })
               : navigation.navigate(Routes.NftDetail, {
                   nftContract: item.token_address,

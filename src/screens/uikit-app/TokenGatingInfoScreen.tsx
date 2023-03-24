@@ -24,13 +24,17 @@ const TokenGatingInfoScreen = (): ReactElement => {
   const { sdk } = useSendbirdChat()
   const { gatingToken: nftContract, chain, channelUrl } = params
   const { channel } = useGroupChannel(sdk, channelUrl)
-  const { name } = useNft({ nftContract })
+  const { name } = useNft({ nftContract, chain })
 
   const { data: tokenName = '' } = useReactQuery(
-    [QueryKeyEnum.NFT_TOKEN_NAME, nftContract],
+    [QueryKeyEnum.NFT_TOKEN_NAME, nftContract, chain],
     async () => name()
   )
-  const { loading, uri, metadata } = useNftImage({ nftContract, tokenId: '1' })
+  const { loading, uri, metadata } = useNftImage({
+    nftContract,
+    tokenId: '1',
+    chain,
+  })
   const mediaProps: MediaRendererProps = {
     src: uri,
     width: '100%',
@@ -39,7 +43,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
     metadata,
   }
 
-  const { user } = useAuth()
+  const { user } = useAuth(chain)
   const membersWithoutMe = useMemo(
     () => channel?.members.filter(x => x.userId !== user?.address) || [],
     [channel?.members]

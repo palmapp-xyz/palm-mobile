@@ -3,7 +3,7 @@ import { UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import { fetchNftImage } from 'libs/fetchTokenUri'
-import { ContractAddr, QueryKeyEnum } from 'types'
+import { ContractAddr, QueryKeyEnum, SupportedNetworkEnum } from 'types'
 
 export type UseNftImageReturn = {
   loading: boolean
@@ -15,14 +15,16 @@ const useNftImage = ({
   nftContract,
   tokenId,
   metadata,
+  chain,
 }: {
   nftContract: ContractAddr
   tokenId: string
   metadata?: Maybe<string>
+  chain: SupportedNetworkEnum
 }): UseNftImageReturn => {
-  const { tokenURI } = useNft({ nftContract })
+  const { tokenURI } = useNft({ nftContract, chain })
   const { data: tokenUri = '' } = useReactQuery(
-    [QueryKeyEnum.NFT_TOKEN_URI, nftContract, tokenId],
+    [QueryKeyEnum.NFT_TOKEN_URI, nftContract, tokenId, chain],
     async () => {
       const uri = await tokenURI({ tokenId })
       if (uri && UTIL.isURL(uri.trim())) {

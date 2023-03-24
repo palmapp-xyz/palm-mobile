@@ -6,7 +6,12 @@ import useWeb3 from 'hooks/complex/useWeb3'
 import { savePkey, getPkeyPwd, getPkey } from 'libs/account'
 import appStore from 'store/appStore'
 
-import { ContractAddr, TrueOrErrReturn, User } from 'types'
+import {
+  ContractAddr,
+  SupportedNetworkEnum,
+  TrueOrErrReturn,
+  User,
+} from 'types'
 import { formatHex } from 'libs/utils'
 
 export type UseAuthReturn = {
@@ -17,9 +22,9 @@ export type UseAuthReturn = {
   logout: () => Promise<void>
 }
 
-const useAuth = (): UseAuthReturn => {
+const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const [user, setUser] = useRecoilState(appStore.user)
-  const { web3Eth } = useWeb3()
+  const { web3 } = useWeb3(chain ?? SupportedNetworkEnum.ETHEREUM)
   const { connect, disconnect } = useConnection()
 
   const register = async ({
@@ -29,9 +34,7 @@ const useAuth = (): UseAuthReturn => {
     privateKey: string
     password: string
   }): Promise<void> => {
-    const account = web3Eth.eth.accounts.privateKeyToAccount(
-      formatHex(privateKey)
-    )
+    const account = web3.eth.accounts.privateKeyToAccount(formatHex(privateKey))
     await savePkey(privateKey, password)
 
     await connect(account.address)
@@ -47,7 +50,7 @@ const useAuth = (): UseAuthReturn => {
       const savedPwd = await getPkeyPwd()
       if (savedPwd === password) {
         const privateKey = await getPkey()
-        const account = web3Eth.eth.accounts.privateKeyToAccount(privateKey)
+        const account = web3.eth.accounts.privateKeyToAccount(privateKey)
         await connect(account.address)
         setUser({ address: account.address as ContractAddr })
         return { success: true, value: '' }

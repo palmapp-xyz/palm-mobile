@@ -1,4 +1,4 @@
-import { NftSwapV4 } from '@traderxyz/nft-swap-sdk'
+import { NftSwapV4 } from 'evm-nft-swap'
 import { ethers } from 'ethers'
 import { useQuery } from 'react-query'
 
@@ -8,11 +8,10 @@ import { QueryKeyEnum, SupportedNetworkEnum } from 'types'
 
 export type UseZxReturn = { nftSwapSdk?: NftSwapV4 }
 
-const useZx = (): UseZxReturn => {
+const useZx = (chain: SupportedNetworkEnum): UseZxReturn => {
   const { connectedNetworkParams, connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
-  const connectedNetworkParam =
-    connectedNetworkParams[SupportedNetworkEnum.ETHEREUM]
+  const connectedNetworkId = connectedNetworkIds[chain]
+  const connectedNetworkParam = connectedNetworkParams[chain]
 
   const { data: nftSwapSdk } = useQuery(
     [QueryKeyEnum.ZX_SWAP_SDK_V4, connectedNetworkParam, connectedNetworkId],

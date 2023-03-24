@@ -24,10 +24,16 @@ const SendNftMessage = ({
   const { navigation } = useAppNavigation()
 
   const item = data.selectedNft
+
+  const chain =
+    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    SupportedNetworkEnum.ETHEREUM
+
   const { loading, uri, metadata } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
     metadata: item.metadata,
+    chain,
   })
 
   const mediaProps: MediaRendererProps = {
@@ -37,10 +43,6 @@ const SendNftMessage = ({
     loading,
     metadata,
   }
-
-  const chain =
-    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-    SupportedNetworkEnum.ETHEREUM
 
   return (
     <View style={styles.container}>

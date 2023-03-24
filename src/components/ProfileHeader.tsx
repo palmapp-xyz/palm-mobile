@@ -24,7 +24,6 @@ import useEthPrice from 'hooks/independent/useEthPrice'
 import { getProfileImgFromLensProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import useLensProfile from 'hooks/lens/useLensProfile'
-import useKlayPrice from 'hooks/independent/useKlayPrice'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 
 const ProfileHeader = ({
@@ -42,12 +41,14 @@ const ProfileHeader = ({
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { user } = useMyPageMain({ selectedNetwork })
   const { getEthPrice } = useEthPrice()
-  const { getKlayPrice } = useKlayPrice()
   const { profile } = useLensProfile({ userAddress })
 
   const [profileImg, setProfileImg] = useState<string | undefined>()
 
-  const { ethBalance, klayBalance } = useUserBalance({ address: userAddress })
+  const { ethBalance } = useUserBalance({
+    address: userAddress,
+    chain: SupportedNetworkEnum.ETHEREUM,
+  })
 
   useAsyncLayoutEffect(async () => {
     const res = await getProfileImgFromLensProfile(profile)
@@ -155,28 +156,6 @@ const ProfileHeader = ({
                   $
                   {UTIL.formatAmountP(
                     getEthPrice(ethBalance || ('0' as pToken)),
-                    {
-                      toFix: 0,
-                    }
-                  )}
-                </Text>
-              </View>
-              <View style={{ alignItems: 'flex-end' }}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: COLOR.primary._400,
-                    fontWeight: 'bold',
-                  }}>
-                  {UTIL.formatAmountP(klayBalance || ('0' as pToken), {
-                    toFix: 4,
-                  })}{' '}
-                  KLAY
-                </Text>
-                <Text style={{ fontSize: 12 }}>
-                  $
-                  {UTIL.formatAmountP(
-                    getKlayPrice(klayBalance || ('0' as pToken)),
                     {
                       toFix: 0,
                     }

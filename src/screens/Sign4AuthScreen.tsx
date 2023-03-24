@@ -6,10 +6,11 @@ import useSign4Auth from 'hooks/page/sign/useSign4Auth'
 import { useRecoilValue } from 'recoil'
 import fetchApiStore from 'store/fetchApiStore'
 import useAuth from 'hooks/independent/useAuth'
+import { SupportedNetworkEnum } from 'types'
 
 const Sign4AuthScreen = (): ReactElement => {
   const { logout } = useAuth()
-  const { signMessage, onPress } = useSign4Auth()
+  const { signMessage, onPress } = useSign4Auth(SupportedNetworkEnum.ETHEREUM)
   const isFetching = useRecoilValue(fetchApiStore.isFetchingPostApiStore)
 
   return (

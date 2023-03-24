@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { Keyboard, StyleSheet, Text, View } from 'react-native'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 import { useRecoilValue } from 'recoil'
-import { SignedNftOrderV4Serialized } from '@traderxyz/nft-swap-sdk'
+import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import firestore from '@react-native-firebase/firestore'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
@@ -34,25 +34,28 @@ import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 const Contents = ({
   channelUrl,
   selectedNft,
+  chain,
 }: {
   channelUrl: string
   selectedNft: Moralis.NftItem
+  chain: SupportedNetworkEnum
 }): ReactElement => {
   const nftContract = selectedNft.token_address
   const { price, setPrice, isApproved, onClickApprove, onClickConfirm } =
     useZxListNft({
       nftContract,
       tokenId: selectedNft.token_id,
+      chain,
     })
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
 
   const { fsChannel } = useFsChannel({ channelUrl })
 
-  const { name } = useNft({ nftContract })
+  const { name } = useNft({ nftContract, chain })
 
   const { data: tokenName = '' } = useReactQuery(
-    [QueryKeyEnum.NFT_TOKEN_NAME, nftContract],
+    [QueryKeyEnum.NFT_TOKEN_NAME, nftContract, chain],
     name
   )
 
@@ -77,7 +80,7 @@ const Contents = ({
       await fsChannel
         .collection('listings')
         .doc(order.nonce)
-        .set({ order, status: 'active' })
+        .set({ order, status: 'active', chain })
 
       // also add to listings collection for keeping track of listed channels for the nft
       await firestore()
@@ -85,7 +88,7 @@ const Contents = ({
         .doc(selectedNft.token_address)
         .collection('orders')
         .doc(order.nonce)
-        .set({ order, channelUrl, status: 'active' })
+        .set({ order, channelUrl, status: 'active', chain })
     } catch (e) {
       console.error(e)
     }
@@ -97,14 +100,11 @@ const Contents = ({
         <View style={{ paddingHorizontal: 20 }}>
           <Row style={{ paddingBottom: 10 }}>
             <View style={{ width: 100, height: 100, marginEnd: 10 }}>
-              <ChainLogoWrapper
-                chain={
-                  chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
-                  SupportedNetworkEnum.ETHEREUM
-                }>
+              <ChainLogoWrapper chain={chain}>
                 <NftRenderer
                   nftContract={selectedNft.token_address}
                   tokenId={selectedNft.token_id}
+                  chain={chain}
                 />
               </ChainLogoWrapper>
             </View>
@@ -226,6 +226,10 @@ const ListNftScreen = (): ReactElement => {
   const { params, navigation } = useAppNavigation<Routes.ListNft>()
 
   const selectedNftList = useRecoilValue(selectNftStore.selectedNftList)
+  const selectedNft = selectedNftList[0]!
+  const chain: SupportedNetworkEnum =
+    chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+    SupportedNetworkEnum.ETHEREUM
 
   return (
     <Container style={{ flex: 1 }}>
@@ -237,7 +241,8 @@ const ListNftScreen = (): ReactElement => {
       {selectedNftList.length > 0 && (
         <Contents
           channelUrl={params.channelUrl}
-          selectedNft={selectedNftList[0]}
+          selectedNft={selectedNft}
+          chain={chain}
         />
       )}
     </Container>

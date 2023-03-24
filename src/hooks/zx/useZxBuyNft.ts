@@ -18,8 +18,11 @@ export type UseZxBuyNftReturn = {
   }) => Promise<TrueOrErrReturn>
 }
 
-const useZxBuyNft = (channelUrl: string): UseZxBuyNftReturn => {
-  const { nftSwapSdk } = useZx()
+const useZxBuyNft = (
+  channelUrl: string,
+  chain: SupportedNetworkEnum
+): UseZxBuyNftReturn => {
+  const { nftSwapSdk } = useZx(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const { sdk } = useSendbirdChat()

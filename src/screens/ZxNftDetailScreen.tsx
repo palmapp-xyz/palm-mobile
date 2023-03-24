@@ -24,19 +24,24 @@ import GroupChannelItem from 'components/GroupChannelItem'
 const Contents = ({
   selectedNft,
   channelUrl,
+  chain,
 }: {
   selectedNft: zx.order
   channelUrl?: string
+  chain: SupportedNetworkEnum
 }): ReactElement => {
-  const { user } = useAuth()
+  const { user } = useAuth(chain)
   const isMine =
     selectedNft.order.maker.toLocaleLowerCase() ===
     user?.address.toLocaleLowerCase()
   const { navigation } = useAppNavigation()
 
-  const { onClickConfirm: onClickCancel } = useZxCancelNft(channelUrl ?? '')
+  const { onClickConfirm: onClickCancel } = useZxCancelNft(
+    channelUrl ?? '',
+    chain
+  )
 
-  const { onClickConfirm: onClickBuy } = useZxBuyNft(channelUrl ?? '')
+  const { onClickConfirm: onClickBuy } = useZxBuyNft(channelUrl ?? '', chain)
 
   const queryClient = useQueryClient()
 
@@ -46,6 +51,7 @@ const Contents = ({
   const { uri } = useMoralisNftImage({
     nftContract: selectedNft.nftToken,
     tokenId: selectedNft.nftTokenId,
+    chain,
   })
 
   const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
@@ -136,7 +142,7 @@ const Contents = ({
                 channel.sendFileMessage(imgInfo)
               }
             }
-            queryClient.removeQueries([QueryKeyEnum.ZX_ORDERS])
+            queryClient.removeQueries([QueryKeyEnum.ZX_ORDERS, chain])
 
             const currRoute = navigationRef.getCurrentRoute()
             if (
@@ -156,7 +162,7 @@ const Contents = ({
 
 const ZxNftDetailScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ZxNftDetail>()
-  const { order } = useZxOrder({ nonce: params.nonce })
+  const { order } = useZxOrder({ nonce: params.nonce, chain: params.chain })
 
   return (
     <Container style={styles.container}>
@@ -167,7 +173,13 @@ const ZxNftDetailScreen = (): ReactElement => {
         }
         onPressLeft={navigation.goBack}
       />
-      {order && <Contents selectedNft={order} channelUrl={params.channelUrl} />}
+      {order && (
+        <Contents
+          selectedNft={order}
+          channelUrl={params.channelUrl}
+          chain={params.chain}
+        />
+      )}
     </Container>
   )
 }

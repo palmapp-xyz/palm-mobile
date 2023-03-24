@@ -9,9 +9,15 @@ export type UseZxOrderReturn = {
   isLoading: boolean
 }
 
-const useZxOrder = ({ nonce }: { nonce: string }): UseZxOrderReturn => {
+const useZxOrder = ({
+  nonce,
+  chain,
+}: {
+  nonce: string
+  chain: SupportedNetworkEnum
+}): UseZxOrderReturn => {
   const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
+  const connectedNetworkId = connectedNetworkIds[chain]
 
   const extApi = `https://api.trader.xyz/orderbook/orders?chainId=${connectedNetworkId}&nftType=erc721&erc20Token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&nonce=${nonce}`
 

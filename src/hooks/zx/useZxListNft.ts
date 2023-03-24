@@ -3,7 +3,7 @@ import {
   UserFacingERC721AssetDataSerializedV4,
   UserFacingERC20AssetDataSerializedV4,
   SignedNftOrderV4Serialized,
-} from '@traderxyz/nft-swap-sdk'
+} from 'evm-nft-swap'
 
 import { UTIL } from 'consts'
 
@@ -33,15 +33,17 @@ export type UseZxListNftReturn = {
 const useZxListNft = ({
   nftContract,
   tokenId,
+  chain,
 }: {
   nftContract: ContractAddr
   tokenId: string
+  chain: SupportedNetworkEnum
 }): UseZxListNftReturn => {
   const { navigation } = useAppNavigation()
-  const { nftSwapSdk } = useZx()
+  const { nftSwapSdk } = useZx(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
-  const { user } = useAuth()
+  const { user } = useAuth(chain)
   const [price, setPrice] = useState<Token>('' as Token)
 
   const nftToSwap = useMemo(
@@ -65,7 +67,7 @@ const useZxListNft = ({
   )
 
   const { data: isApproved = false, refetch: refetchIsApprove } = useReactQuery(
-    [QueryKeyEnum.NFT_APPROVED, nftContract, user?.address],
+    [QueryKeyEnum.NFT_APPROVED, nftContract, user?.address, chain],
     async () => {
       if (user && nftSwapSdk) {
         return (await nftSwapSdk.loadApprovalStatus(nftToSwap, user.address))
@@ -82,7 +84,7 @@ const useZxListNft = ({
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
-          chain: SupportedNetworkEnum.ETHEREUM,
+          chain,
         })
         const approvalTx = await nftSwapSdk.approveTokenOrNftByAsset(
           nftToSwap,
@@ -91,19 +93,19 @@ const useZxListNft = ({
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
           transactionHash: approvalTx.hash,
-          chain: SupportedNetworkEnum.ETHEREUM,
+          chain,
         })
 
         const approvalTxReceipt = await approvalTx.wait()
         setPostTxResult({
           status: PostTxStatus.DONE,
           value: approvalTxReceipt,
-          chain: SupportedNetworkEnum.ETHEREUM,
+          chain,
         })
       } catch (error) {
         setPostTxResult({
           status: PostTxStatus.ERROR,
-          chain: SupportedNetworkEnum.ETHEREUM,
+          chain,
           error,
         })
       }
@@ -118,7 +120,7 @@ const useZxListNft = ({
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
-          chain: SupportedNetworkEnum.ETHEREUM,
+          chain,
         })
         const order = nftSwapSdk.buildOrder(nftToSwap, priceOfNft, user.address)
 
@@ -132,10 +134,11 @@ const useZxListNft = ({
 
         setPostTxResult({
           status: PostTxStatus.DONE,
-          chain: SupportedNetworkEnum.ETHEREUM,
+          chain,
         })
         navigation.replace(Routes.ZxNftDetail, {
           nonce: postOrder.order.nonce,
+          chain,
         })
 
         return postOrder.order
@@ -143,7 +146,7 @@ const useZxListNft = ({
         setPostTxResult({
           status: PostTxStatus.ERROR,
           error,
-          chain: SupportedNetworkEnum.ETHEREUM,
+          chain,
         })
       }
     }
