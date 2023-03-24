@@ -1,5 +1,12 @@
 import React, { ReactElement, useState } from 'react'
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import firestore from '@react-native-firebase/firestore'
@@ -29,6 +36,7 @@ const Contents = ({
   const { ownerOf } = useNft({ nftContract, chain })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
   const { user } = useAuth(chain)
+  const [isFetching, setIsFetching] = useState<boolean>(false)
 
   const isMine =
     tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
@@ -37,7 +45,7 @@ const Contents = ({
     []
   )
 
-  const { loading, uri, metadata } = useNftImage({
+  const { loading, uri, metadata, refetch, isRefetching } = useNftImage({
     nftContract,
     tokenId,
     chain,
@@ -78,11 +86,22 @@ const Contents = ({
       setActiveListedChannels(activeListings)
     } catch (e) {
       console.error(e)
+    } finally {
+      setIsFetching(false)
     }
-  }, [nftContract, tokenId])
+  }, [nftContract, tokenId, isFetching])
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefetching}
+          onRefresh={(): void => {
+            setIsFetching(true)
+            refetch()
+          }}
+        />
+      }>
       <View style={styles.body}>
         <View style={styles.imageBox}>
           <NftMediaRenderer {...nftRenderProps} />

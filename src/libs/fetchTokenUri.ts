@@ -35,7 +35,10 @@ export const fetchNftImage = async ({
       const fetched = await fetch(fixedUrl)
       const blob = await fetched.blob()
       if (blob.type.startsWith('image')) {
-        return { image: fixedUrl, metadata: await blob.text() }
+        return {
+          image: fixedUrl,
+          metadata: blob.text ? await blob.text() : undefined,
+        }
       }
 
       const axiosData = await axios.get(fixedUrl)

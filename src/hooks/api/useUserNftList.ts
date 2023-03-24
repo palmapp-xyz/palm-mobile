@@ -7,13 +7,13 @@ import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 import useNetwork from '../complex/useNetwork'
 import useApi from '../complex/useApi'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
-import useSetting from 'hooks/independent/useSetting'
 
 export type UseUserNftListReturn = {
   nftList: Moralis.NftItem[]
   fetchNextPage: () => void
   hasNextPage: boolean
   refetch: () => void
+  remove: () => void
   isRefetching: boolean
   isLoading: boolean
 }
@@ -27,7 +27,6 @@ const useUserNftList = ({
   userAddress?: ContractAddr
   limit?: number
 }): UseUserNftListReturn => {
-  const { setting } = useSetting()
   const { connectedNetworkIds } = useNetwork()
   const connectedNetworkId = connectedNetworkIds[selectedNetwork]
   const { getApi } = useApi()
@@ -37,6 +36,7 @@ const useUserNftList = ({
     fetchNextPage,
     hasNextPage = false,
     refetch,
+    remove,
     isRefetching,
     isLoading,
   } = useInfiniteQuery(
@@ -74,6 +74,7 @@ const useUserNftList = ({
   )
 
   useEffect(() => {
+    remove()
     refetch()
   }, [connectedNetworkId])
 
@@ -82,6 +83,7 @@ const useUserNftList = ({
     fetchNextPage,
     hasNextPage,
     refetch,
+    remove,
     isRefetching,
     isLoading,
   }

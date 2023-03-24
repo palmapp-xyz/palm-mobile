@@ -56,6 +56,7 @@ const UserProfileScreen = (): ReactElement => {
         <RefreshControl
           refreshing={useUserNftListReturn.isRefetching}
           onRefresh={(): void => {
+            useUserNftListReturn.remove()
             useUserNftListReturn.refetch()
             balanceRefetch()
           }}

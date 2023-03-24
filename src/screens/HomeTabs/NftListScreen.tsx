@@ -21,13 +21,19 @@ const NftListScreen = ({
 }: {
   chain: SupportedNetworkEnum
 }): ReactElement => {
-  const { orderList, refetch, isFetching } = useZxOrders(chain)
+  const { orderList, refetch, remove, isFetching } = useZxOrders(chain)
   const { navigation } = useAppNavigation()
 
   return (
     <ScrollView
       refreshControl={
-        <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+        <RefreshControl
+          refreshing={isFetching}
+          onRefresh={(): void => {
+            remove()
+            refetch()
+          }}
+        />
       }>
       <Container style={styles.container}>
         <Header title="Listed NFTs" />

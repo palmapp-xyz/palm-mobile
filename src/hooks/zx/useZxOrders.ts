@@ -7,6 +7,7 @@ import { QueryKeyEnum, SupportedNetworkEnum, zx } from 'types'
 export type UseZxOrdersReturn = {
   orderList: zx.order[]
   refetch: () => void
+  remove: () => void
   isFetching: boolean
 }
 
@@ -19,6 +20,7 @@ const useZxOrders = (chain: SupportedNetworkEnum): UseZxOrdersReturn => {
   const {
     data: orderList = [],
     refetch,
+    remove,
     isFetching,
   } = useReactQuery([QueryKeyEnum.ZX_ORDERS, connectedNetworkId], async () => {
     const fetchRes: AxiosResponse<{ orders: zx.order[] }, any> =
@@ -26,7 +28,7 @@ const useZxOrders = (chain: SupportedNetworkEnum): UseZxOrdersReturn => {
     return fetchRes.data.orders
   })
 
-  return { orderList, refetch, isFetching }
+  return { orderList, refetch, remove, isFetching }
 }
 
 export default useZxOrders

@@ -1,3 +1,4 @@
+import { COLOR } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 
@@ -14,7 +15,7 @@ const NftAttributes = ({
   attributes,
   style,
   itemStyle,
-  numColumns = 2,
+  numColumns = 3,
 }: {
   attributes: { trait_type: string; value: string }[]
   style?: StyleProp<ImageStyle>
@@ -27,6 +28,7 @@ const NftAttributes = ({
   return (
     <FlatList
       numColumns={numColumns}
+      scrollEnabled={false}
       data={attributes}
       keyExtractor={({ trait_type }): string => `nft-attribute-${trait_type}`}
       contentContainerStyle={[styles.container, style]}
@@ -54,8 +56,11 @@ const styles = StyleSheet.create({
     rowGap: 10,
   },
   item: {
-    flex: 1,
-    marginVertical: 10,
+    margin: 10,
+    borderRadius: 5,
+    borderColor: COLOR.gray._400,
+    borderWidth: 1,
+    padding: 5,
   },
   headText: {
     fontWeight: 'bold',

@@ -33,7 +33,10 @@ const SvgRenderer = ({
     )
   }
 
-  if (mediaType.mimeType === 'image/svg+xml') {
+  if (
+    !mediaType.mimeType?.startsWith('data') &&
+    mediaType.mimeType?.includes('image/svg+xml')
+  ) {
     return (
       <SvgUri
         width={width}

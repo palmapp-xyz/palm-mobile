@@ -45,14 +45,20 @@ const NftMetadata = ({
           <View style={style}>
             <Text style={styles.headText}>{_.capitalize(key)}</Text>
             {typeof item === 'object' ? (
-              <NftAttributes
-                attributes={item}
-                style={{ flex: 1, width: '100%' }}
-              />
-            ) : typeof item === 'string' && item.includes('://') ? (
+              key === 'attributes' ? (
+                <NftAttributes
+                  attributes={item}
+                  style={{ flex: 1, width: '100%' }}
+                />
+              ) : (
+                <Text>{JSON.stringify(item, null, 2)}</Text>
+              )
+            ) : typeof item === 'string' &&
+              item.includes('://') &&
+              !item.includes(' ') ? (
               <LinkRenderer src={item} />
             ) : (
-              <Text>String(item)</Text>
+              <Text>{String(item)}</Text>
             )}
           </View>
         )
