@@ -34,7 +34,7 @@ const useNewAccount = (): UseNewAccountReturn => {
 
   const onClickConfirm = async (): Promise<void> => {
     if (wallet) {
-      register({ privateKey: wallet.privateKey, password })
+      await register({ privateKey: wallet.privateKey, password })
     }
   }
 

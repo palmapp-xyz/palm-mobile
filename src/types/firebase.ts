@@ -25,4 +25,6 @@ export enum FirestoreKeyEnum {
   ChannelField = 'ChannelField',
   Listing = 'Listing',
   ListingField = 'ListingField',
+  Profile = 'Profile',
+  ProfileField = 'ProfileField',
 }

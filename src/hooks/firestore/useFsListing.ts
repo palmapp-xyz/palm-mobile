@@ -7,7 +7,7 @@ import { FbListing, FirestoreKeyEnum } from 'types'
 import { useMemo } from 'react'
 import { Maybe } from '@toruslabs/openlogin'
 
-export type UseFsChannelReturn = {
+export type UseFsListingReturn = {
   fsListing?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
   fsListingField?: FbListing
   isFetching: boolean
@@ -18,7 +18,7 @@ const useFsListing = ({
   nonce,
 }: {
   nonce: Maybe<string>
-}): UseFsChannelReturn => {
+}): UseFsListingReturn => {
   const {
     data: fsListing,
     refetch: refetchListing,

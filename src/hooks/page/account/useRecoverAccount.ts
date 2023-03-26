@@ -47,10 +47,10 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
 
   const onClickConfirm = async (): Promise<void> => {
     if (usePkey) {
-      register({ privateKey, password })
+      await register({ privateKey, password })
     } else {
       const wallet = await generateEvmHdAccount(mnemonic)
-      register({ privateKey: wallet.privateKey, password })
+      await register({ privateKey: wallet.privateKey, password })
     }
   }
 

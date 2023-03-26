@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import { Routes } from 'libs/navigation'
 import {
@@ -31,24 +32,58 @@ import {
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import { useQuery } from 'react-query'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import { NetworkSettingEnum, User } from 'types'
+import useSetting from 'hooks/independent/useSetting'
+import CreateProfileScreen from 'screens/CreateProfileScreen'
 
 const MainStack = createNativeStackNavigator()
 
 const MainNavigator = (): ReactElement => {
+  const { setting } = useSetting()
+
   const { user } = useAuth()
-  const { profile, refetch } = useLensProfile({ userAddress: user?.address })
+  const { profile, refetch: refetchLensProfile } = useLensProfile({
+    userAddress: user?.address,
+  })
+  const {
+    fsProfile,
+    fsProfileField,
+    refetch: refetchFsProfile,
+  } = useFsProfile({
+    address: user?.address,
+  })
 
   useQuery(
-    ['refetchuseLensProfile'],
+    ['refetchUseLensProfile'],
     () => {
-      refetch()
+      refetchLensProfile()
     },
     { enabled: !profile, refetchInterval: 1000 }
   )
 
+  useQuery(
+    ['refetchUseFsProfile'],
+    () => {
+      refetchFsProfile()
+    },
+    { enabled: !fsProfile, refetchInterval: 1000 }
+  )
+
+  useAsyncEffect(async () => {
+    if (profile && fsProfile) {
+      await fsProfile.set({
+        address: user?.address,
+        lensProfile: profile,
+        ...profile,
+      } as User)
+      refetchFsProfile()
+    }
+  }, [profile, fsProfile])
+
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
-      {profile ? (
+      {profile || fsProfileField?.handle ? (
         <>
           <MainStack.Screen name={Routes.HomeTabs} component={HomeTabs} />
           <MainStack.Screen
@@ -143,10 +178,15 @@ const MainNavigator = (): ReactElement => {
             />
           </MainStack.Group>
         </>
-      ) : (
+      ) : setting.network === NetworkSettingEnum.TESTNET ? (
         <MainStack.Screen
           name={'CreateLensProfile'}
           component={CreateLensProfileScreen}
+        />
+      ) : (
+        <MainStack.Screen
+          name={'CreateProfile'}
+          component={CreateProfileScreen}
         />
       )}
     </MainStack.Navigator>
