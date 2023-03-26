@@ -6,15 +6,17 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus, SupportedNetworkEnum, TrueOrErrReturn, zx } from 'types'
+import { PostTxStatus, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
 import useZx from './useZx'
 import _ from 'lodash'
+import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
+import { getOrderTokenAddress } from 'libs/zx'
 
 export type UseZxBuyNftReturn = {
   onClickConfirm: ({
     order,
   }: {
-    order: zx.order['order']
+    order: SignedNftOrderV4Serialized
   }) => Promise<TrueOrErrReturn>
 }
 
@@ -31,7 +33,7 @@ const useZxBuyNft = (
   const onClickConfirm = async ({
     order,
   }: {
-    order: zx.order['order']
+    order: SignedNftOrderV4Serialized
   }): Promise<TrueOrErrReturn> => {
     if (nftSwapSdk) {
       try {
@@ -68,7 +70,7 @@ const useZxBuyNft = (
           }
           await firestore()
             .collection('listings')
-            .doc(order.erc721Token)
+            .doc(getOrderTokenAddress(order))
             .collection('orders')
             .doc(order.nonce)
             .set({ status: 'completed' })

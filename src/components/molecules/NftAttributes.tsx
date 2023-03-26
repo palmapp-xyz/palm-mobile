@@ -35,13 +35,15 @@ const NftAttributes = ({
       renderItem={({ item: { trait_type, value } }): ReactElement | null => (
         <View style={[styles.item, itemStyle]}>
           <Text style={styles.headText}>{_.capitalize(trait_type)}</Text>
-          <Text>
-            {typeof value === 'string'
-              ? value
-              : typeof value === 'object'
-              ? JSON.stringify(value)
-              : String(value)}
-          </Text>
+          <View style={{ maxWidth: 120 }}>
+            <Text style={{ flex: 1, flexWrap: 'wrap' }}>
+              {typeof value === 'string'
+                ? value
+                : typeof value === 'object'
+                ? JSON.stringify(value)
+                : String(value)}
+            </Text>
+          </View>
         </View>
       )}
     />
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: COLOR.gray._400,
     borderWidth: 1,
-    padding: 5,
+    padding: 10,
   },
   headText: {
     fontWeight: 'bold',

@@ -12,13 +12,9 @@ const ProfileFooter = ({
   useUserNftListReturn: UseUserNftListReturn
 }): ReactElement => {
   return (
-    <View
-      style={[
-        styles.footer,
-        { height: useUserNftListReturn.nftList.length > 0 ? 50 : 150 },
-      ]}>
+    <View style={[styles.footer]}>
       {useUserNftListReturn.isLoading ? (
-        <ActivityIndicator size="large" color={COLOR.primary._400} />
+        <ActivityIndicator size="small" color={COLOR.primary._400} />
       ) : useUserNftListReturn.nftList.length === 0 ? (
         <Text style={styles.text}>{'The user has no NFTs yet.'}</Text>
       ) : !useUserNftListReturn.hasNextPage ? (
@@ -36,6 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 20,
     padding: 10,
+    height: 70,
   },
   text: {
     color: 'gray',

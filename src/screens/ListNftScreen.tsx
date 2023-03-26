@@ -3,7 +3,6 @@ import { Keyboard, StyleSheet, Text, View } from 'react-native'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 import { useRecoilValue } from 'recoil'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
-import firestore from '@react-native-firebase/firestore'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
@@ -26,7 +25,6 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import selectNftStore from 'store/selectNftStore'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
-import useFsChannel from 'hooks/firestore/useFsChannel'
 import useNft from 'hooks/contract/useNft'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
@@ -46,11 +44,10 @@ const Contents = ({
       nftContract,
       tokenId: selectedNft.token_id,
       chain,
+      channelUrl,
     })
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
-
-  const { fsChannel } = useFsChannel({ channelUrl })
 
   const { name } = useNft({ nftContract, chain })
 
@@ -63,7 +60,7 @@ const Contents = ({
     token_uri: string,
     order: SignedNftOrderV4Serialized | undefined
   ): Promise<void> => {
-    if (!channel || !order || !fsChannel) {
+    if (!channel || !order) {
       return
     }
     const imgInfo = await nftUriFetcher(token_uri)
@@ -74,24 +71,6 @@ const Contents = ({
       ethAmount: UTIL.microfyP(price),
     })
     channel.sendFileMessage(imgInfo)
-
-    try {
-      // add the new listing item to the corresponding channel doc firestore
-      await fsChannel
-        .collection('listings')
-        .doc(order.nonce)
-        .set({ order, status: 'active', chain })
-
-      // also add to listings collection for keeping track of listed channels for the nft
-      await firestore()
-        .collection('listings')
-        .doc(selectedNft.token_address)
-        .collection('orders')
-        .doc(order.nonce)
-        .set({ order, channelUrl, status: 'active', chain })
-    } catch (e) {
-      console.error(e)
-    }
   }
 
   return (

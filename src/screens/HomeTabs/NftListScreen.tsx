@@ -14,7 +14,7 @@ import useZxOrders from 'hooks/zx/useZxOrders'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import { SupportedNetworkEnum } from 'types'
+import { ContractAddr, SupportedNetworkEnum } from 'types'
 
 const NftListScreen = ({
   chain,
@@ -63,8 +63,8 @@ const NftListScreen = ({
                     })
                   }}>
                   <NftRenderer
-                    tokenId={item.order.erc721TokenId}
-                    nftContract={item.order.erc721Token}
+                    tokenId={item.nftTokenId}
+                    nftContract={item.nftToken as ContractAddr}
                     width={150}
                     height={150}
                     chain={chain}

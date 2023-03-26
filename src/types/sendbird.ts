@@ -1,7 +1,7 @@
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import { Moralis } from './api'
 import { ContractAddr } from './contracts'
 import { pToken } from './currencies'
-import { zx } from './zx'
 
 export type SbNftDataType =
   | SbBuyNftDataType
@@ -11,7 +11,7 @@ export type SbNftDataType =
 
 export type SbBuyNftDataType = {
   type: 'buy'
-  selectedNft: zx.order
+  selectedNft: PostOrderResponsePayload
   buyer: ContractAddr
 }
 

@@ -1,163 +1,12 @@
-import React, { ReactElement, useState } from 'react'
-import {
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import React, { ReactElement } from 'react'
+import { StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-import firestore from '@react-native-firebase/firestore'
 
 import { COLOR } from 'consts'
-import { ContractAddr, FbListing, SupportedNetworkEnum } from 'types'
-import { Container, Header, LinkExplorer } from 'components'
+import { Container, Header } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import useNft from 'hooks/contract/useNft'
-import useAuth from 'hooks/independent/useAuth'
-import GroupChannelItem from 'components/GroupChannelItem'
-import NftMetadata from 'components/molecules/NftMetadata'
-import useNftImage from 'hooks/independent/useNftImage'
-import { MediaRendererProps } from 'components/atoms/MediaRenderer'
-import NftMediaRenderer from 'components/molecules/NftMediaRenderer'
-
-const Contents = ({
-  nftContract,
-  tokenId,
-  chain,
-}: {
-  nftContract: ContractAddr
-  tokenId: string
-  chain: SupportedNetworkEnum
-}): ReactElement => {
-  const { ownerOf } = useNft({ nftContract, chain })
-  const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
-  const { user } = useAuth(chain)
-  const [isFetching, setIsFetching] = useState<boolean>(false)
-
-  const isMine =
-    tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
-
-  const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
-    []
-  )
-
-  const { loading, uri, metadata, refetch, isRefetching } = useNftImage({
-    nftContract,
-    tokenId,
-    chain,
-  })
-
-  const nftRenderProps: MediaRendererProps = {
-    src: uri,
-    alt: `${nftContract}:${tokenId}`,
-    loading,
-    metadata,
-    style: { flex: 1 },
-  }
-
-  useAsyncEffect(async (): Promise<void> => {
-    const owner = await ownerOf({ tokenId })
-    setTokenOwner(owner)
-
-    const activeListings: FbListing[] = []
-    try {
-      await firestore()
-        .collection('listings')
-        .doc(nftContract)
-        .collection('orders')
-        .get()
-        .then(ordersSnapshot => {
-          ordersSnapshot.forEach(orderSnapshot => {
-            const listing = orderSnapshot.data() as FbListing
-            if (
-              listing.order &&
-              listing.status === 'active' &&
-              listing.channelUrl
-            ) {
-              activeListings.push(listing)
-            }
-          })
-        })
-
-      setActiveListedChannels(activeListings)
-    } catch (e) {
-      console.error(e)
-    } finally {
-      setIsFetching(false)
-    }
-  }, [nftContract, tokenId, isFetching])
-
-  return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefetching}
-          onRefresh={(): void => {
-            setIsFetching(true)
-            refetch()
-          }}
-        />
-      }>
-      <View style={styles.body}>
-        <View style={styles.imageBox}>
-          <NftMediaRenderer {...nftRenderProps} />
-        </View>
-        <View style={styles.info}>
-          <View style={styles.infoDetails}>
-            {tokenOwner && (
-              <View style={styles.item}>
-                <Text style={styles.headText}>Owner</Text>
-                <LinkExplorer
-                  type="address"
-                  address={tokenOwner}
-                  network={chain}
-                />
-              </View>
-            )}
-            <View style={styles.item}>
-              <Text style={styles.headText}>Token Contract</Text>
-              <LinkExplorer
-                type="address"
-                address={nftContract}
-                network={chain}
-              />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.headText}>Token ID</Text>
-              <Text>{tokenId}</Text>
-            </View>
-            <NftMetadata metadata={metadata} style={styles.item} />
-            {isMine && (
-              <View style={styles.item}>
-                <Text style={styles.headText}>
-                  Active Listings ({activeListedChannels.length})
-                </Text>
-                {activeListedChannels.length > 0 ? (
-                  <FlatList
-                    scrollEnabled={false}
-                    data={activeListedChannels}
-                    keyExtractor={(_, index): string =>
-                      `active-listing-${index}`
-                    }
-                    renderItem={({ item }): ReactElement => {
-                      return <GroupChannelItem channelUrl={item.channelUrl} />
-                    }}
-                  />
-                ) : (
-                  <Text>None</Text>
-                )}
-              </View>
-            )}
-          </View>
-        </View>
-      </View>
-    </ScrollView>
-  )
-}
+import NftDetails from './NftDetails'
 
 const NftDetailScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.NftDetail>()
@@ -171,7 +20,7 @@ const NftDetailScreen = (): ReactElement => {
         }
         onPressLeft={navigation.goBack}
       />
-      <Contents
+      <NftDetails
         nftContract={params.nftContract}
         tokenId={params.tokenId}
         chain={params.chain}

@@ -1,15 +1,15 @@
-import React, { ReactElement, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import React, { ReactElement } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import Icon from 'react-native-vector-icons/Ionicons'
+
+import { Maybe } from '@toruslabs/openlogin'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-import firestore from '@react-native-firebase/firestore'
 
-import { COLOR, UTIL } from 'consts'
-import { FbListing, QueryKeyEnum, SupportedNetworkEnum, zx } from 'types'
-import { Container, Header, MediaRenderer, SubmitButton } from 'components'
+import { COLOR } from 'consts'
+import { ContractAddr, QueryKeyEnum } from 'types'
+import { Container, Header } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
 import useZxCancelNft from 'hooks/zx/useZxCancelNft'
@@ -18,151 +18,65 @@ import { navigationRef, Routes } from 'libs/navigation'
 import useZxOrder from 'hooks/zx/useZxOrder'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
-import useMoralisNftImage from 'hooks/independent/useNftImage'
-import GroupChannelItem from 'components/GroupChannelItem'
+import NftDetails from './NftDetails'
 
-const Contents = ({
-  selectedNft,
-  channelUrl,
-  chain,
-}: {
-  selectedNft: zx.order
-  channelUrl?: string
-  chain: SupportedNetworkEnum
-}): ReactElement => {
-  const { user } = useAuth(chain)
+const ZxNftDetailScreen = (): ReactElement => {
+  const {
+    navigation,
+    params: { nonce, channelUrl, chain },
+  } = useAppNavigation<Routes.ZxNftDetail>()
+  const { order } = useZxOrder({ nonce: nonce, chain: chain })
+
+  const queryClient = useQueryClient()
+
+  const { user } = useAuth()
+
   const isMine =
-    selectedNft.order.maker.toLocaleLowerCase() ===
-    user?.address.toLocaleLowerCase()
-  const { navigation } = useAppNavigation()
+    order &&
+    order.order.maker.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
+
+  const { sdk } = useSendbirdChat()
+  const { channel } = useGroupChannel(sdk, channelUrl || '')
 
   const { onClickConfirm: onClickCancel } = useZxCancelNft(
     channelUrl ?? '',
     chain
   )
-
   const { onClickConfirm: onClickBuy } = useZxBuyNft(channelUrl ?? '', chain)
 
-  const queryClient = useQueryClient()
-
-  const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl || '')
-
-  const { uri } = useMoralisNftImage({
-    nftContract: selectedNft.nftToken,
-    tokenId: selectedNft.nftTokenId,
-    chain,
-  })
-
-  const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
-    []
-  )
-
-  useAsyncEffect(async () => {
-    const activeListings: FbListing[] = []
-    try {
-      await firestore()
-        .collection('listings')
-        .doc(selectedNft.nftToken)
-        .collection('orders')
-        .get()
-        .then(ordersSnapshot => {
-          ordersSnapshot.forEach(orderSnapshot => {
-            const listing = orderSnapshot.data() as FbListing
-            if (
-              listing.order &&
-              listing.status === 'active' &&
-              listing.channelUrl
-            ) {
-              activeListings.push(listing)
-            }
-          })
-        })
-
-      setActiveListedChannels(activeListings)
-    } catch (e) {
-      console.error(e)
+  const onSubmit = async (
+    nftImageUri: string | undefined,
+    _metadata: Maybe<string>
+  ): Promise<void> => {
+    if (!order) {
+      return
     }
-  }, [selectedNft])
 
-  return (
-    <View style={styles.body}>
-      <View style={styles.imageBox}>
-        <MediaRenderer src={uri} width={'100%'} height={250} />
-      </View>
-      <View style={styles.info}>
-        <View style={styles.infoDetails}>
-          <View>
-            <Text style={styles.headText}>Owner</Text>
-            <Text>
-              {isMine ? 'Mine' : UTIL.truncate(selectedNft.order.maker)}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.headText}>Token</Text>
-            <Text>{selectedNft.order.erc721Token}</Text>
-          </View>
-          <View>
-            <Text style={styles.headText}>Price</Text>
-            <Text>{UTIL.formatAmountP(selectedNft.erc20TokenAmount)} ETH</Text>
-          </View>
-          {isMine && (
-            <View>
-              <Text style={styles.headText}>
-                Active Listings ({activeListedChannels.length})
-              </Text>
-              {activeListedChannels.length > 0 ? (
-                <FlatList
-                  data={activeListedChannels}
-                  keyExtractor={(_, index): string => `active-listing-${index}`}
-                  renderItem={({ item }): ReactElement => {
-                    return <GroupChannelItem channelUrl={item.channelUrl} />
-                  }}
-                />
-              ) : (
-                <Text>None</Text>
-              )}
-            </View>
-          )}
-        </View>
-        <SubmitButton
-          network={SupportedNetworkEnum.ETHEREUM}
-          onPress={async (): Promise<void> => {
-            if (isMine) {
-              await onClickCancel({ order: selectedNft.order })
-            } else {
-              const buyRes = await onClickBuy({ order: selectedNft.order })
-              if (channel && uri && user && buyRes.success) {
-                const imgInfo = await nftUriFetcher(uri)
-                imgInfo.data = stringifySendFileData({
-                  type: 'buy',
-                  selectedNft,
-                  buyer: user.address,
-                })
-                channel.sendFileMessage(imgInfo)
-              }
-            }
-            queryClient.removeQueries([QueryKeyEnum.ZX_ORDERS, chain])
+    if (isMine) {
+      await onClickCancel({ order: order.order })
+    } else {
+      const buyRes = await onClickBuy({ order: order.order })
+      if (channel && nftImageUri && user && buyRes.success) {
+        const imgInfo = await nftUriFetcher(nftImageUri)
+        imgInfo.data = stringifySendFileData({
+          type: 'buy',
+          selectedNft: order,
+          buyer: user.address,
+        })
+        channel.sendFileMessage(imgInfo)
+      }
+    }
+    queryClient.removeQueries([QueryKeyEnum.ZX_ORDERS, chain])
 
-            const currRoute = navigationRef.getCurrentRoute()
-            if (
-              Routes.ZxNftDetail === currRoute?.name &&
-              // @ts-ignore
-              selectedNft.order.nonce === currRoute?.params?.nonce
-            ) {
-              navigation.goBack()
-            }
-          }}>
-          {isMine ? 'Cancel' : 'Buy'}
-        </SubmitButton>
-      </View>
-    </View>
-  )
-}
-
-const ZxNftDetailScreen = (): ReactElement => {
-  const { navigation, params } = useAppNavigation<Routes.ZxNftDetail>()
-  const { order } = useZxOrder({ nonce: params.nonce, chain: params.chain })
+    const currRoute = navigationRef.getCurrentRoute()
+    if (
+      Routes.ZxNftDetail === currRoute?.name &&
+      // @ts-ignore
+      selectedNft.order.nonce === currRoute?.params?.nonce
+    ) {
+      navigation.goBack()
+    }
+  }
 
   return (
     <Container style={styles.container}>
@@ -174,11 +88,14 @@ const ZxNftDetailScreen = (): ReactElement => {
         onPressLeft={navigation.goBack}
       />
       {order && (
-        <Contents
-          selectedNft={order}
-          channelUrl={params.channelUrl}
-          chain={params.chain}
-        />
+        <View>
+          <NftDetails
+            nftContract={order.nftToken as ContractAddr}
+            tokenId={order.nftTokenId}
+            chain={chain}
+            onSubmit={onSubmit}
+          />
+        </View>
       )}
     </Container>
   )

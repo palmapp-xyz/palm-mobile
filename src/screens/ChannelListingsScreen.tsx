@@ -18,6 +18,7 @@ import { FbListing } from 'types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
+import { getOrderTokenAddress, getOrderTokenId } from 'libs/zx'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ChannelListings>()
@@ -88,8 +89,8 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
                     })
                   }}>
                   <NftRenderer
-                    tokenId={listing.order.erc721TokenId}
-                    nftContract={listing.order.erc721Token}
+                    tokenId={getOrderTokenId(listing.order)}
+                    nftContract={getOrderTokenAddress(listing.order)}
                     width={150}
                     height={150}
                     chain={listing.chain}

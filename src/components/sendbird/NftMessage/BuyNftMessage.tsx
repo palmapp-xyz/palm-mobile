@@ -6,7 +6,7 @@ import { Routes } from 'libs/navigation'
 
 import { COLOR, UTIL } from 'consts'
 
-import { SbBuyNftDataType, SupportedNetworkEnum } from 'types'
+import { ContractAddr, SbBuyNftDataType, SupportedNetworkEnum } from 'types'
 
 import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
 import useNftImage from 'hooks/independent/useNftImage'
@@ -22,7 +22,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
     SupportedNetworkEnum.ETHEREUM
 
   const { loading, uri, metadata } = useNftImage({
-    nftContract: item.nftToken,
+    nftContract: item.nftToken as ContractAddr,
     tokenId: item.nftTokenId,
     chain,
   })
@@ -52,7 +52,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
           size="sm"
           onPress={(): void => {
             navigation.navigate(Routes.NftDetail, {
-              nftContract: item.nftToken,
+              nftContract: item.nftToken as ContractAddr,
               tokenId: item.nftTokenId,
               chain,
             })

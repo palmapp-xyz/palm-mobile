@@ -58,7 +58,7 @@ const NftMetadata = ({
               !item.includes(' ') ? (
               <LinkRenderer src={item} />
             ) : (
-              <Text>{String(item)}</Text>
+              <Text numberOfLines={5}>{String(item)}</Text>
             )}
           </View>
         )

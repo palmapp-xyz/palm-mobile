@@ -5,11 +5,17 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus, SupportedNetworkEnum, zx } from 'types'
+import { PostTxStatus, SupportedNetworkEnum } from 'types'
 import useZx from './useZx'
+import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
+import { getOrderTokenAddress } from 'libs/zx'
 
 export type UseZxCancelNftReturn = {
-  onClickConfirm: ({ order }: { order: zx.order['order'] }) => Promise<void>
+  onClickConfirm: ({
+    order,
+  }: {
+    order: SignedNftOrderV4Serialized
+  }) => Promise<void>
 }
 
 const useZxCancelNft = (
@@ -25,7 +31,7 @@ const useZxCancelNft = (
   const onClickConfirm = async ({
     order,
   }: {
-    order: zx.order['order']
+    order: SignedNftOrderV4Serialized
   }): Promise<void> => {
     if (nftSwapSdk) {
       setPostTxResult({
@@ -57,7 +63,7 @@ const useZxCancelNft = (
         }
         await firestore()
           .collection('listings')
-          .doc(order.erc721Token)
+          .doc(getOrderTokenAddress(order))
           .collection('orders')
           .doc(order.nonce)
           .update({ status: 'cancelled' })

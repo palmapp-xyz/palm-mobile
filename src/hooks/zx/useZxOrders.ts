@@ -2,10 +2,11 @@ import axios, { AxiosResponse } from 'axios'
 
 import useNetwork from '../complex/useNetwork'
 import useReactQuery from 'hooks/complex/useReactQuery'
-import { QueryKeyEnum, SupportedNetworkEnum, zx } from 'types'
+import { QueryKeyEnum, SupportedNetworkEnum } from 'types'
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 
 export type UseZxOrdersReturn = {
-  orderList: zx.order[]
+  orderList: PostOrderResponsePayload[]
   refetch: () => void
   remove: () => void
   isFetching: boolean
@@ -23,7 +24,7 @@ const useZxOrders = (chain: SupportedNetworkEnum): UseZxOrdersReturn => {
     remove,
     isFetching,
   } = useReactQuery([QueryKeyEnum.ZX_ORDERS, connectedNetworkId], async () => {
-    const fetchRes: AxiosResponse<{ orders: zx.order[] }, any> =
+    const fetchRes: AxiosResponse<{ orders: PostOrderResponsePayload[] }, any> =
       await axios.get(extApi)
     return fetchRes.data.orders
   })

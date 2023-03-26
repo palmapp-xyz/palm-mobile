@@ -1,12 +1,12 @@
 import { ChannelType } from '@sendbird/chat'
 import { ContractAddr } from './contracts'
-import { zx } from './zx'
 import { SupportedNetworkEnum } from './network'
+import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 
 export type FbListingState = 'active' | 'completed' | 'cancelled'
 
 export type FbListing = {
-  order: zx.order['order']
+  order: SignedNftOrderV4Serialized
   status: FbListingState
   chain: SupportedNetworkEnum
   channelUrl?: string

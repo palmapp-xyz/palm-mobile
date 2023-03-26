@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react'
+import firestore from '@react-native-firebase/firestore'
+
 import {
   UserFacingERC721AssetDataSerializedV4,
   UserFacingERC20AssetDataSerializedV4,
   SignedNftOrderV4Serialized,
+  SignedNftOrderV4,
 } from 'evm-nft-swap'
 
 import { UTIL } from 'consts'
@@ -11,6 +14,7 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 import useAuth from 'hooks/independent/useAuth'
 import {
   ContractAddr,
+  FbListing,
   PostTxStatus,
   QueryKeyEnum,
   SupportedNetworkEnum,
@@ -21,6 +25,10 @@ import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
+import { serializeNftOrder } from 'libs/zx'
+import _ from 'lodash'
+import useFsChannel from 'hooks/firestore/useFsChannel'
 
 export type UseZxListNftReturn = {
   isApproved: boolean
@@ -34,10 +42,12 @@ const useZxListNft = ({
   nftContract,
   tokenId,
   chain,
+  channelUrl,
 }: {
   nftContract: ContractAddr
   tokenId: string
   chain: SupportedNetworkEnum
+  channelUrl: string
 }): UseZxListNftReturn => {
   const { navigation } = useAppNavigation()
   const { nftSwapSdk } = useZx(chain)
@@ -45,6 +55,8 @@ const useZxListNft = ({
 
   const { user } = useAuth(chain)
   const [price, setPrice] = useState<Token>('' as Token)
+
+  const { fsChannel } = useFsChannel({ channelUrl })
 
   const nftToSwap = useMemo(
     () =>
@@ -113,6 +125,62 @@ const useZxListNft = ({
     }
   }
 
+  const postOrder = async (
+    signedOrder: SignedNftOrderV4
+  ): Promise<PostOrderResponsePayload | undefined> => {
+    if (nftSwapSdk && fsChannel) {
+      const postedOrder: PostOrderResponsePayload =
+        chain !== SupportedNetworkEnum.KLAYTN
+          ? await nftSwapSdk.postOrder(signedOrder, nftSwapSdk.chainId)
+          : {
+              order: serializeNftOrder(signedOrder),
+              erc20Token: signedOrder.erc20Token,
+              erc20TokenAmount: signedOrder.erc20TokenAmount.toString(),
+              nftToken: nftToSwap.tokenAddress,
+              nftTokenId: nftToSwap.tokenId,
+              nftTokenAmount: '1',
+              nftType: nftToSwap.type,
+              sellOrBuyNft: 'sell',
+              chainId: _.toString(nftSwapSdk.chainId),
+              metadata: {},
+            }
+
+      const listing: FbListing = {
+        order: postedOrder.order,
+        status: 'active',
+        chain,
+        channelUrl,
+      }
+
+      // add the new listing item to the corresponding channel doc firestore
+      await fsChannel
+        .collection('listings')
+        .doc(postedOrder.order.nonce)
+        .set({
+          order: postedOrder.order,
+          status: 'active',
+          chain,
+          channelUrl,
+        } as FbListing)
+
+      // also add to listings collection for keeping track of listed channels for the nft
+      await firestore()
+        .collection('listings')
+        .doc(nftToSwap.tokenAddress)
+        .collection('orders')
+        .doc(postedOrder.order.nonce)
+        .set({
+          order: postedOrder.order,
+          channelUrl,
+          status: 'active',
+          chain,
+        } as FbListing)
+      return postedOrder
+    }
+
+    return undefined
+  }
+
   const onClickConfirm = async (): Promise<
     SignedNftOrderV4Serialized | undefined
   > => {
@@ -125,23 +193,25 @@ const useZxListNft = ({
         const order = nftSwapSdk.buildOrder(nftToSwap, priceOfNft, user.address)
 
         // Sign the order (User A signs since they are initiating the trade)
-        const signedOrder = await nftSwapSdk.signOrder(order)
+        const signedOrder: SignedNftOrderV4 = await nftSwapSdk.signOrder(order)
 
-        const postOrder = await nftSwapSdk.postOrder(
-          signedOrder,
-          nftSwapSdk.chainId
-        )
+        console.log('signedOrder', JSON.stringify(signedOrder, null, 2))
+
+        const postedOrder: PostOrderResponsePayload | undefined =
+          await postOrder(signedOrder)
+
+        console.log(JSON.stringify(postedOrder, null, 2))
 
         setPostTxResult({
           status: PostTxStatus.DONE,
           chain,
         })
         navigation.replace(Routes.ZxNftDetail, {
-          nonce: postOrder.order.nonce,
+          nonce: postedOrder!.order.nonce,
           chain,
         })
 
-        return postOrder.order
+        return postedOrder!.order
       } catch (error) {
         setPostTxResult({
           status: PostTxStatus.ERROR,
