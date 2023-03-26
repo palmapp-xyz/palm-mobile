@@ -4,7 +4,8 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { COLOR } from 'consts'
 
 const GroupChannelItem = ({
   channelUrl,
@@ -21,16 +22,27 @@ const GroupChannelItem = ({
 
   return (
     <TouchableOpacity
-      style={{ width: '100%', padding: 12 }}
+      style={styles.container}
       onPress={(): void => {
         if (!channelUrl || !channel) {
           return
         }
         navigation.navigate(Routes.GroupChannel, { channelUrl })
       }}>
-      <Text>{channel.name}</Text>
+      <Text>{channel.url}</Text>
     </TouchableOpacity>
   )
 }
 
 export default GroupChannelItem
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 10,
+    backgroundColor: COLOR.primary._100,
+    borderWidth: 2,
+    borderColor: COLOR.gray._400,
+  },
+})

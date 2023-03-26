@@ -98,13 +98,21 @@ const NftDetails = ({
             {isMine && (
               <View style={styles.item}>
                 <Text style={styles.headText}>Listed Channels</Text>
-                <NftListingChannels nftContract={nftContract} />
+                <NftListingChannels
+                  nftContract={nftContract}
+                  tokenId={tokenId}
+                />
               </View>
             )}
           </View>
         </View>
         {onSubmit && (
           <SubmitButton
+            containerStyle={{
+              marginBottom: 50,
+              marginHorizontal: 30,
+              marginTop: 0,
+            }}
             network={SupportedNetworkEnum.ETHEREUM}
             onPress={(): Promise<void> => onSubmit(uri, metadata)}>
             {isMine ? 'Cancel' : 'Buy'}

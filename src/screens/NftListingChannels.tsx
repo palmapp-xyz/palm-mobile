@@ -8,9 +8,11 @@ import GroupChannelItem from 'components/GroupChannelItem'
 
 const NftListingChannels = ({
   nftContract,
+  tokenId,
   containerStyle,
 }: {
   nftContract: ContractAddr
+  tokenId: string
   containerStyle?: StyleProp<ViewStyle>
 }): ReactElement => {
   const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
@@ -23,6 +25,7 @@ const NftListingChannels = ({
       await firestore()
         .collection('listings')
         .where('nftContract', '==', nftContract)
+        .where('tokenId', '==', tokenId)
         .get()
         .then(ordersSnapshot => {
           ordersSnapshot.forEach(orderSnapshot => {
@@ -45,7 +48,7 @@ const NftListingChannels = ({
 
   return activeListedChannels.length > 0 ? (
     <FlatList
-      style={containerStyle}
+      contentContainerStyle={[{ gap: 10, marginVertical: 10 }, containerStyle]}
       scrollEnabled={false}
       data={activeListedChannels}
       keyExtractor={(_, index): string => `active-listing-${index}`}

@@ -146,6 +146,8 @@ const useZxListNft = ({
             }
 
       const listing: FbListing = {
+        nftContract: nftToSwap.tokenAddress as ContractAddr,
+        tokenId: nftToSwap.tokenId,
         order: postedOrder,
         status: 'active',
         channelUrl,

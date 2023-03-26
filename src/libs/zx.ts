@@ -39,7 +39,7 @@ export const serializeNftOrder = (
       erc1155TokenId: signedOrder.erc1155TokenId.toString(),
     }
   } else {
-    console.log(
+    console.error(
       'unknown order format type (not erc721 and not erc1155',
       signedOrder
     )
