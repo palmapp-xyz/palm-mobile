@@ -25,7 +25,7 @@ const ZxNftDetailScreen = (): ReactElement => {
     navigation,
     params: { nonce, channelUrl, chain },
   } = useAppNavigation<Routes.ZxNftDetail>()
-  const { order } = useZxOrder({ nonce: nonce, chain: chain })
+  const { order } = useZxOrder({ nonce, chain })
 
   const queryClient = useQueryClient()
 
@@ -40,9 +40,14 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   const { onClickConfirm: onClickCancel } = useZxCancelNft(
     channelUrl ?? '',
+    nonce,
     chain
   )
-  const { onClickConfirm: onClickBuy } = useZxBuyNft(channelUrl ?? '', chain)
+  const { onClickConfirm: onClickBuy } = useZxBuyNft(
+    channelUrl ?? '',
+    nonce,
+    chain
+  )
 
   const onSubmit = async (
     nftImageUri: string | undefined,

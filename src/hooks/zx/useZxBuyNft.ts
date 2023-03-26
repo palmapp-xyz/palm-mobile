@@ -1,16 +1,18 @@
 import { ethers } from 'ethers'
 import { useSetRecoilState } from 'recoil'
-import firestore from '@react-native-firebase/firestore'
-
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
+import {
+  FbListing,
+  PostTxStatus,
+  SupportedNetworkEnum,
+  TrueOrErrReturn,
+} from 'types'
 import useZx from './useZx'
 import _ from 'lodash'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
-import { getOrderTokenAddress } from 'libs/zx'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import useFsListing from 'hooks/firestore/useFsListing'
 
 export type UseZxBuyNftReturn = {
   onClickConfirm: ({
@@ -22,13 +24,14 @@ export type UseZxBuyNftReturn = {
 
 const useZxBuyNft = (
   channelUrl: string,
+  nonce: string,
   chain: SupportedNetworkEnum
 ): UseZxBuyNftReturn => {
   const { nftSwapSdk } = useZx(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
-  const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl)
+  const { fsChannel } = useFsChannel({ channelUrl })
+  const { fsListing } = useFsListing({ nonce })
 
   const onClickConfirm = async ({
     order,
@@ -59,21 +62,18 @@ const useZxBuyNft = (
         })
 
         try {
-          if (channel) {
+          if (fsChannel) {
             // add the new listing item to the corresponding channel doc firestore
-            await firestore()
-              .collection('channels')
-              .doc(channel.url)
+            await fsChannel
               .collection('listings')
               .doc(order.nonce)
-              .set({ status: 'completed' })
+              .update({ status: 'completed' } as Partial<FbListing>)
           }
-          await firestore()
-            .collection('listings')
-            .doc(getOrderTokenAddress(order))
-            .collection('orders')
-            .doc(order.nonce)
-            .set({ status: 'completed' })
+          if (fsListing) {
+            await fsListing.update({
+              status: 'completed',
+            } as Partial<FbListing>)
+          }
         } catch (e) {
           console.error(e)
         }

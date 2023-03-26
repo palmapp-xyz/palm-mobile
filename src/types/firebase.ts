@@ -1,14 +1,13 @@
 import { ChannelType } from '@sendbird/chat'
 import { ContractAddr } from './contracts'
 import { SupportedNetworkEnum } from './network'
-import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 
 export type FbListingState = 'active' | 'completed' | 'cancelled'
 
 export type FbListing = {
-  order: SignedNftOrderV4Serialized
+  order: PostOrderResponsePayload
   status: FbListingState
-  chain: SupportedNetworkEnum
   channelUrl?: string
 }
 
@@ -22,4 +21,6 @@ export type FbChannelField = {
 export enum FirestoreKeyEnum {
   Channel = 'Channel',
   ChannelField = 'ChannelField',
+  Listing = 'Listing',
+  ListingField = 'ListingField',
 }

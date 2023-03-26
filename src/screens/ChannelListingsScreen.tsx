@@ -14,11 +14,12 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { FbListing } from 'types'
+import { FbListing, SupportedNetworkEnum } from 'types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { getOrderTokenAddress, getOrderTokenId } from 'libs/zx'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ChannelListings>()
@@ -75,6 +76,9 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
             contentContainerStyle={{ gap: 10 }}
             columnWrapperStyle={{ gap: 10 }}
             renderItem={({ item: listing }): ReactElement => {
+              const chain: SupportedNetworkEnum =
+                chainIdToSupportedNetworkEnum(listing.order.chainId || '0x1') ||
+                SupportedNetworkEnum.ETHEREUM
               return (
                 <TouchableOpacity
                   style={{
@@ -84,16 +88,16 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
                   }}
                   onPress={async (): Promise<void> => {
                     navigation.navigate(Routes.ZxNftDetail, {
-                      nonce: listing.order.nonce,
-                      chain: listing.chain,
+                      nonce: listing.order.order.nonce,
+                      chain,
                     })
                   }}>
                   <NftRenderer
-                    tokenId={getOrderTokenId(listing.order)}
-                    nftContract={getOrderTokenAddress(listing.order)}
+                    tokenId={getOrderTokenId(listing.order.order)}
+                    nftContract={getOrderTokenAddress(listing.order.order)}
                     width={150}
                     height={150}
-                    chain={listing.chain}
+                    chain={chain}
                   />
                 </TouchableOpacity>
               )

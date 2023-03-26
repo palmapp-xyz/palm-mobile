@@ -22,8 +22,7 @@ const NftListingChannels = ({
     try {
       await firestore()
         .collection('listings')
-        .doc(nftContract)
-        .collection('orders')
+        .where('nftContract', '==', nftContract)
         .get()
         .then(ordersSnapshot => {
           ordersSnapshot.forEach(orderSnapshot => {

@@ -146,9 +146,8 @@ const useZxListNft = ({
             }
 
       const listing: FbListing = {
-        order: postedOrder.order,
+        order: postedOrder,
         status: 'active',
-        chain,
         channelUrl,
       }
 
@@ -156,25 +155,13 @@ const useZxListNft = ({
       await fsChannel
         .collection('listings')
         .doc(postedOrder.order.nonce)
-        .set({
-          order: postedOrder.order,
-          status: 'active',
-          chain,
-          channelUrl,
-        } as FbListing)
+        .set(listing)
 
       // also add to listings collection for keeping track of listed channels for the nft
       await firestore()
         .collection('listings')
-        .doc(nftToSwap.tokenAddress)
-        .collection('orders')
         .doc(postedOrder.order.nonce)
-        .set({
-          order: postedOrder.order,
-          channelUrl,
-          status: 'active',
-          chain,
-        } as FbListing)
+        .set(listing)
       return postedOrder
     }
 

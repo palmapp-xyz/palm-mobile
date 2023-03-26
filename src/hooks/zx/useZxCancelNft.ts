@@ -1,14 +1,12 @@
 import firestore from '@react-native-firebase/firestore'
 
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
-import { PostTxStatus, SupportedNetworkEnum } from 'types'
+import { FbListing, PostTxStatus, SupportedNetworkEnum } from 'types'
 import useZx from './useZx'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
-import { getOrderTokenAddress } from 'libs/zx'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import useFsListing from 'hooks/firestore/useFsListing'
 
 export type UseZxCancelNftReturn = {
   onClickConfirm: ({
@@ -20,13 +18,14 @@ export type UseZxCancelNftReturn = {
 
 const useZxCancelNft = (
   channelUrl: string,
+  nonce: string,
   chain: SupportedNetworkEnum
 ): UseZxCancelNftReturn => {
   const { nftSwapSdk } = useZx(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
-  const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl)
+  const { fsChannel } = useFsChannel({ channelUrl })
+  const { fsListing } = useFsListing({ nonce })
 
   const onClickConfirm = async ({
     order,
@@ -53,20 +52,17 @@ const useZxCancelNft = (
       })
 
       try {
-        if (channel) {
+        if (fsChannel) {
           await firestore()
             .collection('channels')
-            .doc(channel.url)
+            .doc(channelUrl)
             .collection('listings')
             .doc(order.nonce)
-            .update({ status: 'cancelled' })
+            .update({ status: 'cancelled' } as Partial<FbListing>)
         }
-        await firestore()
-          .collection('listings')
-          .doc(getOrderTokenAddress(order))
-          .collection('orders')
-          .doc(order.nonce)
-          .update({ status: 'cancelled' })
+        if (fsListing) {
+          await fsListing.update({ status: 'cancelled' } as Partial<FbListing>)
+        }
       } catch (e) {
         console.error(e)
       }
