@@ -76,6 +76,7 @@ const MyPageScreen = (): ReactElement => {
       if (res.success) {
         const txHash = res.value
         console.log(`updateProfileImage tx hash ${txHash}`)
+        await useLensProfileReturn.refetch()
       } else {
         console.error(`updateProfileImage error ${res.errMsg}`)
       }

@@ -90,6 +90,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
           <View style={{ rowGap: 10, padding: 20 }}>
             <Text style={styles.headText}>Bio</Text>
             <FormInput
+              style={{ height: 150, paddingTop: 10, paddingBottom: 10 }}
               placeholder="Input your bio"
               value={updatedProfile?.bio || ''}
               onChangeText={(bio: string): void => {

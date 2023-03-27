@@ -20,7 +20,6 @@ const useAuthLogin = (): UseMainAccountReturn => {
     const res = await login({ password })
     if (res.success === false) {
       console.error('useMainAccount:onClickConfirm', res.errMsg)
-      console.log()
       Alert.alert('Login Failed', res.errMsg)
     }
   }

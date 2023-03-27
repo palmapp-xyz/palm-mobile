@@ -8,6 +8,7 @@ import {
   ProfileMetadata,
   Search,
 } from '@lens-protocol/react-native-lens-ui-kit'
+import firestore from '@react-native-firebase/firestore'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
@@ -18,7 +19,7 @@ import useLens from 'hooks/lens/useLens'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { Profile } from 'graphqls/__generated__/graphql'
-import { createFsProfile } from 'libs/firebase'
+import { ContractAddr, User } from 'types'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
@@ -40,7 +41,20 @@ const LensFriendsScreen = (): ReactElement => {
       return
     }
 
-    await createFsProfile(profile.ownedBy, profile as Profile)
+    const fsProfile = firestore().collection('profiles').doc(profile.ownedBy)
+    const fsProfileDoc = await fsProfile.get()
+
+    let fsUser: User = {
+      address: profile.ownedBy as ContractAddr,
+      lensProfile: profile as Profile,
+      ...(profile as Profile),
+    }
+
+    if (!fsProfileDoc.exists) {
+      await fsProfile.set(fsUser)
+    } else {
+      fsUser = (await fsProfileDoc.data()) as User
+    }
 
     // create sendbird user by connecting
     const newUser = await connect(profile.ownedBy)
