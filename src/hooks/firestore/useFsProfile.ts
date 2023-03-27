@@ -5,12 +5,14 @@ import firestore, {
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { ContractAddr, FirestoreKeyEnum, User } from 'types'
 import { useMemo } from 'react'
+import { Profile } from 'graphqls/__generated__/graphql'
 
 export type UseFsProfileReturn = {
   fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
   fsProfileField?: User
   isFetching: boolean
-  refetch: () => void
+  refetch: () => Promise<void>
+  createFsProfile: (address: string, lensProfile?: Profile) => Promise<User>
 }
 
 const useFsProfile = ({
@@ -74,7 +76,33 @@ const useFsProfile = ({
     refetchField()
   }
 
-  return { fsProfile, fsProfileField, refetch, isFetching }
+  const createFsProfile = async (
+    userAddress: string,
+    lensProfile?: Profile
+  ): Promise<User> => {
+    const profile = firestore().collection('profiles').doc(userAddress)
+    const profileDoc = await profile.get()
+
+    let fsUser: User = {
+      address: userAddress as ContractAddr,
+      lensProfile,
+      ...lensProfile,
+    }
+    if (!profileDoc.exists) {
+      await firestore().collection('profiles').doc(userAddress).set(fsUser)
+    } else {
+      fsUser = (await profileDoc.data()) as User
+    }
+    return fsUser
+  }
+
+  return {
+    fsProfile,
+    fsProfileField,
+    createFsProfile,
+    refetch,
+    isFetching,
+  }
 }
 
 export default useFsProfile

@@ -15,32 +15,43 @@ import useAuth from 'hooks/independent/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import useLens from 'hooks/lens/useLens'
-import { getProfileImgFromLensProfile } from 'libs/lens'
+import { getProfileImgFromProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import { Profile } from 'graphqls/__generated__/graphql'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
   const { connect } = useConnection()
   const { user } = useAuth()
   const { createGroupChatIfNotExist } = useSendbird()
-  const { updateCurrentUserInfo } = useSendbirdChat()
+  const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getDefaultProfile } = useLens()
+  const { createFsProfile } = useFsProfile({})
 
   const { data: lensProfile } = useReactQuery(
     ['getDefaultProfile', user?.address],
     () => getDefaultProfile(user?.address ?? '')
   )
 
-  const createSendbirdUserFromProfile = async (
+  const createUserFromProfile = async (
     profile: ExtendedProfile
   ): Promise<void> => {
     if (!user) {
       return
     }
-    await connect(profile.ownedBy)
-    const profileImg = await getProfileImgFromLensProfile(profile)
+
+    await createFsProfile(profile.ownedBy, profile as Profile)
+
+    // create sendbird user by connecting
+    const newUser = await connect(profile.ownedBy)
+    setCurrentUser(newUser)
+    const profileImg = getProfileImgFromProfile(profile)
     await updateCurrentUserInfo(profile.handle, profileImg)
-    await connect(user?.address)
+
+    // reconnect back to self
+    const me = await connect(user?.address)
+    setCurrentUser(me)
   }
 
   const goToProfileChat = async (profile: ExtendedProfile): Promise<void> => {
@@ -48,7 +59,7 @@ const LensFriendsScreen = (): ReactElement => {
       return
     }
     try {
-      await createSendbirdUserFromProfile(profile)
+      await createUserFromProfile(profile)
       await createGroupChatIfNotExist(
         profile.ownedBy,
         [user?.address],

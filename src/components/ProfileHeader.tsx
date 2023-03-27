@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -13,18 +13,19 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncLayoutEffect } from '@sendbird/uikit-utils'
 
 import { COLOR, UTIL } from 'consts'
-import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
+import { ContractAddr, SupportedNetworkEnum, User, pToken } from 'types'
 import images from 'assets/images'
 
 import { Routes } from 'libs/navigation'
 import { Card, FormButton, FormImage, MediaRenderer, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import useEthPrice from 'hooks/independent/useEthPrice'
-import { getProfileImgFromLensProfile } from 'libs/lens'
+import { getProfileImgFromProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import { Profile } from 'graphqls/__generated__/graphql'
 
 const ProfileHeader = ({
   userAddress,
@@ -39,11 +40,13 @@ const ProfileHeader = ({
 }): ReactElement => {
   const { navigation } = useAppNavigation()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
-  const { user } = useMyPageMain({ selectedNetwork })
   const { getEthPrice } = useEthPrice()
   const { profile } = useLensProfile({ userAddress })
-
-  const [profileImg, setProfileImg] = useState<string | undefined>()
+  const { fsProfileField } = useFsProfile({
+    address: userAddress,
+  })
+  const userProfile: Profile | User | undefined = profile || fsProfileField
+  const profileImg = getProfileImgFromProfile(userProfile)
 
   const { ethBalance } = useUserBalance({
     address: userAddress,
@@ -51,18 +54,11 @@ const ProfileHeader = ({
   })
 
   useAsyncLayoutEffect(async () => {
-    const res = await getProfileImgFromLensProfile(profile)
-    if (res) {
-      setProfileImg(res)
-    }
-  }, [profile])
-
-  useAsyncLayoutEffect(async () => {
-    if (profileImg && isMyPage) {
-      const me = await updateCurrentUserInfo(profile?.handle, profileImg)
+    if (userProfile && isMyPage) {
+      const me = await updateCurrentUserInfo(userProfile.handle, profileImg)
       setCurrentUser(me)
     }
-  }, [profileImg, user])
+  }, [profileImg])
 
   return (
     <View style={styles.container}>
@@ -118,7 +114,7 @@ const ProfileHeader = ({
               navigation.navigate(Routes.UpdateLensProfile)
             }}>
             <Card style={styles.profileNicknameCard}>
-              <Text style={{ color: 'black' }}>{profile?.handle}</Text>
+              <Text style={{ color: 'black' }}>{userProfile?.handle}</Text>
             </Card>
           </TouchableOpacity>
         </View>
@@ -164,13 +160,13 @@ const ProfileHeader = ({
               </View>
             </View>
           </Row>
-          {!!profile?.attributes?.length && (
+          {!!userProfile?.attributes?.length && (
             <View
               style={{
                 padding: 6,
               }}>
               <FlatList
-                data={profile.attributes}
+                data={userProfile.attributes}
                 keyExtractor={(_, index): string =>
                   `profile-attribute-${index}`
                 }
@@ -205,7 +201,7 @@ const ProfileHeader = ({
               borderColor: COLOR.gray._400,
               borderRadius: 20,
             }}>
-            <Text>{profile?.bio || 'Tell us something about you!'}</Text>
+            <Text>{userProfile?.bio || 'Tell us something about you!'}</Text>
           </View>
         </Card>
       </ImageBackground>

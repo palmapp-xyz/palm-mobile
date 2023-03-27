@@ -1,6 +1,5 @@
 import { useRecoilState } from 'recoil'
-import firestore from '@react-native-firebase/firestore'
-import { useConnection } from '@sendbird/uikit-react-native'
+import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { SendbirdUser } from '@sendbird/uikit-utils'
 
 import _ from 'lodash'
@@ -9,13 +8,9 @@ import useWeb3 from 'hooks/complex/useWeb3'
 import { savePkey, getPkeyPwd, getPkey } from 'libs/account'
 import appStore from 'store/appStore'
 
-import {
-  ContractAddr,
-  SupportedNetworkEnum,
-  TrueOrErrReturn,
-  User,
-} from 'types'
+import { SupportedNetworkEnum, TrueOrErrReturn, User } from 'types'
 import { formatHex } from 'libs/utils'
+import useFsProfile from 'hooks/firestore/useFsProfile'
 
 export type UseAuthReturn = {
   user?: User
@@ -28,24 +23,9 @@ export type UseAuthReturn = {
 const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const [user, setUser] = useRecoilState(appStore.user)
   const { web3 } = useWeb3(chain ?? SupportedNetworkEnum.ETHEREUM)
+  const { createFsProfile: createUser } = useFsProfile({})
   const { connect, disconnect } = useConnection()
-
-  const authenticateUser = async (address: string): Promise<void> => {
-    const profile = firestore().collection('profiles').doc(address)
-    const profileDoc = await profile.get()
-
-    let fsUser: User = {
-      address: address as ContractAddr,
-    }
-    if (!profileDoc.exists) {
-      await firestore().collection('profiles').doc(address).set(fsUser)
-    } else {
-      fsUser = (await profileDoc.data()) as User
-    }
-
-    const sbUser: SendbirdUser = await connect(address)
-    setUser({ ...fsUser, sbUser })
-  }
+  const { setCurrentUser } = useSendbirdChat()
 
   const register = async ({
     privateKey,
@@ -56,7 +36,10 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   }): Promise<void> => {
     const account = web3.eth.accounts.privateKeyToAccount(formatHex(privateKey))
     await savePkey(privateKey, password)
-    await authenticateUser(account.address)
+    const fsUser: User = await createUser(account.address)
+    const sbUser: SendbirdUser = await connect(account.address)
+    setCurrentUser(sbUser)
+    setUser({ ...fsUser, sbUser })
   }
 
   const login = async ({
@@ -69,7 +52,10 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
       if (savedPwd === password) {
         const privateKey = await getPkey()
         const account = web3.eth.accounts.privateKeyToAccount(privateKey)
-        await authenticateUser(account.address)
+        const fsUser: User = await createUser(account.address)
+        const sbUser: SendbirdUser = await connect(account.address)
+        setCurrentUser(sbUser)
+        setUser({ ...fsUser, sbUser })
         return { success: true, value: '' }
       } else {
         return { success: false, errMsg: 'Invalid password' }
@@ -88,6 +74,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
 
   const logout = async (): Promise<void> => {
     await disconnect()
+    setCurrentUser(undefined)
     setUser(undefined)
   }
 

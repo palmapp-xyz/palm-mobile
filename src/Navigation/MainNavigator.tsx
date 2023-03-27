@@ -27,6 +27,7 @@ import {
   TokenGatingInfoScreen,
   FileViewerScreen,
   CreateLensProfileScreen,
+  CreateProfileScreen,
   UpdateLensProfileScreen,
 } from '../screens'
 import useAuth from 'hooks/independent/useAuth'
@@ -35,7 +36,6 @@ import { useQuery } from 'react-query'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import { NetworkSettingEnum, User } from 'types'
 import useSetting from 'hooks/independent/useSetting'
-import CreateProfileScreen from 'screens/CreateProfileScreen'
 
 const MainStack = createNativeStackNavigator()
 
@@ -59,7 +59,7 @@ const MainNavigator = (): ReactElement => {
     () => {
       refetchLensProfile()
     },
-    { enabled: !profile, refetchInterval: 1000 }
+    { enabled: user && !profile, refetchInterval: 1000 }
   )
 
   useQuery(
@@ -67,10 +67,13 @@ const MainNavigator = (): ReactElement => {
     () => {
       refetchFsProfile()
     },
-    { enabled: !fsProfile, refetchInterval: 1000 }
+    { enabled: user && !fsProfile, refetchInterval: 1000 }
   )
 
   useAsyncEffect(async () => {
+    if (!user) {
+      return
+    }
     if (profile && fsProfile) {
       await fsProfile.set({
         address: user?.address,
@@ -79,7 +82,7 @@ const MainNavigator = (): ReactElement => {
       } as User)
       refetchFsProfile()
     }
-  }, [profile, fsProfile])
+  }, [user, profile, fsProfile])
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>

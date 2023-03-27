@@ -1,11 +1,12 @@
 import { Profile } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { fixIpfsURL } from './ipfs'
+import { User } from 'types'
 
-export const getProfileImgFromLensProfile = async (
-  profile: Profile | undefined
-): Promise<string | undefined> => {
+export const getProfileImgFromProfile = (
+  profile: Profile | User | undefined
+): string | undefined => {
   if (!profile) {
-    return
+    return undefined
   }
   const profileImg =
     profile.picture?.__typename === 'MediaSet'

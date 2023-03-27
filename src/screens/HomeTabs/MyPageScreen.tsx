@@ -21,6 +21,8 @@ import useLensProfile from 'hooks/lens/useLensProfile'
 import ProfileFooter from 'components/ProfileFooter'
 import useLens from 'hooks/lens/useLens'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import { NETWORK } from 'consts'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -39,6 +41,10 @@ const MyPageScreen = (): ReactElement => {
 
   const useLensProfileReturn = useLensProfile({ userAddress: user?.address })
   const { updateProfileImage } = useLens()
+
+  const { fsProfile, refetch: refetchFsProfile } = useFsProfile({
+    address: user?.address,
+  })
 
   const profileHeader = useCallback(
     () => (
@@ -78,6 +84,21 @@ const MyPageScreen = (): ReactElement => {
       metadata: selectedItem.metadata,
       tokenUri: selectedItem.token_uri,
     })
+
+    if (fsProfile) {
+      await fsProfile.update({
+        picture: {
+          __typename: 'NftImage',
+          chainId: NETWORK.chainIds[selectedNetwork],
+          contractAddress: selectedItem.token_address,
+          tokenId: selectedItem.token_id,
+          uri: image,
+          verified: false,
+        },
+      })
+      await refetchFsProfile()
+    }
+
     const me = await updateCurrentUserInfo(undefined, image)
     setCurrentUser(me)
   }
@@ -92,6 +113,7 @@ const MyPageScreen = (): ReactElement => {
             useMyNftListReturn.refetch()
             useMyBalanceReturn.refetch()
             useLensProfileReturn.refetch()
+            refetchFsProfile()
           }}
         />
       }
