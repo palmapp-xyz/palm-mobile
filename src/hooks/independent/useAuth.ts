@@ -1,4 +1,4 @@
-import { SetterOrUpdater, useRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { SendbirdUser } from '@sendbird/uikit-utils'
 
@@ -10,11 +10,10 @@ import appStore from 'store/appStore'
 
 import { SupportedNetworkEnum, TrueOrErrReturn, User } from 'types'
 import { formatHex } from 'libs/utils'
-import useFsProfile from 'hooks/firestore/useFsProfile'
+import { createFsProfile } from 'libs/firebase'
 
 export type UseAuthReturn = {
   user?: User
-  setUser: SetterOrUpdater<User | undefined>
   register: (props: { privateKey: string; password: string }) => Promise<void>
   login: ({ password }: { password: string }) => Promise<TrueOrErrReturn>
   setAccToken: (accessToken: string) => void
@@ -24,7 +23,6 @@ export type UseAuthReturn = {
 const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const [user, setUser] = useRecoilState(appStore.user)
   const { web3 } = useWeb3(chain ?? SupportedNetworkEnum.ETHEREUM)
-  const { createFsProfile: createUser } = useFsProfile({})
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
 
@@ -37,10 +35,11 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   }): Promise<void> => {
     const account = web3.eth.accounts.privateKeyToAccount(formatHex(privateKey))
     await savePkey(privateKey, password)
-    const fsUser: User = await createUser(account.address)
+    const fsUser: User = await createFsProfile(account.address)
     const sbUser: SendbirdUser = await connect(account.address)
     setCurrentUser(sbUser)
     setUser({ ...fsUser, sbUser })
+    console.log({ ...fsUser, sbUser })
   }
 
   const login = async ({
@@ -53,7 +52,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
       if (savedPwd === password) {
         const privateKey = await getPkey()
         const account = web3.eth.accounts.privateKeyToAccount(privateKey)
-        const fsUser: User = await createUser(account.address)
+        const fsUser: User = await createFsProfile(account.address)
         const sbUser: SendbirdUser = await connect(account.address)
         setCurrentUser(sbUser)
         setUser({ ...fsUser, sbUser })
@@ -79,7 +78,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     setUser(undefined)
   }
 
-  return { user, setUser, register, login, setAccToken, logout }
+  return { user, register, login, setAccToken, logout }
 }
 
 export default useAuth

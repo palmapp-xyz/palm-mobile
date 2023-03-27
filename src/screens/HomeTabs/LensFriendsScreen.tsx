@@ -17,8 +17,8 @@ import { GroupChannel } from '@sendbird/chat/groupChannel'
 import useLens from 'hooks/lens/useLens'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
-import useFsProfile from 'hooks/firestore/useFsProfile'
 import { Profile } from 'graphqls/__generated__/graphql'
+import { createFsProfile } from 'libs/firebase'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
@@ -27,7 +27,6 @@ const LensFriendsScreen = (): ReactElement => {
   const { createGroupChatIfNotExist } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getDefaultProfile } = useLens()
-  const { createFsProfile } = useFsProfile({})
 
   const { data: lensProfile } = useReactQuery(
     ['getDefaultProfile', user?.address],
