@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil'
+import { SetterOrUpdater, useRecoilState } from 'recoil'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { SendbirdUser } from '@sendbird/uikit-utils'
 
@@ -14,6 +14,7 @@ import useFsProfile from 'hooks/firestore/useFsProfile'
 
 export type UseAuthReturn = {
   user?: User
+  setUser: SetterOrUpdater<User | undefined>
   register: (props: { privateKey: string; password: string }) => Promise<void>
   login: ({ password }: { password: string }) => Promise<TrueOrErrReturn>
   setAccToken: (accessToken: string) => void
@@ -78,7 +79,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     setUser(undefined)
   }
 
-  return { user, register, login, setAccToken, logout }
+  return { user, setUser, register, login, setAccToken, logout }
 }
 
 export default useAuth

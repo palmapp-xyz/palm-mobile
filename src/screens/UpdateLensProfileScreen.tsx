@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { COLOR } from 'consts'
-import { Container, FormButton, Header } from 'components'
+import { Container, FormButton, FormInput, Header } from 'components'
 import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
@@ -40,7 +40,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
 
   const userProfile: Profile | User | undefined = profile || fsProfileField
 
-  const [updatedProfile, _setUpdatedProfile] = useState<
+  const [updatedProfile, setUpdatedProfile] = useState<
     Profile | User | undefined
   >(profile || fsProfileField)
 
@@ -75,7 +75,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title="Update lens profile"
+        title="Update Profile"
         left={
           <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
         }
@@ -87,26 +87,18 @@ const UpdateLensProfileScreen = (): ReactElement => {
         </View>
       ) : (
         <View style={styles.body}>
-          <View style={{ paddingTop: 30, alignItems: 'center' }}>
-            <Text style={styles.text}>{'Your lens Profile'}</Text>
-          </View>
-          <View
-            style={{
-              height: 400,
-              overflow: 'scroll',
-              backgroundColor: 'white',
-            }}>
-            <Text style={styles.text}>
-              {JSON.stringify(
-                {
-                  bio: userProfile?.bio,
-                  name: userProfile?.name,
-                  attributes: userProfile?.attributes,
-                },
-                null,
-                2
-              )}
-            </Text>
+          <View style={{ rowGap: 10, padding: 20 }}>
+            <Text style={styles.headText}>Bio</Text>
+            <FormInput
+              placeholder="Input your bio"
+              value={updatedProfile?.bio || ''}
+              onChangeText={(bio: string): void => {
+                setUpdatedProfile({ ...updatedProfile, bio } as User)
+              }}
+              textContentType="none"
+              multiline
+              secureTextEntry
+            />
           </View>
           <FormButton disabled={isFetching || loading} onPress={onClickConfirm}>
             Update profile
@@ -131,5 +123,9 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     textAlign: 'center',
+  },
+  headText: {
+    fontWeight: 'bold',
+    margin: 4,
   },
 })

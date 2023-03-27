@@ -42,7 +42,7 @@ const MainStack = createNativeStackNavigator()
 const MainNavigator = (): ReactElement => {
   const { setting } = useSetting()
 
-  const { user } = useAuth()
+  const { user, setUser } = useAuth()
   const { profile, refetch: refetchLensProfile } = useLensProfile({
     userAddress: user?.address,
   })
@@ -80,9 +80,9 @@ const MainNavigator = (): ReactElement => {
         lensProfile: profile,
         ...profile,
       } as User)
-      refetchFsProfile()
+      await refetchFsProfile()
     }
-  }, [user, profile, fsProfile])
+  }, [profile, fsProfile])
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import useAuth from 'hooks/independent/useAuth'
+import { Alert } from 'react-native'
 
 export type UseMainAccountReturn = {
   password: string
@@ -12,7 +12,6 @@ export type UseMainAccountReturn = {
 
 const useAuthLogin = (): UseMainAccountReturn => {
   const { login } = useAuth()
-  const { alert } = useAlert()
   const [password, setPassword] = useState('')
 
   const isValidForm = !!password
@@ -21,7 +20,8 @@ const useAuthLogin = (): UseMainAccountReturn => {
     const res = await login({ password })
     if (res.success === false) {
       console.error('useMainAccount:onClickConfirm', res.errMsg)
-      alert({ message: res.errMsg })
+      console.log()
+      Alert.alert('Login Failed', res.errMsg)
     }
   }
 
