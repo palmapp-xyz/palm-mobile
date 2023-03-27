@@ -110,10 +110,12 @@ const MyPageScreen = (): ReactElement => {
           refreshing={useMyNftListReturn.isRefetching}
           onRefresh={(): void => {
             useMyNftListReturn.remove()
-            useMyNftListReturn.refetch()
-            useMyBalanceReturn.refetch()
-            useLensProfileReturn.refetch()
-            refetchFsProfile()
+            Promise.all([
+              useMyNftListReturn.refetch(),
+              useMyBalanceReturn.refetch(),
+              useLensProfileReturn.refetch(),
+              refetchFsProfile(),
+            ])
           }}
         />
       }

@@ -46,6 +46,7 @@ import {
   HasTxHashBeenIndexedDocument,
   HasTxHashBeenIndexedQuery,
   HasTxHashBeenIndexedRequest,
+  TransactionReceipt,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
 import useNetwork from 'hooks/complex/useNetwork'
@@ -95,6 +96,12 @@ export type UseLensReturn = {
           txId: string
         }
   ) => Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
+  setMetadata: (profile: Profile) => Promise<
+    TrueOrErrReturn<{
+      txHash: string
+      txId: string
+    }>
+  >
 }
 
 const useLens = (): UseLensReturn => {
@@ -485,6 +492,100 @@ const useLens = (): UseLensReturn => {
     }
   }
 
+  const setMetadata = async (
+    profile: Profile
+  ): Promise<
+    TrueOrErrReturn<{
+      txHash: any
+      txId: any
+    }>
+  > => {
+    try {
+      // TODO: uplodate updated profile metadata to ipfs
+      const createMetadataRequest: CreatePublicSetProfileMetadataUriRequest = {
+        profileId: profile.id,
+        metadata:
+          'https://lens.infura-ipfs.io/ipfs/QmPZufGcsXtnV4VKLD3bnUPh8ovzKhQgtgeDYptc2rWHmZ',
+      }
+      let value: {
+        txHash: any
+        txId: any
+      }
+      // this means it they have not setup the dispatcher, if its a no you must use broadcast
+      if (profile?.dispatcher?.canUseRelay) {
+        const dispatcherResult =
+          await createSetProfileMetadataViaDispatcherRequest(
+            createMetadataRequest
+          )
+        console.log(
+          'create profile metadata via dispatcher: createPostViaDispatcherRequest',
+          dispatcherResult
+        )
+
+        if (dispatcherResult.__typename !== 'RelayerResult') {
+          console.error(
+            'create profile metadata via dispatcher: failed',
+            dispatcherResult
+          )
+          throw new Error('create profile metadata via dispatcher: failed')
+        }
+
+        value = {
+          txHash: dispatcherResult.txHash,
+          txId: dispatcherResult.txId,
+        }
+      } else {
+        const signedResult = await signCreateSetProfileMetadataTypedData(
+          createMetadataRequest
+        )
+        console.log(
+          'create profile metadata via broadcast: signedResult',
+          signedResult
+        )
+
+        const broadcastResult = await broadcastRequest({
+          id: signedResult.result.id,
+          signature: signedResult.signature,
+        })
+
+        if (broadcastResult.__typename !== 'RelayerResult') {
+          console.error(
+            'create profile metadata via broadcast: failed',
+            broadcastResult
+          )
+          throw new Error('create profile metadata via broadcast: failed')
+        }
+
+        console.log(
+          'create profile metadata via broadcast: broadcastResult',
+          broadcastResult
+        )
+        value = { txHash: broadcastResult.txHash, txId: broadcastResult.txId }
+      }
+
+      console.log('create comment gasless', value)
+
+      console.log('create profile metadata: poll until indexed')
+      const indexedResult = await pollUntilIndexed({ txId: value.txId })
+
+      console.log('create profile metadata: profile has been indexed', value)
+
+      const logs =
+        indexedResult.txReceipt &&
+        'logs' in indexedResult?.txReceipt &&
+        (indexedResult.txReceipt as TransactionReceipt).logs
+
+      console.log('create profile metadata: logs', logs)
+
+      return {
+        success: true,
+        value,
+      }
+    } catch (error) {
+      return { success: false, errMsg: _.toString(error) }
+    }
+  }
+
   return {
     sign,
     getProfiles,
@@ -497,6 +598,7 @@ const useLens = (): UseLensReturn => {
     signCreateSetProfileMetadataTypedData,
     broadcastRequest,
     pollUntilIndexed,
+    setMetadata,
   }
 }
 

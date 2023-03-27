@@ -42,9 +42,11 @@ const useLensProfile = ({
 
   const refetch = async (): Promise<void> => {
     useProfilesReturn.remove()
-    useProfilesReturn.refetch()
     useDefaultProfileReturn.remove()
-    useDefaultProfileReturn.refetch()
+    await Promise.all([
+      useProfilesReturn.refetch(),
+      useDefaultProfileReturn.refetch(),
+    ])
   }
 
   const profile = useMemo(() => {

@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { COLOR } from 'consts'
 import { Container, FormButton, Header } from 'components'
@@ -8,110 +9,66 @@ import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
 
-import {
-  CreatePublicSetProfileMetadataUriRequest,
-  TransactionReceipt,
-} from 'graphqls/__generated__/graphql'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { SupportedNetworkEnum } from 'types'
+import { SupportedNetworkEnum, User } from 'types'
+import { Profile } from 'graphqls/__generated__/graphql'
+import useFsProfile from 'hooks/firestore/useFsProfile'
 
 const UpdateLensProfileScreen = (): ReactElement => {
   const [isFetching, setIsFetching] = useState(false)
 
   const { navigation } = useAppNavigation()
   const { user } = useAuth(SupportedNetworkEnum.ETHEREUM)
-  const {
-    createSetProfileMetadataViaDispatcherRequest,
-    signCreateSetProfileMetadataTypedData,
-    broadcastRequest,
-    pollUntilIndexed,
-  } = useLens()
+  const { setMetadata } = useLens()
+  const { alert } = useAlert()
 
-  const { profile, loading, refetch } = useLensProfile({
+  const {
+    profile,
+    loading,
+    refetch: refetchLensProfile,
+  } = useLensProfile({
     userAddress: user?.address,
   })
 
-  const setMetadata = async (
-    createMetadataRequest: CreatePublicSetProfileMetadataUriRequest
-  ): Promise<{
-    txHash: any
-    txId: any
-  }> => {
-    // this means it they have not setup the dispatcher, if its a no you must use broadcast
-    if (profile?.dispatcher?.canUseRelay) {
-      const dispatcherResult =
-        await createSetProfileMetadataViaDispatcherRequest(
-          createMetadataRequest
-        )
-      console.log(
-        'create profile metadata via dispatcher: createPostViaDispatcherRequest',
-        dispatcherResult
-      )
+  const {
+    fsProfile,
+    fsProfileField,
+    refetch: refetchFsProfile,
+  } = useFsProfile({
+    address: user?.address,
+  })
 
-      if (dispatcherResult.__typename !== 'RelayerResult') {
-        console.error(
-          'create profile metadata via dispatcher: failed',
-          dispatcherResult
-        )
-        throw new Error('create profile metadata via dispatcher: failed')
-      }
+  const userProfile: Profile | User | undefined = profile || fsProfileField
 
-      return { txHash: dispatcherResult.txHash, txId: dispatcherResult.txId }
-    } else {
-      const signedResult = await signCreateSetProfileMetadataTypedData(
-        createMetadataRequest
-      )
-      console.log(
-        'create profile metadata via broadcast: signedResult',
-        signedResult
-      )
-
-      const broadcastResult = await broadcastRequest({
-        id: signedResult.result.id,
-        signature: signedResult.signature,
-      })
-
-      if (broadcastResult.__typename !== 'RelayerResult') {
-        console.error(
-          'create profile metadata via broadcast: failed',
-          broadcastResult
-        )
-        throw new Error('create profile metadata via broadcast: failed')
-      }
-
-      console.log(
-        'create profile metadata via broadcast: broadcastResult',
-        broadcastResult
-      )
-      return { txHash: broadcastResult.txHash, txId: broadcastResult.txId }
-    }
-  }
+  const [updatedProfile, _setUpdatedProfile] = useState<
+    Profile | User | undefined
+  >(profile || fsProfileField)
 
   const onClickConfirm = async (): Promise<void> => {
+    if (!updatedProfile) {
+      return
+    }
     setIsFetching(true)
-    // hard coded to make the code example clear
-    const createProfileMetadataRequest = {
-      profileId: profile?.id,
-      metadata:
-        'https://lens.infura-ipfs.io/ipfs/QmPZufGcsXtnV4VKLD3bnUPh8ovzKhQgtgeDYptc2rWHmZ',
+    let doUpdate = true
+    if (profile) {
+      const result = await setMetadata(updatedProfile as Profile)
+      if (!result.success) {
+        alert({ message: result.errMsg })
+        doUpdate = false
+      }
     }
 
-    const result = await setMetadata(createProfileMetadataRequest)
+    if (doUpdate) {
+      if (fsProfile) {
+        await fsProfile.set(
+          { lensProfile: profile, ...updatedProfile },
+          { merge: true }
+        )
+      }
+      await Promise.all([refetchFsProfile(), refetchLensProfile()])
+      alert({ message: 'Profile updated' })
+    }
 
-    console.log('create comment gasless', result)
-
-    console.log('create profile metadata: poll until indexed')
-    const indexedResult = await pollUntilIndexed({ txId: result.txId })
-
-    console.log('create profile metadata: profile has been indexed', result)
-
-    const logs =
-      indexedResult.txReceipt &&
-      'logs' in indexedResult?.txReceipt &&
-      (indexedResult.txReceipt as TransactionReceipt).logs
-
-    console.log('create profile metadata: logs', logs)
-    refetch()
     setIsFetching(false)
   }
 
@@ -142,9 +99,9 @@ const UpdateLensProfileScreen = (): ReactElement => {
             <Text style={styles.text}>
               {JSON.stringify(
                 {
-                  bio: profile?.bio,
-                  name: profile?.name,
-                  attributes: profile?.attributes,
+                  bio: userProfile?.bio,
+                  name: userProfile?.name,
+                  attributes: userProfile?.attributes,
                 },
                 null,
                 2

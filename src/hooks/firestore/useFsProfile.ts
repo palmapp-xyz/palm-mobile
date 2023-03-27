@@ -72,8 +72,7 @@ const useFsProfile = ({
   const refetch = async (): Promise<void> => {
     removeProfile()
     removeField()
-    refetchProfile()
-    refetchField()
+    await Promise.all([refetchProfile(), refetchField()])
   }
 
   const createFsProfile = async (

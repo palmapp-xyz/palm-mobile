@@ -54,9 +54,8 @@ const useNftImage = ({
 
   const refetch = async (): Promise<void> => {
     tokenURIRemove()
-    tokenURIRefetch()
     fetchNftImageRemove()
-    fetchNftImageRefetch()
+    await Promise.all([tokenURIRefetch(), fetchNftImageRefetch()])
   }
 
   return {

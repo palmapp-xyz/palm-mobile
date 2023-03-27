@@ -68,8 +68,7 @@ const useFsListing = ({
   const refetch = async (): Promise<void> => {
     removeListing()
     removeField()
-    refetchListing()
-    refetchField()
+    await Promise.all([refetchListing(), refetchField()])
   }
 
   return { fsListing, fsListingField, refetch, isFetching }
