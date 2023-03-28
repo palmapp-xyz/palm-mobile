@@ -3,6 +3,9 @@ import { validateMnemonic } from 'bip39'
 
 import useAuth from 'hooks/independent/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
+import { InteractionManager } from 'react-native'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
@@ -19,6 +22,7 @@ export type UseRecoverAccountReturn = {
   passwordConfirmErrMsg: string
   isValidForm: boolean
   onClickConfirm: () => Promise<void>
+  loading: boolean
 }
 
 const useRecoverAccount = (): UseRecoverAccountReturn => {
@@ -43,15 +47,25 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     return ''
   }, [password, passwordConfirm])
 
+  const [loading, setLoading] = useRecoilState(appStore.loading)
+
   const isValidForm = !!password && !passwordConfirmErrMsg && !mnemonicErrMsg
 
   const onClickConfirm = async (): Promise<void> => {
-    if (usePkey) {
-      await register({ privateKey, password })
-    } else {
-      const wallet = await generateEvmHdAccount(mnemonic)
-      await register({ privateKey: wallet.privateKey, password })
-    }
+    setLoading(true)
+    setTimeout(async () => {
+      if (usePkey) {
+        await register({ privateKey, password })
+        setLoading(false)
+      } else {
+        await generateEvmHdAccount(mnemonic).then(
+          async (res): Promise<void> => {
+            await register({ privateKey: res.privateKey, password })
+          }
+        )
+        setLoading(false)
+      }
+    }, 500)
   }
 
   return {
@@ -69,6 +83,7 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
+    loading,
   }
 }
 

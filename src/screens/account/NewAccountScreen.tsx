@@ -9,6 +9,7 @@ import { AuthBody, ErrorMessage, FormButton, Row, FormInput } from 'components'
 import useNewAccount from 'hooks/page/account/useNewAccount'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 const NewAccountScreen = (): ReactElement => {
   const {
@@ -20,71 +21,93 @@ const NewAccountScreen = (): ReactElement => {
     passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
+    loading,
   } = useNewAccount()
   const { navigation } = useAppNavigation()
+
+  if (!mnemonic) {
+    return (
+      <Spinner
+        visible={loading}
+        textContent={'Loading...'}
+        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
+      />
+    )
+  }
+
   return (
     <AuthBody>
-      <View style={styles.pkInfo}>
-        <Text style={{ fontWeight: 'bold' }}>Private key</Text>
-        <Row style={styles.pkBox}>
-          <View style={{ flex: 1, paddingVertical: 10 }}>
-            <Text style={{ color: 'white', fontSize: 12 }}>{mnemonic}</Text>
+      <Spinner
+        visible={loading}
+        textContent={'Loading...'}
+        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
+      />
+      <View>
+        <View style={styles.pkInfo}>
+          <Text style={{ fontWeight: 'bold' }}>Mnemonic</Text>
+          <Row style={styles.pkBox}>
+            <View style={{ flex: 1, paddingVertical: 10 }}>
+              <Text style={{ color: 'white', fontSize: 12 }}>{mnemonic}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.copyBox}
+              onPress={(): void => {
+                Alert.alert('Copied')
+                Clipboard.setString(mnemonic!)
+              }}>
+              <Icon name="copy-outline" color="white" size={16} />
+            </TouchableOpacity>
+          </Row>
+
+          <View style={{ padding: 4 }}>
+            <Text style={{ fontSize: 12 }}>
+              Copy your mnemonic and keep it in a safe place. It will allow you
+              to recover your wallet if you lose your password. Your generated
+              wallet's mnemonic is not stored on the server and is stored on
+              your mobile device.
+            </Text>
           </View>
-          <TouchableOpacity
-            style={styles.copyBox}
-            onPress={(): void => {
-              Alert.alert('Copied')
-              Clipboard.setString(mnemonic)
-            }}>
-            <Icon name="copy-outline" color="white" size={16} />
-          </TouchableOpacity>
-        </Row>
-        <Text style={{ fontSize: 12 }}>
-          Copy your Privatekey and keep it in a safe place. It will allow you to
-          recover your wallet if you lose your password. Your generated wallet's
-          Privatekey is not stored on the server and is stored on your mobile
-          device.
-        </Text>
-      </View>
-      <View style={{ rowGap: 10 }}>
-        <FormInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          textContentType="password"
-          secureTextEntry
-        />
-        <View>
+        </View>
+        <View style={{ rowGap: 10 }}>
           <FormInput
-            placeholder="Confirm Password"
-            value={passwordConfirm}
-            onChangeText={setPasswordConfirm}
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
             textContentType="password"
             secureTextEntry
           />
-          <ErrorMessage message={passwordConfirmErrMsg} />
+          <View>
+            <FormInput
+              placeholder="Confirm Password"
+              value={passwordConfirm}
+              onChangeText={setPasswordConfirm}
+              textContentType="password"
+              secureTextEntry
+            />
+            <ErrorMessage message={passwordConfirmErrMsg} />
+          </View>
         </View>
+        <Row style={styles.btnGroup}>
+          <FormButton
+            containerStyle={[styles.btn, { backgroundColor: 'white' }]}
+            textStyle={{
+              color: COLOR.primary._400,
+              fontWeight: '400',
+              paddingHorizontal: 20,
+            }}
+            onPress={(): void => {
+              navigation.replace(Routes.AuthMenu)
+            }}>
+            Cancel
+          </FormButton>
+          <FormButton
+            containerStyle={[styles.btn, { flex: 1 }]}
+            disabled={!isValidForm}
+            onPress={onClickConfirm}>
+            Create
+          </FormButton>
+        </Row>
       </View>
-      <Row style={styles.btnGroup}>
-        <FormButton
-          containerStyle={[styles.btn, { backgroundColor: 'white' }]}
-          textStyle={{
-            color: COLOR.primary._400,
-            fontWeight: '400',
-            paddingHorizontal: 20,
-          }}
-          onPress={(): void => {
-            navigation.replace(Routes.AuthMenu)
-          }}>
-          Cancel
-        </FormButton>
-        <FormButton
-          containerStyle={[styles.btn, { flex: 1 }]}
-          disabled={!isValidForm}
-          onPress={onClickConfirm}>
-          Create
-        </FormButton>
-      </Row>
     </AuthBody>
   )
 }

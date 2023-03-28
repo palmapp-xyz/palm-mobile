@@ -1,12 +1,17 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
+
 import { generateMnemonic } from 'bip39'
 import { Wallet } from 'ethers'
 
 import useAuth from 'hooks/independent/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
+import { InteractionManager } from 'react-native'
 
 export type UseNewAccountReturn = {
-  mnemonic: string
+  mnemonic: string | undefined
   wallet?: Wallet
   password: string
   setPassword: (value: string) => void
@@ -15,11 +20,12 @@ export type UseNewAccountReturn = {
   passwordConfirmErrMsg: string
   isValidForm: boolean
   onClickConfirm: () => Promise<void>
+  loading: boolean
 }
 
 const useNewAccount = (): UseNewAccountReturn => {
   const { register } = useAuth()
-  const mnemonic = useMemo(() => generateMnemonic(128), [])
+  const [mnemonic, setMnemonic] = useState<string>()
   const [wallet, setWallet] = useState<Wallet>()
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -30,18 +36,37 @@ const useNewAccount = (): UseNewAccountReturn => {
     return ''
   }, [password, passwordConfirm])
 
+  const [loading, setLoading] = useRecoilState(appStore.loading)
+
   const isValidForm = !!password && !passwordConfirmErrMsg
 
   const onClickConfirm = async (): Promise<void> => {
-    if (wallet) {
-      await register({ privateKey: wallet.privateKey, password })
-    }
+    setLoading(true)
+    setTimeout(async () => {
+      if (wallet) {
+        await register({ privateKey: wallet.privateKey, password })
+      }
+      setLoading(false)
+    }, 500)
   }
 
-  useEffect(() => {
-    generateEvmHdAccount(mnemonic).then(res => {
+  useAsyncEffect(async (): Promise<void> => {
+    setLoading(true)
+    setTimeout(async () => {
+      InteractionManager.runAfterInteractions(async () => {
+        setMnemonic(await generateMnemonic(128))
+      })
+    }, 500)
+  }, [])
+
+  useAsyncEffect(async () => {
+    if (!mnemonic) {
+      return
+    }
+    await generateEvmHdAccount(mnemonic).then(res => {
       setWallet(res)
     })
+    setLoading(false)
   }, [mnemonic])
 
   return {
@@ -54,6 +79,7 @@ const useNewAccount = (): UseNewAccountReturn => {
     passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
+    loading,
   }
 }
 

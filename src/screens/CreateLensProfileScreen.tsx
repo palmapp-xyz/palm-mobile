@@ -7,6 +7,7 @@ import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import { COLOR } from 'consts'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 const CreateLensProfileScreen = (): ReactElement => {
   const { user } = useAuth()
@@ -15,56 +16,60 @@ const CreateLensProfileScreen = (): ReactElement => {
   const [isFetching, setIsFetching] = useState(false)
   const [handle, setHandle] = useState('')
 
-  const { refetch, loading } = useLensProfile({
+  const { refetch, loading: lensProfileFetchLoading } = useLensProfile({
     userAddress: user?.address,
   })
 
   const { alert } = useAlert()
 
   const onClickConfirm = async (): Promise<void> => {
-    try {
-      setIsFetching(true)
-      const res = await createProfile({
-        handle,
-      })
+    setIsFetching(true)
+    setTimeout(async () => {
+      try {
+        const res = await createProfile({
+          handle,
+        })
 
-      if (res.success) {
-        await refetch()
-      } else {
-        throw new Error(res.errMsg)
+        if (res.success) {
+          await refetch()
+        } else {
+          throw new Error(res.errMsg)
+        }
+      } catch (error) {
+        console.error(
+          'createProfile, onClickConfirm',
+          JSON.stringify(error, null, 2)
+        )
+        alert({ message: JSON.stringify(error, null, 2) })
+      } finally {
+        setIsFetching(false)
       }
-    } catch (error) {
-      console.error(
-        'createProfile, onClickConfirm',
-        JSON.stringify(error, null, 2)
-      )
-      alert({ message: JSON.stringify(error, null, 2) })
-    }
-    setIsFetching(false)
+    }, 500)
   }
 
   return (
     <Container style={styles.container}>
-      {loading ? (
-        <View style={[styles.body]}>
-          <ActivityIndicator size="large" color={COLOR.primary._100} />
+      <Spinner
+        visible={isFetching || lensProfileFetchLoading}
+        textContent={'Loading...'}
+        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
+      />
+      <View style={styles.body}>
+        <View style={{ paddingTop: 30, alignItems: 'center' }}>
+          <Text style={styles.text}>{"You don't have any lens Profile"}</Text>
         </View>
-      ) : (
-        <View style={styles.body}>
-          <View style={{ paddingTop: 30, alignItems: 'center' }}>
-            <Text style={styles.text}>{"You don't have any lens Profile"}</Text>
-          </View>
-          <Text style={styles.text}>Choose Username:</Text>
-          <FormInput
-            value={handle}
-            onChangeText={setHandle}
-            textContentType="username"
-          />
-          <FormButton disabled={isFetching || loading} onPress={onClickConfirm}>
-            Mint Profile NFT
-          </FormButton>
-        </View>
-      )}
+        <Text style={styles.text}>Choose Username:</Text>
+        <FormInput
+          value={handle}
+          onChangeText={setHandle}
+          textContentType="username"
+        />
+        <FormButton
+          disabled={!handle || isFetching || lensProfileFetchLoading}
+          onPress={onClickConfirm}>
+          Mint Profile NFT
+        </FormButton>
+      </View>
     </Container>
   )
 }

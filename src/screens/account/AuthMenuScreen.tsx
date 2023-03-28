@@ -10,6 +10,9 @@ import { AuthBody, FormButton, Row } from 'components'
 import { KeyChainEnum } from 'types'
 import { useQuery } from 'react-query'
 import { getPkeyPwd } from 'libs/account'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
+import Spinner from 'react-native-loading-spinner-overlay/lib'
 
 const AuthMenuScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -22,8 +25,15 @@ const AuthMenuScreen = (): ReactElement => {
     }
   )
 
+  const [loading, setLoading] = useRecoilState(appStore.loading)
+
   return (
     <AuthBody>
+      <Spinner
+        visible={loading}
+        textContent={'Loading...'}
+        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
+      />
       <View style={{ rowGap: 10 }}>
         <FormButton
           disabled={!hasStoredKey}
@@ -37,7 +47,10 @@ const AuthMenuScreen = (): ReactElement => {
             containerStyle={{ backgroundColor: 'white', flex: 1 }}
             textStyle={{ color: COLOR.primary._400 }}
             onPress={(): void => {
-              navigation.replace(Routes.NewAccount)
+              setLoading(true)
+              setTimeout(async () => {
+                navigation.replace(Routes.NewAccount)
+              }, 500)
             }}>
             New Account
           </FormButton>

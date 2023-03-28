@@ -1,6 +1,7 @@
 export default {
   app: {
     user: 'app_user',
+    loading: 'app_loading',
   },
   postTx: {
     postTxResult: 'postTx_postTxResult',

@@ -7,6 +7,12 @@ const user = atom<User | undefined>({
   default: undefined,
 })
 
+const loading = atom<boolean>({
+  key: storeKeys.app.loading,
+  default: false,
+})
+
 export default {
   user,
+  loading,
 }

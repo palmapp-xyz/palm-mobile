@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
+
 import { Text } from '@sendbird/uikit-react-native-foundation'
 
 import { AuthBody, ErrorMessage, FormButton, Row, FormInput } from 'components'
@@ -7,6 +8,7 @@ import useRecoverAccount from 'hooks/page/account/useRecoverAccount'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { COLOR } from 'consts'
+import Spinner from 'react-native-loading-spinner-overlay/lib'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
@@ -24,11 +26,19 @@ const RecoverAccountScreen = (): ReactElement => {
     passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
+    loading,
   } = useRecoverAccount()
   const { navigation } = useAppNavigation()
 
+  console.log('########!!', loading)
+
   return (
     <AuthBody>
+      <Spinner
+        visible={loading}
+        textContent={'Loading...'}
+        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
+      />
       <View style={{ gap: 10 }}>
         <Text style={{ fontWeight: 'bold' }}>Recover Account</Text>
         <Row style={{ gap: 10 }}>
