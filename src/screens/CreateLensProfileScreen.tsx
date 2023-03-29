@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { Container, FormButton, FormInput } from 'components'
@@ -50,7 +50,7 @@ const CreateLensProfileScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Spinner
-        visible={isFetching || lensProfileFetchLoading}
+        visible={isFetching}
         textContent={'Loading...'}
         textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
       />
