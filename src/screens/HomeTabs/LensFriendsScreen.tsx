@@ -27,7 +27,7 @@ const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
   const { connect } = useConnection()
   const { user } = useAuth()
-  const { createGroupChatIfNotExist } = useSendbird()
+  const { createGroupChatIfNotExist, generateDmChannelUrl } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getDefaultProfile } = useLens()
 
@@ -80,18 +80,19 @@ const LensFriendsScreen = (): ReactElement => {
     setTimeout(async () => {
       try {
         await createUserFromProfile(profile)
-        await createGroupChatIfNotExist(
-          profile.ownedBy,
-          [user?.address],
-          (channel: GroupChannel) => {
+        await createGroupChatIfNotExist({
+          channelUrl: generateDmChannelUrl(profile.ownedBy, user?.address),
+          invitedUserIds: [profile.ownedBy],
+          operatorUserIds: [user?.address, profile.ownedBy],
+          onChannelCreated: (channel: GroupChannel) => {
             setLoading(false)
             setTimeout(() => {
               navigation.navigate(Routes.GroupChannel, {
                 channelUrl: channel.url,
               })
             }, 200)
-          }
-        )
+          },
+        })
       } catch (e) {
         console.error(e)
       }

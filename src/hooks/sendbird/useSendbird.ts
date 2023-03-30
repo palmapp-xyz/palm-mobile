@@ -4,24 +4,38 @@ import {
   GroupChannelCreateParams,
 } from '@sendbird/chat/groupChannel'
 
+export type CreateGroupChatInput = {
+  channelUrl: string
+  invitedUserIds: string[]
+  channelName?: string
+  operatorUserIds?: string[]
+  onChannelCreated?: ((channel: GroupChannel) => void) | undefined
+  onError?: ((e: unknown) => void) | undefined
+}
+
 export type UseSendbirdReturn = {
-  createGroupChatIfNotExist: (
-    channelUrl: string,
-    operatorUserIds?: string[],
-    onChannelCreated?: ((channel: GroupChannel) => void) | undefined,
-    onError?: ((e: unknown) => void) | undefined
-  ) => Promise<void>
+  createGroupChatIfNotExist: ({
+    channelUrl,
+    invitedUserIds,
+    channelName,
+    operatorUserIds,
+    onChannelCreated,
+    onError,
+  }: CreateGroupChatInput) => Promise<void>
+  generateDmChannelUrl: (a: string | undefined, b: string | undefined) => string
 }
 
 const useSendbird = (): UseSendbirdReturn => {
   const { sdk } = useSendbirdChat()
 
-  const createGroupChatIfNotExist = async (
-    channelUrl: string,
-    operatorUserIds?: string[],
-    onChannelCreated?: (channel: GroupChannel) => void,
-    onError?: (e: unknown) => void
-  ): Promise<void> => {
+  const createGroupChatIfNotExist = async ({
+    channelUrl,
+    invitedUserIds,
+    channelName,
+    operatorUserIds,
+    onChannelCreated,
+    onError,
+  }: CreateGroupChatInput): Promise<void> => {
     let channel
     try {
       channel = await sdk.groupChannel.getChannel(channelUrl)
@@ -29,8 +43,8 @@ const useSendbird = (): UseSendbirdReturn => {
       console.error('getChannel Error: ', e)
       const params: GroupChannelCreateParams = {
         channelUrl,
-        invitedUserIds: [channelUrl],
-        name: '',
+        invitedUserIds: invitedUserIds,
+        name: channelName,
         coverUrl: '',
         isDistinct: false,
       }
@@ -45,7 +59,12 @@ const useSendbird = (): UseSendbirdReturn => {
     }
   }
 
-  return { createGroupChatIfNotExist }
+  const generateDmChannelUrl = (
+    a: string | undefined,
+    b: string | undefined
+  ): string => [String(a), String(b)].sort().join('-')
+
+  return { createGroupChatIfNotExist, generateDmChannelUrl }
 }
 
 export default useSendbird
