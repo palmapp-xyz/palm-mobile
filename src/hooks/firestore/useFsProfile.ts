@@ -10,6 +10,7 @@ export type UseFsProfileReturn = {
   fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
   fsProfileField?: User
   isFetching: boolean
+  isRefetching: boolean
   refetch: () => Promise<void>
 }
 
@@ -23,6 +24,7 @@ const useFsProfile = ({
     refetch: refetchProfile,
     remove: removeProfile,
     isFetching: isFetchingProfile,
+    isRefetching: isRefetchingProfile,
   } = useReactQuery(
     [FirestoreKeyEnum.Profile, address],
     async () => {
@@ -50,6 +52,7 @@ const useFsProfile = ({
     refetch: refetchField,
     remove: removeField,
     isFetching: isFetchingField,
+    isRefetching: isRefetchingField,
   } = useReactQuery(
     [FirestoreKeyEnum.ProfileField, fsProfile?.id],
     async () => {
@@ -67,6 +70,11 @@ const useFsProfile = ({
     [isFetchingProfile, isFetchingField]
   )
 
+  const isRefetching = useMemo(
+    () => isRefetchingProfile || isRefetchingField,
+    [isRefetchingProfile, isRefetchingField]
+  )
+
   const refetch = async (): Promise<void> => {
     removeProfile()
     removeField()
@@ -78,6 +86,7 @@ const useFsProfile = ({
     fsProfileField,
     refetch,
     isFetching,
+    isRefetching,
   }
 }
 

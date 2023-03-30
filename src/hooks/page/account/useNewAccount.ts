@@ -6,7 +6,7 @@ import { Wallet } from 'ethers'
 
 import useAuth from 'hooks/independent/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import { InteractionManager } from 'react-native'
 
@@ -20,7 +20,6 @@ export type UseNewAccountReturn = {
   passwordConfirmErrMsg: string
   isValidForm: boolean
   onClickConfirm: () => Promise<void>
-  loading: boolean
 }
 
 const useNewAccount = (): UseNewAccountReturn => {
@@ -36,7 +35,7 @@ const useNewAccount = (): UseNewAccountReturn => {
     return ''
   }, [password, passwordConfirm])
 
-  const [loading, setLoading] = useRecoilState(appStore.loading)
+  const setLoading = useSetRecoilState(appStore.loading)
 
   const isValidForm = !!password && !passwordConfirmErrMsg
 
@@ -65,8 +64,8 @@ const useNewAccount = (): UseNewAccountReturn => {
     }
     await generateEvmHdAccount(mnemonic).then(res => {
       setWallet(res)
+      setLoading(false)
     })
-    setLoading(false)
   }, [mnemonic])
 
   return {
@@ -79,7 +78,6 @@ const useNewAccount = (): UseNewAccountReturn => {
     passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
-    loading,
   }
 }
 

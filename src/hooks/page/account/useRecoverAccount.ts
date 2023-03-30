@@ -3,9 +3,8 @@ import { validateMnemonic } from 'bip39'
 
 import useAuth from 'hooks/independent/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import { InteractionManager } from 'react-native'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
@@ -22,7 +21,6 @@ export type UseRecoverAccountReturn = {
   passwordConfirmErrMsg: string
   isValidForm: boolean
   onClickConfirm: () => Promise<void>
-  loading: boolean
 }
 
 const useRecoverAccount = (): UseRecoverAccountReturn => {
@@ -47,7 +45,7 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     return ''
   }, [password, passwordConfirm])
 
-  const [loading, setLoading] = useRecoilState(appStore.loading)
+  const setLoading = useSetRecoilState(appStore.loading)
 
   const isValidForm = !!password && !passwordConfirmErrMsg && !mnemonicErrMsg
 
@@ -83,7 +81,6 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
-    loading,
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
@@ -13,18 +13,21 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { SupportedNetworkEnum, User } from 'types'
 import { Profile } from 'graphqls/__generated__/graphql'
 import useFsProfile from 'hooks/firestore/useFsProfile'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
 
 const UpdateLensProfileScreen = (): ReactElement => {
-  const [isFetching, setIsFetching] = useState(false)
-
   const { navigation } = useAppNavigation()
   const { user } = useAuth(SupportedNetworkEnum.ETHEREUM)
   const { setMetadata } = useLens()
   const { alert } = useAlert()
 
+  const [loading, setLoading] = useRecoilState(appStore.loading)
+  const [refetching, setRefetching] = useState(false)
+
   const {
     profile,
-    loading,
+    loading: loadingLensProfile,
     refetch: refetchLensProfile,
   } = useLensProfile({
     userAddress: user?.address,
@@ -34,6 +37,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
     fsProfile,
     fsProfileField,
     refetch: refetchFsProfile,
+    isRefetching: isRefetchingProfile,
   } = useFsProfile({
     address: user?.address,
   })
@@ -42,13 +46,9 @@ const UpdateLensProfileScreen = (): ReactElement => {
 
   const [updatedProfile, setUpdatedProfile] = useState<
     Profile | User | undefined
-  >(profile || fsProfileField)
+  >(userProfile)
 
-  const onClickConfirm = async (): Promise<void> => {
-    if (!updatedProfile) {
-      return
-    }
-    setIsFetching(true)
+  const update = async (): Promise<void> => {
     let doUpdate = true
     if (profile) {
       const result = await setMetadata(updatedProfile as Profile)
@@ -65,12 +65,28 @@ const UpdateLensProfileScreen = (): ReactElement => {
           { merge: true }
         )
       }
+      setRefetching(true)
       await Promise.all([refetchFsProfile(), refetchLensProfile()])
       alert({ message: 'Profile updated' })
     }
-
-    setIsFetching(false)
   }
+
+  const onClickConfirm = async (): Promise<void> => {
+    if (!updatedProfile) {
+      return
+    }
+    setLoading(true)
+    setTimeout(() => {
+      update()
+    }, 500)
+  }
+
+  useEffect(() => {
+    if (refetching) {
+      setRefetching(false)
+      setLoading(false)
+    }
+  }, [isRefetchingProfile])
 
   return (
     <Container style={styles.container}>
@@ -81,7 +97,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
         }
         onPressLeft={navigation.goBack}
       />
-      {loading ? (
+      {!userProfile ? (
         <View style={styles.body}>
           <ActivityIndicator size="large" color={COLOR.primary._100} />
         </View>
@@ -101,7 +117,9 @@ const UpdateLensProfileScreen = (): ReactElement => {
               secureTextEntry
             />
           </View>
-          <FormButton disabled={isFetching || loading} onPress={onClickConfirm}>
+          <FormButton
+            disabled={loading || loadingLensProfile}
+            onPress={onClickConfirm}>
             Update profile
           </FormButton>
         </View>

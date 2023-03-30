@@ -20,6 +20,8 @@ import { getProfileImgFromProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { Profile } from 'graphqls/__generated__/graphql'
 import { ContractAddr, User } from 'types'
+import { useSetRecoilState } from 'recoil'
+import appStore from 'store/appStore'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
@@ -28,6 +30,8 @@ const LensFriendsScreen = (): ReactElement => {
   const { createGroupChatIfNotExist } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getDefaultProfile } = useLens()
+
+  const setLoading = useSetRecoilState(appStore.loading)
 
   const { data: lensProfile } = useReactQuery(
     ['getDefaultProfile', user?.address],
@@ -71,19 +75,27 @@ const LensFriendsScreen = (): ReactElement => {
     if (!user) {
       return
     }
-    try {
-      await createUserFromProfile(profile)
-      await createGroupChatIfNotExist(
-        profile.ownedBy,
-        [user?.address],
-        (channel: GroupChannel) =>
-          navigation.navigate(Routes.GroupChannel, {
-            channelUrl: channel.url,
-          })
-      )
-    } catch (e) {
-      console.error(e)
-    }
+
+    setLoading(true)
+    setTimeout(async () => {
+      try {
+        await createUserFromProfile(profile)
+        await createGroupChatIfNotExist(
+          profile.ownedBy,
+          [user?.address],
+          (channel: GroupChannel) => {
+            setLoading(false)
+            setTimeout(() => {
+              navigation.navigate(Routes.GroupChannel, {
+                channelUrl: channel.url,
+              })
+            }, 200)
+          }
+        )
+      } catch (e) {
+        console.error(e)
+      }
+    }, 200)
   }
 
   const onFollowPress = async (

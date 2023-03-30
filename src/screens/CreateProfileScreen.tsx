@@ -1,23 +1,21 @@
-import React, { ReactElement, useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { Container, FormButton, FormInput } from 'components'
 import useAuth from 'hooks/independent/useAuth'
-import { COLOR } from 'consts'
 import useFsProfile from 'hooks/firestore/useFsProfile'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
 
 const CreateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
 
-  const [isFetching, setIsFetching] = useState(false)
   const [handle, setHandle] = useState('')
 
-  const {
-    fsProfile,
-    refetch,
-    isFetching: loading,
-  } = useFsProfile({
+  const [loading, setLoading] = useRecoilState(appStore.loading)
+
+  const { fsProfile, fsProfileField, refetch } = useFsProfile({
     address: user?.address,
   })
 
@@ -25,16 +23,13 @@ const CreateProfileScreen = (): ReactElement => {
 
   const onClickConfirm = async (): Promise<void> => {
     if (!fsProfile) {
-      alert({
-        message: `No profile exists for account address ${user?.address}`,
-      })
       return
     }
 
     try {
-      setIsFetching(true)
+      setLoading(true)
       await fsProfile.update({ handle })
-      refetch()
+      await refetch()
     } catch (error) {
       console.error(
         'createProfile, onClickConfirm',
@@ -42,31 +37,38 @@ const CreateProfileScreen = (): ReactElement => {
       )
       alert({ message: JSON.stringify(error, null, 2) })
     }
-    setIsFetching(false)
   }
+
+  useEffect(() => {
+    if (fsProfileField?.handle) {
+      setLoading(false)
+    }
+  }, [fsProfileField])
 
   return (
     <Container style={styles.container}>
-      {loading ? (
-        <View style={[styles.body]}>
-          <ActivityIndicator size="large" color={COLOR.primary._100} />
+      <View style={styles.body}>
+        <View style={{ paddingTop: 30, alignItems: 'center' }}>
+          <Text style={styles.text}>
+            {!fsProfileField
+              ? 'Checking for your profile'
+              : 'Create your profile'}
+          </Text>
         </View>
-      ) : (
-        <View style={styles.body}>
-          <View style={{ paddingTop: 30, alignItems: 'center' }}>
-            <Text style={styles.text}>{"You don't have any lens Profile"}</Text>
+        {fsProfileField && !fsProfileField.handle && (
+          <View>
+            <Text style={styles.text}>Choose Username:</Text>
+            <FormInput
+              value={handle}
+              onChangeText={setHandle}
+              textContentType="username"
+            />
+            <FormButton disabled={loading} onPress={onClickConfirm}>
+              Create Profile
+            </FormButton>
           </View>
-          <Text style={styles.text}>Choose Username:</Text>
-          <FormInput
-            value={handle}
-            onChangeText={setHandle}
-            textContentType="username"
-          />
-          <FormButton disabled={isFetching || loading} onPress={onClickConfirm}>
-            Create Profile
-          </FormButton>
-        </View>
-      )}
+        )}
+      </View>
     </Container>
   )
 }

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
@@ -6,24 +6,38 @@ import { Container, FormButton, FormInput } from 'components'
 import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
 import useLensProfile from 'hooks/lens/useLensProfile'
-import { COLOR } from 'consts'
-import Spinner from 'react-native-loading-spinner-overlay'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
+import useFsProfile from 'hooks/firestore/useFsProfile'
 
 const CreateLensProfileScreen = (): ReactElement => {
   const { user } = useAuth()
   const { createProfile } = useLens()
 
-  const [isFetching, setIsFetching] = useState(false)
   const [handle, setHandle] = useState('')
 
-  const { refetch, loading: lensProfileFetchLoading } = useLensProfile({
-    userAddress: user?.address,
+  const {
+    fsProfile,
+    fsProfileField,
+    refetch: refetchProfile,
+  } = useFsProfile({
+    address: user?.address,
   })
+
+  const { refetch: refetchLensProfile, loading: lensProfileFetchLoading } =
+    useLensProfile({
+      userAddress: user?.address,
+    })
 
   const { alert } = useAlert()
 
+  const [loading, setLoading] = useRecoilState(appStore.loading)
+
   const onClickConfirm = async (): Promise<void> => {
-    setIsFetching(true)
+    if (!fsProfile) {
+      return
+    }
+    setLoading(true)
     setTimeout(async () => {
       try {
         const res = await createProfile({
@@ -31,32 +45,32 @@ const CreateLensProfileScreen = (): ReactElement => {
         })
 
         if (res.success) {
-          await refetch()
+          await fsProfile.update({ handle })
+          await Promise.all([refetchProfile(), refetchLensProfile()])
         } else {
           throw new Error(res.errMsg)
         }
       } catch (error) {
         console.error(
-          'createProfile, onClickConfirm',
+          'createProfile:onClickConfirm',
           JSON.stringify(error, null, 2)
         )
         alert({ message: JSON.stringify(error, null, 2) })
-      } finally {
-        setIsFetching(false)
       }
     }, 500)
   }
 
+  useEffect(() => {
+    if (fsProfileField?.handle) {
+      setLoading(false)
+    }
+  }, [fsProfileField])
+
   return (
     <Container style={styles.container}>
-      <Spinner
-        visible={isFetching}
-        textContent={'Loading...'}
-        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
-      />
       <View style={styles.body}>
         <View style={{ paddingTop: 30, alignItems: 'center' }}>
-          <Text style={styles.text}>{"You don't have any lens Profile"}</Text>
+          <Text style={styles.text}>{'Create your Lens profile'}</Text>
         </View>
         <Text style={styles.text}>Choose Username:</Text>
         <FormInput
@@ -65,7 +79,7 @@ const CreateLensProfileScreen = (): ReactElement => {
           textContentType="username"
         />
         <FormButton
-          disabled={!handle || isFetching || lensProfileFetchLoading}
+          disabled={!handle || loading || lensProfileFetchLoading}
           onPress={onClickConfirm}>
           Mint Profile NFT
         </FormButton>

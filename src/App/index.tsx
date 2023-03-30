@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
+import Loading from 'components/atoms/Loading'
 
 const queryClient = new QueryClient()
 
@@ -21,6 +22,7 @@ const App = (): ReactElement => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppProvider>
+        <Loading />
         <Navigation />
       </AppProvider>
     </QueryClientProvider>

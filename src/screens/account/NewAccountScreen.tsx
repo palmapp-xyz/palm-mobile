@@ -9,7 +9,9 @@ import { AuthBody, ErrorMessage, FormButton, Row, FormInput } from 'components'
 import useNewAccount from 'hooks/page/account/useNewAccount'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import Spinner from 'react-native-loading-spinner-overlay'
+import Loading from 'components/atoms/Loading'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
 
 const NewAccountScreen = (): ReactElement => {
   const {
@@ -21,27 +23,17 @@ const NewAccountScreen = (): ReactElement => {
     passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
-    loading,
   } = useNewAccount()
   const { navigation } = useAppNavigation()
 
-  if (!mnemonic) {
-    return (
-      <Spinner
-        visible={loading}
-        textContent={'Loading...'}
-        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
-      />
-    )
+  const [loading] = useRecoilState(appStore.loading)
+
+  if (!mnemonic || loading) {
+    return <Loading />
   }
 
   return (
     <AuthBody>
-      <Spinner
-        visible={loading}
-        textContent={'Loading...'}
-        textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
-      />
       <View>
         <View style={styles.pkInfo}>
           <Text style={{ fontWeight: 'bold' }}>Mnemonic</Text>
@@ -102,7 +94,7 @@ const NewAccountScreen = (): ReactElement => {
           </FormButton>
           <FormButton
             containerStyle={[styles.btn, { flex: 1 }]}
-            disabled={!isValidForm}
+            disabled={!isValidForm || loading}
             onPress={onClickConfirm}>
             Create
           </FormButton>
