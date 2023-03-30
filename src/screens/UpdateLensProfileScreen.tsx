@@ -27,11 +27,9 @@ const UpdateLensProfileScreen = (): ReactElement => {
 
   const {
     profile,
-    loading: loadingLensProfile,
+    isLoading: loadingLensProfile,
     refetch: refetchLensProfile,
-  } = useLensProfile({
-    userAddress: user?.address,
-  })
+  } = useLensProfile({ userAddress: user?.address })
 
   const {
     fsProfile,

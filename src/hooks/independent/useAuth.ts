@@ -1,8 +1,9 @@
 import { useRecoilState } from 'recoil'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { SendbirdUser } from '@sendbird/uikit-utils'
-
+import firestore from '@react-native-firebase/firestore'
 import _ from 'lodash'
+import RNRestart from 'react-native-restart'
 
 import useWeb3 from 'hooks/complex/useWeb3'
 import { savePkey, getPkeyPwd, getPkey } from 'libs/account'
@@ -16,16 +17,12 @@ import {
 } from 'types'
 import { formatHex } from 'libs/utils'
 
-import firestore from '@react-native-firebase/firestore'
-import { Profile } from 'graphqls/__generated__/graphql'
-
 export type UseAuthReturn = {
   user?: User
   register: (props: { privateKey: string; password: string }) => Promise<void>
   login: ({ password }: { password: string }) => Promise<TrueOrErrReturn>
   setAccToken: (accessToken: string) => void
   logout: () => Promise<void>
-  createFsProfile: (userAddress: string, lensProfile?: Profile) => Promise<User>
 }
 
 const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
@@ -34,23 +31,14 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
 
-  const createFsProfile = async (
-    userAddress: string,
-    lensProfile?: Profile
-  ): Promise<User> => {
-    const profile = firestore().collection('profiles').doc(userAddress)
+  const _registerToFirebase = async (address: ContractAddr): Promise<User> => {
+    const profile = firestore().collection('profiles').doc(address)
     const profileDoc = await profile.get()
-
-    let fsUser: User = {
-      address: userAddress as ContractAddr,
-      lensProfile,
-      ...lensProfile,
-    }
-
+    let fsUser: User = { address }
     if (!profileDoc.exists) {
       await profile.set(fsUser)
     } else {
-      fsUser = (await profileDoc.data()) as User
+      fsUser = profileDoc.data() as User
     }
     return fsUser
   }
@@ -65,18 +53,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     const account = web3.eth.accounts.privateKeyToAccount(formatHex(privateKey))
     await savePkey(privateKey, password)
 
-    const profile = firestore().collection('profiles').doc(account.address)
-    const profileDoc = await profile.get()
-
-    let fsUser: User = {
-      address: account.address as ContractAddr,
-    }
-
-    if (!profileDoc.exists) {
-      await profile.set(fsUser)
-    } else {
-      fsUser = (await profileDoc.data()) as User
-    }
+    const fsUser = await _registerToFirebase(account.address as ContractAddr)
 
     const sbUser: SendbirdUser = await connect(account.address)
     setCurrentUser(sbUser)
@@ -94,18 +71,9 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         const privateKey = await getPkey()
         const account = web3.eth.accounts.privateKeyToAccount(privateKey)
 
-        const profile = firestore().collection('profiles').doc(account.address)
-        const profileDoc = await profile.get()
-
-        let fsUser: User = {
-          address: account.address as ContractAddr,
-        }
-
-        if (!profileDoc.exists) {
-          await profile.set(fsUser)
-        } else {
-          fsUser = (await profileDoc.data()) as User
-        }
+        const fsUser = await _registerToFirebase(
+          account.address as ContractAddr
+        )
 
         const sbUser: SendbirdUser = await connect(account.address)
         setCurrentUser(sbUser)
@@ -130,9 +98,10 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     await disconnect()
     setCurrentUser(undefined)
     setUser(undefined)
+    RNRestart.restart()
   }
 
-  return { user, register, login, setAccToken, logout, createFsProfile }
+  return { user, register, login, setAccToken, logout }
 }
 
 export default useAuth

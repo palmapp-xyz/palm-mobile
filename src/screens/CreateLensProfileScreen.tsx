@@ -24,10 +24,8 @@ const CreateLensProfileScreen = (): ReactElement => {
     address: user?.address,
   })
 
-  const { refetch: refetchLensProfile, loading: lensProfileFetchLoading } =
-    useLensProfile({
-      userAddress: user?.address,
-    })
+  const { refetch: refetchLensProfile, isLoading: lensProfileFetchLoading } =
+    useLensProfile({ userAddress: user?.address })
 
   const { alert } = useAlert()
 

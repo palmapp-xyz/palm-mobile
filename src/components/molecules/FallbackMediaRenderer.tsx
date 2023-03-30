@@ -18,6 +18,7 @@ const FallbackMediaRenderer = ({
 }): ReactElement => {
   const dim =
     typeof width === 'number' ? width : typeof height === 'number' ? height : 50
+
   return (
     <Card center={true} style={[style, { padding: 0, width, height }]}>
       <Icons.CarbonDocumentUnknown width={dim / 2} height={dim / 2} />

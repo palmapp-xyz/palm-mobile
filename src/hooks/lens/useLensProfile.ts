@@ -7,7 +7,7 @@ import { ContractAddr, QueryKeyEnum } from 'types'
 import useLens from './useLens'
 
 export type UseLensProfileReturn = {
-  loading: boolean
+  isLoading: boolean
   profile?: Profile
   refetch: () => Promise<void>
   useProfilesReturn: UseQueryResult<PaginatedProfileResult | undefined, unknown>
@@ -58,7 +58,7 @@ const useLensProfile = ({
     refetch,
     useProfilesReturn,
     useDefaultProfileReturn,
-    loading: useProfilesReturn.isLoading && useDefaultProfileReturn.isLoading,
+    isLoading: useProfilesReturn.isLoading && useDefaultProfileReturn.isLoading,
   }
 }
 

@@ -154,7 +154,7 @@ const useLens = (): UseLensReturn => {
     if (signer) {
       try {
         /* first request the challenge from the API server */
-        const challengeInfo = await query({
+        const challengeInfo = await aQuery({
           query: ChallengeDocument,
           variables: {
             request: { address: signer.address },
@@ -167,7 +167,7 @@ const useLens = (): UseLensReturn => {
         ).signature
 
         /* authenticate the user */
-        const authData = await mutate({
+        const authData = await aMutate({
           mutation: AuthenticateDocument,
           variables: {
             request: {

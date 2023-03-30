@@ -20,6 +20,7 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
   const { colors } = useUIKitTheme()
   const { message, children, variant } = props
   const parsedData = parseSendFileData(message.data || '')
+
   if (parsedData) {
     switch (parsedData.type) {
       case 'list':
@@ -36,7 +37,6 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
   if (!message.customType) {
     return <FileMessage {...props} />
   }
-
   return (
     <View
       style={[

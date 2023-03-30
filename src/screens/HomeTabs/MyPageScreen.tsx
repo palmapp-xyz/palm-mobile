@@ -40,6 +40,7 @@ const MyPageScreen = (): ReactElement => {
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
 
   const useLensProfileReturn = useLensProfile({ userAddress: user?.address })
+
   const { updateProfileImage } = useLens()
 
   const { fsProfile, refetch: refetchFsProfile } = useFsProfile({
