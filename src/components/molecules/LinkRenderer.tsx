@@ -29,6 +29,7 @@ const LinkRenderer = ({
   if (!src) {
     return null
   }
+
   const fixedUrl = fixIpfsURL(src)
   return (
     <TouchableOpacity

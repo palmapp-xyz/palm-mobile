@@ -84,7 +84,7 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
         <Icon
           color={disabled ? COLOR.primary._100 : COLOR.primary._400}
           name={openBottomMenu ? 'close-circle' : 'add-circle'}
-          size={30}
+          size={36}
         />
       </TouchableOpacity>
       <TextInput
@@ -94,7 +94,21 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
         onSelectionChange={onSelectionChange}
         editable={!disabled}
         onChangeText={onChangeText}
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            backgroundColor: 'white',
+            borderColor: '#0D0E101a',
+            borderWidth: 1,
+            borderRadius: 14,
+            fontSize: 14,
+            lineHeight: 18,
+            justifyContent: 'center',
+            paddingHorizontal: 14,
+            paddingTop: 9,
+            marginLeft: 12,
+          },
+        ]}
         placeholder={conditionChaining(
           [frozen, muted],
           [
@@ -110,9 +124,7 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
         <TouchableOpacity onPress={onPressSend} disabled={disabled}>
           <Icon
             color={
-              disabled
-                ? colors.ui.input.default.disabled.highlight
-                : colors.ui.input.default.active.highlight
+              disabled ? colors.ui.input.default.disabled.highlight : '#A7ABB4'
             }
             name={'send'}
             size={24}

@@ -26,7 +26,7 @@ const primary = {
   _50: '#f6f2ff',
   _100: '#EDF3FF',
   _300: '#8B99FF',
-  _400: '#6344FE',
+  _400: '#0057FF',
 }
 
 const orange = '#FFA467'

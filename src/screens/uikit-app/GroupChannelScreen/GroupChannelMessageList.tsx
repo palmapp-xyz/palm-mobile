@@ -48,7 +48,6 @@ import ChatFlatList, {
   ChatFlatListRef,
 } from '@sendbird/uikit-react-native/src/components/ChatFlatList'
 import { DEPRECATION_WARNING } from '@sendbird/uikit-react-native/src/constants'
-import { COLOR } from 'consts'
 
 const HANDLE_NEXT_MSG_SEPARATELY = Platform.select({ default: true })
 
@@ -149,7 +148,7 @@ const GroupChannelMessageList = ({
           // { minHeight: '100%', justifyContent: 'flex-end' },
           channel.isFrozen && styles.frozenListPadding,
           flatListProps?.contentContainerStyle,
-          { backgroundColor: COLOR.primary._100 },
+          { paddingTop: 80 },
         ]}
       />
       {renderNewMessagesButton && (
