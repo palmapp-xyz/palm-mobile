@@ -1,90 +1,62 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { COLOR } from 'consts'
 import { Container, FormButton, FormInput, Header } from 'components'
-import useLens from 'hooks/lens/useLens'
 import useAuth from 'hooks/independent/useAuth'
-import useLensProfile from 'hooks/lens/useLensProfile'
 
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { SupportedNetworkEnum, User } from 'types'
-import { Profile } from 'graphqls/__generated__/graphql'
-import useFsProfile from 'hooks/firestore/useFsProfile'
+import { SupportedNetworkEnum } from 'types'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
+import useProfile from 'hooks/independent/useProfile'
+import {
+  AttributeData,
+  ProfileMetadata,
+} from '@lens-protocol/react-native-lens-ui-kit'
 
 const UpdateLensProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
   const { user } = useAuth(SupportedNetworkEnum.ETHEREUM)
-  const { setMetadata } = useLens()
   const { alert } = useAlert()
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
-  const [refetching, setRefetching] = useState(false)
 
-  const {
-    profile,
-    isLoading: loadingLensProfile,
-    refetch: refetchLensProfile,
-  } = useLensProfile({ userAddress: user?.address })
-
-  const {
-    fsProfile,
-    fsProfileField,
-    refetch: refetchFsProfile,
-    isRefetching: isRefetchingProfile,
-  } = useFsProfile({
-    address: user?.address,
-  })
-
-  const userProfile: Profile | User | undefined = profile || fsProfileField
+  const { profile, setMetadata } = useProfile({ address: user?.address })
 
   const [updatedProfile, setUpdatedProfile] = useState<
-    Profile | User | undefined
-  >(userProfile)
+    Partial<ProfileMetadata>
+  >({
+    name: profile?.name || undefined,
+    bio: profile?.bio || undefined,
+    attributes: (profile?.attributes as AttributeData[]) || [],
+  })
 
   const update = async (): Promise<void> => {
-    let doUpdate = true
     if (profile) {
-      const result = await setMetadata(updatedProfile as Profile)
-      if (!result.success) {
-        alert({ message: result.errMsg })
-        doUpdate = false
-      }
-    }
-
-    if (doUpdate) {
-      if (fsProfile) {
-        await fsProfile.set(
-          { lensProfile: profile, ...updatedProfile },
-          { merge: true }
-        )
-      }
-      setRefetching(true)
-      await Promise.all([refetchFsProfile(), refetchLensProfile()])
-      alert({ message: 'Profile updated' })
+      const result = await setMetadata(updatedProfile)
+      setLoading(false)
+      setTimeout(() => {
+        if (!result.success) {
+          alert({ message: result.errMsg })
+        } else {
+          alert({ message: 'Profile updated' })
+        }
+      }, 300)
     }
   }
 
   const onClickConfirm = async (): Promise<void> => {
-    if (!updatedProfile) {
+    if (!profile) {
       return
     }
     setLoading(true)
     setTimeout(() => {
       update()
-    }, 500)
+    }, 300)
   }
-
-  useEffect(() => {
-    if (refetching) {
-      setRefetching(false)
-      setLoading(false)
-    }
-  }, [isRefetchingProfile])
 
   return (
     <Container style={styles.container}>
@@ -95,9 +67,9 @@ const UpdateLensProfileScreen = (): ReactElement => {
         }
         onPressLeft={navigation.goBack}
       />
-      {!userProfile ? (
+      {!profile ? (
         <View style={styles.body}>
-          <ActivityIndicator size="large" color={COLOR.primary._100} />
+          <ActivityIndicator size="large" color={COLOR.primary._300} />
         </View>
       ) : (
         <View style={styles.body}>
@@ -108,16 +80,14 @@ const UpdateLensProfileScreen = (): ReactElement => {
               placeholder="Input your bio"
               value={updatedProfile?.bio || ''}
               onChangeText={(bio: string): void => {
-                setUpdatedProfile({ ...updatedProfile, bio } as User)
+                setUpdatedProfile({ ...updatedProfile, bio })
               }}
               textContentType="none"
               multiline
               secureTextEntry
             />
           </View>
-          <FormButton
-            disabled={loading || loadingLensProfile}
-            onPress={onClickConfirm}>
+          <FormButton disabled={loading} onPress={onClickConfirm}>
             Update profile
           </FormButton>
         </View>

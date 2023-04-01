@@ -47,18 +47,17 @@ const LensFriendsScreen = (): ReactElement => {
 
     const fsProfile = firestore().collection('profiles').doc(profile.ownedBy)
     const fsProfileDoc = await fsProfile.get()
+    if (fsProfileDoc.exists) {
+      return
+    }
 
-    let fsUser: User = {
+    // not a palm user. create a new profile for the user.
+    const fsUser: User = {
       address: profile.ownedBy as ContractAddr,
       lensProfile: profile as Profile,
       ...(profile as Profile),
     }
-
-    if (!fsProfileDoc.exists) {
-      await fsProfile.set(fsUser)
-    } else {
-      fsUser = (await fsProfileDoc.data()) as User
-    }
+    await fsProfile.set(fsUser)
 
     // create sendbird user by connecting
     const newUser = await connect(profile.ownedBy)

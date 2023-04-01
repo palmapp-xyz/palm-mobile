@@ -54,6 +54,7 @@ import { TransactionResponse } from '@ethersproject/providers'
 import useLensHub from './useLensHub'
 import useEthers from 'hooks/complex/useEthers'
 import postTxStore from 'store/postTxStore'
+import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 
 export type UseLensReturn = {
   signer?: Account
@@ -96,10 +97,14 @@ export type UseLensReturn = {
           txId: string
         }
   ) => Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
-  setMetadata: (profile: Profile) => Promise<
+  setMetadata: (
+    profile: Profile,
+    metadata: Partial<ProfileMetadata>
+  ) => Promise<
     TrueOrErrReturn<{
-      txHash: string
-      txId: string
+      metadata: any
+      txHash: any
+      txId: any
     }>
   >
 }
@@ -185,7 +190,7 @@ const useLens = (): UseLensReturn => {
           }
         }
       } catch (error) {
-        return { success: false, errMsg: JSON.stringify(error, null, 2) }
+        return { success: false, errMsg: JSON.stringify(error) }
       }
     }
     return { success: false, errMsg: 'No user' }
@@ -493,24 +498,29 @@ const useLens = (): UseLensReturn => {
   }
 
   const setMetadata = async (
-    profile: Profile
+    profile: Profile,
+    update: Partial<ProfileMetadata>
   ): Promise<
     TrueOrErrReturn<{
+      metadata: any
       txHash: any
       txId: any
     }>
   > => {
     try {
+      console.log(JSON.stringify(update, null, 2))
+      const metadata =
+        'https://lens.infura-ipfs.io/ipfs/QmPZufGcsXtnV4VKLD3bnUPh8ovzKhQgtgeDYptc2rWHmZ'
       // TODO: uplodate updated profile metadata to ipfs
       const createMetadataRequest: CreatePublicSetProfileMetadataUriRequest = {
         profileId: profile.id,
-        metadata:
-          'https://lens.infura-ipfs.io/ipfs/QmPZufGcsXtnV4VKLD3bnUPh8ovzKhQgtgeDYptc2rWHmZ',
+        metadata,
       }
       let value: {
+        metadata: any
         txHash: any
         txId: any
-      }
+      } = { metadata, txHash: undefined, txId: undefined }
       // this means it they have not setup the dispatcher, if its a no you must use broadcast
       if (profile?.dispatcher?.canUseRelay) {
         const dispatcherResult =
@@ -533,6 +543,7 @@ const useLens = (): UseLensReturn => {
         value = {
           txHash: dispatcherResult.txHash,
           txId: dispatcherResult.txId,
+          metadata,
         }
       } else {
         const signedResult = await signCreateSetProfileMetadataTypedData(
@@ -560,7 +571,11 @@ const useLens = (): UseLensReturn => {
           'create profile metadata via broadcast: broadcastResult',
           broadcastResult
         )
-        value = { txHash: broadcastResult.txHash, txId: broadcastResult.txId }
+        value = {
+          metadata,
+          txHash: broadcastResult.txHash,
+          txId: broadcastResult.txId,
+        }
       }
 
       console.log('create comment gasless', value)

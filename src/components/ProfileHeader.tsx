@@ -9,11 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useAsyncLayoutEffect } from '@sendbird/uikit-utils'
 
 import { COLOR, UTIL } from 'consts'
-import { ContractAddr, SupportedNetworkEnum, User, pToken } from 'types'
+import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 import images from 'assets/images'
 
 import { Routes } from 'libs/navigation'
@@ -22,10 +20,8 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
-import useLensProfile from 'hooks/lens/useLensProfile'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import { Profile } from 'graphqls/__generated__/graphql'
+import useProfile from 'hooks/independent/useProfile'
 
 const ProfileHeader = ({
   userAddress,
@@ -39,26 +35,14 @@ const ProfileHeader = ({
   onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
 }): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getEthPrice } = useEthPrice()
-  const { profile } = useLensProfile({ userAddress })
-  const { fsProfileField } = useFsProfile({
-    address: userAddress,
-  })
-  const userProfile: Profile | User | undefined = profile || fsProfileField
-  const profileImg = getProfileImgFromProfile(userProfile)
+  const { profile } = useProfile({ address: userAddress })
+  const profileImg = getProfileImgFromProfile(profile)
 
   const { ethBalance } = useUserBalance({
     address: userAddress,
     chain: SupportedNetworkEnum.ETHEREUM,
   })
-
-  useAsyncLayoutEffect(async () => {
-    if (userProfile && isMyPage) {
-      const me = await updateCurrentUserInfo(userProfile.handle, profileImg)
-      setCurrentUser(me)
-    }
-  }, [profileImg])
 
   return (
     <View style={styles.container}>
@@ -114,7 +98,7 @@ const ProfileHeader = ({
               navigation.navigate(Routes.UpdateLensProfile)
             }}>
             <Card style={styles.profileNicknameCard}>
-              <Text style={{ color: 'black' }}>{userProfile?.handle}</Text>
+              <Text style={{ color: 'black' }}>{profile?.handle}</Text>
             </Card>
           </TouchableOpacity>
         </View>
@@ -160,13 +144,13 @@ const ProfileHeader = ({
               </View>
             </View>
           </Row>
-          {!!userProfile?.attributes?.length && (
+          {!!profile?.attributes?.length && (
             <View
               style={{
                 padding: 6,
               }}>
               <FlatList
-                data={userProfile.attributes}
+                data={profile.attributes}
                 keyExtractor={(_, index): string =>
                   `profile-attribute-${index}`
                 }
@@ -201,7 +185,7 @@ const ProfileHeader = ({
               borderColor: COLOR.gray._400,
               borderRadius: 20,
             }}>
-            <Text>{userProfile?.bio || 'Tell us something about you!'}</Text>
+            <Text>{profile?.bio || 'Tell us something about you!'}</Text>
           </View>
         </Card>
       </ImageBackground>

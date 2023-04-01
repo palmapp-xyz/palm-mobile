@@ -29,28 +29,17 @@ import {
   UpdateLensProfileScreen,
 } from '../screens'
 import useAuth from 'hooks/independent/useAuth'
-import { useQuery } from 'react-query'
-import useFsProfile from 'hooks/firestore/useFsProfile'
+import useProfile from 'hooks/independent/useProfile'
 
 const MainStack = createNativeStackNavigator()
 
 const MainNavigator = (): ReactElement => {
   const { user } = useAuth()
-  const { fsProfileField, refetch: refetchFsProfile } = useFsProfile({
-    address: user?.address,
-  })
-
-  useQuery(
-    ['refetchUseFsProfile'],
-    () => {
-      refetchFsProfile()
-    },
-    { enabled: !fsProfileField?.handle, refetchInterval: 1000 }
-  )
+  const { profile } = useProfile({ address: user?.address })
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
-      {fsProfileField?.handle ? (
+      {profile?.handle ? (
         <>
           <MainStack.Screen name={Routes.HomeTabs} component={HomeTabs} />
           <MainStack.Screen

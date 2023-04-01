@@ -2,16 +2,14 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
 
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { ContractAddr, FirestoreKeyEnum, User } from 'types'
-import { useMemo } from 'react'
+import { ContractAddr, User } from 'types'
+import { useEffect, useState } from 'react'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { getProfileImgFromProfile } from 'libs/lens'
 
 export type UseFsProfileReturn = {
   fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
   fsProfileField?: User
-  isFetching: boolean
-  isRefetching: boolean
-  refetch: () => Promise<void>
 }
 
 const useFsProfile = ({
@@ -19,74 +17,47 @@ const useFsProfile = ({
 }: {
   address?: string
 }): UseFsProfileReturn => {
-  const {
-    data: fsProfile,
-    refetch: refetchProfile,
-    remove: removeProfile,
-    isFetching: isFetchingProfile,
-    isRefetching: isRefetchingProfile,
-  } = useReactQuery(
-    [FirestoreKeyEnum.Profile, address],
-    async () => {
-      if (address) {
-        const _fsProfile = firestore().collection('profiles').doc(address)
-        const profileDoc = await _fsProfile.get()
+  const [fsProfileField, setFsProfileField] = useState<User | undefined>()
 
-        if (!profileDoc.exists) {
-          const fbProfileField: User = {
-            address: address as ContractAddr,
-          }
-          await _fsProfile.set(fbProfileField)
+  const { currentUser, setCurrentUser, updateCurrentUserInfo } =
+    useSendbirdChat()
+
+  const fsProfile = firestore().collection('profiles').doc(address)
+
+  useEffect(() => {
+    const subscriber = fsProfile.onSnapshot(profileDocSnapshot => {
+      if (!profileDocSnapshot.exists) {
+        const profileField: User = {
+          address: address as ContractAddr,
         }
-
-        return _fsProfile
+        fsProfile.set(profileField).then(() => {
+          setFsProfileField(profileField)
+        })
+      } else {
+        setFsProfileField(profileDocSnapshot.data() as User)
       }
-    },
-    {
-      enabled: !!address,
+    })
+    return () => subscriber()
+  }, [address])
+
+  useEffect(() => {
+    if (!currentUser || !fsProfileField) {
+      return
     }
-  )
-
-  const {
-    data: fsProfileField,
-    refetch: refetchField,
-    remove: removeField,
-    isFetching: isFetchingField,
-    isRefetching: isRefetchingField,
-  } = useReactQuery(
-    [FirestoreKeyEnum.ProfileField, fsProfile?.id],
-    async () => {
-      if (fsProfile) {
-        return (await fsProfile?.get()).data() as User
-      }
-    },
-    {
-      enabled: !!fsProfile,
+    const profileImg = getProfileImgFromProfile(fsProfileField)
+    if (
+      currentUser.nickname !== fsProfileField.handle ||
+      currentUser.profileUrl !== profileImg
+    ) {
+      updateCurrentUserInfo(fsProfileField.handle, profileImg).then(user => {
+        setCurrentUser(user)
+      })
     }
-  )
-
-  const isFetching = useMemo(
-    () => isFetchingProfile || isFetchingField,
-    [isFetchingProfile, isFetchingField]
-  )
-
-  const isRefetching = useMemo(
-    () => isRefetchingProfile || isRefetchingField,
-    [isRefetchingProfile, isRefetchingField]
-  )
-
-  const refetch = async (): Promise<void> => {
-    removeProfile()
-    removeField()
-    await Promise.all([refetchProfile(), refetchField()])
-  }
+  }, [fsProfileField])
 
   return {
     fsProfile,
     fsProfileField,
-    refetch,
-    isFetching,
-    isRefetching,
   }
 }
 

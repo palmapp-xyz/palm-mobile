@@ -4,60 +4,57 @@ import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { Container, FormButton, FormInput } from 'components'
 import useAuth from 'hooks/independent/useAuth'
-import useFsProfile from 'hooks/firestore/useFsProfile'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
+import useProfile from 'hooks/independent/useProfile'
+import useSetting from 'hooks/independent/useSetting'
+import { NetworkSettingEnum } from 'types'
 
 const CreateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
-
   const [handle, setHandle] = useState('')
-
   const [loading, setLoading] = useRecoilState(appStore.loading)
-
-  const { fsProfile, fsProfileField, refetch } = useFsProfile({
-    address: user?.address,
-  })
-
+  const { profile, createProfile } = useProfile({ address: user?.address })
   const { alert } = useAlert()
+  const { setting } = useSetting()
+  const isTestnet = setting.network === NetworkSettingEnum.TESTNET
 
   const onClickConfirm = async (): Promise<void> => {
-    if (!fsProfile) {
+    if (!profile) {
       return
     }
 
     try {
       setLoading(true)
-      await fsProfile.update({ handle })
-      await refetch()
+      setTimeout(() => createProfile(handle, isTestnet), 300)
     } catch (error) {
       console.error(
-        'createProfile, onClickConfirm',
+        'createProfile:onClickConfirm',
         JSON.stringify(error, null, 2)
       )
-      alert({ message: JSON.stringify(error, null, 2) })
+      alert({ message: JSON.stringify(error) })
     }
   }
 
   useEffect(() => {
-    if (fsProfileField?.handle) {
+    if (profile?.handle) {
       setLoading(false)
     }
-  }, [fsProfileField])
+  }, [profile])
 
   return (
     <Container style={styles.container}>
       <View style={styles.body}>
         <View style={{ paddingTop: 30, alignItems: 'center' }}>
           <Text style={styles.text}>
-            {!fsProfileField
-              ? 'Checking for your profile'
-              : 'Create your profile'}
+            {!profile
+              ? `Checking for your ${isTestnet ? 'Lens ' : ' '}profile`
+              : `Create your ${isTestnet ? 'Lens ' : ' '}profile`}
           </Text>
         </View>
-        {fsProfileField && !fsProfileField.handle && (
+        {profile && !profile.handle && (
           <View>
-            <Text style={styles.text}>Choose Username:</Text>
+            <Text style={styles.text}>Choose a unique handle:</Text>
             <FormInput
               value={handle}
               onChangeText={setHandle}

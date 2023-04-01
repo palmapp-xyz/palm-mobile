@@ -13,7 +13,7 @@ import useAuth from 'hooks/independent/useAuth'
 import { Routes, navigationRef } from 'libs/navigation'
 import { onForegroundAndroid, onForegroundIOS } from 'libs/notification'
 
-import { SignWithLens } from '../screens'
+import { SignInWithLens } from '../screens'
 import PostTxResult from './PostTxResult'
 import MainNavigator from './MainNavigator'
 import AuthNavigator from './AuthNavigator'
@@ -44,7 +44,7 @@ const Navigation = (): ReactElement => {
             component={MainNavigator}
           />
         ) : user ? (
-          <RootStack.Screen name="SignWithLens" component={SignWithLens} />
+          <RootStack.Screen name="SignInWithLens" component={SignInWithLens} />
         ) : (
           <RootStack.Screen
             name={Routes.AuthNavigator}

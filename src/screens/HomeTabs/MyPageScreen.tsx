@@ -8,21 +8,17 @@ import {
   RefreshControl,
   useWindowDimensions,
 } from 'react-native'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import ProfileHeader from '../../components/ProfileHeader'
 import { ChainLogoWrapper, MoralisNftRenderer, NftItemMenu } from 'components'
-import { fetchNftImage } from 'libs/fetchTokenUri'
 import { Moralis, SupportedNetworkEnum } from 'types'
-import useLensProfile from 'hooks/lens/useLensProfile'
 import ProfileFooter from 'components/ProfileFooter'
-import useLens from 'hooks/lens/useLens'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import { NETWORK } from 'consts'
+import useProfile from 'hooks/independent/useProfile'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -33,19 +29,13 @@ const MyPageScreen = (): ReactElement => {
 
   const gap = 4
   const size = useWindowDimensions()
+  const { alert } = useAlert()
 
   const { user, useMyNftListReturn, useMyBalanceReturn } = useMyPageMain({
     selectedNetwork,
   })
-  const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
 
-  const useLensProfileReturn = useLensProfile({ userAddress: user?.address })
-
-  const { updateProfileImage } = useLens()
-
-  const { fsProfile, refetch: refetchFsProfile } = useFsProfile({
-    address: user?.address,
-  })
+  const { profile, updateProfileImage } = useProfile({ address: user?.address })
 
   const profileHeader = useCallback(
     () => (
@@ -67,42 +57,19 @@ const MyPageScreen = (): ReactElement => {
   const doUpdateProfileImage = async (
     selectedItem: Moralis.NftItem
   ): Promise<void> => {
-    if (useLensProfileReturn.profile) {
-      const res = await updateProfileImage(
-        useLensProfileReturn.profile.id,
-        selectedItem.token_address,
-        selectedItem.token_id,
-        selectedNetwork
-      )
-      if (res.success) {
-        const txHash = res.value
-        console.log(`updateProfileImage tx hash ${txHash}`)
-        await useLensProfileReturn.refetch()
-      } else {
-        console.error(`updateProfileImage error ${res.errMsg}`)
-      }
-    }
-    const { image } = await fetchNftImage({
-      metadata: selectedItem.metadata,
-      tokenUri: selectedItem.token_uri,
-    })
-
-    if (fsProfile) {
-      await fsProfile.update({
-        picture: {
-          __typename: 'NftImage',
-          chainId: NETWORK.chainIds[selectedNetwork],
-          contractAddress: selectedItem.token_address,
-          tokenId: selectedItem.token_id,
-          uri: image,
-          verified: false,
-        },
-      })
-      await refetchFsProfile()
+    if (!profile) {
+      return
     }
 
-    const me = await updateCurrentUserInfo(undefined, image)
-    setCurrentUser(me)
+    const res = await updateProfileImage(selectedItem, selectedNetwork)
+    if (res.success) {
+      const txHash = res.value
+      console.log(`updateProfileImage tx hash ${txHash}`)
+      alert({ message: 'Profile image updated' })
+    } else {
+      console.error(`updateProfileImage error ${res.errMsg}`)
+      alert({ message: `Update profile image failed: ${res.errMsg}` })
+    }
   }
 
   return (
@@ -115,8 +82,6 @@ const MyPageScreen = (): ReactElement => {
             Promise.all([
               useMyNftListReturn.refetch(),
               useMyBalanceReturn.refetch(),
-              useLensProfileReturn.refetch(),
-              refetchFsProfile(),
             ])
           }}
         />

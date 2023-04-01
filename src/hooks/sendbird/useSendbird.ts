@@ -40,7 +40,7 @@ const useSendbird = (): UseSendbirdReturn => {
     try {
       channel = await sdk.groupChannel.getChannel(channelUrl)
     } catch (e) {
-      console.error('getChannel Error: ', e)
+      console.error('getChannel Error: ', e, channelUrl)
       const params: GroupChannelCreateParams = {
         channelUrl,
         invitedUserIds: invitedUserIds,
