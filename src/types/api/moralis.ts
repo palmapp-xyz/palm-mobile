@@ -18,6 +18,19 @@ export namespace Moralis {
     last_metadata_sync: string
     minter_address: ContractAddr
     chainId?: string
+    media?: {
+      mimetype: string
+      parent_hash: string
+      status: MediaPreviewStatus
+      updatedAt: string
+      media_collection?: {
+        low: MediaPreview
+        medium: MediaPreview
+        high: MediaPreview
+      }
+      original_media_url: string
+    }
+    possible_spam?: boolean
   }
 
   export enum Status {
@@ -28,6 +41,23 @@ export namespace Moralis {
   export enum NftType {
     ERC721 = 'ERC721',
     ERC1155 = 'ERC1155',
+  }
+
+  // https://docs.moralis.io/web3-data-api/evm/nft-image-previews#what-formats-are-supported
+  export type MediaPreview = {
+    height: number
+    width: number
+    url: string
+  }
+
+  // https://docs.moralis.io/web3-data-api/evm/nft-image-previews#im-using-the-query-parameter-but-im-not-receiving-any-previews-why
+  export enum MediaPreviewStatus {
+    success = 'success',
+    processing = 'processing',
+    unsupported_media = 'unsupported_media',
+    invalid_url = 'invalid_url',
+    host_unavailable = 'host_unavailable',
+    temporarily_unavailable = 'temporarily_unavailable',
   }
 
   export type NftCollection = {
