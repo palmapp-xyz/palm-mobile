@@ -14,7 +14,7 @@ import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import ProfileHeader from '../../components/ProfileHeader'
-import { ChainLogoWrapper, MoralisNftRenderer, NftItemMenu } from 'components'
+import { ChainLogoWrapper, MoralisNftPreview, NftItemMenu } from 'components'
 import { Moralis, SupportedNetworkEnum } from 'types'
 import ProfileFooter from 'components/ProfileFooter'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
@@ -113,7 +113,7 @@ const MyPageScreen = (): ReactElement => {
           }}>
           <View style={{ borderRadius: 10, flex: 1 }}>
             <ChainLogoWrapper chain={selectedNetwork}>
-              <MoralisNftRenderer
+              <MoralisNftPreview
                 item={item}
                 width={'100%'}
                 height={(size.width - gap) / 2.0}

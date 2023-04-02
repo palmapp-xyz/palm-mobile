@@ -18,7 +18,7 @@ import {
   FormButton,
   FormInput,
   Header,
-  MoralisNftRenderer,
+  MoralisNftPreview,
   Row,
 } from 'components'
 import { ContractAddr, QueryKeyEnum, SupportedNetworkEnum } from 'types'
@@ -164,7 +164,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
                   })
                 }}>
                 <View style={{ borderRadius: 10, flex: 1 }}>
-                  <MoralisNftRenderer item={item} width={'100%'} height={180} />
+                  <MoralisNftPreview item={item} width={'100%'} height={180} />
                 </View>
               </TouchableOpacity>
             )}

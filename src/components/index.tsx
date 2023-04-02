@@ -13,6 +13,7 @@ export { default as MediaRenderer } from './atoms/MediaRenderer'
 export { default as KeyboardAvoidingView } from './atoms/KeyboardAvoidingView'
 export { default as FormText } from './atoms/FormText'
 
+export { default as MoralisNftPreview } from './molecules/MoralisNftPreview'
 export { default as MoralisNftRenderer } from './molecules/MoralisNftRenderer'
 export { default as NftRenderer } from './molecules/NftRenderer'
 export { default as SubmitButton } from './molecules/SubmitButton'

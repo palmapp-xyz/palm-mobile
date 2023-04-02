@@ -9,7 +9,7 @@ import {
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
-import { FormButton, MoralisNftRenderer, Row } from 'components'
+import { FormButton, MoralisNftPreview, Row } from 'components'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
 import { COLOR } from 'consts'
@@ -90,7 +90,7 @@ const MyNftList = ({
                 }
               }}>
               <View style={{ padding: 5 }}>
-                <MoralisNftRenderer
+                <MoralisNftPreview
                   item={item}
                   width={150}
                   height="100%"
