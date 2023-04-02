@@ -3,6 +3,7 @@ import { NETWORK } from 'consts'
 import { URL } from 'react-native-url-polyfill'
 import {
   ChainNetworkEnum,
+  ContractAddr,
   NetworkSettingEnum,
   SupportedNetworkEnum,
 } from 'types'
@@ -134,4 +135,22 @@ export const chainIdToSupportedNetworkEnum = (
       Number(chain) === NETWORK.chainId[ChainNetworkEnum.MUMBAI]
     ? SupportedNetworkEnum.POLYGON
     : undefined
+}
+
+export const compareContractAddr = (
+  a: string | ContractAddr,
+  b: string | ContractAddr
+): boolean => {
+  if (a.length !== b.length) {
+    return false
+  }
+  a = a.toLowerCase()
+  b = b.toLowerCase()
+  for (let i = 0; i < a.length; i++) {
+    if (a.charAt(i) !== b.charAt(i)) {
+      return false
+    }
+  }
+
+  return true
 }

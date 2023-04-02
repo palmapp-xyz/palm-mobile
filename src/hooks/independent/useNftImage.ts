@@ -3,6 +3,7 @@ import { UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import { fetchNftImage } from 'libs/fetchTokenUri'
+import { isENS } from 'libs/ens'
 import _ from 'lodash'
 import {
   ContractAddr,
@@ -46,7 +47,6 @@ const useNftImage = ({
         type === NftType.ERC721
           ? await tokenURI({ tokenId })
           : await URI({ tokenId })
-
       if (uri && UTIL.isURL(uri.trim())) {
         return uri.trim()
       }
@@ -61,8 +61,10 @@ const useNftImage = ({
     isRefetching: fetchNftImageFetching,
   } = useReactQuery(
     [QueryKeyEnum.MORALIS_NFT_IMAGE, tokenUri, metadata],
-    () => fetchNftImage({ metadata, tokenUri }),
-    { enabled: !!tokenUri || !!metadata }
+    () => fetchNftImage({ nftContract, tokenId, metadata, tokenUri }),
+    {
+      enabled: !!tokenUri || !!metadata || isENS(nftContract),
+    }
   )
 
   const refetch = async (): Promise<void> => {

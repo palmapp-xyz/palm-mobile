@@ -179,6 +179,8 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
 
     try {
       const { image } = await fetchNftImage({
+        nftContract: item.token_address,
+        tokenId: item.token_id,
         metadata: item.metadata,
         tokenUri: item.token_uri,
       })
