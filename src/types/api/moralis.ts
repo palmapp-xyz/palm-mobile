@@ -1,4 +1,4 @@
-import { ContractAddr } from '../contracts'
+import { ContractAddr, NftType } from '../contracts'
 
 export namespace Moralis {
   export type NftItem = {
@@ -9,7 +9,7 @@ export namespace Moralis {
     token_hash: string
     block_number_minted: string
     block_number: string
-    contract_type: string
+    contract_type: NftType
     name: string
     symbol: string
     token_uri: string
@@ -36,11 +36,6 @@ export namespace Moralis {
   export enum Status {
     SYNCED = 'SYNCED',
     SYNCING = 'SYNCING',
-  }
-
-  export enum NftType {
-    ERC721 = 'ERC721',
-    ERC1155 = 'ERC1155',
   }
 
   // https://docs.moralis.io/web3-data-api/evm/nft-image-previews#what-formats-are-supported

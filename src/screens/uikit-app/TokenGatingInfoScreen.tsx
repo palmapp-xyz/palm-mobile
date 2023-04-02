@@ -22,7 +22,12 @@ import MediaRenderer, {
 const TokenGatingInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.TokenGatingInfo>()
   const { sdk } = useSendbirdChat()
-  const { gatingToken: nftContract, chain, channelUrl } = params
+  const {
+    gatingToken: nftContract,
+    gatingTokenType,
+    chain,
+    channelUrl,
+  } = params
   const { channel } = useGroupChannel(sdk, channelUrl)
   const { name } = useNft({ nftContract, chain })
 
@@ -33,6 +38,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
   const { loading, uri, metadata } = useNftImage({
     nftContract,
     tokenId: '1',
+    type: gatingTokenType,
     chain,
   })
   const mediaProps: MediaRendererProps = {

@@ -74,6 +74,7 @@ const UserProfileScreen = (): ReactElement => {
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
+              nftContractType: item.contract_type,
               chain:
                 chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                 SupportedNetworkEnum.ETHEREUM,

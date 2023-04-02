@@ -21,7 +21,12 @@ import {
   MoralisNftPreview,
   Row,
 } from 'components'
-import { ContractAddr, QueryKeyEnum, SupportedNetworkEnum } from 'types'
+import {
+  ContractAddr,
+  NftType,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+} from 'types'
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useFsChannel from 'hooks/firestore/useFsChannel'
@@ -37,9 +42,11 @@ import MediaRenderer, {
 const GatingToken = ({
   chain,
   nftContract,
+  type,
 }: {
   chain: SupportedNetworkEnum
   nftContract: ContractAddr
+  type: NftType
 }): ReactElement => {
   const { name } = useNft({ nftContract, chain })
   const { data: tokenName = '' } = useReactQuery(
@@ -49,6 +56,7 @@ const GatingToken = ({
   const { loading, uri, metadata } = useNftImage({
     nftContract,
     tokenId: '1',
+    type,
     chain,
   })
 
@@ -75,8 +83,13 @@ const ChannelTokenGatingScreen = (): ReactElement => {
   const { user } = useAuth()
   const [editGatingToken, setEditGatingToken] = useState<{
     contract: ContractAddr
+    type: NftType
     chain: SupportedNetworkEnum
-  }>({ contract: '' as ContractAddr, chain: SupportedNetworkEnum.ETHEREUM })
+  }>({
+    contract: '' as ContractAddr,
+    type: NftType.ERC721,
+    chain: SupportedNetworkEnum.ETHEREUM,
+  })
   const editGatingTokenErrMsg = useMemo(() => {
     if (editGatingToken) {
       if (utils.isAddress(editGatingToken.contract) === false) {
@@ -125,6 +138,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
             {fsChannelField?.gatingToken ? (
               <GatingToken
                 chain={SupportedNetworkEnum.ETHEREUM}
+                type={fsChannelField?.gatingTokenType ?? NftType.ERC721}
                 nftContract={fsChannelField?.gatingToken}
               />
             ) : (
@@ -160,6 +174,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
                 onPress={(): void => {
                   setEditGatingToken({
                     contract: item.token_address,
+                    type: item.contract_type,
                     chain: SupportedNetworkEnum.ETHEREUM,
                   })
                 }}>

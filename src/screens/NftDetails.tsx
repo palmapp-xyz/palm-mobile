@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { ContractAddr, SupportedNetworkEnum } from 'types'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 import { LinkExplorer, SubmitButton } from 'components'
 import useNft from 'hooks/contract/useNft'
 import useAuth from 'hooks/independent/useAuth'
@@ -22,11 +22,13 @@ import NftListingChannels from './NftListingChannels'
 const NftDetails = ({
   nftContract,
   tokenId,
+  type,
   chain,
   onSubmit,
 }: {
   nftContract: ContractAddr
   tokenId: string
+  type: NftType
   chain: SupportedNetworkEnum
   onSubmit?: (uri: string | undefined, metadata: Maybe<string>) => Promise<void>
 }): ReactElement => {
@@ -40,6 +42,7 @@ const NftDetails = ({
   const { loading, uri, metadata, refetch, isRefetching } = useNftImage({
     nftContract,
     tokenId,
+    type,
     chain,
   })
 

@@ -14,7 +14,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { FbListing, SupportedNetworkEnum } from 'types'
+import { FbListing, NftType, SupportedNetworkEnum } from 'types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
@@ -95,6 +95,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
                   <NftRenderer
                     tokenId={getOrderTokenId(listing.order.order)}
                     nftContract={getOrderTokenAddress(listing.order.order)}
+                    type={listing.order.nftType as NftType}
                     width={150}
                     height={150}
                     chain={chain}

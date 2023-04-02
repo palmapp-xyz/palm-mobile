@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 
-import { ContractAddr, SupportedNetworkEnum } from 'types'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 import { FlexStyle, ImageStyle, StyleProp } from 'react-native'
 import useNftImage from 'hooks/independent/useNftImage'
 import NftMediaRenderer from './NftMediaRenderer'
@@ -9,6 +9,7 @@ import { MediaRendererProps } from 'components/atoms/MediaRenderer'
 const NftRenderer = ({
   nftContract,
   tokenId,
+  type,
   chain,
   width,
   height,
@@ -17,6 +18,7 @@ const NftRenderer = ({
 }: {
   nftContract: ContractAddr
   tokenId: string
+  type: NftType
   chain: SupportedNetworkEnum
   width?: FlexStyle['width']
   height?: FlexStyle['height']
@@ -26,6 +28,7 @@ const NftRenderer = ({
   const { loading, uri, metadata } = useNftImage({
     nftContract,
     tokenId,
+    type,
     chain,
   })
 

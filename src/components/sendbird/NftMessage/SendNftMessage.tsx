@@ -32,6 +32,7 @@ const SendNftMessage = ({
   const { loading, uri, metadata } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
+    type: item.contract_type,
     metadata: item.metadata,
     chain,
   })
@@ -75,6 +76,7 @@ const SendNftMessage = ({
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
+              nftContractType: item.contract_type,
               chain,
             })
           }}>

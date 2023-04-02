@@ -23,6 +23,7 @@ const NftDetailScreen = (): ReactElement => {
       <NftDetails
         nftContract={params.nftContract}
         tokenId={params.tokenId}
+        type={params.nftContractType}
         chain={params.chain}
       />
     </Container>

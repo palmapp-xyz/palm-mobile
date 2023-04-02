@@ -7,7 +7,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
-import { ContractAddr, SupportedNetworkEnum } from 'types'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 
 import { GetSendbirdSDK } from './sendbird'
 
@@ -136,6 +136,7 @@ type MainRouteParamsUnion =
       params: {
         nftContract: ContractAddr
         tokenId: string
+        nftContractType: NftType
         chain: SupportedNetworkEnum
       }
     }
@@ -175,6 +176,7 @@ type MainRouteParamsUnion =
       params: {
         channelUrl: string
         gatingToken: ContractAddr
+        gatingTokenType: NftType
         chain: SupportedNetworkEnum
       }
     }

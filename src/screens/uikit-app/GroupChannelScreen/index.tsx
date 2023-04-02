@@ -8,7 +8,12 @@ import {
 
 import { Routes } from 'libs/navigation'
 
-import { ContractAddr, QueryKeyEnum, SupportedNetworkEnum } from 'types'
+import {
+  ContractAddr,
+  NftType,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+} from 'types'
 import GroupChannelHeader from './GroupChannelHeader'
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
@@ -28,9 +33,11 @@ const GroupChannelFragment = createGroupChannelFragment({
 const HasGatingToken = ({
   chain,
   gatingToken,
+  gatingTokenType,
 }: {
   chain: SupportedNetworkEnum
   gatingToken: ContractAddr
+  gatingTokenType: NftType
 }): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
@@ -50,6 +57,7 @@ const HasGatingToken = ({
       navigation.replace(Routes.TokenGatingInfo, {
         channelUrl: params.channelUrl,
         gatingToken,
+        gatingTokenType,
         chain,
       })
     }
@@ -65,9 +73,10 @@ const GroupChannelScreen = (): ReactElement => {
   const { channel } = useGroupChannel(sdk, params.channelUrl)
 
   const { fsChannelField } = useFsChannel({ channelUrl: params.channelUrl })
-  const { gatingToken, gatingTokenChain } = useMemo(
+  const { gatingToken, gatingTokenChain, gatingTokenType } = useMemo(
     () => ({
       gatingToken: fsChannelField?.gatingToken,
+      gatingTokenType: fsChannelField?.gatingTokenType,
       gatingTokenChain: fsChannelField?.gatingTokenChain,
     }),
     [fsChannelField]
@@ -83,6 +92,7 @@ const GroupChannelScreen = (): ReactElement => {
         <HasGatingToken
           chain={gatingTokenChain ?? SupportedNetworkEnum.ETHEREUM}
           gatingToken={gatingToken}
+          gatingTokenType={gatingTokenType ?? NftType.ERC721}
         />
       )}
       <GroupChannelFragment

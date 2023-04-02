@@ -8,7 +8,7 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { COLOR } from 'consts'
-import { ContractAddr, QueryKeyEnum } from 'types'
+import { ContractAddr, NftType, QueryKeyEnum } from 'types'
 import { Container, Header } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
@@ -97,6 +97,7 @@ const ZxNftDetailScreen = (): ReactElement => {
           <NftDetails
             nftContract={order.nftToken as ContractAddr}
             tokenId={order.nftTokenId}
+            type={order.nftType as NftType}
             chain={chain}
             onSubmit={onSubmit}
           />

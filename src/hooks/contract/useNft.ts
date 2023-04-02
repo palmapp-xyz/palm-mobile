@@ -17,7 +17,10 @@ export type UseNftReturn = {
     owner: ContractAddr
     index: number
   }) => Promise<string | undefined>
+  // ERC721
   tokenURI: (props: { tokenId: string }) => Promise<string | undefined>
+  // ERC1155
+  URI: (props: { tokenId: string }) => Promise<string | undefined>
   setApprovalForAllData: (props: {
     operator: ContractAddr
   }) => EncodedTxData | undefined
@@ -85,13 +88,22 @@ const useNft = ({
     callMethod<string>('tokenOfOwnerByIndex', [owner, index])
 
   /**
-   * @returns token uri
+   * @returns ec721 token uri
    */
   const tokenURI = async ({
     tokenId,
   }: {
     tokenId: string
   }): Promise<string | undefined> => callMethod<string>('tokenURI', [tokenId])
+
+  /**
+   * @returns erc1155 token uri
+   */
+  const URI = async ({
+    tokenId,
+  }: {
+    tokenId: string
+  }): Promise<string | undefined> => callMethod<string>('uri', [tokenId])
 
   const setApprovalForAllData = ({
     operator,
@@ -118,6 +130,7 @@ const useNft = ({
     balanceOf,
     tokenOfOwnerByIndex,
     tokenURI,
+    URI,
     setApprovalForAllData,
     transferFromData,
   }

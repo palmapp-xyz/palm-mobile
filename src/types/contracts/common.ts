@@ -12,3 +12,8 @@ export type NetworkContractMap = {
 }
 
 export type ContractMap = Record<SupportedNetworkEnum, NetworkContractMap>
+
+export enum NftType {
+  ERC721 = 'ERC721',
+  ERC1155 = 'ERC1155',
+}

@@ -83,6 +83,7 @@ const Contents = ({
                 <NftRenderer
                   nftContract={selectedNft.token_address}
                   tokenId={selectedNft.token_id}
+                  type={selectedNft.contract_type}
                   chain={chain}
                 />
               </ChainLogoWrapper>
