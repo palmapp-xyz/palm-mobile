@@ -81,6 +81,7 @@ const LensFriendsScreen = (): ReactElement => {
         await createUserFromProfile(profile)
         await createGroupChatIfNotExist({
           channelUrl: generateDmChannelUrl(profile.ownedBy, user?.address),
+          isDistinct: true,
           invitedUserIds: [profile.ownedBy],
           operatorUserIds: [user?.address, profile.ownedBy],
           onChannelCreated: (channel: GroupChannel) => {

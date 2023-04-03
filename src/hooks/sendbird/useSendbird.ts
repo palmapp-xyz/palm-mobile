@@ -7,6 +7,8 @@ import {
 export type CreateGroupChatInput = {
   channelUrl: string
   invitedUserIds: string[]
+  isDistinct?: boolean
+  coverUrl?: string
   channelName?: string
   operatorUserIds?: string[]
   onChannelCreated?: ((channel: GroupChannel) => void) | undefined
@@ -31,6 +33,8 @@ const useSendbird = (): UseSendbirdReturn => {
   const createGroupChatIfNotExist = async ({
     channelUrl,
     invitedUserIds,
+    coverUrl,
+    isDistinct,
     channelName,
     operatorUserIds,
     onChannelCreated,
@@ -45,8 +49,8 @@ const useSendbird = (): UseSendbirdReturn => {
         channelUrl,
         invitedUserIds: invitedUserIds,
         name: channelName,
-        coverUrl: '',
-        isDistinct: false,
+        coverUrl,
+        isDistinct,
       }
       params.operatorUserIds = operatorUserIds
       channel = await sdk.groupChannel.createChannel(params)

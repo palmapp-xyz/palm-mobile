@@ -1,6 +1,7 @@
 import React, { ReactElement, useContext } from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import {
+  Avatar,
   Header,
   createStyleSheet,
   useHeaderStyle,
@@ -12,24 +13,62 @@ import {
 } from '@sendbird/uikit-react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { FormText } from 'components'
+import { Routes } from 'libs/navigation'
+import { ContractAddr } from 'types'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Member } from '@sendbird/chat/groupChannel'
+import useAuth from 'hooks/independent/useAuth'
+import { FormImage } from 'components'
 
 const GroupChannelHeader = ({
   onPressHeaderLeft,
   onPressHeaderRight,
 }: GroupChannelProps['Header']): ReactElement => {
+  const { user } = useAuth()
+  const { navigation } = useAppNavigation<Routes.GroupChannel>()
   const { headerTitle, channel } = useContext(GroupChannelContexts.Fragment)
   const { typingUsers } = useContext(GroupChannelContexts.TypingIndicator)
   const { STRINGS } = useLocalization()
   const { HeaderComponent } = useHeaderStyle()
   const subtitle = STRINGS.LABELS.TYPING_INDICATOR_TYPINGS(typingUsers)
 
+  const isMyDM =
+    channel.memberCount === 2 &&
+    channel.members.filter((member: Member) => member.userId === user?.address)
+      .length === 1
+  const otherDMUser: Member | undefined = isMyDM
+    ? channel.members.filter(
+        (member: Member) => member.userId !== user?.address
+      )[0]
+    : undefined
+
   return (
     <HeaderComponent
       clearTitleMargin
       title={
         <View style={styles.titleContainer}>
-          <FormText fontType="B.18">{channel.coverUrl}</FormText>
+          {channel.coverUrl ? (
+            <FormImage
+              source={{ uri: channel.coverUrl }}
+              size={36}
+              style={styles.avatarGroup}
+            />
+          ) : (
+            otherDMUser && (
+              <TouchableOpacity
+                onPress={(): void => {
+                  navigation.navigate(Routes.UserProfile, {
+                    address: otherDMUser.userId as ContractAddr,
+                  })
+                }}>
+                <Avatar
+                  size={36}
+                  uri={otherDMUser.profileUrl}
+                  containerStyle={styles.avatarGroup}
+                />
+              </TouchableOpacity>
+            )
+          )}
           <View style={{ flexShrink: 1 }}>
             <Header.Title h2>{headerTitle}</Header.Title>
             {Boolean(subtitle) && subtitle && (
