@@ -21,12 +21,6 @@ module.exports = function (api) {
 
   const plugins = [
     moduleResolver,
-    // Reanimated plugin has to be listed last.
-    [
-      'react-native-reanimated/plugin', {
-        relativeSourceLocation: true,
-      },
-    ]
   ]
 
   return {
