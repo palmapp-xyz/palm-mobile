@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 
 import useAuth from 'hooks/independent/useAuth'
 import {
+  ApiData,
   ApiEnum,
   ApiFetchResult,
   ApiParamFabricated,
@@ -20,6 +21,7 @@ export type UseApiReturn = {
   postApi: <T extends ApiEnum>(props: {
     path: ApiParamFabricated
     params: ApiParams[T]['POST']
+    data?: ApiData[T]['POST']
     useFormData?: boolean
   }) => Promise<ApiFetchResult<ApiResponse[T]['POST']>>
   putApi: <T extends ApiEnum>(props: {
@@ -111,10 +113,12 @@ const useApi = (): UseApiReturn => {
   const postApi = async <T extends ApiEnum>({
     path,
     params,
+    data,
     useFormData,
   }: {
     path: ApiParamFabricated
     params: ApiParams[T]['POST']
+    data?: any
     useFormData?: boolean
   }): Promise<ApiFetchResult<ApiResponse[T]['POST']>> => {
     setIsFetchingPostApiStore(true)
@@ -128,6 +132,7 @@ const useApi = (): UseApiReturn => {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
           },
+          data,
         })
 
       if (fetchRes.status === 200) {

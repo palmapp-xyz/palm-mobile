@@ -58,4 +58,8 @@ export default {
     put: (): ApiParamFabricated => '/v1/accounts' as ApiParamFabricated,
     del: (): ApiParamFabricated => '/v1/accounts' as ApiParamFabricated,
   },
+  [ApiEnum.IPFS]: {
+    post: (): ApiParamFabricated =>
+      '/v1/api/evm-api-proxy/ipfs/uploadFolder' as ApiParamFabricated,
+  },
 }

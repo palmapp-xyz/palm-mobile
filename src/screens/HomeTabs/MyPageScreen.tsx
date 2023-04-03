@@ -88,7 +88,7 @@ const MyPageScreen = (): ReactElement => {
       }
       ListHeaderComponent={profileHeader}
       ListFooterComponent={profileFooter}
-      data={useMyNftListReturn.nftList}
+      data={useMyNftListReturn.nftList.filter(x => !!x)}
       keyExtractor={(_, index): string => `nftList-${index}`}
       numColumns={2}
       contentContainerStyle={{ gap }}

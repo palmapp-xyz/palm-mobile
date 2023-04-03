@@ -61,4 +61,15 @@ export namespace Moralis {
     name: string
     symbol: string | null
   }
+
+  export type ERC20 = {
+    token_address: ContractAddr
+    name: string
+    symbol: string
+    logo: string | null
+    thumbnail: string | null
+    decimals: 18
+    balance: string
+    possible_spam?: boolean
+  }
 }

@@ -10,6 +10,7 @@ import {
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 import { utils } from 'ethers'
+import { v4 as uuidv4 } from 'uuid'
 
 import useWeb3 from 'hooks/complex/useWeb3'
 import {
@@ -47,6 +48,7 @@ import {
   HasTxHashBeenIndexedQuery,
   HasTxHashBeenIndexedRequest,
   TransactionReceipt,
+  PublicationMetadataStatusType,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
 import useNetwork from 'hooks/complex/useNetwork'
@@ -54,9 +56,16 @@ import { TransactionResponse } from '@ethersproject/providers'
 import useLensHub from './useLensHub'
 import useEthers from 'hooks/complex/useEthers'
 import postTxStore from 'store/postTxStore'
-import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
+import {
+  Environment,
+  ProfileMetadata,
+} from '@lens-protocol/react-native-lens-ui-kit'
+import useSetting from 'hooks/independent/useSetting'
+import { isMainnet } from 'libs/utils'
+import useIpfs from 'hooks/complex/useIpfs'
 
 export type UseLensReturn = {
+  appId: string
   signer?: Account
   sign: () => Promise<TrueOrErrReturn>
   getProfiles: (request: ProfileQueryRequest) => Promise<PaginatedProfileResult>
@@ -95,8 +104,11 @@ export type UseLensReturn = {
         }
       | {
           txId: string
-        }
-  ) => Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
+        },
+    maxTimeout?: number
+  ) => Promise<
+    TrueOrErrReturn<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
+  >
   setMetadata: (
     profile: Profile,
     metadata: Partial<ProfileMetadata>
@@ -114,11 +126,18 @@ const useLens = (): UseLensReturn => {
   const { signedTypeData, getSigner: getEthersSigner } = useEthers()
   const { user } = useAuth()
   const { query: aQuery, mutate: aMutate } = useApolloClient()
+  const { uploadFolder } = useIpfs()
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const { connectedNetworkIds } = useNetwork()
+  const { setting } = useSetting()
+  const lensEnv = isMainnet(setting.network)
+    ? Environment.mainnet
+    : Environment.testnet
 
   const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
+
+  const appId = `palm-${lensEnv}`
 
   const query = <
     T = any,
@@ -456,45 +475,82 @@ const useLens = (): UseLensReturn => {
     return result.data.hasTxHashBeenIndexed
   }
 
-  const pollUntilIndexed = async (
-    input: { txHash: string } | { txId: string }
-  ): Promise<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']> => {
-    while (true) {
-      const response = await hasTxBeenIndexed(input)
-      console.log('pool until indexed: result', response)
-
-      if (response.__typename === 'TransactionIndexedResult') {
-        console.log('pool until indexed: indexed', response.indexed)
-        console.log(
-          'pool until metadataStatus: metadataStatus',
-          response.metadataStatus
-        )
-
-        console.log(response.metadataStatus)
-        if (response.metadataStatus) {
-          if (response.metadataStatus.status === 'SUCCESS') {
-            return response
-          }
-
-          if (response.metadataStatus.status === 'METADATA_VALIDATION_FAILED') {
-            throw new Error(response.metadataStatus.status)
-          }
+  const processIndexedResult = async (
+    response: HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']
+  ): Promise<
+    TrueOrErrReturn<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
+  > => {
+    if (response.__typename === 'TransactionIndexedResult') {
+      console.log('poll until indexed: indexed', response.indexed)
+      console.log(
+        'poll until metadataStatus: metadataStatus',
+        response.metadataStatus
+      )
+      console.log(response.metadataStatus)
+      if (response.metadataStatus) {
+        if (response.metadataStatus.status === 'SUCCESS') {
+          return { success: true, value: response }
+        } else if (
+          response.metadataStatus.status ===
+          PublicationMetadataStatusType.MetadataValidationFailed
+        ) {
+          throw new Error(
+            response.metadataStatus.reason || response.metadataStatus.status
+          )
         } else {
-          if (response.indexed) {
-            return response
+          return {
+            success: false,
+            errMsg:
+              response.metadataStatus.reason || response.metadataStatus.status,
           }
         }
-
-        console.log(
-          'pool until indexed: sleep for 1500 milliseconds then try again'
-        )
-        // sleep for a second before trying again
-        await new Promise(resolve => setTimeout(resolve, 1500))
       } else {
-        // it got reverted and failed!
-        throw new Error(response.reason)
+        if (response.indexed) {
+          return { success: true, value: response }
+        } else {
+          return {
+            success: false,
+            errMsg: PublicationMetadataStatusType.NotFound,
+          }
+        }
       }
+    } else {
+      // it got reverted and failed!
+      throw new Error(response.reason)
     }
+  }
+
+  const pollUntilIndexed = async (
+    input: { txHash: string } | { txId: string },
+    maxTimeout?: number
+  ): Promise<
+    TrueOrErrReturn<HasTxHashBeenIndexedQuery['hasTxHashBeenIndexed']>
+  > => {
+    const timeout = 1500
+    let i = 0
+    while (Number(maxTimeout) > 0 ? i * timeout < Number(maxTimeout) : true) {
+      const response = await hasTxBeenIndexed(input)
+      const res = await processIndexedResult(response)
+      console.log('poll until indexed: result', response)
+
+      if (res.success) {
+        return res
+      } else if (
+        res.errMsg === PublicationMetadataStatusType.MetadataValidationFailed
+      ) {
+        throw new Error(res.errMsg)
+      }
+
+      i++
+      console.log(
+        `poll until indexed: sleeping for ${
+          timeout * i
+        } milliseconds then try again until ${maxTimeout}`
+      )
+      // sleep for a second before trying again
+      await new Promise(resolve => setTimeout(resolve, timeout * i))
+    }
+    return { success: false, errMsg: PublicationMetadataStatusType.Pending }
   }
 
   const setMetadata = async (
@@ -508,10 +564,29 @@ const useLens = (): UseLensReturn => {
     }>
   > => {
     try {
-      console.log(JSON.stringify(update, null, 2))
-      const metadata =
-        'https://lens.infura-ipfs.io/ipfs/QmPZufGcsXtnV4VKLD3bnUPh8ovzKhQgtgeDYptc2rWHmZ'
-      // TODO: uplodate updated profile metadata to ipfs
+      const metadata_id = uuidv4()
+      const profileMetadata: ProfileMetadata = {
+        version: '1.0.0',
+        metadata_id,
+        appId,
+        name: update.name || '',
+        bio: update.bio || '',
+        cover_picture: update.cover_picture || '',
+        attributes: update.attributes ?? [],
+      }
+      const res = await uploadFolder([
+        {
+          path: `${appId}/${profile.ownedBy}/${metadata_id}.json`,
+          content: profileMetadata,
+        },
+      ])
+      console.log('uploadIpfs result:', res)
+      if (!res.success) {
+        throw new Error(res.errMsg)
+      }
+      const metadata = res.value?.[0].path
+      console.log('set metadata:', metadata)
+
       const createMetadataRequest: CreatePublicSetProfileMetadataUriRequest = {
         profileId: profile.id,
         metadata,
@@ -581,20 +656,24 @@ const useLens = (): UseLensReturn => {
       console.log('create comment gasless', value)
 
       console.log('create profile metadata: poll until indexed')
-      const indexedResult = await pollUntilIndexed({ txId: value.txId })
+      const indexedResult = await pollUntilIndexed({ txId: value.txId }, 20000)
 
       console.log('create profile metadata: profile has been indexed', value)
 
-      const logs =
-        indexedResult.txReceipt &&
-        'logs' in indexedResult?.txReceipt &&
-        (indexedResult.txReceipt as TransactionReceipt).logs
+      if (indexedResult.success) {
+        const logs =
+          indexedResult.value.txReceipt &&
+          'logs' in indexedResult.value?.txReceipt &&
+          (indexedResult.value.txReceipt as TransactionReceipt).logs
 
-      console.log('create profile metadata: logs', logs)
+        console.log('create profile metadata: logs', logs)
 
-      return {
-        success: true,
-        value,
+        return {
+          success: true,
+          value,
+        }
+      } else {
+        return indexedResult
       }
     } catch (error) {
       return { success: false, errMsg: _.toString(error) }
@@ -602,6 +681,7 @@ const useLens = (): UseLensReturn => {
   }
 
   return {
+    appId,
     sign,
     getProfiles,
     getProfile,

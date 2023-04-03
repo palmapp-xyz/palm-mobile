@@ -93,14 +93,9 @@ const ProfileHeader = ({
           )}
         </View>
         <View style={styles.profileNicknameBox}>
-          <TouchableOpacity
-            onPress={(): void => {
-              navigation.navigate(Routes.UpdateLensProfile)
-            }}>
-            <Card style={styles.profileNicknameCard}>
-              <Text style={{ color: 'black' }}>{profile?.handle}</Text>
-            </Card>
-          </TouchableOpacity>
+          <Card style={styles.profileNicknameCard}>
+            <Text style={{ color: 'black' }}>{profile?.handle}</Text>
+          </Card>
         </View>
         <Card
           style={{
@@ -178,15 +173,14 @@ const ProfileHeader = ({
               />
             </View>
           )}
-          <View
-            style={{
-              padding: 20,
-              borderWidth: 1,
-              borderColor: COLOR.gray._400,
-              borderRadius: 20,
+          <TouchableOpacity
+            onPress={(): void => {
+              navigation.navigate(Routes.UpdateLensProfile)
             }}>
-            <Text>{profile?.bio || 'Tell us something about you!'}</Text>
-          </View>
+            <Card style={styles.bioCard}>
+              <Text>{profile?.bio || 'Tell us something about you!'}</Text>
+            </Card>
+          </TouchableOpacity>
         </Card>
       </ImageBackground>
       <View style={styles.body}>
@@ -231,6 +225,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     alignItems: 'center',
+  },
+  bioCard: {
+    padding: 20,
+    borderWidth: 1,
+    borderColor: COLOR.gray._400,
+    borderRadius: 20,
   },
   walletBalanceBox: {
     alignItems: 'center',

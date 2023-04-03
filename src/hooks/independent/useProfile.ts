@@ -219,7 +219,6 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
     }
 
     if (
-      metadata.cover_picture ||
       metadata.appId ||
       metadata.metadata_id ||
       metadata.version ||

@@ -4,7 +4,7 @@ import Spinner, { SpinnerPropTypes } from 'react-native-loading-spinner-overlay'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
-const maxTimeout = 10000
+const maxTimeout = 30000
 
 const Loading = (props: SpinnerPropTypes): ReactElement => {
   const [loading, setLoading] = useRecoilState(appStore.loading)

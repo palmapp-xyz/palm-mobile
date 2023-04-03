@@ -12,10 +12,9 @@ import { SupportedNetworkEnum } from 'types'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import useProfile from 'hooks/independent/useProfile'
-import {
-  AttributeData,
-  ProfileMetadata,
-} from '@lens-protocol/react-native-lens-ui-kit'
+import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
+import { getAttributesData } from 'libs/lens'
+import { PublicationMetadataStatusType } from 'graphqls/__generated__/graphql'
 
 const UpdateLensProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -31,7 +30,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
   >({
     name: profile?.name || undefined,
     bio: profile?.bio || undefined,
-    attributes: (profile?.attributes as AttributeData[]) || [],
+    attributes: getAttributesData(profile),
   })
 
   const update = async (): Promise<void> => {
@@ -40,9 +39,23 @@ const UpdateLensProfileScreen = (): ReactElement => {
       setLoading(false)
       setTimeout(() => {
         if (!result.success) {
-          alert({ message: result.errMsg })
+          if (result.errMsg === PublicationMetadataStatusType.Pending) {
+            alert({
+              title: 'Pending',
+              message:
+                'Your profile will be reflected once update transaction gets indexed.',
+            })
+          } else {
+            alert({
+              title: 'Failure',
+              message: result.errMsg,
+            })
+          }
         } else {
-          alert({ message: 'Profile updated' })
+          alert({
+            title: 'Success',
+            message: 'Profile updated',
+          })
         }
       }, 300)
     }
@@ -61,7 +74,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title="Update Profile"
+        title="Update Bio"
         left={
           <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
         }

@@ -15,6 +15,8 @@ export enum ApiEnum {
   FRIENDS = 'FRIENDS',
   CHANNELS = 'CHANNELS',
   CHANNEL = 'CHANNEL',
+
+  IPFS = 'IPFS',
 }
 
 export type ApiParamFabricated = string & NominalType<'ApiParamFabricated'>
@@ -27,6 +29,27 @@ type DefaultMethods = {
 }
 
 type Override<T> = Omit<DefaultMethods, keyof T> & T
+
+export type ApiData = {
+  [ApiEnum.MORALIS_AUTH_REQUEST_MESSAGE]: DefaultMethods
+  [ApiEnum.MORALIS_AUTH_ISSUE_TOKEN]: DefaultMethods
+
+  [ApiEnum.ASSETS]: DefaultMethods
+  [ApiEnum.COLLECTIONS]: DefaultMethods
+  [ApiEnum.FRIENDS]: DefaultMethods
+
+  [ApiEnum.CHANNELS]: DefaultMethods
+  [ApiEnum.CHANNEL]: DefaultMethods
+
+  [ApiEnum.AUTH]: DefaultMethods
+  [ApiEnum.ACCOUNTS]: DefaultMethods
+  [ApiEnum.IPFS]: Override<{
+    POST: {
+      path: string
+      content: string
+    }[]
+  }>
+}
 
 export type ApiParams = {
   [ApiEnum.MORALIS_AUTH_REQUEST_MESSAGE]: Override<{
@@ -81,6 +104,12 @@ export type ApiParams = {
       id: number
     }
   }>
+  [ApiEnum.IPFS]: Override<{
+    POST: {
+      path: string
+      content: string
+    }[]
+  }>
 }
 
 export type ApiFetchResult<T = ApiResponse[ApiEnum][keyof DefaultMethods]> =
@@ -134,4 +163,8 @@ export type ApiResponse = {
 
   [ApiEnum.CHANNELS]: DefaultMethods
   [ApiEnum.CHANNEL]: DefaultMethods
+
+  [ApiEnum.IPFS]: Override<{
+    POST: { path: string }[]
+  }>
 }
