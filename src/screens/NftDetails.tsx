@@ -14,8 +14,8 @@ import useNft from 'hooks/contract/useNft'
 import useAuth from 'hooks/independent/useAuth'
 import NftMetadata from 'components/molecules/NftMetadata'
 import useNftImage from 'hooks/independent/useNftImage'
-import { MediaRendererProps } from 'components/atoms/MediaRenderer'
-import NftMediaRenderer from 'components/molecules/NftMediaRenderer'
+import { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import MediaRenderer from 'components/molecules/MediaRenderer'
 import { Maybe } from '@toruslabs/openlogin'
 import NftListingChannels from './NftListingChannels'
 
@@ -50,7 +50,6 @@ const NftDetails = ({
     src: uri,
     alt: `${nftContract}:${tokenId}`,
     loading,
-    metadata,
     style: { flex: 1 },
   }
 
@@ -66,7 +65,7 @@ const NftDetails = ({
       }>
       <View style={styles.body}>
         <View style={styles.imageBox}>
-          <NftMediaRenderer {...nftRenderProps} />
+          <MediaRenderer {...nftRenderProps} />
         </View>
         <View style={styles.info}>
           <View style={styles.infoDetails}>

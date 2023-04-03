@@ -1,34 +1,14 @@
 import { resolveIpfsUri, resolveMimeType } from 'libs/ipfs'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { MediaType } from 'types'
 
-/**
- * @param uri - the uri to resolve (can be a url or a ipfs://\<cid\>)
- * @returns the fully resolved url + mime type of the media
- *
- * @example
- * Usage with fully formed url:
- * ```jsx
- * const Component = () => {
- *   const resolved = useResolvedMediaType("https://example.com/video.mp4");
- *   console.log("mime type", resolved.data.mimeType);
- *   console.log("url", resolved.data.url);
- *   return null;
- * }
- * ```
- *
- * Usage with ipfs cid:
- * ```jsx
- * const Component = () => {
- *   const resolved = useResolvedMediaType("ipfs://QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvsd");
- *   console.log("mime type", resolved.data.mimeType);
- *   console.log("url", resolved.data.url);
- *   return null;
- * }
- * ```
- */
-export function useResolvedMediaType(uri?: string): MediaType {
+export type UseResolvedMediaTypeReturn = {
+  url?: string
+  mimeType?: string
+  isLoading: boolean
+}
+
+export function useResolvedMediaType(uri?: string): UseResolvedMediaTypeReturn {
   const resolvedUrl = useMemo(() => resolveIpfsUri(uri), [uri])
   const resolvedMimType = useQuery(
     ['mime-type', resolvedUrl],
@@ -41,5 +21,6 @@ export function useResolvedMediaType(uri?: string): MediaType {
   return {
     url: resolvedUrl,
     mimeType: resolvedMimType.data,
+    isLoading: resolvedMimType.isLoading,
   }
 }

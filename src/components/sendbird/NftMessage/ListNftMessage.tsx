@@ -12,7 +12,9 @@ import useZxOrder from 'hooks/zx/useZxOrder'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useNftImage from 'hooks/independent/useNftImage'
 
-import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
+import MediaRenderer, {
+  MediaRendererProps,
+} from '../../molecules/MediaRenderer'
 import Row from '../../atoms/Row'
 import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'

@@ -17,7 +17,7 @@ import images from 'assets/images'
 import useAuth from 'hooks/independent/useAuth'
 import MediaRenderer, {
   MediaRendererProps,
-} from 'components/atoms/MediaRenderer'
+} from 'components/molecules/MediaRenderer'
 
 const TokenGatingInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.TokenGatingInfo>()

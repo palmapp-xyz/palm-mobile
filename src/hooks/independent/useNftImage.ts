@@ -1,10 +1,10 @@
 import { Maybe } from '@toruslabs/openlogin'
+
 import { UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { isENS } from 'libs/ens'
-import _ from 'lodash'
 import {
   ContractAddr,
   NftType,

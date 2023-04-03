@@ -1,29 +1,25 @@
 import React, { ReactElement } from 'react'
-import { StyleProp, FlexStyle, Image, ImageStyle } from 'react-native'
+import { StyleProp, FlexStyle, Image, ImageStyle, View } from 'react-native'
+import * as Progress from 'react-native-progress'
 
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
-import IframePlayer from '../molecules/IframeRenderer'
-import SvgRenderer from '../molecules/SvgRenderer'
 import { isValidHttpUrl } from 'libs/utils'
-import FallbackMediaRenderer from '../molecules/FallbackMediaRenderer'
-import VideoRenderer from '../molecules/VideoRenderer'
-import * as Progress from 'react-native-progress'
-import Card from './Card'
-import { Maybe } from '@toruslabs/openlogin'
 
-export interface SharedMediaProps {
-  style?: StyleProp<ImageStyle>
-  width?: FlexStyle['width']
-  height?: FlexStyle['height']
-}
+import IframePlayer from '../atoms/IframeRenderer'
+import SvgRenderer from '../atoms/SvgRenderer'
+import FallbackMediaRenderer from '../atoms/FallbackMediaRenderer'
+import VideoRenderer from '../atoms/VideoRenderer'
 
 /**
  *
  * The props for the {@link MediaRenderer} component.
  * @public
  */
-export interface MediaRendererProps extends SharedMediaProps {
+export interface MediaRendererProps {
+  style?: StyleProp<ImageStyle>
+  width?: FlexStyle['width']
+  height?: FlexStyle['height']
   /**
    * The media source uri.
    */
@@ -34,30 +30,8 @@ export interface MediaRendererProps extends SharedMediaProps {
   alt?: string
 
   loading?: boolean
-
-  metadata?: Maybe<string>
 }
 
-/**
- * This component can be used to render any media type, including image, audio, video, and html files.
- * Its convenient for rendering NFT media files, as these can be a variety of different types.
- * The component falls back to a external link if the media type is not supported.
- *
- * Props: {@link MediaRendererProps}
- *
- * @example
- * We can take a video file hosted on IPFS and render it using this component as follows
- * ```jsx
- * const Component = () => {
- *   return <MediaRenderer
- *     src='ipfs://Qmb9ZV5yznE4C4YvyJe8DVFv1LSVkebdekY6HjLVaKmHZi'
- *     alt='A mp4 video'
- *   />
- * }
- * ```
- *
- * You can try switching out the `src` prop to different types of URLs and media types to explore the possibilities.
- */
 const MediaRenderer = ({
   src,
   alt,
@@ -68,11 +42,17 @@ const MediaRenderer = ({
 }: MediaRendererProps): ReactElement => {
   const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
 
-  if (loading) {
+  if (videoOrImageSrc.isLoading || loading) {
     return (
-      <Card center={true} style={[style, { width, height }]}>
+      <View
+        style={{
+          width,
+          height,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         <Progress.Pie size={20} indeterminate={true} />
-      </Card>
+      </View>
     )
   }
 
@@ -120,15 +100,7 @@ const MediaRenderer = ({
     )
   }
 
-  return (
-    <FallbackMediaRenderer
-      width={width}
-      height={height}
-      style={style}
-      src={videoOrImageSrc.url}
-      alt={alt}
-    />
-  )
+  return <FallbackMediaRenderer width={width} height={height} style={style} />
 }
 
 export default MediaRenderer

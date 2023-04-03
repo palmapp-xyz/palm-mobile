@@ -10,7 +10,9 @@ import { SbShareNftDataType, SupportedNetworkEnum } from 'types'
 
 import useNftImage from 'hooks/independent/useNftImage'
 import FormButton from '../../atoms/FormButton'
-import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
+import MediaRenderer, {
+  MediaRendererProps,
+} from '../../molecules/MediaRenderer'
 import Row from '../../atoms/Row'
 import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'

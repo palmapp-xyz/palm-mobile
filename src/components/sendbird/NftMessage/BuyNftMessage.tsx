@@ -13,7 +13,9 @@ import {
   SupportedNetworkEnum,
 } from 'types'
 
-import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
+import MediaRenderer, {
+  MediaRendererProps,
+} from '../../molecules/MediaRenderer'
 import useNftImage from 'hooks/independent/useNftImage'
 import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'

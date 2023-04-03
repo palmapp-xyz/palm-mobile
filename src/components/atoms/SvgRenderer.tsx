@@ -2,19 +2,17 @@ import React, { ReactElement, useCallback, useState } from 'react'
 import { SvgUri, SvgWithCss } from 'react-native-svg'
 import base64 from 'react-native-base64'
 
-import { MediaType } from 'types'
-
-import { MediaRendererProps } from '../atoms/MediaRenderer'
+import { MediaRendererProps } from '../molecules/MediaRenderer'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
+import { UseResolvedMediaTypeReturn } from 'hooks/complex/useResolvedMediaType'
 
 const SvgRenderer = ({
-  alt,
   style,
   width,
   height,
   mediaType,
 }: MediaRendererProps & {
-  mediaType: MediaType
+  mediaType: UseResolvedMediaTypeReturn
 }): ReactElement => {
   const [hasError, setError] = useState(false)
   const onError = useCallback(() => {
@@ -22,15 +20,7 @@ const SvgRenderer = ({
   }, [])
 
   if (!mediaType.url || hasError) {
-    return (
-      <FallbackMediaRenderer
-        width={width}
-        height={height}
-        style={style}
-        src={mediaType.url}
-        alt={alt}
-      />
-    )
+    return <FallbackMediaRenderer width={width} height={height} style={style} />
   }
 
   if (
@@ -58,15 +48,7 @@ const SvgRenderer = ({
 
   // https://github.com/software-mansion/react-native-svg/issues/1740
   if (!xml || xml?.includes('transform:translate')) {
-    return (
-      <FallbackMediaRenderer
-        width={width}
-        height={height}
-        style={style}
-        src={mediaType.url}
-        alt={alt}
-      />
-    )
+    return <FallbackMediaRenderer width={width} height={height} style={style} />
   }
 
   return (

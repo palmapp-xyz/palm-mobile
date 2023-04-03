@@ -18,7 +18,7 @@ import {
   FormButton,
   FormInput,
   Header,
-  MoralisNftPreview,
+  MoralisNftRenderer,
   Row,
 } from 'components'
 import {
@@ -37,7 +37,7 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import MediaRenderer, {
   MediaRendererProps,
-} from 'components/atoms/MediaRenderer'
+} from 'components/molecules/MediaRenderer'
 
 const GatingToken = ({
   chain,
@@ -53,7 +53,7 @@ const GatingToken = ({
     [QueryKeyEnum.NFT_TOKEN_NAME, nftContract, chain],
     name
   )
-  const { loading, uri, metadata } = useNftImage({
+  const { loading, uri } = useNftImage({
     nftContract,
     tokenId: '1',
     type,
@@ -65,7 +65,6 @@ const GatingToken = ({
     width: 40,
     height: 40,
     loading,
-    metadata,
   }
 
   return (
@@ -179,7 +178,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
                   })
                 }}>
                 <View style={{ borderRadius: 10, flex: 1 }}>
-                  <MoralisNftPreview item={item} width={'100%'} height={180} />
+                  <MoralisNftRenderer item={item} width={'100%'} height={180} />
                 </View>
               </TouchableOpacity>
             )}

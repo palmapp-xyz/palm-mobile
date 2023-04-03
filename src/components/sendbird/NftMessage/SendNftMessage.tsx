@@ -9,7 +9,9 @@ import { COLOR, UTIL } from 'consts'
 
 import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
 
-import MediaRenderer, { MediaRendererProps } from '../../atoms/MediaRenderer'
+import MediaRenderer, {
+  MediaRendererProps,
+} from '../../molecules/MediaRenderer'
 import Row from '../../atoms/Row'
 import LinkExplorer from '../../atoms/LinkExplorer'
 import useNftImage from 'hooks/independent/useNftImage'

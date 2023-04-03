@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 
 import { Routes } from 'libs/navigation'
-import { MoralisNftPreview } from 'components'
+import { MoralisNftRenderer } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useUserBalance from 'hooks/independent/useUserBalance'
@@ -81,7 +81,7 @@ const UserProfileScreen = (): ReactElement => {
             })
           }}>
           <View style={{ borderRadius: 10, flex: 1 }}>
-            <MoralisNftPreview item={item} width={'100%'} height={180} />
+            <MoralisNftRenderer item={item} width={'100%'} height={180} />
           </View>
         </TouchableWithoutFeedback>
       )}
