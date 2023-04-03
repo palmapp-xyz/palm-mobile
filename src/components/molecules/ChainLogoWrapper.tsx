@@ -1,9 +1,9 @@
 import React, { ReactElement, ReactNode } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import images from 'assets/images'
 import FormImage from 'components/atoms/FormImage'
 import { SupportedNetworkEnum } from 'types'
+import { NETWORK } from 'consts'
 
 const ChainLogoWrapper = ({
   chain,
@@ -16,16 +16,7 @@ const ChainLogoWrapper = ({
     <View style={styles.container}>
       {children}
       <View style={styles.imgBox}>
-        <FormImage
-          source={
-            chain === SupportedNetworkEnum.POLYGON
-              ? images.matic_logo
-              : chain === SupportedNetworkEnum.KLAYTN
-              ? images.klay_logo
-              : images.eth_logo
-          }
-          size={20}
-        />
+        <FormImage source={NETWORK.getNetworkLogo(chain)} size={20} />
       </View>
     </View>
   )

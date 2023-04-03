@@ -53,7 +53,7 @@
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>Access Downloads folder from Palm.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Access Microphone for camera usage.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -64,6 +64,7 @@
 	<array>
 		<string>Ionicons.ttf</string>
 		<string>AntDesign.ttf</string>
+		<string>MaterialIcons.ttf</string>
 		<string>SpaceGrotesk-Bold.ttf</string>
 		<string>SpaceGrotesk-Light.ttf</string>
 		<string>SpaceGrotesk-Medium.ttf</string>

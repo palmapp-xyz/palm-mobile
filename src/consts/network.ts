@@ -7,6 +7,7 @@ import {
   SupportedNetworkEnum,
 } from 'types'
 import Config from 'react-native-config'
+import images from 'assets/images'
 
 const chainId: Record<ChainNetworkEnum, number> = {
   [ChainNetworkEnum.ETHEREUM]: 1,
@@ -114,9 +115,18 @@ const chainParams: Record<
   },
 }
 
+const getNetworkLogo = (chain: SupportedNetworkEnum): any => {
+  return chain === SupportedNetworkEnum.POLYGON
+    ? images.matic_logo
+    : chain === SupportedNetworkEnum.KLAYTN
+    ? images.klay_logo
+    : images.eth_logo
+}
+
 export default {
   chainId,
   chainParam,
   chainIds,
   chainParams,
+  getNetworkLogo,
 }

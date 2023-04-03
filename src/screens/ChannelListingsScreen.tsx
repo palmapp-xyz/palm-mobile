@@ -1,29 +1,20 @@
 import React, { ReactElement, useState } from 'react'
-import {
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-
-import { Container, Header, NftRenderer } from 'components'
-
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { FbListing, NftType, SupportedNetworkEnum } from 'types'
-import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
+
+import { Container, Header } from 'components'
+
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import useFsChannel from 'hooks/firestore/useFsChannel'
-import { getOrderTokenAddress, getOrderTokenId } from 'libs/zx'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import { Routes } from 'libs/navigation'
+
+import { FbListing } from 'types'
+import FbListingItem from 'components/fbListing/FbListingItem'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
-  const { navigation } = useAppNavigation<Routes.ChannelListings>()
-
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [channelListings, setChannelListings] = useState<FbListing[]>([])
 
@@ -56,57 +47,31 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   }, [fsChannel, isFetching])
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={isFetching}
-          onRefresh={(): void => {
-            setIsFetching(true)
-          }}
-        />
-      }>
-      <Container style={styles.container}>
-        <View style={styles.body}>
-          <FlatList
-            data={channelListings}
-            keyExtractor={(_, index): string => `listing-${index}`}
-            numColumns={2}
-            scrollEnabled={false}
-            style={{ paddingHorizontal: 20 }}
-            contentContainerStyle={{ gap: 10 }}
-            columnWrapperStyle={{ gap: 10 }}
-            renderItem={({ item: listing }): ReactElement => {
-              const chain: SupportedNetworkEnum =
-                chainIdToSupportedNetworkEnum(listing.order.chainId || '0x1') ||
-                SupportedNetworkEnum.ETHEREUM
-              return (
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'center',
-                    flex: 1,
-                    justifyContent: 'center',
-                  }}
-                  onPress={async (): Promise<void> => {
-                    navigation.navigate(Routes.ZxNftDetail, {
-                      nonce: listing.order.order.nonce,
-                      chain,
-                    })
-                  }}>
-                  <NftRenderer
-                    tokenId={getOrderTokenId(listing.order.order)}
-                    nftContract={getOrderTokenAddress(listing.order.order)}
-                    type={listing.order.nftType as NftType}
-                    width={150}
-                    height={150}
-                    chain={chain}
-                  />
-                </TouchableOpacity>
-              )
+    <View style={styles.body}>
+      <FlatList
+        data={channelListings}
+        overScrollMode="auto"
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetching}
+            onRefresh={(): void => {
+              setIsFetching(true)
             }}
           />
-        </View>
-      </Container>
-    </ScrollView>
+        }
+        refreshing={isFetching}
+        keyExtractor={(_, index): string => `listing-${index}`}
+        numColumns={2}
+        scrollEnabled
+        style={{
+          paddingHorizontal: 20,
+          paddingTop: 20,
+        }}
+        contentContainerStyle={{ gap: 10 }}
+        columnWrapperStyle={{ gap: 10 }}
+        renderItem={({ item }): ReactElement => <FbListingItem item={item} />}
+      />
+    </View>
   )
 }
 
@@ -116,7 +81,7 @@ const ChannelListingsScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title="Channel Listed NFTs"
+        title="NFT List"
         left={
           <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
         }
