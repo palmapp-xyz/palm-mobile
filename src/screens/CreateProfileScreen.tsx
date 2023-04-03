@@ -24,16 +24,24 @@ const CreateProfileScreen = (): ReactElement => {
       return
     }
 
-    try {
-      setLoading(true)
-      setTimeout(() => createProfile(handle, isTestnet), 300)
-    } catch (error) {
-      console.error(
-        'createProfile:onClickConfirm',
-        JSON.stringify(error, null, 2)
-      )
-      alert({ message: JSON.stringify(error) })
-    }
+    setLoading(true)
+    setTimeout(() => {
+      createProfile(handle, isTestnet)
+        .then(res => {
+          if (!res.success) {
+            console.error('createProfile:onClickConfirm', res.errMsg)
+            alert({ message: res.errMsg })
+          }
+        })
+        .catch(error => {
+          console.error(
+            'createProfile:onClickConfirm',
+            JSON.stringify(error, null, 2)
+          )
+          alert({ message: JSON.stringify(error) })
+        })
+        .finally(() => setLoading(false))
+    }, 300)
   }
 
   useEffect(() => {
@@ -46,10 +54,10 @@ const CreateProfileScreen = (): ReactElement => {
     <Container style={styles.container}>
       <View style={styles.body}>
         <View style={{ paddingTop: 30, alignItems: 'center' }}>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { fontWeight: 'bold' }]}>
             {!profile
-              ? `Checking for your ${isTestnet ? 'Lens ' : ' '}profile`
-              : `Create your ${isTestnet ? 'Lens ' : ' '}profile`}
+              ? `Checking for your ${isTestnet ? 'Lens ' : ''}profile`
+              : `Create your ${isTestnet ? 'Lens ' : ''}profile`}
           </Text>
         </View>
         {profile && !profile.handle && (
@@ -59,6 +67,7 @@ const CreateProfileScreen = (): ReactElement => {
               value={handle}
               onChangeText={setHandle}
               textContentType="username"
+              style={{ marginVertical: 20 }}
             />
             <FormButton disabled={loading} onPress={onClickConfirm}>
               Create Profile

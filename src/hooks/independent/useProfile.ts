@@ -86,24 +86,17 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
   )
 
   const authenticate = async (): Promise<TrueOrErrReturn<string>> => {
-    if (lensProfile) {
-      try {
-        const res = await signInWithLens()
-        if (res.success) {
-          setAccToken(res.value)
-        } else {
-          console.error('useProfile:signInWithLens', res.errMsg)
-        }
-        return res
-      } catch (error) {
-        console.error('useProfile:signInWithLens', error)
-        return { success: false, errMsg: JSON.stringify(error) }
+    try {
+      const res = await signInWithLens()
+      if (res.success) {
+        setAccToken(res.value)
+      } else {
+        console.error('useProfile:signInWithLens', res.errMsg)
       }
-    } else {
-      // TODO: authenticate with the server
-      const accessToken = 'palm_access_token'
-      setAccToken(accessToken)
-      return { success: true, value: accessToken }
+      return res
+    } catch (error) {
+      console.error('useProfile:signInWithLens', error)
+      return { success: false, errMsg: JSON.stringify(error) }
     }
   }
 

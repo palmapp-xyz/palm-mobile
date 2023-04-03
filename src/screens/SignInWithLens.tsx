@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { Alert, StyleSheet, Text, View } from 'react-native'
 import _ from 'lodash'
 
@@ -11,21 +11,19 @@ import useProfile from 'hooks/independent/useProfile'
 const SignInWithLens = (): ReactElement => {
   const { user, logout } = useAuth()
 
-  const { profile, isLoadingLensProfile, authenticate } = useProfile({
+  const { authenticate } = useProfile({
     address: user?.address,
   })
 
   useEffect(() => {
-    if (isLoadingLensProfile === false && profile?.lensProfile) {
-      authenticate().then(res => {
-        if (!res.success) {
-          console.error('SignInWithLens:authenticate', res.errMsg)
-          Alert.alert(res.errMsg)
-          logout()
-        }
-      })
-    }
-  }, [isLoadingLensProfile, profile])
+    authenticate().then(res => {
+      if (!res.success) {
+        console.error('SignInWithLens:authenticate', res.errMsg)
+        Alert.alert(res.errMsg)
+        logout()
+      }
+    })
+  }, [])
 
   return (
     <Container style={styles.container}>
