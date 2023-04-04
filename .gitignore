@@ -63,6 +63,7 @@ yarn-error.log
 .metro-health-check*
 
 .env
+**/*.keystore
 android/app/debug.keystore
 android/app/release.keystore
 android/app/release/app-release.aab

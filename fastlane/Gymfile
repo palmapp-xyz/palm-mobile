@@ -1,0 +1,25 @@
+# For more information about this configuration visit
+# https://docs.fastlane.tools/actions/gym/#gymfile
+
+# In general, you can use the options available
+# fastlane gym --help
+
+# Remove the # in front of the line to enable the option
+
+scheme("PalmMobile")
+
+sdk("iOS 12.4")
+
+clean(true)
+
+workspace("./ios/PalmMobile.xcworkspace")
+
+export_method("adhoc")
+
+output_directory("./build")
+
+output_name("PalmMobile.ipa")
+
+include_symbols(false)
+
+include_bitcode(false)

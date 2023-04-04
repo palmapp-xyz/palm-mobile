@@ -1,0 +1,16 @@
+git_url("https://github.com/oedi-social/oedi-code-signing.git")
+
+storage_mode("git")
+
+type("adhoc") # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier(["com.palmmobile"])
+
+username("skqksh@naver.com")
+
+readonly(false)
+
+# For all available options run `fastlane match --help`
+# Remove the # in the beginning of the line to enable the other options
+
+# The docs are available on https://docs.fastlane.tools/actions/match

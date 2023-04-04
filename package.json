@@ -16,7 +16,9 @@
     "ios:build-clean": "npm run bundle; npm run ios:pod-install; npm run ios:clean",
     "ios:pod-install": "cd ios; pod install --repo-update;",
     "clean": "watchman watch-del $PWD ; watchman watch-project $PWD",
-    "postinstall": "node_modules/.bin/rn-nodeify --install crypto,http,https,assert,url,stream,events --hack"
+    "postinstall": "node_modules/.bin/rn-nodeify --install crypto,http,https,assert,url,stream,events --hack",
+    "ios:beta": "fastlane ios beta",
+    "android:beta": "fastlane android beta"
   },
   "dependencies": {
     "@apollo/client": "^3.7.9",
