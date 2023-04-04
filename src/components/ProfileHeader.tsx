@@ -8,7 +8,9 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
+import Clipboard from '@react-native-clipboard/clipboard'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { COLOR, UTIL } from 'consts'
 import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
@@ -38,6 +40,7 @@ const ProfileHeader = ({
   const { getEthPrice } = useEthPrice()
   const { profile } = useProfile({ address: userAddress })
   const profileImg = getProfileImgFromProfile(profile)
+  const { alert } = useAlert()
 
   const { ethBalance } = useUserBalance({
     address: userAddress,
@@ -105,15 +108,25 @@ const ProfileHeader = ({
             marginBottom: -30,
           }}>
           <Row style={styles.walletBalanceBox}>
-            <Row style={{ alignItems: 'center', columnGap: 10 }}>
-              <View style={styles.walletIconBox}>
-                <Icon name="wallet" color={COLOR.primary._400} size={20} />
-              </View>
-              <View>
-                <Text style={{ color: 'black' }}>Wallet</Text>
-                <Text>{UTIL.truncate(userAddress || '')}</Text>
-              </View>
-            </Row>
+            <TouchableOpacity
+              onPress={(): void => {
+                if (!userAddress) {
+                  return
+                }
+                alert({ title: 'Address copied', message: userAddress })
+                Clipboard.setString(userAddress)
+              }}>
+              <Row style={{ alignItems: 'center', columnGap: 10 }}>
+                <View style={styles.walletIconBox}>
+                  <Icon name="wallet" color={COLOR.primary._400} size={20} />
+                </View>
+                <View>
+                  <Text style={{ color: 'black' }}>Wallet</Text>
+
+                  <Text>{UTIL.truncate(userAddress || '')}</Text>
+                </View>
+              </Row>
+            </TouchableOpacity>
             <View>
               <View style={{ alignItems: 'flex-end' }}>
                 <Text
@@ -173,14 +186,22 @@ const ProfileHeader = ({
               />
             </View>
           )}
-          <TouchableOpacity
-            onPress={(): void => {
-              navigation.navigate(Routes.UpdateLensProfile)
-            }}>
-            <Card style={styles.bioCard}>
-              <Text>{profile?.bio || 'Tell us something about you!'}</Text>
-            </Card>
-          </TouchableOpacity>
+          {isMyPage ? (
+            <TouchableOpacity
+              onPress={(): void => {
+                navigation.navigate(Routes.UpdateLensProfile)
+              }}>
+              <Card style={styles.bioCard}>
+                <Text>{profile?.bio || 'Tell us something about you!'}</Text>
+              </Card>
+            </TouchableOpacity>
+          ) : (
+            <View>
+              <Card style={styles.bioCard}>
+                <Text>{profile?.bio || 'Tell us something about you!'}</Text>
+              </Card>
+            </View>
+          )}
         </Card>
       </ImageBackground>
       <View style={styles.body}>

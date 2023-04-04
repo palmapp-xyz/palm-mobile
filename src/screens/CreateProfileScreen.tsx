@@ -55,7 +55,7 @@ const CreateProfileScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ paddingTop: 30, alignItems: 'center' }}>
           <Text style={[styles.text, { fontWeight: 'bold' }]}>
-            {!profile
+            {!profile || profile.handle
               ? `Checking for your ${isTestnet ? 'Lens ' : ''}profile`
               : `Create your ${isTestnet ? 'Lens ' : ''}profile`}
           </Text>

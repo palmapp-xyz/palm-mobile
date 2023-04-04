@@ -47,26 +47,26 @@ const GroupChannelHeader = ({
       clearTitleMargin
       title={
         <View style={styles.titleContainer}>
-          {channel.coverUrl ? (
-            <FormImage
-              source={{ uri: channel.coverUrl }}
-              size={36}
-              style={styles.avatarGroup}
-            />
+          {otherDMUser ? (
+            <TouchableOpacity
+              onPress={(): void => {
+                navigation.navigate(Routes.UserProfile, {
+                  address: otherDMUser.userId as ContractAddr,
+                })
+              }}>
+              <Avatar
+                size={36}
+                uri={otherDMUser.profileUrl}
+                containerStyle={styles.avatarGroup}
+              />
+            </TouchableOpacity>
           ) : (
-            otherDMUser && (
-              <TouchableOpacity
-                onPress={(): void => {
-                  navigation.navigate(Routes.UserProfile, {
-                    address: otherDMUser.userId as ContractAddr,
-                  })
-                }}>
-                <Avatar
-                  size={36}
-                  uri={otherDMUser.profileUrl}
-                  containerStyle={styles.avatarGroup}
-                />
-              </TouchableOpacity>
+            channel.coverUrl && (
+              <FormImage
+                source={{ uri: channel.coverUrl }}
+                size={36}
+                style={styles.avatarGroup}
+              />
             )
           )}
           <View style={{ flexShrink: 1 }}>
