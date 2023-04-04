@@ -26,12 +26,14 @@ const useNftImage = ({
   type,
   metadata,
   chain,
+  enabled,
 }: {
   nftContract: ContractAddr
   tokenId: string
   type: NftType
   metadata?: Maybe<string>
   chain: SupportedNetworkEnum
+  enabled?: boolean
 }): UseNftImageReturn => {
   const { tokenURI, URI } = useNft({ nftContract, chain })
 
@@ -50,6 +52,9 @@ const useNftImage = ({
       if (uri && UTIL.isURL(uri.trim())) {
         return uri.trim()
       }
+    },
+    {
+      enabled,
     }
   )
 

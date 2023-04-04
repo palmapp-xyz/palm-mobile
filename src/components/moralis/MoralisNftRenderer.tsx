@@ -24,18 +24,19 @@ const MoralisNftRenderer = ({
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
+  const previewUri = item.media?.media_collection?.medium?.url
+
   const { loading, uri } = useNftImage({
     nftContract: item.token_address,
     tokenId: item.token_id,
     type: item.contract_type,
     metadata: item.metadata,
     chain,
+    enabled: !previewUri,
   })
 
   const src = useMemo(
-    () =>
-      item.media?.media_collection?.medium?.url ||
-      (typeof uri === 'string' ? uri : `${uri}`),
+    () => previewUri || (typeof uri === 'string' ? uri : `${uri}`),
     [uri]
   )
 
