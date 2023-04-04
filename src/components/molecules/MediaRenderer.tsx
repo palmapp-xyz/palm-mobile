@@ -30,6 +30,8 @@ export interface MediaRendererProps {
   alt?: string
 
   loading?: boolean
+
+  metadata?: string | null
 }
 
 const MediaRenderer = ({
