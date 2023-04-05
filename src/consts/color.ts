@@ -2,7 +2,7 @@ const white = '#ffffff'
 
 const gray = {
   _30: '#FAFAFA',
-  _50: '#F4F4F6',
+  _50: '#EBECED',
   _70: '#ECECEF',
   _100: '#E3E4E8',
   _200: '#D8DADE',
@@ -29,6 +29,8 @@ const primary = {
   _400: '#0057FF',
 }
 
+const main_light = '#D7E4FF'
+
 const orange = '#FFA467'
 
 const black = '#000000'
@@ -47,6 +49,8 @@ export default {
   error,
   warning,
   primary,
+
+  main_light,
 
   orange,
   text,

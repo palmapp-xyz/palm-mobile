@@ -1,37 +1,50 @@
 import React, { ReactElement, useMemo } from 'react'
-import { StyleSheet, Text, Pressable, FlatList, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import { StyleSheet, Pressable, FlatList, View } from 'react-native'
 
 import { COLOR } from 'consts'
-import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
-
-const NUM_COLUMNS = 4
+import {
+  StepAfterSelectNftType,
+  UseGcInputReturn,
+} from 'hooks/page/groupChannel/useGcInput'
+import { FormImage, FormText, Row } from 'components'
+import images from 'assets/images'
 
 const BottomMenu = ({
   useGcInputReturn,
 }: {
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
-  const menuList = useMemo(
+  const menuList: {
+    key: StepAfterSelectNftType
+    icon: JSX.Element
+    onPress: () => void
+    title: string
+  }[] = useMemo(
     () => [
       {
-        icon: 'ios-images',
-        onPress: (): void => {
-          useGcInputReturn.setStepAfterSelectNft('share')
-        },
-        title: 'Share NFT',
-      },
-      {
-        icon: 'ios-duplicate',
+        key: 'list',
+        icon: <FormImage source={images.list} />,
         onPress: (): void => {
           useGcInputReturn.setStepAfterSelectNft('list')
+          useGcInputReturn.setSelectedNftList([])
         },
         title: 'List NFT',
       },
       {
-        icon: 'ios-document-attach-sharp',
+        key: 'share',
+        icon: <FormImage source={images.NFT} />,
+        onPress: (): void => {
+          useGcInputReturn.setStepAfterSelectNft('share')
+          useGcInputReturn.setSelectedNftList([])
+        },
+        title: 'Show NFT',
+      },
+      {
+        key: 'send',
+        icon: <FormImage source={images.arrow_right} />,
         onPress: (): void => {
           useGcInputReturn.setStepAfterSelectNft('send')
+          useGcInputReturn.setSelectedNftList([])
         },
         title: 'Send NFT',
       },
@@ -43,16 +56,24 @@ const BottomMenu = ({
       <FlatList
         data={menuList}
         keyExtractor={(_, index): string => `menuList-${index}`}
-        numColumns={NUM_COLUMNS}
+        horizontal
         contentContainerStyle={{ gap: 10 }}
-        columnWrapperStyle={{ gap: 10 }}
         renderItem={({ item }): ReactElement => {
+          const selected = item.key === useGcInputReturn.stepAfterSelectNft
           return (
-            <Pressable style={styles.itemBox} onPress={item.onPress}>
-              <View style={styles.iconBox}>
-                <Icon color={COLOR.primary._400} name={item.icon} size={30} />
-              </View>
-              <Text style={{ fontSize: 12 }}>{item.title}</Text>
+            <Pressable onPress={item.onPress}>
+              <Row
+                style={[
+                  styles.itemBox,
+                  {
+                    backgroundColor: selected ? COLOR.main_light : 'white',
+                  },
+                ]}>
+                <View>{item.icon}</View>
+                <FormText fontType="B.12" color={COLOR.primary._400}>
+                  {item.title}
+                </FormText>
+              </Row>
             </Pressable>
           )
         }}
@@ -66,21 +87,14 @@ const BottomMenu = ({
 export default BottomMenu
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    columnGap: 20,
-    height: 200,
-  },
+  container: { paddingBottom: 8 },
   itemBox: {
-    flex: 1 / NUM_COLUMNS,
-    paddingVertical: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderRadius: 20,
-    rowGap: 10,
+    columnGap: 4,
     alignItems: 'center',
-  },
-  iconBox: {
-    padding: 20,
-    backgroundColor: COLOR.primary._100,
-    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: COLOR.main_light,
   },
 })

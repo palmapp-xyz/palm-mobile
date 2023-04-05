@@ -1,20 +1,21 @@
-import React, { ReactElement, useState } from 'react'
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  FlatList,
-  Text,
-} from 'react-native'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
+import React, { ReactElement, useMemo, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import BottomSheet from '@gorhom/bottom-sheet'
+import { TouchableOpacity, FlatList } from 'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/Ionicons'
 
+import { COLOR } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
-import { FormButton, MoralisNftRenderer, Row } from 'components'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/independent/useAuth'
-import { COLOR } from 'consts'
 import { SupportedNetworkEnum } from 'types'
-import SupportedNetworkRow from 'components/molecules/SupportedNetworkRow'
+import {
+  FormText,
+  MoralisNftRenderer,
+  Row,
+  SupportedNetworkRow,
+} from 'components'
+import BottomMenu from './BottomMenu'
 
 const MyNftList = ({
   useGcInputReturn,
@@ -31,74 +32,102 @@ const MyNftList = ({
     selectedNetwork,
   })
 
+  const snapPoints = useMemo(() => [300, '100%'], [])
+
+  const disabledNext = useGcInputReturn.selectedNftList.length < 1
+
   return useGcInputReturn.stepAfterSelectNft ? (
     <View style={styles.container}>
-      <Row style={styles.header}>
-        <TouchableOpacity
-          onPress={(): void => {
-            useGcInputReturn.setStepAfterSelectNft(undefined)
-          }}>
-          <Icon icon={'arrow-left'} size={24} />
-        </TouchableOpacity>
-
-        <FormButton
-          disabled={useGcInputReturn.selectedNftList.length < 1}
-          size="sm"
-          onPress={useGcInputReturn.onClickNextStep}>
-          {useGcInputReturn.stepAfterSelectNft}
-        </FormButton>
-      </Row>
-      <SupportedNetworkRow
-        selectedNetwork={selectedNetwork}
-        onNetworkSelected={setSelectedNetwork}
-      />
-      {nftList.length === 0 && (
-        <View style={styles.footer}>
-          <Text style={styles.text}>{'The user has no NFTs yet.'}</Text>
+      <BottomSheet snapPoints={snapPoints} enableOverDrag={false}>
+        <Row style={styles.inputHeader}>
+          <TouchableOpacity
+            onPress={(): void => {
+              useGcInputReturn.setOpenBottomMenu(false)
+              useGcInputReturn.setStepAfterSelectNft(undefined)
+            }}>
+            <Icon color={COLOR.primary._400} name={'close-outline'} size={36} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.nextStepIcon,
+              {
+                backgroundColor: disabledNext
+                  ? COLOR.gray._50
+                  : COLOR.primary._400,
+              },
+            ]}
+            disabled={disabledNext}
+            onPress={useGcInputReturn.onClickNextStep}>
+            <Icon name="arrow-up" color={'white'} size={24} />
+          </TouchableOpacity>
+        </Row>
+        <View style={{ paddingHorizontal: 16, rowGap: 8 }}>
+          <BottomMenu useGcInputReturn={useGcInputReturn} />
+          <SupportedNetworkRow
+            selectedNetwork={selectedNetwork}
+            onNetworkSelected={setSelectedNetwork}
+          />
         </View>
-      )}
-      <FlatList
-        data={nftList}
-        keyExtractor={(_, index): string => `nftList-${index}`}
-        horizontal
-        style={{ paddingHorizontal: 10 }}
-        contentContainerStyle={{
-          gap: 10,
-          paddingTop: 10,
-        }}
-        renderItem={({ item }): ReactElement => {
-          const selected = useGcInputReturn.selectedNftList.includes(item)
+        {nftList.length === 0 && (
+          <View style={styles.footer}>
+            <FormText style={styles.text}>
+              {'The user has no NFTs yet.'}
+            </FormText>
+          </View>
+        )}
+        <FlatList
+          data={nftList}
+          keyExtractor={(_, index): string => `nftList-${index}`}
+          style={{ paddingHorizontal: 8, paddingTop: 20 }}
+          contentContainerStyle={{ gap: 8 }}
+          columnWrapperStyle={{ gap: 8 }}
+          numColumns={3}
+          renderItem={({ item }): ReactElement => {
+            const selectedIndex = useGcInputReturn.selectedNftList.findIndex(
+              x =>
+                x.token_address === item.token_address &&
+                x.token_id === item.token_id
+            )
 
-          return (
-            <TouchableOpacity
-              style={{
-                borderColor: selected ? COLOR.primary._400 : COLOR.primary._100,
-                borderWidth: 1,
-                borderRadius: 10,
-                height: 150,
-                overflow: 'hidden',
-              }}
-              onPress={(): void => {
-                if (useGcInputReturn.stepAfterSelectNft === 'share') {
-                  useGcInputReturn.setSelectedNftList(valOrUpdater =>
-                    selected
-                      ? valOrUpdater.filter(x => x !== item)
-                      : [...valOrUpdater, item]
-                  )
-                } else {
-                  useGcInputReturn.setSelectedNftList([item])
-                }
-              }}>
-              <View style={{ padding: 5 }}>
-                <MoralisNftRenderer item={item} width={150} height="100%" />
+            return (
+              <View style={{ flex: 1 / 3, alignItems: 'center' }}>
+                <TouchableOpacity
+                  onPress={(): void => {
+                    if (useGcInputReturn.stepAfterSelectNft === 'share') {
+                      useGcInputReturn.setSelectedNftList(valOrUpdater =>
+                        selectedIndex > -1
+                          ? valOrUpdater.filter(x => x !== item)
+                          : [...valOrUpdater, item]
+                      )
+                    } else {
+                      useGcInputReturn.setSelectedNftList([item])
+                    }
+                  }}>
+                  <MoralisNftRenderer item={item} width={104} height={104} />
+                  <View
+                    style={[
+                      styles.selectItemIcon,
+                      {
+                        backgroundColor:
+                          selectedIndex > -1 ? COLOR.primary._400 : 'white',
+                      },
+                    ]}>
+                    {selectedIndex > -1 && (
+                      <FormText fontType="B.12" color="white">
+                        {selectedIndex + 1}
+                      </FormText>
+                    )}
+                  </View>
+                  <View style={styles.nftTitle}>
+                    <FormText
+                      style={{ fontSize: 10 }}>{`#${item.token_id}`}</FormText>
+                  </View>
+                </TouchableOpacity>
               </View>
-              <View style={styles.nftTitle}>
-                <Text style={{ fontSize: 10 }}>{`#${item.token_id}`}</Text>
-              </View>
-            </TouchableOpacity>
-          )
-        }}
-      />
+            )
+          }}
+        />
+      </BottomSheet>
     </View>
   ) : (
     <></>
@@ -110,18 +139,17 @@ export default MyNftList
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
+    backgroundColor: '#00000018',
     width: '100%',
     height: '100%',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    overflow: 'hidden',
-    backgroundColor: '#F4F6F9',
+    bottom: 0,
+    zIndex: 1,
   },
-  header: {
-    height: 60,
+  inputHeader: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 12,
   },
   nftTitle: {
     position: 'absolute',
@@ -132,6 +160,25 @@ const styles = StyleSheet.create({
     margin: 10,
     alignSelf: 'center',
     bottom: 0,
+  },
+  selectItemIcon: {
+    position: 'absolute',
+    top: 8,
+    left: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: COLOR.primary._400,
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  nextStepIcon: {
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
   },
   footer: {
     flex: 1,

@@ -132,7 +132,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           borderTopWidth: 1,
           zIndex: 1,
         }}
-        keyboardVerticalOffset={-bottom + keyboardAvoidOffset}
+        keyboardVerticalOffset={keyboardAvoidOffset - bottom}
         behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}>
         <View
           style={{
@@ -172,11 +172,13 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
               />
             )}
           </View>
-          <BottomMenu useGcInputReturn={useGcInputReturn} />
+          <View style={{ paddingHorizontal: 16 }}>
+            <BottomMenu useGcInputReturn={useGcInputReturn} />
+          </View>
           <SafeAreaBottom height={bottom} />
         </View>
-        <MyNftList useGcInputReturn={useGcInputReturn} />
       </KeyboardAvoidingView>
+      <MyNftList useGcInputReturn={useGcInputReturn} />
       {mentionAvailable && (
         <props.SuggestedMentionList
           text={text}

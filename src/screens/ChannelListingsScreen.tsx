@@ -61,7 +61,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
         }
         refreshing={isFetching}
         keyExtractor={(_, index): string => `listing-${index}`}
-        numColumns={2}
+        numColumns={3}
         scrollEnabled
         style={{
           paddingHorizontal: 20,

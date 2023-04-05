@@ -19,5 +19,6 @@ export { default as SubmitButton } from './molecules/SubmitButton'
 export { default as ChainLogoWrapper } from './molecules/ChainLogoWrapper'
 export { default as NftItemMenu } from './molecules/NftItemMenu'
 export { default as AuthBody } from './molecules/AuthBody'
+export { default as SupportedNetworkRow } from './molecules/SupportedNetworkRow'
 
 export { default as MessageRenderer } from './sendbird/MessageRenderer'

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { FlexStyle, useWindowDimensions } from 'react-native'
+import { FlexStyle } from 'react-native'
 
 import { Moralis, SupportedNetworkEnum } from 'types'
 import MediaRenderer from '../molecules/MediaRenderer'

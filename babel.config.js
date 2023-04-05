@@ -21,6 +21,12 @@ module.exports = function (api) {
 
   const plugins = [
     moduleResolver,
+    [
+      'react-native-reanimated/plugin',
+      {
+        relativeSourceLocation: true,
+      },
+    ],
   ]
 
   return {

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native'
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native'
 
 import { SupportedNetworkEnum } from 'types'
 
@@ -8,31 +8,29 @@ import { FormButton, Row } from 'components'
 const SupportedNetworkRow = ({
   selectedNetwork,
   onNetworkSelected,
-  style = {},
+  style,
 }: {
   selectedNetwork: SupportedNetworkEnum
   onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
-  style?: StyleProp<ViewStyle> | undefined
+  style?: StyleProp<ViewStyle>
 }): ReactElement => {
   return (
-    <View style={style}>
-      <Row style={styles.rowButtons}>
-        {Object.values(SupportedNetworkEnum).map(
-          (network: SupportedNetworkEnum) => (
-            <FormButton
-              key={network}
-              containerStyle={{
-                flex: 1,
-              }}
-              figure={network === selectedNetwork ? 'primary' : 'secondary'}
-              size="sm"
-              onPress={(): void => onNetworkSelected?.(network)}>
-              {network}
-            </FormButton>
-          )
-        )}
-      </Row>
-    </View>
+    <Row style={[styles.rowButtons, style]}>
+      {Object.values(SupportedNetworkEnum).map(
+        (network: SupportedNetworkEnum) => (
+          <FormButton
+            key={network}
+            containerStyle={{
+              flex: 1,
+            }}
+            figure={network === selectedNetwork ? 'primary' : 'secondary'}
+            size="sm"
+            onPress={(): void => onNetworkSelected?.(network)}>
+            {network}
+          </FormButton>
+        )
+      )}
+    </Row>
   )
 }
 
@@ -43,7 +41,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     alignSelf: 'flex-start',
-    padding: 5,
     borderRadius: 10,
     columnGap: 10,
   },

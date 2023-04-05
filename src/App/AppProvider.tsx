@@ -31,6 +31,7 @@ import { ErrorInfoScreen } from '../screens'
 import useAppearance from 'hooks/useAppearance'
 import useSetting from 'hooks/independent/useSetting'
 import { isMainnet } from 'libs/utils'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()
@@ -92,7 +93,9 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
                   }
                 },
               }}>
-              {children}
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                {children}
+              </GestureHandlerRootView>
             </SendbirdUIKitContainer>
           </MenuProvider>
         </RecoilRoot>

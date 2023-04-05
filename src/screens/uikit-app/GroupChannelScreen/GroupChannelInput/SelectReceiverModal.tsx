@@ -65,9 +65,7 @@ export default SelectReceiverModal
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     backgroundColor: '#0000001a',
-    //backgroundColor: 'red',
     justifyContent: 'flex-end',
   },
   body: {

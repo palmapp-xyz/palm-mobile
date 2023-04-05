@@ -26,7 +26,7 @@ export type UseGcInputReturn = {
   onClickNextStep: () => Promise<void>
 }
 
-type StepAfterSelectNftType = 'share' | 'send' | 'list'
+export type StepAfterSelectNftType = 'share' | 'send' | 'list'
 
 const useGcInput = ({
   channel,
