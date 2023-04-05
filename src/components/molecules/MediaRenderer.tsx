@@ -10,6 +10,7 @@ import IframePlayer from '../atoms/IframeRenderer'
 import SvgRenderer from '../atoms/SvgRenderer'
 import FallbackMediaRenderer from '../atoms/FallbackMediaRenderer'
 import VideoRenderer from '../atoms/VideoRenderer'
+import Card from 'components/atoms/Card'
 
 /**
  *
@@ -46,15 +47,9 @@ const MediaRenderer = ({
 
   if (videoOrImageSrc.isLoading || loading) {
     return (
-      <View
-        style={{
-          width,
-          height,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+      <Card center={true} style={[style, { width, height }]}>
         <Progress.Pie size={20} indeterminate={true} />
-      </View>
+      </Card>
     )
   }
 

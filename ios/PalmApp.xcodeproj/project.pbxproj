@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* PalmMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PalmMobileTests.m */; };
+		00E356F31AD99517003FC87E /* PalmAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PalmAppTests.m */; };
 		03408C468B7447549D22364E /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1D6787CFB49B44618FF12DA0 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */; };
-		2044379988C09E1BAB174A60 /* libPods-PalmMobile-PalmMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844DE788858875DAF5570881 /* libPods-PalmMobile-PalmMobileTests.a */; };
+		2044379988C09E1BAB174A60 /* libPods-PalmApp-PalmAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844DE788858875DAF5570881 /* libPods-PalmApp-PalmAppTests.a */; };
 		3356C06B76EF482083562269 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */; };
 		358FF5CF220842269540FAA5 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
 		3E4EB99629DA66FA00A026BA /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E4EB99529DA66FA00A026BA /* MaterialIcons.ttf */; };
@@ -22,7 +22,7 @@
 		402FB58629AB042700FD4051 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57629AB042700FD4051 /* Ionicons.ttf */; };
 		4092583429A341C70003D8B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4092583329A341C70003D8B0 /* GoogleService-Info.plist */; };
 		57D86DB640134D39A9A5FAEE /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */; };
-		5F3822904E2E005889A4CE20 /* libPods-PalmMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D232DD4CBB6695299D6E316F /* libPods-PalmMobile.a */; };
+		5F3822904E2E005889A4CE20 /* libPods-PalmApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D232DD4CBB6695299D6E316F /* libPods-PalmApp.a */; };
 		6D22850329CA754400414E02 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6D22850229CA754400414E02 /* fonts */; };
 		6D83288C29B26CD400719DA9 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -34,39 +34,39 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = PalmMobile;
+			remoteInfo = PalmApp;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* PalmMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalmMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* PalmAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalmAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* PalmMobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PalmMobileTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* PalmMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PalmMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PalmMobile/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = PalmMobile/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PalmMobile/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PalmMobile/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PalmMobile/main.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* PalmAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PalmAppTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* PalmApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PalmApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PalmApp/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = PalmApp/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PalmApp/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PalmApp/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PalmApp/main.m; sourceTree = "<group>"; };
 		242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Medium.ttf"; path = "../assets/fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; };
 		29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-SemiBold.ttf"; path = "../assets/fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
 		3E4EB99529DA66FA00A026BA /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		4022CA4829B46B9F00335C68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		402FB57429AB042700FD4051 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
 		402FB57629AB042700FD4051 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
-		4092583329A341C70003D8B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PalmMobile/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4092583329A341C70003D8B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PalmApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Bold.ttf"; path = "../assets/fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; };
 		4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Regular.ttf"; path = "../assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; };
 		6D22850229CA754400414E02 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../assets/fonts; sourceTree = "<group>"; };
-		6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PalmMobile/AppCenter-Config.plist"; sourceTree = "<group>"; };
-		6F9691225B3C76124AD38739 /* Pods-PalmMobile-PalmMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmMobile-PalmMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PalmMobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		844DE788858875DAF5570881 /* libPods-PalmMobile-PalmMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmMobile-PalmMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		98972C1DB7CC92B358A7E869 /* Pods-PalmMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmMobile.debug.xcconfig"; path = "Target Support Files/Pods-PalmMobile/Pods-PalmMobile.debug.xcconfig"; sourceTree = "<group>"; };
-		BCD09E44168CA0276A38E6BE /* Pods-PalmMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmMobile.release.xcconfig"; path = "Target Support Files/Pods-PalmMobile/Pods-PalmMobile.release.xcconfig"; sourceTree = "<group>"; };
-		D232DD4CBB6695299D6E316F /* libPods-PalmMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DE5F761958FB0EB9C65A2DBC /* Pods-PalmMobile-PalmMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmMobile-PalmMobileTests.release.xcconfig"; path = "Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PalmApp/AppCenter-Config.plist"; sourceTree = "<group>"; };
+		6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp-PalmAppTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PalmApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		844DE788858875DAF5570881 /* libPods-PalmApp-PalmAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmApp-PalmAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		98972C1DB7CC92B358A7E869 /* Pods-PalmApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.debug.xcconfig"; sourceTree = "<group>"; };
+		BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.release.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.release.xcconfig"; sourceTree = "<group>"; };
+		D232DD4CBB6695299D6E316F /* libPods-PalmApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE5F761958FB0EB9C65A2DBC /* Pods-PalmApp-PalmAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp-PalmAppTests.release.xcconfig"; path = "Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -75,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2044379988C09E1BAB174A60 /* libPods-PalmMobile-PalmMobileTests.a in Frameworks */,
+				2044379988C09E1BAB174A60 /* libPods-PalmApp-PalmAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,20 +83,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F3822904E2E005889A4CE20 /* libPods-PalmMobile.a in Frameworks */,
+				5F3822904E2E005889A4CE20 /* libPods-PalmApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* PalmMobileTests */ = {
+		00E356EF1AD99517003FC87E /* PalmAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* PalmMobileTests.m */,
+				00E356F21AD99517003FC87E /* PalmAppTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = PalmMobileTests;
+			path = PalmAppTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -107,7 +107,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* PalmMobile */ = {
+		13B07FAE1A68108700A75B9A /* PalmApp */ = {
 			isa = PBXGroup;
 			children = (
 				4022CA4829B46B9F00335C68 /* Assets.xcassets */,
@@ -118,15 +118,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = PalmMobile;
+			name = PalmApp;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				D232DD4CBB6695299D6E316F /* libPods-PalmMobile.a */,
-				844DE788858875DAF5570881 /* libPods-PalmMobile-PalmMobileTests.a */,
+				D232DD4CBB6695299D6E316F /* libPods-PalmApp.a */,
+				844DE788858875DAF5570881 /* libPods-PalmApp-PalmAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,9 +168,9 @@
 				6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */,
 				402FB56D29AB042700FD4051 /* Fonts */,
 				4092583329A341C70003D8B0 /* GoogleService-Info.plist */,
-				13B07FAE1A68108700A75B9A /* PalmMobile */,
+				13B07FAE1A68108700A75B9A /* PalmApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* PalmMobileTests */,
+				00E356EF1AD99517003FC87E /* PalmAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -184,8 +184,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* PalmMobile.app */,
-				00E356EE1AD99517003FC87E /* PalmMobileTests.xctest */,
+				13B07F961A680F5B00A75B9A /* PalmApp.app */,
+				00E356EE1AD99517003FC87E /* PalmAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,10 +193,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				98972C1DB7CC92B358A7E869 /* Pods-PalmMobile.debug.xcconfig */,
-				BCD09E44168CA0276A38E6BE /* Pods-PalmMobile.release.xcconfig */,
-				6F9691225B3C76124AD38739 /* Pods-PalmMobile-PalmMobileTests.debug.xcconfig */,
-				DE5F761958FB0EB9C65A2DBC /* Pods-PalmMobile-PalmMobileTests.release.xcconfig */,
+				98972C1DB7CC92B358A7E869 /* Pods-PalmApp.debug.xcconfig */,
+				BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */,
+				6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */,
+				DE5F761958FB0EB9C65A2DBC /* Pods-PalmApp-PalmAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -204,9 +204,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* PalmMobileTests */ = {
+		00E356ED1AD99517003FC87E /* PalmAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PalmMobileTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PalmAppTests" */;
 			buildPhases = (
 				1BC8B5D77403A69553D337DF /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -220,14 +220,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = PalmMobileTests;
-			productName = PalmMobileTests;
-			productReference = 00E356EE1AD99517003FC87E /* PalmMobileTests.xctest */;
+			name = PalmAppTests;
+			productName = PalmAppTests;
+			productReference = 00E356EE1AD99517003FC87E /* PalmAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* PalmMobile */ = {
+		13B07F861A680F5B00A75B9A /* PalmApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PalmMobile" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PalmApp" */;
 			buildPhases = (
 				1764E130AD51F13C53CD2A2D /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -243,9 +243,9 @@
 			);
 			dependencies = (
 			);
-			name = PalmMobile;
-			productName = PalmMobile;
-			productReference = 13B07F961A680F5B00A75B9A /* PalmMobile.app */;
+			name = PalmApp;
+			productName = PalmApp;
+			productReference = 13B07F961A680F5B00A75B9A /* PalmApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -266,7 +266,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PalmMobile" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PalmApp" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -279,8 +279,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* PalmMobile */,
-				00E356ED1AD99517003FC87E /* PalmMobileTests */,
+				13B07F861A680F5B00A75B9A /* PalmApp */,
+				00E356ED1AD99517003FC87E /* PalmAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -348,7 +348,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PalmMobile-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PalmApp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -370,7 +370,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PalmMobile-PalmMobileTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PalmApp-PalmAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -396,15 +396,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile/Pods-PalmMobile-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile/Pods-PalmMobile-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmMobile/Pods-PalmMobile-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		616B9EF9080A7562CB48A744 /* [CP] Embed Pods Frameworks */ = {
@@ -413,15 +413,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile/Pods-PalmMobile-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile/Pods-PalmMobile-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmMobile/Pods-PalmMobile-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F822CF4518CF15B978AD5D4 /* [CP] Embed Pods Frameworks */ = {
@@ -430,15 +430,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F8E4342DB0BCE7167B808DEF /* [CP] Copy Pods Resources */ = {
@@ -447,15 +447,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmMobile-PalmMobileTests/Pods-PalmMobile-PalmMobileTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -484,7 +484,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* PalmMobileTests.m in Sources */,
+				00E356F31AD99517003FC87E /* PalmAppTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +502,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* PalmMobile */;
+			target = 13B07F861A680F5B00A75B9A /* PalmApp */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -510,7 +510,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F9691225B3C76124AD38739 /* Pods-PalmMobile-PalmMobileTests.debug.xcconfig */;
+			baseConfigurationReference = 6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -519,7 +519,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = PalmMobileTests/Info.plist;
+				INFOPLIST_FILE = PalmAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -531,21 +531,21 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmobile.PalmMobileTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.palmobile.PalmAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PalmMobile.app/PalmMobile";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PalmApp.app/PalmApp";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE5F761958FB0EB9C65A2DBC /* Pods-PalmMobile-PalmMobileTests.release.xcconfig */;
+			baseConfigurationReference = DE5F761958FB0EB9C65A2DBC /* Pods-PalmApp-PalmAppTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 6ALF5777EL;
-				INFOPLIST_FILE = PalmMobileTests/Info.plist;
+				INFOPLIST_FILE = PalmAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -557,34 +557,34 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmobile.PalmMobileTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.palmobile.PalmAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PalmMobile.app/PalmMobile";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PalmApp.app/PalmApp";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98972C1DB7CC92B358A7E869 /* Pods-PalmMobile.debug.xcconfig */;
+			baseConfigurationReference = 98972C1DB7CC92B358A7E869 /* Pods-PalmApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = UHG6NSQDVG;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6ALF5777EL;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = PalmMobile/Info.plist;
+				INFOPLIST_FILE = PalmApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmmobile;
-				PRODUCT_NAME = PalmMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz;
+				PRODUCT_NAME = PalmApp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -593,25 +593,25 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCD09E44168CA0276A38E6BE /* Pods-PalmMobile.release.xcconfig */;
+			baseConfigurationReference = BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = UHG6NSQDVG;
-				INFOPLIST_FILE = PalmMobile/Info.plist;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6ALF5777EL;
+				INFOPLIST_FILE = PalmApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmmobile;
-				PRODUCT_NAME = PalmMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz;
+				PRODUCT_NAME = PalmApp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -757,7 +757,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PalmMobileTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PalmAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -766,7 +766,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PalmMobile" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PalmApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -775,7 +775,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PalmMobile" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PalmApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

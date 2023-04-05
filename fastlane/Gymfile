@@ -6,19 +6,19 @@
 
 # Remove the # in front of the line to enable the option
 
-scheme("PalmMobile")
+scheme("PalmApp")
 
 sdk("iOS 12.4")
 
 clean(true)
 
-workspace("./ios/PalmMobile.xcworkspace")
+workspace("./ios/PalmApp.xcworkspace")
 
 export_method("adhoc")
 
 output_directory("./ios/build")
 
-output_name("PalmMobile.ipa")
+output_name("PalmApp.ipa")
 
 include_symbols(false)
 

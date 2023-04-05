@@ -4,9 +4,9 @@ storage_mode("git")
 
 type("adhoc") # The default type, can be: appstore, adhoc, enterprise or development
 
-app_identifier(["com.palmmobile"])
+app_identifier(["com.palmapp.xyz"])
 
-username("skqksh@naver.com")
+username("jhwon0820@gmail.com")
 
 readonly(false)
 

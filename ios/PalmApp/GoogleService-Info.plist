@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>219711213585-a9fgn2a0uollu5p76sa1lmnkvves5b1c.apps.googleusercontent.com</string>
+	<string>219711213585-4hkqqelu5g8ibccfsubge6uo66knbm0o.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.219711213585-a9fgn2a0uollu5p76sa1lmnkvves5b1c</string>
+	<string>com.googleusercontent.apps.219711213585-4hkqqelu5g8ibccfsubge6uo66knbm0o</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBzkvIbqIV_ZGLu09bL_AElXGaRBkRZOks</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.palmmobile</string>
+	<string>com.palmapp.xyz</string>
 	<key>PROJECT_ID</key>
 	<string>oedi-a1953</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:219711213585:ios:5ef6e54c95d608269121b0</string>
+	<string>1:219711213585:ios:e02799e9fda06ddc9121b0</string>
 </dict>
 </plist>
