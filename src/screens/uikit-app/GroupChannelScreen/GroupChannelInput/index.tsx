@@ -23,7 +23,6 @@ import {
   GroupChannelProps,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
-import { BlurView } from '@react-native-community/blur'
 
 import EditInput from './EditInput'
 import SendInput from './SendInput'
@@ -131,18 +130,16 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           bottom: 0,
           borderTopColor: COLOR.gray._100,
           borderTopWidth: 1,
+          zIndex: 1,
         }}
         keyboardVerticalOffset={-bottom + keyboardAvoidOffset}
         behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}>
-        <BlurView
+        <View
           style={{
             paddingLeft: left,
             paddingRight: right,
             backgroundColor: '#FFFFFFdd',
-          }}
-          blurType="light"
-          blurAmount={6}
-          reducedTransparencyFallbackColor="white">
+          }}>
           <View
             onLayout={(e): void => setInputHeight(e.nativeEvent.layout.height)}
             style={styles.inputContainer}>
@@ -177,7 +174,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           </View>
           <BottomMenu useGcInputReturn={useGcInputReturn} />
           <SafeAreaBottom height={bottom} />
-        </BlurView>
+        </View>
         <MyNftList useGcInputReturn={useGcInputReturn} />
       </KeyboardAvoidingView>
       {mentionAvailable && (
