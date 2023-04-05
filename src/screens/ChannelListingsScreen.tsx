@@ -69,7 +69,11 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
         }}
         contentContainerStyle={{ gap: 10 }}
         columnWrapperStyle={{ gap: 10 }}
-        renderItem={({ item }): ReactElement => <FbListingItem item={item} />}
+        renderItem={({ item }): ReactElement => (
+          <View style={{ flex: 1 / 2 }}>
+            <FbListingItem item={item} />
+          </View>
+        )}
       />
     </View>
   )
