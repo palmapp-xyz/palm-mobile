@@ -1,24 +1,42 @@
 import React, { ReactElement } from 'react'
 
 import Icons from 'components/atoms/Icons'
-import { StyleProp, View, ViewStyle } from 'react-native'
+
+import Card from 'components/atoms/Card'
+import LinkRenderer from 'components/molecules/LinkRenderer'
+import { MediaRendererProps } from 'components/molecules/MediaRenderer'
 
 const FallbackMediaRenderer = ({
+  src,
+  alt,
   width,
   height,
   style,
-}: {
-  width?: number | string
-  height?: number | string
-  style?: StyleProp<ViewStyle>
+  hideAlt,
+}: MediaRendererProps & {
+  hideAlt?: boolean
 }): ReactElement => {
   const dim =
     typeof width === 'number' ? width : typeof height === 'number' ? height : 50
 
   return (
-    <View style={[{ paddingVertical: 10, alignItems: 'center' }, style]}>
+    <Card center={true} style={[style, { padding: 0, width, height }]}>
       <Icons.CarbonDocumentUnknown width={dim / 2} height={dim / 2} />
-    </View>
+      {!hideAlt && (
+        <LinkRenderer
+          src={src}
+          alt={alt || 'File'}
+          numberOfLines={1}
+          textStyle={{ color: 'rgb(138, 147, 155)' }}
+          containerStyle={{
+            marginTop: 10,
+            width: '80%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        />
+      )}
+    </Card>
   )
 }
 

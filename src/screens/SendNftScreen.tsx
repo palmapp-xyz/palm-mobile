@@ -8,7 +8,13 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { UTIL } from 'consts'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 import selectNftStore from 'store/selectNftStore'
-import { Header, SubmitButton, Container, NftRenderer, Row } from 'components'
+import {
+  Header,
+  SubmitButton,
+  Container,
+  Row,
+  MoralisNftRenderer,
+} from 'components'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -57,12 +63,7 @@ const Contents = ({
       <View>
         <Row style={{ paddingBottom: 10 }}>
           <View style={{ width: 100, height: 100, marginEnd: 10 }}>
-            <NftRenderer
-              nftContract={selectedNft.token_address}
-              tokenId={selectedNft.token_id}
-              type={selectedNft.contract_type}
-              chain={chain}
-            />
+            <MoralisNftRenderer item={selectedNft} />
           </View>
           <View style={{ rowGap: 10 }}>
             <Text>Address : {UTIL.truncate(selectedNft.token_address)}</Text>

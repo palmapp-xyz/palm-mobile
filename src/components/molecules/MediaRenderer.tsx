@@ -102,7 +102,15 @@ const MediaRenderer = ({
     )
   }
 
-  return <FallbackMediaRenderer width={width} height={height} style={style} />
+  return (
+    <FallbackMediaRenderer
+      width={width}
+      height={height}
+      style={style}
+      src={videoOrImageSrc.url}
+      alt={alt}
+    />
+  )
 }
 
 export default MediaRenderer

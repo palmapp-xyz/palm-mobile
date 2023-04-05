@@ -7,6 +7,7 @@ import FallbackMediaRenderer from './FallbackMediaRenderer'
 import { UseResolvedMediaTypeReturn } from 'hooks/complex/useResolvedMediaType'
 
 const SvgRenderer = ({
+  alt,
   style,
   width,
   height,
@@ -20,7 +21,15 @@ const SvgRenderer = ({
   }, [])
 
   if (!mediaType.url || hasError) {
-    return <FallbackMediaRenderer width={width} height={height} style={style} />
+    return (
+      <FallbackMediaRenderer
+        width={width}
+        height={height}
+        style={style}
+        src={mediaType.url}
+        alt={alt}
+      />
+    )
   }
 
   if (
@@ -48,7 +57,15 @@ const SvgRenderer = ({
 
   // https://github.com/software-mansion/react-native-svg/issues/1740
   if (!xml || xml?.includes('transform:translate')) {
-    return <FallbackMediaRenderer width={width} height={height} style={style} />
+    return (
+      <FallbackMediaRenderer
+        width={width}
+        height={height}
+        style={style}
+        src={mediaType.url}
+        alt={alt}
+      />
+    )
   }
 
   return (

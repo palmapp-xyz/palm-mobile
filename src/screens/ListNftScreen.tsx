@@ -15,9 +15,9 @@ import {
   FormInput,
   Container,
   Row,
-  NftRenderer,
   ChainLogoWrapper,
   KeyboardAvoidingView,
+  MoralisNftRenderer,
 } from 'components'
 import useZxListNft from 'hooks/zx/useZxListNft'
 import { Routes } from 'libs/navigation'
@@ -80,12 +80,7 @@ const Contents = ({
           <Row style={{ paddingBottom: 10 }}>
             <View style={{ width: 100, height: 100, marginEnd: 10 }}>
               <ChainLogoWrapper chain={chain}>
-                <NftRenderer
-                  nftContract={selectedNft.token_address}
-                  tokenId={selectedNft.token_id}
-                  type={selectedNft.contract_type}
-                  chain={chain}
-                />
+                <MoralisNftRenderer item={selectedNft} />
               </ChainLogoWrapper>
             </View>
             <View style={{ rowGap: 10 }}>

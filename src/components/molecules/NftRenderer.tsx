@@ -5,12 +5,14 @@ import { FlexStyle, ImageStyle, StyleProp } from 'react-native'
 import useNftImage from 'hooks/independent/useNftImage'
 import MediaRenderer from './MediaRenderer'
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import { Maybe } from '@toruslabs/openlogin'
 
 const NftRenderer = ({
   nftContract,
   tokenId,
   type,
   chain,
+  metadata,
   width,
   height,
   style,
@@ -19,6 +21,7 @@ const NftRenderer = ({
   tokenId: string
   type: NftType
   chain: SupportedNetworkEnum
+  metadata?: Maybe<string>
   width?: FlexStyle['width']
   height?: FlexStyle['height']
   style?: StyleProp<ImageStyle>
@@ -28,6 +31,7 @@ const NftRenderer = ({
     tokenId,
     type,
     chain,
+    metadata,
   })
 
   const props: MediaRendererProps = {
