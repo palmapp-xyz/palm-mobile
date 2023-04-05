@@ -18,7 +18,9 @@ platform :ios do
       api_token: ENV["APPCENTER_API_TOKEN"],
       owner_name: ENV["APPCENTER_OWNER_NAME"],
       app_name: ENV["APPCENTER_IOS_APP_NAME"],
-      ipa: ENV["APPCENTER_DISTRIBUTE_IPA"]
+      ipa: ENV["APPCENTER_DISTRIBUTE_IPA"],
+      destinations: "*",
+      notify_testers: true
     )
   end
 
