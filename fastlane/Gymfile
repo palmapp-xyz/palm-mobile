@@ -8,13 +8,11 @@
 
 scheme("PalmApp")
 
-sdk("iOS 12.4")
-
 clean(true)
 
 workspace("./ios/PalmApp.xcworkspace")
 
-export_method("adhoc")
+export_method("ad-hoc")
 
 output_directory("./ios/build")
 
