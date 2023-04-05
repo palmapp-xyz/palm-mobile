@@ -8,7 +8,7 @@ app_identifier(["com.palmapp.xyz"])
 
 username("jhwon0820@gmail.com")
 
-readonly(true)
+readonly(false)
 
 # For all available options run `fastlane match --help`
 # Remove the # in the beginning of the line to enable the other options

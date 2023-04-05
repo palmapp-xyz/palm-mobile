@@ -2,7 +2,16 @@ platform :ios do
 
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do
-    match
+    cert(
+      username: "jhwon0820@gmail.com",
+      team_id: "6ALF5777EL"
+    )
+    match(
+      type: "adhoc",
+      app_identifier: "com.palmapp.xyz",
+      username: "jhwon0820@gmail.com",
+      readonly: true
+    )
   end
 
   desc 'Fetch certificates. Build the iOS application.'
