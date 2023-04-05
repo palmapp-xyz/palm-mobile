@@ -1,13 +1,13 @@
 import React, { ReactElement, ReactNode } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { Container } from 'components'
+import { KeyboardAvoidingView } from 'components'
 
 const AuthBody = ({ children }: { children: ReactNode }): ReactElement => {
   return (
-    <Container style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.bottomBody}>{children}</View>
-    </Container>
+    </KeyboardAvoidingView>
   )
 }
 
