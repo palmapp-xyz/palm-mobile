@@ -101,7 +101,7 @@ android {
         applicationId "com.palmmobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 3
         versionName "0.0.2"
     }
 
