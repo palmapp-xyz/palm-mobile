@@ -16,7 +16,7 @@ workspace("./ios/PalmMobile.xcworkspace")
 
 export_method("adhoc")
 
-output_directory("./build")
+output_directory("./ios/build")
 
 output_name("PalmMobile.ipa")
 
