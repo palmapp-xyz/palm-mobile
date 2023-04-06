@@ -24,6 +24,7 @@ export type UseGcInputReturn = {
   selectedNftList: Moralis.NftItem[]
   setSelectedNftList: SetterOrUpdater<Moralis.NftItem[]>
   onClickNextStep: () => Promise<void>
+  runningNextStep: boolean
 }
 
 export type StepAfterSelectNftType = 'share' | 'send' | 'list'
@@ -34,6 +35,7 @@ const useGcInput = ({
   channel: GroupChannel
 }): UseGcInputReturn => {
   const { user } = useAuth()
+  const [runningNextStep, setRunningNextStep] = useState(false)
   const [openSelectReceiver, setOpenSelectReceiver] = useState(false)
   const { navigation } = useAppNavigation<Routes.GroupChannel>()
   const [openBottomMenu, setOpenBottomMenu] = useState(false)
@@ -49,18 +51,20 @@ const useGcInput = ({
   )
 
   const onClickNextStep = async (): Promise<void> => {
+    setRunningNextStep(true)
     if (selectedNftList.length > 0) {
       if (stepAfterSelectNft === 'share') {
-        await Promise.all(
-          _.forEach(selectedNftList, async item => {
+        const fileMessages = await Promise.all(
+          _.map(selectedNftList, async item => {
             const imgInfo = await nftUriFetcher(item.token_uri)
             imgInfo.data = stringifySendFileData({
               type: 'share',
               selectedNft: item,
             })
-            channel.sendFileMessage(imgInfo)
+            return imgInfo
           })
         )
+        channel.sendFileMessages(fileMessages)
         setSelectedNftList([])
       } else if (stepAfterSelectNft === 'list') {
         navigation.navigate(Routes.ListNft, { channelUrl: channel.url })
@@ -82,7 +86,7 @@ const useGcInput = ({
     } else {
       // Should not be clickable this button without selectedNft
     }
-
+    setRunningNextStep(false)
     setStepAfterSelectNft(undefined)
     setOpenBottomMenu(false)
   }
@@ -98,6 +102,7 @@ const useGcInput = ({
     selectedNftList,
     setSelectedNftList,
     onClickNextStep,
+    runningNextStep,
   }
 }
 

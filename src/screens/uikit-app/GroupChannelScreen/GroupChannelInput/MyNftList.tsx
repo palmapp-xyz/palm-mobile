@@ -1,5 +1,5 @@
 import React, { ReactElement, useMemo, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import BottomSheet from '@gorhom/bottom-sheet'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -47,19 +47,25 @@ const MyNftList = ({
             }}>
             <Icon color={COLOR.primary._400} name={'close-outline'} size={36} />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.nextStepIcon,
-              {
-                backgroundColor: disabledNext
-                  ? COLOR.gray._50
-                  : COLOR.primary._400,
-              },
-            ]}
-            disabled={disabledNext}
-            onPress={useGcInputReturn.onClickNextStep}>
-            <Icon name="arrow-up" color={'white'} size={24} />
-          </TouchableOpacity>
+          {useGcInputReturn.runningNextStep ? (
+            <View style={styles.nextStepIcon}>
+              <ActivityIndicator size="large" color={COLOR.primary._400} />
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={[
+                styles.nextStepIcon,
+                {
+                  backgroundColor: disabledNext
+                    ? COLOR.gray._50
+                    : COLOR.primary._400,
+                },
+              ]}
+              disabled={disabledNext}
+              onPress={useGcInputReturn.onClickNextStep}>
+              <Icon name="arrow-up" color={'white'} size={24} />
+            </TouchableOpacity>
+          )}
         </Row>
         <View style={{ paddingHorizontal: 16, rowGap: 8 }}>
           <BottomMenu useGcInputReturn={useGcInputReturn} />
