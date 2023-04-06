@@ -126,6 +126,7 @@ const MyNftList = ({
                   </View>
                   <View style={styles.nftTitle}>
                     <FormText
+                      numberOfLines={1}
                       style={{ fontSize: 10 }}>{`#${item.token_id}`}</FormText>
                   </View>
                 </TouchableOpacity>

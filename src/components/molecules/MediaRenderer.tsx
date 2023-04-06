@@ -116,7 +116,9 @@ const MediaRenderer = ({
       <Image
         alt={alt}
         style={[{ width, height }, style]}
-        source={{ uri: videoOrImageSrc.url }}
+        source={{
+          uri: videoOrImageSrc.url,
+        }}
         onError={onError}
       />
     )
