@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from 'react'
-import { View } from 'react-native'
 import Video from 'react-native-video'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { MediaRendererProps } from '../molecules/MediaRenderer'
@@ -12,7 +11,11 @@ const VideoRenderer = ({
   width,
   height,
   audioOnly,
-}: MediaRendererProps & { audioOnly?: boolean }): ReactElement => {
+  onError,
+}: MediaRendererProps & {
+  audioOnly?: boolean
+  onError?: (error) => void
+}): ReactElement => {
   const [thumbnail, setThumbnail] = useState('')
   const { mediaService } = usePlatformService()
 
@@ -29,17 +32,19 @@ const VideoRenderer = ({
   }, [src])
 
   return (
-    <View style={[{ position: 'relative', width, height }, style]}>
-      <Video
-        posterResizeMode={'contain'}
-        poster={thumbnail}
-        source={{ uri: src ?? undefined }}
-        repeat={true}
-        muted={true}
-        resizeMode={'contain'}
-        audioOnly={audioOnly}
-      />
-    </View>
+    <Video
+      posterResizeMode={'contain'}
+      poster={thumbnail}
+      source={{
+        uri: src ?? undefined,
+      }}
+      repeat={true}
+      muted={true}
+      resizeMode={'contain'}
+      audioOnly={audioOnly}
+      style={[{ position: 'relative', width, height }, style]}
+      onError={onError}
+    />
   )
 }
 

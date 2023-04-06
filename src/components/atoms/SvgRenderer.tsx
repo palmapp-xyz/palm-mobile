@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { SvgUri, SvgWithCss } from 'react-native-svg'
 import base64 from 'react-native-base64'
 
@@ -6,21 +6,48 @@ import { MediaRendererProps } from '../molecules/MediaRenderer'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
 import { UseResolvedMediaTypeReturn } from 'hooks/complex/useResolvedMediaType'
 
+import { parseString } from 'react-native-xml2js'
+
 const SvgRenderer = ({
   alt,
   style,
   width,
   height,
   mediaType,
+  onError,
 }: MediaRendererProps & {
   mediaType: UseResolvedMediaTypeReturn
+  onError?: (error) => void
 }): ReactElement => {
-  const [hasError, setError] = useState(false)
-  const onError = useCallback(() => {
-    setError(true)
-  }, [])
+  const [xml, setXml] = useState<string | undefined>()
 
-  if (!mediaType.url || hasError) {
+  useEffect(() => {
+    let decoded: string | undefined
+    if (mediaType.mimeType === 'data:image/svg+xml;base64') {
+      decoded = base64.decode(
+        mediaType.url?.replace('data:image/svg+xml;base64,', '') || ''
+      )
+    } else if (mediaType.mimeType === 'data:image/svg+xml') {
+      decoded = mediaType.url?.replace('data:image/svg+xml,', '')
+    }
+
+    if (decoded) {
+      parseString(decoded, (err, result) => {
+        if (err || !result) {
+          console.error(err)
+          onError?.(err)
+        } else {
+          setXml(
+            decoded
+              ?.replace(/(\d+)%(\d+)/g, '$1%')
+              ?.replace(/transform:translate.*\(.*\)/g, '')
+          )
+        }
+      })
+    }
+  }, [mediaType])
+
+  if (!mediaType.url || !xml) {
     return (
       <FallbackMediaRenderer
         width={width}
@@ -30,9 +57,7 @@ const SvgRenderer = ({
         alt={alt}
       />
     )
-  }
-
-  if (
+  } else if (
     !mediaType.mimeType?.startsWith('data') &&
     mediaType.mimeType?.includes('image/svg+xml')
   ) {
@@ -42,28 +67,6 @@ const SvgRenderer = ({
         height={height}
         style={style}
         uri={mediaType.url || null}
-      />
-    )
-  }
-
-  let xml
-  if (mediaType.mimeType === 'data:image/svg+xml;base64') {
-    xml = base64.decode(
-      mediaType.url?.replace('data:image/svg+xml;base64,', '') || ''
-    )
-  } else if (mediaType.mimeType === 'data:image/svg+xml') {
-    xml = mediaType.url?.replace('data:image/svg+xml,', '')
-  }
-
-  // https://github.com/software-mansion/react-native-svg/issues/1740
-  if (!xml || xml?.includes('transform:translate')) {
-    return (
-      <FallbackMediaRenderer
-        width={width}
-        height={height}
-        style={style}
-        src={mediaType.url}
-        alt={alt}
       />
     )
   }

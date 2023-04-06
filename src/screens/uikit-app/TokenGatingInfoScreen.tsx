@@ -6,18 +6,15 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
 import { COLOR } from 'consts'
 
-import { ChainLogoWrapper, Container, FormImage, Header, Row } from 'components'
+import { Container, FormImage, Header, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import useNft from 'hooks/contract/useNft'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { QueryKeyEnum } from 'types'
-import useNftImage from 'hooks/independent/useNftImage'
 import images from 'assets/images'
 import useAuth from 'hooks/independent/useAuth'
-import MediaRenderer, {
-  MediaRendererProps,
-} from 'components/molecules/MediaRenderer'
+import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 
 const TokenGatingInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.TokenGatingInfo>()
@@ -35,18 +32,12 @@ const TokenGatingInfoScreen = (): ReactElement => {
     [QueryKeyEnum.NFT_TOKEN_NAME, nftContract, chain],
     async () => name()
   )
-  const { loading, uri, metadata } = useNftImage({
+
+  const nftRendererProps: NftRendererProp = {
     nftContract,
     tokenId: '1',
     type: gatingTokenType,
     chain,
-  })
-  const mediaProps: MediaRendererProps = {
-    src: uri,
-    width: '100%',
-    height: 150,
-    loading,
-    metadata,
   }
 
   const { user } = useAuth(chain)
@@ -84,9 +75,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
             borderRadius: 999,
             borderColor: COLOR.primary._50,
           }}>
-          <ChainLogoWrapper chain={chain}>
-            <MediaRenderer {...mediaProps} width={120} height={120} />
-          </ChainLogoWrapper>
+          <NftRenderer {...nftRendererProps} width={120} height={120} />
         </View>
         <Text
           style={{
@@ -106,9 +95,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
         </Row>
         <Text style={{ fontSize: 16 }}>Entry requirement</Text>
         <Row style={{ alignItems: 'center', columnGap: 10 }}>
-          <ChainLogoWrapper chain={chain}>
-            <MediaRenderer {...mediaProps} width={24} height={24} />
-          </ChainLogoWrapper>
+          <NftRenderer {...nftRendererProps} width={24} height={24} />
           <Text>{nftContract}</Text>
         </Row>
         <View style={{ backgroundColor: COLOR.gray._300, padding: 10 }}>

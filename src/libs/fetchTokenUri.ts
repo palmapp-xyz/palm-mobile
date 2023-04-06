@@ -54,7 +54,8 @@ export const fetchNftImage = async ({
 
   if (tokenUri) {
     try {
-      const fixedUrl = fixIpfsURL(tokenUri)
+      // royal nft support to replace {id} with tokenId
+      const fixedUrl = fixIpfsURL(tokenUri.replace(/\{id\}/g, tokenId))
       const fetched = await fetch(fixedUrl)
       const blob = await fetched.blob()
       if (blob.type.startsWith('image')) {

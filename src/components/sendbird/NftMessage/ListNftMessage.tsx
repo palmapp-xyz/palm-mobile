@@ -10,14 +10,10 @@ import { COLOR, UTIL } from 'consts'
 import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
 import useZxOrder from 'hooks/zx/useZxOrder'
 import useEthPrice from 'hooks/independent/useEthPrice'
-import useNftImage from 'hooks/independent/useNftImage'
 
-import MediaRenderer, {
-  MediaRendererProps,
-} from '../../molecules/MediaRenderer'
 import Row from '../../atoms/Row'
-import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 
 const ListNftMessage = ({
   data,
@@ -31,30 +27,22 @@ const ListNftMessage = ({
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const { loading, uri, metadata } = useNftImage({
+  const { order, isLoading } = useZxOrder({ nonce: data.nonce, chain })
+  const { getEthPrice } = useEthPrice()
+
+  const nftRendererProps: NftRendererProp = {
     nftContract: item.token_address,
     tokenId: item.token_id,
     type: item.contract_type,
     metadata: item.metadata,
     chain,
-  })
-
-  const { order, isLoading } = useZxOrder({ nonce: data.nonce, chain })
-  const { getEthPrice } = useEthPrice()
-
-  const mediaProps: MediaRendererProps = {
-    src: uri,
     width: '100%',
     height: 150,
-    loading,
-    metadata,
   }
 
   return (
     <View style={styles.container}>
-      <ChainLogoWrapper chain={chain}>
-        <MediaRenderer {...mediaProps} />
-      </ChainLogoWrapper>
+      <NftRenderer {...nftRendererProps} />
       {isLoading === false && !order && (
         <View
           style={{

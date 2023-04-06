@@ -65,6 +65,7 @@ const useUserNftList = ({
     {
       getNextPageParam: lastPage => lastPage.cursor,
       keepPreviousData: false,
+      staleTime: 60 * 1000,
     }
   )
 

@@ -9,14 +9,10 @@ import { COLOR, UTIL } from 'consts'
 
 import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
 
-import MediaRenderer, {
-  MediaRendererProps,
-} from '../../molecules/MediaRenderer'
 import Row from '../../atoms/Row'
 import LinkExplorer from '../../atoms/LinkExplorer'
-import useNftImage from 'hooks/independent/useNftImage'
-import ChainLogoWrapper from '../../molecules/ChainLogoWrapper'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 
 const SendNftMessage = ({
   data,
@@ -31,27 +27,19 @@ const SendNftMessage = ({
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const { loading, uri, metadata } = useNftImage({
+  const nftRendererProps: NftRendererProp = {
     nftContract: item.token_address,
     tokenId: item.token_id,
     type: item.contract_type,
     metadata: item.metadata,
     chain,
-  })
-
-  const mediaProps: MediaRendererProps = {
-    src: uri,
     width: '100%',
     height: 150,
-    loading,
-    metadata,
   }
 
   return (
     <View style={styles.container}>
-      <ChainLogoWrapper chain={chain}>
-        <MediaRenderer {...mediaProps} />
-      </ChainLogoWrapper>
+      <NftRenderer {...nftRendererProps} />
       <View style={styles.body}>
         <Row style={{ alignItems: 'center', columnGap: 5 }}>
           <Icon

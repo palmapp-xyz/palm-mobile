@@ -35,7 +35,7 @@ const NftAttributes = ({
       renderItem={({ item: { trait_type, value } }): ReactElement | null => (
         <View style={[styles.item, itemStyle]}>
           <Text style={styles.headText}>{_.capitalize(trait_type)}</Text>
-          <View style={{ maxWidth: 120 }}>
+          <View style={{ maxWidth: 100 }}>
             <Text style={{ flex: 1, flexWrap: 'wrap' }}>
               {typeof value === 'string'
                 ? value

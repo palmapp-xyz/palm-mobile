@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react'
-import { StyleProp, FlexStyle, Image, ImageStyle, View } from 'react-native'
+import React, { ReactElement, useCallback, useState } from 'react'
+import { StyleProp, FlexStyle, Image, ImageStyle } from 'react-native'
 import * as Progress from 'react-native-progress'
 
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
@@ -43,8 +43,12 @@ const MediaRenderer = ({
   height,
   loading,
 }: MediaRendererProps): ReactElement => {
-  const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
+  const [hasError, setError] = useState(false)
+  const onError = useCallback(() => {
+    setError(true)
+  }, [])
 
+  const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
   if (videoOrImageSrc.isLoading || loading) {
     return (
       <Card center={true} style={[style, { width, height }]}>
@@ -53,7 +57,24 @@ const MediaRenderer = ({
     )
   }
 
-  if (videoOrImageSrc.mimeType?.includes('svg')) {
+  const fallback: ReactElement = (
+    <FallbackMediaRenderer
+      width={width}
+      height={height}
+      style={style}
+      src={videoOrImageSrc.url}
+      alt={alt}
+    />
+  )
+
+  if (hasError) {
+    return fallback
+  }
+
+  if (
+    videoOrImageSrc.mimeType?.includes('svg') ||
+    videoOrImageSrc.mimeType?.includes('xml')
+  ) {
     return (
       <SvgRenderer
         alt={alt}
@@ -61,6 +82,7 @@ const MediaRenderer = ({
         width={width}
         height={height}
         mediaType={videoOrImageSrc}
+        onError={onError}
       />
     )
   } else if (videoOrImageSrc.mimeType === 'text/html') {
@@ -72,6 +94,7 @@ const MediaRenderer = ({
         width={width}
         height={height}
         src={videoOrImageSrc.url}
+        onError={onError}
       />
     )
   } else if (shouldRenderAudioTag(videoOrImageSrc.mimeType)) {
@@ -82,6 +105,7 @@ const MediaRenderer = ({
         width={width}
         height={height}
         src={videoOrImageSrc.url}
+        onError={onError}
       />
     )
   } else if (
@@ -93,19 +117,12 @@ const MediaRenderer = ({
         alt={alt}
         style={[{ width, height }, style]}
         source={{ uri: videoOrImageSrc.url }}
+        onError={onError}
       />
     )
   }
 
-  return (
-    <FallbackMediaRenderer
-      width={width}
-      height={height}
-      style={style}
-      src={videoOrImageSrc.url}
-      alt={alt}
-    />
-  )
+  return fallback
 }
 
 export default MediaRenderer

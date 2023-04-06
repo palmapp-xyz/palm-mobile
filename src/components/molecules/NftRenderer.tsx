@@ -6,6 +6,18 @@ import useNftImage from 'hooks/independent/useNftImage'
 import MediaRenderer from './MediaRenderer'
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
 import { Maybe } from '@toruslabs/openlogin'
+import ChainLogoWrapper from './ChainLogoWrapper'
+
+export type NftRendererProp = {
+  nftContract: ContractAddr
+  tokenId: string
+  type: NftType
+  chain: SupportedNetworkEnum
+  metadata?: Maybe<string>
+  width?: FlexStyle['width']
+  height?: FlexStyle['height']
+  style?: StyleProp<ImageStyle>
+}
 
 const NftRenderer = ({
   nftContract,
@@ -16,17 +28,12 @@ const NftRenderer = ({
   width,
   height,
   style,
-}: {
-  nftContract: ContractAddr
-  tokenId: string
-  type: NftType
-  chain: SupportedNetworkEnum
-  metadata?: Maybe<string>
-  width?: FlexStyle['width']
-  height?: FlexStyle['height']
-  style?: StyleProp<ImageStyle>
-}): ReactElement => {
-  const { loading, uri } = useNftImage({
+}: NftRendererProp): ReactElement => {
+  const {
+    loading,
+    uri,
+    metadata: _metadata,
+  } = useNftImage({
     nftContract,
     tokenId,
     type,
@@ -41,9 +48,14 @@ const NftRenderer = ({
     height,
     loading,
     style,
+    metadata: _metadata,
   }
 
-  return <MediaRenderer {...props} />
+  return (
+    <ChainLogoWrapper chain={chain}>
+      <MediaRenderer {...props} />
+    </ChainLogoWrapper>
+  )
 }
 
 export default NftRenderer

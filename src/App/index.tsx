@@ -10,7 +10,15 @@ import firestore, {
 } from '@react-native-firebase/firestore'
 import Loading from 'components/atoms/Loading'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
+      retry: false,
+    },
+  },
+})
 
 const App = (): ReactElement => {
   LogBox.ignoreAllLogs()

@@ -51,6 +51,8 @@ const NftDetails = ({
     alt: `${nftContract}:${tokenId}`,
     loading,
     style: { flex: 1 },
+    width: '100%',
+    height: '100%',
   }
 
   useAsyncEffect(async (): Promise<void> => {
