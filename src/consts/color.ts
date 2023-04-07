@@ -15,7 +15,15 @@ const gray = {
   _830: '#323438',
   _850: '#2B2C30',
   _870: '#232427',
-  _900: '#191A1C',
+  _900: '#0D0E10',
+}
+
+const opacity = {
+  _10: '1a',
+  _30: '4d',
+  _50: '80',
+  _80: 'cc',
+  _90: 'e6',
 }
 
 const error = '#FF001A'
@@ -57,4 +65,5 @@ export default {
 
   gold,
   silver,
+  opacity,
 }

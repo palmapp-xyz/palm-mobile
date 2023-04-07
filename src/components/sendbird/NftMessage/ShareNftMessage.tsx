@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR } from 'consts'
 
 import { SbShareNftDataType, SupportedNetworkEnum } from 'types'
 
-import FormButton from '../../atoms/FormButton'
-import Row from '../../atoms/Row'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import FormText from 'components/atoms/FormText'
+import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 
 const ShareNftMessage = ({
   data,
@@ -38,33 +37,33 @@ const ShareNftMessage = ({
   }
 
   return (
-    <View style={styles.container}>
-      <NftRenderer {...nftRendererProps} />
-      <View style={styles.body}>
-        <Row style={{ alignItems: 'center', columnGap: 5 }}>
-          <Icon
-            name="ios-shield-checkmark"
-            color={COLOR.primary._400}
-            size={20}
+    <TouchableWithoutFeedback
+      onPress={(): void => {
+        navigation.navigate(Routes.NftDetail, {
+          nftContract: item.token_address,
+          tokenId: item.token_id,
+          nftContractType: item.contract_type,
+          chain,
+        })
+      }}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <FormText
+            numberOfLines={1}
+            fontType="B.10">{`${item.name} #${item.token_id}`}</FormText>
+        </View>
+        <VerifiedWrapper>
+          <NftRenderer
+            {...nftRendererProps}
+            style={{
+              borderRadius: 18,
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+            }}
           />
-          <Text
-            style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
-        </Row>
-
-        <FormButton
-          size="sm"
-          onPress={(): void => {
-            navigation.navigate(Routes.NftDetail, {
-              nftContract: item.token_address,
-              tokenId: item.token_id,
-              nftContractType: item.contract_type,
-              chain,
-            })
-          }}>
-          Details
-        </FormButton>
+        </VerifiedWrapper>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -72,13 +71,13 @@ export default ShareNftMessage
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    width: 240,
-    padding: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    width: 230,
+    borderRadius: 18,
+    borderColor: `${COLOR.gray._900}${COLOR.opacity._10}`,
+    borderWidth: 1,
+    borderStyle: 'solid',
   },
-  body: { paddingTop: 10, gap: 10 },
+  header: { paddingVertical: 10, paddingHorizontal: 12 },
   priceBox: {
     backgroundColor: COLOR.primary._50,
     padding: 10,

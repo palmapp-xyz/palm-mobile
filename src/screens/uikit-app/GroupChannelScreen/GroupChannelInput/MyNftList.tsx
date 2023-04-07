@@ -100,11 +100,18 @@ const MyNftList = ({
                 <TouchableOpacity
                   onPress={(): void => {
                     if (useGcInputReturn.stepAfterSelectNft === 'share') {
-                      useGcInputReturn.setSelectedNftList(valOrUpdater =>
-                        selectedIndex > -1
-                          ? valOrUpdater.filter(x => x !== item)
-                          : [...valOrUpdater, item]
-                      )
+                      useGcInputReturn.setSelectedNftList(valOrUpdater => {
+                        if (selectedIndex > -1) {
+                          return valOrUpdater.filter(x => x !== item)
+                        } else {
+                          // Send up to N at a time.
+                          if (useGcInputReturn.selectedNftList.length < 3) {
+                            return [...valOrUpdater, item]
+                          } else {
+                            return valOrUpdater
+                          }
+                        }
+                      })
                     } else {
                       useGcInputReturn.setSelectedNftList([item])
                     }

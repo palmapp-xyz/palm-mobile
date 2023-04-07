@@ -28,12 +28,13 @@ const styles = StyleSheet.create({
   container: { position: 'relative' },
   imgBox: {
     position: 'absolute',
-    margin: 5,
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
     borderRadius: 999,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    right: 8,
+    top: 8,
   },
 })
