@@ -7,19 +7,19 @@ export type UseMainAccountReturn = {
   password: string
   setPassword: (value: string) => void
   isValidForm: boolean
-  onClickConfirm: () => Promise<void>
+  login: () => Promise<void>
 }
 
 const useAuthLogin = (): UseMainAccountReturn => {
-  const { login } = useAuth()
+  const { authenticate } = useAuth()
   const [password, setPassword] = useState('')
 
   const isValidForm = !!password
 
-  const onClickConfirm = async (): Promise<void> => {
-    const res = await login({ password })
+  const login = async (): Promise<void> => {
+    const res = await authenticate({ password })
     if (res.success === false) {
-      console.error('useMainAccount:onClickConfirm', res.errMsg)
+      console.error('useMainAccount:login', res.errMsg)
       Alert.alert('Login Failed', res.errMsg)
     }
   }
@@ -28,7 +28,7 @@ const useAuthLogin = (): UseMainAccountReturn => {
     password,
     setPassword,
     isValidForm,
-    onClickConfirm,
+    login,
   }
 }
 

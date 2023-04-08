@@ -17,7 +17,7 @@ import NetworkOptions from 'components/molecules/NetworkOptions'
 
 const AuthLoginScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { password, setPassword, isValidForm, onClickConfirm } = useAuthLogin()
+  const { password, setPassword, isValidForm, login } = useAuthLogin()
 
   return (
     <AuthBody>
@@ -37,8 +37,8 @@ const AuthLoginScreen = (): ReactElement => {
             <Icon name="lock-closed" style={{ color: COLOR.primary._400 }} />
             <Text style={{ color: COLOR.primary._400 }}>Forgot password</Text>
           </TouchableOpacity>
-          <FormButton disabled={!isValidForm} onPress={onClickConfirm}>
-            Sign In With Lens
+          <FormButton disabled={!isValidForm} onPress={login}>
+            Sign In
           </FormButton>
           <Text>Change Network</Text>
           <NetworkOptions />

@@ -23,7 +23,7 @@ import { Maybe } from '@toruslabs/openlogin'
 export type UseProfileReturn = {
   profile: User | undefined
   isLoadingLensProfile: boolean
-  authenticate: () => Promise<TrueOrErrReturn<string>>
+  lensLogin: () => Promise<TrueOrErrReturn<string>>
   createProfile: (
     handle: string,
     createOnLens?: boolean
@@ -85,7 +85,7 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
     { enabled: !!address, refetchInterval: 5000 }
   )
 
-  const authenticate = async (): Promise<TrueOrErrReturn<string>> => {
+  const lensLogin = async (): Promise<TrueOrErrReturn<string>> => {
     try {
       const res = await signInWithLens()
       if (res.success) {
@@ -255,7 +255,7 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
   return {
     profile: fsProfileField,
     isLoadingLensProfile,
-    authenticate,
+    lensLogin,
     createProfile,
     updateProfileImage,
     setMetadata,

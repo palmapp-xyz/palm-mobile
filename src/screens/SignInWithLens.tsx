@@ -11,14 +11,14 @@ import useProfile from 'hooks/independent/useProfile'
 const SignInWithLens = (): ReactElement => {
   const { user, logout } = useAuth()
 
-  const { authenticate } = useProfile({
+  const { lensLogin } = useProfile({
     address: user?.address,
   })
 
   useEffect(() => {
-    authenticate().then(res => {
+    lensLogin().then(res => {
       if (!res.success) {
-        console.error('SignInWithLens:authenticate', res.errMsg)
+        console.error('SignInWithLens:lensLogin', res.errMsg)
         Alert.alert(res.errMsg)
         logout()
       }

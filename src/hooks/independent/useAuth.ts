@@ -20,7 +20,7 @@ import { formatHex } from 'libs/utils'
 export type UseAuthReturn = {
   user?: User
   register: (props: { privateKey: string; password: string }) => Promise<void>
-  login: ({ password }: { password: string }) => Promise<TrueOrErrReturn>
+  authenticate: ({ password }: { password: string }) => Promise<TrueOrErrReturn>
   setAccToken: (accessToken: string) => void
   logout: () => Promise<void>
 }
@@ -60,7 +60,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     setUser({ ...fsUser, sbUser })
   }
 
-  const login = async ({
+  const authenticate = async ({
     password,
   }: {
     password: string
@@ -101,7 +101,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     RNRestart.restart()
   }
 
-  return { user, register, login, setAccToken, logout }
+  return { user, register, authenticate, setAccToken, logout }
 }
 
 export default useAuth
