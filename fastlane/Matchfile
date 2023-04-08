@@ -1,4 +1,4 @@
-git_url("git@github.com:oedi-social/oedi-code-signing.git")
+git_url("git@github.com:palmapp-xyz/palm-code-signing.git")
 
 storage_mode("git")
 
