@@ -1,13 +1,13 @@
+import { AuthChallengeInfo, AuthChallengeResult } from 'types'
 import { NominalType } from '../common'
 import { ContractAddr } from '../contracts'
 import { Accounts } from './accounts'
 import { Moralis } from './moralis'
 
 export enum ApiEnum {
-  MORALIS_AUTH_REQUEST_MESSAGE = 'MORALIS_AUTH_REQUEST_MESSAGE',
-  MORALIS_AUTH_ISSUE_TOKEN = 'MORALIS_AUTH_ISSUE_TOKEN',
+  AUTH_CHALLENGE_REQUEST = 'AUTH_CHALLENGE_REQUEST',
+  AUTH_CHALLENGE_VERIFY = 'AUTH_CHALLENGE_VERIFY',
 
-  AUTH = 'AUTH',
   ACCOUNTS = 'ACCOUNTS',
   ASSETS = 'ASSETS',
   COLLECTIONS = 'COLLECTIONS',
@@ -31,8 +31,18 @@ type DefaultMethods = {
 type Override<T> = Omit<DefaultMethods, keyof T> & T
 
 export type ApiData = {
-  [ApiEnum.MORALIS_AUTH_REQUEST_MESSAGE]: DefaultMethods
-  [ApiEnum.MORALIS_AUTH_ISSUE_TOKEN]: DefaultMethods
+  [ApiEnum.AUTH_CHALLENGE_REQUEST]: Override<{
+    POST: {
+      address: ContractAddr
+      chainId: number
+    }
+  }>
+  [ApiEnum.AUTH_CHALLENGE_VERIFY]: Override<{
+    POST: {
+      message: string
+      signature: string
+    }
+  }>
 
   [ApiEnum.ASSETS]: DefaultMethods
   [ApiEnum.COLLECTIONS]: DefaultMethods
@@ -41,7 +51,6 @@ export type ApiData = {
   [ApiEnum.CHANNELS]: DefaultMethods
   [ApiEnum.CHANNEL]: DefaultMethods
 
-  [ApiEnum.AUTH]: DefaultMethods
   [ApiEnum.ACCOUNTS]: DefaultMethods
   [ApiEnum.IPFS]: Override<{
     POST: {
@@ -52,18 +61,14 @@ export type ApiData = {
 }
 
 export type ApiParams = {
-  [ApiEnum.MORALIS_AUTH_REQUEST_MESSAGE]: Override<{
+  [ApiEnum.AUTH_CHALLENGE_REQUEST]: Override<{
     POST: {
-      data: {
-        networkType: 'evm'
-        address: string
-        chain: string
-      }
+      address: ContractAddr
+      chainId: number
     }
   }>
-  [ApiEnum.MORALIS_AUTH_ISSUE_TOKEN]: Override<{
+  [ApiEnum.AUTH_CHALLENGE_VERIFY]: Override<{
     POST: {
-      networkType: 'evm'
       message: string
       signature: string
     }
@@ -76,14 +81,6 @@ export type ApiParams = {
   [ApiEnum.CHANNELS]: DefaultMethods
   [ApiEnum.CHANNEL]: DefaultMethods
 
-  [ApiEnum.AUTH]: Override<{
-    POST: {
-      address: ContractAddr
-      message: string
-      signature: string
-      wallet: 'kaikas' | 'metamask'
-    }
-  }>
   [ApiEnum.ACCOUNTS]: Override<{
     PUT: {
       id: number
@@ -123,24 +120,13 @@ export type ApiFetchResult<T = ApiResponse[ApiEnum][keyof DefaultMethods]> =
     }
 
 export type ApiResponse = {
-  [ApiEnum.MORALIS_AUTH_REQUEST_MESSAGE]: Override<{
-    POST: {
-      result: {
-        id: string
-        message: string
-        profileId: string
-      }
-    }
+  [ApiEnum.AUTH_CHALLENGE_REQUEST]: Override<{
+    POST: AuthChallengeInfo
   }>
-  [ApiEnum.MORALIS_AUTH_ISSUE_TOKEN]: Override<{
-    POST: {
-      result: {
-        idToken: string
-      }
-    }
+  [ApiEnum.AUTH_CHALLENGE_VERIFY]: Override<{
+    POST: AuthChallengeResult
   }>
 
-  [ApiEnum.AUTH]: Override<{ POST: string }>
   [ApiEnum.ACCOUNTS]: Override<{ GET: Accounts.Item }>
   [ApiEnum.ASSETS]: Override<{
     GET: {

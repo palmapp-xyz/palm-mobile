@@ -34,11 +34,12 @@ const GroupChannelHeader = ({
 
   const isMyDM =
     channel.memberCount === 2 &&
-    channel.members.filter((member: Member) => member.userId === user?.address)
-      .length === 1
+    channel.members.filter(
+      (member: Member) => member.userId === user?.profileId
+    ).length === 1
   const otherDMUser: Member | undefined = isMyDM
     ? channel.members.filter(
-        (member: Member) => member.userId !== user?.address
+        (member: Member) => member.userId !== user?.profileId
       )[0]
     : undefined
 

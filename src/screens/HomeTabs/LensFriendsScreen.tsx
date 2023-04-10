@@ -9,9 +9,12 @@ import {
   Search,
 } from '@lens-protocol/react-native-lens-ui-kit'
 import firestore from '@react-native-firebase/firestore'
+
+import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
+
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import useAuth from 'hooks/independent/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
@@ -19,17 +22,21 @@ import useLens from 'hooks/lens/useLens'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { Profile } from 'graphqls/__generated__/graphql'
-import { ContractAddr, User } from 'types'
+import { User } from 'types'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import _ from 'lodash'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
   const { connect } = useConnection()
-  const { user } = useAuth()
+  const { user, fetchUserProfileId } = useAuth()
   const { createGroupChatIfNotExist, generateDmChannelUrl } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getDefaultProfile } = useLens()
+  const { fetchProfile } = useFsProfile({})
+  const { alert } = useAlert()
 
   const setLoading = useSetRecoilState(appStore.loading)
 
@@ -40,34 +47,37 @@ const LensFriendsScreen = (): ReactElement => {
 
   const createUserFromProfile = async (
     profile: ExtendedProfile
-  ): Promise<void> => {
+  ): Promise<User | undefined> => {
     if (!user) {
-      return
+      return undefined
     }
 
-    const fsProfile = firestore().collection('profiles').doc(profile.ownedBy)
-    const fsProfileDoc = await fsProfile.get()
-    if (fsProfileDoc.exists) {
-      return
-    }
-
-    // not a palm user. create a new profile for the user.
-    const fsUser: User = {
-      address: profile.ownedBy as ContractAddr,
+    const userProfileId = await fetchUserProfileId(profile.ownedBy)
+    const userProfile = await fetchProfile(userProfileId!)
+    const ret: User = {
+      ...userProfile!,
       lensProfile: profile as Profile,
       ...(profile as Profile),
     }
-    await fsProfile.set(fsUser)
+    // not a palm user yet. populate with lens profile info for him/her
+    if (!userProfile!.handle) {
+      await firestore()
+        .collection('profiles')
+        .doc(userProfileId)
+        .set(ret, { merge: true })
+    }
 
     // create sendbird user by connecting
-    const newUser = await connect(profile.ownedBy)
+    const newUser = await connect(userProfileId!)
     setCurrentUser(newUser)
     const profileImg = getProfileImgFromProfile(profile)
     await updateCurrentUserInfo(profile.handle, profileImg)
 
     // reconnect back to self
-    const me = await connect(user?.address)
+    const me = await connect(user?.profileId)
     setCurrentUser(me)
+
+    return ret
   }
 
   const goToProfileChat = async (profile: ExtendedProfile): Promise<void> => {
@@ -78,12 +88,15 @@ const LensFriendsScreen = (): ReactElement => {
     setLoading(true)
     setTimeout(async () => {
       try {
-        await createUserFromProfile(profile)
+        const userProfile = await createUserFromProfile(profile)
         await createGroupChatIfNotExist({
-          channelUrl: generateDmChannelUrl(profile.ownedBy, user?.address),
+          channelUrl: generateDmChannelUrl(
+            userProfile!.profileId,
+            user.profileId
+          ),
           isDistinct: true,
-          invitedUserIds: [profile.ownedBy],
-          operatorUserIds: [user?.address, profile.ownedBy],
+          invitedUserIds: [userProfile!.profileId],
+          operatorUserIds: [user.profileId, userProfile!.profileId],
           onChannelCreated: (channel: GroupChannel) => {
             setLoading(false)
             setTimeout(() => {
@@ -95,6 +108,7 @@ const LensFriendsScreen = (): ReactElement => {
         })
       } catch (e) {
         console.error(e)
+        alert({ title: 'Unknown Error', message: _.toString(e) })
       }
     }, 200)
   }

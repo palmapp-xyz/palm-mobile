@@ -5,7 +5,7 @@ import { SetterOrUpdater, useRecoilState } from 'recoil'
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
 import { GroupChannelProps } from '@sendbird/uikit-react-native'
 
-import { ContractAddr, Moralis } from 'types'
+import { Moralis } from 'types'
 import selectNftStore from 'store/selectNftStore'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { nftUriFetcher } from 'libs/nft'
@@ -46,7 +46,7 @@ const useGcInput = ({
     useState<StepAfterSelectNftType>()
 
   const receiverList = useMemo(
-    () => channel.members.filter(x => x.userId !== user?.address) || [],
+    () => channel.members.filter(x => x.userId !== user?.profileId) || [],
     [channel.members]
   )
 
@@ -70,10 +70,10 @@ const useGcInput = ({
         navigation.navigate(Routes.ListNft, { channelUrl: channel.url })
       } else if (stepAfterSelectNft === 'send') {
         if (channel.members.length < 3) {
-          const target = channel.members.find(x => x.userId !== user?.address)
+          const target = channel.members.find(x => x.userId !== user?.profileId)
           if (target) {
             navigation.navigate(Routes.SendNft, {
-              receiver: target.userId as ContractAddr,
+              receiverId: target.userId,
               channelUrl: channel.url,
             })
           } else {

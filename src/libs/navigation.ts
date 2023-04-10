@@ -147,7 +147,7 @@ type MainRouteParamsUnion =
   | {
       route: Routes.SendNft
       params: {
-        receiver: ContractAddr
+        receiverId: string
         channelUrl?: string
       }
     }

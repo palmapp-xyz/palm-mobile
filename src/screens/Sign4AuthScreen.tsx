@@ -10,7 +10,7 @@ import { SupportedNetworkEnum } from 'types'
 
 const Sign4AuthScreen = (): ReactElement => {
   const { logout } = useAuth()
-  const { signMessage, onPress } = useSign4Auth(SupportedNetworkEnum.ETHEREUM)
+  const { challenge, onPress } = useSign4Auth(SupportedNetworkEnum.ETHEREUM)
   const isFetching = useRecoilValue(fetchApiStore.isFetchingPostApiStore)
 
   return (
@@ -20,11 +20,11 @@ const Sign4AuthScreen = (): ReactElement => {
           <Text style={{ fontSize: 20 }}>Sign</Text>
         </View>
         <View style={styles.signMessageBox}>
-          <Text>{signMessage || 'Loading message.'}</Text>
+          <Text>{challenge?.message || 'Loading message.'}</Text>
         </View>
       </View>
       <View style={{ rowGap: 10 }}>
-        <FormButton disabled={!signMessage || isFetching} onPress={onPress}>
+        <FormButton disabled={!challenge || isFetching} onPress={onPress}>
           Sign to Login
         </FormButton>
         <FormButton figure="error" onPress={logout}>

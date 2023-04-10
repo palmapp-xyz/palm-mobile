@@ -23,7 +23,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
-  const { profile, setMetadata } = useProfile({ address: user?.address })
+  const { profile, setMetadata } = useProfile({ profileId: user?.profileId })
 
   const [updatedProfile, setUpdatedProfile] = useState<
     Partial<ProfileMetadata>

@@ -14,7 +14,7 @@ const CreateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
   const [handle, setHandle] = useState('')
   const [loading, setLoading] = useRecoilState(appStore.loading)
-  const { profile, createProfile } = useProfile({ address: user?.address })
+  const { profile, createProfile } = useProfile({ profileId: user?.profileId })
   const { alert } = useAlert()
   const { setting } = useSetting()
   const isTestnet = setting.network === NetworkSettingEnum.TESTNET

@@ -148,8 +148,8 @@ const useLens = (): UseLensReturn => {
     aQuery({
       context: {
         headers: {
-          'x-access-token': user?.accessToken
-            ? `Bearer ${user.accessToken}`
+          'x-access-token': user?.lensAccessToken
+            ? `Bearer ${user.lensAccessToken}`
             : '',
         },
       },
@@ -165,8 +165,8 @@ const useLens = (): UseLensReturn => {
     aMutate({
       context: {
         headers: {
-          'x-access-token': user?.accessToken
-            ? `Bearer ${user.accessToken}`
+          'x-access-token': user?.lensAccessToken
+            ? `Bearer ${user.lensAccessToken}`
             : '',
         },
       },

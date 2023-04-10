@@ -42,7 +42,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
 
   const { user } = useAuth(chain)
   const membersWithoutMe = useMemo(
-    () => channel?.members.filter(x => x.userId !== user?.address) || [],
+    () => channel?.members.filter(x => x.userId !== user?.profileId) || [],
     [channel?.members]
   )
   if (!channel) {

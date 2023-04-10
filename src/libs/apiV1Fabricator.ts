@@ -2,12 +2,13 @@ import { utils } from 'ethers'
 import { ApiEnum, ApiParamFabricated, ContractAddr } from 'types'
 
 export default {
-  [ApiEnum.MORALIS_AUTH_REQUEST_MESSAGE]: {
+  [ApiEnum.AUTH_CHALLENGE_REQUEST]: {
     post: (): ApiParamFabricated =>
-      '/ext-moralis-auth-requestMessage' as ApiParamFabricated,
+      '/v1/auth/challenge/request' as ApiParamFabricated,
   },
-  [ApiEnum.MORALIS_AUTH_ISSUE_TOKEN]: {
-    post: (): ApiParamFabricated => '/v1/jwt/issue' as ApiParamFabricated,
+  [ApiEnum.AUTH_CHALLENGE_VERIFY]: {
+    post: (): ApiParamFabricated =>
+      '/v1/auth/challenge/verify' as ApiParamFabricated,
   },
 
   [ApiEnum.ASSETS]: {
@@ -46,11 +47,6 @@ export default {
       )}&limit=${limit || 10}${
         cursor ? `&cursor=${cursor}` : ''
       }` as ApiParamFabricated,
-  },
-  [ApiEnum.AUTH]: {
-    post: (): ApiParamFabricated => '/v1/auth' as ApiParamFabricated,
-    put: (): ApiParamFabricated => '/v1/auth' as ApiParamFabricated,
-    del: (): ApiParamFabricated => '/v1/auth' as ApiParamFabricated,
   },
   [ApiEnum.ACCOUNTS]: {
     get: (): ApiParamFabricated => '/v1/accounts' as ApiParamFabricated,

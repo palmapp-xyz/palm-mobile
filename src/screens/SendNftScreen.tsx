@@ -1,12 +1,13 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useRecoilValue } from 'recoil'
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import { UTIL } from 'consts'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
+import { Moralis, SupportedNetworkEnum, User } from 'types'
 import selectNftStore from 'store/selectNftStore'
 import {
   Header,
@@ -22,26 +23,28 @@ import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import useAuth from 'hooks/independent/useAuth'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import useFsProfile from 'hooks/firestore/useFsProfile'
 
 const Contents = ({
   selectedNft,
-  receiver,
+  receiverId,
   channelUrl,
   chain,
 }: {
   selectedNft: Moralis.NftItem
-  receiver: ContractAddr
+  receiverId: string
   channelUrl?: string
   chain: SupportedNetworkEnum
 }): ReactElement => {
   const { user } = useAuth()
+  const [receiver, setReceiver] = useState<User>()
   const { isPosting, isValidForm, onClickConfirm } = useSendNft({
     selectedNft,
-    receiver,
+    receiver: receiver?.address,
   })
 
   const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl ?? receiver)
+  const { channel } = useGroupChannel(sdk, channelUrl ?? receiverId)
 
   const onSubmit = async (token_uri: string): Promise<void> => {
     if (!channel || !user) {
@@ -52,11 +55,17 @@ const Contents = ({
     imgInfo.data = stringifySendFileData({
       type: 'send',
       selectedNft,
-      from: user.address,
-      to: receiver,
+      from: user.profileId,
+      to: receiverId,
     })
     channel.sendFileMessage(imgInfo)
   }
+
+  const { fetchProfile } = useFsProfile({})
+  useAsyncEffect(async () => {
+    const _receiver = await fetchProfile(receiverId)
+    setReceiver(_receiver)
+  }, [receiverId])
 
   return (
     <View style={styles.body}>
@@ -72,7 +81,7 @@ const Contents = ({
         </Row>
         <View>
           <Text style={{ fontSize: 20 }}>Receiver</Text>
-          <Text>{receiver}</Text>
+          <Text>{receiver?.address || 'Loading...'}</Text>
         </View>
       </View>
       <SubmitButton
@@ -109,7 +118,7 @@ const SendNftScreen = (): ReactElement => {
       {selectedNftList.length > 0 && (
         <Contents
           selectedNft={selectedNftList[0]}
-          receiver={params.receiver}
+          receiverId={params.receiverId}
           channelUrl={params.channelUrl}
           chain={chain}
         />

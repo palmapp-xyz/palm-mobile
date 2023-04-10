@@ -12,7 +12,7 @@ const SignInWithLens = (): ReactElement => {
   const { user, logout } = useAuth()
 
   const { lensLogin } = useProfile({
-    address: user?.address,
+    profileId: user?.profileId,
   })
 
   useEffect(() => {

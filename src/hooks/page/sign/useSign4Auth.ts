@@ -1,47 +1,61 @@
-import useMoralisRequestMessage from 'hooks/api/useMoralisRequestMessage'
-import useApi from 'hooks/complex/useApi'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
+
+import useNetwork from 'hooks/complex/useNetwork'
 import useWeb3 from 'hooks/complex/useWeb3'
 import useAuth from 'hooks/independent/useAuth'
 import { getPkey } from 'libs/account'
-import apiV1Fabricator from 'libs/apiV1Fabricator'
-import { ApiEnum, SupportedNetworkEnum } from 'types'
+import _ from 'lodash'
+import { useState } from 'react'
+import { Alert } from 'react-native'
+import { AuthChallengeInfo, SupportedNetworkEnum } from 'types'
 
 export type UseSign4AuthReturn = {
-  signMessage: string
+  challenge: AuthChallengeInfo | undefined
   onPress: () => Promise<void>
 }
 
 const useSign4Auth = (chain: SupportedNetworkEnum): UseSign4AuthReturn => {
-  const { user, setAccToken } = useAuth()
-  const { signMessage } = useMoralisRequestMessage({
-    userAddress: user?.address,
-  })
+  const { user, setAuth, challengeRequest, challengeVerify } = useAuth()
+  const { connectedNetworkIds } = useNetwork()
+  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
 
-  const { postApi } = useApi()
   const { web3 } = useWeb3(chain)
 
+  const [challenge, setChallenge] = useState<AuthChallengeInfo>()
+
+  useAsyncEffect(async () => {
+    if (!user?.address) {
+      return
+    }
+
+    try {
+      const requestInfo = await challengeRequest(user?.address)
+      setChallenge(requestInfo)
+    } catch (e) {
+      console.error(e)
+      Alert.alert('Unknown Error', _.toString(e))
+    }
+  }, [user?.address, connectedNetworkId])
+
   const onPress = async (): Promise<void> => {
+    if (!challenge) {
+      return
+    }
+
     try {
       const pKey = await getPkey()
       const account = web3.eth.accounts.privateKeyToAccount(pKey)
-      const signature = account.sign(signMessage).signature
+      const signature = account.sign(challenge.message).signature
 
-      const fetchRes = await postApi<ApiEnum.MORALIS_AUTH_ISSUE_TOKEN>({
-        path: apiV1Fabricator[ApiEnum.MORALIS_AUTH_ISSUE_TOKEN].post(),
-        params: {
-          networkType: 'evm',
-          message: signMessage,
-          signature,
-        },
-      })
-
-      if (fetchRes.success) {
-        setAccToken(fetchRes.data.result.idToken)
-      }
-    } catch (error) {}
+      const result = await challengeVerify(signature, challenge.message)
+      setAuth(result)
+    } catch (e) {
+      console.error(e)
+      Alert.alert('Unknown Error', _.toString(e))
+    }
   }
 
-  return { signMessage, onPress }
+  return { challenge, onPress }
 }
 
 export default useSign4Auth

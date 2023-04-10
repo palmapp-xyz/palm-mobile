@@ -38,7 +38,7 @@ const Navigation = (): ReactElement => {
       ref={navigationRef}
       theme={isLightTheme ? DefaultTheme : DarkTheme}>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        {user?.accessToken ? (
+        {user?.lensAccessToken ? (
           <RootStack.Screen
             name={Routes.MainNavigator}
             component={MainNavigator}

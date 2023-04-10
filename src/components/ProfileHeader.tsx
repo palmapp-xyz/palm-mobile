@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,7 @@ import {
 import Clipboard from '@react-native-clipboard/clipboard'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import { COLOR, UTIL } from 'consts'
 import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
@@ -23,29 +24,43 @@ import useEthPrice from 'hooks/independent/useEthPrice'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
-import useProfile from 'hooks/independent/useProfile'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import useAuth from 'hooks/independent/useAuth'
 
 const ProfileHeader = ({
   userAddress,
+  userProfileId,
   isMyPage,
   selectedNetwork,
   onNetworkSelected,
 }: {
   userAddress?: ContractAddr
+  userProfileId?: string
   isMyPage: boolean
   selectedNetwork: SupportedNetworkEnum
   onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
 }): ReactElement => {
   const { navigation } = useAppNavigation()
   const { getEthPrice } = useEthPrice()
-  const { profile } = useProfile({ address: userAddress })
-  const profileImg = getProfileImgFromProfile(profile)
   const { alert } = useAlert()
+  const { fetchUserProfileId } = useAuth()
 
   const { ethBalance } = useUserBalance({
     address: userAddress,
     chain: SupportedNetworkEnum.ETHEREUM,
   })
+
+  const [profileId, setProfileId] = useState<string | undefined>(userProfileId)
+  const { fsProfileField: profile } = useFsProfile({ profileId })
+  const profileImg = getProfileImgFromProfile(profile)
+
+  useAsyncEffect(async () => {
+    if (profileId || !userAddress) {
+      return
+    }
+    const fetchedProfileId = await fetchUserProfileId(userAddress)
+    setProfileId(fetchedProfileId)
+  }, [userAddress])
 
   return (
     <View style={styles.container}>

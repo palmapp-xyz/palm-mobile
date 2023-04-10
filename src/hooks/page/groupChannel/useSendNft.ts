@@ -34,7 +34,7 @@ const useSendNft = ({
   receiver,
 }: {
   selectedNft: Moralis.NftItem
-  receiver: ContractAddr
+  receiver: ContractAddr | undefined
 }): UseSendNftReturn => {
   const { navigation } = useAppNavigation()
 
@@ -61,7 +61,7 @@ const useSendNft = ({
   const isValidForm = !!receiver
 
   const onClickConfirm = async (): Promise<PostTxReturn | undefined> => {
-    if (user?.address) {
+    if (user?.address && receiver) {
       const data = transferFromData({
         from: user.address,
         to: receiver,

@@ -66,7 +66,7 @@ const ZxNftDetailScreen = (): ReactElement => {
         imgInfo.data = stringifySendFileData({
           type: 'buy',
           selectedNft: order,
-          buyer: user.address,
+          buyer: user.profileId,
         })
         channel.sendFileMessage(imgInfo)
       }

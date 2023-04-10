@@ -2,7 +2,7 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
 
-import { ContractAddr, User } from 'types'
+import { User } from 'types'
 import { useEffect, useState } from 'react'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { getProfileImgFromProfile } from 'libs/lens'
@@ -10,35 +10,32 @@ import { getProfileImgFromProfile } from 'libs/lens'
 export type UseFsProfileReturn = {
   fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
   fsProfileField?: User
+  fetchProfile: (profileId: string) => Promise<User | undefined>
 }
 
 const useFsProfile = ({
-  address,
+  profileId,
 }: {
-  address?: string
+  profileId?: string
 }): UseFsProfileReturn => {
   const [fsProfileField, setFsProfileField] = useState<User | undefined>()
 
   const { currentUser, setCurrentUser, updateCurrentUserInfo } =
     useSendbirdChat()
 
-  const fsProfile = firestore().collection('profiles').doc(address)
+  const fsProfile = firestore().collection('profiles').doc(profileId)
 
   useEffect(() => {
+    if (!profileId) {
+      return
+    }
     const subscriber = fsProfile.onSnapshot(profileDocSnapshot => {
-      if (!profileDocSnapshot.exists) {
-        const profileField: User = {
-          address: address as ContractAddr,
-        }
-        fsProfile.set(profileField).then(() => {
-          setFsProfileField(profileField)
-        })
-      } else {
+      if (profileDocSnapshot.exists) {
         setFsProfileField(profileDocSnapshot.data() as User)
       }
     })
     return () => subscriber()
-  }, [address])
+  }, [profileId])
 
   useEffect(() => {
     if (!currentUser || !fsProfileField) {
@@ -55,9 +52,23 @@ const useFsProfile = ({
     }
   }, [fsProfileField])
 
+  const fetchProfile = async (
+    _profileId: string
+  ): Promise<User | undefined> => {
+    const _fsProfile = await firestore()
+      .collection('profiles')
+      .doc(_profileId)
+      .get()
+    if (!_fsProfile.exists) {
+      return undefined
+    }
+    return _fsProfile.data() as User
+  }
+
   return {
     fsProfile,
     fsProfileField,
+    fetchProfile,
   }
 }
 

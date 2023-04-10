@@ -35,7 +35,7 @@ const MainStack = createNativeStackNavigator()
 
 const MainNavigator = (): ReactElement => {
   const { user } = useAuth()
-  const { profile } = useProfile({ address: user?.address })
+  const { profile } = useProfile({ profileId: user?.profileId })
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>

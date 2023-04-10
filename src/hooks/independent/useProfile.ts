@@ -44,9 +44,13 @@ export type UseProfileReturn = {
   >
 }
 
-const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
-  const { fsProfile, fsProfileField } = useFsProfile({ address })
-  const { setAccToken } = useAuth()
+const useProfile = ({
+  profileId,
+}: {
+  profileId?: string
+}): UseProfileReturn => {
+  const { fsProfile, fsProfileField } = useFsProfile({ profileId })
+  const { setLensAccToken } = useAuth()
   const { connectedNetworkIds } = useNetwork()
 
   const {
@@ -54,7 +58,7 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
     refetch: refetchLensProfile,
     isLoading: isLoadingLensProfile,
   } = useLensProfile({
-    userAddress: address as ContractAddr,
+    userAddress: fsProfileField?.address as ContractAddr,
   })
 
   const {
@@ -70,7 +74,6 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
     }
     if (checkForProfileUpdate(fsProfileField, lensProfile)) {
       await fsProfile.set({
-        address,
         lensProfile,
         ...lensProfile,
       })
@@ -82,14 +85,14 @@ const useProfile = ({ address }: { address?: string }): UseProfileReturn => {
     () => {
       refetchLensProfile()
     },
-    { enabled: !!address, refetchInterval: 5000 }
+    { enabled: !!profileId, refetchInterval: 5000 }
   )
 
   const lensLogin = async (): Promise<TrueOrErrReturn<string>> => {
     try {
       const res = await signInWithLens()
       if (res.success) {
-        setAccToken(res.value)
+        setLensAccToken(res.value)
       } else {
         console.error('useProfile:signInWithLens', res.errMsg)
       }

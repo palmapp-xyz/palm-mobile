@@ -14,7 +14,6 @@ import { FormModal } from 'components'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { ContractAddr } from 'types'
 
 const SelectReceiverModal = ({
   useGcInputReturn,
@@ -42,7 +41,7 @@ const SelectReceiverModal = ({
                   onPress={(): void => {
                     useGcInputReturn.setOpenSelectReceiver(false)
                     navigation.navigate(Routes.SendNft, {
-                      receiver: item.userId as ContractAddr,
+                      receiverId: item.userId,
                       channelUrl: channel.url,
                     })
                   }}>
