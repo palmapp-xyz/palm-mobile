@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import RenderHtml from 'react-native-render-html'
 
 import { Container, FormButton } from 'components'
 import useSign4Auth from 'hooks/page/sign/useSign4Auth'
@@ -13,6 +14,10 @@ const Sign4AuthScreen = (): ReactElement => {
   const { challenge, onPress } = useSign4Auth(SupportedNetworkEnum.ETHEREUM)
   const isFetching = useRecoilValue(fetchApiStore.isFetchingPostApiStore)
 
+  const source = {
+    html: `<p>${challenge?.message}</p>`,
+  }
+
   return (
     <Container style={styles.container}>
       <View>
@@ -20,7 +25,11 @@ const Sign4AuthScreen = (): ReactElement => {
           <Text style={{ fontSize: 20 }}>Sign</Text>
         </View>
         <View style={styles.signMessageBox}>
-          <Text>{challenge?.message || 'Loading message.'}</Text>
+          {challenge ? (
+            <RenderHtml source={source} />
+          ) : (
+            <Text>Loading Challenge...</Text>
+          )}
         </View>
       </View>
       <View style={{ rowGap: 10 }}>
