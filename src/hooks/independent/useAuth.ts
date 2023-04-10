@@ -20,7 +20,11 @@ import { formatHex } from 'libs/utils'
 export type UseAuthReturn = {
   user?: User
   register: (props: { privateKey: string; password: string }) => Promise<void>
-  authenticate: ({ password }: { password: string }) => Promise<TrueOrErrReturn>
+  authenticate: ({
+    password,
+  }: {
+    password: string
+  }) => Promise<TrueOrErrReturn<string>>
   setAccToken: (accessToken: string) => void
   logout: () => Promise<void>
 }
@@ -64,7 +68,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     password,
   }: {
     password: string
-  }): Promise<TrueOrErrReturn> => {
+  }): Promise<TrueOrErrReturn<string>> => {
     try {
       const savedPwd = await getPkeyPwd()
       if (savedPwd === password) {
@@ -78,7 +82,8 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         const sbUser: SendbirdUser = await connect(account.address)
         setCurrentUser(sbUser)
         setUser({ ...fsUser, sbUser })
-        return { success: true, value: '' }
+
+        return { success: true, value: 'string' }
       } else {
         return { success: false, errMsg: 'Invalid password' }
       }
@@ -101,7 +106,13 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     RNRestart.restart()
   }
 
-  return { user, register, authenticate, setAccToken, logout }
+  return {
+    user,
+    register,
+    authenticate,
+    setAccToken,
+    logout,
+  }
 }
 
 export default useAuth

@@ -51,6 +51,11 @@ const AuthLoginScreen = (): ReactElement => {
 export default AuthLoginScreen
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   forgetPwd: {
     justifyContent: 'center',
     paddingVertical: 10,

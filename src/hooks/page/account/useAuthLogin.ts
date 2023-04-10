@@ -19,8 +19,10 @@ const useAuthLogin = (): UseMainAccountReturn => {
   const login = async (): Promise<void> => {
     const res = await authenticate({ password })
     if (res.success === false) {
-      console.error('useMainAccount:login', res.errMsg)
+      console.error('useMainAccount:authenticate', res.errMsg)
       Alert.alert('Login Failed', res.errMsg)
+    } else {
+      console.log('authenticate:session', res.value)
     }
   }
 

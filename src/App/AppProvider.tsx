@@ -5,6 +5,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import Config from 'react-native-config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { MenuProvider } from 'react-native-popup-menu'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 import {
   LensProvider,
@@ -31,7 +32,6 @@ import { ErrorInfoScreen } from '../screens'
 import useAppearance from 'hooks/useAppearance'
 import useSetting from 'hooks/independent/useSetting'
 import { isMainnet } from 'libs/utils'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()
