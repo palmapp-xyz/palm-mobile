@@ -14,14 +14,10 @@ import {
   User,
   ContractAddr,
   AuthChallengeResult,
-  ApiEnum,
-  AuthChallengeInfo,
 } from 'types'
 import { formatHex } from 'libs/utils'
-import useApi from 'hooks/complex/useApi'
-import apiV1Fabricator from 'libs/apiV1Fabricator'
-import useNetwork from 'hooks/complex/useNetwork'
 import useFsProfile from 'hooks/firestore/useFsProfile'
+import useAuthChallenge from 'hooks/api/useAuthChallenge'
 
 export type UseAuthReturn = {
   user?: User
@@ -34,11 +30,6 @@ export type UseAuthReturn = {
   }: {
     password: string
   }) => Promise<TrueOrErrReturn<string>>
-  challengeRequest: (address: ContractAddr) => Promise<AuthChallengeInfo>
-  challengeVerify: (
-    signature: string,
-    message: string
-  ) => Promise<AuthChallengeResult>
   fetchUserProfileId: (
     userAddress: ContractAddr | undefined
   ) => Promise<string | undefined>
@@ -52,45 +43,10 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const { web3 } = useWeb3(chain ?? SupportedNetworkEnum.ETHEREUM)
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
-  const { postApi } = useApi()
   const { fetchProfile } = useFsProfile({})
-  const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[SupportedNetworkEnum.ETHEREUM]
-
-  const challengeRequest = async (
-    address: ContractAddr
-  ): Promise<AuthChallengeInfo> => {
-    const fetchRes = await postApi<ApiEnum.AUTH_CHALLENGE_REQUEST>({
-      path: apiV1Fabricator[ApiEnum.AUTH_CHALLENGE_REQUEST].post(),
-      params: {
-        address,
-        chainId: connectedNetworkId,
-      },
-    })
-
-    if (!fetchRes.success) {
-      throw new Error(fetchRes.errMsg)
-    }
-    return fetchRes.data
-  }
-
-  const challengeVerify = async (
-    signature: string,
-    message: string
-  ): Promise<AuthChallengeResult> => {
-    const fetchRes = await postApi<ApiEnum.AUTH_CHALLENGE_VERIFY>({
-      path: apiV1Fabricator[ApiEnum.AUTH_CHALLENGE_VERIFY].post(),
-      params: {
-        signature,
-        message,
-      },
-    })
-
-    if (!fetchRes.success) {
-      throw new Error(fetchRes.errMsg)
-    }
-    return fetchRes.data
-  }
+  const { challengeRequest, challengeVerify } = useAuthChallenge(
+    chain ?? SupportedNetworkEnum.ETHEREUM
+  )
 
   const fetchUserProfileId = async (
     userAddress: ContractAddr | undefined
@@ -198,8 +154,6 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     user,
     register,
     authenticate,
-    challengeRequest,
-    challengeVerify,
     fetchUserProfileId,
     setAuth,
     setLensAccToken,
