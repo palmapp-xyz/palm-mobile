@@ -48,6 +48,14 @@ const BottomMenu = ({
         },
         title: 'Send NFT',
       },
+      {
+        key: 'album',
+        icon: <FormImage source={images.image} />,
+        onPress: (): void => {
+          useGcInputReturn.onPressAttachment()
+        },
+        title: 'Album',
+      },
     ],
     []
   )

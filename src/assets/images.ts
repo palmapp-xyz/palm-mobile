@@ -9,4 +9,5 @@ export default {
   arrow_right: require('./arrow_right.png'),
   list: require('./list.png'),
   NFT: require('./NFT.png'),
+  image: require('./image.png'),
 }
