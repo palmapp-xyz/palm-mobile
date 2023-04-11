@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 
@@ -14,10 +14,23 @@ import {
 import useAuthLogin from 'hooks/page/account/useAuthLogin'
 import { Routes } from 'libs/navigation'
 import NetworkOptions from 'components/molecules/NetworkOptions'
+import { AuthChallengeInfo } from 'types'
 
 const AuthLoginScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { password, setPassword, isValidForm, login } = useAuthLogin()
+  const { password, setPassword, isValidForm, onClickConfirm } = useAuthLogin()
+
+  const onPressConfirm = async (): Promise<void> => {
+    await onClickConfirm(
+      (challenge: AuthChallengeInfo | undefined, errMsg?: string) => {
+        if (challenge) {
+          navigation.replace(Routes.Sign4Auth, { challenge })
+        } else {
+          Alert.alert('Unknown Error', errMsg)
+        }
+      }
+    )
+  }
 
   return (
     <AuthBody>
@@ -37,7 +50,7 @@ const AuthLoginScreen = (): ReactElement => {
             <Icon name="lock-closed" style={{ color: COLOR.primary._400 }} />
             <Text style={{ color: COLOR.primary._400 }}>Forgot password</Text>
           </TouchableOpacity>
-          <FormButton disabled={!isValidForm} onPress={login}>
+          <FormButton disabled={!isValidForm} onPress={onPressConfirm}>
             Sign In
           </FormButton>
           <Text>Change Network</Text>

@@ -7,7 +7,12 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
+import {
+  AuthChallengeInfo,
+  ContractAddr,
+  NftType,
+  SupportedNetworkEnum,
+} from 'types'
 
 import { GetSendbirdSDK } from './sendbird'
 
@@ -85,7 +90,9 @@ type AuthRouteParamsUnion =
     }
   | {
       route: Routes.Sign4Auth
-      params: undefined
+      params: {
+        challenge: AuthChallengeInfo
+      }
     }
 
 type MainRouteParamsUnion =

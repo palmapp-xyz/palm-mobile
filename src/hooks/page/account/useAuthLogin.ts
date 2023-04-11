@@ -1,36 +1,55 @@
 import { useState } from 'react'
 
 import useAuth from 'hooks/independent/useAuth'
-import { Alert } from 'react-native'
+import { AuthChallengeInfo } from 'types'
+import { useSetRecoilState } from 'recoil'
+import appStore from 'store/appStore'
 
-export type UseMainAccountReturn = {
+export type UseAuthLoginReturn = {
   password: string
   setPassword: (value: string) => void
   isValidForm: boolean
-  login: () => Promise<void>
+  onClickConfirm: (
+    callback: (
+      challenge: AuthChallengeInfo | undefined,
+      errMsg?: string
+    ) => void
+  ) => Promise<void>
 }
 
-const useAuthLogin = (): UseMainAccountReturn => {
-  const { authenticate } = useAuth()
+const useAuthLogin = (): UseAuthLoginReturn => {
+  const { authenticateRequest } = useAuth()
   const [password, setPassword] = useState('')
+  const setLoading = useSetRecoilState(appStore.loading)
 
   const isValidForm = !!password
 
-  const login = async (): Promise<void> => {
-    const res = await authenticate({ password })
-    if (res.success === false) {
-      console.error('useMainAccount:authenticate', res.errMsg)
-      Alert.alert('Login Failed', res.errMsg)
-    } else {
-      console.log('authenticate:session', res.value)
-    }
+  const onClickConfirm = async (
+    callback: (
+      challenge: AuthChallengeInfo | undefined,
+      errMsg?: string
+    ) => void
+  ): Promise<void> => {
+    setLoading(true)
+    setTimeout(async () => {
+      const res = await authenticateRequest({ password })
+      if (res.success === false) {
+        setLoading(false)
+        console.error('useAuthLogin:authenticateRequest', res.errMsg)
+        callback(undefined, res.errMsg)
+      } else {
+        setLoading(false)
+        console.log('useAuthLogin:challenge', res.value)
+        callback(res.value)
+      }
+    }, 500)
   }
 
   return {
     password,
     setPassword,
     isValidForm,
-    login,
+    onClickConfirm,
   }
 }
 

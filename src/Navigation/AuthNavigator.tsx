@@ -8,6 +8,7 @@ import {
   AuthMenuScreen,
   NewAccountScreen,
   RecoverAccountScreen,
+  Sign4AuthScreen,
 } from '../screens'
 
 const AuthStack = createNativeStackNavigator()
@@ -37,6 +38,11 @@ const AuthNavigator = (): ReactElement => {
       <AuthStack.Screen
         name={Routes.RecoverAccount}
         component={RecoverAccountScreen}
+        options={{ presentation: 'transparentModal' }}
+      />
+      <AuthStack.Screen
+        name={Routes.Sign4Auth}
+        component={Sign4AuthScreen}
         options={{ presentation: 'transparentModal' }}
       />
     </AuthStack.Navigator>

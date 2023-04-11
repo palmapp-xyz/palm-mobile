@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { Text } from '@sendbird/uikit-react-native-foundation'
 
@@ -11,6 +11,7 @@ import { COLOR } from 'consts'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import Loading from 'components/atoms/Loading'
+import { AuthChallengeInfo } from 'types'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
@@ -34,6 +35,18 @@ const RecoverAccountScreen = (): ReactElement => {
   const [loading] = useRecoilState(appStore.loading)
   if (loading) {
     return <Loading />
+  }
+
+  const onPressConfirm = async (): Promise<void> => {
+    await onClickConfirm(
+      (challenge: AuthChallengeInfo | undefined, errMsg?: string) => {
+        if (challenge) {
+          navigation.replace(Routes.Sign4Auth, { challenge })
+        } else {
+          Alert.alert('Unknown Error', errMsg)
+        }
+      }
+    )
   }
 
   return (
@@ -117,7 +130,7 @@ const RecoverAccountScreen = (): ReactElement => {
         <FormButton
           containerStyle={[styles.btn, { flex: 1 }]}
           disabled={!isValidForm || loading}
-          onPress={onClickConfirm}>
+          onPress={onPressConfirm}>
           Recover
         </FormButton>
       </Row>

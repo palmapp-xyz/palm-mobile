@@ -14,6 +14,7 @@ import {
   User,
   ContractAddr,
   AuthChallengeResult,
+  AuthChallengeInfo,
 } from 'types'
 import { formatHex } from 'libs/utils'
 import useFsProfile from 'hooks/firestore/useFsProfile'
@@ -21,15 +22,21 @@ import useAuthChallenge from 'hooks/api/useAuthChallenge'
 
 export type UseAuthReturn = {
   user?: User
-  register: (props: {
+
+  registerRequest: (props: {
     privateKey: string
     password: string
-  }) => Promise<TrueOrErrReturn<string>>
-  authenticate: ({
+  }) => Promise<TrueOrErrReturn<AuthChallengeInfo>>
+  authenticateRequest: ({
     password,
   }: {
     password: string
-  }) => Promise<TrueOrErrReturn<string>>
+  }) => Promise<TrueOrErrReturn<AuthChallengeInfo>>
+  authenticate: ({
+    challenge,
+  }: {
+    challenge: AuthChallengeInfo
+  }) => Promise<TrueOrErrReturn<AuthChallengeResult>>
   fetchUserProfileId: (
     userAddress: ContractAddr | undefined
   ) => Promise<string | undefined>
@@ -58,13 +65,13 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     return result.profileId
   }
 
-  const register = async ({
+  const registerRequest = async ({
     privateKey,
     password,
   }: {
     privateKey: string
     password: string
-  }): Promise<TrueOrErrReturn<string>> => {
+  }): Promise<TrueOrErrReturn<AuthChallengeInfo>> => {
     try {
       const account = web3.eth.accounts.privateKeyToAccount(
         formatHex(privateKey)
@@ -72,6 +79,44 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
       await savePkey(privateKey, password)
 
       const challenge = await challengeRequest(account.address as ContractAddr)
+      return { success: true, value: challenge }
+    } catch (error) {
+      return { success: false, errMsg: _.toString(error) }
+    }
+  }
+
+  const authenticateRequest = async ({
+    password,
+  }: {
+    password: string
+  }): Promise<TrueOrErrReturn<AuthChallengeInfo>> => {
+    try {
+      const savedPwd = await getPkeyPwd()
+      if (savedPwd === password) {
+        const privateKey = await getPkey()
+        const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+
+        const challenge = await challengeRequest(
+          account.address as ContractAddr
+        )
+        return { success: true, value: challenge }
+      } else {
+        return { success: false, errMsg: 'Invalid password' }
+      }
+    } catch (error) {
+      return { success: false, errMsg: _.toString(error) }
+    }
+  }
+
+  const authenticate = async ({
+    challenge,
+  }: {
+    challenge: AuthChallengeInfo
+  }): Promise<TrueOrErrReturn<AuthChallengeResult>> => {
+    try {
+      const privateKey = await getPkey()
+      const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+
       const signature = account.sign(challenge.message).signature
       const result = await challengeVerify(signature, challenge.message)
 
@@ -82,44 +127,9 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
       if (!fsUser) {
         throw new Error(`User ${result.profileId} does not exist`)
       }
-      setUser({ ...fsUser, auth: result, sbUser })
+      setUser({ ...fsUser, sbUser })
 
-      return { success: true, value: result.nonce }
-    } catch (error) {
-      return { success: false, errMsg: _.toString(error) }
-    }
-  }
-
-  const authenticate = async ({
-    password,
-  }: {
-    password: string
-  }): Promise<TrueOrErrReturn<string>> => {
-    try {
-      const savedPwd = await getPkeyPwd()
-      if (savedPwd === password) {
-        const privateKey = await getPkey()
-        const account = web3.eth.accounts.privateKeyToAccount(privateKey)
-
-        const challenge = await challengeRequest(
-          account.address as ContractAddr
-        )
-        const signature = account.sign(challenge.message).signature
-        const result = await challengeVerify(signature, challenge.message)
-
-        const sbUser: SendbirdUser = await connect(result.profileId)
-        setCurrentUser(sbUser)
-
-        const fsUser: User | undefined = await fetchProfile(result.profileId)
-        if (!fsUser) {
-          throw new Error(`User ${result.profileId} does not exist`)
-        }
-        setUser({ ...fsUser, auth: result, sbUser })
-
-        return { success: true, value: result.nonce }
-      } else {
-        return { success: false, errMsg: 'Invalid password' }
-      }
+      return { success: true, value: result }
     } catch (error) {
       return { success: false, errMsg: _.toString(error) }
     }
@@ -148,7 +158,8 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
 
   return {
     user,
-    register,
+    registerRequest,
+    authenticateRequest,
     authenticate,
     fetchUserProfileId,
     setAuth,

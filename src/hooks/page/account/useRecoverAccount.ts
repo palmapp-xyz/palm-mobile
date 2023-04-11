@@ -5,6 +5,8 @@ import useAuth from 'hooks/independent/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
+import { AuthChallengeInfo } from 'types'
+import _ from 'lodash'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
@@ -20,11 +22,16 @@ export type UseRecoverAccountReturn = {
   setPasswordConfirm: (value: string) => void
   passwordConfirmErrMsg: string
   isValidForm: boolean
-  onClickConfirm: () => Promise<void>
+  onClickConfirm: (
+    callback: (
+      challenge: AuthChallengeInfo | undefined,
+      errMsg?: string
+    ) => void
+  ) => Promise<void>
 }
 
 const useRecoverAccount = (): UseRecoverAccountReturn => {
-  const { register } = useAuth()
+  const { registerRequest } = useAuth()
   const [usePkey, setUsePkey] = useState(false)
 
   const [privateKey, setPrivateKey] = useState('')
@@ -49,19 +56,47 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
 
   const isValidForm = !!password && !passwordConfirmErrMsg && !mnemonicErrMsg
 
-  const onClickConfirm = async (): Promise<void> => {
+  const onClickConfirm = async (
+    callback: (
+      challenge: AuthChallengeInfo | undefined,
+      errMsg?: string
+    ) => void
+  ): Promise<void> => {
     setLoading(true)
     setTimeout(async () => {
-      if (usePkey) {
-        await register({ privateKey, password })
-        setLoading(false)
-      } else {
-        await generateEvmHdAccount(mnemonic).then(
-          async (res): Promise<void> => {
-            await register({ privateKey: res.privateKey, password })
+      let challenge: AuthChallengeInfo | undefined
+
+      try {
+        if (usePkey) {
+          const res = await registerRequest({ privateKey, password })
+          if (!res.success) {
+            throw new Error(res.errMsg)
+          } else {
+            challenge = res.value
           }
-        )
+        } else {
+          await generateEvmHdAccount(mnemonic).then(
+            async (account): Promise<void> => {
+              const res = await registerRequest({
+                privateKey: account.privateKey,
+                password,
+              })
+              if (!res.success) {
+                throw new Error(res.errMsg)
+              } else {
+                challenge = res.value
+              }
+            }
+          )
+        }
+
         setLoading(false)
+        console.log('useRecoverAccount:challenge', challenge)
+        callback(challenge)
+      } catch (e) {
+        setLoading(false)
+        console.error('useRecoverAccount:authenticateRequest', e)
+        callback(undefined, _.toString(e))
       }
     }, 500)
   }

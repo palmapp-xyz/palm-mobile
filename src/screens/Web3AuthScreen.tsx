@@ -7,14 +7,14 @@ import Versions from '../components/Versions'
 
 import useWeb3Auth from '../hooks/useWeb3Auth'
 import { useAppNavigation } from '../hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
+// import { Routes } from 'libs/navigation'
 
 const Web3AuthScreen = (): ReactElement => {
-  const { navigation } = useAppNavigation()
+  // const { navigation } = useAppNavigation()
 
-  const { loading, login } = useWeb3Auth(async () =>
-    navigation.navigate(Routes.Sign4Auth)
-  )
+  const { loading, login } = useWeb3Auth(async () => {
+    // navigation.navigate(Routes.Sign4Auth)
+  })
   const { colors } = useUIKitTheme()
 
   if (loading) {
@@ -32,7 +32,7 @@ const Web3AuthScreen = (): ReactElement => {
         variant={'contained'}
         onPress={async (): Promise<void> => {
           await login(async () => {
-            navigation.navigate(Routes.Sign4Auth)
+            // navigation.navigate(Routes.Sign4Auth)
           })
         }}>
         {'Wen3Auth'}
