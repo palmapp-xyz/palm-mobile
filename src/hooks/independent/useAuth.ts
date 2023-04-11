@@ -54,12 +54,8 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     if (!userAddress) {
       return undefined
     }
-    try {
-      const result = await challengeRequest(userAddress)
-      return result.profileId
-    } catch (error) {
-      return undefined
-    }
+    const result = await challengeRequest(userAddress)
+    return result.profileId
   }
 
   const register = async ({

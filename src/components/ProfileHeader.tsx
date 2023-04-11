@@ -26,6 +26,7 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import useAuth from 'hooks/independent/useAuth'
+import _ from 'lodash'
 
 const ProfileHeader = ({
   userAddress,
@@ -58,8 +59,16 @@ const ProfileHeader = ({
     if (profileId || !userAddress) {
       return
     }
-    const fetchedProfileId = await fetchUserProfileId(userAddress)
-    setProfileId(fetchedProfileId)
+    try {
+      const fetchedProfileId = await fetchUserProfileId(userAddress)
+      setProfileId(fetchedProfileId)
+    } catch (e) {
+      console.error(e)
+      alert({ title: 'Unknown Error', message: _.toString(e) })
+      if (navigation.canGoBack()) {
+        navigation.goBack()
+      }
+    }
   }, [userAddress])
 
   return (

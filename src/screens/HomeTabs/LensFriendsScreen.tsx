@@ -107,6 +107,7 @@ const LensFriendsScreen = (): ReactElement => {
           },
         })
       } catch (e) {
+        setLoading(false)
         console.error(e)
         alert({ title: 'Unknown Error', message: _.toString(e) })
       }

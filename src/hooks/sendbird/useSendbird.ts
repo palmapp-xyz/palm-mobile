@@ -3,6 +3,7 @@ import {
   GroupChannel,
   GroupChannelCreateParams,
 } from '@sendbird/chat/groupChannel'
+import { v5 as uuidv5 } from 'uuid'
 
 export type CreateGroupChatInput = {
   channelUrl: string
@@ -66,7 +67,7 @@ const useSendbird = (): UseSendbirdReturn => {
   const generateDmChannelUrl = (
     a: string | undefined,
     b: string | undefined
-  ): string => [String(a), String(b)].sort().join('-')
+  ): string => uuidv5([String(a), String(b)].sort().join('-'), uuidv5.DNS)
 
   return { createGroupChatIfNotExist, generateDmChannelUrl }
 }
