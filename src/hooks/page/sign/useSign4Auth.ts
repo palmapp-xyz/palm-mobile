@@ -24,6 +24,7 @@ const useSign4Auth = (chain: SupportedNetworkEnum): UseSign4AuthReturn => {
       try {
         const result = await authenticate({ challenge })
         if (result.success) {
+          console.log('useSign4Auth:signChallenge result', result.value)
           setAuth(result.value)
           setLoading(false)
         } else {

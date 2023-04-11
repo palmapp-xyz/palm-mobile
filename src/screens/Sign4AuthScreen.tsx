@@ -1,5 +1,11 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, View, Text, Alert } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  useWindowDimensions,
+} from 'react-native'
 import RenderHtml from 'react-native-render-html'
 
 import { AuthBody, FormButton, Row } from 'components'
@@ -16,9 +22,12 @@ const Sign4AuthScreen = (): ReactElement => {
   const { challenge } = params
   const { signChallenge } = useSign4Auth(SupportedNetworkEnum.ETHEREUM)
   const isFetching = useRecoilValue(fetchApiStore.isFetchingPostApiStore)
+  const { width } = useWindowDimensions()
 
   const source = {
-    html: `<p>${challenge?.message}</p>`,
+    html: `<p>${JSON.stringify(challenge?.message)
+      ?.replace(/"/g, '')
+      ?.replace(/\\n/g, '<br/>')}</p>`,
   }
 
   const onPressSign = async (): Promise<void> => {
@@ -33,7 +42,7 @@ const Sign4AuthScreen = (): ReactElement => {
         <Text style={{ fontWeight: 'bold' }}>Authenticate</Text>
         <View style={styles.signMessageBox}>
           {challenge ? (
-            <RenderHtml source={source} />
+            <RenderHtml source={source} contentWidth={width} />
           ) : (
             <Text>Loading Challenge...</Text>
           )}
