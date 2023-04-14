@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react'
-import { STYLE } from 'consts'
+import { COLOR, STYLE } from 'consts'
 import { Text, TextProps } from 'react-native'
 import { FontType } from 'types'
 
@@ -12,7 +12,7 @@ type FormTextProps = {
 const FormText = ({
   fontType = 'R.16',
   children,
-  color,
+  color = COLOR.gray._900,
   style,
   ...rest
 }: FormTextProps): ReactElement => {

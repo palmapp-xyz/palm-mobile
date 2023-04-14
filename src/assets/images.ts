@@ -1,4 +1,5 @@
 export default {
+  palm_logo: require('./palm_logo.png'),
   loading: require('./loading.gif'),
   splash: require('./splash.png'),
   blank_profile: require('./blank_profile.png'),

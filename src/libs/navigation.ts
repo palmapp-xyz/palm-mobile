@@ -30,7 +30,7 @@ export enum Routes {
   Sign4Auth = 'Sign4Auth',
 
   HomeTabs = 'HomeTabs',
-  Feed = 'Feed',
+  Explore = 'Explore',
   LensFriends = 'LensFriends',
   NftList = 'NftList',
   MyPage = 'MyPage',
@@ -40,6 +40,7 @@ export enum Routes {
   UpdateLensProfile = 'UpdateLensProfile',
   NftDetail = 'NftDetail',
   ZxNftDetail = 'ZxNftDetail',
+  InitExplore = 'InitExplore',
   ListNft = 'ListNft',
   SendNft = 'SendNft',
   ChannelListings = 'ChannelListings',
@@ -105,7 +106,7 @@ type MainRouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.Feed
+      route: Routes.Explore
       params: undefined
     }
   | {
@@ -114,6 +115,10 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.NftList
+      params: undefined
+    }
+  | {
+      route: Routes.InitExplore
       params: undefined
     }
   | {

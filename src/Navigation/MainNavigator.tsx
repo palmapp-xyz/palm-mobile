@@ -27,6 +27,7 @@ import {
   FileViewerScreen,
   CreateProfileScreen,
   UpdateLensProfileScreen,
+  InitExploreScreen,
 } from '../screens'
 import useAuth from 'hooks/independent/useAuth'
 import useProfile from 'hooks/independent/useProfile'
@@ -42,6 +43,11 @@ const MainNavigator = (): ReactElement => {
       {profile?.handle ? (
         <>
           <MainStack.Screen name={Routes.HomeTabs} component={HomeTabs} />
+          <MainStack.Screen
+            name={Routes.InitExplore}
+            component={InitExploreScreen}
+            options={{ gestureEnabled: false }}
+          />
           <MainStack.Screen
             name={Routes.ZxNftDetail}
             component={ZxNftDetailScreen}

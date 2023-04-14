@@ -11,7 +11,7 @@ import { Routes } from 'libs/navigation'
 
 import GroupChannelListScreen from './GroupChannelListScreen'
 import MyPageScreen from './MyPageScreen'
-// import FeedScreen from './FeedScreen'
+import ExploreScreen from './ExploreScreen'
 // import NftListScreen from './NftListScreen'
 import LensFriendsScreen from './LensFriendsScreen'
 
@@ -41,11 +41,11 @@ const HomeTabs = (): ReactElement => {
         headerShown: false,
         tabBarShowLabel: false,
       }}>
-      {/* <Tab.Screen
-        name={Routes.Feed}
-        component={FeedScreen}
-        options={{ tabBarIcon: TabIcon({ name: 'ios-people' }) }}
-      /> */}
+      <Tab.Screen
+        name={Routes.Explore}
+        component={ExploreScreen}
+        options={{ tabBarIcon: TabIcon({ name: 'ios-search' }) }}
+      />
       <Tab.Screen
         name={Routes.LensFriends}
         component={LensFriendsScreen}
