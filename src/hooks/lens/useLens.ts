@@ -49,6 +49,9 @@ import {
   HasTxHashBeenIndexedRequest,
   TransactionReceipt,
   PublicationMetadataStatusType,
+  AuthenticationResult,
+  RefreshDocument,
+  VerifyDocument,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
 import useNetwork from 'hooks/complex/useNetwork'
@@ -67,7 +70,9 @@ import useIpfs from 'hooks/complex/useIpfs'
 export type UseLensReturn = {
   appId: string
   signer?: Account
-  sign: () => Promise<TrueOrErrReturn>
+  authenticate: () => Promise<TrueOrErrReturn<AuthenticationResult | null>>
+  refreshAuth: () => Promise<TrueOrErrReturn<AuthenticationResult>>
+  verifyAuth: () => Promise<TrueOrErrReturn<boolean>>
   getProfiles: (request: ProfileQueryRequest) => Promise<PaginatedProfileResult>
   getProfile: (profileId: string) => Promise<Profile | undefined>
   getDefaultProfile: (address: string) => Promise<Profile | undefined>
@@ -148,8 +153,8 @@ const useLens = (): UseLensReturn => {
     aQuery({
       context: {
         headers: {
-          'x-access-token': user?.lensAccessToken
-            ? `Bearer ${user.lensAccessToken}`
+          'x-access-token': user?.lensAuth?.accessToken
+            ? `Bearer ${user.lensAuth.accessToken}`
             : '',
         },
       },
@@ -165,15 +170,17 @@ const useLens = (): UseLensReturn => {
     aMutate({
       context: {
         headers: {
-          'x-access-token': user?.lensAccessToken
-            ? `Bearer ${user.lensAccessToken}`
+          'x-access-token': user?.lensAuth?.accessToken
+            ? `Bearer ${user.lensAuth.accessToken}`
             : '',
         },
       },
       ...options,
     })
 
-  const sign = async (): Promise<TrueOrErrReturn> => {
+  const authenticate = async (): Promise<
+    TrueOrErrReturn<AuthenticationResult | null>
+  > => {
     const signer = await getSigner()
     if (signer) {
       try {
@@ -202,11 +209,67 @@ const useLens = (): UseLensReturn => {
         })
 
         /* if user authentication is successful, you will receive an accessToken and refreshToken */
-        if (authData.data?.authenticate.accessToken) {
+        if (
+          authData.data?.authenticate?.accessToken &&
+          authData.data?.authenticate?.refreshToken
+        ) {
           return {
             success: true,
-            value: authData.data.authenticate.accessToken,
+            value: authData.data.authenticate,
           }
+        } else {
+          return {
+            success: true,
+            value: null,
+          }
+        }
+      } catch (error) {
+        return { success: false, errMsg: JSON.stringify(error) }
+      }
+    }
+    return { success: false, errMsg: 'No user' }
+  }
+
+  const refreshAuth = async (): Promise<
+    TrueOrErrReturn<AuthenticationResult>
+  > => {
+    const signer = await getSigner()
+    if (signer && user?.lensAuth?.refreshToken) {
+      try {
+        const authData = await mutate({
+          mutation: RefreshDocument,
+          variables: {
+            request: {
+              refreshToken: user.lensAuth.refreshToken,
+            },
+          },
+        })
+
+        return {
+          success: true,
+          value: authData.data!.refresh!,
+        }
+      } catch (error) {
+        return { success: false, errMsg: JSON.stringify(error) }
+      }
+    }
+    return { success: false, errMsg: 'No user' }
+  }
+
+  const verifyAuth = async (): Promise<TrueOrErrReturn<boolean>> => {
+    const signer = await getSigner()
+    if (signer && user?.lensAuth?.accessToken) {
+      try {
+        const authData = await query({
+          query: VerifyDocument,
+          variables: {
+            request: { accessToken: user.lensAuth.accessToken },
+          },
+        })
+
+        return {
+          success: true,
+          value: authData.data!.verify!,
         }
       } catch (error) {
         return { success: false, errMsg: JSON.stringify(error) }
@@ -682,7 +745,9 @@ const useLens = (): UseLensReturn => {
 
   return {
     appId,
-    sign,
+    authenticate,
+    refreshAuth,
+    verifyAuth,
     getProfiles,
     getProfile,
     getDefaultProfile,

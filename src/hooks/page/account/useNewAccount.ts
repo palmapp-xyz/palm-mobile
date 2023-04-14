@@ -9,6 +9,8 @@ import { generateEvmHdAccount } from 'libs/account'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import { InteractionManager } from 'react-native'
+import { AuthChallengeInfo } from 'types'
+import _ from 'lodash'
 
 export type UseNewAccountReturn = {
   mnemonic: string | undefined
@@ -19,11 +21,16 @@ export type UseNewAccountReturn = {
   setPasswordConfirm: (value: string) => void
   passwordConfirmErrMsg: string
   isValidForm: boolean
-  onClickConfirm: () => Promise<void>
+  onClickConfirm: (
+    callback: (
+      challenge: AuthChallengeInfo | undefined,
+      errMsg?: string
+    ) => void
+  ) => Promise<void>
 }
 
 const useNewAccount = (): UseNewAccountReturn => {
-  const { register } = useAuth()
+  const { registerRequest } = useAuth()
   const [mnemonic, setMnemonic] = useState<string>()
   const [wallet, setWallet] = useState<Wallet>()
   const [password, setPassword] = useState('')
@@ -39,13 +46,37 @@ const useNewAccount = (): UseNewAccountReturn => {
 
   const isValidForm = !!password && !passwordConfirmErrMsg
 
-  const onClickConfirm = async (): Promise<void> => {
+  const onClickConfirm = async (
+    callback: (
+      challenge: AuthChallengeInfo | undefined,
+      errMsg?: string
+    ) => void
+  ): Promise<void> => {
     setLoading(true)
     setTimeout(async () => {
-      if (wallet) {
-        await register({ privateKey: wallet.privateKey, password })
+      let challenge: AuthChallengeInfo | undefined
+
+      try {
+        if (wallet) {
+          const res = await registerRequest({
+            privateKey: wallet.privateKey,
+            password,
+          })
+          if (!res.success) {
+            throw new Error(res.errMsg)
+          } else {
+            challenge = res.value
+          }
+        }
+
+        setLoading(false)
+        console.log('useNewAccount:challenge', challenge)
+        callback(challenge)
+      } catch (e) {
+        setLoading(false)
+        console.error('useNewAccount:authenticateRequest', e)
+        callback(undefined, _.toString(e))
       }
-      setLoading(false)
     }, 500)
   }
 

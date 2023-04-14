@@ -70,7 +70,7 @@ const getFormData = <T extends ApiEnum>(
 const useApi = (): UseApiReturn => {
   const { apiPath } = useNetwork()
   const { user } = useAuth()
-  const accessToken = user?.lensAccessToken
+  const accessToken = user?.auth?.authToken
   const setIsFetchingPutApiStore = useSetRecoilState(
     fetchApiStore.isFetchingPutApiStore
   )

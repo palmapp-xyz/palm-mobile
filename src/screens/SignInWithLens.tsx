@@ -1,19 +1,13 @@
 import React, { ReactElement, useEffect } from 'react'
 import { Alert, StyleSheet, Text, View } from 'react-native'
-import _ from 'lodash'
 
 import { Container } from 'components'
 import LensLogo from 'assets/LensLogo'
 
 import useAuth from 'hooks/independent/useAuth'
-import useProfile from 'hooks/independent/useProfile'
 
 const SignInWithLens = (): ReactElement => {
-  const { user, logout } = useAuth()
-
-  const { lensLogin } = useProfile({
-    profileId: user?.profileId,
-  })
+  const { lensLogin, logout } = useAuth()
 
   useEffect(() => {
     lensLogin().then(res => {
@@ -21,6 +15,12 @@ const SignInWithLens = (): ReactElement => {
         console.error('SignInWithLens:lensLogin', res.errMsg)
         Alert.alert(res.errMsg)
         logout()
+      } else {
+        if (res.value) {
+          console.log('SignInWithLens:lensLogin', res.value)
+        } else {
+          console.log('SignInWithLens:lensLogin not a lens user')
+        }
       }
     })
   }, [])

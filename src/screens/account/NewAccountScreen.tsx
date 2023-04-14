@@ -12,6 +12,7 @@ import { Routes } from 'libs/navigation'
 import Loading from 'components/atoms/Loading'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
+import { AuthChallengeInfo } from 'types'
 
 const NewAccountScreen = (): ReactElement => {
   const {
@@ -27,6 +28,18 @@ const NewAccountScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
 
   const [loading] = useRecoilState(appStore.loading)
+
+  const onPressConfirm = async (): Promise<void> => {
+    await onClickConfirm(
+      (challenge: AuthChallengeInfo | undefined, errMsg?: string) => {
+        if (challenge) {
+          navigation.replace(Routes.Sign4Auth, { challenge })
+        } else {
+          Alert.alert('Unknown Error', errMsg)
+        }
+      }
+    )
+  }
 
   if (!mnemonic || loading) {
     return <Loading />
@@ -95,7 +108,7 @@ const NewAccountScreen = (): ReactElement => {
           <FormButton
             containerStyle={[styles.btn, { flex: 1 }]}
             disabled={!isValidForm || loading}
-            onPress={onClickConfirm}>
+            onPress={onPressConfirm}>
             Create
           </FormButton>
         </Row>

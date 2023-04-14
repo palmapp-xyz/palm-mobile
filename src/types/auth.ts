@@ -1,14 +1,16 @@
-import { Profile } from 'graphqls/__generated__/graphql'
+import { AuthenticationResult, Profile } from 'graphqls/__generated__/graphql'
 import { ContractAddr } from './contracts'
 import { SendbirdUser } from '@sendbird/uikit-utils'
+import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 export type User = Partial<Profile> & {
   address: ContractAddr
   profileId: string
-  lensAccessToken?: string
+  lensAuth?: AuthenticationResult | null // if null, not a lens user
   sbUser?: SendbirdUser
   lensProfile?: Profile
   auth?: AuthChallengeResult
+  userCredential?: FirebaseAuthTypes.UserCredential
   verified: boolean
 }
 
@@ -30,4 +32,5 @@ export type AuthChallengeResult = {
   version: string
   nonce: string
   profileId: string
+  authToken: string
 }

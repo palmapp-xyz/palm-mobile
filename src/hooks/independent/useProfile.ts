@@ -14,7 +14,6 @@ import { checkForProfileUpdate } from 'libs/profile'
 import useLens from 'hooks/lens/useLens'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
-import useAuth from './useAuth'
 import { NftImage } from 'graphqls/__generated__/graphql'
 import useNetwork from 'hooks/complex/useNetwork'
 import { formatValues } from 'libs/firebase'
@@ -23,7 +22,6 @@ import { Maybe } from '@toruslabs/openlogin'
 export type UseProfileReturn = {
   profile: User | undefined
   isLoadingLensProfile: boolean
-  lensLogin: () => Promise<TrueOrErrReturn<string>>
   createProfile: (
     handle: string,
     createOnLens?: boolean
@@ -50,7 +48,6 @@ const useProfile = ({
   profileId?: string
 }): UseProfileReturn => {
   const { fsProfile, fsProfileField } = useFsProfile({ profileId })
-  const { setLensAccToken } = useAuth()
   const { connectedNetworkIds } = useNetwork()
 
   const {
@@ -62,7 +59,6 @@ const useProfile = ({
   })
 
   const {
-    sign: signInWithLens,
     createProfile: createLensProfile,
     updateProfileImage: updateLensProfileImage,
     setMetadata: setLensMetadata,
@@ -87,21 +83,6 @@ const useProfile = ({
     },
     { enabled: !!profileId, refetchInterval: 5000 }
   )
-
-  const lensLogin = async (): Promise<TrueOrErrReturn<string>> => {
-    try {
-      const res = await signInWithLens()
-      if (res.success) {
-        setLensAccToken(res.value)
-      } else {
-        console.error('useProfile:signInWithLens', res.errMsg)
-      }
-      return res
-    } catch (error) {
-      console.error('useProfile:signInWithLens', error)
-      return { success: false, errMsg: JSON.stringify(error) }
-    }
-  }
 
   const createProfile = async (
     handle: string,
@@ -258,7 +239,6 @@ const useProfile = ({
   return {
     profile: fsProfileField,
     isLoadingLensProfile,
-    lensLogin,
     createProfile,
     updateProfileImage,
     setMetadata,
