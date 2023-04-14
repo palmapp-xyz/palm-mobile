@@ -173,9 +173,11 @@ const InitExploreScreen = (): ReactElement => {
             case 0:
               showText1()
               break
-
             case 1:
               showText2()
+              break
+            case 2:
+              showText3()
               break
           }
         }}>
@@ -318,7 +320,6 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: 1,
     borderColor: COLOR.gray._50,
-    alignSelf: 'flex-start',
   },
   footer: {
     borderTopWidth: 1,

@@ -14,7 +14,12 @@ const Card = (props: ViewProps & { center?: boolean }): ReactElement => {
 export default Card
 
 const styles = StyleSheet.create({
-  container: { padding: 30, borderRadius: 30, backgroundColor: 'white' },
+  container: {
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
   center: {
     width: '100%',
     height: '100%',

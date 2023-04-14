@@ -19,6 +19,7 @@ const gray = {
 }
 
 const opacity = {
+  _05: '0d',
   _10: '1a',
   _30: '4d',
   _50: '80',

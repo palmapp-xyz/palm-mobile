@@ -112,6 +112,11 @@ const abbreviateNumber = (
       value: eraseDecimal(bn.div(1e6).toFixed(toFix, BigNumber.ROUND_DOWN)),
       unit: 'M',
     }
+  } else if (bn.gte(1e3)) {
+    return {
+      value: eraseDecimal(bn.div(1e3).toFixed(toFix, BigNumber.ROUND_DOWN)),
+      unit: 'K',
+    }
   }
   return {
     value: eraseDecimal(bn.toFixed(toFix, BigNumber.ROUND_DOWN)),
