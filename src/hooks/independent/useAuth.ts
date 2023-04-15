@@ -23,7 +23,7 @@ import useFsProfile from 'hooks/firestore/useFsProfile'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import useLens from 'hooks/lens/useLens'
+import useLensAuth from 'hooks/lens/useLensAuth'
 import { UTIL } from 'consts'
 
 export type UseAuthReturn = {
@@ -63,7 +63,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const {
     authenticate: lensAuthenticate,
     refreshAuthIfExpired: lensRefreshAuthIfExpired,
-  } = useLens()
+  } = useLensAuth()
 
   const onAuthStateChanged = async (
     firebaseUser: FirebaseAuthTypes.User | null
