@@ -137,7 +137,7 @@ export type UseLensReturn = {
 const useLens = (): UseLensReturn => {
   const { getSigner } = useWeb3(SupportedNetworkEnum.ETHEREUM)
   const { signedTypeData, getSigner: getEthersSigner } = useEthers()
-  const { user } = useAuth()
+  const { user, setLensAuth } = useAuth()
   const { query: aQuery, mutate: aMutate } = useApolloClient()
   const { uploadFolder } = useIpfs()
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
@@ -152,13 +152,22 @@ const useLens = (): UseLensReturn => {
 
   const appId = `palm-${lensEnv}`
 
-  const query = <
+  const query = async <
     T = any,
     TVariables extends OperationVariables = OperationVariables
   >(
     options: QueryOptions<TVariables, T>
-  ): Promise<ApolloQueryResult<T>> =>
-    aQuery({
+  ): Promise<ApolloQueryResult<T>> => {
+    if (user?.lensAuth) {
+      await refreshAuthIfExpired(user.lensAuth).then(res => {
+        if (res.success && res.value !== undefined) {
+          // token refreshed
+          setLensAuth(res.value)
+        }
+      })
+    }
+
+    return await aQuery({
       context: {
         headers: {
           'x-access-token': user?.lensAuth?.accessToken
@@ -168,14 +177,24 @@ const useLens = (): UseLensReturn => {
       },
       ...options,
     })
+  }
 
-  const mutate = <
+  const mutate = async <
     TData = any,
     TVariables extends OperationVariables = OperationVariables
   >(
     options: MutationOptions<TData, TVariables>
-  ): Promise<FetchResult<TData>> =>
-    aMutate({
+  ): Promise<FetchResult<TData>> => {
+    if (user?.lensAuth) {
+      await refreshAuthIfExpired(user.lensAuth).then(res => {
+        if (res.success && res.value !== undefined) {
+          // token refreshed
+          setLensAuth(res.value)
+        }
+      })
+    }
+
+    return await aMutate({
       context: {
         headers: {
           'x-access-token': user?.lensAuth?.accessToken
@@ -185,6 +204,7 @@ const useLens = (): UseLensReturn => {
       },
       ...options,
     })
+  }
 
   const authenticate = async (): Promise<
     TrueOrErrReturn<AuthenticationResult | null>

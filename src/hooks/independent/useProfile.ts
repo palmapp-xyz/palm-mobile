@@ -81,7 +81,7 @@ const useProfile = ({
     () => {
       refetchLensProfile()
     },
-    { enabled: !!profileId, refetchInterval: 5000 }
+    { enabled: !!profileId, refetchInterval: 10000 }
   )
 
   const createProfile = async (

@@ -1,5 +1,7 @@
 import _ from 'lodash'
-import axios, { AxiosResponse } from 'axios'
+import * as axiosjs from 'axios'
+import { AxiosResponse } from 'axios'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 import useAuth from 'hooks/independent/useAuth'
 import {
@@ -80,6 +82,25 @@ const useApi = (): UseApiReturn => {
   const setIsFetchingDelApiStore = useSetRecoilState(
     fetchApiStore.isFetchingDelApiStore
   )
+
+  const axios = axiosjs.default.create({
+    baseURL: apiPath,
+    headers: {
+      Authorization: accessToken ? `Bearer ${accessToken}` : '',
+    },
+  })
+  axios.interceptors.request.use(async req => {
+    try {
+      const currentUser: FirebaseAuthTypes.User | null =
+        user?.userCredential?.user ?? auth().currentUser
+      if (currentUser) {
+        await currentUser.getIdTokenResult(true)
+      }
+    } catch (e) {
+      console.error('useApi request interceptor', e)
+    }
+    return req
+  })
 
   const getApi = async <T extends ApiEnum>({
     path,
