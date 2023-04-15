@@ -64,15 +64,23 @@ import {
   ProfileMetadata,
 } from '@lens-protocol/react-native-lens-ui-kit'
 import useSetting from 'hooks/independent/useSetting'
-import { isMainnet } from 'libs/utils'
+import { isMainnet, parseJwt } from 'libs/utils'
 import useIpfs from 'hooks/complex/useIpfs'
 
 export type UseLensReturn = {
   appId: string
   signer?: Account
   authenticate: () => Promise<TrueOrErrReturn<AuthenticationResult | null>>
-  refreshAuth: () => Promise<TrueOrErrReturn<AuthenticationResult>>
-  verifyAuth: () => Promise<TrueOrErrReturn<boolean>>
+  refreshAuthIfExpired: (
+    authResult: AuthenticationResult,
+    serverVerify?: boolean
+  ) => Promise<TrueOrErrReturn<AuthenticationResult | undefined>>
+  refreshAuth: (
+    authResult: AuthenticationResult
+  ) => Promise<TrueOrErrReturn<AuthenticationResult>>
+  verifyAuth: (
+    authResult: AuthenticationResult
+  ) => Promise<TrueOrErrReturn<boolean>>
   getProfiles: (request: ProfileQueryRequest) => Promise<PaginatedProfileResult>
   getProfile: (profileId: string) => Promise<Profile | undefined>
   getDefaultProfile: (address: string) => Promise<Profile | undefined>
@@ -230,17 +238,64 @@ const useLens = (): UseLensReturn => {
     return { success: false, errMsg: 'No user' }
   }
 
-  const refreshAuth = async (): Promise<
-    TrueOrErrReturn<AuthenticationResult>
-  > => {
+  // returns new auth token if expired, undefined if not expired
+  const refreshAuthIfExpired = async (
+    authResult: AuthenticationResult,
+    serverVerify?: boolean
+  ): Promise<TrueOrErrReturn<AuthenticationResult | undefined>> => {
+    try {
+      if (serverVerify) {
+        await verifyAuth(authResult).then(res => {
+          if (!res.success) {
+            throw new Error(res.errMsg)
+          }
+        })
+      }
+
+      if (!authResult.accessToken || !authResult.refreshToken) {
+        throw new Error(
+          `useLens:refreshIfExpired invalid Lens auth token ${JSON.stringify(
+            authResult
+          )}`
+        )
+      }
+
+      const currTimeInMillisecs = new Date().getTime() / 1000
+      const parsed = parseJwt(authResult.accessToken)
+      if (!parsed || parsed.iat > currTimeInMillisecs) {
+        throw new Error(
+          `useLens:refreshIfExpired invalid jwt parsed ${JSON.stringify(
+            parsed
+          )}`
+        )
+      }
+
+      if (parsed.exp > currTimeInMillisecs + 60 * 1000) {
+        /* 60 seconds buffer */
+        return { success: true, value: undefined }
+      }
+      const res = await refreshAuth(authResult)
+      if (!res.success) {
+        throw new Error(`useLens:refreshIfExpired failed ${res.errMsg}`)
+      }
+      return { success: true, value: res.value }
+    } catch (e) {
+      console.error('useLens:refreshIfExpired error', e)
+      return { success: false, errMsg: _.toString(e) }
+    }
+  }
+
+  const refreshAuth = async (
+    authResult: AuthenticationResult
+  ): Promise<TrueOrErrReturn<AuthenticationResult>> => {
     const signer = await getSigner()
-    if (signer && user?.lensAuth?.refreshToken) {
+    if (signer) {
       try {
         const authData = await mutate({
           mutation: RefreshDocument,
           variables: {
             request: {
-              refreshToken: user.lensAuth.refreshToken,
+              refreshToken: authResult.refreshToken,
             },
           },
         })
@@ -256,14 +311,16 @@ const useLens = (): UseLensReturn => {
     return { success: false, errMsg: 'No user' }
   }
 
-  const verifyAuth = async (): Promise<TrueOrErrReturn<boolean>> => {
+  const verifyAuth = async (
+    authResult: AuthenticationResult
+  ): Promise<TrueOrErrReturn<boolean>> => {
     const signer = await getSigner()
-    if (signer && user?.lensAuth?.accessToken) {
+    if (signer) {
       try {
         const authData = await query({
           query: VerifyDocument,
           variables: {
-            request: { accessToken: user.lensAuth.accessToken },
+            request: { accessToken: authResult.accessToken },
           },
         })
 
@@ -746,6 +803,7 @@ const useLens = (): UseLensReturn => {
   return {
     appId,
     authenticate,
+    refreshAuthIfExpired,
     refreshAuth,
     verifyAuth,
     getProfiles,

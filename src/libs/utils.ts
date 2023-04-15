@@ -1,9 +1,10 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
-import { NETWORK } from 'consts'
+import { NETWORK, UTIL } from 'consts'
 import { URL } from 'react-native-url-polyfill'
 import {
   ChainNetworkEnum,
   ContractAddr,
+  JwtToken,
   NetworkSettingEnum,
   SupportedNetworkEnum,
 } from 'types'
@@ -153,4 +154,10 @@ export const compareContractAddr = (
   }
 
   return true
+}
+
+export const parseJwt = (token: string): JwtToken | undefined => {
+  return UTIL.jsonTryParse<JwtToken>(
+    Buffer.from(token.split('.')[1], 'base64').toString()
+  )
 }

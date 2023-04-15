@@ -62,8 +62,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   )
   const {
     authenticate: lensAuthenticate,
-    verifyAuth: lensVerifyAuth,
-    refreshAuth: lensRefreshAuth,
+    refreshAuthIfExpired: lensRefreshAuthIfExpired,
   } = useLens()
 
   const onAuthStateChanged = async (
@@ -85,23 +84,20 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
 
   const restoreAuth = async (restore: AuthStorageType): Promise<void> => {
     if (restore.auth) {
-      await appSignIn(restore.auth)
-        .catch(() => {})
-        .then(() => {
-          if (restore.lensAuth) {
-            lensVerifyAuth().then(res => {
-              if (!res.success) {
-                lensRefreshAuth().then(refreshed => {
-                  if (refreshed.success) {
-                    setLensAuth(refreshed.value)
-                  }
-                })
-              } else {
-                setLensAuth(restore.lensAuth!)
-              }
-            })
+      try {
+        await appSignIn(restore.auth)
+        if (restore.lensAuth) {
+          const res = await lensRefreshAuthIfExpired(restore.lensAuth, true)
+          if (!res.success) {
+            console.error(`useAuth:lensRefreshAuthIfExpired ${res.errMsg}`)
+          } else {
+            setLensAuth(res.value ?? restore.lensAuth)
           }
-        })
+        }
+      } catch (e) {
+        console.error('useAuth:restoreAuth', e)
+        await logout()
+      }
     }
   }
 

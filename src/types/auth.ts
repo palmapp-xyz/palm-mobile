@@ -34,3 +34,10 @@ export type AuthChallengeResult = {
   profileId: string
   authToken: string
 }
+
+export type JwtToken = {
+  id: string
+  role: string
+  iat: number
+  exp: number
+}
