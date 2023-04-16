@@ -25,9 +25,11 @@ import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import useLensAuth from 'hooks/lens/useLensAuth'
 import { UTIL } from 'consts'
+import { useState } from 'react'
 
 export type UseAuthReturn = {
   user?: User
+  restoreLoading: boolean
   registerRequest: (props: {
     privateKey: string
     password: string
@@ -46,8 +48,11 @@ export type UseAuthReturn = {
   fetchUserProfileId: (
     userAddress: ContractAddr | undefined
   ) => Promise<string | undefined>
-  setAuth: (result: AuthChallengeResult) => Promise<void>
-  setLensAuth: (lensAuth: AuthenticationResult) => Promise<void>
+  setAuth: (currentUser: User, result: AuthChallengeResult) => Promise<void>
+  setLensAuth: (
+    currentUser: User,
+    lensAuth: AuthenticationResult
+  ) => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -64,6 +69,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     authenticate: lensAuthenticate,
     refreshAuthIfExpired: lensRefreshAuthIfExpired,
   } = useLensAuth()
+  const [restoreLoading, setRestoreLoading] = useState<boolean>(true)
 
   const onAuthStateChanged = async (
     firebaseUser: FirebaseAuthTypes.User | null
@@ -77,23 +83,22 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         ...user,
         userCredential: { ...user.userCredential, user: firebaseUser },
       })
-    } else {
-      await logout()
     }
   }
 
   const restoreAuth = async (restore: AuthStorageType): Promise<void> => {
     if (restore.auth) {
       try {
-        await appSignIn(restore.auth)
+        const currentUser = await appSignIn(restore.auth)
         if (restore.lensAuth) {
           const res = await lensRefreshAuthIfExpired(restore.lensAuth, true)
           if (!res.success) {
             console.error(`useAuth:lensRefreshAuthIfExpired ${res.errMsg}`)
           } else {
-            setLensAuth(res.value ?? restore.lensAuth)
+            setLensAuth(currentUser, res.value ?? restore.lensAuth)
           }
         }
+        console.log('useAuth:restoreAuth', user, restore)
       } catch (e) {
         console.error('useAuth:restoreAuth', e)
         await logout()
@@ -109,6 +114,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         await restoreAuth(result)
       }
     }
+    setRestoreLoading(false)
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
     return subscriber
@@ -193,7 +199,9 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     setCurrentUser(sbUser)
 
     const r: User = { ...fsUser, userCredential, sbUser }
-    setUser(r)
+    setAuth(r, authResult)
+
+    console.log('App signed in as', r)
     return r
   }
 
@@ -225,7 +233,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         throw new Error(res.errMsg)
       }
 
-      setLensAuth(res.value)
+      setLensAuth(user!, res.value)
       return res
     } catch (error) {
       console.error('useAuth:lensLogin', error)
@@ -233,22 +241,30 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     }
   }
 
-  const setAuth = async (result: AuthChallengeResult): Promise<void> => {
-    if (user) {
-      const newUser = { ...user, auth: result }
-      setUser(newUser)
-      await storeAuth({ auth: result })
+  const setAuth = async (
+    currentUser: User,
+    result: AuthChallengeResult
+  ): Promise<void> => {
+    await storeAuth({ auth: result })
+
+    const authenticatedUser: User = {
+      ...currentUser,
+      auth: result,
     }
+    setUser(authenticatedUser)
   }
 
   const setLensAuth = async (
+    currentUser: User,
     lensAuth: AuthenticationResult | null
   ): Promise<void> => {
-    if (user) {
-      const newUser: User = { ...user, lensAuth }
-      setUser(newUser)
-      await storeAuth({ lensAuth })
+    await storeAuth({ lensAuth })
+
+    const lensUser: User = {
+      ...currentUser,
+      lensAuth,
     }
+    setUser(lensUser)
   }
 
   const logout = async (): Promise<void> => {
@@ -260,6 +276,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
 
   return {
     user,
+    restoreLoading,
     registerRequest,
     authenticateRequest,
     authenticate,

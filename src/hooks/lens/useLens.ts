@@ -45,6 +45,7 @@ import {
   HasTxHashBeenIndexedRequest,
   TransactionReceipt,
   PublicationMetadataStatusType,
+  AuthenticationResult,
 } from 'graphqls/__generated__/graphql'
 import useAuth from '../independent/useAuth'
 import useNetwork from 'hooks/complex/useNetwork'
@@ -141,20 +142,24 @@ const useLens = (): UseLensReturn => {
   >(
     options: QueryOptions<TVariables, T>
   ): Promise<ApolloQueryResult<T>> => {
+    let lensAuth: AuthenticationResult | null | undefined
     if (user?.lensAuth) {
-      await refreshAuthIfExpired(user.lensAuth).then(res => {
+      lensAuth = await refreshAuthIfExpired(user.lensAuth).then(res => {
         if (res.success && res.value !== undefined) {
           // token refreshed
-          setLensAuth(res.value)
+          setLensAuth(user, res.value)
+          return res.value
         }
       })
     }
 
+    lensAuth = lensAuth ?? user?.lensAuth
+
     return await aQuery({
       context: {
         headers: {
-          'x-access-token': user?.lensAuth?.accessToken
-            ? `Bearer ${user.lensAuth.accessToken}`
+          'x-access-token': lensAuth?.accessToken
+            ? `Bearer ${lensAuth.accessToken}`
             : '',
         },
       },
@@ -168,20 +173,24 @@ const useLens = (): UseLensReturn => {
   >(
     options: MutationOptions<TData, TVariables>
   ): Promise<FetchResult<TData>> => {
+    let lensAuth: AuthenticationResult | null | undefined
     if (user?.lensAuth) {
-      await refreshAuthIfExpired(user.lensAuth).then(res => {
+      lensAuth = await refreshAuthIfExpired(user.lensAuth).then(res => {
         if (res.success && res.value !== undefined) {
           // token refreshed
-          setLensAuth(res.value)
+          setLensAuth(user, res.value)
+          return res.value
         }
       })
     }
 
+    lensAuth = lensAuth ?? user?.lensAuth
+
     return await aMutate({
       context: {
         headers: {
-          'x-access-token': user?.lensAuth?.accessToken
-            ? `Bearer ${user.lensAuth.accessToken}`
+          'x-access-token': lensAuth?.accessToken
+            ? `Bearer ${lensAuth.accessToken}`
             : '',
         },
       },

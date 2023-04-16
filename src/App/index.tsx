@@ -23,7 +23,9 @@ const queryClient = new QueryClient({
 const App = (): ReactElement => {
   LogBox.ignoreAllLogs()
   useAsyncEffect(async () => {
-    const setting: FirebaseFirestoreTypes.Settings = { persistence: false }
+    const setting: FirebaseFirestoreTypes.Settings = {
+      persistence: process.env.NODE_ENV !== 'development',
+    }
     await firestore().settings(setting)
   }, [])
 

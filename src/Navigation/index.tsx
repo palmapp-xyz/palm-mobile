@@ -18,11 +18,12 @@ import PostTxResult from './PostTxResult'
 import MainNavigator from './MainNavigator'
 import AuthNavigator from './AuthNavigator'
 import { SupportedNetworkEnum } from 'types'
+import LoadingPage from 'components/atoms/LoadingPage'
 
 const RootStack = createNativeStackNavigator()
 
 const Navigation = (): ReactElement => {
-  const { user } = useAuth()
+  const { user, restoreLoading } = useAuth()
   const { scheme } = useAppearance()
   const isLightTheme = scheme === 'light'
 
@@ -32,6 +33,10 @@ const Navigation = (): ReactElement => {
       unsubscribes.forEach(fn => fn())
     }
   }, [])
+
+  if (restoreLoading) {
+    return <LoadingPage />
+  }
 
   return (
     <NavigationContainer

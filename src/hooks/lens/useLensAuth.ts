@@ -1,4 +1,11 @@
-import { useApolloClient } from '@apollo/client'
+import {
+  ApolloQueryResult,
+  FetchResult,
+  MutationOptions,
+  OperationVariables,
+  QueryOptions,
+  useApolloClient,
+} from '@apollo/client'
 import _ from 'lodash'
 
 import useWeb3 from 'hooks/complex/useWeb3'
@@ -29,6 +36,38 @@ export type UseLensAuthReturn = {
 const useLensAuth = (): UseLensAuthReturn => {
   const { getSigner } = useWeb3(SupportedNetworkEnum.ETHEREUM)
   const { query: aQuery, mutate: aMutate } = useApolloClient()
+
+  const query = <
+    T = any,
+    TVariables extends OperationVariables = OperationVariables
+  >(
+    authToken: string,
+    options: QueryOptions<TVariables, T>
+  ): Promise<ApolloQueryResult<T>> =>
+    aQuery({
+      context: {
+        headers: {
+          'x-access-token': authToken ? `Bearer ${authToken}` : '',
+        },
+      },
+      ...options,
+    })
+
+  const mutate = <
+    TData = any,
+    TVariables extends OperationVariables = OperationVariables
+  >(
+    authToken: string,
+    options: MutationOptions<TData, TVariables>
+  ): Promise<FetchResult<TData>> =>
+    aMutate({
+      context: {
+        headers: {
+          'x-access-token': authToken ? `Bearer ${authToken}` : '',
+        },
+      },
+      ...options,
+    })
 
   const authenticate = async (): Promise<
     TrueOrErrReturn<AuthenticationResult | null>
@@ -135,7 +174,7 @@ const useLensAuth = (): UseLensAuthReturn => {
     const signer = await getSigner()
     if (signer) {
       try {
-        const authData = await aMutate({
+        const authData = await mutate(authResult.accessToken, {
           mutation: RefreshDocument,
           variables: {
             request: {
@@ -161,7 +200,7 @@ const useLensAuth = (): UseLensAuthReturn => {
     const signer = await getSigner()
     if (signer) {
       try {
-        const authData = await aQuery({
+        const authData = await query(authResult.accessToken, {
           query: VerifyDocument,
           variables: {
             request: { accessToken: authResult.accessToken },

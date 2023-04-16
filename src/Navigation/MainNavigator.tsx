@@ -30,17 +30,15 @@ import {
   InitExploreScreen,
 } from '../screens'
 import useAuth from 'hooks/independent/useAuth'
-import useProfile from 'hooks/independent/useProfile'
 
 const MainStack = createNativeStackNavigator()
 
 const MainNavigator = (): ReactElement => {
   const { user } = useAuth()
-  const { profile } = useProfile({ profileId: user?.profileId })
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
-      {profile?.handle ? (
+      {user?.handle ? (
         <>
           <MainStack.Screen name={Routes.HomeTabs} component={HomeTabs} />
           <MainStack.Screen

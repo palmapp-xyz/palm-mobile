@@ -12,7 +12,7 @@ export type UseSign4AuthReturn = {
 }
 
 const useSign4Auth = (chain: SupportedNetworkEnum): UseSign4AuthReturn => {
-  const { authenticate, setAuth } = useAuth(chain)
+  const { user, authenticate, setAuth } = useAuth(chain)
   const setLoading = useSetRecoilState(appStore.loading)
 
   const signChallenge = async (
@@ -25,7 +25,7 @@ const useSign4Auth = (chain: SupportedNetworkEnum): UseSign4AuthReturn => {
         const result = await authenticate({ challenge })
         if (result.success) {
           console.log('useSign4Auth:signChallenge result', result.value)
-          setAuth(result.value)
+          setAuth(user!, result.value)
           setLoading(false)
         } else {
           throw new Error(result.errMsg)
