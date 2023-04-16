@@ -93,7 +93,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         if (restore.lensAuth) {
           const res = await lensRefreshAuthIfExpired(restore.lensAuth)
           if (res.success) {
-            setLensAuth(currentUser, res.value ?? restore.lensAuth)
+            await setLensAuth(currentUser, res.value ?? restore.lensAuth)
           }
         }
       } catch (e) {
@@ -196,11 +196,11 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     setCurrentUser(sbUser)
 
     const r: User = { ...fsUser, userCredential, sbUser }
-    const authenticatedUser = setAuth(r, authResult)
+    const authenticatedUser = await setAuth(r, authResult)
 
     console.log(
       'App signed in as',
-      _.pick(authenticatedUser, ['profileId', 'address', 'auth'])
+      _.pick(authenticatedUser, ['profileId', 'address'])
     )
     return authenticatedUser
   }
@@ -233,7 +233,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         throw new Error(res.errMsg)
       }
 
-      setLensAuth(user!, res.value)
+      await setLensAuth(user!, res.value)
       return res
     } catch (error) {
       console.error('useAuth:lensLogin', error)
@@ -250,6 +250,8 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     const authenticatedUser: User = {
       ...currentUser,
       auth: result,
+      address: result.address as ContractAddr,
+      profileId: result.profileId,
     }
     setUser(authenticatedUser)
     return authenticatedUser
