@@ -154,6 +154,7 @@ const useLensAuth = (): UseLensAuthReturn => {
       }
 
       if (parsed.exp > currTimeInMillisecs + 60 * 1000) {
+        console.log('++++++++++', parsed)
         /* 60 seconds buffer */
         return { success: true, value: undefined }
       }

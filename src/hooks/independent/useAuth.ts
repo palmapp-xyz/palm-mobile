@@ -48,7 +48,7 @@ export type UseAuthReturn = {
   fetchUserProfileId: (
     userAddress: ContractAddr | undefined
   ) => Promise<string | undefined>
-  setAuth: (currentUser: User, result: AuthChallengeResult) => Promise<void>
+  setAuth: (currentUser: User, result: AuthChallengeResult) => Promise<User>
   setLensAuth: (
     currentUser: User,
     lensAuth: AuthenticationResult
@@ -91,14 +91,11 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
       try {
         const currentUser = await appSignIn(restore.auth)
         if (restore.lensAuth) {
-          const res = await lensRefreshAuthIfExpired(restore.lensAuth, true)
-          if (!res.success) {
-            console.error(`useAuth:lensRefreshAuthIfExpired ${res.errMsg}`)
-          } else {
+          const res = await lensRefreshAuthIfExpired(restore.lensAuth)
+          if (res.success) {
             setLensAuth(currentUser, res.value ?? restore.lensAuth)
           }
         }
-        console.log('useAuth:restoreAuth', user, restore)
       } catch (e) {
         console.error('useAuth:restoreAuth', e)
         await logout()
@@ -199,10 +196,13 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     setCurrentUser(sbUser)
 
     const r: User = { ...fsUser, userCredential, sbUser }
-    setAuth(r, authResult)
+    const authenticatedUser = setAuth(r, authResult)
 
-    console.log('App signed in as', r)
-    return r
+    console.log(
+      'App signed in as',
+      _.pick(authenticatedUser, ['profileId', 'address', 'auth'])
+    )
+    return authenticatedUser
   }
 
   const authenticate = async ({
@@ -244,7 +244,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const setAuth = async (
     currentUser: User,
     result: AuthChallengeResult
-  ): Promise<void> => {
+  ): Promise<User> => {
     await storeAuth({ auth: result })
 
     const authenticatedUser: User = {
@@ -252,6 +252,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
       auth: result,
     }
     setUser(authenticatedUser)
+    return authenticatedUser
   }
 
   const setLensAuth = async (
