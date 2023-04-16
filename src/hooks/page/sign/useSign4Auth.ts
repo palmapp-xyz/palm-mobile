@@ -35,7 +35,7 @@ const useSign4Auth = (chain: SupportedNetworkEnum): UseSign4AuthReturn => {
         console.error(e)
         onError(_.toString(e))
       }
-    })
+    }, 500)
   }
 
   return { signChallenge }
