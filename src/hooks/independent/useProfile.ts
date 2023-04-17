@@ -18,6 +18,9 @@ import { NftImage } from 'graphqls/__generated__/graphql'
 import useNetwork from 'hooks/complex/useNetwork'
 import { formatValues } from 'libs/firebase'
 import { Maybe } from '@toruslabs/openlogin'
+import { useEffect } from 'react'
+import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
 
 export type UseProfileReturn = {
   profile: User | undefined
@@ -49,6 +52,7 @@ const useProfile = ({
 }): UseProfileReturn => {
   const { fsProfile, fsProfileField } = useFsProfile({ profileId })
   const { connectedNetworkIds } = useNetwork()
+  const [user, setUser] = useRecoilState(appStore.user)
 
   const {
     profile: lensProfile,
@@ -69,12 +73,19 @@ const useProfile = ({
       return
     }
     if (checkForProfileUpdate(fsProfileField, lensProfile)) {
-      await fsProfile.set({
+      await fsProfile.update({
         lensProfile,
         ...lensProfile,
       })
     }
   }, [fsProfile, lensProfile])
+
+  useEffect(() => {
+    if (!lensProfile || !user || isLoadingLensProfile) {
+      return
+    }
+    setUser({ ...user, ...lensProfile, lensProfile } as User)
+  }, [lensProfile])
 
   useQuery(
     ['refetchUseLensProfile'],
