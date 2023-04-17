@@ -1,21 +1,25 @@
-import { Profile } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { Maybe } from '@toruslabs/openlogin'
+import _ from 'lodash'
 import { User } from 'types'
 
-// returns boolean whether the lens profile has been changed and the firestore profile needs to be updated
-export const checkForProfileUpdate = (
-  fsProfile: Maybe<User>,
-  lensProfile: Maybe<Profile>
+// returns boolean whether `second` user fields are all equally included in `first` user fields
+// undefined if first and second inputs are not of the same address
+export const profilesDeepCompare = (
+  first: Maybe<User>,
+  second: Maybe<User>
 ): boolean | undefined => {
   if (
-    fsProfile === null ||
-    fsProfile === undefined ||
-    lensProfile === null ||
-    lensProfile === undefined ||
-    fsProfile.address !== lensProfile.ownedBy
+    first === null ||
+    first === undefined ||
+    second === null ||
+    second === undefined ||
+    first.address !== second.address
   ) {
     return undefined
   }
 
-  return JSON.stringify(fsProfile.lensProfile) !== JSON.stringify(lensProfile)
+  return (
+    JSON.stringify(_.pick(first, Object.keys(second))) ===
+    JSON.stringify(second)
+  )
 }

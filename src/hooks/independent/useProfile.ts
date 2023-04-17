@@ -10,7 +10,7 @@ import {
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import { useQuery } from 'react-query'
-import { checkForProfileUpdate } from 'libs/profile'
+import { profilesDeepCompare } from 'libs/profile'
 import useLens from 'hooks/lens/useLens'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
@@ -72,7 +72,7 @@ const useProfile = ({
     if (!fsProfile || !lensProfile) {
       return
     }
-    if (checkForProfileUpdate(fsProfileField, lensProfile)) {
+    if (profilesDeepCompare(fsProfileField, lensProfile) === false) {
       await fsProfile.update({
         lensProfile,
         ...lensProfile,
@@ -120,8 +120,9 @@ const useProfile = ({
       }
     }
 
+    console.log('#########', handle)
     await fsProfile.update({ handle })
-    return { success: true, value: { handle, ...fsProfileField } as User }
+    return { success: true, value: { ...fsProfileField, handle } as User }
   }
 
   const updateProfileImage = async (

@@ -24,9 +24,9 @@ import useEthPrice from 'hooks/independent/useEthPrice'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
-import useFsProfile from 'hooks/firestore/useFsProfile'
 import useAuth from 'hooks/independent/useAuth'
 import _ from 'lodash'
+import useProfile from 'hooks/independent/useProfile'
 
 const ProfileHeader = ({
   userAddress,
@@ -52,7 +52,7 @@ const ProfileHeader = ({
   })
 
   const [profileId, setProfileId] = useState<string | undefined>(userProfileId)
-  const { fsProfileField: profile } = useFsProfile({ profileId })
+  const { profile } = useProfile({ profileId })
   const profileImg = getProfileImgFromProfile(profile)
 
   useAsyncEffect(async () => {
