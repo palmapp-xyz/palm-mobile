@@ -47,6 +47,7 @@ const useSetting = (): UseSettingReturn => {
   const updateSetting = async (updated: SettingStorageType): Promise<void> => {
     await AsyncStorage.setItem(LocalStorageKey.SETTING, JSON.stringify(updated))
     setSetting(updated)
+
     RNRestart.restart()
   }
 

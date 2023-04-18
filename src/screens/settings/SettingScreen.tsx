@@ -34,7 +34,7 @@ const SettingScreen = (): ReactElement => {
             },
           ]}>
           <Text>Change Network</Text>
-          <NetworkOptions />
+          <NetworkOptions onNetworkChanged={logout} />
         </View>
 
         <View

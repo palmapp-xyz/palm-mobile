@@ -5,7 +5,11 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
 import { NetworkSettingEnum } from 'types'
 
-const NetworkOptions = (): ReactElement => {
+const NetworkOptions = ({
+  onNetworkChanged,
+}: {
+  onNetworkChanged?: (network: NetworkSettingEnum) => Promise<void>
+}): ReactElement => {
   const { setting, updateSetting } = useSetting()
 
   const [open, setOpen] = useState(false)
@@ -26,7 +30,9 @@ const NetworkOptions = (): ReactElement => {
       return
     }
     setting.network = selected
-    updateSetting(setting)
+    updateSetting(setting).then(() => {
+      onNetworkChanged?.(selected)
+    })
   }
 
   useEffect(() => {

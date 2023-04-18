@@ -13,13 +13,23 @@ export const profilesDeepCompare = (
     first === undefined ||
     second === null ||
     second === undefined ||
-    first.address !== second.address
+    (first.address || first.ownedBy) !== (second.address || second.ownedBy)
   ) {
     return undefined
   }
 
-  return (
-    JSON.stringify(_.pick(first, Object.keys(second))) ===
-    JSON.stringify(second)
-  )
+  const firstSerialized = JSON.stringify(_.pick(first, Object.keys(second)))
+  const secondSerialized = JSON.stringify(second)
+
+  // console.log(
+  //   '[profilesDeepCompare]\n - ',
+  //   firstSerialized,
+  //   '\n - ',
+  //   secondSerialized,
+  //   `\n : firstSerialized === secondSerialized ${
+  //     firstSerialized === secondSerialized
+  //   }`
+  // )
+
+  return firstSerialized === secondSerialized
 }
