@@ -162,6 +162,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 

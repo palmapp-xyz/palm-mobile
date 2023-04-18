@@ -12,6 +12,10 @@ export type User = Partial<Profile> & {
   auth?: AuthChallengeResult
   userCredential?: FirebaseAuthTypes.UserCredential
   verified: boolean
+  deviceTokens?: {
+    apns: string[]
+    fcm: string[]
+  }
 }
 
 export type AuthChallengeInfo = {

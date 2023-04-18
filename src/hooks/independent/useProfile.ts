@@ -120,7 +120,6 @@ const useProfile = ({
       }
     }
 
-    console.log('#########', handle)
     await fsProfile.update({ handle })
     return { success: true, value: { ...fsProfileField, handle } as User }
   }

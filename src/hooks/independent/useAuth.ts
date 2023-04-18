@@ -27,6 +27,7 @@ import useLensAuth from 'hooks/lens/useLensAuth'
 import { UTIL } from 'consts'
 import { useEffect, useState } from 'react'
 import { profilesDeepCompare } from 'libs/profile'
+import useNotification from './useNotification'
 
 export type UseAuthReturn = {
   user?: User
@@ -73,6 +74,10 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     refreshAuthIfExpired: lensRefreshAuthIfExpired,
   } = useLensAuth()
   const [restoreLoading, setRestoreLoading] = useState<boolean>(true)
+  const { unregisterDeviceToken } = useNotification({
+    profileId: user?.profileId,
+    channelId: 'default',
+  })
 
   const onAuthStateChanged = async (
     firebaseUser: FirebaseAuthTypes.User | null
@@ -288,7 +293,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
 
   const logout = async (): Promise<void> => {
     await AsyncStorage.removeItem(LocalStorageKey.AUTH)
-    await Promise.all([auth().signOut(), disconnect()])
+    await Promise.all([auth().signOut(), disconnect(), unregisterDeviceToken()])
     setCurrentUser(undefined)
     setUser(undefined)
   }

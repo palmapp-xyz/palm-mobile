@@ -5,13 +5,12 @@ import {
 } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 
 import useAppearance from 'hooks/useAppearance'
 import useAuth from 'hooks/independent/useAuth'
 
 import { Routes, navigationRef } from 'libs/navigation'
-import { onForegroundAndroid, onForegroundIOS } from 'libs/notification'
 
 import { SignInWithLens } from '../screens'
 import PostTxResult from './PostTxResult'
@@ -26,13 +25,6 @@ const Navigation = (): ReactElement => {
   const { user, restoreLoading } = useAuth()
   const { scheme } = useAppearance()
   const isLightTheme = scheme === 'light'
-
-  useEffect(() => {
-    const unsubscribes = [onForegroundAndroid(), onForegroundIOS()]
-    return () => {
-      unsubscribes.forEach(fn => fn())
-    }
-  }, [])
 
   if (restoreLoading) {
     return <LoadingPage />

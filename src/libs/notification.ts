@@ -1,12 +1,14 @@
-import Notifee, { EventType } from '@notifee/react-native'
-import type { Event } from '@notifee/react-native/dist/types/Notification'
+import { Platform } from 'react-native'
+
+import Notifee, {
+  AndroidImportance,
+  Event,
+  EventType,
+} from '@notifee/react-native'
 import PushNotificationIOS, {
   PushNotification,
 } from '@react-native-community/push-notification-ios'
-import messaging, {
-  FirebaseMessagingTypes,
-} from '@react-native-firebase/messaging'
-import { Platform } from 'react-native'
+import { FirebaseMessagingTypes } from '@react-native-firebase/messaging'
 
 import {
   NOOP,
@@ -15,13 +17,6 @@ import {
 } from '@sendbird/uikit-utils'
 
 import { Routes, navigationRef, runAfterAppReady } from './navigation'
-
-const channelId = 'default'
-Notifee.createChannel({
-  id: channelId,
-  name: 'Default Channel',
-  importance: 4,
-})
 
 export const onNotificationAndroid: (event: Event) => Promise<void> = async ({
   type,
@@ -48,26 +43,70 @@ export const onNotificationAndroid: (event: Event) => Promise<void> = async ({
   }
 }
 
+export const onNotificationIOS = (notification: PushNotification): void => {
+  const data = notification.getData()
+  const isClicked = data.userInteraction === 1
+  if (isClicked && isSendbirdNotification(data)) {
+    const sendbird = parseSendbirdNotification(data)
+    runAfterAppReady(async (_, actions) => {
+      const channelUrl = sendbird.channel.channel_url
+      if (Routes.HomeTabs === navigationRef.getCurrentRoute()?.name) {
+        actions.push(Routes.GroupChannelList, { channelUrl })
+      } else {
+        actions.navigate(Routes.GroupChannel, { channelUrl })
+      }
+    })
+  }
+  // Use the appropriate result based on what you needed to do for this notification
+  const result = PushNotificationIOS.FetchResult.NoData
+  notification.finish(result)
+}
+
+export const backgroundMessageHandler = async (
+  channelId: string,
+  message: FirebaseMessagingTypes.RemoteMessage
+): Promise<any> => {
+  if (Platform.OS !== 'android') {
+    return
+  }
+
+  if (isSendbirdNotification(message.data)) {
+    const sendbird = parseSendbirdNotification(message.data)
+    await Notifee.displayNotification({
+      id: String(sendbird.message_id),
+      title: `${
+        sendbird.channel.name || sendbird.sender?.name || 'Message received'
+      }`,
+      body: sendbird.message,
+      data: message.data,
+      android: {
+        channelId,
+        smallIcon: '',
+        importance: AndroidImportance.HIGH,
+        largeIcon: sendbird.sender?.profile_url || sendbird.channel.channel_url,
+        circularLargeIcon: true,
+        pressAction: { id: 'default' },
+        showTimestamp: true,
+        timestamp: sendbird.created_at,
+      },
+      ios: {
+        threadId: sendbird.channel.channel_url,
+        foregroundPresentationOptions: {
+          alert: true,
+          badge: true,
+          sound: true,
+        },
+      },
+    })
+  }
+}
+
 export const onForegroundAndroid = (): (() => void) =>
   Notifee.onForegroundEvent(onNotificationAndroid)
+
 export const onForegroundIOS = (): (() => void) => {
   if (Platform.OS !== 'ios') {
     return NOOP
-  }
-
-  const onNotificationIOS = (notification: PushNotification): void => {
-    const data = notification.getData()
-    if (data.userInteraction === 1 && isSendbirdNotification(data)) {
-      const sendbird = parseSendbirdNotification(data)
-      runAfterAppReady(async (_, actions) => {
-        const channelUrl = sendbird.channel.channel_url
-        if (Routes.HomeTabs === navigationRef.getCurrentRoute()?.name) {
-          actions.push(Routes.GroupChannelList, { channelUrl })
-        } else {
-          actions.navigate(Routes.GroupChannel, { channelUrl })
-        }
-      })
-    }
   }
 
   const checkAppOpenedWithNotification = async (): Promise<void> => {
@@ -79,38 +118,3 @@ export const onForegroundIOS = (): (() => void) => {
   PushNotificationIOS.addEventListener('localNotification', onNotificationIOS)
   return () => PushNotificationIOS.removeEventListener('localNotification')
 }
-
-Notifee.onBackgroundEvent(onNotificationAndroid)
-messaging().setBackgroundMessageHandler(
-  async (message: FirebaseMessagingTypes.RemoteMessage) => {
-    if (Platform.OS !== 'android') {
-      return
-    }
-
-    if (isSendbirdNotification(message.data)) {
-      const sendbird = parseSendbirdNotification(message.data)
-      await Notifee.displayNotification({
-        id: String(sendbird.message_id),
-        title: `[RN]${
-          sendbird.channel.name || sendbird.sender?.name || 'Message received'
-        }`,
-        body: sendbird.message,
-        data: message.data,
-        android: {
-          channelId,
-          importance: 4,
-          // smallIcon: 'drawable/icon_push_lollipop',
-          largeIcon:
-            sendbird.sender?.profile_url || sendbird.channel.channel_url,
-          circularLargeIcon: true,
-          pressAction: { id: 'default' },
-          showTimestamp: true,
-          timestamp: sendbird.created_at,
-        },
-        ios: {
-          threadId: sendbird.channel.channel_url,
-        },
-      })
-    }
-  }
-)

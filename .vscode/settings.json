@@ -8,5 +8,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
   },
-  "java.configuration.updateBuildConfiguration": "interactive",
+  "java.configuration.updateBuildConfiguration": "automatic",
 }
