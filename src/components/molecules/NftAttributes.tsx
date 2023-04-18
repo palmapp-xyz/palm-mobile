@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   item: {
     margin: 10,
     borderRadius: 5,
-    borderColor: COLOR.gray._400,
+    borderColor: COLOR.black._400,
     borderWidth: 1,
     padding: 10,
   },

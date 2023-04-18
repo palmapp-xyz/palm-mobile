@@ -151,7 +151,7 @@ const InitExploreScreen = (): ReactElement => {
             )}
             <FormText
               fontType="SB.14"
-              color={selected ? COLOR.primary._400 : COLOR.gray._400}>
+              color={selected ? COLOR.primary._400 : COLOR.black._400}>
               {item.title}
             </FormText>
           </Row>
@@ -211,7 +211,7 @@ const InitExploreScreen = (): ReactElement => {
             ]}>
             <FormText
               fontType="B.24"
-              color={showStep === 1 ? COLOR.gray._900 : COLOR.gray._400}>
+              color={showStep === 1 ? COLOR.black._900 : COLOR.black._400}>
               {'Hi, there!\nWelcome to Palm.'}
             </FormText>
           </Animated.View>
@@ -263,9 +263,9 @@ const InitExploreScreen = (): ReactElement => {
                   <Icon
                     name="ios-arrow-forward"
                     size={14}
-                    color={COLOR.gray._500}
+                    color={COLOR.black._500}
                   />
-                  <FormText fontType="R.12" color={COLOR.gray._500}>
+                  <FormText fontType="R.12" color={COLOR.black._500}>
                     Skip this step
                   </FormText>
                 </TouchableOpacity>
@@ -319,11 +319,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: COLOR.gray._50,
+    borderColor: COLOR.black._50,
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: `${COLOR.gray._900}${COLOR.opacity._10}`,
+    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
     paddingVertical: 12,
     paddingHorizontal: 20,
   },

@@ -58,7 +58,9 @@ const RecoverAccountScreen = (): ReactElement => {
             style={[
               styles.tabItem,
               {
-                backgroundColor: usePkey ? COLOR.gray._400 : COLOR.primary._400,
+                backgroundColor: usePkey
+                  ? COLOR.black._400
+                  : COLOR.primary._400,
               },
             ]}
             onPress={(): void => {
@@ -70,7 +72,9 @@ const RecoverAccountScreen = (): ReactElement => {
             style={[
               styles.tabItem,
               {
-                backgroundColor: usePkey ? COLOR.primary._400 : COLOR.gray._400,
+                backgroundColor: usePkey
+                  ? COLOR.primary._400
+                  : COLOR.black._400,
               },
             ]}
             onPress={(): void => {

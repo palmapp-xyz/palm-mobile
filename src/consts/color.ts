@@ -1,23 +1,5 @@
 const white = '#ffffff'
 
-const gray = {
-  _30: '#FAFAFA',
-  _50: '#EBECED',
-  _70: '#ECECEF',
-  _100: '#E3E4E8',
-  _200: '#D8DADE',
-  _300: '#C8CAD0',
-  _400: '#6E7582',
-  _500: '#5A616C',
-  _600: '#70727C',
-  _700: '#4C4E54',
-  _800: '#3F4146',
-  _830: '#323438',
-  _850: '#2B2C30',
-  _870: '#232427',
-  _900: '#0D0E10',
-}
-
 const opacity = {
   _05: '0d',
   _10: '1a',
@@ -40,19 +22,24 @@ const primary = {
 
 const main_light = '#D7E4FF'
 
-const orange = '#FFA467'
-
-const black = '#000000'
-
-const gold = '#ffd700'
-const silver = '#c0c0c0'
+const black = {
+  _50: '#EBECED',
+  _100: '#C9CBCF',
+  _200: '#A7ABB4',
+  _300: '#888E9A',
+  _400: '#6E7582',
+  _500: '#5A616C',
+  _600: '#454A54',
+  _700: '#32363E',
+  _800: '#21252B',
+  _900: '#0D0E10',
+}
 
 const text = white
 
 export default {
   white,
 
-  gray,
   black,
 
   error,
@@ -61,10 +48,7 @@ export default {
 
   main_light,
 
-  orange,
   text,
 
-  gold,
-  silver,
   opacity,
 }

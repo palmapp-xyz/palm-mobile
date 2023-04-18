@@ -22,7 +22,7 @@ const Loading = (props: SpinnerPropTypes): ReactElement => {
       {...props}
       visible={loading}
       textContent={'Loading...'}
-      textStyle={{ color: COLOR.gray._300, fontSize: 16 }}
+      textStyle={{ color: COLOR.black._300, fontSize: 16 }}
     />
   )
 }

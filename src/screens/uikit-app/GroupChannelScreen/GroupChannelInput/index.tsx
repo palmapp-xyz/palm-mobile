@@ -128,7 +128,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           position: 'absolute',
           width: '100%',
           bottom: 0,
-          borderTopColor: COLOR.gray._100,
+          borderTopColor: COLOR.black._100,
           borderTopWidth: 1,
           zIndex: 1,
         }}

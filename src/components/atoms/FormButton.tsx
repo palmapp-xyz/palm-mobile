@@ -32,7 +32,7 @@ const FormButton = ({
     figure === 'primary'
       ? COLOR.primary._400
       : figure === 'secondary'
-      ? COLOR.gray._200
+      ? COLOR.black._200
       : '#F84F4F'
 
   const paddingVertical = size === 'md' ? 15 : 10
@@ -43,7 +43,7 @@ const FormButton = ({
       style={[
         styles.container,
         {
-          backgroundColor: disabled ? COLOR.gray._200 : mainColor,
+          backgroundColor: disabled ? COLOR.black._200 : mainColor,
           paddingVertical,
         },
         containerStyle,

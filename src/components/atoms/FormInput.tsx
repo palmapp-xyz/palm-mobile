@@ -13,7 +13,7 @@ export default FormInput
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: `${COLOR.gray._900}${COLOR.opacity._10}`,
+    borderColor: `${COLOR.black._900}${COLOR.opacity._10}`,
     borderRadius: 14,
     borderStyle: 'solid',
     borderWidth: 1.5,

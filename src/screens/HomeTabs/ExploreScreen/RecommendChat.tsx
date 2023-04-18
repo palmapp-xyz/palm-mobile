@@ -47,7 +47,7 @@ const RecommendChat = (): ReactElement => {
                 }}>
                 <FormText
                   fontType="SB.14"
-                  color={selected ? COLOR.primary._400 : COLOR.gray._400}>
+                  color={selected ? COLOR.primary._400 : COLOR.black._400}>
                   #{item.title}
                 </FormText>
               </TouchableOpacity>
@@ -65,7 +65,7 @@ const RecommendChat = (): ReactElement => {
               columnGap: 4,
             }}>
             <Icon name="refresh" />
-            <FormText fontType="R.12" color={COLOR.gray._500}>
+            <FormText fontType="R.12" color={COLOR.black._500}>
               Refresh List
             </FormText>
           </Row>
@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: COLOR.gray._50,
+    borderColor: COLOR.black._50,
   },
   body: {
-    backgroundColor: `${COLOR.gray._900}${COLOR.opacity._05}`,
+    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
     paddingHorizontal: 20,
     paddingTop: 16,
     paddingBottom: 24,

@@ -18,7 +18,7 @@ const SettingScreen = (): ReactElement => {
       <Header
         title="Setting"
         left={
-          <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
+          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
         }
         onPressLeft={navigation.goBack}
       />
@@ -82,7 +82,7 @@ const SettingScreen = (): ReactElement => {
             <Text>Service Agreement</Text>
             <Icon
               name="ios-chevron-forward"
-              color={COLOR.gray._800}
+              color={COLOR.black._800}
               size={20}
             />
           </TouchableOpacity>
@@ -94,7 +94,7 @@ const SettingScreen = (): ReactElement => {
             <Text>Privacy</Text>
             <Icon
               name="ios-chevron-forward"
-              color={COLOR.gray._800}
+              color={COLOR.black._800}
               size={20}
             />
           </TouchableOpacity>
@@ -114,7 +114,7 @@ const SettingScreen = (): ReactElement => {
             <Text>Contact</Text>
             <Icon
               name="ios-chevron-forward"
-              color={COLOR.gray._800}
+              color={COLOR.black._800}
               size={20}
             />
           </TouchableOpacity>

@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 
 import { Routes } from 'libs/navigation'
-import { MoralisNftRenderer } from 'components'
+import { Container, MoralisNftRenderer } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useUserBalance from 'hooks/independent/useUserBalance'
@@ -51,41 +51,43 @@ const UserProfileScreen = (): ReactElement => {
   )
 
   return (
-    <FlatList
-      refreshControl={
-        <RefreshControl
-          refreshing={useUserNftListReturn.isRefetching}
-          onRefresh={(): void => {
-            useUserNftListReturn.remove()
-            Promise.all([useUserNftListReturn.refetch(), balanceRefetch()])
-          }}
-        />
-      }
-      ListHeaderComponent={profileHeader}
-      ListFooterComponent={profileFooter}
-      data={useUserNftListReturn.nftList}
-      keyExtractor={(_, index): string => `nftList-${index}`}
-      numColumns={2}
-      contentContainerStyle={{ gap: 10 }}
-      columnWrapperStyle={{ gap: 10 }}
-      renderItem={({ item }): ReactElement => (
-        <TouchableWithoutFeedback
-          onPress={(): void => {
-            navigation.navigate(Routes.NftDetail, {
-              nftContract: item.token_address,
-              tokenId: item.token_id,
-              nftContractType: item.contract_type,
-              chain:
-                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-                SupportedNetworkEnum.ETHEREUM,
-            })
-          }}>
-          <View style={{ borderRadius: 10, flex: 1 }}>
-            <MoralisNftRenderer item={item} width={'100%'} height={180} />
-          </View>
-        </TouchableWithoutFeedback>
-      )}
-    />
+    <Container>
+      <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={useUserNftListReturn.isRefetching}
+            onRefresh={(): void => {
+              useUserNftListReturn.remove()
+              Promise.all([useUserNftListReturn.refetch(), balanceRefetch()])
+            }}
+          />
+        }
+        ListHeaderComponent={profileHeader}
+        ListFooterComponent={profileFooter}
+        data={useUserNftListReturn.nftList}
+        keyExtractor={(_, index): string => `nftList-${index}`}
+        numColumns={2}
+        contentContainerStyle={{ rowGap: 8 }}
+        columnWrapperStyle={{ columnGap: 16, paddingHorizontal: 20 }}
+        renderItem={({ item }): ReactElement => (
+          <TouchableWithoutFeedback
+            onPress={(): void => {
+              navigation.navigate(Routes.NftDetail, {
+                nftContract: item.token_address,
+                tokenId: item.token_id,
+                nftContractType: item.contract_type,
+                chain:
+                  chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                  SupportedNetworkEnum.ETHEREUM,
+              })
+            }}>
+            <View style={{ borderRadius: 10, flex: 1 }}>
+              <MoralisNftRenderer item={item} width={'100%'} height={180} />
+            </View>
+          </TouchableWithoutFeedback>
+        )}
+      />
+    </Container>
   )
 }
 

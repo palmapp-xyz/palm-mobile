@@ -42,7 +42,7 @@ const NftItemMenu = ({
         {triggerComponent || (
           <Icon
             name="reorder-three-outline"
-            color={COLOR.gray._800}
+            color={COLOR.black._800}
             size={20}
           />
         )}

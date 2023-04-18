@@ -12,7 +12,7 @@ type FormTextProps = {
 const FormText = ({
   fontType = 'R.16',
   children,
-  color = COLOR.gray._900,
+  color = COLOR.black._900,
   style,
   ...rest
 }: FormTextProps): ReactElement => {

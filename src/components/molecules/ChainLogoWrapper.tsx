@@ -16,7 +16,7 @@ const ChainLogoWrapper = ({
     <View style={styles.container}>
       {children}
       <View style={styles.imgBox}>
-        <FormImage source={NETWORK.getNetworkLogo(chain)} size={20} />
+        <FormImage source={NETWORK.getNetworkLogo(chain)} size={24} />
       </View>
     </View>
   )
@@ -28,12 +28,6 @@ const styles = StyleSheet.create({
   container: { position: 'relative' },
   imgBox: {
     position: 'absolute',
-    width: 24,
-    height: 24,
-    borderRadius: 999,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
     right: 8,
     top: 8,
   },

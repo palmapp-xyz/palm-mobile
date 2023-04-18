@@ -120,7 +120,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
       <Header
         title="Token Gating"
         left={
-          <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
+          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
         }
         onPressLeft={navigation.goBack}
       />
@@ -128,7 +128,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
         <View style={{ flex: 1 }}>
           <View
             style={{
-              borderBottomColor: COLOR.gray._400,
+              borderBottomColor: COLOR.black._400,
               borderBottomWidth: 1,
               paddingBottom: 10,
               marginBottom: 10,

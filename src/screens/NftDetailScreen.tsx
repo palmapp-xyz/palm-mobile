@@ -16,7 +16,7 @@ const NftDetailScreen = (): ReactElement => {
       <Header
         title="NFT Info"
         left={
-          <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
+          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
         }
         onPressLeft={navigation.goBack}
       />

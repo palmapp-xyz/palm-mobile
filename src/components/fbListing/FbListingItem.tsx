@@ -80,14 +80,14 @@ const FbListingItem = ({ item }: { item: FbListing }): ReactElement => {
           </FormText>
         </Row>
         <View>
-          <FormText fontType="R.10" color={COLOR.gray._400}>
+          <FormText fontType="R.10" color={COLOR.black._400}>
             {`(≈$${UTIL.formatAmountP(usdPrice, { toFix: 0 })})`}
           </FormText>
         </View>
         <View>
           <FormText
             fontType="R.10"
-            color={COLOR.gray._400}>{`Listed by ...${order.order.maker.slice(
+            color={COLOR.black._400}>{`Listed by ...${order.order.maker.slice(
             -5
           )}`}</FormText>
         </View>

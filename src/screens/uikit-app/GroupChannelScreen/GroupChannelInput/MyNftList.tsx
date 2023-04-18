@@ -57,7 +57,7 @@ const MyNftList = ({
                 styles.nextStepIcon,
                 {
                   backgroundColor: disabledNext
-                    ? COLOR.gray._50
+                    ? COLOR.black._50
                     : COLOR.primary._400,
                 },
               ]}

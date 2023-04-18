@@ -24,7 +24,7 @@ const TabIcon =
       <Icon
         name={focused ? name : `${name}-outline`}
         size={24}
-        color={focused ? COLOR.primary._400 : COLOR.gray._700}
+        color={focused ? COLOR.primary._400 : COLOR.black._700}
       />
     )
 

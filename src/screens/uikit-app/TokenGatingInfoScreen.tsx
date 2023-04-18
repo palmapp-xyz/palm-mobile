@@ -54,7 +54,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
       <Header
         title={`${tokenName} holders`}
         left={
-          <Icon name="ios-chevron-back" color={COLOR.gray._800} size={20} />
+          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
         }
         onPressLeft={navigation.goBack}
       />
@@ -87,7 +87,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
             style={{
               color: COLOR.primary._400,
               padding: 5,
-              backgroundColor: COLOR.gray._200,
+              backgroundColor: COLOR.black._200,
             }}>
             Exclusive space
           </Text>
@@ -98,7 +98,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
           <NftRenderer {...nftRendererProps} width={24} height={24} />
           <Text>{nftContract}</Text>
         </Row>
-        <View style={{ backgroundColor: COLOR.gray._300, padding: 10 }}>
+        <View style={{ backgroundColor: COLOR.black._300, padding: 10 }}>
           <Text>
             You need to meet the above requirement to have access to the space.
           </Text>

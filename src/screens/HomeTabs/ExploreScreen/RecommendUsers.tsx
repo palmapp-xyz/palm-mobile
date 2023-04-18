@@ -64,7 +64,7 @@ const RecommendUsers = (): ReactElement => {
               columnGap: 4,
             }}>
             <Icon name="refresh" />
-            <FormText fontType="R.12" color={COLOR.gray._500}>
+            <FormText fontType="R.12" color={COLOR.black._500}>
               Refresh List
             </FormText>
           </Row>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   optionItem: { borderRadius: 8, overflow: 'hidden' },
   body: {
-    backgroundColor: `${COLOR.gray._900}${COLOR.opacity._05}`,
+    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
     paddingHorizontal: 20,
     paddingTop: 16,
     paddingBottom: 24,

@@ -48,7 +48,7 @@ const RecommendChatCard = ({ chat }: { chat: ChatItem }): ReactElement => {
             renderItem={({ item: tag }): ReactElement => {
               return (
                 <View style={styles.tagItem}>
-                  <FormText fontType="SB.14" color={COLOR.gray._500}>
+                  <FormText fontType="SB.14" color={COLOR.black._500}>
                     #{tag}
                   </FormText>
                 </View>
@@ -59,14 +59,14 @@ const RecommendChatCard = ({ chat }: { chat: ChatItem }): ReactElement => {
         {!!chat.gatingToken && (
           <View style={styles.section}>
             <Row style={styles.gatingTokeBox}>
-              <Icon color={COLOR.gray._100} size={16} name="alert-circle" />
+              <Icon color={COLOR.black._100} size={16} name="alert-circle" />
               <FormImage source={chat.gatingToken.img} size={40} />
               <View>
                 <Row>
-                  <FormText color={COLOR.gray._500} fontType="B.12">
+                  <FormText color={COLOR.black._500} fontType="B.12">
                     {chat.gatingToken.amount}
                   </FormText>
-                  <FormText color={COLOR.gray._500} fontType="R.12">
+                  <FormText color={COLOR.black._500} fontType="R.12">
                     of
                   </FormText>
                 </Row>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     bottom: 0,
-    backgroundColor: COLOR.gray._50,
+    backgroundColor: COLOR.black._50,
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 999,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   tagItem: {
-    backgroundColor: COLOR.gray._50,
+    backgroundColor: COLOR.black._50,
     paddingVertical: 4,
     paddingHorizontal: 12,
     borderRadius: 8,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderWidth: 1,
     borderRadius: 12,
-    borderColor: `${COLOR.gray._900}${COLOR.opacity._10}`,
+    borderColor: `${COLOR.black._900}${COLOR.opacity._10}`,
     columnGap: 8,
     alignItems: 'center',
   },

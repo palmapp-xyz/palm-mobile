@@ -1,9 +1,16 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import {
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+} from 'react-native'
+import _ from 'lodash'
 
 import { SupportedNetworkEnum } from 'types'
 
-import { FormButton, Row } from 'components'
+import { COLOR, NETWORK } from 'consts'
+import { FormImage, FormText, Row } from 'components'
 
 const SupportedNetworkRow = ({
   selectedNetwork,
@@ -17,18 +24,25 @@ const SupportedNetworkRow = ({
   return (
     <Row style={[styles.rowButtons, style]}>
       {Object.values(SupportedNetworkEnum).map(
-        (network: SupportedNetworkEnum) => (
-          <FormButton
-            key={network}
-            containerStyle={{
-              flex: 1,
-            }}
-            figure={network === selectedNetwork ? 'primary' : 'secondary'}
-            size="sm"
-            onPress={(): void => onNetworkSelected?.(network)}>
-            {network}
-          </FormButton>
-        )
+        (network: SupportedNetworkEnum) => {
+          const selected = network === selectedNetwork
+          return (
+            <TouchableOpacity
+              key={network}
+              style={[
+                styles.optionItem,
+                { backgroundColor: selected ? COLOR.main_light : 'white' },
+              ]}
+              onPress={(): void => onNetworkSelected?.(network)}>
+              <FormImage source={NETWORK.getNetworkLogo(network)} size={16} />
+              <FormText
+                fontType="SB.12"
+                color={selected ? COLOR.primary._400 : COLOR.black._400}>
+                {_.capitalize(network)}
+              </FormText>
+            </TouchableOpacity>
+          )
+        }
       )}
     </Row>
   )
@@ -43,5 +57,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: 10,
     columnGap: 10,
+  },
+  optionItem: {
+    flexDirection: 'row',
+    columnGap: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: COLOR.black._50,
   },
 })

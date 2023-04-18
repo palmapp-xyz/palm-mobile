@@ -14,7 +14,12 @@ import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import ProfileHeader from '../../components/ProfileHeader'
-import { ChainLogoWrapper, MoralisNftRenderer, NftItemMenu } from 'components'
+import {
+  ChainLogoWrapper,
+  Container,
+  MoralisNftRenderer,
+  NftItemMenu,
+} from 'components'
 import { Moralis, SupportedNetworkEnum } from 'types'
 import ProfileFooter from 'components/ProfileFooter'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
@@ -76,78 +81,80 @@ const MyPageScreen = (): ReactElement => {
   }
 
   return (
-    <FlatList
-      refreshControl={
-        <RefreshControl
-          refreshing={useMyNftListReturn.isRefetching}
-          onRefresh={(): void => {
-            useMyNftListReturn.remove()
-            Promise.all([
-              useMyNftListReturn.refetch(),
-              useMyBalanceReturn.refetch(),
-            ])
-          }}
-        />
-      }
-      ListHeaderComponent={profileHeader}
-      ListFooterComponent={profileFooter}
-      data={useMyNftListReturn.nftList.filter(x => !!x)}
-      keyExtractor={(_, index): string => `nftList-${index}`}
-      numColumns={2}
-      contentContainerStyle={{ gap }}
-      columnWrapperStyle={{ gap }}
-      onEndReached={(): void => {
-        if (useMyNftListReturn.hasNextPage) {
-          useMyNftListReturn.fetchNextPage()
+    <Container>
+      <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={useMyNftListReturn.isRefetching}
+            onRefresh={(): void => {
+              useMyNftListReturn.remove()
+              Promise.all([
+                useMyNftListReturn.refetch(),
+                useMyBalanceReturn.refetch(),
+              ])
+            }}
+          />
         }
-      }}
-      onEndReachedThreshold={0.5}
-      initialNumToRender={10}
-      renderItem={({ item }): ReactElement => (
-        <TouchableWithoutFeedback
-          onPress={(): void => {
-            navigation.navigate(Routes.NftDetail, {
-              nftContract: item.token_address,
-              tokenId: item.token_id,
-              nftContractType: item.contract_type,
-              chain:
-                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-                SupportedNetworkEnum.ETHEREUM,
-            })
-          }}>
-          <View style={{ borderRadius: 10, flex: 1 }}>
-            <ChainLogoWrapper chain={selectedNetwork}>
-              <MoralisNftRenderer
-                item={item}
-                width={'100%'}
-                height={(size.width - gap) / 2.0}
-              />
-              <NftItemMenu
-                chainId={selectedNetwork}
-                item={item}
-                triggerComponent={
-                  <View style={styles.nftTitle}>
-                    <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
-                  </View>
-                }
-                onSelect={async (
-                  selectedItem: Moralis.NftItem,
-                  selectedOption: string
-                ): Promise<void> => {
-                  try {
-                    if (selectedOption === 'set_nft_profile') {
-                      await doUpdateProfileImage(selectedItem)
-                    }
-                  } catch (e) {
-                    console.error(e, selectedItem, selectedOption)
+        ListHeaderComponent={profileHeader}
+        ListFooterComponent={profileFooter}
+        data={useMyNftListReturn.nftList.filter(x => !!x)}
+        keyExtractor={(_, index): string => `nftList-${index}`}
+        numColumns={2}
+        contentContainerStyle={{ rowGap: 8 }}
+        columnWrapperStyle={{ columnGap: 16, paddingHorizontal: 20 }}
+        onEndReached={(): void => {
+          if (useMyNftListReturn.hasNextPage) {
+            useMyNftListReturn.fetchNextPage()
+          }
+        }}
+        onEndReachedThreshold={0.5}
+        initialNumToRender={10}
+        renderItem={({ item }): ReactElement => (
+          <TouchableWithoutFeedback
+            onPress={(): void => {
+              navigation.navigate(Routes.NftDetail, {
+                nftContract: item.token_address,
+                tokenId: item.token_id,
+                nftContractType: item.contract_type,
+                chain:
+                  chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                  SupportedNetworkEnum.ETHEREUM,
+              })
+            }}>
+            <View style={{ borderRadius: 10, flex: 1 }}>
+              <ChainLogoWrapper chain={selectedNetwork}>
+                <MoralisNftRenderer
+                  item={item}
+                  width={'100%'}
+                  height={(size.width - gap) / 2.0}
+                />
+                <NftItemMenu
+                  chainId={selectedNetwork}
+                  item={item}
+                  triggerComponent={
+                    <View style={styles.nftTitle}>
+                      <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
+                    </View>
                   }
-                }}
-              />
-            </ChainLogoWrapper>
-          </View>
-        </TouchableWithoutFeedback>
-      )}
-    />
+                  onSelect={async (
+                    selectedItem: Moralis.NftItem,
+                    selectedOption: string
+                  ): Promise<void> => {
+                    try {
+                      if (selectedOption === 'set_nft_profile') {
+                        await doUpdateProfileImage(selectedItem)
+                      }
+                    } catch (e) {
+                      console.error(e, selectedItem, selectedOption)
+                    }
+                  }}
+                />
+              </ChainLogoWrapper>
+            </View>
+          </TouchableWithoutFeedback>
+        )}
+      />
+    </Container>
   )
 }
 
