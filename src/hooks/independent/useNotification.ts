@@ -129,8 +129,10 @@ const useNotification = ({
   }
 
   useAsyncEffect(async () => {
-    await registerDeviceToken()
-  }, [fsProfileField, notificationEnabled])
+    if (fsProfileField && notificationEnabled) {
+      await registerDeviceToken()
+    }
+  }, [fsProfileField?.profileId, notificationEnabled])
 
   useEffect(() => {
     Notifee.createChannel({
