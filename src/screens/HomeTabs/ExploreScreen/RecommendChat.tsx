@@ -83,7 +83,7 @@ const RecommendChat = (): ReactElement => {
 export default RecommendChat
 
 const styles = StyleSheet.create({
-  container: { paddingTop: 32 },
+  container: { paddingTop: 20 },
   header: { paddingHorizontal: 20, paddingBottom: 20 },
   title: {
     paddingBottom: 20,
