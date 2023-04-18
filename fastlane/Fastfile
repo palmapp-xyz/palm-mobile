@@ -53,7 +53,8 @@ platform :android do
       app_name: ENV["APPCENTER_ANDROID_APP_NAME"],
       apk: ENV["APPCENTER_ANDROID_DISTRIBUTE_APK"],
       destinations: "*",
-      notify_testers: true
+      notify_testers: true,
+      mandatory_update: true
     )
   end
 
