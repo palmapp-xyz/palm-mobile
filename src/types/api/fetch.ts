@@ -1,4 +1,4 @@
-import { AuthChallengeInfo, AuthChallengeResult } from 'types'
+import { AuthChallengeInfo, AuthChallengeResult, User } from 'types'
 import { NominalType } from '../common'
 import { ContractAddr } from '../contracts'
 import { Accounts } from './accounts'
@@ -17,6 +17,8 @@ export enum ApiEnum {
   CHANNEL = 'CHANNEL',
 
   IPFS = 'IPFS',
+
+  SEARCH = 'SEARCH',
 }
 
 export type ApiParamFabricated = string & NominalType<'ApiParamFabricated'>
@@ -29,36 +31,6 @@ type DefaultMethods = {
 }
 
 type Override<T> = Omit<DefaultMethods, keyof T> & T
-
-export type ApiData = {
-  [ApiEnum.AUTH_CHALLENGE_REQUEST]: Override<{
-    POST: {
-      address: ContractAddr
-      chainId: number
-    }
-  }>
-  [ApiEnum.AUTH_CHALLENGE_VERIFY]: Override<{
-    POST: {
-      message: string
-      signature: string
-    }
-  }>
-
-  [ApiEnum.ASSETS]: DefaultMethods
-  [ApiEnum.COLLECTIONS]: DefaultMethods
-  [ApiEnum.FRIENDS]: DefaultMethods
-
-  [ApiEnum.CHANNELS]: DefaultMethods
-  [ApiEnum.CHANNEL]: DefaultMethods
-
-  [ApiEnum.ACCOUNTS]: DefaultMethods
-  [ApiEnum.IPFS]: Override<{
-    POST: {
-      path: string
-      content: string
-    }[]
-  }>
-}
 
 export type ApiParams = {
   [ApiEnum.AUTH_CHALLENGE_REQUEST]: Override<{
@@ -107,6 +79,15 @@ export type ApiParams = {
       content: string
     }[]
   }>
+
+  [ApiEnum.SEARCH]: Override<{
+    POST: {
+      query: string // query to search for - eg: 'vic'
+      searchFields: string[] // fields to search in - eg: '[handle, name]'
+      page: number // offset in terms of pages - eg: 1 (first page, which means offset = pageSize * (page - 1))
+      pageSize: number // number of matching results/profiles to return - eg: 10
+    }
+  }>
 }
 
 export type ApiFetchResult<T = ApiResponse[ApiEnum][keyof DefaultMethods]> =
@@ -152,5 +133,23 @@ export type ApiResponse = {
 
   [ApiEnum.IPFS]: Override<{
     POST: { path: string }[]
+  }>
+
+  [ApiEnum.SEARCH]: Override<{
+    POST: {
+      response: {
+        hits: {
+          total: {
+            value: number
+            relation: string
+          }
+          hits: {
+            _index: string
+            _id: string
+            _source: User
+          }[]
+        }
+      }
+    }
   }>
 }

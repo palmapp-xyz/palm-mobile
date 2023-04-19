@@ -1,5 +1,12 @@
 import React, { ReactElement, useEffect, useRef } from 'react'
-import { Animated, ScrollView, StyleSheet, View } from 'react-native'
+import {
+  Animated,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import Ionicon from 'react-native-vector-icons/Ionicons'
 
 import { Container, FormImage, FormInput, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -7,6 +14,8 @@ import { Routes } from 'libs/navigation'
 import images from 'assets/images'
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
+import useExploreSearch from 'hooks/page/explore/useExploreSearch'
+import { COLOR } from 'consts'
 
 const HEADER_HEIGHT = 72
 
@@ -14,6 +23,9 @@ const ExploreScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
 
   const scrollOffsetY = useRef(new Animated.Value(0)).current
+
+  const { inputSearch, setInputSearch, isSearching, onClickConfirm } =
+    useExploreSearch()
 
   useEffect(() => {
     navigation.navigate(Routes.InitExplore)
@@ -49,7 +61,25 @@ const ExploreScreen = (): ReactElement => {
           </Row>
         </Animated.View>
         <View style={styles.searchBox}>
-          <FormInput placeholder="Search by username, tag, chat room name..." />
+          <View style={{ position: 'relative' }}>
+            <FormInput
+              placeholder="Search by username, tag, chat room name..."
+              style={{ paddingRight: 40 }}
+              maxLength={20}
+              value={inputSearch}
+              onChangeText={setInputSearch}
+            />
+            <View
+              style={{ position: 'absolute', right: 10, top: 8, zIndex: 1 }}>
+              <TouchableOpacity disabled={isSearching} onPress={onClickConfirm}>
+                <Ionicon
+                  name="ios-search"
+                  size={20}
+                  color={isSearching ? COLOR.black._100 : COLOR.black._300}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </Animated.View>
 

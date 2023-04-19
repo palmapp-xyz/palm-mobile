@@ -29,8 +29,8 @@ const useIpfs = (): UseIpfsReturn => {
     const fetchResult = await postApi<ApiEnum.IPFS>({
       path: apiPath,
       params,
-      data: params,
     })
+
     if (fetchResult.success) {
       return { success: true, value: fetchResult.data }
     } else {

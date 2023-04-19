@@ -58,4 +58,8 @@ export default {
     post: (): ApiParamFabricated =>
       '/api/evm-api-proxy/ipfs/uploadFolder' as ApiParamFabricated,
   },
+
+  [ApiEnum.SEARCH]: {
+    post: (): ApiParamFabricated => '/search/all' as ApiParamFabricated,
+  },
 }
