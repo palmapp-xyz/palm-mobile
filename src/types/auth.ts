@@ -3,6 +3,11 @@ import { ContractAddr } from './contracts'
 import { SendbirdUser } from '@sendbird/uikit-utils'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
+export type DeviceToken = {
+  apns: string[]
+  fcm: string[]
+}
+
 export type User = Partial<Profile> & {
   address: ContractAddr
   profileId: string
@@ -12,10 +17,7 @@ export type User = Partial<Profile> & {
   auth?: AuthChallengeResult
   userCredential?: FirebaseAuthTypes.UserCredential
   verified: boolean
-  deviceTokens?: {
-    apns: string[]
-    fcm: string[]
-  }
+  deviceTokens?: DeviceToken[]
 }
 
 export type AuthChallengeInfo = {
