@@ -28,14 +28,13 @@ const useExploreSearch = (): UseExploreSearchReturn => {
           query: inputSearch,
           page: 1,
           pageSize: 10,
-          searchFields: ['name', 'handle'],
+          searchFields: ['name', 'handle', 'tags'],
         },
       })
-
       if (fetchResult.success) {
         Alert.alert(
           JSON.stringify(
-            fetchResult.data?.response?.hits?.hits?.map(x => x?._source.handle),
+            fetchResult.data?.response?.hits?.hits?.map(x => x?._source),
             null,
             2
           )

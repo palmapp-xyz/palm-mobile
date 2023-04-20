@@ -21,5 +21,7 @@ export { default as NftItemMenu } from './molecules/NftItemMenu'
 export { default as AuthBody } from './molecules/AuthBody'
 export { default as SupportedNetworkRow } from './molecules/SupportedNetworkRow'
 export { default as VerifiedWrapper } from './molecules/VerifiedWrapper'
+export { default as MenuItem } from './molecules/MenuItem'
+export { default as Tag } from './molecules/Tag'
 
 export { default as MessageRenderer } from './sendbird/MessageRenderer'

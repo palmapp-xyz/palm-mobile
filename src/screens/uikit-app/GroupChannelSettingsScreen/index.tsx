@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useAppNavigation } from '../../../hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import GroupChannelSettingsInfo from './GroupChannelSettingsInfo'
+import useFsChannel from 'hooks/firestore/useFsChannel'
 
 const GroupChannelSettingsFragment = createGroupChannelSettingsFragment({
   Info: GroupChannelSettingsInfo,
@@ -20,6 +21,9 @@ const GroupChannelSettingsScreen = (): ReactElement => {
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, params.channelUrl)
+  const { fsChannel } = useFsChannel({
+    channelUrl: params.channelUrl,
+  })
   if (!channel) {
     return <></>
   }
@@ -41,6 +45,7 @@ const GroupChannelSettingsScreen = (): ReactElement => {
       }}
       onPressMenuLeaveChannel={(): void => {
         // Navigate to group channel list
+        fsChannel?.delete()
         navigation.navigate(Routes.GroupChannelList)
       }}
       onPressMenuNotification={(): void => {

@@ -5,6 +5,7 @@ import {
   ChainNetworkEnum,
   NetworkSettingEnum,
   SupportedNetworkEnum,
+  TokenSymbolEnum,
 } from 'types'
 import Config from 'react-native-config'
 import images from 'assets/images'
@@ -123,10 +124,17 @@ const getNetworkLogo = (chain: SupportedNetworkEnum): any => {
     : images.eth_logo
 }
 
+const nativeToken = {
+  [SupportedNetworkEnum.ETHEREUM]: TokenSymbolEnum.ETH,
+  [SupportedNetworkEnum.KLAYTN]: TokenSymbolEnum.KLAY,
+  [SupportedNetworkEnum.POLYGON]: TokenSymbolEnum.MATIC,
+}
+
 export default {
   chainId,
   chainParam,
   chainIds,
   chainParams,
   getNetworkLogo,
+  nativeToken,
 }

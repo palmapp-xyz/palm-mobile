@@ -1,5 +1,5 @@
 import { ChannelType } from '@sendbird/chat'
-import { ContractAddr, NftType } from './contracts'
+import { ContractAddr } from './contracts'
 import { SupportedNetworkEnum } from './network'
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 
@@ -13,15 +13,45 @@ export type FbListing = {
   channelUrl?: string
 }
 
+export type FbChannelNativeGatingField = {
+  gatingType: 'Native'
+  amount: string
+  chain: SupportedNetworkEnum
+}
+
+export type FbChannelFTGatingField = {
+  gatingType: 'FT'
+  tokenAddress: ContractAddr
+  amount: string
+  chain: SupportedNetworkEnum
+}
+
+export type FbChannelNFTGatingField = {
+  gatingType: 'NFT'
+  tokenAddress: ContractAddr
+  amount: string
+  chain: SupportedNetworkEnum
+}
+
+export type FbChannelGatingField =
+  | FbChannelNativeGatingField
+  | FbChannelFTGatingField
+  | FbChannelNFTGatingField
+
 export type FbChannelField = {
   url: string
   channelType: ChannelType
-  gatingToken?: ContractAddr
-  gatingTokenType?: NftType
-  gatingTokenChain?: SupportedNetworkEnum
+  tags: string[]
+  desc: string
+  gating?: FbChannelGatingField
+}
+
+export type FbTags = {
+  [id: string]: string
 }
 
 export enum FirestoreKeyEnum {
+  Tag = 'Tag',
   Channel = 'Channel',
   ChannelField = 'ChannelField',
   Listing = 'Listing',

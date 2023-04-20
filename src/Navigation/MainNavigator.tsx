@@ -28,6 +28,7 @@ import {
   CreateProfileScreen,
   UpdateLensProfileScreen,
   InitExploreScreen,
+  CreateChannelScreen,
 } from '../screens'
 import useAuth from 'hooks/independent/useAuth'
 
@@ -137,6 +138,10 @@ const MainNavigator = (): ReactElement => {
               component={FileViewerScreen}
             />
           </MainStack.Group>
+          <MainStack.Screen
+            name={Routes.CreateChannel}
+            component={CreateChannelScreen}
+          />
         </>
       ) : (
         <MainStack.Screen

@@ -168,6 +168,10 @@ const isURL = (value: string): boolean => {
   }
 }
 
+const noUndefinedObj = <T extends object & { length?: never }>(obj: T): T => {
+  return JSON.parse(JSON.stringify(obj)) as T
+}
+
 export default {
   truncate,
   jsonTryParse,
@@ -191,4 +195,5 @@ export default {
   fromBase64,
   formatPercentage,
   isURL,
+  noUndefinedObj,
 }

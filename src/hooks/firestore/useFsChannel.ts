@@ -1,8 +1,6 @@
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore'
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 import useReactQuery from 'hooks/complex/useReactQuery'
 import {
@@ -12,6 +10,7 @@ import {
   SupportedNetworkEnum,
 } from 'types'
 import { useMemo, useState } from 'react'
+import { getFsChannel } from 'libs/firebase'
 
 export type UseFsChannelReturn = {
   fsChannel?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
@@ -26,7 +25,7 @@ export type UseFsChannelReturn = {
 const useFsChannel = ({
   channelUrl,
 }: {
-  channelUrl?: string
+  channelUrl: string
 }): UseFsChannelReturn => {
   const [isUpdating, setIsUpdating] = useState(false)
 
@@ -36,23 +35,12 @@ const useFsChannel = ({
   const { data: fsChannel, isFetching: isFetchingChannel } = useReactQuery(
     [FirestoreKeyEnum.Channel, channelUrl],
     async () => {
-      if (channel) {
-        const _fsChannel = firestore().collection('channels').doc(channelUrl)
-        const channelDoc = await _fsChannel.get()
-
-        if (!channelDoc.exists) {
-          const fbChannelField: FbChannelField = {
-            url: channel.url,
-            channelType: channel.channelType,
-          }
-          await _fsChannel.set(fbChannelField)
-        }
-
-        return _fsChannel
+      if (channel && channelUrl) {
+        return getFsChannel({ channel, channelUrl })
       }
     },
     {
-      enabled: !!channel,
+      enabled: !!channel && !!channelUrl,
     }
   )
 

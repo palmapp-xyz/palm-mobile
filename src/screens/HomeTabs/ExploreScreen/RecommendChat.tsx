@@ -4,7 +4,7 @@ import _ from 'lodash'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR } from 'consts'
-import { FormText, Row } from 'components'
+import { FormText, Row, MenuItem } from 'components'
 import useExploreRecommendChat from 'hooks/page/explore/useExploreRecommendChat'
 import RecommendChatCard from 'components/exploreTab/RecommendChatCard'
 
@@ -33,26 +33,14 @@ const RecommendChat = (): ReactElement => {
           keyExtractor={(_item, index): string => `optionList-${index}`}
           horizontal
           contentContainerStyle={{ gap: 8 }}
-          renderItem={({ item }): ReactElement => {
-            const selected = selectedOption === item.id
-
-            return (
-              <TouchableOpacity
-                style={[
-                  styles.optionItem,
-                  { backgroundColor: selected ? COLOR.main_light : 'white' },
-                ]}
-                onPress={(): void => {
-                  setSelectedOption(item.id)
-                }}>
-                <FormText
-                  fontType="SB.14"
-                  color={selected ? COLOR.primary._400 : COLOR.black._400}>
-                  #{item.title}
-                </FormText>
-              </TouchableOpacity>
-            )
-          }}
+          renderItem={({ item }): ReactElement => (
+            <MenuItem
+              id={item.id}
+              title={item.title}
+              selected={selectedOption === item.id}
+              setSelected={setSelectedOption}
+            />
+          )}
         />
       </View>
       <View style={styles.body}>

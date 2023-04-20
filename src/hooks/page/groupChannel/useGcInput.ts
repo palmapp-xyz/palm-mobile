@@ -5,16 +5,8 @@ import { SetterOrUpdater, useRecoilState } from 'recoil'
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
 import { GroupChannelProps } from '@sendbird/uikit-react-native'
 
-import { useToast, useAlert } from '@sendbird/uikit-react-native-foundation'
-import {
-  FileType,
-  useLocalization,
-  usePlatformService,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
-import SBUError from '@sendbird/uikit-react-native/src/libs/SBUError'
-import { isImage, shouldCompressImage } from '@sendbird/uikit-utils'
+import { useToast } from '@sendbird/uikit-react-native-foundation'
+import { useLocalization } from '@sendbird/uikit-react-native'
 
 import { Moralis } from 'types'
 import selectNftStore from 'store/selectNftStore'
@@ -23,6 +15,7 @@ import { nftUriFetcher } from 'libs/nft'
 import { Routes } from 'libs/navigation'
 import useAuth from 'hooks/independent/useAuth'
 import { stringifySendFileData } from 'libs/sendbird'
+import useDevice from 'hooks/complex/useDevice'
 
 export type UseGcInputReturn = {
   receiverList: Member[]
@@ -63,67 +56,18 @@ const useGcInput = ({
     [channel.members]
   )
 
-  const { alert } = useAlert()
-  const { features, imageCompressionConfig } = useSendbirdChat()
-  const { fileService, mediaService } = usePlatformService()
   const toast = useToast()
   const { STRINGS } = useLocalization()
-  const sendFileMessage = (file: FileType): void => {
-    onSendFileMessage(file).catch(onFailureToSend)
-  }
 
   const onFailureToSend = (): void =>
     toast.show(STRINGS.TOAST.SEND_MSG_ERROR, 'error')
 
+  const { getMediaFile } = useDevice()
+
   const onPressAttachment = async (): Promise<void> => {
-    const mediaFiles = await fileService.openMediaLibrary({
-      selectionLimit: 1,
-      mediaType: 'all',
-      onOpenFailure: error => {
-        if (error.code === SBUError.CODE.ERR_PERMISSIONS_DENIED) {
-          alert({
-            title: STRINGS.DIALOG.ALERT_PERMISSIONS_TITLE,
-            message: STRINGS.DIALOG.ALERT_PERMISSIONS_MESSAGE(
-              STRINGS.LABELS.PERMISSION_DEVICE_STORAGE,
-              STRINGS.LABELS.PERMISSION_APP_NAME
-            ),
-            buttons: [
-              {
-                text: STRINGS.DIALOG.ALERT_PERMISSIONS_OK,
-                onPress: () => SBUUtils.openSettings(),
-              },
-            ],
-          })
-        } else {
-          toast.show(STRINGS.TOAST.OPEN_PHOTO_LIBRARY_ERROR, 'error')
-        }
-      },
-    })
-
-    if (mediaFiles && mediaFiles[0]) {
-      const mediaFile = mediaFiles[0]
-
-      // Image compression
-      if (
-        isImage(mediaFile.uri, mediaFile.type) &&
-        shouldCompressImage(mediaFile.type, features.imageCompressionEnabled)
-      ) {
-        await SBUUtils.safeRun(async () => {
-          const compressed = await mediaService.compressImage({
-            uri: mediaFile.uri,
-            maxWidth: imageCompressionConfig.width,
-            maxHeight: imageCompressionConfig.height,
-            compressionRate: imageCompressionConfig.compressionRate,
-          })
-
-          if (compressed) {
-            mediaFile.uri = compressed.uri
-            mediaFile.size = compressed.size
-          }
-        })
-      }
-
-      sendFileMessage(mediaFile)
+    const mediaFile = await getMediaFile()
+    if (mediaFile) {
+      onSendFileMessage(mediaFile).catch(onFailureToSend)
     }
   }
 

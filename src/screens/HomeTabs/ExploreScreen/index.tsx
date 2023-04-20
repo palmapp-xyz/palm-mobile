@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
+import { COLOR } from 'consts'
+
 import { Container, FormImage, FormInput, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -15,7 +17,6 @@ import images from 'assets/images'
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
-import { COLOR } from 'consts'
 
 const HEADER_HEIGHT = 72
 

@@ -17,7 +17,6 @@ import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/independent/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
 import useLens from 'hooks/lens/useLens'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
@@ -86,32 +85,28 @@ const LensFriendsScreen = (): ReactElement => {
     }
 
     setLoading(true)
-    setTimeout(async () => {
-      try {
-        const userProfile = await createUserFromProfile(profile)
-        await createGroupChatIfNotExist({
-          channelUrl: generateDmChannelUrl(
-            userProfile!.profileId,
-            user.profileId
-          ),
-          isDistinct: true,
-          invitedUserIds: [userProfile!.profileId],
-          operatorUserIds: [user.profileId, userProfile!.profileId],
-          onChannelCreated: (channel: GroupChannel) => {
-            setLoading(false)
-            setTimeout(() => {
-              navigation.navigate(Routes.GroupChannel, {
-                channelUrl: channel.url,
-              })
-            }, 200)
-          },
+    try {
+      const userProfile = await createUserFromProfile(profile)
+      const channel = await createGroupChatIfNotExist({
+        channelUrl: generateDmChannelUrl(
+          userProfile!.profileId,
+          user.profileId
+        ),
+        isDistinct: true,
+        invitedUserIds: [userProfile!.profileId],
+        operatorUserIds: [user.profileId, userProfile!.profileId],
+      })
+      setLoading(false)
+      setTimeout(() => {
+        navigation.navigate(Routes.GroupChannel, {
+          channelUrl: channel.url,
         })
-      } catch (e) {
-        setLoading(false)
-        console.error(e)
-        alert({ title: 'Unknown Error', message: _.toString(e) })
-      }
-    }, 200)
+      }, 200)
+    } catch (e) {
+      setLoading(false)
+      console.error(e)
+      alert({ title: 'Unknown Error', message: _.toString(e) })
+    }
   }
 
   const onFollowPress = async (

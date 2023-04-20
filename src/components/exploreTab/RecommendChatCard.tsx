@@ -4,8 +4,8 @@ import _ from 'lodash'
 import { FlatList } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { Card, FormImage, FormText, Row } from 'components'
 import { COLOR } from 'consts'
+import { Card, FormImage, FormText, Row, Tag } from 'components'
 import { ChatItem } from 'hooks/page/explore/useExploreRecommendChat'
 
 const RecommendChatCard = ({ chat }: { chat: ChatItem }): ReactElement => {
@@ -45,15 +45,7 @@ const RecommendChatCard = ({ chat }: { chat: ChatItem }): ReactElement => {
             keyExtractor={(_item, index): string => `tagList-${index}`}
             horizontal
             contentContainerStyle={{ gap: 4 }}
-            renderItem={({ item: tag }): ReactElement => {
-              return (
-                <View style={styles.tagItem}>
-                  <FormText fontType="SB.14" color={COLOR.black._500}>
-                    #{tag}
-                  </FormText>
-                </View>
-              )
-            }}
+            renderItem={({ item }): ReactElement => <Tag title={item} />}
           />
         </View>
         {!!chat.gatingToken && (

@@ -11,7 +11,7 @@ import {
 import { conditionChaining } from '@sendbird/uikit-utils'
 
 export type HeaderProps = {
-  title: ReactNode
+  title?: ReactNode
   left?: ReactNode
   right?: ReactNode
   onPressLeft?: () => void
@@ -19,7 +19,7 @@ export type HeaderProps = {
 }
 
 const Header = ({
-  title,
+  title = '',
   left = null,
   right = null,
   onPressLeft,

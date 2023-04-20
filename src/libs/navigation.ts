@@ -62,6 +62,8 @@ export enum Routes {
   GroupChannelInvite = 'GroupChannelInvite',
   Setting = 'Setting',
   FileViewer = 'FileViewer',
+
+  CreateChannel = 'CreateChannel',
 }
 
 type AuthRouteParamsUnion =
@@ -187,9 +189,6 @@ type MainRouteParamsUnion =
       route: Routes.TokenGatingInfo
       params: {
         channelUrl: string
-        gatingToken: ContractAddr
-        gatingTokenType: NftType
-        chain: SupportedNetworkEnum
       }
     }
   | {
@@ -234,6 +233,10 @@ type MainRouteParamsUnion =
         serializedFileMessage: object
         deleteMessage: () => Promise<void>
       }
+    }
+  | {
+      route: Routes.CreateChannel
+      params: undefined
     }
 
 export type RouteParamsUnion =

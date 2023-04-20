@@ -1,67 +1,80 @@
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { v5 as uuidv5 } from 'uuid'
+
 import {
   GroupChannel,
   GroupChannelCreateParams,
 } from '@sendbird/chat/groupChannel'
-import { v5 as uuidv5 } from 'uuid'
+import { FileCompat } from '@sendbird/chat'
+import { UTIL } from 'consts'
 
-export type CreateGroupChatInput = {
+export type CreateGroupChatParam = {
+  invitedUserIds: string[]
+  coverImage?: FileCompat
+  channelName: string
+  operatorUserIds: string[]
+}
+
+export type CreateGroupChatIfNotExistParam = {
   channelUrl: string
   invitedUserIds: string[]
   isDistinct?: boolean
-  coverUrl?: string
+  coverImage?: string
   channelName?: string
-  operatorUserIds?: string[]
-  onChannelCreated?: ((channel: GroupChannel) => void) | undefined
-  onError?: ((e: unknown) => void) | undefined
+  operatorUserIds: string[]
 }
 
 export type UseSendbirdReturn = {
-  createGroupChatIfNotExist: ({
-    channelUrl,
-    invitedUserIds,
-    channelName,
-    operatorUserIds,
-    onChannelCreated,
-    onError,
-  }: CreateGroupChatInput) => Promise<void>
+  createGroupChat: (param: CreateGroupChatParam) => Promise<GroupChannel>
+  createGroupChatIfNotExist: (
+    param: CreateGroupChatIfNotExistParam
+  ) => Promise<GroupChannel>
   generateDmChannelUrl: (a: string | undefined, b: string | undefined) => string
 }
 
 const useSendbird = (): UseSendbirdReturn => {
   const { sdk } = useSendbirdChat()
 
+  const createGroupChat = async ({
+    invitedUserIds,
+    coverImage,
+    channelName,
+    operatorUserIds,
+  }: CreateGroupChatParam): Promise<GroupChannel> => {
+    const params: GroupChannelCreateParams = {
+      invitedUserIds,
+      name: channelName,
+      coverImage,
+      operatorUserIds,
+    }
+
+    return sdk.groupChannel.createChannel(UTIL.noUndefinedObj(params))
+  }
+
   const createGroupChatIfNotExist = async ({
     channelUrl,
     invitedUserIds,
-    coverUrl,
+    coverImage,
     isDistinct,
     channelName,
     operatorUserIds,
-    onChannelCreated,
-    onError,
-  }: CreateGroupChatInput): Promise<void> => {
-    let channel
+  }: CreateGroupChatIfNotExistParam): Promise<GroupChannel> => {
+    let channel: GroupChannel
     try {
       channel = await sdk.groupChannel.getChannel(channelUrl)
-    } catch (e) {
-      console.error('getChannel Error: ', e, channelUrl)
+    } catch {
       const params: GroupChannelCreateParams = {
-        channelUrl,
-        invitedUserIds: invitedUserIds,
+        invitedUserIds,
         name: channelName,
-        coverUrl,
+        coverImage,
         isDistinct,
+        operatorUserIds,
       }
-      params.operatorUserIds = operatorUserIds
-      channel = await sdk.groupChannel.createChannel(params)
+      channel = await sdk.groupChannel.createChannel(
+        UTIL.noUndefinedObj(params)
+      )
     }
-
-    if (channel) {
-      onChannelCreated?.(channel)
-    } else {
-      onError?.(`Failed to create the sendbird channel for ${channelUrl}`)
-    }
+    return channel
   }
 
   const generateDmChannelUrl = (
@@ -69,7 +82,7 @@ const useSendbird = (): UseSendbirdReturn => {
     b: string | undefined
   ): string => uuidv5([String(a), String(b)].sort().join('-'), uuidv5.DNS)
 
-  return { createGroupChatIfNotExist, generateDmChannelUrl }
+  return { createGroupChat, createGroupChatIfNotExist, generateDmChannelUrl }
 }
 
 export default useSendbird

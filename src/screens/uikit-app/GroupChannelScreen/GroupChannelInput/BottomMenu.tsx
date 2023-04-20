@@ -50,7 +50,7 @@ const BottomMenu = ({
       },
       {
         key: 'album',
-        icon: <FormImage source={images.image} />,
+        icon: <FormImage source={images.image_blue} />,
         onPress: (): void => {
           useGcInputReturn.onPressAttachment()
         },
