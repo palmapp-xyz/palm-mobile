@@ -13,19 +13,37 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1D6787CFB49B44618FF12DA0 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */; };
-		2044379988C09E1BAB174A60 /* libPods-PalmApp-PalmAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 844DE788858875DAF5570881 /* libPods-PalmApp-PalmAppTests.a */; };
 		3356C06B76EF482083562269 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */; };
+		34CBC0DBD042E8B82BD1B15F /* libPods-PalmAppCommonPods-PalmApp-Testnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 012B443BC30DBC902C57943D /* libPods-PalmAppCommonPods-PalmApp-Testnet.a */; };
 		358FF5CF220842269540FAA5 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
 		3E4EB99629DA66FA00A026BA /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E4EB99529DA66FA00A026BA /* MaterialIcons.ttf */; };
 		4022CA4929B46B9F00335C68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4022CA4829B46B9F00335C68 /* Assets.xcassets */; };
 		402FB58429AB042700FD4051 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57429AB042700FD4051 /* AntDesign.ttf */; };
 		402FB58629AB042700FD4051 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57629AB042700FD4051 /* Ionicons.ttf */; };
-		4092583429A341C70003D8B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4092583329A341C70003D8B0 /* GoogleService-Info.plist */; };
 		57D86DB640134D39A9A5FAEE /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */; };
-		5F3822904E2E005889A4CE20 /* libPods-PalmApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D232DD4CBB6695299D6E316F /* libPods-PalmApp.a */; };
 		6D22850329CA754400414E02 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6D22850229CA754400414E02 /* fonts */; };
-		6D83288C29B26CD400719DA9 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */; };
+		6DEC80E629F163D300F4B174 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
+		6DEC80E729F163D300F4B174 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		6DEC80EB29F163D300F4B174 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57629AB042700FD4051 /* Ionicons.ttf */; };
+		6DEC80EC29F163D300F4B174 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		6DEC80ED29F163D300F4B174 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57429AB042700FD4051 /* AntDesign.ttf */; };
+		6DEC80EE29F163D300F4B174 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		6DEC80EF29F163D300F4B174 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4022CA4829B46B9F00335C68 /* Assets.xcassets */; };
+		6DEC80F029F163D300F4B174 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6D22850229CA754400414E02 /* fonts */; };
+		6DEC80F129F163D300F4B174 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E4EB99529DA66FA00A026BA /* MaterialIcons.ttf */; };
+		6DEC80F429F163D300F4B174 /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */; };
+		6DEC80F529F163D300F4B174 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */; };
+		6DEC80F629F163D300F4B174 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */; };
+		6DEC80F729F163D300F4B174 /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */; };
+		6DEC80F829F163D300F4B174 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
+		6DEC810829F169E300F4B174 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810729F169E300F4B174 /* GoogleService-Info.plist */; };
+		6DEC810A29F169F000F4B174 /* GoogleService-Info-Testnet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810929F169F000F4B174 /* GoogleService-Info-Testnet.plist */; };
+		6DEC810C29F211A300F4B174 /* PalmApp-Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */; };
+		6DEC811029F2261200F4B174 /* AppCenter-Config-Testnet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810F29F2261200F4B174 /* AppCenter-Config-Testnet.plist */; };
+		6DEC811229F226BD00F4B174 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC811129F226BD00F4B174 /* AppCenter-Config.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A266178DA498A48563EAC1DF /* libPods-PalmAppCommonPods-PalmApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */; };
+		CE20653989CD1E4F5CD61198 /* libPods-PalmAppCommonPods-PalmAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99994A8B3A1B5D875744BCCF /* libPods-PalmAppCommonPods-PalmAppTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,33 +60,44 @@
 		00E356EE1AD99517003FC87E /* PalmAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalmAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* PalmAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PalmAppTests.m; sourceTree = "<group>"; };
+		012B443BC30DBC902C57943D /* libPods-PalmAppCommonPods-PalmApp-Testnet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmAppCommonPods-PalmApp-Testnet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* PalmApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PalmApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PalmApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = PalmApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PalmApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PalmApp/Info.plist; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* PalmApp-Mainnet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PalmApp-Mainnet-Info.plist"; path = "PalmApp/PalmApp-Mainnet-Info.plist"; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PalmApp/main.m; sourceTree = "<group>"; };
 		242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Medium.ttf"; path = "../assets/fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; };
 		29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-SemiBold.ttf"; path = "../assets/fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
+		29F338ECFB9CF6C68EB28F4A /* Pods-PalmAppCommonPods-PalmAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmAppTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2A8F85DBBEFC0DCBEBABD71B /* Pods-PalmAppCommonPods-PalmAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmAppTests.release.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		3E4EB99529DA66FA00A026BA /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		4022CA4829B46B9F00335C68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		402FB57429AB042700FD4051 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
 		402FB57629AB042700FD4051 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
-		4092583329A341C70003D8B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PalmApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Bold.ttf"; path = "../assets/fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; };
+		4806AC2EF583A55BC8F104F9 /* Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig"; sourceTree = "<group>"; };
 		4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Regular.ttf"; path = "../assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; };
 		6D22850229CA754400414E02 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../assets/fonts; sourceTree = "<group>"; };
-		6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PalmApp/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		6DEC80E129EE193A00F4B174 /* PalmApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PalmApp.entitlements; path = PalmApp/PalmApp.entitlements; sourceTree = "<group>"; };
+		6DEC810029F163D400F4B174 /* PalmApp-Testnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PalmApp-Testnet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DEC810729F169E300F4B174 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PalmApp/GoogleServices/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6DEC810929F169F000F4B174 /* GoogleService-Info-Testnet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info-Testnet.plist"; path = "PalmApp/GoogleServices/GoogleService-Info-Testnet.plist"; sourceTree = "<group>"; };
+		6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PalmApp-Testnet-Info.plist"; path = "PalmApp/PalmApp-Testnet-Info.plist"; sourceTree = "<group>"; };
+		6DEC810F29F2261200F4B174 /* AppCenter-Config-Testnet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config-Testnet.plist"; path = "PalmApp/AppCenter/AppCenter-Config-Testnet.plist"; sourceTree = "<group>"; };
+		6DEC811129F226BD00F4B174 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PalmApp/AppCenter/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp-PalmAppTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PalmApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		844DE788858875DAF5570881 /* libPods-PalmApp-PalmAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmApp-PalmAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmAppCommonPods-PalmApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98972C1DB7CC92B358A7E869 /* Pods-PalmApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.debug.xcconfig"; sourceTree = "<group>"; };
+		99994A8B3A1B5D875744BCCF /* libPods-PalmAppCommonPods-PalmAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmAppCommonPods-PalmAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.release.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.release.xcconfig"; sourceTree = "<group>"; };
-		D232DD4CBB6695299D6E316F /* libPods-PalmApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1D9CF663CF70F40E086E90B /* Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig"; sourceTree = "<group>"; };
+		DA2B7B0FBD548F6AFA201E90 /* Pods-PalmAppCommonPods-PalmApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmApp.debug.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp.debug.xcconfig"; sourceTree = "<group>"; };
 		DE5F761958FB0EB9C65A2DBC /* Pods-PalmApp-PalmAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp-PalmAppTests.release.xcconfig"; path = "Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F38DC60366AEB05971011972 /* Pods-PalmAppCommonPods-PalmApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmApp.release.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2044379988C09E1BAB174A60 /* libPods-PalmApp-PalmAppTests.a in Frameworks */,
+				CE20653989CD1E4F5CD61198 /* libPods-PalmAppCommonPods-PalmAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +113,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F3822904E2E005889A4CE20 /* libPods-PalmApp.a in Frameworks */,
+				A266178DA498A48563EAC1DF /* libPods-PalmAppCommonPods-PalmApp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DEC80E829F163D300F4B174 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34CBC0DBD042E8B82BD1B15F /* libPods-PalmAppCommonPods-PalmApp-Testnet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,12 +148,17 @@
 		13B07FAE1A68108700A75B9A /* PalmApp */ = {
 			isa = PBXGroup;
 			children = (
+				6DEC811129F226BD00F4B174 /* AppCenter-Config.plist */,
+				6DEC810F29F2261200F4B174 /* AppCenter-Config-Testnet.plist */,
+				6DEC810929F169F000F4B174 /* GoogleService-Info-Testnet.plist */,
+				6DEC810729F169E300F4B174 /* GoogleService-Info.plist */,
 				6DEC80E129EE193A00F4B174 /* PalmApp.entitlements */,
 				4022CA4829B46B9F00335C68 /* Assets.xcassets */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				13B07FB61A68108700A75B9A /* Info.plist */,
+				6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */,
+				13B07FB61A68108700A75B9A /* PalmApp-Mainnet-Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -127,8 +169,9 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				D232DD4CBB6695299D6E316F /* libPods-PalmApp.a */,
-				844DE788858875DAF5570881 /* libPods-PalmApp-PalmAppTests.a */,
+				84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */,
+				012B443BC30DBC902C57943D /* libPods-PalmAppCommonPods-PalmApp-Testnet.a */,
+				99994A8B3A1B5D875744BCCF /* libPods-PalmAppCommonPods-PalmAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,9 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				6D22850229CA754400414E02 /* fonts */,
-				6D83288B29B26CD400719DA9 /* AppCenter-Config.plist */,
 				402FB56D29AB042700FD4051 /* Fonts */,
-				4092583329A341C70003D8B0 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* PalmApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PalmAppTests */,
@@ -188,6 +229,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* PalmApp.app */,
 				00E356EE1AD99517003FC87E /* PalmAppTests.xctest */,
+				6DEC810029F163D400F4B174 /* PalmApp-Testnet.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -199,6 +241,12 @@
 				BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */,
 				6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */,
 				DE5F761958FB0EB9C65A2DBC /* Pods-PalmApp-PalmAppTests.release.xcconfig */,
+				DA2B7B0FBD548F6AFA201E90 /* Pods-PalmAppCommonPods-PalmApp.debug.xcconfig */,
+				F38DC60366AEB05971011972 /* Pods-PalmAppCommonPods-PalmApp.release.xcconfig */,
+				D1D9CF663CF70F40E086E90B /* Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig */,
+				4806AC2EF583A55BC8F104F9 /* Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig */,
+				29F338ECFB9CF6C68EB28F4A /* Pods-PalmAppCommonPods-PalmAppTests.debug.xcconfig */,
+				2A8F85DBBEFC0DCBEBABD71B /* Pods-PalmAppCommonPods-PalmAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -239,7 +287,6 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				616B9EF9080A7562CB48A744 /* [CP] Embed Pods Frameworks */,
 				4D68B7AB66A224D6B241CD08 /* [CP] Copy Pods Resources */,
-				4CBAEBFF353BB26BD2D1DFBA /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -248,6 +295,28 @@
 			name = PalmApp;
 			productName = PalmApp;
 			productReference = 13B07F961A680F5B00A75B9A /* PalmApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6DEC80E229F163D300F4B174 /* PalmApp-Testnet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DEC80FD29F163D300F4B174 /* Build configuration list for PBXNativeTarget "PalmApp-Testnet" */;
+			buildPhases = (
+				6DEC80E329F163D300F4B174 /* [CP] Check Pods Manifest.lock */,
+				6DEC80E429F163D300F4B174 /* Start Packager */,
+				6DEC80E529F163D300F4B174 /* Sources */,
+				6DEC80E829F163D300F4B174 /* Frameworks */,
+				6DEC80EA29F163D300F4B174 /* Resources */,
+				6DEC80F929F163D300F4B174 /* Bundle React Native code and images */,
+				6DEC80FA29F163D300F4B174 /* [CP] Embed Pods Frameworks */,
+				6DEC80FB29F163D300F4B174 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PalmApp-Testnet";
+			productName = PalmApp;
+			productReference = 6DEC810029F163D400F4B174 /* PalmApp-Testnet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -283,6 +352,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* PalmApp */,
 				00E356ED1AD99517003FC87E /* PalmAppTests */,
+				6DEC80E229F163D300F4B174 /* PalmApp-Testnet */,
 			);
 		};
 /* End PBXProject section */
@@ -306,13 +376,35 @@
 				4022CA4929B46B9F00335C68 /* Assets.xcassets in Resources */,
 				6D22850329CA754400414E02 /* fonts in Resources */,
 				3E4EB99629DA66FA00A026BA /* MaterialIcons.ttf in Resources */,
-				4092583429A341C70003D8B0 /* GoogleService-Info.plist in Resources */,
-				6D83288C29B26CD400719DA9 /* AppCenter-Config.plist in Resources */,
 				57D86DB640134D39A9A5FAEE /* SpaceGrotesk-Bold.ttf in Resources */,
 				1D6787CFB49B44618FF12DA0 /* SpaceGrotesk-Light.ttf in Resources */,
 				3356C06B76EF482083562269 /* SpaceGrotesk-Medium.ttf in Resources */,
 				03408C468B7447549D22364E /* SpaceGrotesk-Regular.ttf in Resources */,
 				358FF5CF220842269540FAA5 /* SpaceGrotesk-SemiBold.ttf in Resources */,
+				6DEC810829F169E300F4B174 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DEC80EA29F163D300F4B174 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DEC80EB29F163D300F4B174 /* Ionicons.ttf in Resources */,
+				6DEC80EC29F163D300F4B174 /* LaunchScreen.storyboard in Resources */,
+				6DEC810A29F169F000F4B174 /* GoogleService-Info-Testnet.plist in Resources */,
+				6DEC80ED29F163D300F4B174 /* AntDesign.ttf in Resources */,
+				6DEC80EE29F163D300F4B174 /* Images.xcassets in Resources */,
+				6DEC811229F226BD00F4B174 /* AppCenter-Config.plist in Resources */,
+				6DEC810C29F211A300F4B174 /* PalmApp-Testnet-Info.plist in Resources */,
+				6DEC80EF29F163D300F4B174 /* Assets.xcassets in Resources */,
+				6DEC80F029F163D300F4B174 /* fonts in Resources */,
+				6DEC811029F2261200F4B174 /* AppCenter-Config-Testnet.plist in Resources */,
+				6DEC80F129F163D300F4B174 /* MaterialIcons.ttf in Resources */,
+				6DEC80F429F163D300F4B174 /* SpaceGrotesk-Bold.ttf in Resources */,
+				6DEC80F529F163D300F4B174 /* SpaceGrotesk-Light.ttf in Resources */,
+				6DEC80F629F163D300F4B174 /* SpaceGrotesk-Medium.ttf in Resources */,
+				6DEC80F729F163D300F4B174 /* SpaceGrotesk-Regular.ttf in Resources */,
+				6DEC80F829F163D300F4B174 /* SpaceGrotesk-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +442,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PalmApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PalmAppCommonPods-PalmApp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -372,25 +464,12 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PalmApp-PalmAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PalmAppCommonPods-PalmAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		4CBAEBFF353BB26BD2D1DFBA /* [CP-User] [RNFB] Core Configuration */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "[CP-User] [RNFB] Core Configuration";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -Ku -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -Ku -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    if ! python3 --version >/dev/null 2>&1; then echo \"python3 not found, firebase.json file processing error.\" && exit 1; fi\n    _JSON_OUTPUT_BASE64=$(python3 -c 'import json,sys,base64;print(base64.b64encode(bytes(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"', '\"'rb'\"').read())['${_JSON_ROOT}']), '\"'utf-8'\"')).decode())' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.analytics_registration_with_ad_network_enabled\n  _ANALYTICS_REGISTRATION_WITH_AD_NETWORK=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_registration_with_ad_network_enabled\")\n  if [[ $_ANALYTICS_REGISTRATION_WITH_AD_NETWORK ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_REGISTRATION_WITH_AD_NETWORK_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_REGISTRATION_WITH_AD_NETWORK\")\")\n  fi\n\n  # config.google_analytics_automatic_screen_reporting_enabled\n  _ANALYTICS_AUTO_SCREEN_REPORTING=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_automatic_screen_reporting_enabled\")\n  if [[ $_ANALYTICS_AUTO_SCREEN_REPORTING ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAutomaticScreenReportingEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_SCREEN_REPORTING\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
 		};
 		4D68B7AB66A224D6B241CD08 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -398,15 +477,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		616B9EF9080A7562CB48A744 /* [CP] Embed Pods Frameworks */ = {
@@ -415,15 +494,106 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp/Pods-PalmApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DEC80E329F163D300F4B174 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PalmAppCommonPods-PalmApp-Testnet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DEC80E429F163D300F4B174 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6DEC80F929F163D300F4B174 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		6DEC80FA29F163D300F4B174 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DEC80FB29F163D300F4B174 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F822CF4518CF15B978AD5D4 /* [CP] Embed Pods Frameworks */ = {
@@ -432,15 +602,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F8E4342DB0BCE7167B808DEF /* [CP] Copy Pods Resources */ = {
@@ -449,15 +619,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmAppTests/Pods-PalmAppCommonPods-PalmAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -499,6 +669,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6DEC80E529F163D300F4B174 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DEC80E629F163D300F4B174 /* AppDelegate.mm in Sources */,
+				6DEC80E729F163D300F4B174 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -512,7 +691,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */;
+			baseConfigurationReference = 29F338ECFB9CF6C68EB28F4A /* Pods-PalmAppCommonPods-PalmAppTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -541,7 +720,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE5F761958FB0EB9C65A2DBC /* Pods-PalmApp-PalmAppTests.release.xcconfig */;
+			baseConfigurationReference = 2A8F85DBBEFC0DCBEBABD71B /* Pods-PalmAppCommonPods-PalmAppTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -567,7 +746,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98972C1DB7CC92B358A7E869 /* Pods-PalmApp.debug.xcconfig */;
+			baseConfigurationReference = DA2B7B0FBD548F6AFA201E90 /* Pods-PalmAppCommonPods-PalmApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -577,7 +756,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6ALF5777EL;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = PalmApp/Info.plist;
+				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = PalmApp;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -599,7 +779,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */;
+			baseConfigurationReference = F38DC60366AEB05971011972 /* Pods-PalmAppCommonPods-PalmApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -610,7 +790,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6ALF5777EL;
-				INFOPLIST_FILE = PalmApp/Info.plist;
+				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = PalmApp;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -625,6 +806,73 @@
 				PRODUCT_NAME = PalmApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.palmapp.xyz";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		6DEC80FE29F163D300F4B174 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1D9CF663CF70F40E086E90B /* Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6ALF5777EL;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "PalmApp (Testnet)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz.testnet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		6DEC80FF29F163D300F4B174 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4806AC2EF583A55BC8F104F9 /* Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6ALF5777EL;
+				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "PalmApp (Testnet)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz.testnet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.palmapp.xyz.testnet";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -784,6 +1032,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DEC80FD29F163D300F4B174 /* Build configuration list for PBXNativeTarget "PalmApp-Testnet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DEC80FE29F163D300F4B174 /* Debug */,
+				6DEC80FF29F163D300F4B174 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

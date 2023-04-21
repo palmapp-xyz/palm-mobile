@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1430"
-   version = "1.7">
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;echo &quot;.env.testnet&quot; &gt; /tmp/envfile&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,9 +23,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "PalmApp.app"
-               BlueprintName = "PalmApp"
+               BlueprintIdentifier = "6DEC80E229F163D300F4B174"
+               BuildableName = "PalmApp-Testnet.app"
+               BlueprintName = "PalmApp-Testnet"
                ReferencedContainer = "container:PalmApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,8 +35,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -43,9 +53,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "PalmApp.app"
-            BlueprintName = "PalmApp"
+            BlueprintIdentifier = "6DEC80E229F163D300F4B174"
+            BuildableName = "PalmApp-Testnet.app"
+            BlueprintName = "PalmApp-Testnet"
             ReferencedContainer = "container:PalmApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -56,16 +66,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "PalmApp.app"
-            BlueprintName = "PalmApp"
+            BlueprintIdentifier = "6DEC80E229F163D300F4B174"
+            BuildableName = "PalmApp-Testnet.app"
+            BlueprintName = "PalmApp-Testnet"
             ReferencedContainer = "container:PalmApp.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

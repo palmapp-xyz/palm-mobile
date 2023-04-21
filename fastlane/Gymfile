@@ -6,7 +6,7 @@
 
 # Remove the # in front of the line to enable the option
 
-scheme("PalmApp")
+scheme("#{ENV['FASTLANE_APP_NAME']}")
 
 clean(true)
 
@@ -16,7 +16,7 @@ export_method("ad-hoc")
 
 output_directory("./ios/build")
 
-output_name("PalmApp.ipa")
+output_name("#{ENV['FASTLANE_APP_NAME']}.ipa")
 
 include_symbols(false)
 

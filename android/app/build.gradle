@@ -1,7 +1,15 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "com.google.gms.google-services"
+
+project.ext.envConfigFiles = [
+   palmMainnetDebug: ".env.mainnet",
+   palmMainnetRelease: ".env.mainnet",
+   palmTestnetDebug: ".env.testnet",
+   palmTestnetRelease: ".env.testnet",
+]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
@@ -132,6 +140,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release']
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -139,6 +148,21 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    flavorDimensions "default"
+    productFlavors {
+        palmTestnet {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.palmapp.xyz.testnet'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.palmapp.xyz"
+        }
+        palmMainnet {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.palmapp.xyz'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.palmapp.xyz"
         }
     }
 

@@ -1,15 +1,27 @@
+fastlane_require 'dotenv'
+
 platform :ios do
+
+  before_all do |lane|
+    Dotenv.overload '../.env'
+    environment = lane_context[SharedValues::ENVIRONMENT]
+    unless environment.nil?
+        puts "Load .env file of #{environment}"
+        Dotenv.overload '../.env.' + environment
+        puts "ENV_NAME: #{ENV["ENV_NAME"]}"
+    end
+  end
 
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do
     cert(
-      username: "jhwon0820@gmail.com",
-      team_id: "6ALF5777EL"
+      username: ENV["FASTLANE_USERNAME"],
+      team_id: ENV["FASTLANE_TEAM_ID"],
     )
     match(
       type: "adhoc",
-      app_identifier: "com.palmapp.xyz",
-      username: "jhwon0820@gmail.com",
+      app_identifier: ENV["BUNDLE_ID"],
+      username: ENV["FASTLANE_USERNAME"],
       readonly: true
     )
   end
@@ -24,7 +36,7 @@ platform :ios do
   lane :beta do
     build
     appcenter_upload(
-      api_token: ENV["APPCENTER_API_TOKEN"],
+      api_token: ENV["APPCENTER_IOS_API_TOKEN"],
       owner_name: ENV["APPCENTER_OWNER_NAME"],
       app_name: ENV["APPCENTER_IOS_APP_NAME"],
       ipa: ENV["APPCENTER_IOS_DISTRIBUTE_IPA"],
@@ -38,17 +50,36 @@ end
 # Generated .apk will be at android/app/build/outputs/apk/release/app-release.apk
 platform :android do
 
+
+  before_all do |lane|
+    Dotenv.overload '../.env'
+    environment = lane_context[SharedValues::ENVIRONMENT]
+    unless environment.nil?
+        puts "Load .env file of #{environment}"
+        Dotenv.overload '../.env.' + environment
+        puts "ENV_NAME: #{ENV["ENV_NAME"]}"
+    end
+  end
+
   desc 'Build the Android application.'
   lane :build do
-    gradle(task: 'clean', project_dir: 'android/')
-    gradle(task: 'assemble', build_type: 'release', project_dir: 'android/')
+    gradle(
+      task: 'clean',
+      project_dir: 'android/'
+    )
+    gradle(
+      task: 'assemble',
+      flavor: "Palm#{ENV["ENV_NAME"].capitalize}",
+      build_type: 'Release',
+      project_dir: 'android/'
+    )
   end
 
   desc 'Build and upload to App Center.'
   lane :beta do
     build
     appcenter_upload(
-      api_token: ENV["APPCENTER_API_TOKEN"],
+      api_token: ENV["APPCENTER_ANDROID_API_TOKEN"],
       owner_name: ENV["APPCENTER_OWNER_NAME"],
       app_name: ENV["APPCENTER_ANDROID_APP_NAME"],
       apk: ENV["APPCENTER_ANDROID_DISTRIBUTE_APK"],

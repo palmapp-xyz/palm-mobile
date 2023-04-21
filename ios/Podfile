@@ -21,7 +21,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'PalmApp' do
+abstract_target 'PalmAppCommonPods' do
 
   pod 'FirebaseCore', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
@@ -56,6 +56,12 @@ target 'PalmApp' do
 
   pod 'AppCenter/Distribute'
 
+  target 'PalmApp-Testnet' do
+  end
+
+  target 'PalmApp' do
+  end
+
   target 'PalmAppTests' do
     inherit! :complete
     # Pods for testing
@@ -76,4 +82,5 @@ target 'PalmApp' do
     end
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
+
 end
