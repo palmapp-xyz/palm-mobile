@@ -7,8 +7,7 @@ import useAuth from 'hooks/independent/useAuth'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import useProfile from 'hooks/independent/useProfile'
-import useSetting from 'hooks/independent/useSetting'
-import { NetworkSettingEnum } from 'types'
+import { isMainnet } from 'libs/utils'
 
 const CreateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
@@ -16,8 +15,7 @@ const CreateProfileScreen = (): ReactElement => {
   const [loading, setLoading] = useRecoilState(appStore.loading)
   const { profile, createProfile } = useProfile({ profileId: user?.profileId })
   const { alert } = useAlert()
-  const { setting } = useSetting()
-  const isTestnet = setting.network === NetworkSettingEnum.TESTNET
+  const testnet = !isMainnet()
 
   const onClickConfirm = async (): Promise<void> => {
     if (!profile) {
@@ -26,7 +24,7 @@ const CreateProfileScreen = (): ReactElement => {
 
     setLoading(true)
     setTimeout(() => {
-      createProfile(handle, isTestnet)
+      createProfile(handle, testnet)
         .then(res => {
           if (!res.success) {
             console.error('createProfile:onClickConfirm', res.errMsg)
@@ -56,8 +54,8 @@ const CreateProfileScreen = (): ReactElement => {
         <View style={{ paddingTop: 30, alignItems: 'center' }}>
           <Text style={[styles.text, { fontWeight: 'bold' }]}>
             {!profile || profile.handle
-              ? `Checking for your ${isTestnet ? 'Lens ' : ''}profile`
-              : `Create your ${isTestnet ? 'Lens ' : ''}profile`}
+              ? `Checking for your ${testnet ? 'Lens ' : ''}profile`
+              : `Create your ${testnet ? 'Lens ' : ''}profile`}
           </Text>
         </View>
         {profile && !profile.handle && (

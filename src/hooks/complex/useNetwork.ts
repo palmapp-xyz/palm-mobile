@@ -3,10 +3,11 @@ import { Config } from 'react-native-config'
 import {
   AddEthereumChainParameter,
   ContractMap,
+  NetworkTypeEnum,
   SupportedNetworkEnum,
 } from 'types'
 import { ADDRESS_MAP, NETWORK } from 'consts'
-import useSetting from 'hooks/independent/useSetting'
+import { isMainnet } from 'libs/utils'
 
 const useNetwork = (): {
   apiPath: string
@@ -17,20 +18,27 @@ const useNetwork = (): {
     AddEthereumChainParameter
   >
 } => {
-  const { setting } = useSetting()
+  const mainnet = isMainnet()
 
   const apiPath = Config.OEDI_API || ''
 
   const contractMap = useMemo(() => {
-    return ADDRESS_MAP.contractMap[setting.network]
-  }, [setting.network])
+    return ADDRESS_MAP.contractMap[
+      mainnet ? NetworkTypeEnum.MAINNET : NetworkTypeEnum.TESTNET
+    ]
+  }, [])
 
   const connectedNetworkIds = useMemo(() => {
-    return NETWORK.chainIds[setting.network]
-  }, [setting.network])
+    return NETWORK.chainIds[
+      mainnet ? NetworkTypeEnum.MAINNET : NetworkTypeEnum.TESTNET
+    ]
+  }, [])
   const connectedNetworkParams = useMemo(
-    () => NETWORK.chainParams[setting.network],
-    [setting.network]
+    () =>
+      NETWORK.chainParams[
+        mainnet ? NetworkTypeEnum.MAINNET : NetworkTypeEnum.TESTNET
+      ],
+    []
   )
 
   return {

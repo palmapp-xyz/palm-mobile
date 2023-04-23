@@ -13,7 +13,7 @@ export enum SupportedNetworkEnum {
   POLYGON = 'POLYGON',
 }
 
-export enum NetworkSettingEnum {
-  MAINNET = 'MAINNET',
-  TESTNET = 'TESTNET',
+export enum NetworkTypeEnum {
+  MAINNET = 'mainnet',
+  TESTNET = 'testnet',
 }

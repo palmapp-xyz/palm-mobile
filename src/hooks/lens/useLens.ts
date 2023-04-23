@@ -56,7 +56,6 @@ import {
   Environment,
   ProfileMetadata,
 } from '@lens-protocol/react-native-lens-ui-kit'
-import useSetting from 'hooks/independent/useSetting'
 import { isMainnet } from 'libs/utils'
 import useIpfs from 'hooks/complex/useIpfs'
 import useLensHub from './useLensHub'
@@ -125,10 +124,7 @@ const useLens = (): UseLensReturn => {
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const { connectedNetworkIds } = useNetwork()
-  const { setting } = useSetting()
-  const lensEnv = isMainnet(setting.network)
-    ? Environment.mainnet
-    : Environment.testnet
+  const lensEnv = isMainnet() ? Environment.mainnet : Environment.testnet
 
   const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
 

@@ -1,11 +1,12 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
 import { NETWORK, UTIL } from 'consts'
+import Config from 'react-native-config'
 import { URL } from 'react-native-url-polyfill'
 import {
   ChainNetworkEnum,
   ContractAddr,
   JwtToken,
-  NetworkSettingEnum,
+  NetworkTypeEnum,
   SupportedNetworkEnum,
 } from 'types'
 
@@ -109,18 +110,8 @@ export const formatHex = (str: string): string => {
   return ret
 }
 
-export const isMainnet = (
-  chain: ChainNetworkEnum | string | number | NetworkSettingEnum
-): boolean => {
-  return (
-    chain === NetworkSettingEnum.MAINNET ||
-    chain === ChainNetworkEnum.ETHEREUM ||
-    chain === ChainNetworkEnum.POLYGON ||
-    chain === ChainNetworkEnum.CYPRESS ||
-    Number(chain) === NETWORK.chainId.ETHEREUM ||
-    Number(chain) === NETWORK.chainId.POLYGON ||
-    Number(chain) === NETWORK.chainId.CYPRESS
-  )
+export const isMainnet = (): boolean => {
+  return Config.ENV_NAME === NetworkTypeEnum.MAINNET
 }
 
 export const chainIdToSupportedNetworkEnum = (

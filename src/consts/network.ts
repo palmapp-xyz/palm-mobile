@@ -3,7 +3,7 @@ import { toHex } from 'web3-utils'
 import {
   AddEthereumChainParameter,
   ChainNetworkEnum,
-  NetworkSettingEnum,
+  NetworkTypeEnum,
   SupportedNetworkEnum,
   TokenSymbolEnum,
 } from 'types'
@@ -20,15 +20,15 @@ const chainId: Record<ChainNetworkEnum, number> = {
 }
 
 const chainIds: Record<
-  NetworkSettingEnum,
+  NetworkTypeEnum,
   Record<SupportedNetworkEnum, number>
 > = {
-  [NetworkSettingEnum.MAINNET]: {
+  [NetworkTypeEnum.MAINNET]: {
     [SupportedNetworkEnum.ETHEREUM]: chainId[ChainNetworkEnum.ETHEREUM],
     [SupportedNetworkEnum.KLAYTN]: chainId[ChainNetworkEnum.CYPRESS],
     [SupportedNetworkEnum.POLYGON]: chainId[ChainNetworkEnum.POLYGON],
   },
-  [NetworkSettingEnum.TESTNET]: {
+  [NetworkTypeEnum.TESTNET]: {
     [SupportedNetworkEnum.ETHEREUM]: chainId[ChainNetworkEnum.GOERLI],
     [SupportedNetworkEnum.KLAYTN]: chainId[ChainNetworkEnum.BAOBAB],
     [SupportedNetworkEnum.POLYGON]: chainId[ChainNetworkEnum.MUMBAI],
@@ -101,15 +101,15 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
 }
 
 const chainParams: Record<
-  NetworkSettingEnum,
+  NetworkTypeEnum,
   Record<SupportedNetworkEnum, AddEthereumChainParameter>
 > = {
-  [NetworkSettingEnum.MAINNET]: {
+  [NetworkTypeEnum.MAINNET]: {
     [SupportedNetworkEnum.ETHEREUM]: chainParam[ChainNetworkEnum.ETHEREUM],
     [SupportedNetworkEnum.KLAYTN]: chainParam[ChainNetworkEnum.CYPRESS],
     [SupportedNetworkEnum.POLYGON]: chainParam[ChainNetworkEnum.POLYGON],
   },
-  [NetworkSettingEnum.TESTNET]: {
+  [NetworkTypeEnum.TESTNET]: {
     [SupportedNetworkEnum.ETHEREUM]: chainParam[ChainNetworkEnum.GOERLI],
     [SupportedNetworkEnum.KLAYTN]: chainParam[ChainNetworkEnum.BAOBAB],
     [SupportedNetworkEnum.POLYGON]: chainParam[ChainNetworkEnum.MUMBAI],

@@ -22,7 +22,7 @@ import { Logger, SendbirdChatSDK } from '@sendbird/uikit-utils'
 import { SbNftDataType } from 'types/sendbird'
 import { UTIL } from 'consts'
 
-const APP_ID = Config.APP_ID || ''
+const APP_ID = Config.SENDBIRD_APP_ID || ''
 
 let AppSendbirdSDK: SendbirdChatSDK
 export const GetSendbirdSDK = (): SendbirdChatSDK => AppSendbirdSDK

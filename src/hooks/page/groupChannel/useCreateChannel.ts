@@ -111,6 +111,7 @@ const useCreateChannel = (): UseCreateChannelReturn => {
             const gating: FbChannelNFTGatingField = {
               gatingType: 'NFT',
               tokenAddress: selectedGatingToken.token_address,
+              tokenType: selectedGatingToken.contract_type,
               amount: gatingTokenAmount,
               chain: gatingTokenNetwork,
             }

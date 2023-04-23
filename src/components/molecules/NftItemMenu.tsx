@@ -1,5 +1,5 @@
 import { COLOR } from 'consts'
-import useSetting from 'hooks/independent/useSetting'
+import { isMainnet } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
 import {
   Menu,
@@ -8,7 +8,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Moralis, NetworkSettingEnum, SupportedNetworkEnum } from 'types'
+import { Moralis, SupportedNetworkEnum } from 'types'
 
 const NftItemMenu = ({
   chainId,
@@ -22,10 +22,10 @@ const NftItemMenu = ({
   triggerComponent?: ReactElement
 }): ReactElement => {
   const [nftMenuOpen, setNftMenuOpen] = useState<boolean>(false)
-  const { setting } = useSetting()
+  const mainnet = isMainnet()
   const disabled =
     !chainId ||
-    (setting.network === NetworkSettingEnum.MAINNET
+    (mainnet
       ? chainId !== SupportedNetworkEnum.ETHEREUM &&
         chainId !== SupportedNetworkEnum.POLYGON
       : chainId !== SupportedNetworkEnum.POLYGON)
@@ -60,7 +60,7 @@ const NftItemMenu = ({
         <MenuOption
           text={`Set as NFT profile ${
             disabled
-              ? setting.network === NetworkSettingEnum.MAINNET
+              ? mainnet
                 ? ' (Only Ethereum and Polygon NFTs Supported)'
                 : '(Only Mumbai NFTs supported)'
               : ''

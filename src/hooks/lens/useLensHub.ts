@@ -8,7 +8,6 @@ import useNetwork from 'hooks/complex/useNetwork'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { ethers } from 'ethers'
 import useEthers from 'hooks/complex/useEthers'
-import useSetting from 'hooks/independent/useSetting'
 
 export type UseLensHubReturn = {
   lensHub: ethers.Contract | undefined
@@ -17,7 +16,6 @@ export type UseLensHubReturn = {
 
 const useLensHub = (chain: SupportedNetworkEnum): UseLensHubReturn => {
   const { contractMap } = useNetwork()
-  const { setting } = useSetting()
   const { getSigner } = useEthers()
   const [lensHubContract, lensPeripheryContract] = useMemo(
     () => [contractMap[chain].lens_hub!, contractMap[chain].lens_periphery!],
@@ -34,7 +32,7 @@ const useLensHub = (chain: SupportedNetworkEnum): UseLensHubReturn => {
         new ethers.Contract(lensPeripheryContract, lensPeripheryAbi, signer)
       )
     }
-  }, [setting.network])
+  }, [])
 
   return {
     lensHub,

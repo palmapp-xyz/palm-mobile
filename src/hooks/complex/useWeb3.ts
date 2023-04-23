@@ -3,7 +3,6 @@ import { Account } from 'web3-core'
 import { useMemo } from 'react'
 
 import { NETWORK } from 'consts'
-import useSetting from 'hooks/independent/useSetting'
 import { getPkey } from 'libs/account'
 import { ChainNetworkEnum, SupportedNetworkEnum } from 'types'
 import { isMainnet } from 'libs/utils'
@@ -14,8 +13,7 @@ type UseWeb3Return = {
 }
 
 const useWeb3 = (chain: SupportedNetworkEnum): UseWeb3Return => {
-  const { setting } = useSetting()
-  const mainnet = isMainnet(setting.network)
+  const mainnet = isMainnet()
 
   const web3 = useMemo(
     () =>

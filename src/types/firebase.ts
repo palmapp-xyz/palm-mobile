@@ -1,5 +1,5 @@
 import { ChannelType } from '@sendbird/chat'
-import { ContractAddr } from './contracts'
+import { ContractAddr, NftType } from './contracts'
 import { SupportedNetworkEnum } from './network'
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 
@@ -29,6 +29,7 @@ export type FbChannelFTGatingField = {
 export type FbChannelNFTGatingField = {
   gatingType: 'NFT'
   tokenAddress: ContractAddr
+  tokenType: NftType
   amount: string
   chain: SupportedNetworkEnum
 }

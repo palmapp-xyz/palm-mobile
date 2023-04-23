@@ -1,12 +1,12 @@
 import {
   ContractAddr,
   ContractMap,
-  NetworkSettingEnum,
+  NetworkTypeEnum,
   SupportedNetworkEnum,
 } from 'types'
 
-const contractMap: Record<NetworkSettingEnum, ContractMap> = {
-  [NetworkSettingEnum.MAINNET]: {
+const contractMap: Record<NetworkTypeEnum, ContractMap> = {
+  [NetworkTypeEnum.MAINNET]: {
     [SupportedNetworkEnum.ETHEREUM]: {
       escrow: '' as ContractAddr,
     },
@@ -23,7 +23,7 @@ const contractMap: Record<NetworkSettingEnum, ContractMap> = {
         '0xeff187b4190E551FC25a7fA4dFC6cf7fDeF7194f' as ContractAddr,
     },
   },
-  [NetworkSettingEnum.TESTNET]: {
+  [NetworkTypeEnum.TESTNET]: {
     [SupportedNetworkEnum.ETHEREUM]: {
       escrow: '0x43692EE081A8823F22D476052BB80DF29C3AA1ED' as ContractAddr,
     },

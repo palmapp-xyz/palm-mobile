@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
 import { NETWORK } from 'consts'
-import useSetting from 'hooks/independent/useSetting'
 import { getPkey } from 'libs/account'
 import { ChainNetworkEnum, SupportedNetworkEnum } from 'types'
 import { isMainnet } from 'libs/utils'
@@ -20,8 +19,7 @@ type UseEthersReturn = {
 }
 
 const useEthers = (): UseEthersReturn => {
-  const { setting } = useSetting()
-  const mainnet = isMainnet(setting.network)
+  const mainnet = isMainnet()
 
   const { providers } = useMemo(
     () => ({

@@ -35,6 +35,8 @@ export const getFsChannel = async ({
     const fbChannelField: FbChannelField = {
       url: channel.url,
       channelType: channel.channelType,
+      tags: [],
+      desc: '',
     }
     await fsChannel.set(fbChannelField)
   }

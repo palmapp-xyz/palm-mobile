@@ -1,6 +1,5 @@
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import { ContractAddr } from './contracts'
-import { NetworkSettingEnum } from './network'
 import { ThemeModeType } from './theme'
 import { AuthChallengeResult } from './auth'
 
@@ -22,5 +21,4 @@ export type AuthStorageType = {
 
 export type SettingStorageType = {
   themeMode: ThemeModeType
-  network: NetworkSettingEnum
 }

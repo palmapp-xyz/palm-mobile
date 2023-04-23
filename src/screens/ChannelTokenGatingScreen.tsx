@@ -134,11 +134,12 @@ const ChannelTokenGatingScreen = (): ReactElement => {
               marginBottom: 10,
             }}>
             <Text>Gating Token</Text>
-            {fsChannelField?.gatingToken ? (
+            {fsChannelField?.gating &&
+            fsChannelField?.gating?.gatingType === 'NFT' ? (
               <GatingToken
                 chain={SupportedNetworkEnum.ETHEREUM}
-                type={fsChannelField?.gatingTokenType ?? NftType.ERC721}
-                nftContract={fsChannelField?.gatingToken}
+                type={fsChannelField.gating.tokenType}
+                nftContract={fsChannelField.gating.tokenAddress}
               />
             ) : (
               <Text>None</Text>

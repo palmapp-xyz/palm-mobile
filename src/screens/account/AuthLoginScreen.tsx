@@ -13,12 +13,9 @@ import {
 } from 'components'
 import useAuthLogin from 'hooks/page/account/useAuthLogin'
 import { Routes } from 'libs/navigation'
-import NetworkOptions from 'components/molecules/NetworkOptions'
 import { AuthChallengeInfo } from 'types'
-import useAuth from 'hooks/independent/useAuth'
 
 const AuthLoginScreen = (): ReactElement => {
-  const { logout } = useAuth()
   const { navigation } = useAppNavigation()
   const { password, setPassword, isValidForm, onClickConfirm } = useAuthLogin()
 
@@ -55,8 +52,6 @@ const AuthLoginScreen = (): ReactElement => {
           <FormButton disabled={!isValidForm} onPress={onPressConfirm}>
             Sign In
           </FormButton>
-          <Text>Change Network</Text>
-          <NetworkOptions onNetworkChanged={logout} />
         </View>
       </KeyboardAvoidingView>
     </AuthBody>

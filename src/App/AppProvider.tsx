@@ -38,21 +38,12 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
 
   const isLightTheme = scheme === 'light'
 
-  const lensEnv = isMainnet(setting.network)
-    ? Environment.mainnet
-    : Environment.testnet
+  const lensEnv = isMainnet() ? Environment.mainnet : Environment.testnet
 
   const client = new ApolloClient({
-    uri: isMainnet(setting.network)
-      ? Config.LENS_API_ETHEREUM
-      : Config.LENS_API_GOERLI,
-
+    uri: Config.LENS_API,
     cache: new InMemoryCache(),
   })
-
-  const APP_ID = isMainnet(setting.network)
-    ? Config.SENDBIRD_APP_ID_ETHEREUM
-    : Config.SENDBIRD_APP_ID_GOERLI
 
   return (
     <LensProvider
@@ -61,7 +52,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
       <ApolloProvider client={client}>
         <MenuProvider>
           <SendbirdUIKitContainer
-            appId={APP_ID || ''}
+            appId={Config.SENDBIRD_APP_ID || ''}
             chatOptions={{
               localCacheStorage: AsyncStorage,
               onInitialized: SetSendbirdSDK,

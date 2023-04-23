@@ -7,7 +7,6 @@ import { Container, Header, Row } from 'components'
 import useAuth from 'hooks/independent/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import ThemeOptions from './ThemeOptions'
-import NetworkOptions from 'components/molecules/NetworkOptions'
 
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()
@@ -34,7 +33,6 @@ const SettingScreen = (): ReactElement => {
             },
           ]}>
           <Text>Change Network</Text>
-          <NetworkOptions onNetworkChanged={logout} />
         </View>
 
         <View
