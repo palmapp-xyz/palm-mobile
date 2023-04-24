@@ -36,11 +36,7 @@
 		6DEC80F629F163D300F4B174 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */; };
 		6DEC80F729F163D300F4B174 /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */; };
 		6DEC80F829F163D300F4B174 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
-		6DEC810829F169E300F4B174 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810729F169E300F4B174 /* GoogleService-Info.plist */; };
-		6DEC810A29F169F000F4B174 /* GoogleService-Info-Testnet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810929F169F000F4B174 /* GoogleService-Info-Testnet.plist */; };
 		6DEC810C29F211A300F4B174 /* PalmApp-Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */; };
-		6DEC811029F2261200F4B174 /* AppCenter-Config-Testnet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810F29F2261200F4B174 /* AppCenter-Config-Testnet.plist */; };
-		6DEC811229F226BD00F4B174 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC811129F226BD00F4B174 /* AppCenter-Config.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A266178DA498A48563EAC1DF /* libPods-PalmAppCommonPods-PalmApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */; };
 		CE20653989CD1E4F5CD61198 /* libPods-PalmAppCommonPods-PalmAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99994A8B3A1B5D875744BCCF /* libPods-PalmAppCommonPods-PalmAppTests.a */; };
@@ -82,11 +78,11 @@
 		6D22850229CA754400414E02 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../assets/fonts; sourceTree = "<group>"; };
 		6DEC80E129EE193A00F4B174 /* PalmApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PalmApp.entitlements; path = PalmApp/PalmApp.entitlements; sourceTree = "<group>"; };
 		6DEC810029F163D400F4B174 /* PalmApp-Testnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PalmApp-Testnet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DEC810729F169E300F4B174 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PalmApp/GoogleServices/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6DEC810929F169F000F4B174 /* GoogleService-Info-Testnet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info-Testnet.plist"; path = "PalmApp/GoogleServices/GoogleService-Info-Testnet.plist"; sourceTree = "<group>"; };
 		6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PalmApp-Testnet-Info.plist"; path = "PalmApp/PalmApp-Testnet-Info.plist"; sourceTree = "<group>"; };
-		6DEC810F29F2261200F4B174 /* AppCenter-Config-Testnet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config-Testnet.plist"; path = "PalmApp/AppCenter/AppCenter-Config-Testnet.plist"; sourceTree = "<group>"; };
-		6DEC811129F226BD00F4B174 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PalmApp/AppCenter/AppCenter-Config.plist"; sourceTree = "<group>"; };
+		6DF021AE29F6114A0045385F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6DF021B029F6114A0045385F /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
+		6DF021B229F6116B0045385F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6DF021B429F6116B0045385F /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp-PalmAppTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PalmApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmAppCommonPods-PalmApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,10 +144,8 @@
 		13B07FAE1A68108700A75B9A /* PalmApp */ = {
 			isa = PBXGroup;
 			children = (
-				6DEC811129F226BD00F4B174 /* AppCenter-Config.plist */,
-				6DEC810F29F2261200F4B174 /* AppCenter-Config-Testnet.plist */,
-				6DEC810929F169F000F4B174 /* GoogleService-Info-Testnet.plist */,
-				6DEC810729F169E300F4B174 /* GoogleService-Info.plist */,
+				6DF021B329F6116B0045385F /* AppCenter */,
+				6DF021B129F6116B0045385F /* GoogleServices */,
 				6DEC80E129EE193A00F4B174 /* PalmApp.entitlements */,
 				4022CA4829B46B9F00335C68 /* Assets.xcassets */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -199,6 +193,49 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		6DF021AC29F6114A0045385F /* PalmApp-Testnet */ = {
+			isa = PBXGroup;
+			children = (
+				6DF021AD29F6114A0045385F /* GoogleServices */,
+				6DF021AF29F6114A0045385F /* AppCenter */,
+			);
+			path = "PalmApp-Testnet";
+			sourceTree = "<group>";
+		};
+		6DF021AD29F6114A0045385F /* GoogleServices */ = {
+			isa = PBXGroup;
+			children = (
+				6DF021AE29F6114A0045385F /* GoogleService-Info.plist */,
+			);
+			path = GoogleServices;
+			sourceTree = "<group>";
+		};
+		6DF021AF29F6114A0045385F /* AppCenter */ = {
+			isa = PBXGroup;
+			children = (
+				6DF021B029F6114A0045385F /* AppCenter-Config.plist */,
+			);
+			path = AppCenter;
+			sourceTree = "<group>";
+		};
+		6DF021B129F6116B0045385F /* GoogleServices */ = {
+			isa = PBXGroup;
+			children = (
+				6DF021B229F6116B0045385F /* GoogleService-Info.plist */,
+			);
+			name = GoogleServices;
+			path = PalmApp/GoogleServices;
+			sourceTree = "<group>";
+		};
+		6DF021B329F6116B0045385F /* AppCenter */ = {
+			isa = PBXGroup;
+			children = (
+				6DF021B429F6116B0045385F /* AppCenter-Config.plist */,
+			);
+			name = AppCenter;
+			path = PalmApp/AppCenter;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +246,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6DF021AC29F6114A0045385F /* PalmApp-Testnet */,
 				6D22850229CA754400414E02 /* fonts */,
 				402FB56D29AB042700FD4051 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* PalmApp */,
@@ -283,6 +321,7 @@
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				6D187EF229F5878300AEBABF /* Setup Environment Services */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				616B9EF9080A7562CB48A744 /* [CP] Embed Pods Frameworks */,
@@ -305,6 +344,7 @@
 				6DEC80E429F163D300F4B174 /* Start Packager */,
 				6DEC80E529F163D300F4B174 /* Sources */,
 				6DEC80E829F163D300F4B174 /* Frameworks */,
+				6D187F1929F58B7B00AEBABF /* Setup Environment Services */,
 				6DEC80EA29F163D300F4B174 /* Resources */,
 				6DEC80F929F163D300F4B174 /* Bundle React Native code and images */,
 				6DEC80FA29F163D300F4B174 /* [CP] Embed Pods Frameworks */,
@@ -381,7 +421,6 @@
 				3356C06B76EF482083562269 /* SpaceGrotesk-Medium.ttf in Resources */,
 				03408C468B7447549D22364E /* SpaceGrotesk-Regular.ttf in Resources */,
 				358FF5CF220842269540FAA5 /* SpaceGrotesk-SemiBold.ttf in Resources */,
-				6DEC810829F169E300F4B174 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,14 +430,11 @@
 			files = (
 				6DEC80EB29F163D300F4B174 /* Ionicons.ttf in Resources */,
 				6DEC80EC29F163D300F4B174 /* LaunchScreen.storyboard in Resources */,
-				6DEC810A29F169F000F4B174 /* GoogleService-Info-Testnet.plist in Resources */,
 				6DEC80ED29F163D300F4B174 /* AntDesign.ttf in Resources */,
 				6DEC80EE29F163D300F4B174 /* Images.xcassets in Resources */,
-				6DEC811229F226BD00F4B174 /* AppCenter-Config.plist in Resources */,
 				6DEC810C29F211A300F4B174 /* PalmApp-Testnet-Info.plist in Resources */,
 				6DEC80EF29F163D300F4B174 /* Assets.xcassets in Resources */,
 				6DEC80F029F163D300F4B174 /* fonts in Resources */,
-				6DEC811029F2261200F4B174 /* AppCenter-Config-Testnet.plist in Resources */,
 				6DEC80F129F163D300F4B174 /* MaterialIcons.ttf in Resources */,
 				6DEC80F429F163D300F4B174 /* SpaceGrotesk-Bold.ttf in Resources */,
 				6DEC80F529F163D300F4B174 /* SpaceGrotesk-Light.ttf in Resources */,
@@ -504,6 +540,42 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		6D187EF229F5878300AEBABF /* Setup Environment Services */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Environment Services";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\nAPPCENTER_CONFIG_PLIST=AppCenter-Config.plist\n\n# Get references to mainnet versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO=${PROJECT_DIR}/${TARGET_NAME}/GoogleServices/mainnet/${GOOGLESERVICE_INFO_PLIST}\nAPPCENTER_CONFIG=${PROJECT_DIR}/${TARGET_NAME}/AppCenter/mainnet/${APPCENTER_CONFIG_PLIST}\n\n# Make sure the mainnet version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO}\"\nif [ ! -f $GOOGLESERVICE_INFO ]\nthen\n    echo \"No mainnet GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\necho \"Looking for ${APPCENTER_CONFIG_PLIST} in ${APPCENTER_CONFIG}\"\nif [ ! -f $APPCENTER_CONFIG ]\nthen\n    echo \"No mainnet AppCenter-Config.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\n\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${GOOGLESERVICE_INFO}\"\ncp \"${GOOGLESERVICE_INFO}\" \"${PLIST_DESTINATION}\"\n\necho \"Will copy ${APPCENTER_CONFIG_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${APPCENTER_CONFIG}\"\ncp \"${APPCENTER_CONFIG}\" \"${PLIST_DESTINATION}\"\n";
+		};
+		6D187F1929F58B7B00AEBABF /* Setup Environment Services */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Environment Services";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\nAPPCENTER_CONFIG_PLIST=AppCenter-Config.plist\n\n# Get references to testnet versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO=${PROJECT_DIR}/${TARGET_NAME}/GoogleServices/${GOOGLESERVICE_INFO_PLIST}\nAPPCENTER_CONFIG=${PROJECT_DIR}/${TARGET_NAME}/AppCenter/${APPCENTER_CONFIG_PLIST}\n\n# Make sure the testnet version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO}\"\nif [ ! -f $GOOGLESERVICE_INFO ]\nthen\n    echo \"No testnet GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\necho \"Looking for ${APPCENTER_CONFIG_PLIST} in ${APPCENTER_CONFIG}\"\nif [ ! -f $APPCENTER_CONFIG ]\nthen\n    echo \"No testnet AppCenter-Config.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\n\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${GOOGLESERVICE_INFO}\"\ncp \"${GOOGLESERVICE_INFO}\" \"${PLIST_DESTINATION}\"\n\necho \"Will copy ${APPCENTER_CONFIG_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${APPCENTER_CONFIG}\"\ncp \"${APPCENTER_CONFIG}\" \"${PLIST_DESTINATION}\"\n";
 		};
 		6DEC80E329F163D300F4B174 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -69,3 +69,6 @@ android/app/release.keystore
 android/app/release/app-release.aab
 
 **/__generated__/*
+
+**/GoogleService-Info.plist
+**/AppCenter-Config.plist
