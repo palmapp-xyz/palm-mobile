@@ -72,3 +72,5 @@ android/app/release/app-release.aab
 
 **/GoogleService-Info.plist
 **/AppCenter-Config.plist
+
+**/*.cer
