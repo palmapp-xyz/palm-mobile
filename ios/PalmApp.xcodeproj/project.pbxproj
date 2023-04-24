@@ -557,7 +557,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\nAPPCENTER_CONFIG_PLIST=AppCenter-Config.plist\n\n# Get references to mainnet versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO=${PROJECT_DIR}/${TARGET_NAME}/GoogleServices/mainnet/${GOOGLESERVICE_INFO_PLIST}\nAPPCENTER_CONFIG=${PROJECT_DIR}/${TARGET_NAME}/AppCenter/mainnet/${APPCENTER_CONFIG_PLIST}\n\n# Make sure the mainnet version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO}\"\nif [ ! -f $GOOGLESERVICE_INFO ]\nthen\n    echo \"No mainnet GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\necho \"Looking for ${APPCENTER_CONFIG_PLIST} in ${APPCENTER_CONFIG}\"\nif [ ! -f $APPCENTER_CONFIG ]\nthen\n    echo \"No mainnet AppCenter-Config.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\n\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${GOOGLESERVICE_INFO}\"\ncp \"${GOOGLESERVICE_INFO}\" \"${PLIST_DESTINATION}\"\n\necho \"Will copy ${APPCENTER_CONFIG_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${APPCENTER_CONFIG}\"\ncp \"${APPCENTER_CONFIG}\" \"${PLIST_DESTINATION}\"\n";
+			shellScript = "# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\nAPPCENTER_CONFIG_PLIST=AppCenter-Config.plist\n\n# Get references to mainnet versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO=${PROJECT_DIR}/${TARGET_NAME}/GoogleServices/${GOOGLESERVICE_INFO_PLIST}\nAPPCENTER_CONFIG=${PROJECT_DIR}/${TARGET_NAME}/AppCenter/${APPCENTER_CONFIG_PLIST}\n\n# Make sure the mainnet version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO}\"\nif [ ! -f $GOOGLESERVICE_INFO ]\nthen\n    echo \"No mainnet GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\necho \"Looking for ${APPCENTER_CONFIG_PLIST} in ${APPCENTER_CONFIG}\"\nif [ ! -f $APPCENTER_CONFIG ]\nthen\n    echo \"No mainnet AppCenter-Config.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\n\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${GOOGLESERVICE_INFO}\"\ncp \"${GOOGLESERVICE_INFO}\" \"${PLIST_DESTINATION}\"\n\necho \"Will copy ${APPCENTER_CONFIG_PLIST} to final destination: ${PLIST_DESTINATION}\"\necho \"Using ${APPCENTER_CONFIG}\"\ncp \"${APPCENTER_CONFIG}\" \"${PLIST_DESTINATION}\"\n";
 		};
 		6D187F1929F58B7B00AEBABF /* Setup Environment Services */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -857,11 +857,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6ALF5777EL;
+				DEVELOPMENT_TEAM = 6ALF5777EL;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = PalmApp;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -877,7 +875,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz;
 				PRODUCT_NAME = PalmApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.palmapp.xyz";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
