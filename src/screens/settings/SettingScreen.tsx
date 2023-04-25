@@ -6,7 +6,6 @@ import { COLOR } from 'consts'
 import { Container, Header, Row } from 'components'
 import useAuth from 'hooks/independent/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import ThemeOptions from './ThemeOptions'
 
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()
@@ -22,33 +21,6 @@ const SettingScreen = (): ReactElement => {
         onPressLeft={navigation.goBack}
       />
       <View style={styles.body}>
-        <View
-          style={[
-            styles.itemGroup,
-            {
-              paddingVertical: 16,
-              paddingHorizontal: 20,
-              justifyContent: 'space-between',
-              gap: 10,
-            },
-          ]}>
-          <Text>Change Network</Text>
-        </View>
-
-        <View
-          style={[
-            styles.itemGroup,
-            {
-              paddingVertical: 16,
-              paddingHorizontal: 20,
-              justifyContent: 'space-between',
-              gap: 10,
-            },
-          ]}>
-          <Text>Change Theme</Text>
-          <ThemeOptions />
-        </View>
-
         <View style={styles.itemGroup}>
           <TouchableOpacity
             style={styles.item}
