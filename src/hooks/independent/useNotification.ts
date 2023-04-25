@@ -115,7 +115,7 @@ const useNotification = ({
           Platform.OS === 'ios'
             ? sdk.unregisterAPNSPushTokenForCurrentUser(token)
             : sdk.unregisterFCMPushTokenForCurrentUser(token),
-          fsProfile!.set({
+          fsProfile!.update({
             deviceTokens: {
               ...fsProfileField?.deviceTokens,
               [Platform.OS === 'ios' ? 'apns' : 'fcm']: tokens,

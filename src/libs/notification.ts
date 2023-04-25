@@ -81,7 +81,6 @@ export const backgroundMessageHandler = async (
       data: message.data,
       android: {
         channelId,
-        smallIcon: '',
         importance: AndroidImportance.HIGH,
         largeIcon: sendbird.sender?.profile_url || sendbird.channel.channel_url,
         circularLargeIcon: true,
