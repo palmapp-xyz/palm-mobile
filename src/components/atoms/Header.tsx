@@ -7,12 +7,14 @@ import {
   TouchableOpacityProps,
   View,
 } from 'react-native'
-
+import Icon from 'react-native-vector-icons/Ionicons'
 import { conditionChaining } from '@sendbird/uikit-utils'
+
+import { COLOR } from 'consts'
 
 export type HeaderProps = {
   title?: ReactNode
-  left?: ReactNode
+  left?: 'back' | ReactElement
   right?: ReactNode
   onPressLeft?: () => void
   onPressRight?: () => void
@@ -20,11 +22,15 @@ export type HeaderProps = {
 
 const Header = ({
   title = '',
-  left = null,
-  right = null,
+  left = undefined,
+  right = undefined,
   onPressLeft,
   onPressRight,
 }: HeaderProps): ReactElement => {
+  if (left === 'back') {
+    left = <Icon name="ios-chevron-back" color={COLOR.black._900} size={28} />
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -121,8 +127,6 @@ const HeaderButton = ({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eeeeee',
     height: 56,
     justifyContent: 'center',
     backgroundColor: 'white',

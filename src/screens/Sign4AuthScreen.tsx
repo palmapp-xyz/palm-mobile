@@ -7,13 +7,14 @@ import {
   useWindowDimensions,
 } from 'react-native'
 import RenderHtml from 'react-native-render-html'
-
-import { AuthBody, FormButton, Row } from 'components'
-import useSign4Auth from 'hooks/page/sign/useSign4Auth'
 import { useRecoilValue } from 'recoil'
+
+import { COLOR } from 'consts'
+
+import { Container, FormButton, Header } from 'components'
+import useSign4Auth from 'hooks/page/sign/useSign4Auth'
 import fetchApiStore from 'store/fetchApiStore'
 import { SupportedNetworkEnum } from 'types'
-import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 
@@ -37,9 +38,14 @@ const Sign4AuthScreen = (): ReactElement => {
   }
 
   return (
-    <AuthBody>
-      <View style={{ gap: 10 }}>
-        <Text style={{ fontWeight: 'bold' }}>Authenticate</Text>
+    <Container style={styles.container}>
+      <Header
+        left="back"
+        onPressLeft={navigation.goBack}
+        title="Authenticate"
+      />
+
+      <View style={{ flex: 1, padding: 20 }}>
         <View style={styles.signMessageBox}>
           {challenge ? (
             <RenderHtml source={source} contentWidth={width} />
@@ -49,40 +55,30 @@ const Sign4AuthScreen = (): ReactElement => {
         </View>
       </View>
 
-      <Row style={styles.btnGroup}>
-        <FormButton
-          containerStyle={[styles.btn, { backgroundColor: 'white' }]}
-          textStyle={{
-            color: COLOR.primary._400,
-            fontWeight: '400',
-            paddingHorizontal: 20,
-          }}
-          onPress={(): void => {
-            navigation.replace(Routes.AuthMenu)
-          }}>
-          Cancel
-        </FormButton>
-
-        <FormButton
-          containerStyle={[styles.btn, { flex: 1 }]}
-          disabled={!challenge || isFetching}
-          onPress={onPressSign}>
+      <View style={styles.footer}>
+        <FormButton disabled={!challenge || isFetching} onPress={onPressSign}>
           Sign to Login
         </FormButton>
-      </Row>
-    </AuthBody>
+      </View>
+    </Container>
   )
 }
 
 export default Sign4AuthScreen
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
   signMessageBox: {
     padding: 10,
     backgroundColor: '#cecece',
     borderRadius: 20,
   },
   tabItem: { padding: 10, borderRadius: 10 },
-  btnGroup: { marginHorizontal: -20, paddingTop: 20, marginBottom: -30 },
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
   btn: { borderRadius: 0 },
 })

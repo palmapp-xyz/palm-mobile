@@ -13,13 +13,7 @@ const SettingScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Header
-        title="Setting"
-        left={
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
-        }
-        onPressLeft={navigation.goBack}
-      />
+      <Header title="Setting" left="back" onPressLeft={navigation.goBack} />
       <View style={styles.body}>
         <View style={styles.itemGroup}>
           <TouchableOpacity

@@ -21,9 +21,9 @@ export enum Routes {
   AuthNavigator = 'AuthNavigator',
 
   MainAccount = 'MainAccount',
-  AuthMenu = 'AuthMenu',
   Login = 'Login',
   NewAccount = 'NewAccount',
+  ConfirmSeed = 'ConfirmSeed',
   RecoverAccount = 'RecoverAccount',
   Web3Auth = 'Web3Auth',
 
@@ -76,10 +76,6 @@ type AuthRouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.AuthMenu
-      params: undefined
-    }
-  | {
       route: Routes.Login
       params: undefined
     }
@@ -88,8 +84,14 @@ type AuthRouteParamsUnion =
       params: undefined
     }
   | {
+      route: Routes.ConfirmSeed
+      params: { mnemonic: string }
+    }
+  | {
       route: Routes.RecoverAccount
-      params: undefined
+      params: {
+        isSignUp: boolean
+      }
     }
   | {
       route: Routes.Sign4Auth

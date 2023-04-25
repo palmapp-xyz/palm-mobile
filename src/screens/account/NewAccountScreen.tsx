@@ -1,146 +1,112 @@
-import React, { ReactElement } from 'react'
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Text } from '@sendbird/uikit-react-native-foundation'
-import Icon from 'react-native-vector-icons/Ionicons'
+import React, { ReactElement, useMemo } from 'react'
+import { Alert, FlatList, StyleSheet, View } from 'react-native'
 import Clipboard from '@react-native-clipboard/clipboard'
+import { generateMnemonic } from 'bip39'
 
 import { COLOR } from 'consts'
-import { AuthBody, ErrorMessage, FormButton, Row, FormInput } from 'components'
-import useNewAccount from 'hooks/page/account/useNewAccount'
+import { Container, FormButton, Row, Header, FormText } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import Loading from 'components/atoms/Loading'
-import { useRecoilState } from 'recoil'
-import appStore from 'store/appStore'
-import { AuthChallengeInfo } from 'types'
 
 const NewAccountScreen = (): ReactElement => {
-  const {
-    mnemonic,
-    password,
-    setPassword,
-    passwordConfirm,
-    setPasswordConfirm,
-    passwordConfirmErrMsg,
-    isValidForm,
-    onClickConfirm,
-  } = useNewAccount()
+  const mnemonic = useMemo(() => generateMnemonic(128), [])
   const { navigation } = useAppNavigation()
 
-  const [loading] = useRecoilState(appStore.loading)
-
-  const onPressConfirm = async (): Promise<void> => {
-    await onClickConfirm(
-      (challenge: AuthChallengeInfo | undefined, errMsg?: string) => {
-        if (challenge) {
-          navigation.replace(Routes.Sign4Auth, { challenge })
-        } else {
-          Alert.alert('Unknown Error', errMsg)
-        }
-      }
-    )
-  }
-
-  if (!mnemonic || loading) {
-    return <Loading />
-  }
+  const seedPhrase = mnemonic?.split(' ')
 
   return (
-    <AuthBody>
-      <View>
-        <View style={styles.pkInfo}>
-          <Text style={{ fontWeight: 'bold' }}>Mnemonic</Text>
-          <Row style={styles.pkBox}>
-            <View style={{ flex: 1, paddingVertical: 10 }}>
-              <Text style={{ color: 'white', fontSize: 12 }}>{mnemonic}</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.copyBox}
-              onPress={(): void => {
-                Alert.alert('Copied')
-                Clipboard.setString(mnemonic!)
-              }}>
-              <Icon name="copy-outline" color="white" size={16} />
-            </TouchableOpacity>
-          </Row>
+    <Container style={styles.container}>
+      <Header left="back" onPressLeft={navigation.goBack} />
 
-          <View style={{ padding: 4 }}>
-            <Text style={{ fontSize: 12 }}>
-              Copy your mnemonic and keep it in a safe place. It will allow you
-              to recover your wallet if you lose your password. Your generated
-              wallet's mnemonic is not stored on the server and is stored on
-              your mobile device.
-            </Text>
-          </View>
+      <View style={styles.body}>
+        <View style={{ rowGap: 8, paddingBottom: 40 }}>
+          <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
+            {'Copy your wallet’s\nseed phrase'}
+          </FormText>
+          <FormText color={COLOR.black._400} fontType="R.14">
+            {
+              'Keep the seed phrase in a safe place.\nIt will allow you to recover your wallet.'
+            }
+          </FormText>
         </View>
-        <View style={{ rowGap: 10 }}>
-          <FormInput
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            textContentType="password"
-            secureTextEntry
-          />
-          <View>
-            <FormInput
-              placeholder="Confirm Password"
-              value={passwordConfirm}
-              onChangeText={setPasswordConfirm}
-              textContentType="password"
-              secureTextEntry
-            />
-            <ErrorMessage message={passwordConfirmErrMsg} />
-          </View>
+        <View
+          style={{
+            marginBottom: 12,
+            backgroundColor: '#fffbf2',
+            paddingVertical: 12,
+            paddingHorizontal: 16,
+            borderRadius: 14,
+          }}>
+          <FormText fontType="R.12" color={COLOR.yellow}>
+            Notice that your generated wallet's Privatekey is not stored on the
+            server and is stored on your mobile device.
+          </FormText>
         </View>
-        <Row style={styles.btnGroup}>
+        <View style={{ paddingBottom: 12 }}>
           <FormButton
-            containerStyle={[styles.btn, { backgroundColor: 'white' }]}
-            textStyle={{
-              color: COLOR.primary._400,
-              fontWeight: '400',
-              paddingHorizontal: 20,
-            }}
+            figure="outline"
             onPress={(): void => {
-              navigation.replace(Routes.AuthMenu)
+              Alert.alert('Copied')
+              Clipboard.setString(mnemonic!)
             }}>
-            Cancel
+            Copy the Set of Seed Phrase
           </FormButton>
-          <FormButton
-            containerStyle={[styles.btn, { flex: 1 }]}
-            disabled={!isValidForm || loading}
-            onPress={onPressConfirm}>
-            Create
-          </FormButton>
-        </Row>
+        </View>
+        <FlatList
+          data={seedPhrase}
+          numColumns={2}
+          columnWrapperStyle={{ columnGap: 24 }}
+          contentContainerStyle={{ rowGap: 12 }}
+          keyExtractor={(item, index): string => `seedPhrase-${index}`}
+          renderItem={({ item, index }): ReactElement => {
+            return (
+              <Row style={styles.seedItem}>
+                <FormText style={{ width: 20 }}>{index + 1}</FormText>
+                <View
+                  style={{
+                    flex: 1,
+                    borderRadius: 14,
+                    borderColor: COLOR.black._200,
+                    borderWidth: 1,
+                    borderStyle: 'solid',
+                    paddingVertical: 4,
+                    paddingHorizontal: 12,
+                  }}>
+                  <FormText fontType="R.14">{item}</FormText>
+                </View>
+              </Row>
+            )
+          }}
+        />
       </View>
-    </AuthBody>
+
+      <View style={styles.footer}>
+        <FormButton
+          size="lg"
+          onPress={(): void => {
+            navigation.navigate(Routes.ConfirmSeed, { mnemonic })
+          }}>
+          Next
+        </FormButton>
+      </View>
+    </Container>
   )
 }
 
 export default NewAccountScreen
 
 const styles = StyleSheet.create({
-  pkInfo: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 15,
-    gap: 10,
-    marginBottom: 20,
+  container: { flex: 1 },
+  body: { flex: 1, paddingHorizontal: 20, paddingVertical: 12 },
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
   },
-  copyBox: {
-    width: 30,
-    borderColor: 'white',
-    borderLeftWidth: 1,
+  seedItem: {
+    flex: 1,
+    columnGap: 4,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 10,
-    paddingLeft: 10,
   },
-  pkBox: {
-    backgroundColor: COLOR.primary._400,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-  },
-  btnGroup: { marginHorizontal: -20, paddingTop: 20, marginBottom: -30 },
-  btn: { borderRadius: 0 },
 })

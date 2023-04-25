@@ -1,6 +1,5 @@
 import React, { ReactElement, useMemo } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
@@ -137,9 +136,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
     <Container style={styles.container}>
       <Header
         title={'Private channel'}
-        left={
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
-        }
+        left="back"
         onPressLeft={navigation.goBack}
       />
       <View style={styles.body}>

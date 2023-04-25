@@ -1,8 +1,6 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 
-import { COLOR } from 'consts'
 import { Container, Header } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -13,13 +11,7 @@ const NftDetailScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Header
-        title="NFT Info"
-        left={
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
-        }
-        onPressLeft={navigation.goBack}
-      />
+      <Header title="NFT Info" left="back" onPressLeft={navigation.goBack} />
       <NftDetails
         nftContract={params.nftContract}
         tokenId={params.tokenId}

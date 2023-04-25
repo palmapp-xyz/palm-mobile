@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { COLOR } from 'consts'
@@ -73,13 +72,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Header
-        title="Update Bio"
-        left={
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
-        }
-        onPressLeft={navigation.goBack}
-      />
+      <Header title="Update Bio" left="back" onPressLeft={navigation.goBack} />
       {!profile ? (
         <View style={styles.body}>
           <ActivityIndicator size="large" color={COLOR.primary._300} />

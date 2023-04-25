@@ -34,7 +34,6 @@ export type UseAuthReturn = {
   restoreLoading: boolean
   registerRequest: (props: {
     privateKey: string
-    password: string
   }) => Promise<TrueOrErrReturn<AuthChallengeInfo>>
   authenticateRequest: ({
     password,
@@ -163,16 +162,14 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
 
   const registerRequest = async ({
     privateKey,
-    password,
   }: {
     privateKey: string
-    password: string
   }): Promise<TrueOrErrReturn<AuthChallengeInfo>> => {
     try {
       const account = web3.eth.accounts.privateKeyToAccount(
         formatHex(privateKey)
       )
-      await savePkey(privateKey, password)
+      await savePkey(privateKey)
 
       const challenge = await challengeRequest(account.address as ContractAddr)
       return { success: true, value: challenge }
