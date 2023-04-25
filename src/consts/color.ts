@@ -37,6 +37,8 @@ const black = {
 
 const text = white
 
+const yellow = '#F0AD00'
+
 export default {
   white,
 
@@ -49,6 +51,8 @@ export default {
   main_light,
 
   text,
+
+  yellow,
 
   opacity,
 }

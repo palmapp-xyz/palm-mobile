@@ -1,13 +1,11 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
-import Icon from 'react-native-vector-icons/Ionicons'
 
 import { Maybe } from '@toruslabs/openlogin'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 
-import { COLOR } from 'consts'
 import { ContractAddr, NftType, QueryKeyEnum } from 'types'
 import { Container, Header } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -85,13 +83,7 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Header
-        title="Buy NFT"
-        left={
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
-        }
-        onPressLeft={navigation.goBack}
-      />
+      <Header title="Buy NFT" left="back" onPressLeft={navigation.goBack} />
       {order && (
         <View>
           <NftDetails

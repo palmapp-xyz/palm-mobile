@@ -1,26 +1,22 @@
 import { useMemo, useState } from 'react'
 import { validateMnemonic } from 'bip39'
+import Clipboard from '@react-native-clipboard/clipboard'
+import { useSetRecoilState } from 'recoil'
+import _ from 'lodash'
 
 import useAuth from 'hooks/auth/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
-import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import { AuthChallengeInfo } from 'types'
-import _ from 'lodash'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
   setUsePkey: (value: boolean) => void
   privateKey: string
   setPrivateKey: (value: string) => void
-  mnemonic: string
-  setMnemonic: (value: string) => void
+  seedPhrase: string[]
+  updateSeedPhrase: ({ value, index }: { value: string; index: number }) => void
   mnemonicErrMsg: string
-  password: string
-  setPassword: (value: string) => void
-  passwordConfirm: string
-  setPasswordConfirm: (value: string) => void
-  passwordConfirmErrMsg: string
   isValidForm: boolean
   onClickConfirm: (
     callback: (
@@ -35,7 +31,36 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
   const [usePkey, setUsePkey] = useState(false)
 
   const [privateKey, setPrivateKey] = useState('')
-  const [mnemonic, setMnemonic] = useState<string>('')
+  const [seedPhrase, setSeedPhrase] = useState<string[]>([])
+  const mnemonic = seedPhrase.join(' ')
+
+  const updateSeedPhrase = ({
+    value,
+    index,
+  }: {
+    value: string
+    index: number
+  }): void => {
+    const splitted = value.split(' ')
+    if (splitted.length > 11) {
+      Clipboard.getString().then(text => {
+        const clipboardList = text
+          .trim()
+          .split(' ')
+          .map(x => x.trim())
+        if (clipboardList.length > 11) {
+          setSeedPhrase(clipboardList)
+        }
+      })
+    } else {
+      setSeedPhrase(oriList => {
+        const newList = [...oriList]
+        newList[index] = value
+        return newList
+      })
+    }
+  }
+
   const mnemonicErrMsg = useMemo(() => {
     if (usePkey === false && mnemonic && validateMnemonic(mnemonic) === false) {
       return 'Invalid mnemonic'
@@ -43,18 +68,9 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     return ''
   }, [mnemonic, usePkey])
 
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
-  const passwordConfirmErrMsg = useMemo(() => {
-    if (password && password !== passwordConfirm) {
-      return 'Password does not match'
-    }
-    return ''
-  }, [password, passwordConfirm])
-
   const setLoading = useSetRecoilState(appStore.loading)
 
-  const isValidForm = !!password && !passwordConfirmErrMsg && !mnemonicErrMsg
+  const isValidForm = usePkey ? !!privateKey : !!mnemonic && !mnemonicErrMsg
 
   const onClickConfirm = async (
     callback: (
@@ -68,7 +84,7 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
 
       try {
         if (usePkey) {
-          const res = await registerRequest({ privateKey, password })
+          const res = await registerRequest({ privateKey })
           if (!res.success) {
             throw new Error(res.errMsg)
           } else {
@@ -79,7 +95,6 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
             async (account): Promise<void> => {
               const res = await registerRequest({
                 privateKey: account.privateKey,
-                password,
               })
               if (!res.success) {
                 throw new Error(res.errMsg)
@@ -106,14 +121,9 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     setUsePkey,
     privateKey,
     setPrivateKey,
-    mnemonic,
-    setMnemonic,
+    seedPhrase,
+    updateSeedPhrase,
     mnemonicErrMsg,
-    password,
-    setPassword,
-    passwordConfirm,
-    setPasswordConfirm,
-    passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
   }

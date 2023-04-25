@@ -3,18 +3,18 @@ import React, { ReactElement } from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
-  Text,
   StyleProp,
   ViewStyle,
   TextStyle,
 } from 'react-native'
+import FormText from './FormText'
 
 export type FormButtonProps = {
   children: string
   disabled?: boolean
   onPress?: () => void
-  figure?: 'primary' | 'secondary' | 'error'
-  size?: 'sm' | 'md'
+  figure?: 'primary' | 'outline' | 'error'
+  size?: 'sm' | 'md' | 'lg'
   containerStyle?: StyleProp<ViewStyle>
   textStyle?: StyleProp<TextStyle>
 }
@@ -28,29 +28,37 @@ const FormButton = ({
   containerStyle,
   textStyle,
 }: FormButtonProps): ReactElement => {
-  const mainColor =
-    figure === 'primary'
-      ? COLOR.primary._400
-      : figure === 'secondary'
-      ? COLOR.black._200
-      : '#F84F4F'
+  let mainColor = COLOR.primary._400
+  if (figure === 'error') {
+    mainColor = '#F84F4F'
+  }
 
-  const paddingVertical = size === 'md' ? 15 : 10
-  const fontSize = size === 'md' ? 16 : 14
+  const paddingVertical = size === 'md' ? 8 : 'lg' ? 11 : 5
+  const fontType = size === 'sm' ? 'R.14' : 'R.16'
+  const fontColor = figure === 'outline' ? mainColor : 'white'
+  const backgroundColor = disabled
+    ? COLOR.black._200
+    : figure === 'outline'
+    ? 'white'
+    : mainColor
+  const borderColor = disabled ? COLOR.black._200 : mainColor
 
   return (
     <TouchableOpacity
       style={[
         styles.container,
         {
-          backgroundColor: disabled ? COLOR.black._200 : mainColor,
+          backgroundColor,
           paddingVertical,
+          borderColor,
         },
         containerStyle,
       ]}
       disabled={disabled}
       onPress={onPress}>
-      <Text style={[styles.text, { fontSize }, textStyle]}>{children}</Text>
+      <FormText fontType={fontType} style={[{ color: fontColor }, textStyle]}>
+        {children}
+      </FormText>
     </TouchableOpacity>
   )
 }
@@ -63,9 +71,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     paddingHorizontal: 10,
-  },
-  text: {
-    fontWeight: 'bold',
-    color: 'white',
+    borderWidth: 1,
   },
 })

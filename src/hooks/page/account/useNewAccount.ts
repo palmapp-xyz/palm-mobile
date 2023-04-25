@@ -60,7 +60,6 @@ const useNewAccount = (): UseNewAccountReturn => {
         if (wallet) {
           const res = await registerRequest({
             privateKey: wallet.privateKey,
-            password,
           })
           if (!res.success) {
             throw new Error(res.errMsg)

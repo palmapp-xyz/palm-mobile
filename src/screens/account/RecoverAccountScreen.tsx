@@ -1,14 +1,26 @@
 import React, { ReactElement } from 'react'
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useRecoilState } from 'recoil'
+import Icon from 'react-native-vector-icons/Ionicons'
+import Clipboard from '@react-native-clipboard/clipboard'
+import { FlatList } from 'react-native'
 
-import { Text } from '@sendbird/uikit-react-native-foundation'
+import { COLOR } from 'consts'
 
-import { AuthBody, ErrorMessage, FormButton, Row, FormInput } from 'components'
+import {
+  Container,
+  ErrorMessage,
+  FormButton,
+  Row,
+  FormInput,
+  FormText,
+  Header,
+  MenuItem,
+  KeyboardAvoidingView,
+} from 'components'
 import useRecoverAccount from 'hooks/page/account/useRecoverAccount'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { COLOR } from 'consts'
-import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import Loading from 'components/atoms/Loading'
 import { AuthChallengeInfo } from 'types'
@@ -19,18 +31,14 @@ const RecoverAccountScreen = (): ReactElement => {
     setUsePkey,
     privateKey,
     setPrivateKey,
-    mnemonic,
-    setMnemonic,
+    seedPhrase,
+    updateSeedPhrase,
     mnemonicErrMsg,
-    password,
-    setPassword,
-    passwordConfirm,
-    setPasswordConfirm,
-    passwordConfirmErrMsg,
     isValidForm,
     onClickConfirm,
   } = useRecoverAccount()
-  const { navigation } = useAppNavigation()
+  const { navigation, params } = useAppNavigation<Routes.RecoverAccount>()
+  const isSignUp = params.isSignUp
 
   const [loading] = useRecoilState(appStore.loading)
   if (loading) {
@@ -50,102 +58,119 @@ const RecoverAccountScreen = (): ReactElement => {
   }
 
   return (
-    <AuthBody>
-      <View style={{ gap: 10 }}>
-        <Text style={{ fontWeight: 'bold' }}>Recover Account</Text>
-        <Row style={{ gap: 10 }}>
-          <TouchableOpacity
-            style={[
-              styles.tabItem,
-              {
-                backgroundColor: usePkey
-                  ? COLOR.black._400
-                  : COLOR.primary._400,
-              },
-            ]}
-            onPress={(): void => {
-              setUsePkey(false)
-            }}>
-            <Text style={{ color: 'white' }}>Mnemonic</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.tabItem,
-              {
-                backgroundColor: usePkey
-                  ? COLOR.primary._400
-                  : COLOR.black._400,
-              },
-            ]}
-            onPress={(): void => {
-              setUsePkey(true)
-            }}>
-            <Text style={{ color: 'white' }}>Private Key</Text>
-          </TouchableOpacity>
+    <Container style={styles.container}>
+      <Header left="back" onPressLeft={navigation.goBack} />
+      <View style={styles.body}>
+        <View style={{ rowGap: 8 }}>
+          <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
+            {isSignUp
+              ? 'How do you\nimport your wallet?'
+              : 'Please verify\nthe wallet'}
+          </FormText>
+          {isSignUp === false && (
+            <FormText color={COLOR.black._400} fontType="R.14">
+              {'The account can only be restored\nby verifying the wallet.'}
+            </FormText>
+          )}
+        </View>
+        <Row
+          style={{
+            columnGap: 8,
+            paddingTop: 40,
+            paddingBottom: 28,
+            justifyContent: 'center',
+          }}>
+          <MenuItem
+            value={true}
+            title="Enter a private key"
+            selected={usePkey}
+            setSelected={setUsePkey}
+          />
+          <MenuItem
+            value={false}
+            title="Seed Phrase"
+            selected={!usePkey}
+            setSelected={setUsePkey}
+          />
         </Row>
         {usePkey ? (
-          <FormInput
-            placeholder="Private key"
-            value={privateKey}
-            onChangeText={setPrivateKey}
-          />
-        ) : (
-          <View>
+          <View style={{ rowGap: 12 }}>
             <FormInput
-              placeholder="Mnemonic"
-              value={mnemonic}
-              onChangeText={setMnemonic}
+              placeholder="Private key"
+              value={privateKey}
+              onChangeText={setPrivateKey}
+            />
+            <TouchableOpacity
+              onPress={(): void => {
+                Clipboard.getString().then(text => {
+                  setPrivateKey(text)
+                })
+              }}>
+              <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
+                <Icon name="copy-outline" size={14} />
+                <FormText fontType="R.12">Paste from Clipboard</FormText>
+              </Row>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <>
+            <FlatList
+              data={Array.from({ length: 12 })}
+              numColumns={2}
+              columnWrapperStyle={{ columnGap: 24 }}
+              contentContainerStyle={{ rowGap: 12 }}
+              keyExtractor={(item, index): string => `seedPhrase-${index}`}
+              renderItem={({ index }): ReactElement => {
+                const value = seedPhrase[index]
+
+                return (
+                  <Row style={styles.seedItem}>
+                    <FormText style={{ width: 20 }}>{index + 1}</FormText>
+                    <View style={{ flex: 1 }}>
+                      <FormInput
+                        value={value}
+                        onChangeText={(newValue: string): void =>
+                          updateSeedPhrase({ value: newValue, index })
+                        }
+                      />
+                    </View>
+                  </Row>
+                )
+              }}
             />
             <ErrorMessage message={mnemonicErrMsg} />
-          </View>
+          </>
         )}
-        <FormInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          textContentType="password"
-          secureTextEntry
-        />
-
-        <FormInput
-          placeholder="Confirm Password"
-          value={passwordConfirm}
-          onChangeText={setPasswordConfirm}
-          textContentType="password"
-          secureTextEntry
-        />
-        <ErrorMessage message={passwordConfirmErrMsg} />
       </View>
 
-      <Row style={styles.btnGroup}>
-        <FormButton
-          containerStyle={[styles.btn, { backgroundColor: 'white' }]}
-          textStyle={{
-            color: COLOR.primary._400,
-            fontWeight: '400',
-            paddingHorizontal: 20,
-          }}
-          onPress={(): void => {
-            navigation.replace(Routes.AuthMenu)
-          }}>
-          Cancel
-        </FormButton>
-
-        <FormButton
-          containerStyle={[styles.btn, { flex: 1 }]}
-          disabled={!isValidForm || loading}
-          onPress={onPressConfirm}>
-          Recover
-        </FormButton>
-      </Row>
-    </AuthBody>
+      <KeyboardAvoidingView>
+        <View style={styles.footer}>
+          <FormButton
+            size="lg"
+            disabled={!isValidForm || loading}
+            onPress={onPressConfirm}>
+            {isSignUp ? 'Import the Wallet' : 'Verify'}
+          </FormButton>
+        </View>
+      </KeyboardAvoidingView>
+    </Container>
   )
 }
 
 export default RecoverAccountScreen
 
 const styles = StyleSheet.create({
-  tabItem: { padding: 10, borderRadius: 10 },
-  btnGroup: { marginHorizontal: -20, paddingTop: 20, marginBottom: -30 },
-  btn: { borderRadius: 0 },
+  container: { flex: 1 },
+  body: { flex: 1, paddingHorizontal: 20, paddingVertical: 12 },
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  seedItem: {
+    flex: 1,
+    columnGap: 4,
+    alignItems: 'center',
+  },
 })

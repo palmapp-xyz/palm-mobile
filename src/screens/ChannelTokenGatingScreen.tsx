@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import _ from 'lodash'
 import { utils } from 'ethers'
 
@@ -119,9 +118,7 @@ const ChannelTokenGatingScreen = (): ReactElement => {
     <Container style={styles.container}>
       <Header
         title="Token Gating"
-        left={
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
-        }
+        left="back"
         onPressLeft={navigation.goBack}
       />
       <View style={styles.body}>

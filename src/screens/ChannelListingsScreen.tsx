@@ -1,9 +1,6 @@
 import React, { ReactElement, useState } from 'react'
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-
-import { COLOR } from 'consts'
 
 import { Container, Header } from 'components'
 
@@ -84,13 +81,7 @@ const ChannelListingsScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Header
-        title="NFT List"
-        left={
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={20} />
-        }
-        onPressLeft={navigation.goBack}
-      />
+      <Header title="NFT List" left="back" onPressLeft={navigation.goBack} />
       <Contents channelUrl={params.channelUrl} />
     </Container>
   )

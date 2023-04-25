@@ -13,4 +13,6 @@ export default {
   image_blue: require('./image_blue.png'),
   select_image: require('./select_image.png'),
   create_channel: require('./create_channel.png'),
+  import: require('./import.png'),
+  plus: require('./plus.png'),
 }

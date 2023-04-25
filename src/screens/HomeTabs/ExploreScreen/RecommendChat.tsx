@@ -35,7 +35,7 @@ const RecommendChat = (): ReactElement => {
           contentContainerStyle={{ gap: 8 }}
           renderItem={({ item }): ReactElement => (
             <MenuItem
-              id={item.id}
+              value={item.id}
               title={item.title}
               selected={selectedOption === item.id}
               setSelected={setSelectedOption}

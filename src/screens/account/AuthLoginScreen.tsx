@@ -6,7 +6,7 @@ import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 
 import {
-  AuthBody,
+  Container,
   FormButton,
   FormInput,
   KeyboardAvoidingView,
@@ -32,7 +32,7 @@ const AuthLoginScreen = (): ReactElement => {
   }
 
   return (
-    <AuthBody>
+    <Container>
       <KeyboardAvoidingView>
         <View style={{ rowGap: 10 }}>
           <FormInput
@@ -41,11 +41,7 @@ const AuthLoginScreen = (): ReactElement => {
             textContentType="password"
             secureTextEntry
           />
-          <TouchableOpacity
-            style={styles.forgetPwd}
-            onPress={(): void => {
-              navigation.replace(Routes.AuthMenu)
-            }}>
+          <TouchableOpacity style={styles.forgetPwd}>
             <Icon name="lock-closed" style={{ color: COLOR.primary._400 }} />
             <Text style={{ color: COLOR.primary._400 }}>Forgot password</Text>
           </TouchableOpacity>
@@ -54,7 +50,7 @@ const AuthLoginScreen = (): ReactElement => {
           </FormButton>
         </View>
       </KeyboardAvoidingView>
-    </AuthBody>
+    </Container>
   )
 }
 

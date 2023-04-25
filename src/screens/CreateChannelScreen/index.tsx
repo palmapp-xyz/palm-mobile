@@ -47,9 +47,7 @@ const CreateChannelScreen = (): ReactElement => {
     <>
       <Container style={styles.container}>
         <Header
-          left={
-            <Icon name="ios-chevron-back" color={COLOR.black._800} size={28} />
-          }
+          left="back"
           onPressLeft={navigation.goBack}
           right={
             <Icon
