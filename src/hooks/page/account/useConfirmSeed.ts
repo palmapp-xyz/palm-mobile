@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
 import appStore from 'store/appStore'
 import { AuthChallengeInfo } from 'types'
