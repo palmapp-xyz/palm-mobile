@@ -2,15 +2,15 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
 
-import { User } from 'types'
+import { FbProfile } from 'types'
 import { useEffect, useState } from 'react'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { getProfileImgFromProfile } from 'libs/lens'
 
 export type UseFsProfileReturn = {
   fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
-  fsProfileField?: User
-  fetchProfile: (profileId: string) => Promise<User | undefined>
+  fsProfileField?: FbProfile
+  fetchProfile: (profileId: string) => Promise<FbProfile | undefined>
 }
 
 const useFsProfile = ({
@@ -18,7 +18,7 @@ const useFsProfile = ({
 }: {
   profileId?: string
 }): UseFsProfileReturn => {
-  const [fsProfileField, setFsProfileField] = useState<User | undefined>()
+  const [fsProfileField, setFsProfileField] = useState<FbProfile | undefined>()
 
   const { currentUser, setCurrentUser, updateCurrentUserInfo } =
     useSendbirdChat()
@@ -31,7 +31,7 @@ const useFsProfile = ({
     }
     const subscriber = fsProfile.onSnapshot(profileDocSnapshot => {
       if (profileDocSnapshot.exists) {
-        setFsProfileField(profileDocSnapshot.data() as User)
+        setFsProfileField(profileDocSnapshot.data() as FbProfile)
       }
     })
     return () => subscriber()
@@ -54,7 +54,7 @@ const useFsProfile = ({
 
   const fetchProfile = async (
     _profileId: string
-  ): Promise<User | undefined> => {
+  ): Promise<FbProfile | undefined> => {
     const _fsProfile = await firestore()
       .collection('profiles')
       .doc(_profileId)
@@ -62,7 +62,7 @@ const useFsProfile = ({
     if (!_fsProfile.exists) {
       return undefined
     }
-    return _fsProfile.data() as User
+    return _fsProfile.data() as FbProfile
   }
 
   return {

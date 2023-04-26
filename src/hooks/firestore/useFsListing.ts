@@ -3,9 +3,9 @@ import firestore, {
 } from '@react-native-firebase/firestore'
 
 import useReactQuery from 'hooks/complex/useReactQuery'
-import { FbListing, FirestoreKeyEnum } from 'types'
 import { useMemo } from 'react'
 import { Maybe } from '@toruslabs/openlogin'
+import { FbListing, FirestoreKeyEnum } from 'types'
 
 export type UseFsListingReturn = {
   fsListing?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>

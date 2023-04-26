@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { SendbirdUser, useAsyncEffect } from '@sendbird/uikit-utils'
@@ -25,9 +26,7 @@ import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import useLensAuth from 'hooks/lens/useLensAuth'
 import { UTIL } from 'consts'
-import { useEffect, useState } from 'react'
-import { profilesDeepCompare } from 'libs/profile'
-import useNotification from '../independent/useNotification'
+import useNotification from 'hooks/independent/useNotification'
 
 export type UseAuthReturn = {
   user?: User
@@ -63,7 +62,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const { web3 } = useWeb3(chain ?? SupportedNetworkEnum.ETHEREUM)
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
-  const { fsProfileField, fetchProfile } = useFsProfile({
+  const { fetchProfile } = useFsProfile({
     profileId: user?.profileId,
   })
   const { challengeRequest, challengeVerify } = useAuthChallenge(
@@ -124,19 +123,6 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
     return subscriber
   }, [])
-
-  useEffect(() => {
-    if (!user || !fsProfileField) {
-      return
-    }
-
-    if (profilesDeepCompare(user, fsProfileField) === false) {
-      setUser({
-        ...user,
-        ...fsProfileField,
-      })
-    }
-  }, [user, fsProfileField])
 
   const storeAuth = async (input: Partial<AuthStorageType>): Promise<void> => {
     if (user) {
