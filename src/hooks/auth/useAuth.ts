@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
-import { SendbirdUser, useAsyncEffect } from '@sendbird/uikit-utils'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 import _ from 'lodash'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
@@ -20,7 +20,6 @@ import {
   AuthStorageType,
 } from 'types'
 import { formatHex } from 'libs/utils'
-import useFsProfile from 'hooks/firestore/useFsProfile'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -48,11 +47,8 @@ export type UseAuthReturn = {
   fetchUserProfileId: (
     userAddress: ContractAddr | undefined
   ) => Promise<string | undefined>
-  setAuth: (currentUser: User, result: AuthChallengeResult) => Promise<User>
-  setLensAuth: (
-    currentUser: User,
-    lensAuth: AuthenticationResult
-  ) => Promise<void>
+  setAuth: (result: AuthChallengeResult) => Promise<User>
+  setLensAuth: (lensAuth: AuthenticationResult) => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -61,9 +57,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const { web3 } = useWeb3(chain ?? SupportedNetworkEnum.ETHEREUM)
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
-  const { fetchProfile } = useFsProfile({
-    profileId: user?.profileId,
-  })
+
   const { challengeRequest, challengeVerify } = useAuthChallenge(
     chain ?? SupportedNetworkEnum.ETHEREUM
   )
@@ -73,7 +67,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   } = useLensAuth()
   const [restoreLoading, setRestoreLoading] = useState<boolean>(true)
   const { unregisterDeviceToken } = useNotification({
-    profileId: user?.profileId,
+    profileId: user?.auth?.profileId,
     channelId: 'default',
   })
 
@@ -95,11 +89,11 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const restoreAuth = async (restore: AuthStorageType): Promise<void> => {
     if (restore.auth) {
       try {
-        const currentUser = await appSignIn(restore.auth)
+        await appSignIn(restore.auth)
         if (restore.lensAuth) {
           const res = await lensRefreshAuthIfExpired(restore.lensAuth)
           if (res.success) {
-            await setLensAuth(currentUser, res.value ?? restore.lensAuth)
+            await setLensAuth(res.value ?? restore.lensAuth)
           }
         }
       } catch (e) {
@@ -188,19 +182,12 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   }
 
   const appSignIn = async (authResult: AuthChallengeResult): Promise<User> => {
-    const userCredential: FirebaseAuthTypes.UserCredential =
-      await auth().signInWithCustomToken(authResult.authToken)
-
-    const fsUser: User | undefined = await fetchProfile(authResult.profileId)
-    if (!fsUser) {
-      throw new Error(`User ${authResult.profileId} does not exist`)
-    }
-
-    const sbUser: SendbirdUser = await connect(authResult.profileId)
+    const [_userCredential, sbUser, authenticatedUser] = await Promise.all([
+      auth().signInWithCustomToken(authResult.authToken),
+      connect(authResult.profileId),
+      setAuth(authResult),
+    ])
     setCurrentUser(sbUser)
-
-    const r: User = { ...fsUser, userCredential, sbUser }
-    const authenticatedUser = await setAuth(r, authResult)
 
     console.log(
       'App signed in as',
@@ -237,7 +224,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
         throw new Error(res.errMsg)
       }
 
-      await setLensAuth(user!, res.value)
+      await setLensAuth(res.value)
       return res
     } catch (error) {
       console.error('useAuth:lensLogin', error)
@@ -245,30 +232,28 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
     }
   }
 
-  const setAuth = async (
-    currentUser: User,
-    result: AuthChallengeResult
-  ): Promise<User> => {
+  const setAuth = async (result: AuthChallengeResult): Promise<User> => {
     await storeAuth({ auth: result })
 
     const authenticatedUser: User = {
-      ...currentUser,
+      ...user,
       auth: result,
       address: result.address as ContractAddr,
-      profileId: result.profileId,
     }
     setUser(authenticatedUser)
     return authenticatedUser
   }
 
   const setLensAuth = async (
-    currentUser: User,
     lensAuth: AuthenticationResult | null
   ): Promise<void> => {
+    if (!user) {
+      return
+    }
     await storeAuth({ lensAuth })
 
     const lensUser: User = {
-      ...currentUser,
+      ...user,
       lensAuth,
     }
     setUser(lensUser)

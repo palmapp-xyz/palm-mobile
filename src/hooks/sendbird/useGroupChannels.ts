@@ -16,7 +16,7 @@ export const useGroupChannels = (
 ): useGroupChannelsReturn => {
   const { sdk } = useSendbirdChat()
   const { user } = useAuth()
-  return useGroupChannelList(sdk, user?.profileId, {
+  return useGroupChannelList(sdk, user?.auth?.profileId, {
     queryCreator: () =>
       sdk.groupChannel.createMyGroupChannelListQuery({
         channelUrlsFilter: channelUrls,

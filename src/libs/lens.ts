@@ -1,11 +1,10 @@
 import { Profile } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { fixIpfsURL } from './ipfs'
-import { User } from 'types'
 import { AttributeData } from '@lens-protocol/react-native-lens-ui-kit'
 import { Attribute } from 'graphqls/__generated__/graphql'
 
-export const getProfileImgFromProfile = (
-  profile: Profile | User | undefined
+export const getProfileImgFromLensProfile = (
+  profile: Profile | undefined
 ): string | undefined => {
   if (!profile) {
     return undefined
@@ -20,7 +19,7 @@ export const getProfileImgFromProfile = (
 }
 
 export const getAttributesData = (
-  profile: User | Profile | undefined
+  profile: Profile | undefined
 ): AttributeData[] => {
   return (
     profile?.attributes?.map(

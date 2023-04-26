@@ -7,7 +7,7 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import { UTIL } from 'consts'
-import { Moralis, SupportedNetworkEnum, User } from 'types'
+import { FbProfile, Moralis, SupportedNetworkEnum } from 'types'
 import selectNftStore from 'store/selectNftStore'
 import {
   Header,
@@ -37,7 +37,7 @@ const Contents = ({
   chain: SupportedNetworkEnum
 }): ReactElement => {
   const { user } = useAuth()
-  const [receiver, setReceiver] = useState<User>()
+  const [receiver, setReceiver] = useState<FbProfile>()
   const { isPosting, isValidForm, onClickConfirm } = useSendNft({
     selectedNft,
     receiver: receiver?.address,
@@ -55,7 +55,7 @@ const Contents = ({
     imgInfo.data = stringifySendFileData({
       type: 'send',
       selectedNft,
-      from: user.profileId,
+      from: user!.auth!.profileId,
       to: receiverId,
     })
     channel.sendFileMessage(imgInfo)

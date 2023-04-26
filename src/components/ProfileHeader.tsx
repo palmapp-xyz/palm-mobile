@@ -19,7 +19,6 @@ import { Routes } from 'libs/navigation'
 import { FormImage, FormText, MediaRenderer, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useEthPrice from 'hooks/independent/useEthPrice'
-import { getProfileImgFromProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import useAuth from 'hooks/auth/useAuth'
@@ -27,6 +26,7 @@ import _ from 'lodash'
 import useProfile from 'hooks/auth/useProfile'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
+import { isLensProfile } from 'libs/profile'
 
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr
@@ -65,7 +65,6 @@ const ProfileHeader = ({
 
   const [profileId, setProfileId] = useState<string | undefined>(userProfileId)
   const { profile } = useProfile({ profileId })
-  const profileImg = getProfileImgFromProfile(profile)
 
   useAsyncEffect(async () => {
     if (profileId || !userAddress) {
@@ -114,9 +113,9 @@ const ProfileHeader = ({
       </View>
       <View style={{ backgroundColor: 'white', paddingHorizontal: 20 }}>
         <View style={styles.profileImgBox}>
-          {profileImg ? (
+          {profile?.profileImg ? (
             <MediaRenderer
-              src={profileImg}
+              src={profile.profileImg}
               width={100}
               height={100}
               style={{ borderRadius: 50 }}
@@ -258,7 +257,7 @@ const ProfileHeader = ({
             </View>
           </View>
         </View>
-        {!!profile?.attributes?.length && (
+        {profile && isLensProfile(profile) && !!profile?.attributes?.length && (
           <View
             style={{
               padding: 6,

@@ -143,7 +143,7 @@ const useLens = (): UseLensReturn => {
       lensAuth = await refreshAuthIfExpired(user.lensAuth).then(res => {
         if (res.success && res.value !== undefined) {
           // token refreshed
-          return setLensAuth(user, res.value).then(() => {
+          return setLensAuth(res.value).then(() => {
             return res.value
           })
         }
@@ -175,7 +175,7 @@ const useLens = (): UseLensReturn => {
       lensAuth = await refreshAuthIfExpired(user.lensAuth).then(res => {
         if (res.success && res.value !== undefined) {
           // token refreshed
-          return setLensAuth(user, res.value).then(() => {
+          return setLensAuth(res.value).then(() => {
             return res.value
           })
         }

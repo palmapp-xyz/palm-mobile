@@ -14,6 +14,7 @@ import useProfile from 'hooks/auth/useProfile'
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 import { getAttributesData } from 'libs/lens'
 import { PublicationMetadataStatusType } from 'graphqls/__generated__/graphql'
+import { isLensProfile } from 'libs/profile'
 
 const UpdateLensProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -22,14 +23,22 @@ const UpdateLensProfileScreen = (): ReactElement => {
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
-  const { profile, setMetadata } = useProfile({ profileId: user?.profileId })
+  const { profile, setMetadata } = useProfile({
+    profileId: user?.auth?.profileId,
+  })
 
   const [updatedProfile, setUpdatedProfile] = useState<
     Partial<ProfileMetadata>
   >({
-    name: profile?.name || undefined,
+    name:
+      profile && isLensProfile(profile)
+        ? profile?.name || undefined
+        : undefined,
     bio: profile?.bio || undefined,
-    attributes: getAttributesData(profile),
+    attributes:
+      profile && isLensProfile(profile)
+        ? getAttributesData(profile)
+        : undefined,
   })
 
   const update = async (): Promise<void> => {

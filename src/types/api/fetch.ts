@@ -1,4 +1,4 @@
-import { AuthChallengeInfo, AuthChallengeResult, User } from 'types'
+import { AuthChallengeInfo, AuthChallengeResult, FbProfile } from 'types'
 import { NominalType } from '../common'
 import { ContractAddr } from '../contracts'
 import { Accounts } from './accounts'
@@ -146,7 +146,7 @@ export type ApiResponse = {
           hits: {
             _index: string
             _id: string
-            _source: User
+            _source: FbProfile
           }[]
         }
       }

@@ -124,7 +124,8 @@ const TokenGatingInfoScreen = (): ReactElement => {
 
   const { user } = useAuth(gating?.chain)
   const membersWithoutMe = useMemo(
-    () => channel?.members.filter(x => x.userId !== user?.profileId) || [],
+    () =>
+      channel?.members.filter(x => x.userId !== user?.auth?.profileId) || [],
     [channel?.members]
   )
 

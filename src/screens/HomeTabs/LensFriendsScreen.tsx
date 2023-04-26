@@ -18,10 +18,9 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/auth/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import useLens from 'hooks/lens/useLens'
-import { getProfileImgFromProfile } from 'libs/lens'
+import { getProfileImgFromLensProfile } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
-import { Profile } from 'graphqls/__generated__/graphql'
-import { User } from 'types'
+import { FbProfile } from 'types'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import useFsProfile from 'hooks/firestore/useFsProfile'
@@ -44,19 +43,20 @@ const LensFriendsScreen = (): ReactElement => {
     () => getDefaultProfile(user?.address ?? '')
   )
 
-  const createUserFromProfile = async (
+  const createProfileFromLensProfile = async (
     profile: ExtendedProfile
-  ): Promise<User | undefined> => {
+  ): Promise<FbProfile | undefined> => {
     if (!user) {
       return undefined
     }
 
     const userProfileId = await fetchUserProfileId(profile.ownedBy)
     const userProfile = await fetchProfile(userProfileId!)
-    const ret: User = {
+    const ret: FbProfile = {
       ...userProfile!,
-      lensProfile: profile as Profile,
-      ...(profile as Profile),
+      bio: profile.bio || undefined,
+      handle: profile.handle,
+      profileImg: getProfileImgFromLensProfile(profile),
     }
     // not a palm user yet. populate with lens profile info for him/her
     if (!userProfile!.handle) {
@@ -69,11 +69,11 @@ const LensFriendsScreen = (): ReactElement => {
     // create sendbird user by connecting
     const newUser = await connect(userProfileId!)
     setCurrentUser(newUser)
-    const profileImg = getProfileImgFromProfile(profile)
+    const profileImg = getProfileImgFromLensProfile(profile)
     await updateCurrentUserInfo(profile.handle, profileImg)
 
     // reconnect back to self
-    const me = await connect(user?.profileId)
+    const me = await connect(user.auth!.profileId)
     setCurrentUser(me)
 
     return ret
@@ -86,15 +86,15 @@ const LensFriendsScreen = (): ReactElement => {
 
     setLoading(true)
     try {
-      const userProfile = await createUserFromProfile(profile)
+      const userProfile = await createProfileFromLensProfile(profile)
       const channel = await createGroupChatIfNotExist({
         channelUrl: generateDmChannelUrl(
           userProfile!.profileId,
-          user.profileId
+          user.auth!.profileId
         ),
         isDistinct: true,
         invitedUserIds: [userProfile!.profileId],
-        operatorUserIds: [user.profileId, userProfile!.profileId],
+        operatorUserIds: [user.auth!.profileId, userProfile!.profileId],
       })
       setLoading(false)
       setTimeout(() => {

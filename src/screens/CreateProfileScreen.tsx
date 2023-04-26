@@ -13,7 +13,9 @@ const CreateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
   const [handle, setHandle] = useState('')
   const [loading, setLoading] = useRecoilState(appStore.loading)
-  const { profile, createProfile } = useProfile({ profileId: user?.profileId })
+  const { profile, createProfile } = useProfile({
+    profileId: user?.auth?.profileId,
+  })
   const { alert } = useAlert()
   const testnet = !isMainnet()
 

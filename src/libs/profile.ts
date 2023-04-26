@@ -1,35 +1,35 @@
-import { Maybe } from '@toruslabs/openlogin'
+import { Profile } from 'graphqls/__generated__/graphql'
 import _ from 'lodash'
-import { User } from 'types'
+import { ContractAddr, FbProfile } from 'types'
+import { getProfileImgFromLensProfile } from './lens'
 
 // returns boolean whether `second` user fields are all equally included in `first` user fields
 // undefined if first and second inputs are not of the same address
 export const profilesDeepCompare = (
-  first: Maybe<User>,
-  second: Maybe<User>
+  first: FbProfile | Profile,
+  second: FbProfile | Profile
 ): boolean | undefined => {
-  if (
-    first === null ||
-    first === undefined ||
-    second === null ||
-    second === undefined ||
-    (first.address || first.ownedBy) !== (second.address || second.ownedBy)
-  ) {
+  const firstAddress: ContractAddr = isLensProfile(first)
+    ? (first.ownedBy as ContractAddr)
+    : first.address
+  const secondAddress: ContractAddr = isLensProfile(second)
+    ? (second.ownedBy as ContractAddr)
+    : second.address
+
+  if (firstAddress !== secondAddress || first.handle !== second.handle) {
     return undefined
   }
 
-  const firstSerialized = JSON.stringify(_.pick(first, Object.keys(second)))
-  const secondSerialized = JSON.stringify(second)
+  const firstProfileImg: string | undefined = isLensProfile(first)
+    ? getProfileImgFromLensProfile(first)
+    : first.profileImg
+  const secondProfileImg: string | undefined = isLensProfile(second)
+    ? getProfileImgFromLensProfile(second)
+    : second.profileImg
 
-  // console.log(
-  //   '[profilesDeepCompare]\n - ',
-  //   firstSerialized,
-  //   '\n - ',
-  //   secondSerialized,
-  //   `\n : firstSerialized === secondSerialized ${
-  //     firstSerialized === secondSerialized
-  //   }`
-  // )
+  return first.bio === second.bio && firstProfileImg === secondProfileImg
+}
 
-  return firstSerialized === secondSerialized
+export const isLensProfile = (x: FbProfile | Profile): x is Profile => {
+  return (x as Profile).__typename !== undefined
 }

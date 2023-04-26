@@ -83,8 +83,8 @@ const useCreateChannel = (): UseCreateChannelReturn => {
     if (user) {
       try {
         const channel = await createGroupChat({
-          invitedUserIds: [user.profileId],
-          operatorUserIds: [user.profileId],
+          invitedUserIds: [user.auth!.profileId],
+          operatorUserIds: [user.auth!.profileId],
           coverImage: channelImage,
           channelName,
         })

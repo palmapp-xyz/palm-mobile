@@ -2,10 +2,10 @@ import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import {
   ContractAddr,
+  FbProfile,
   Moralis,
   SupportedNetworkEnum,
   TrueOrErrReturn,
-  User,
 } from 'types'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import useLensProfile from 'hooks/lens/useLensProfile'
@@ -14,21 +14,20 @@ import { profilesDeepCompare } from 'libs/profile'
 import useLens from 'hooks/lens/useLens'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
-import { NftImage } from 'graphqls/__generated__/graphql'
+import { NftImage, Profile } from 'graphqls/__generated__/graphql'
 import useNetwork from 'hooks/complex/useNetwork'
 import { formatValues } from 'libs/firebase'
 import { Maybe } from '@toruslabs/openlogin'
-import { useEffect } from 'react'
-import { useRecoilState } from 'recoil'
-import appStore from 'store/appStore'
+import { getProfileImgFromLensProfile } from 'libs/lens'
 
 export type UseProfileReturn = {
-  profile: User | undefined
+  profile: FbProfile | undefined
+  lensProfile: Profile | undefined
   isLoadingLensProfile: boolean
   createProfile: (
     handle: string,
     createOnLens?: boolean
-  ) => Promise<TrueOrErrReturn<User>>
+  ) => Promise<TrueOrErrReturn<FbProfile>>
   updateProfileImage: (
     item: Partial<Moralis.NftItem>,
     selectedNetwork: SupportedNetworkEnum
@@ -52,7 +51,6 @@ const useProfile = ({
 }): UseProfileReturn => {
   const { fsProfile, fsProfileField } = useFsProfile({ profileId })
   const { connectedNetworkIds } = useNetwork()
-  const [user, setUser] = useRecoilState(appStore.user)
 
   const {
     profile: lensProfile,
@@ -69,23 +67,16 @@ const useProfile = ({
   } = useLens()
 
   useAsyncEffect(async () => {
-    if (!fsProfile || !lensProfile) {
+    if (!fsProfile || !fsProfileField || !lensProfile) {
       return
     }
     if (profilesDeepCompare(fsProfileField, lensProfile) === false) {
       await fsProfile.update({
-        lensProfile,
-        ...lensProfile,
-      })
+        bio: lensProfile.bio || undefined,
+        profileImg: getProfileImgFromLensProfile(lensProfile),
+      } as Partial<FbProfile>)
     }
   }, [fsProfile, lensProfile])
-
-  useEffect(() => {
-    if (!lensProfile || !user || isLoadingLensProfile) {
-      return
-    }
-    setUser({ ...user, ...lensProfile, lensProfile } as User)
-  }, [lensProfile])
 
   useQuery(
     ['refetchUseLensProfile'],
@@ -98,7 +89,7 @@ const useProfile = ({
   const createProfile = async (
     handle: string,
     createOnLens?: boolean
-  ): Promise<TrueOrErrReturn<User>> => {
+  ): Promise<TrueOrErrReturn<FbProfile>> => {
     if (!fsProfile) {
       return { success: false, errMsg: 'user does not exist.' }
     }
@@ -121,7 +112,7 @@ const useProfile = ({
     }
 
     await fsProfile.update({ handle })
-    return { success: true, value: { ...fsProfileField, handle } as User }
+    return { success: true, value: { ...fsProfileField, handle } as FbProfile }
   }
 
   const updateProfileImage = async (
@@ -249,6 +240,7 @@ const useProfile = ({
 
   return {
     profile: fsProfileField,
+    lensProfile,
     isLoadingLensProfile,
     createProfile,
     updateProfileImage,

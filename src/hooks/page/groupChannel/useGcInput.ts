@@ -52,7 +52,7 @@ const useGcInput = ({
     useState<StepAfterSelectNftType>()
 
   const receiverList = useMemo(
-    () => channel.members.filter(x => x.userId !== user?.profileId) || [],
+    () => channel.members.filter(x => x.userId !== user?.auth?.profileId) || [],
     [channel.members]
   )
 
@@ -91,7 +91,9 @@ const useGcInput = ({
         navigation.navigate(Routes.ListNft, { channelUrl: channel.url })
       } else if (stepAfterSelectNft === 'send') {
         if (channel.members.length < 3) {
-          const target = channel.members.find(x => x.userId !== user?.profileId)
+          const target = channel.members.find(
+            x => x.userId !== user?.auth?.profileId
+          )
           if (target) {
             navigation.navigate(Routes.SendNft, {
               receiverId: target.userId,

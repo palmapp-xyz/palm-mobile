@@ -41,14 +41,14 @@ const MyPageScreen = (): ReactElement => {
   })
 
   const { profile, updateProfileImage } = useProfile({
-    profileId: user?.profileId,
+    profileId: user?.auth?.profileId,
   })
 
   const profileHeader = useCallback(
     () => (
       <ProfileHeader
         isMyPage
-        userProfileId={user?.profileId}
+        userProfileId={user?.auth?.profileId}
         userAddress={user?.address}
         selectedNetwork={selectedNetwork}
         onNetworkSelected={setSelectedNetwork}
