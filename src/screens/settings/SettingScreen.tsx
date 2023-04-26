@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { COLOR } from 'consts'
 import { Container, Header, Row } from 'components'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 
 const SettingScreen = (): ReactElement => {

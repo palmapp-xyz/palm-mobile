@@ -4,7 +4,7 @@ import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { generateMnemonic } from 'bip39'
 import { Wallet } from 'ethers'
 
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'

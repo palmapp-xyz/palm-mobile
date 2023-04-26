@@ -21,7 +21,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 

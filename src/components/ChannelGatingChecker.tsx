@@ -11,7 +11,7 @@ import {
 } from 'types'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useReactQuery from 'hooks/complex/useReactQuery'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import useNft from 'hooks/contract/useNft'
 import useUserBalance from 'hooks/independent/useUserBalance'
 

@@ -14,7 +14,7 @@ import {
 } from 'types'
 import usePostTx from 'hooks/complex/usePostTx'
 import useNft from 'hooks/contract/useNft'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 // import useExplorer from 'hooks/complex/useExplorer'
 import usePostTxStatusEffect, {
   EffectListType,

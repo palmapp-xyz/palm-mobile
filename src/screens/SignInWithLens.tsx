@@ -4,7 +4,7 @@ import { Alert, StyleSheet, Text, View } from 'react-native'
 import { Container } from 'components'
 import LensLogo from 'assets/LensLogo'
 
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 
 const SignInWithLens = (): ReactElement => {
   const { lensLogin, logout } = useAuth()

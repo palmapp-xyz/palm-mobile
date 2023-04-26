@@ -3,7 +3,7 @@ import * as axiosjs from 'axios'
 import { AxiosResponse } from 'axios'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import {
   ApiEnum,
   ApiFetchResult,

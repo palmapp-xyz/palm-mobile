@@ -5,7 +5,7 @@ import useDevice from 'hooks/complex/useDevice'
 import useFsTags from 'hooks/firestore/useFsTags'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useSendbird from 'hooks/sendbird/useSendbird'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { Routes } from 'libs/navigation'
 import { getFsChannel } from 'libs/firebase'
 import {

@@ -3,10 +3,10 @@ import { StyleSheet, Text, View } from 'react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { Container, FormButton, FormInput } from 'components'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import useProfile from 'hooks/independent/useProfile'
+import useProfile from 'hooks/auth/useProfile'
 import { isMainnet } from 'libs/utils'
 
 const CreateProfileScreen = (): ReactElement => {

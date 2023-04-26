@@ -1,7 +1,7 @@
 import { SupportedNetworkEnum, User } from 'types'
 
 import useUserNftList, { UseUserNftListReturn } from 'hooks/api/useUserNftList'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import useUserBalance, {
   UseUserBalanceReturn,
 } from 'hooks/independent/useUserBalance'

@@ -15,7 +15,7 @@ import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import useLens from 'hooks/lens/useLens'
 import { getProfileImgFromProfile } from 'libs/lens'

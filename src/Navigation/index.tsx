@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { ReactElement } from 'react'
 
 import useAppearance from 'hooks/useAppearance'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 
 import { Routes, navigationRef } from 'libs/navigation'
 

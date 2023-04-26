@@ -1,7 +1,7 @@
 import { useSetRecoilState } from 'recoil'
 import _ from 'lodash'
 
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import postTxStore from 'store/postTxStore'
 
 import {

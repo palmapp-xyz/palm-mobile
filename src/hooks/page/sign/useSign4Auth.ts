@@ -1,4 +1,4 @@
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'

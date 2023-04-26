@@ -27,7 +27,7 @@ import useLensAuth from 'hooks/lens/useLensAuth'
 import { UTIL } from 'consts'
 import { useEffect, useState } from 'react'
 import { profilesDeepCompare } from 'libs/profile'
-import useNotification from './useNotification'
+import useNotification from '../independent/useNotification'
 
 export type UseAuthReturn = {
   user?: User

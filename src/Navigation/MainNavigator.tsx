@@ -30,7 +30,7 @@ import {
   InitExploreScreen,
   CreateChannelScreen,
 } from '../screens'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 
 const MainStack = createNativeStackNavigator()
 

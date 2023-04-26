@@ -11,7 +11,7 @@ import {
 import { UTIL } from 'consts'
 
 import useReactQuery from 'hooks/complex/useReactQuery'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import {
   ContractAddr,
   FbListing,

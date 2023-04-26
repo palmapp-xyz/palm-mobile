@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { COLOR } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import useUserNftList from 'hooks/api/useUserNftList'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { SupportedNetworkEnum } from 'types'
 import {
   FormText,

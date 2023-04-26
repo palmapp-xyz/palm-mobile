@@ -23,7 +23,7 @@ import {
 import { Moralis, SupportedNetworkEnum } from 'types'
 import ProfileFooter from 'components/ProfileFooter'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import useProfile from 'hooks/independent/useProfile'
+import useProfile from 'hooks/auth/useProfile'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()

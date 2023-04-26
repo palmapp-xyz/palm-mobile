@@ -17,7 +17,7 @@ import { Routes } from 'libs/navigation'
 import { ContractAddr } from 'types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Member } from '@sendbird/chat/groupChannel'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { FormImage } from 'components'
 
 const GroupChannelHeader = ({

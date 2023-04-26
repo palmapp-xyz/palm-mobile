@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import _ from 'lodash'
 
 import { COLOR, NETWORK } from 'consts'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import {
   Container,
   FormButton,

@@ -22,11 +22,19 @@ import useEthPrice from 'hooks/independent/useEthPrice'
 import { getProfileImgFromProfile } from 'libs/lens'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import _ from 'lodash'
-import useProfile from 'hooks/independent/useProfile'
+import useProfile from 'hooks/auth/useProfile'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
+
+export type ProfileHeaderProps = {
+  userAddress?: ContractAddr
+  userProfileId?: string
+  isMyPage: boolean
+  selectedNetwork: SupportedNetworkEnum
+  onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
+}
 
 const ProfileHeader = ({
   userAddress,
@@ -34,13 +42,7 @@ const ProfileHeader = ({
   isMyPage,
   selectedNetwork,
   onNetworkSelected,
-}: {
-  userAddress?: ContractAddr
-  userProfileId?: string
-  isMyPage: boolean
-  selectedNetwork: SupportedNetworkEnum
-  onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
-}): ReactElement => {
+}: ProfileHeaderProps): ReactElement => {
   const { navigation } = useAppNavigation()
   const { getEthPrice } = useEthPrice()
   const { getKlayPrice } = useKlayPrice()

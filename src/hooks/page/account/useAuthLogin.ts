@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { AuthChallengeInfo } from 'types'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'

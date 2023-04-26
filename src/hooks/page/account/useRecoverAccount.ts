@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { validateMnemonic } from 'bip39'
 
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { generateEvmHdAccount } from 'libs/account'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'

@@ -47,7 +47,7 @@ import {
   PublicationMetadataStatusType,
   AuthenticationResult,
 } from 'graphqls/__generated__/graphql'
-import useAuth from '../independent/useAuth'
+import useAuth from '../auth/useAuth'
 import useNetwork from 'hooks/complex/useNetwork'
 import { TransactionResponse } from '@ethersproject/providers'
 import useEthers from 'hooks/complex/useEthers'

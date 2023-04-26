@@ -13,7 +13,7 @@ import selectNftStore from 'store/selectNftStore'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { nftUriFetcher } from 'libs/nft'
 import { Routes } from 'libs/navigation'
-import useAuth from 'hooks/independent/useAuth'
+import useAuth from 'hooks/auth/useAuth'
 import { stringifySendFileData } from 'libs/sendbird'
 import useDevice from 'hooks/complex/useDevice'
 
