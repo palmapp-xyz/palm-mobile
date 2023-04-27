@@ -16,7 +16,7 @@ export const profilesDeepCompare = (
     ? (second.ownedBy as ContractAddr)
     : second.address
 
-  if (firstAddress !== secondAddress || first.handle !== second.handle) {
+  if (firstAddress !== secondAddress) {
     return undefined
   }
 
@@ -27,7 +27,11 @@ export const profilesDeepCompare = (
     ? getProfileImgFromLensProfile(second)
     : second.profileImg
 
-  return first.bio === second.bio && firstProfileImg === secondProfileImg
+  return (
+    first.handle === second.handle &&
+    first.bio === second.bio &&
+    firstProfileImg === secondProfileImg
+  )
 }
 
 export const isLensProfile = (x: FbProfile | Profile): x is Profile => {

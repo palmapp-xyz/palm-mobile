@@ -18,6 +18,7 @@ import {
   AuthChallengeInfo,
   LocalStorageKey,
   AuthStorageType,
+  FbProfile,
 } from 'types'
 import { formatHex } from 'libs/utils'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
@@ -26,6 +27,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import useLensAuth from 'hooks/lens/useLensAuth'
 import { UTIL } from 'consts'
 import useNotification from 'hooks/independent/useNotification'
+import useFsProfile from 'hooks/firestore/useFsProfile'
 
 export type UseAuthReturn = {
   user?: User
@@ -57,6 +59,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   const { web3 } = useWeb3(chain ?? SupportedNetworkEnum.ETHEREUM)
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
+  const { fetchProfile } = useFsProfile({ profileId: user?.auth?.profileId })
 
   const { challengeRequest, challengeVerify } = useAuthChallenge(
     chain ?? SupportedNetworkEnum.ETHEREUM
@@ -182,6 +185,17 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
   }
 
   const appSignIn = async (authResult: AuthChallengeResult): Promise<User> => {
+    // if user profile is deleted from the db, logout for re-authentication
+    await fetchProfile(authResult.profileId).then(
+      (profile: FbProfile | undefined) => {
+        if (!profile) {
+          throw new Error(
+            `User with profide Id ${authResult.profileId} does not exist.`
+          )
+        }
+      }
+    )
+
     const [_userCredential, sbUser, authenticatedUser] = await Promise.all([
       auth().signInWithCustomToken(authResult.authToken),
       connect(authResult.profileId),
@@ -191,7 +205,7 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
 
     console.log(
       'App signed in as',
-      _.pick(authenticatedUser, ['profileId', 'address'])
+      _.pick(authenticatedUser.auth, ['profileId', 'address'])
     )
     return authenticatedUser
   }

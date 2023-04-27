@@ -72,11 +72,12 @@ const useProfile = ({
     }
     if (profilesDeepCompare(fsProfileField, lensProfile) === false) {
       await fsProfile.update({
+        handle: lensProfile.handle,
         bio: lensProfile.bio || undefined,
         profileImg: getProfileImgFromLensProfile(lensProfile),
       } as Partial<FbProfile>)
     }
-  }, [fsProfile, lensProfile])
+  }, [fsProfileField, lensProfile])
 
   useQuery(
     ['refetchUseLensProfile'],
