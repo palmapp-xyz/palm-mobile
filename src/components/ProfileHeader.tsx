@@ -27,6 +27,7 @@ import useProfile from 'hooks/auth/useProfile'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
 import { isLensProfile } from 'libs/profile'
+import { getProfileMediaImg } from 'libs/lens'
 
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr
@@ -65,6 +66,7 @@ const ProfileHeader = ({
 
   const [profileId, setProfileId] = useState<string | undefined>(userProfileId)
   const { profile } = useProfile({ profileId })
+  const profileImg = getProfileMediaImg(profile)
 
   useAsyncEffect(async () => {
     if (profileId || !userAddress) {
@@ -113,9 +115,9 @@ const ProfileHeader = ({
       </View>
       <View style={{ backgroundColor: 'white', paddingHorizontal: 20 }}>
         <View style={styles.profileImgBox}>
-          {profile?.profileImg ? (
+          {profileImg ? (
             <MediaRenderer
-              src={profile.profileImg}
+              src={profileImg}
               width={100}
               height={100}
               style={{ borderRadius: 50 }}

@@ -5,6 +5,7 @@ import firestore, {
 import { FbProfile } from 'types'
 import { useEffect, useState } from 'react'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { getProfileMediaImg } from 'libs/lens'
 
 export type UseFsProfileReturn = {
   fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
@@ -40,14 +41,12 @@ const useFsProfile = ({
     if (!currentUser || !fsProfileField) {
       return
     }
+    const profileImg = getProfileMediaImg(fsProfileField)
     if (
       currentUser.nickname !== fsProfileField.handle ||
-      currentUser.profileUrl !== fsProfileField.profileImg
+      currentUser.profileUrl !== profileImg
     ) {
-      updateCurrentUserInfo(
-        fsProfileField.handle,
-        fsProfileField.profileImg
-      ).then(user => {
+      updateCurrentUserInfo(fsProfileField.handle, profileImg).then(user => {
         setCurrentUser(user)
       })
     }

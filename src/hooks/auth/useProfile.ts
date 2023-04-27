@@ -14,11 +14,10 @@ import { profilesDeepCompare } from 'libs/profile'
 import useLens from 'hooks/lens/useLens'
 import { fetchNftImage } from 'libs/fetchTokenUri'
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
-import { NftImage, Profile } from 'graphqls/__generated__/graphql'
+import { Profile, ProfileMedia } from 'graphqls/__generated__/graphql'
 import useNetwork from 'hooks/complex/useNetwork'
 import { formatValues } from 'libs/firebase'
 import { Maybe } from '@toruslabs/openlogin'
-import { getProfileImgFromLensProfile } from 'libs/lens'
 
 export type UseProfileReturn = {
   profile: FbProfile | undefined
@@ -74,7 +73,7 @@ const useProfile = ({
       await fsProfile.update({
         handle: lensProfile.handle,
         bio: lensProfile.bio || undefined,
-        profileImg: getProfileImgFromLensProfile(lensProfile),
+        picture: lensProfile.picture || undefined,
       } as Partial<FbProfile>)
     }
   }, [fsProfileField, lensProfile])
@@ -165,12 +164,12 @@ const useProfile = ({
         tokenUri: item.token_uri,
       })
 
-      const picture: Maybe<NftImage> = formatValues<NftImage>({
+      const picture: Maybe<ProfileMedia> = formatValues<ProfileMedia>({
         __typename: 'NftImage',
-        chainId: connectedNetworkIds[selectedNetwork],
-        contractAddress: item.token_address,
-        tokenId: item.token_id,
-        uri: image,
+        chainId: connectedNetworkIds[selectedNetwork]!,
+        contractAddress: item.token_address!,
+        tokenId: item.token_id!,
+        uri: image!,
         verified: false,
       })
       await fsProfile.update({ picture })

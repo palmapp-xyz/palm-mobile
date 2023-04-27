@@ -18,13 +18,15 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useAuth from 'hooks/auth/useAuth'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import useLens from 'hooks/lens/useLens'
-import { getProfileImgFromLensProfile } from 'libs/lens'
+import { getProfileMediaImg } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { FbProfile } from 'types'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import _ from 'lodash'
+import { formatValues } from 'libs/firebase'
+import { Maybe } from '@toruslabs/openlogin'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
@@ -45,21 +47,21 @@ const LensFriendsScreen = (): ReactElement => {
 
   const createProfileFromLensProfile = async (
     profile: ExtendedProfile
-  ): Promise<FbProfile | undefined> => {
+  ): Promise<Maybe<FbProfile>> => {
     if (!user) {
       return undefined
     }
 
     const userProfileId = await fetchUserProfileId(profile.ownedBy)
     const userProfile = await fetchProfile(userProfileId!)
-    const ret: FbProfile = {
+    const ret: Maybe<FbProfile> = formatValues<FbProfile>({
       ...userProfile!,
       bio: profile.bio || undefined,
       handle: profile.handle,
-      profileImg: getProfileImgFromLensProfile(profile),
-    }
+      picture: profile.picture,
+    })
     // not a palm user yet. populate with lens profile info for him/her
-    if (!userProfile!.handle) {
+    if (ret && !userProfile!.handle) {
       await firestore()
         .collection('profiles')
         .doc(userProfileId)
@@ -69,7 +71,7 @@ const LensFriendsScreen = (): ReactElement => {
     // create sendbird user by connecting
     const newUser = await connect(userProfileId!)
     setCurrentUser(newUser)
-    const profileImg = getProfileImgFromLensProfile(profile)
+    const profileImg = getProfileMediaImg(profile)
     await updateCurrentUserInfo(profile.handle, profileImg)
 
     // reconnect back to self
@@ -93,8 +95,8 @@ const LensFriendsScreen = (): ReactElement => {
           user.auth!.profileId
         ),
         isDistinct: true,
-        invitedUserIds: [userProfile!.profileId],
-        operatorUserIds: [user.auth!.profileId, userProfile!.profileId],
+        invitedUserIds: [userProfile!.profileId!],
+        operatorUserIds: [user.auth!.profileId, userProfile!.profileId!],
       })
       setLoading(false)
       setTimeout(() => {

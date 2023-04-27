@@ -1,17 +1,21 @@
-import { Profile } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { fixIpfsURL } from './ipfs'
 import { AttributeData } from '@lens-protocol/react-native-lens-ui-kit'
-import { Attribute } from 'graphqls/__generated__/graphql'
+import { Maybe } from '@toruslabs/openlogin'
+import {
+  Attribute,
+  Profile,
+  ProfileMedia,
+} from 'graphqls/__generated__/graphql'
 
-export const getProfileImgFromLensProfile = (
-  profile: Profile | undefined
-): string | undefined => {
+export const getProfileMediaImg = (profile?: {
+  picture?: Maybe<ProfileMedia>
+}): string | undefined => {
   if (!profile) {
     return undefined
   }
   const profileImg =
     profile.picture?.__typename === 'MediaSet'
-      ? fixIpfsURL(profile.picture.original.url)
+      ? fixIpfsURL(profile.picture.original?.url)
       : profile.picture?.__typename === 'NftImage'
       ? fixIpfsURL(profile.picture.uri)
       : undefined
