@@ -10,6 +10,8 @@ import {
 } from 'react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
+import { COLOR } from 'consts'
+
 import { Routes } from 'libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
@@ -81,7 +83,8 @@ const MyPageScreen = (): ReactElement => {
   }
 
   return (
-    <Container>
+    <Container
+      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}>
       <FlatList
         refreshControl={
           <RefreshControl

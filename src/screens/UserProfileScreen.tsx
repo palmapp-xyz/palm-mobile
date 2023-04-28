@@ -15,6 +15,7 @@ import ProfileHeader from '../components/ProfileHeader'
 import ProfileFooter from 'components/ProfileFooter'
 import { SupportedNetworkEnum } from 'types'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import { COLOR } from 'consts'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
@@ -52,7 +53,8 @@ const UserProfileScreen = (): ReactElement => {
   )
 
   return (
-    <Container>
+    <Container
+      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}>
       <FlatList
         refreshControl={
           <RefreshControl
