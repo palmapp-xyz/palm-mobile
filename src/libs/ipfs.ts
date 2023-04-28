@@ -1,13 +1,11 @@
-import { IPFS, UTIL } from 'consts'
+import { IPFS } from 'consts'
 import * as mime from 'mime'
+import { unescape } from './utils'
 
 export function resolveIpfsUri(
-  uri?: string,
+  uri: string,
   options = IPFS.defaultIpfsResolverOptions
-): string | undefined {
-  if (!uri) {
-    return undefined
-  }
+): string {
   if (uri.startsWith && uri.startsWith('ipfs://')) {
     return uri.replace('ipfs://', options.gatewayUrl)
   }
@@ -51,17 +49,26 @@ export async function resolveMimeType(
   return undefined
 }
 
-export const fixIpfsURL = (uri: string): string => {
-  if (UTIL.isURL(uri)) {
-    if (uri.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
-      uri = uri.replace('https://ipfs.moralis.io:2053/ipfs/', 'ipfs://')
-    } else if (uri.startsWith('https://ipfs.io/ipfs/')) {
-      uri = uri.replace('https://ipfs.io/ipfs/', 'ipfs://')
-    } else if (uri.match(/^[a-zA-Z0-9_]+$/)) {
-      // uri is just ipfs cid
-      uri = `ipfs://${uri}`
-    }
+export const fixTokenUri = (uri: string): string => {
+  let unescaped = decodeURI(unescape(uri))
+  if (unescaped.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
+    unescaped = unescaped.replace(
+      'https://ipfs.moralis.io:2053/ipfs/',
+      'ipfs://'
+    )
+  } else if (unescaped.startsWith('https://ipfs.io/ipfs/')) {
+    unescaped = unescaped.replace('https://ipfs.io/ipfs/', 'ipfs://')
+  } else if (unescaped.match(/^[a-zA-Z0-9_]+$/)) {
+    // uri is just ipfs cid
+    unescaped = `ipfs://${unescaped}`
+  } else if (
+    unescaped.match(
+      /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/
+    )
+  ) {
+    // url but missing https://
+    unescaped = `https://${unescaped}`
   }
 
-  return resolveIpfsUri(uri) || uri
+  return resolveIpfsUri(unescaped) || unescaped
 }

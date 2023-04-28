@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { UTIL } from 'consts'
-import { fixIpfsURL } from './ipfs'
-import { unescape } from './utils'
+import { fixTokenUri } from './ipfs'
 import { Maybe } from '@toruslabs/openlogin'
 import { ContractAddr } from 'types'
 import { isENS } from './ens'
@@ -31,7 +30,10 @@ export const fetchNftImage = async ({
     const ret =
       metadataJson?.image || metadataJson?.image_url || metadataJson?.image_data
     if (ret) {
-      return { image: unescape(fixIpfsURL(ret)), metadata }
+      return {
+        image: fixTokenUri(ret),
+        metadata,
+      }
     }
   }
 
@@ -46,7 +48,7 @@ export const fetchNftImage = async ({
     const ret = decoded?.image || decoded?.image_url || decoded?.image_data
     if (ret) {
       return {
-        image: unescape(fixIpfsURL(ret)),
+        image: fixTokenUri(ret),
         metadata: JSON.stringify(decoded),
       }
     }
@@ -55,7 +57,7 @@ export const fetchNftImage = async ({
   if (tokenUri) {
     try {
       // royal nft support to replace {id} with tokenId
-      const fixedUrl = fixIpfsURL(tokenUri.replace(/\{id\}/g, tokenId))
+      const fixedUrl = fixTokenUri(tokenUri.replace(/\{id\}/g, tokenId))!
       const fetched = await fetch(fixedUrl)
       const blob = await fetched.blob()
       if (blob.type.startsWith('image')) {
@@ -70,7 +72,7 @@ export const fetchNftImage = async ({
       const ret = jsonData?.image || jsonData?.image_url || jsonData?.image_data
       if (ret) {
         return {
-          image: unescape(fixIpfsURL(ret)),
+          image: fixTokenUri(ret),
           metadata: JSON.stringify(jsonData),
         }
       }

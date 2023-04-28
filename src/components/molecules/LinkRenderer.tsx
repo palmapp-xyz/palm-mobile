@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import { fixIpfsURL } from 'libs/ipfs'
+import { fixTokenUri } from 'libs/ipfs'
 import { Maybe } from '@toruslabs/openlogin'
 import { COLOR } from 'consts'
 
@@ -30,11 +30,11 @@ const LinkRenderer = ({
     return null
   }
 
-  const fixedUrl = fixIpfsURL(src)
+  const fixedUrl = fixTokenUri(String(src))
   return (
     <TouchableOpacity
       onPress={async (): Promise<void> => {
-        const canOpen = !!src && (await Linking.canOpenURL(fixedUrl))
+        const canOpen = !!fixedUrl && (await Linking.canOpenURL(fixedUrl))
         if (canOpen) {
           Linking.openURL(fixedUrl)
         }

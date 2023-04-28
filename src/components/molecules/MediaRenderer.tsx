@@ -48,7 +48,7 @@ const MediaRenderer = ({
     setError(true)
   }, [])
 
-  const videoOrImageSrc = useResolvedMediaType(src ?? undefined)
+  const videoOrImageSrc = useResolvedMediaType(src ?? '')
   if (videoOrImageSrc.isLoading || loading) {
     return (
       <Card center={true} style={[style, { width, height }]}>

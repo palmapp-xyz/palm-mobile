@@ -1,6 +1,5 @@
 import { Maybe } from '@toruslabs/openlogin'
 
-import { UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import { fetchNftImage } from 'libs/fetchTokenUri'
@@ -47,9 +46,7 @@ const useNftImage = ({
         type === NftType.ERC721
           ? await tokenURI({ tokenId })
           : await URI({ tokenId })
-      if (uri && UTIL.isURL(uri.trim())) {
-        return uri.trim()
-      }
+      return uri?.trim()
     }
   )
 

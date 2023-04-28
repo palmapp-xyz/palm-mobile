@@ -1,4 +1,4 @@
-import { fixIpfsURL } from './ipfs'
+import { fixTokenUri } from './ipfs'
 import { AttributeData } from '@lens-protocol/react-native-lens-ui-kit'
 import { Maybe } from '@toruslabs/openlogin'
 import {
@@ -15,9 +15,9 @@ export const getProfileMediaImg = (
   }
   const url =
     picture?.__typename === 'MediaSet'
-      ? fixIpfsURL(picture.original?.url)
+      ? fixTokenUri(picture.original?.url)
       : picture?.__typename === 'NftImage'
-      ? fixIpfsURL(picture.uri)
+      ? fixTokenUri(picture.uri)
       : undefined
   return url
 }

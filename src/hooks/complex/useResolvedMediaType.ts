@@ -8,7 +8,7 @@ export type UseResolvedMediaTypeReturn = {
   isLoading: boolean
 }
 
-export function useResolvedMediaType(uri?: string): UseResolvedMediaTypeReturn {
+export function useResolvedMediaType(uri: string): UseResolvedMediaTypeReturn {
   const resolvedUrl = useMemo(() => resolveIpfsUri(uri), [uri])
   const resolvedMimType = useQuery(
     ['mime-type', resolvedUrl],
