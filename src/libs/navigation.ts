@@ -7,12 +7,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
-import {
-  AuthChallengeInfo,
-  ContractAddr,
-  NftType,
-  SupportedNetworkEnum,
-} from 'types'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 
 import { GetSendbirdSDK } from './sendbird'
 
@@ -21,9 +16,9 @@ export enum Routes {
   AuthNavigator = 'AuthNavigator',
 
   MainAccount = 'MainAccount',
-  Login = 'Login',
   NewAccount = 'NewAccount',
   ConfirmSeed = 'ConfirmSeed',
+  CreateComplete = 'CreateComplete',
   RecoverAccount = 'RecoverAccount',
   Web3Auth = 'Web3Auth',
 
@@ -76,16 +71,16 @@ type AuthRouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.Login
-      params: undefined
-    }
-  | {
       route: Routes.NewAccount
       params: undefined
     }
   | {
       route: Routes.ConfirmSeed
       params: { mnemonic: string }
+    }
+  | {
+      route: Routes.CreateComplete
+      params: undefined
     }
   | {
       route: Routes.RecoverAccount
@@ -95,9 +90,7 @@ type AuthRouteParamsUnion =
     }
   | {
       route: Routes.Sign4Auth
-      params: {
-        challenge: AuthChallengeInfo
-      }
+      params: undefined
     }
 
 type MainRouteParamsUnion =

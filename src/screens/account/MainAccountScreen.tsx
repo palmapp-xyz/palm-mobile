@@ -13,7 +13,7 @@ import images from 'assets/images'
 const MainAccountScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
 
-  const [showBottomSheet, setshowBottomSheet] = useState(false)
+  const [showBottomSheet, setShowBottomSheet] = useState(false)
   const snapPoints = useMemo(() => ['25%'], [])
   const bottomSheetRef = useRef<BottomSheet>(null)
 
@@ -36,7 +36,7 @@ const MainAccountScreen = (): ReactElement => {
           <FormButton
             figure="outline"
             onPress={(): void => {
-              setshowBottomSheet(true)
+              setShowBottomSheet(true)
               bottomSheetRef?.current?.snapToIndex(1)
             }}>
             Sign up with a Wallet
@@ -51,7 +51,7 @@ const MainAccountScreen = (): ReactElement => {
             enableOverDrag={false}
             enablePanDownToClose
             onClose={(): void => {
-              setshowBottomSheet(false)
+              setShowBottomSheet(false)
             }}>
             <Row style={styles.bottomSheet}>
               <TouchableOpacity

@@ -17,7 +17,7 @@ const useMyPageMain = ({
 }: {
   selectedNetwork: SupportedNetworkEnum
 }): UseMyPageMainReturn => {
-  const { user } = useAuth(selectedNetwork)
+  const { user } = useAuth()
 
   const useMyNftListReturn = useUserNftList({
     userAddress: user?.address,

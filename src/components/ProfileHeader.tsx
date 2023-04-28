@@ -11,6 +11,7 @@ import Clipboard from '@react-native-clipboard/clipboard'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import _ from 'lodash'
 
 import { COLOR, UTIL } from 'consts'
 import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
@@ -22,13 +23,12 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
-import useAuth from 'hooks/auth/useAuth'
-import _ from 'lodash'
 import useProfile from 'hooks/auth/useProfile'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
 import { isLensProfile } from 'libs/profile'
 import { getProfileMediaImg } from 'libs/lens'
+import useAuthChallenge from 'hooks/api/useAuthChallenge'
 
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr
@@ -50,7 +50,7 @@ const ProfileHeader = ({
   const { getKlayPrice } = useKlayPrice()
   const { getMaticPrice } = useMaticPrice()
   const { alert } = useAlert()
-  const { fetchUserProfileId } = useAuth()
+  const { fetchUserProfileId } = useAuthChallenge()
 
   const { balance: ethBalance } = useUserBalance({
     address: userAddress,

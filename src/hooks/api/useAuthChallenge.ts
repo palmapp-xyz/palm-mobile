@@ -17,6 +17,9 @@ export type UseAuthChallengeReturn = {
     signature: string,
     message: string
   ) => Promise<AuthChallengeResult>
+  fetchUserProfileId: (
+    userAddress: ContractAddr | undefined
+  ) => Promise<string | undefined>
 }
 
 const useAuthChallenge = (
@@ -26,6 +29,16 @@ const useAuthChallenge = (
   const { apiPath, connectedNetworkIds } = useNetwork()
   const connectedNetworkId =
     connectedNetworkIds[chain ?? SupportedNetworkEnum.ETHEREUM]
+
+  const fetchUserProfileId = async (
+    userAddress: ContractAddr | undefined
+  ): Promise<string | undefined> => {
+    if (!userAddress) {
+      return undefined
+    }
+    const result = await challengeRequest(userAddress)
+    return result.profileId
+  }
 
   const challengeRequest = async (
     address: ContractAddr
@@ -124,6 +137,7 @@ const useAuthChallenge = (
   return {
     challengeRequest,
     challengeVerify,
+    fetchUserProfileId,
   }
 }
 

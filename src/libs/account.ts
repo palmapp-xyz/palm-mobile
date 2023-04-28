@@ -3,6 +3,7 @@ import { mnemonicToSeed } from 'ethers/lib/utils'
 import {
   getInternetCredentials,
   setInternetCredentials,
+  resetInternetCredentials,
 } from 'react-native-keychain'
 import { KeyChainEnum } from 'types'
 
@@ -26,6 +27,11 @@ export const getPkey = async (): Promise<string> => {
   return ''
 }
 
+export const removeKeys = async (): Promise<void> => {
+  await resetInternetCredentials(KeyChainEnum.PK)
+  await resetInternetCredentials(KeyChainEnum.PK_PWD)
+}
+
 export const getPkeyPwd = async (): Promise<string> => {
   const res = await getInternetCredentials(KeyChainEnum.PK_PWD)
   if (res) {
@@ -38,7 +44,7 @@ export const generateEvmHdAccount = async (
   mnemonic: string
 ): Promise<Wallet> => {
   const derivationPath = "m/44'/60'/0'/0/0"
-  const seed = await mnemonicToSeed(mnemonic)
+  const seed = mnemonicToSeed(mnemonic)
   const hdNode = utils.HDNode.fromSeed(seed)
   const derivedHdNode = hdNode.derivePath(derivationPath)
 

@@ -1,11 +1,5 @@
 import React, { ReactElement } from 'react'
-import {
-  Alert,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 
 import { COLOR } from 'consts'
@@ -14,7 +8,6 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import Loading from 'components/atoms/Loading'
 import appStore from 'store/appStore'
-import { AuthChallengeInfo } from 'types'
 import useConfirmSeed from 'hooks/page/account/useConfirmSeed'
 
 const ConfirmSeedScreen = (): ReactElement => {
@@ -30,18 +23,15 @@ const ConfirmSeedScreen = (): ReactElement => {
     setSelectedWordList,
   } = useConfirmSeed({ mnemonic })
 
-  const [loading] = useRecoilState(appStore.loading)
+  const [loading, setLoading] = useRecoilState(appStore.loading)
 
   const onPressConfirm = async (): Promise<void> => {
-    await onClickConfirm(
-      (challenge: AuthChallengeInfo | undefined, errMsg?: string) => {
-        if (challenge) {
-          navigation.replace(Routes.Sign4Auth, { challenge })
-        } else {
-          Alert.alert('Unknown Error', errMsg)
-        }
-      }
-    )
+    setLoading(true)
+    setTimeout(async () => {
+      await onClickConfirm()
+      setLoading(false)
+      navigation.replace(Routes.CreateComplete)
+    }, 100)
   }
 
   if (loading) {

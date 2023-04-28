@@ -27,11 +27,13 @@ import useFsProfile from 'hooks/firestore/useFsProfile'
 import _ from 'lodash'
 import { formatValues } from 'libs/firebase'
 import { Maybe } from '@toruslabs/openlogin'
+import useAuthChallenge from 'hooks/api/useAuthChallenge'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
   const { connect } = useConnection()
-  const { user, fetchUserProfileId } = useAuth()
+  const { user } = useAuth()
+  const { fetchUserProfileId } = useAuthChallenge()
   const { createGroupChatIfNotExist, generateDmChannelUrl } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getDefaultProfile } = useLens()

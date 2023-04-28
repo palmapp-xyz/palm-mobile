@@ -53,7 +53,7 @@ const useZxListNft = ({
   const { nftSwapSdk } = useZx(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
-  const { user } = useAuth(chain)
+  const { user } = useAuth()
   const [price, setPrice] = useState<Token>('' as Token)
 
   const { fsChannel } = useFsChannel({ channelUrl })

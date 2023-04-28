@@ -1,11 +1,5 @@
 import React, { ReactElement } from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  Alert,
-  useWindowDimensions,
-} from 'react-native'
+import { StyleSheet, View, Text, useWindowDimensions } from 'react-native'
 import RenderHtml from 'react-native-render-html'
 import { useRecoilValue } from 'recoil'
 
@@ -14,14 +8,12 @@ import { COLOR } from 'consts'
 import { Container, FormButton, Header } from 'components'
 import useSign4Auth from 'hooks/page/sign/useSign4Auth'
 import fetchApiStore from 'store/fetchApiStore'
-import { SupportedNetworkEnum } from 'types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 
 const Sign4AuthScreen = (): ReactElement => {
-  const { navigation, params } = useAppNavigation<Routes.Sign4Auth>()
-  const { challenge } = params
-  const { signChallenge } = useSign4Auth(SupportedNetworkEnum.ETHEREUM)
+  const { navigation } = useAppNavigation<Routes.Sign4Auth>()
+  const { challenge, signChallenge } = useSign4Auth()
   const isFetching = useRecoilValue(fetchApiStore.isFetchingPostApiStore)
   const { width } = useWindowDimensions()
 
@@ -29,12 +21,6 @@ const Sign4AuthScreen = (): ReactElement => {
     html: `<p>${JSON.stringify(challenge?.message)
       ?.replace(/"/g, '')
       ?.replace(/\\n/g, '<br/>')}</p>`,
-  }
-
-  const onPressSign = async (): Promise<void> => {
-    await signChallenge(challenge, (errMsg: string) => {
-      Alert.alert('Unknown Error', errMsg)
-    })
   }
 
   return (
@@ -56,7 +42,7 @@ const Sign4AuthScreen = (): ReactElement => {
       </View>
 
       <View style={styles.footer}>
-        <FormButton disabled={!challenge || isFetching} onPress={onPressSign}>
+        <FormButton disabled={!challenge || isFetching} onPress={signChallenge}>
           Sign to Login
         </FormButton>
       </View>

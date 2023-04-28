@@ -27,7 +27,7 @@ const NativeGating = ({
 }: {
   gating: FbChannelNativeGatingField
 }): ReactElement => {
-  const { user } = useAuth(gating.chain)
+  const { user } = useAuth()
 
   const { balance } = useUserBalance({
     address: user?.address,
@@ -122,7 +122,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
   })
   const gating = useMemo(() => fsChannelField?.gating, [fsChannelField])
 
-  const { user } = useAuth(gating?.chain)
+  const { user } = useAuth()
   const membersWithoutMe = useMemo(
     () =>
       channel?.members.filter(x => x.userId !== user?.auth?.profileId) || [],

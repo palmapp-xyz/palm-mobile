@@ -1,13 +1,11 @@
 import { useMemo, useState } from 'react'
 import { validateMnemonic } from 'bip39'
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useSetRecoilState } from 'recoil'
 import _ from 'lodash'
+import { Alert } from 'react-native'
 
 import useAuth from 'hooks/auth/useAuth'
-import { generateEvmHdAccount } from 'libs/account'
-import appStore from 'store/appStore'
-import { AuthChallengeInfo } from 'types'
+import { savePkey } from 'libs/account'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
@@ -18,16 +16,11 @@ export type UseRecoverAccountReturn = {
   updateSeedPhrase: ({ value, index }: { value: string; index: number }) => void
   mnemonicErrMsg: string
   isValidForm: boolean
-  onClickConfirm: (
-    callback: (
-      challenge: AuthChallengeInfo | undefined,
-      errMsg?: string
-    ) => void
-  ) => Promise<void>
+  onClickConfirm: () => Promise<void>
 }
 
 const useRecoverAccount = (): UseRecoverAccountReturn => {
-  const { registerRequest } = useAuth()
+  const { registerMnemonic } = useAuth()
   const [usePkey, setUsePkey] = useState(false)
 
   const [privateKey, setPrivateKey] = useState('')
@@ -68,52 +61,19 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
     return ''
   }, [mnemonic, usePkey])
 
-  const setLoading = useSetRecoilState(appStore.loading)
-
   const isValidForm = usePkey ? !!privateKey : !!mnemonic && !mnemonicErrMsg
 
-  const onClickConfirm = async (
-    callback: (
-      challenge: AuthChallengeInfo | undefined,
-      errMsg?: string
-    ) => void
-  ): Promise<void> => {
-    setLoading(true)
-    setTimeout(async () => {
-      let challenge: AuthChallengeInfo | undefined
-
-      try {
-        if (usePkey) {
-          const res = await registerRequest({ privateKey })
-          if (!res.success) {
-            throw new Error(res.errMsg)
-          } else {
-            challenge = res.value
-          }
-        } else {
-          await generateEvmHdAccount(mnemonic).then(
-            async (account): Promise<void> => {
-              const res = await registerRequest({
-                privateKey: account.privateKey,
-              })
-              if (!res.success) {
-                throw new Error(res.errMsg)
-              } else {
-                challenge = res.value
-              }
-            }
-          )
-        }
-
-        setLoading(false)
-        console.log('useRecoverAccount:challenge', challenge)
-        callback(challenge)
-      } catch (e) {
-        setLoading(false)
-        console.error('useRecoverAccount:authenticateRequest', e)
-        callback(undefined, _.toString(e))
+  const onClickConfirm = async (): Promise<void> => {
+    try {
+      if (usePkey) {
+        await savePkey(privateKey)
+      } else {
+        await registerMnemonic(mnemonic)
       }
-    }, 500)
+    } catch (e) {
+      console.error('useRecoverAccount:error', e)
+      Alert.alert(_.toString(e))
+    }
   }
 
   return {

@@ -7,7 +7,6 @@ import { Container, FormButton, FormInput, Header } from 'components'
 import useAuth from 'hooks/auth/useAuth'
 
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { SupportedNetworkEnum } from 'types'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import useProfile from 'hooks/auth/useProfile'
@@ -18,7 +17,7 @@ import { isLensProfile } from 'libs/profile'
 
 const UpdateLensProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { user } = useAuth(SupportedNetworkEnum.ETHEREUM)
+  const { user } = useAuth()
   const { alert } = useAlert()
 
   const [loading, setLoading] = useRecoilState(appStore.loading)

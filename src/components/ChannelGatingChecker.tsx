@@ -25,7 +25,7 @@ const NftChecker = ({
     gating: FbChannelGatingField
   }) => void
 }): ReactElement => {
-  const { user } = useAuth(gating.chain)
+  const { user } = useAuth()
   const { balanceOf } = useNft({
     nftContract: gating.tokenAddress,
     chain: gating.chain,
@@ -60,7 +60,7 @@ const NativeChecker = ({
     gating: FbChannelGatingField
   }) => void
 }): ReactElement => {
-  const { user } = useAuth(gating.chain)
+  const { user } = useAuth()
   const { balance, isLoading } = useUserBalance({
     address: user?.address,
     chain: gating.chain,

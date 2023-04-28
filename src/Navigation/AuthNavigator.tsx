@@ -4,10 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Routes } from '../libs/navigation'
 import {
   MainAccountScreen,
-  AuthLoginScreen,
   NewAccountScreen,
   ConfirmSeedScreen,
   RecoverAccountScreen,
+  CreateCompleteScreen,
   Sign4AuthScreen,
 } from '../screens'
 
@@ -20,11 +20,14 @@ const AuthNavigator = (): ReactElement => {
         name={Routes.MainAccount}
         component={MainAccountScreen}
       />
-      <AuthStack.Screen name={Routes.Login} component={AuthLoginScreen} />
       <AuthStack.Screen name={Routes.NewAccount} component={NewAccountScreen} />
       <AuthStack.Screen
         name={Routes.ConfirmSeed}
         component={ConfirmSeedScreen}
+      />
+      <AuthStack.Screen
+        name={Routes.CreateComplete}
+        component={CreateCompleteScreen}
       />
       <AuthStack.Screen
         name={Routes.RecoverAccount}

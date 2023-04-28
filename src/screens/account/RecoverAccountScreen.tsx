@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Clipboard from '@react-native-clipboard/clipboard'
@@ -23,7 +23,6 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import appStore from 'store/appStore'
 import Loading from 'components/atoms/Loading'
-import { AuthChallengeInfo } from 'types'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
@@ -40,21 +39,19 @@ const RecoverAccountScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.RecoverAccount>()
   const isSignUp = params.isSignUp
 
-  const [loading] = useRecoilState(appStore.loading)
-  if (loading) {
-    return <Loading />
-  }
+  const [loading, setLoading] = useRecoilState(appStore.loading)
 
   const onPressConfirm = async (): Promise<void> => {
-    await onClickConfirm(
-      (challenge: AuthChallengeInfo | undefined, errMsg?: string) => {
-        if (challenge) {
-          navigation.replace(Routes.Sign4Auth, { challenge })
-        } else {
-          Alert.alert('Unknown Error', errMsg)
-        }
-      }
-    )
+    setLoading(true)
+    setTimeout(async () => {
+      await onClickConfirm()
+      setLoading(false)
+      navigation.replace(Routes.Sign4Auth)
+    }, 100)
+  }
+
+  if (loading) {
+    return <Loading />
   }
 
   return (
