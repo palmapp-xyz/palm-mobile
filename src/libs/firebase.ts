@@ -2,12 +2,11 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
-import { Maybe } from '@toruslabs/openlogin'
 import _ from 'lodash'
 
 import { FbChannelField } from 'types'
 
-export const formatValues = <T>(object: Maybe<T>): Maybe<T> => {
+export const formatValues = <T>(object: T): T => {
   if (!object) {
     return object
   }

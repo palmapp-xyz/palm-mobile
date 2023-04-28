@@ -19,10 +19,20 @@ export const profilesDeepCompare = (
     return undefined
   }
 
+  const firstCoverPicture: string | undefined = isLensProfile(first)
+    ? getProfileMediaImg(first.coverPicture)
+    : first.coverPicture
+  const secondCoverPicture: string | undefined = isLensProfile(second)
+    ? getProfileMediaImg(second.coverPicture)
+    : second.coverPicture
+
   return (
     first.handle === second.handle &&
+    first.name === second.name &&
     first.bio === second.bio &&
-    getProfileMediaImg(first) === getProfileMediaImg(second)
+    getProfileMediaImg(first.picture) === getProfileMediaImg(second.picture) &&
+    firstCoverPicture === secondCoverPicture &&
+    JSON.stringify(first.attributes) === JSON.stringify(second.attributes)
   )
 }
 

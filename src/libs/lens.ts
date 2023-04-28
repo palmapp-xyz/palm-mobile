@@ -7,19 +7,19 @@ import {
   ProfileMedia,
 } from 'graphqls/__generated__/graphql'
 
-export const getProfileMediaImg = (profile?: {
-  picture?: Maybe<ProfileMedia>
-}): string | undefined => {
-  if (!profile) {
+export const getProfileMediaImg = (
+  picture: Maybe<ProfileMedia>
+): string | undefined => {
+  if (!picture) {
     return undefined
   }
-  const profileImg =
-    profile.picture?.__typename === 'MediaSet'
-      ? fixIpfsURL(profile.picture.original?.url)
-      : profile.picture?.__typename === 'NftImage'
-      ? fixIpfsURL(profile.picture.uri)
+  const url =
+    picture?.__typename === 'MediaSet'
+      ? fixIpfsURL(picture.original?.url)
+      : picture?.__typename === 'NftImage'
+      ? fixIpfsURL(picture.uri)
       : undefined
-  return profileImg
+  return url
 }
 
 export const getAttributesData = (

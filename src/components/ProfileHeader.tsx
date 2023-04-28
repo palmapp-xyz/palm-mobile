@@ -5,6 +5,7 @@ import {
   View,
   Pressable,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native'
 import Clipboard from '@react-native-clipboard/clipboard'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -66,7 +67,7 @@ const ProfileHeader = ({
 
   const [profileId, setProfileId] = useState<string | undefined>(userProfileId)
   const { profile } = useProfile({ profileId })
-  const profileImg = getProfileMediaImg(profile)
+  const profileImg = getProfileMediaImg(profile?.picture)
 
   useAsyncEffect(async () => {
     if (profileId || !userAddress) {
@@ -87,31 +88,36 @@ const ProfileHeader = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {isMyPage ? (
-          <View style={{ alignItems: 'flex-end' }}>
-            <Pressable
-              style={styles.headerButton}
-              onPress={(): void => {
-                navigation.navigate(Routes.Setting)
-              }}>
-              <Icon name={'settings-outline'} size={24} />
-            </Pressable>
-          </View>
-        ) : (
-          <View style={{ alignItems: 'flex-start' }}>
-            <Pressable
-              style={styles.headerButton}
-              onPress={(): void => {
-                navigation.goBack()
-              }}>
-              <Icon
-                name="ios-chevron-back"
-                color={COLOR.black._800}
-                size={24}
-              />
-            </Pressable>
-          </View>
-        )}
+        <ImageBackground
+          source={{ uri: profile?.coverPicture }}
+          resizeMode="cover"
+          style={{ flex: 1 }}>
+          {isMyPage ? (
+            <View style={{ alignItems: 'flex-end' }}>
+              <Pressable
+                style={styles.headerButton}
+                onPress={(): void => {
+                  navigation.navigate(Routes.Setting)
+                }}>
+                <Icon name={'settings-outline'} size={24} />
+              </Pressable>
+            </View>
+          ) : (
+            <View style={{ alignItems: 'flex-start' }}>
+              <Pressable
+                style={styles.headerButton}
+                onPress={(): void => {
+                  navigation.goBack()
+                }}>
+                <Icon
+                  name="ios-chevron-back"
+                  color={COLOR.black._800}
+                  size={24}
+                />
+              </Pressable>
+            </View>
+          )}
+        </ImageBackground>
       </View>
       <View style={{ backgroundColor: 'white', paddingHorizontal: 20 }}>
         <View style={styles.profileImgBox}>

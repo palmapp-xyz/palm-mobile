@@ -54,11 +54,14 @@ const LensFriendsScreen = (): ReactElement => {
 
     const userProfileId = await fetchUserProfileId(profile.ownedBy)
     const userProfile = await fetchProfile(userProfileId!)
-    const ret: Maybe<FbProfile> = formatValues<FbProfile>({
+    const ret: FbProfile | undefined = formatValues<FbProfile>({
       ...userProfile!,
       bio: profile.bio || undefined,
+      name: profile.name || undefined,
       handle: profile.handle,
-      picture: profile.picture,
+      picture: profile.picture || undefined,
+      coverPicture: getProfileMediaImg(profile.coverPicture),
+      attributes: profile.attributes || undefined,
     })
     // not a palm user yet. populate with lens profile info for him/her
     if (ret && !userProfile!.handle) {
@@ -71,7 +74,7 @@ const LensFriendsScreen = (): ReactElement => {
     // create sendbird user by connecting
     const newUser = await connect(userProfileId!)
     setCurrentUser(newUser)
-    const profileImg = getProfileMediaImg(profile)
+    const profileImg = getProfileMediaImg(profile.picture)
     await updateCurrentUserInfo(profile.handle, profileImg)
 
     // reconnect back to self

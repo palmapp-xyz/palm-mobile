@@ -17,7 +17,7 @@ import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 import { Profile, ProfileMedia } from 'graphqls/__generated__/graphql'
 import useNetwork from 'hooks/complex/useNetwork'
 import { formatValues } from 'libs/firebase'
-import { Maybe } from '@toruslabs/openlogin'
+import { getProfileMediaImg } from 'libs/lens'
 
 export type UseProfileReturn = {
   profile: FbProfile | undefined
@@ -70,6 +70,18 @@ const useProfile = ({
       return
     }
     if (profilesDeepCompare(fsProfileField, lensProfile) === false) {
+      const profileUpdate: Partial<FbProfile> = formatValues<
+        Partial<FbProfile>
+      >({
+        handle: lensProfile.handle,
+        name: lensProfile.name || undefined,
+        bio: lensProfile.bio || undefined,
+        picture: lensProfile.picture || undefined,
+        coverPicture: getProfileMediaImg(lensProfile.coverPicture) || undefined,
+        attributes: lensProfile.attributes || undefined,
+      })
+      await fsProfile.update(profileUpdate)
+
       await fsProfile.update({
         handle: lensProfile.handle,
         bio: lensProfile.bio || undefined,
@@ -164,7 +176,7 @@ const useProfile = ({
         tokenUri: item.token_uri,
       })
 
-      const picture: Maybe<ProfileMedia> = formatValues<ProfileMedia>({
+      const picture: ProfileMedia | undefined = formatValues<ProfileMedia>({
         __typename: 'NftImage',
         chainId: connectedNetworkIds[selectedNetwork]!,
         contractAddress: item.token_address!,
@@ -228,9 +240,15 @@ const useProfile = ({
     }
 
     try {
-      await fsProfile.update({
-        ...formatValues<Partial<ProfileMetadata>>(metadata),
+      const profileUpdate: Partial<FbProfile> = formatValues<
+        Partial<FbProfile>
+      >({
+        name: metadata.name,
+        bio: metadata.bio,
+        coverPicture: metadata.cover_picture,
+        attributes: metadata.attributes,
       })
+      await fsProfile.update(profileUpdate)
       return { success: true, value }
     } catch (error) {
       console.error('setMetadata:fsProfile.update', error)

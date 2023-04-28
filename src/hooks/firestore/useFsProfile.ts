@@ -41,7 +41,7 @@ const useFsProfile = ({
     if (!currentUser || !fsProfileField) {
       return
     }
-    const profileImg = getProfileMediaImg(fsProfileField)
+    const profileImg = getProfileMediaImg(fsProfileField.picture)
     if (
       currentUser.nickname !== fsProfileField.handle ||
       currentUser.profileUrl !== profileImg
