@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { Routes } from 'libs/navigation'
-import { ContractAddr } from 'types'
+import { ContractAddr, SbUserMetadata } from 'types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Member } from '@sendbird/chat/groupChannel'
 import useAuth from 'hooks/auth/useAuth'
@@ -52,7 +52,8 @@ const GroupChannelHeader = ({
             <TouchableOpacity
               onPress={(): void => {
                 navigation.navigate(Routes.UserProfile, {
-                  address: otherDMUser.userId as ContractAddr,
+                  address: (otherDMUser.metaData as SbUserMetadata).address,
+                  profileId: otherDMUser.userId,
                 })
               }}>
               <Avatar

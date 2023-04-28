@@ -44,7 +44,7 @@ const useFsProfile = ({
     const profileImg = getProfileMediaImg(fsProfileField.picture)
     if (
       currentUser.nickname !== fsProfileField.handle ||
-      currentUser.profileUrl !== profileImg
+      currentUser.plainProfileUrl !== profileImg
     ) {
       updateCurrentUserInfo(fsProfileField.handle, profileImg).then(user => {
         setCurrentUser(user)

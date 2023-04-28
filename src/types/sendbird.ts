@@ -1,6 +1,7 @@
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import { Moralis } from './api'
 import { pToken } from './currencies'
+import { ContractAddr } from './contracts'
 
 export type SbNftDataType =
   | SbBuyNftDataType
@@ -31,4 +32,8 @@ export type SbSendNftDataType = {
 export type SbShareNftDataType = {
   type: 'share'
   selectedNft: Moralis.NftItem
+}
+
+export type SbUserMetadata = {
+  address: ContractAddr
 }

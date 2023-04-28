@@ -8,7 +8,7 @@ import {
 import type { SendbirdMessage } from '@sendbird/uikit-utils'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { ContractAddr } from 'types'
+import { SbUserMetadata } from 'types'
 
 type Props = {
   message: SendbirdMessage
@@ -26,7 +26,8 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
           onPress={(): void => {
             const sender = message.sender
             navigation.navigate(Routes.UserProfile, {
-              address: sender.userId as ContractAddr,
+              address: (sender.metaData as SbUserMetadata).address,
+              profileId: sender.userId,
             })
           }}>
           <Avatar size={26} uri={message.sender?.profileUrl} />

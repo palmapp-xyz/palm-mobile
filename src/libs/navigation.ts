@@ -132,7 +132,8 @@ type MainRouteParamsUnion =
   | {
       route: Routes.UserProfile
       params: {
-        address: ContractAddr // sendbird user id
+        address: ContractAddr
+        profileId: string
       }
     }
   | {

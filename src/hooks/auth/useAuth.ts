@@ -19,6 +19,7 @@ import {
   LocalStorageKey,
   AuthStorageType,
   FbProfile,
+  SbUserMetadata,
 } from 'types'
 import { formatHex } from 'libs/utils'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
@@ -201,6 +202,12 @@ const useAuth = (chain?: SupportedNetworkEnum): UseAuthReturn => {
       connect(authResult.profileId),
       setAuth(authResult),
     ])
+    if (!(sbUser.metaData as SbUserMetadata).address) {
+      const data: SbUserMetadata = {
+        address: authResult.address as ContractAddr,
+      }
+      await sbUser.createMetaData(data)
+    }
     setCurrentUser(sbUser)
 
     console.log(

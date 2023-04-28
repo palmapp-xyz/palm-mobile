@@ -20,7 +20,7 @@ import useSendbird from 'hooks/sendbird/useSendbird'
 import useLens from 'hooks/lens/useLens'
 import { getProfileMediaImg } from 'libs/lens'
 import useReactQuery from 'hooks/complex/useReactQuery'
-import { FbProfile } from 'types'
+import { ContractAddr, FbProfile, SbUserMetadata } from 'types'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import useFsProfile from 'hooks/firestore/useFsProfile'
@@ -73,6 +73,12 @@ const LensFriendsScreen = (): ReactElement => {
 
     // create sendbird user by connecting
     const newUser = await connect(userProfileId!)
+    if (!(newUser.metaData as SbUserMetadata).address) {
+      const data: SbUserMetadata = {
+        address: profile.ownedBy as ContractAddr,
+      }
+      await newUser.createMetaData(data)
+    }
     setCurrentUser(newUser)
     const profileImg = getProfileMediaImg(profile.picture)
     await updateCurrentUserInfo(profile.handle, profileImg)

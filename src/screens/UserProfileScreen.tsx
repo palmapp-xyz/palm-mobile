@@ -18,7 +18,7 @@ import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()
-  const userAddress = params.address
+  const { address: userAddress, profileId } = params
 
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
@@ -37,6 +37,7 @@ const UserProfileScreen = (): ReactElement => {
     () => (
       <ProfileHeader
         isMyPage={false}
+        userProfileId={profileId}
         userAddress={userAddress}
         selectedNetwork={selectedNetwork}
         onNetworkSelected={setSelectedNetwork}
