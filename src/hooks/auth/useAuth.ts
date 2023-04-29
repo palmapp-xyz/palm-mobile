@@ -198,6 +198,7 @@ const useAuth = (): UseAuthReturn => {
     await AsyncStorage.removeItem(LocalStorageKey.AUTH)
     await removeKeys()
     await Promise.all([auth().signOut(), disconnect(), unregisterDeviceToken()])
+    setRestoreLoading(false)
   }
 
   return {

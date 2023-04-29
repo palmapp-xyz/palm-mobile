@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react'
 
 import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
-import { FlexStyle, ImageStyle, StyleProp } from 'react-native'
+import { FlexStyle, StyleProp } from 'react-native'
+import { ImageStyle as RNFastImageStyle } from 'react-native-fast-image'
 import useNftImage from 'hooks/independent/useNftImage'
 import MediaRenderer from './MediaRenderer'
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
@@ -16,7 +17,7 @@ export type NftRendererProp = {
   metadata?: Maybe<string>
   width?: FlexStyle['width']
   height?: FlexStyle['height']
-  style?: StyleProp<ImageStyle>
+  style?: StyleProp<RNFastImageStyle>
 }
 
 const NftRenderer = ({

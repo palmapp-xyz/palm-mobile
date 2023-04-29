@@ -34,7 +34,7 @@ const NftDetails = ({
 }): ReactElement => {
   const { ownerOf } = useNft({ nftContract, chain })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
-  const { user } = useAuth(chain)
+  const { user } = useAuth()
 
   const isMine =
     tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()

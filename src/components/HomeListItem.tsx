@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
-import { Image, Pressable, StyleSheet, View } from 'react-native'
-
+import { Pressable, StyleSheet, View } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { Text, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
 
 type Props = React.PropsWithChildren<{
@@ -32,7 +32,11 @@ const HomeListItem = ({ title, desc, image, onPress }: Props): ReactElement => {
             {desc}
           </Text>
         </View>
-        <Image resizeMode={'contain'} source={image} style={styles.infoImage} />
+        <FastImage
+          resizeMode={'contain'}
+          source={image}
+          style={styles.infoImage}
+        />
       </View>
     </Pressable>
   )

@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react'
-import { Image, ImageProps } from 'react-native'
+import FastImage, { FastImageProps } from 'react-native-fast-image'
 
 type FormImageProps = {
   size?: number
-} & ImageProps
+} & FastImageProps
 const FormImage = (props: FormImageProps): ReactElement => {
   const { size = 20, style, ...rest } = props
 
-  return <Image style={[{ width: size, height: size }, style]} {...rest} />
+  return <FastImage style={[{ width: size, height: size }, style]} {...rest} />
 }
 
 export default FormImage

@@ -1,5 +1,8 @@
 import React, { ReactElement, useCallback, useState } from 'react'
-import { StyleProp, FlexStyle, Image, ImageStyle } from 'react-native'
+import { StyleProp, FlexStyle } from 'react-native'
+import FastImage, {
+  ImageStyle as RNFastImageStyle,
+} from 'react-native-fast-image'
 import * as Progress from 'react-native-progress'
 
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
@@ -18,7 +21,7 @@ import Card from 'components/atoms/Card'
  * @public
  */
 export interface MediaRendererProps {
-  style?: StyleProp<ImageStyle>
+  style?: StyleProp<RNFastImageStyle>
   width?: FlexStyle['width']
   height?: FlexStyle['height']
   /**
@@ -113,8 +116,7 @@ const MediaRenderer = ({
     isValidHttpUrl(videoOrImageSrc.url)
   ) {
     return (
-      <Image
-        alt={alt}
+      <FastImage
         style={[{ width, height }, style]}
         source={{
           uri: videoOrImageSrc.url,
