@@ -92,15 +92,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   )
 }
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: true,
-      refetchOnMount: true,
-      retry: false,
-    },
-  },
-})
+const queryClient = new QueryClient()
 
 const AppProviderWrapper = ({
   children,

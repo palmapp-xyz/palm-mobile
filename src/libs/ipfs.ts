@@ -50,11 +50,11 @@ export async function resolveMimeType(
 }
 
 export const fixTokenUri = (uri: string): string => {
-  let unescaped = uri
+  let unescaped = unescape(uri)
   try {
-    unescaped = decodeURI(unescape(uri))
+    unescaped = decodeURI(uri)
   } catch (e) {
-    console.error(uri, e)
+    // console.error(uri, e)
   }
 
   if (unescaped.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
