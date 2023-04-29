@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios bump_build_version
+
+```sh
+[bundle exec] fastlane ios bump_build_version
+```
+
+
+
 ### ios certificates
 
 ```sh
@@ -43,6 +51,14 @@ Fetch certificates, build and upload to App Center.
 
 
 ## Android
+
+### android bump_build_version
+
+```sh
+[bundle exec] fastlane android bump_build_version
+```
+
+Bump version and Build the Android application.
 
 ### android build
 
