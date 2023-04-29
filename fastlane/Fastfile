@@ -12,6 +12,13 @@ platform :ios do
     end
   end
 
+  lane :bump_build_version do
+    increment_build_number(xcodeproj: './ios/PalmApp.xcodeproj')
+    commit_version_bump(message: 'Bump iOS build', xcodeproj: './ios/PalmApp.xcodeproj')
+    git_pull
+    push_to_git_remote
+  end
+
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do
     cert(
@@ -33,7 +40,10 @@ platform :ios do
   end
 
   desc 'Fetch certificates, build and upload to App Center.'
-  lane :beta do
+  lane :beta do |options|
+    if options[:bump]
+      bump_build_version
+    end
     build
     appcenter_upload(
       api_token: ENV["APPCENTER_IOS_API_TOKEN"],
@@ -50,7 +60,6 @@ end
 # Generated .apk will be at android/app/build/outputs/apk/release/app-release.apk
 platform :android do
 
-
   before_all do |lane|
     Dotenv.overload '../.env'
     environment = lane_context[SharedValues::ENVIRONMENT]
@@ -60,6 +69,28 @@ platform :android do
         puts "ENV_NAME: #{ENV["ENV_NAME"]}"
     end
   end
+
+  desc 'Bump version and Build the Android application.'
+  lane :bump_build_version do
+    path = '../android/app/build.gradle'
+    re = /versionCode\s+(\d+)/
+    s = File.read(path)
+    versionCode = s[re, 1].to_i
+    s[re, 1] = (versionCode + 1).to_s
+
+    f = File.new(path, 'w')
+    f.write(s)
+    f.close
+    repo_clean = `git status --porcelain`.empty?
+    if !repo_clean
+      git_commit(path: 'android/app/build.gradle', message: 'Bump android build')
+    end
+
+    git_pull
+
+    push_to_git_remote
+  end
+
 
   desc 'Build the Android application.'
   lane :build do
@@ -76,7 +107,10 @@ platform :android do
   end
 
   desc 'Build and upload to App Center.'
-  lane :beta do
+  lane :beta do |options|
+    if options[:bump]
+      bump_build_version
+    end
     build
     appcenter_upload(
       api_token: ENV["APPCENTER_ANDROID_API_TOKEN"],
