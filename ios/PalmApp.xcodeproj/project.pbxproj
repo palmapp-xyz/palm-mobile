@@ -13,14 +13,16 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1D6787CFB49B44618FF12DA0 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */; };
+		1DA9AE9D881F549AF1BE27DA /* Pods_PalmAppCommonPods_PalmApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3546658EE28308A087DCAB5 /* Pods_PalmAppCommonPods_PalmApp.framework */; };
 		3356C06B76EF482083562269 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 242013472B064A9198F4FDD1 /* SpaceGrotesk-Medium.ttf */; };
-		34CBC0DBD042E8B82BD1B15F /* libPods-PalmAppCommonPods-PalmApp-Testnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 012B443BC30DBC902C57943D /* libPods-PalmAppCommonPods-PalmApp-Testnet.a */; };
 		358FF5CF220842269540FAA5 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
+		3C78C1A1E424710B063B1E74 /* Pods_PalmAppCommonPods_PalmApp_Testnet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 019941F0D9BD233399C5FB05 /* Pods_PalmAppCommonPods_PalmApp_Testnet.framework */; };
 		3E4EB99629DA66FA00A026BA /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E4EB99529DA66FA00A026BA /* MaterialIcons.ttf */; };
 		4022CA4929B46B9F00335C68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4022CA4829B46B9F00335C68 /* Assets.xcassets */; };
 		402FB58429AB042700FD4051 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57429AB042700FD4051 /* AntDesign.ttf */; };
 		402FB58629AB042700FD4051 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57629AB042700FD4051 /* Ionicons.ttf */; };
 		57D86DB640134D39A9A5FAEE /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */; };
+		5BE927350E97305549BA6040 /* Pods_PalmAppCommonPods_PalmAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4412B81ACF82335D8C6C1A3E /* Pods_PalmAppCommonPods_PalmAppTests.framework */; };
 		6D22850329CA754400414E02 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6D22850229CA754400414E02 /* fonts */; };
 		6DEC80E629F163D300F4B174 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		6DEC80E729F163D300F4B174 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -38,8 +40,6 @@
 		6DEC80F829F163D300F4B174 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
 		6DEC810C29F211A300F4B174 /* PalmApp-Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		A266178DA498A48563EAC1DF /* libPods-PalmAppCommonPods-PalmApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */; };
-		CE20653989CD1E4F5CD61198 /* libPods-PalmAppCommonPods-PalmAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99994A8B3A1B5D875744BCCF /* libPods-PalmAppCommonPods-PalmAppTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 		00E356EE1AD99517003FC87E /* PalmAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalmAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* PalmAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PalmAppTests.m; sourceTree = "<group>"; };
-		012B443BC30DBC902C57943D /* libPods-PalmAppCommonPods-PalmApp-Testnet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmAppCommonPods-PalmApp-Testnet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		019941F0D9BD233399C5FB05 /* Pods_PalmAppCommonPods_PalmApp_Testnet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PalmAppCommonPods_PalmApp_Testnet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* PalmApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PalmApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PalmApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = PalmApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -71,6 +71,7 @@
 		4022CA4829B46B9F00335C68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		402FB57429AB042700FD4051 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
 		402FB57629AB042700FD4051 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		4412B81ACF82335D8C6C1A3E /* Pods_PalmAppCommonPods_PalmAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PalmAppCommonPods_PalmAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Bold.ttf"; path = "../assets/fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; };
 		4806AC2EF583A55BC8F104F9 /* Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet.release.xcconfig"; sourceTree = "<group>"; };
 		4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
@@ -85,9 +86,8 @@
 		6DF021B429F6116B0045385F /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp-PalmAppTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PalmApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmAppCommonPods-PalmApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98972C1DB7CC92B358A7E869 /* Pods-PalmApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.debug.xcconfig"; sourceTree = "<group>"; };
-		99994A8B3A1B5D875744BCCF /* libPods-PalmAppCommonPods-PalmAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PalmAppCommonPods-PalmAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3546658EE28308A087DCAB5 /* Pods_PalmAppCommonPods_PalmApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PalmAppCommonPods_PalmApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.release.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.release.xcconfig"; sourceTree = "<group>"; };
 		D1D9CF663CF70F40E086E90B /* Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmApp-Testnet/Pods-PalmAppCommonPods-PalmApp-Testnet.debug.xcconfig"; sourceTree = "<group>"; };
 		DA2B7B0FBD548F6AFA201E90 /* Pods-PalmAppCommonPods-PalmApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmAppCommonPods-PalmApp.debug.xcconfig"; path = "Target Support Files/Pods-PalmAppCommonPods-PalmApp/Pods-PalmAppCommonPods-PalmApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE20653989CD1E4F5CD61198 /* libPods-PalmAppCommonPods-PalmAppTests.a in Frameworks */,
+				5BE927350E97305549BA6040 /* Pods_PalmAppCommonPods_PalmAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,7 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A266178DA498A48563EAC1DF /* libPods-PalmAppCommonPods-PalmApp.a in Frameworks */,
+				1DA9AE9D881F549AF1BE27DA /* Pods_PalmAppCommonPods_PalmApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34CBC0DBD042E8B82BD1B15F /* libPods-PalmAppCommonPods-PalmApp-Testnet.a in Frameworks */,
+				3C78C1A1E424710B063B1E74 /* Pods_PalmAppCommonPods_PalmApp_Testnet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,9 +163,9 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				84F554CF88920D090575086B /* libPods-PalmAppCommonPods-PalmApp.a */,
-				012B443BC30DBC902C57943D /* libPods-PalmAppCommonPods-PalmApp-Testnet.a */,
-				99994A8B3A1B5D875744BCCF /* libPods-PalmAppCommonPods-PalmAppTests.a */,
+				A3546658EE28308A087DCAB5 /* Pods_PalmAppCommonPods_PalmApp.framework */,
+				019941F0D9BD233399C5FB05 /* Pods_PalmAppCommonPods_PalmApp_Testnet.framework */,
+				4412B81ACF82335D8C6C1A3E /* Pods_PalmAppCommonPods_PalmAppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

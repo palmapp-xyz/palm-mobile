@@ -22,10 +22,7 @@ if linkage != nil
 end
 
 abstract_target 'PalmAppCommonPods' do
-
-  pod 'FirebaseCore', :modular_headers => true
-  pod 'GoogleUtilities', :modular_headers => true
-
+  use_frameworks! :linkage => :static
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -46,6 +43,19 @@ abstract_target 'PalmAppCommonPods' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  # https://stackoverflow.com/a/74901546
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('RNPermissions') || pod.name.start_with?('Permission-')
+        def pod.build_type;
+          Pod::BuildType.static_library
+        end
+      end
+    end
+  end
 
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
