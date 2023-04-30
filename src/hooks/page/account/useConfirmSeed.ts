@@ -2,6 +2,7 @@ import _ from 'lodash'
 
 import useAuth from 'hooks/auth/useAuth'
 import { useEffect, useMemo, useState } from 'react'
+import { recordError } from 'libs/logger'
 
 type WordListType = {
   index: number
@@ -40,7 +41,7 @@ const useConfirmSeed = ({
     try {
       await registerMnemonic(mnemonic)
     } catch (e) {
-      console.error('useConfirmSeed:error', e)
+      recordError(e, 'useConfirmSeed:error')
     }
   }
 

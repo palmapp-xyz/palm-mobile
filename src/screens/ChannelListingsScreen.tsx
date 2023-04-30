@@ -10,6 +10,7 @@ import { Routes } from 'libs/navigation'
 
 import { FbListing } from 'types'
 import FbListingItem from 'components/fbListing/FbListingItem'
+import { recordError } from 'libs/logger'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const [isFetching, setIsFetching] = useState<boolean>(true)
@@ -39,7 +40,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
       setChannelListings(listings)
       setIsFetching(false)
     } catch (e) {
-      console.error(e)
+      recordError(e, 'getChannelListings')
     }
   }, [fsChannel, isFetching])
 

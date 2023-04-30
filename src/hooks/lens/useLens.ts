@@ -60,6 +60,7 @@ import { isMainnet } from 'libs/utils'
 import useIpfs from 'hooks/complex/useIpfs'
 import useLensHub from './useLensHub'
 import useLensAuth from './useLensAuth'
+import { recordError } from 'libs/logger'
 
 export type UseLensReturn = {
   appId: string
@@ -584,16 +585,14 @@ const useLens = (): UseLensReturn => {
             createMetadataRequest
           )
         console.log(
-          'create profile metadata via dispatcher: createPostViaDispatcherRequest',
+          'create profile metadata via dispatcher: createSetProfileMetadataViaDispatcherRequest',
           dispatcherResult
         )
 
         if (dispatcherResult.__typename !== 'RelayerResult') {
-          console.error(
-            'create profile metadata via dispatcher: failed',
-            dispatcherResult
-          )
-          throw new Error('create profile metadata via dispatcher: failed')
+          const err: Error = new Error(JSON.stringify(dispatcherResult))
+          recordError(err, 'setProfileMetadata:createDispatcherRequest')
+          throw err
         }
 
         value = {
@@ -616,10 +615,9 @@ const useLens = (): UseLensReturn => {
         })
 
         if (broadcastResult.__typename !== 'RelayerResult') {
-          console.error(
-            'create profile metadata via broadcast: failed',
-            broadcastResult
-          )
+          const err: Error = new Error(JSON.stringify(broadcastResult))
+
+          recordError(err, 'setProfileMetadata:broadcastRequest')
           throw new Error('create profile metadata via broadcast: failed')
         }
 

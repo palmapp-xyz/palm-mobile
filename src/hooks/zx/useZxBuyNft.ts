@@ -13,6 +13,7 @@ import _ from 'lodash'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useFsListing from 'hooks/firestore/useFsListing'
+import { recordError } from 'libs/logger'
 
 export type UseZxBuyNftReturn = {
   onClickConfirm: ({
@@ -75,7 +76,7 @@ const useZxBuyNft = (
             } as Partial<FbListing>)
           }
         } catch (e) {
-          console.error(e)
+          recordError(e, 'useZxBuyNft:fsChannel.collection(listings).update')
         }
         return { success: true, value: '' }
       } catch (error) {

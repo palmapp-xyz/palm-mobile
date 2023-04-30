@@ -18,6 +18,7 @@ import {
   VerifyDocument,
 } from 'graphqls/__generated__/graphql'
 import { parseJwt } from 'libs/utils'
+import { recordError } from 'libs/logger'
 
 export type UseLensAuthReturn = {
   authenticate: () => Promise<TrueOrErrReturn<AuthenticationResult | null>>
@@ -163,7 +164,7 @@ const useLensAuth = (): UseLensAuthReturn => {
       }
       return { success: true, value: res.value }
     } catch (e) {
-      console.error('useLens:refreshIfExpired error', e)
+      recordError(e, 'useLens:refreshIfExpired error')
       return { success: false, errMsg: _.toString(e) }
     }
   }

@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import useProfile from 'hooks/auth/useProfile'
 import { isMainnet } from 'libs/utils'
+import { recordError } from 'libs/logger'
 
 const CreateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
@@ -29,15 +30,12 @@ const CreateProfileScreen = (): ReactElement => {
       createProfile(handle, testnet)
         .then(res => {
           if (!res.success) {
-            console.error('createProfile:onClickConfirm', res.errMsg)
+            recordError(new Error(res.errMsg), 'createProfile:onClickConfirm')
             alert({ message: res.errMsg })
           }
         })
         .catch(error => {
-          console.error(
-            'createProfile:onClickConfirm',
-            JSON.stringify(error, null, 2)
-          )
+          recordError(error, 'createProfile:onClickConfirm')
           alert({ message: JSON.stringify(error) })
         })
         .finally(() => setLoading(false))

@@ -14,6 +14,7 @@ import {
 import useNetwork from './useNetwork'
 import { useSetRecoilState } from 'recoil'
 import fetchApiStore from 'store/fetchApiStore'
+import { recordError } from 'libs/logger'
 
 export type UseApiReturn = {
   getApi: <T extends ApiEnum>(props: {
@@ -95,7 +96,7 @@ const useApi = (): UseApiReturn => {
         await currentUser.getIdTokenResult(true)
       }
     } catch (e) {
-      console.error('useApi request interceptor', e)
+      recordError(e, 'useApi request interceptor')
     }
     return req
   })

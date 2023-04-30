@@ -29,6 +29,7 @@ import useMaticPrice from 'hooks/independent/useMaticPrice'
 import { isLensProfile } from 'libs/profile'
 import { getProfileMediaImg } from 'libs/lens'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
+import { recordError } from 'libs/logger'
 
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr
@@ -77,7 +78,7 @@ const ProfileHeader = ({
       const fetchedProfileId = await fetchUserProfileId(userAddress)
       setProfileId(fetchedProfileId)
     } catch (e) {
-      console.error(e)
+      recordError(e)
       alert({ title: 'Unknown Error', message: _.toString(e) })
       if (navigation.canGoBack()) {
         navigation.goBack()

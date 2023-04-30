@@ -13,6 +13,7 @@ import {
 } from 'libs/notification'
 import { useEffect, useState } from 'react'
 import useFsProfile from 'hooks/firestore/useFsProfile'
+import { recordError } from 'libs/logger'
 
 export type UseNotificationReturn = {
   channelId: string
@@ -89,7 +90,7 @@ const useNotification = ({
         ])
       }
     } catch (e) {
-      console.error('useNotification:registerDeviceToken error', e)
+      recordError(e, 'useNotification:registerDeviceToken error')
     }
   }
 
@@ -124,7 +125,7 @@ const useNotification = ({
         ])
       }
     } catch (e) {
-      console.error('useNotification:unregisterDeviceToken error', e)
+      recordError(e, 'useNotification:unregisterDeviceToken error')
     }
   }
 

@@ -26,6 +26,7 @@ import { Moralis, SupportedNetworkEnum } from 'types'
 import ProfileFooter from 'components/ProfileFooter'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import useProfile from 'hooks/auth/useProfile'
+import { recordError } from 'libs/logger'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -77,7 +78,7 @@ const MyPageScreen = (): ReactElement => {
       console.log(`updateProfileImage tx hash ${txHash}`)
       alert({ message: 'Profile image updated' })
     } else {
-      console.error(`updateProfileImage error ${res.errMsg}`)
+      recordError(`updateProfileImage error ${res.errMsg}`)
       alert({ message: `Update profile image failed: ${res.errMsg}` })
     }
   }
@@ -148,7 +149,7 @@ const MyPageScreen = (): ReactElement => {
                         await doUpdateProfileImage(selectedItem)
                       }
                     } catch (e) {
-                      console.error(e, selectedItem, selectedOption)
+                      recordError(e, 'doUpdateProfileImage')
                     }
                   }}
                 />

@@ -1,3 +1,4 @@
+import { recordError } from 'libs/logger'
 import React, { ErrorInfo, ReactElement, ReactNode } from 'react'
 import { ImageStyle, StyleProp, Text, View } from 'react-native'
 
@@ -25,9 +26,9 @@ class ErrorBoundary extends React.Component<
     return { error }
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  componentDidCatch(error: Error, _errorInfo: ErrorInfo): void {
     // You can also log the error to an error reporting service
-    console.error(error, errorInfo)
+    recordError(error, 'ErrorBoundary')
   }
 
   render(): ReactNode {

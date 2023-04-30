@@ -24,6 +24,7 @@ import useLensAuth from 'hooks/lens/useLensAuth'
 import { UTIL } from 'consts'
 import useNotification from 'hooks/independent/useNotification'
 import useFsProfile from 'hooks/firestore/useFsProfile'
+import { recordError } from 'libs/logger'
 
 export type UseAuthReturn = {
   user?: User
@@ -83,7 +84,7 @@ const useAuth = (): UseAuthReturn => {
           }
         }
       } catch (e) {
-        console.error('useAuth:restoreAuth', e)
+        recordError(e, 'useAuth:restoreAuth')
         await logout()
       }
     }
@@ -160,7 +161,7 @@ const useAuth = (): UseAuthReturn => {
       await setLensAuth(res.value)
       return res
     } catch (error) {
-      console.error('useAuth:lensLogin', error)
+      recordError(error, 'useAuth:lensLogin')
       return { success: false, errMsg: JSON.stringify(error) }
     }
   }

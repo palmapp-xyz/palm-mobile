@@ -28,6 +28,7 @@ import _ from 'lodash'
 import { formatValues } from 'libs/firebase'
 import { Maybe } from '@toruslabs/openlogin'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
+import { recordError } from 'libs/logger'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
@@ -117,7 +118,7 @@ const LensFriendsScreen = (): ReactElement => {
       }, 200)
     } catch (e) {
       setLoading(false)
-      console.error(e)
+      recordError(e, 'LensFriendsScreen:goToProfileChat')
       alert({ title: 'Unknown Error', message: _.toString(e) })
     }
   }

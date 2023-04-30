@@ -7,6 +7,7 @@ import useZx from './useZx'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useFsListing from 'hooks/firestore/useFsListing'
+import { recordError } from 'libs/logger'
 
 export type UseZxCancelNftReturn = {
   onClickConfirm: ({
@@ -64,7 +65,7 @@ const useZxCancelNft = (
           await fsListing.update({ status: 'cancelled' } as Partial<FbListing>)
         }
       } catch (e) {
-        console.error(e)
+        recordError(e, 'useZxCancelNft:fsChannel.collection(listings).update')
       }
     }
   }

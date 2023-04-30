@@ -7,6 +7,7 @@ import FallbackMediaRenderer from './FallbackMediaRenderer'
 import { UseResolvedMediaTypeReturn } from 'hooks/complex/useResolvedMediaType'
 
 import { parseString } from 'react-native-xml2js'
+import { recordError } from 'libs/logger'
 
 const SvgRenderer = ({
   alt,
@@ -34,7 +35,7 @@ const SvgRenderer = ({
     if (decoded) {
       parseString(decoded, (err, result) => {
         if (err || !result) {
-          console.error(err)
+          recordError(err)
           onError?.(err)
         } else {
           setXml(

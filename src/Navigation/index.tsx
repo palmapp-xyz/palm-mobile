@@ -18,11 +18,13 @@ import MainNavigator from './MainNavigator'
 import AuthNavigator from './AuthNavigator'
 import { SupportedNetworkEnum } from 'types'
 import LoadingPage from 'components/atoms/LoadingPage'
+import useCrashlytics from 'hooks/independent/useCrashlytics'
 
 const RootStack = createNativeStackNavigator()
 
 const Navigation = (): ReactElement => {
   const { user, restoreLoading } = useAuth()
+  useCrashlytics()
   const { scheme } = useAppearance()
   const isLightTheme = scheme === 'light'
 

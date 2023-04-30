@@ -5,6 +5,7 @@ import { Container } from 'components'
 import LensLogo from 'assets/LensLogo'
 
 import useAuth from 'hooks/auth/useAuth'
+import { recordError } from 'libs/logger'
 
 const SignInWithLens = (): ReactElement => {
   const { lensLogin, logout } = useAuth()
@@ -12,7 +13,7 @@ const SignInWithLens = (): ReactElement => {
   useEffect(() => {
     lensLogin().then(res => {
       if (!res.success) {
-        console.error('SignInWithLens:lensLogin', res.errMsg)
+        recordError(new Error(res.errMsg), 'SignInWithLens:lensLogin')
         Alert.alert(res.errMsg)
         logout()
       } else {

@@ -5,6 +5,7 @@ import firestore from '@react-native-firebase/firestore'
 
 import { ContractAddr, FbListing } from 'types'
 import GroupChannelItem from 'components/GroupChannelItem'
+import { recordError } from 'libs/logger'
 
 const NftListingChannels = ({
   nftContract,
@@ -42,7 +43,7 @@ const NftListingChannels = ({
 
       setActiveListedChannels(activeListings)
     } catch (e) {
-      console.error(e)
+      recordError(e, 'getActingListings')
     }
   }, [nftContract])
 

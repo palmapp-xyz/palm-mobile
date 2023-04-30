@@ -53,9 +53,7 @@ export const fixTokenUri = (uri: string): string => {
   let unescaped = unescape(uri)
   try {
     unescaped = decodeURI(uri)
-  } catch (e) {
-    // console.error(uri, e)
-  }
+  } catch (e) {}
 
   if (unescaped.startsWith('https://ipfs.moralis.io:2053/ipfs/')) {
     unescaped = unescaped.replace(

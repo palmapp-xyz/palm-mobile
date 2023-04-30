@@ -6,6 +6,7 @@ import { Alert } from 'react-native'
 
 import useAuth from 'hooks/auth/useAuth'
 import { savePkey } from 'libs/account'
+import { recordError } from 'libs/logger'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
@@ -71,7 +72,7 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
         await registerMnemonic(mnemonic)
       }
     } catch (e) {
-      console.error('useRecoverAccount:error', e)
+      recordError(e, 'useRecoverAccount:error')
       Alert.alert(_.toString(e))
     }
   }

@@ -9,6 +9,7 @@ import { Account } from 'web3-core'
 
 import appStore from 'store/appStore'
 import { AuthChallengeInfo, ContractAddr, SupportedNetworkEnum } from 'types'
+import { recordError } from 'libs/logger'
 
 export type UseSign4AuthReturn = {
   challenge?: AuthChallengeInfo
@@ -34,7 +35,7 @@ const useSign4Auth = (): UseSign4AuthReturn => {
         const result = await challengeVerify(signature, challenge.message)
         await appSignIn(result)
       } catch (e) {
-        console.error(e)
+        recordError(e, 'signChallenge')
         Alert.alert(_.toString(e))
       } finally {
         setLoading(false)

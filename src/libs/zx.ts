@@ -5,6 +5,7 @@ import {
   SignedNftOrderV4Serialized,
 } from 'evm-nft-swap'
 import { ContractAddr } from 'types'
+import { recordError } from './logger'
 
 export const serializeNftOrder = (
   signedOrder: SignedNftOrderV4
@@ -39,11 +40,11 @@ export const serializeNftOrder = (
       erc1155TokenId: signedOrder.erc1155TokenId.toString(),
     }
   } else {
-    console.error(
-      'unknown order format type (not erc721 and not erc1155',
-      signedOrder
-    )
-    throw new Error('Unknown asset type')
+    const err: Error = new Error()
+    err.name = 'unknown order format type (not erc721 and not erc1155)'
+    err.message = JSON.stringify(signedOrder)
+    recordError(err, err.name)
+    throw err
   }
 }
 

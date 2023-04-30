@@ -18,6 +18,7 @@ import { Profile, ProfileMedia } from 'graphqls/__generated__/graphql'
 import useNetwork from 'hooks/complex/useNetwork'
 import { formatValues } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
+import { recordError } from 'libs/logger'
 
 export type UseProfileReturn = {
   profile: FbProfile | undefined
@@ -118,7 +119,7 @@ const useProfile = ({
           return { success: false, errMsg: res.errMsg }
         }
       } catch (error) {
-        console.error('createLensProfile', JSON.stringify(error, null, 2))
+        recordError(error, 'createLensProfile')
         return { success: false, errMsg: JSON.stringify(error) }
       }
     }
@@ -160,10 +161,7 @@ const useProfile = ({
           return res
         }
       } catch (error) {
-        console.error(
-          'updateProfileImage:updateLensProfileImage',
-          JSON.stringify(error, null, 2)
-        )
+        recordError(error, 'updateProfileImage:updateLensProfileImage')
         return { success: false, errMsg: JSON.stringify(error) }
       }
     }
@@ -188,7 +186,7 @@ const useProfile = ({
 
       return { success: true, value: txHash }
     } catch (error) {
-      console.error('updateProfileImage:fsProfile.update', error)
+      recordError(error, 'updateProfileImage:fsProfile.update')
       return { success: false, errMsg: JSON.stringify(error) }
     }
   }
@@ -251,7 +249,7 @@ const useProfile = ({
       await fsProfile.update(profileUpdate)
       return { success: true, value }
     } catch (error) {
-      console.error('setMetadata:fsProfile.update', error)
+      recordError(error, 'setMetadata:fsProfile.update')
       return { success: false, errMsg: JSON.stringify(error) }
     }
   }

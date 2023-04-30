@@ -4,6 +4,7 @@ import { fixTokenUri } from './ipfs'
 import { Maybe } from '@toruslabs/openlogin'
 import { ContractAddr } from 'types'
 import { isENS } from './ens'
+import { recordError } from './logger'
 
 export type FetchNftImageReturn = {
   image: string
@@ -77,7 +78,11 @@ export const fetchNftImage = async ({
         }
       }
     } catch (e) {
-      console.error('fetchTokenUri failed: ', metadata, tokenUri, e)
+      const err: Error = new Error()
+      err.name = 'fetchNftImage failed'
+      err.message = JSON.stringify(e)
+      err.stack = (e as Error).stack
+      recordError(err, err.name)
     }
   }
 
