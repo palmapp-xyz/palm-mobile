@@ -1,34 +1,26 @@
-import { useMemo, useState } from 'react'
-import firestore from '@react-native-firebase/firestore'
-
-import {
-  UserFacingERC721AssetDataSerializedV4,
-  UserFacingERC20AssetDataSerializedV4,
-  SignedNftOrderV4Serialized,
-  SignedNftOrderV4,
-} from 'evm-nft-swap'
-
 import { UTIL } from 'consts'
-
-import useReactQuery from 'hooks/complex/useReactQuery'
-import useAuth from 'hooks/auth/useAuth'
 import {
-  ContractAddr,
-  FbListing,
-  PostTxStatus,
-  QueryKeyEnum,
-  SupportedNetworkEnum,
-  Token,
-} from 'types'
-import useZx from './useZx'
-import { useSetRecoilState } from 'recoil'
-import postTxStore from 'store/postTxStore'
+  SignedNftOrderV4, SignedNftOrderV4Serialized, UserFacingERC20AssetDataSerializedV4,
+  UserFacingERC721AssetDataSerializedV4
+} from 'evm-nft-swap'
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
+import useAuth from 'hooks/auth/useAuth'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import { serializeNftOrder } from 'libs/zx'
 import _ from 'lodash'
-import useFsChannel from 'hooks/firestore/useFsChannel'
+import { useMemo, useState } from 'react'
+import { useSetRecoilState } from 'recoil'
+import postTxStore from 'store/postTxStore'
+import {
+  ContractAddr, FbListing, PostTxStatus, QueryKeyEnum, SupportedNetworkEnum, Token
+} from 'types'
+
+import firestore from '@react-native-firebase/firestore'
+
+import useZx from './useZx'
 
 export type UseZxListNftReturn = {
   isApproved: boolean

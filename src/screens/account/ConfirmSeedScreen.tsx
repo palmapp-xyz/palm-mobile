@@ -1,14 +1,13 @@
+import { Container, FormButton, FormText, Header, Row } from 'components'
+import Loading from 'components/atoms/Loading'
+import { COLOR } from 'consts'
+import useConfirmSeed from 'hooks/page/account/useConfirmSeed'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useRecoilState } from 'recoil'
-
-import { COLOR } from 'consts'
-import { Container, FormButton, Row, Header, FormText } from 'components'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import Loading from 'components/atoms/Loading'
 import appStore from 'store/appStore'
-import useConfirmSeed from 'hooks/page/account/useConfirmSeed'
 
 const ConfirmSeedScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ConfirmSeed>()

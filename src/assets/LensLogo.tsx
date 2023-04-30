@@ -1,5 +1,5 @@
 import React from 'react'
-import Svg, { SvgProps, G, Path, Defs, ClipPath } from 'react-native-svg'
+import Svg, { ClipPath, Defs, G, Path, SvgProps } from 'react-native-svg'
 
 const LensLogo = (props: SvgProps): React.ReactElement => (
   <Svg width={54} height={80} fill="none" {...props}>

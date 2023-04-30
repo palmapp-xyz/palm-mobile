@@ -1,24 +1,14 @@
+import images from 'assets/images'
+import { Container, FormImage, FormInput, FormText, Header, Row, Tag } from 'components'
+import { COLOR, UTIL } from 'consts'
+import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import _ from 'lodash'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { COLOR, UTIL } from 'consts'
-
-import {
-  Container,
-  FormImage,
-  FormInput,
-  FormText,
-  Header,
-  Row,
-  Tag,
-} from 'components'
-
-import images from 'assets/images'
-import { useAppNavigation } from 'hooks/useAppNavigation'
 import TokenGating from './TokenGating'
-import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'
 
 const CreateChannelScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()

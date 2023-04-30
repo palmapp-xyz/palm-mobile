@@ -1,15 +1,10 @@
-import { Maybe } from '@toruslabs/openlogin'
-
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
-import { fetchNftImage } from 'libs/fetchTokenUri'
 import { isENS } from 'libs/ens'
-import {
-  ContractAddr,
-  NftType,
-  QueryKeyEnum,
-  SupportedNetworkEnum,
-} from 'types'
+import { fetchNftImage } from 'libs/fetchTokenUri'
+import { ContractAddr, NftType, QueryKeyEnum, SupportedNetworkEnum } from 'types'
+
+import { Maybe } from '@toruslabs/openlogin'
 
 export type UseNftImageReturn = {
   loading: boolean

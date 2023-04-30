@@ -1,9 +1,8 @@
+import { Card, FormImage, FormText, Row } from 'components'
+import { UTIL } from 'consts'
+import { UserItem } from 'hooks/page/explore/useExploreRecommendUsers'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-
-import { Card, FormImage, FormText, Row } from 'components'
-import { UserItem } from 'hooks/page/explore/useExploreRecommendUsers'
-import { UTIL } from 'consts'
 
 const RecommendUsersCard = ({ user }: { user: UserItem }): ReactElement => {
   const follower = UTIL.abbreviateNumber(user.follower.toString())

@@ -1,12 +1,11 @@
+import images from 'assets/images'
+import { Container, FormImage, Row } from 'components'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement, useEffect } from 'react'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { createGroupChannelListFragment } from '@sendbird/uikit-react-native'
-
-import { Routes } from 'libs/navigation'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { StyleSheet, TouchableOpacity } from 'react-native'
-import { Container, FormImage, Row } from 'components'
-import images from 'assets/images'
 
 const HEADER_HEIGHT = 72
 

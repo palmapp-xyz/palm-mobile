@@ -1,11 +1,9 @@
-import { useToast, useAlert } from '@sendbird/uikit-react-native-foundation'
 import {
-  FilePickerResponse,
-  useLocalization,
-  usePlatformService,
+  FilePickerResponse, useLocalization, usePlatformService
 } from '@sendbird/uikit-react-native'
-import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
+import { useAlert, useToast } from '@sendbird/uikit-react-native-foundation'
 import SBUError from '@sendbird/uikit-react-native/src/libs/SBUError'
+import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 
 export type UseDeviceReturn = {
   getMediaFile: () => Promise<FilePickerResponse | undefined>

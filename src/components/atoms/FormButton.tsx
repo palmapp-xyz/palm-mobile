@@ -1,12 +1,7 @@
 import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
-import {
-  StyleSheet,
-  TouchableOpacity,
-  StyleProp,
-  ViewStyle,
-  TextStyle,
-} from 'react-native'
+import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, ViewStyle } from 'react-native'
+
 import FormText from './FormText'
 
 export type FormButtonProps = {

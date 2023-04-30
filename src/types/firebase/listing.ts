@@ -1,5 +1,6 @@
-import { ContractAddr } from '../contracts'
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
+
+import { ContractAddr } from '../contracts'
 
 export type FbListingState = 'active' | 'completed' | 'cancelled'
 

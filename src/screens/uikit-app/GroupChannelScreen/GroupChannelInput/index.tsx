@@ -1,36 +1,26 @@
+import { COLOR } from 'consts'
+import useGcInput from 'hooks/page/groupChannel/useGcInput'
 import React, {
-  MutableRefObject,
-  ReactElement,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
+  MutableRefObject, ReactElement, useContext, useEffect, useRef, useState
 } from 'react'
 import { KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
+
 import {
-  SendbirdFileMessage,
-  SendbirdGroupChannel,
-  SendbirdUserMessage,
-  getGroupChannelChatAvailableState,
-  replace,
-  useIIFE,
-} from '@sendbird/uikit-utils'
+  GroupChannelContexts, GroupChannelProps, useSendbirdChat
+} from '@sendbird/uikit-react-native'
+import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 import useMentionTextInput from '@sendbird/uikit-react-native/src/hooks/useMentionTextInput'
 import {
-  GroupChannelContexts,
-  GroupChannelProps,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
+  getGroupChannelChatAvailableState, replace, SendbirdFileMessage, SendbirdGroupChannel,
+  SendbirdUserMessage, useIIFE
+} from '@sendbird/uikit-utils'
 
-import EditInput from './EditInput'
-import SendInput from './SendInput'
 import BottomMenu from './BottomMenu'
+import EditInput from './EditInput'
 import MyNftList from './MyNftList'
-import useGcInput from 'hooks/page/groupChannel/useGcInput'
 import SelectReceiverModal from './SelectReceiverModal'
-import { COLOR } from 'consts'
+import SendInput from './SendInput'
 
 const AUTO_FOCUS = Platform.select({
   ios: false,

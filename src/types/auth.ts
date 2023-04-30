@@ -1,6 +1,8 @@
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
-import { ContractAddr } from './contracts'
+
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+
+import { ContractAddr } from './contracts'
 
 export type DeviceToken = {
   apns: string[]

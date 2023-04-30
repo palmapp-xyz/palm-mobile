@@ -1,17 +1,11 @@
+import { COLOR } from 'consts'
+import { fixTokenUri } from 'libs/ipfs'
 import React, { ReactElement } from 'react'
 import {
-  ImageStyle,
-  Linking,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
+  ImageStyle, Linking, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity
 } from 'react-native'
 
-import { fixTokenUri } from 'libs/ipfs'
 import { Maybe } from '@toruslabs/openlogin'
-import { COLOR } from 'consts'
 
 const LinkRenderer = ({
   src,

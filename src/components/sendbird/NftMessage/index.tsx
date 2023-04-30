@@ -1,20 +1,17 @@
-import FileMessage, {
-  FileMessageProps,
-} from '@sendbird/uikit-react-native/src/components/MessageRenderer/FileMessage'
+import { MediaRenderer } from 'components'
+import { parseSendFileData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
 import { Text, View } from 'react-native'
-import {
-  createStyleSheet,
-  useUIKitTheme,
-} from '@sendbird/uikit-react-native-foundation'
 
-import { parseSendFileData } from 'libs/sendbird'
-import { MediaRenderer } from 'components'
+import { createStyleSheet, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
+import FileMessage, {
+  FileMessageProps
+} from '@sendbird/uikit-react-native/src/components/MessageRenderer/FileMessage'
 
-import ListNftMessage from './ListNftMessage'
-import ShareNftMessage from './ShareNftMessage'
-import SendNftMessage from './SendNftMessage'
 import BuyNftMessage from './BuyNftMessage'
+import ListNftMessage from './ListNftMessage'
+import SendNftMessage from './SendNftMessage'
+import ShareNftMessage from './ShareNftMessage'
 
 const NftMessage = (props: FileMessageProps): ReactElement => {
   const { colors } = useUIKitTheme()

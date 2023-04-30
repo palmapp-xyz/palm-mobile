@@ -1,17 +1,14 @@
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import {
-  createGroupChannelSettingsFragment,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
 import Icon from 'react-native-vector-icons/Ionicons'
 
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { createGroupChannelSettingsFragment, useSendbirdChat } from '@sendbird/uikit-react-native'
+import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
+
 import { useAppNavigation } from '../../../hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import GroupChannelSettingsInfo from './GroupChannelSettingsInfo'
-import useFsChannel from 'hooks/firestore/useFsChannel'
 
 const GroupChannelSettingsFragment = createGroupChannelSettingsFragment({
   Info: GroupChannelSettingsInfo,

@@ -1,35 +1,30 @@
-import React, { ReactElement, useState } from 'react'
-import {
-  StyleSheet,
-  FlatList,
-  View,
-  Pressable,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native'
-import Clipboard from '@react-native-clipboard/clipboard'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-import _ from 'lodash'
-
-import { COLOR, UTIL } from 'consts'
-import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 import images from 'assets/images'
-
-import { Routes } from 'libs/navigation'
 import { FormImage, FormText, MediaRenderer, Row } from 'components'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useEthPrice from 'hooks/independent/useEthPrice'
-import useUserBalance from 'hooks/independent/useUserBalance'
-import SupportedNetworkRow from './molecules/SupportedNetworkRow'
+import { COLOR, UTIL } from 'consts'
+import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useProfile from 'hooks/auth/useProfile'
+import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
-import { isLensProfile } from 'libs/profile'
+import useUserBalance from 'hooks/independent/useUserBalance'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getProfileMediaImg } from 'libs/lens'
-import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import { recordError } from 'libs/logger'
+import { Routes } from 'libs/navigation'
+import { isLensProfile } from 'libs/profile'
+import _ from 'lodash'
+import React, { ReactElement, useState } from 'react'
+import {
+  FlatList, ImageBackground, Pressable, StyleSheet, TouchableOpacity, View
+} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { ContractAddr, pToken, SupportedNetworkEnum } from 'types'
+
+import Clipboard from '@react-native-clipboard/clipboard'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
+
+import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr

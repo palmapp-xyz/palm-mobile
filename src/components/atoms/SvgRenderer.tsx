@@ -1,13 +1,12 @@
+import { UseResolvedMediaTypeReturn } from 'hooks/complex/useResolvedMediaType'
+import { recordError } from 'libs/logger'
 import React, { ReactElement, useEffect, useState } from 'react'
-import { SvgUri, SvgWithCss } from 'react-native-svg'
 import base64 from 'react-native-base64'
+import { SvgUri, SvgWithCss } from 'react-native-svg'
+import { parseString } from 'react-native-xml2js'
 
 import { MediaRendererProps } from '../molecules/MediaRenderer'
 import FallbackMediaRenderer from './FallbackMediaRenderer'
-import { UseResolvedMediaTypeReturn } from 'hooks/complex/useResolvedMediaType'
-
-import { parseString } from 'react-native-xml2js'
-import { recordError } from 'libs/logger'
 
 const SvgRenderer = ({
   alt,

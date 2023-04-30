@@ -1,4 +1,5 @@
 import { ChannelType } from '@sendbird/chat'
+
 import { ContractAddr, NftType } from '../contracts'
 import { SupportedNetworkEnum } from '../network'
 

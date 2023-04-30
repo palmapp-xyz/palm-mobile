@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios'
-
-import useNetwork from '../complex/useNetwork'
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { QueryKeyEnum, SupportedNetworkEnum } from 'types'
-import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
+
+import useNetwork from '../complex/useNetwork'
 
 export type UseZxOrdersReturn = {
   orderList: PostOrderResponsePayload[]

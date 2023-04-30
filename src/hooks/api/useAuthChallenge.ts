@@ -1,15 +1,10 @@
-import {
-  SupportedNetworkEnum,
-  ContractAddr,
-  AuthChallengeResult,
-  ApiEnum,
-  AuthChallengeInfo,
-  ApiResponse,
-} from 'types'
+import axios, { AxiosResponse } from 'axios'
+import useNetwork from 'hooks/complex/useNetwork'
 // import useApi from 'hooks/complex/useApi'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
-import useNetwork from 'hooks/complex/useNetwork'
-import axios, { AxiosResponse } from 'axios'
+import {
+  ApiEnum, ApiResponse, AuthChallengeInfo, AuthChallengeResult, ContractAddr, SupportedNetworkEnum
+} from 'types'
 
 export type UseAuthChallengeReturn = {
   challengeRequest: (address: ContractAddr) => Promise<AuthChallengeInfo>

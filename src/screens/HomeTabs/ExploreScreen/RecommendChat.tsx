@@ -1,12 +1,11 @@
+import { FormText, MenuItem, Row } from 'components'
+import RecommendChatCard from 'components/exploreTab/RecommendChatCard'
+import { COLOR } from 'consts'
+import useExploreRecommendChat from 'hooks/page/explore/useExploreRecommendChat'
+import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
-import _ from 'lodash'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR } from 'consts'
-import { FormText, Row, MenuItem } from 'components'
-import useExploreRecommendChat from 'hooks/page/explore/useExploreRecommendChat'
-import RecommendChatCard from 'components/exploreTab/RecommendChatCard'
 
 const RecommendChat = (): ReactElement => {
   const [selectedOption, setSelectedOption] = useState('')

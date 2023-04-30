@@ -1,14 +1,11 @@
 import React, { ReactElement } from 'react'
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { Routes } from '../libs/navigation'
 import {
-  MainAccountScreen,
-  NewAccountScreen,
-  ConfirmSeedScreen,
-  RecoverAccountScreen,
-  CreateCompleteScreen,
-  Sign4AuthScreen,
+  ConfirmSeedScreen, CreateCompleteScreen, MainAccountScreen, NewAccountScreen,
+  RecoverAccountScreen, Sign4AuthScreen
 } from '../screens'
 
 const AuthStack = createNativeStackNavigator()

@@ -1,9 +1,8 @@
+import useContract from 'hooks/complex/useContract'
+import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
 import { AbiItem } from 'web3-utils'
 
 import nft from '../../abi/Nft.json'
-
-import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
-import useContract from 'hooks/complex/useContract'
 
 export type UseNftReturn = {
   name: () => Promise<string | undefined>

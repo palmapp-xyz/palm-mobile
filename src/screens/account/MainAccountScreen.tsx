@@ -1,14 +1,12 @@
-import React, { ReactElement, useMemo, useRef, useState } from 'react'
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import images from 'assets/images'
+import { Container, FormButton, FormImage, FormText, Row } from 'components'
 import { COLOR } from 'consts'
-import BottomSheet from '@gorhom/bottom-sheet'
-
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement, useMemo, useRef, useState } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import { Container, FormButton, FormImage, FormText, Row } from 'components'
-
-import images from 'assets/images'
+import BottomSheet from '@gorhom/bottom-sheet'
 
 const MainAccountScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()

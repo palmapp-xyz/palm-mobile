@@ -1,19 +1,17 @@
+import { FormImage, FormText, NftRenderer, Row } from 'components'
+import { COLOR, NETWORK, UTIL } from 'consts'
+import { format } from 'date-fns'
+import useEthPrice from 'hooks/independent/useEthPrice'
+import useKlayPrice from 'hooks/independent/useKlayPrice'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import { getOrderTokenAddress, getOrderTokenId } from 'libs/zx'
+import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { format } from 'date-fns'
-import _ from 'lodash'
-
-import { COLOR, NETWORK, UTIL } from 'consts'
-
 import { FbListing, NftType, pToken, SupportedNetworkEnum } from 'types'
-import { FormImage, FormText, NftRenderer, Row } from 'components'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import { Routes } from 'libs/navigation'
-import { getOrderTokenAddress, getOrderTokenId } from 'libs/zx'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useEthPrice from 'hooks/independent/useEthPrice'
-import useKlayPrice from 'hooks/independent/useKlayPrice'
 
 const FbListingItem = ({ item }: { item: FbListing }): ReactElement => {
   const { navigation } = useAppNavigation()

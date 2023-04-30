@@ -1,9 +1,8 @@
+import FormImage from 'components/atoms/FormImage'
+import { NETWORK } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
 import { StyleSheet, View } from 'react-native'
-
-import FormImage from 'components/atoms/FormImage'
 import { SupportedNetworkEnum } from 'types'
-import { NETWORK } from 'consts'
 
 const ChainLogoWrapper = ({
   chain,

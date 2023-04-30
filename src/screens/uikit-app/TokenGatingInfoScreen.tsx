@@ -1,26 +1,20 @@
-import React, { ReactElement, useMemo } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-
-import { COLOR, NETWORK, UTIL } from 'consts'
-
-import {
-  FbChannelNativeGatingField,
-  FbChannelNFTGatingField,
-  NftType,
-  QueryKeyEnum,
-} from 'types'
 import images from 'assets/images'
 import { Container, FormImage, FormText, Header, Row } from 'components'
-import { Routes } from 'libs/navigation'
-import useNft from 'hooks/contract/useNft'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useAuth from 'hooks/auth/useAuth'
-import useFsChannel from 'hooks/firestore/useFsChannel'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import { COLOR, NETWORK, UTIL } from 'consts'
+import useAuth from 'hooks/auth/useAuth'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useNft from 'hooks/contract/useNft'
+import useFsChannel from 'hooks/firestore/useFsChannel'
 import useUserBalance from 'hooks/independent/useUserBalance'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
+import React, { ReactElement, useMemo } from 'react'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FbChannelNativeGatingField, FbChannelNFTGatingField, NftType, QueryKeyEnum } from 'types'
+
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 const NativeGating = ({
   gating,

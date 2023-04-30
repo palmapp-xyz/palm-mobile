@@ -1,37 +1,19 @@
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { Routes } from 'libs/navigation'
 import {
-  GroupChannelBannedUsersScreen,
-  GroupChannelCreateScreen,
-  GroupChannelInviteScreen,
-  GroupChannelMembersScreen,
-  GroupChannelModerationScreen,
-  GroupChannelMutedMembersScreen,
-  GroupChannelNotificationsScreen,
-  GroupChannelOperatorsScreen,
-  GroupChannelRegisterOperatorScreen,
-  GroupChannelScreen,
-  GroupChannelSettingsScreen,
-  HomeTabs,
-  SettingScreen,
-  ZxNftDetailScreen,
-  SendNftScreen,
-  ListNftScreen,
-  NftDetailScreen,
-  ChannelListingsScreen,
-  ChannelTokenGatingScreen,
-  UserProfileScreen,
-  TokenGatingInfoScreen,
-  FileViewerScreen,
-  CreateProfileScreen,
-  UpdateLensProfileScreen,
-  InitExploreScreen,
-  CreateChannelScreen,
+  ChannelListingsScreen, ChannelTokenGatingScreen, CreateChannelScreen, CreateProfileScreen,
+  FileViewerScreen, GroupChannelBannedUsersScreen, GroupChannelCreateScreen,
+  GroupChannelInviteScreen, GroupChannelMembersScreen, GroupChannelModerationScreen,
+  GroupChannelMutedMembersScreen, GroupChannelNotificationsScreen, GroupChannelOperatorsScreen,
+  GroupChannelRegisterOperatorScreen, GroupChannelScreen, GroupChannelSettingsScreen, HomeTabs,
+  InitExploreScreen, ListNftScreen, NftDetailScreen, SendNftScreen, SettingScreen,
+  TokenGatingInfoScreen, UpdateLensProfileScreen, UserProfileScreen, ZxNftDetailScreen
 } from '../screens'
-import useProfile from 'hooks/auth/useProfile'
-import useAuth from 'hooks/auth/useAuth'
 
 const MainStack = createNativeStackNavigator()
 

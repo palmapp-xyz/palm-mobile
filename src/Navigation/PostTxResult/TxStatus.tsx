@@ -1,21 +1,14 @@
-import React, { ReactElement } from 'react'
-import styled from 'styled-components'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from 'react-native'
+import images from 'assets/images'
+import { Card, FormButton, FormImage, LinkExplorer } from 'components'
 import _ from 'lodash'
+import React, { ReactElement } from 'react'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useRecoilValue } from 'recoil'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
-
 import postTxStore from 'store/postTxStore'
+import styled from 'styled-components'
 import { PostTxStatus, SupportedNetworkEnum } from 'types'
 
-import images from 'assets/images'
-import { FormImage, Card, FormButton, LinkExplorer } from 'components'
+import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 const StyledContainer = styled(View)`
   position: absolute;

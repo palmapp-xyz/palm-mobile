@@ -1,6 +1,7 @@
+import axios from 'axios'
+
 import { FileMessageCreateParams } from '@sendbird/chat/message'
 
-import axios from 'axios'
 import { fixTokenUri } from './ipfs'
 
 const blobFetch = async (imgUri: string): Promise<FileMessageCreateParams> => {

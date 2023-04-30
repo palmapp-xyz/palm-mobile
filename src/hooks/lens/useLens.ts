@@ -1,66 +1,36 @@
+import { utils } from 'ethers'
 import {
-  ApolloQueryResult,
-  FetchResult,
-  MutationOptions,
-  OperationVariables,
-  QueryOptions,
-  useApolloClient,
-} from '@apollo/client'
+  AuthenticationResult, BroadcastDocument, BroadcastMutation, BroadcastRequest,
+  CreateProfileDocument, CreateProfileMutation, CreateProfileRequest,
+  CreatePublicSetProfileMetadataUriRequest, CreateSetProfileImageUriTypedDataDocument,
+  CreateSetProfileMetadataTypedDataDocument, CreateSetProfileMetadataTypedDataMutation,
+  CreateSetProfileMetadataViaDispatcherDocument, CreateSetProfileMetadataViaDispatcherMutation,
+  DefaultProfileDocument, HasTxHashBeenIndexedDocument, HasTxHashBeenIndexedQuery,
+  HasTxHashBeenIndexedRequest, NftOwnershipChallengeDocument, NftOwnershipChallengeRequest,
+  NftOwnershipChallengeResult, PaginatedProfileResult, Profile, ProfileDocument,
+  ProfileQueryRequest, ProfilesDocument, PublicationMetadataStatusType, TransactionReceipt,
+  UpdateProfileImageRequest
+} from 'graphqls/__generated__/graphql'
+import useEthers from 'hooks/complex/useEthers'
+import useIpfs from 'hooks/complex/useIpfs'
+import useNetwork from 'hooks/complex/useNetwork'
+import { recordError } from 'libs/logger'
+import { isMainnet } from 'libs/utils'
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
-import { utils } from 'ethers'
+import postTxStore from 'store/postTxStore'
+import { ContractAddr, PostTxStatus, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
-  ContractAddr,
-  PostTxStatus,
-  SupportedNetworkEnum,
-  TrueOrErrReturn,
-} from 'types'
-import {
-  CreateProfileDocument,
-  CreateProfileMutation,
-  CreateProfileRequest,
-  NftOwnershipChallengeDocument,
-  NftOwnershipChallengeResult,
-  DefaultProfileDocument,
-  PaginatedProfileResult,
-  ProfileDocument,
-  ProfileQueryRequest,
-  ProfilesDocument,
-  NftOwnershipChallengeRequest,
-  CreateSetProfileImageUriTypedDataDocument,
-  Profile,
-  UpdateProfileImageRequest,
-  CreatePublicSetProfileMetadataUriRequest,
-  CreateSetProfileMetadataViaDispatcherDocument,
-  CreateSetProfileMetadataViaDispatcherMutation,
-  CreateSetProfileMetadataTypedDataDocument,
-  CreateSetProfileMetadataTypedDataMutation,
-  BroadcastDocument,
-  BroadcastMutation,
-  BroadcastRequest,
-  HasTxHashBeenIndexedDocument,
-  HasTxHashBeenIndexedQuery,
-  HasTxHashBeenIndexedRequest,
-  TransactionReceipt,
-  PublicationMetadataStatusType,
-  AuthenticationResult,
-} from 'graphqls/__generated__/graphql'
-import useAuth from '../auth/useAuth'
-import useNetwork from 'hooks/complex/useNetwork'
+  ApolloQueryResult, FetchResult, MutationOptions, OperationVariables, QueryOptions, useApolloClient
+} from '@apollo/client'
 import { TransactionResponse } from '@ethersproject/providers'
-import useEthers from 'hooks/complex/useEthers'
-import postTxStore from 'store/postTxStore'
-import {
-  Environment,
-  ProfileMetadata,
-} from '@lens-protocol/react-native-lens-ui-kit'
-import { isMainnet } from 'libs/utils'
-import useIpfs from 'hooks/complex/useIpfs'
-import useLensHub from './useLensHub'
+import { Environment, ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
+
+import useAuth from '../auth/useAuth'
 import useLensAuth from './useLensAuth'
-import { recordError } from 'libs/logger'
+import useLensHub from './useLensHub'
 
 export type UseLensReturn = {
   appId: string

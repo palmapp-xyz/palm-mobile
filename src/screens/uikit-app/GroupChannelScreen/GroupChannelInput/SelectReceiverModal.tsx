@@ -1,19 +1,12 @@
-import React, { ReactElement } from 'react'
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
-
-import { UTIL } from 'consts'
-
 import { FormModal } from 'components'
+import { UTIL } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement } from 'react'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 
 const SelectReceiverModal = ({
   useGcInputReturn,

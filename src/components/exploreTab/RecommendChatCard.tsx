@@ -1,12 +1,11 @@
+import { Card, FormImage, FormText, Row, Tag } from 'components'
+import { COLOR } from 'consts'
+import { ChatItem } from 'hooks/page/explore/useExploreRecommendChat'
+import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-import _ from 'lodash'
 import { FlatList } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR } from 'consts'
-import { Card, FormImage, FormText, Row, Tag } from 'components'
-import { ChatItem } from 'hooks/page/explore/useExploreRecommendChat'
 
 const RecommendChatCard = ({ chat }: { chat: ChatItem }): ReactElement => {
   const displayUsers = chat.users.slice(0, 3)

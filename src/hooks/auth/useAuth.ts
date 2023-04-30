@@ -1,30 +1,23 @@
+import { UTIL } from 'consts'
+import { AuthenticationResult } from 'graphqls/__generated__/graphql'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import useNotification from 'hooks/independent/useNotification'
+import useLensAuth from 'hooks/lens/useLensAuth'
+import { generateEvmHdAccount, removeKeys, savePkey } from 'libs/account'
+import { recordError } from 'libs/logger'
+import _ from 'lodash'
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
+import appStore from 'store/appStore'
+import {
+  AuthChallengeResult, AuthStorageType, ContractAddr, FbProfile, LocalStorageKey, SbUserMetadata,
+  TrueOrErrReturn, User
+} from 'types'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import _ from 'lodash'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-
-import { savePkey, generateEvmHdAccount, removeKeys } from 'libs/account'
-import appStore from 'store/appStore'
-
-import {
-  TrueOrErrReturn,
-  User,
-  ContractAddr,
-  AuthChallengeResult,
-  LocalStorageKey,
-  AuthStorageType,
-  FbProfile,
-  SbUserMetadata,
-} from 'types'
-import { AuthenticationResult } from 'graphqls/__generated__/graphql'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import useLensAuth from 'hooks/lens/useLensAuth'
-import { UTIL } from 'consts'
-import useNotification from 'hooks/independent/useNotification'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import { recordError } from 'libs/logger'
 
 export type UseAuthReturn = {
   user?: User

@@ -1,15 +1,12 @@
-import React, { ReactElement } from 'react'
-import { TouchableOpacity, View } from 'react-native'
-
-import {
-  Avatar,
-  createStyleSheet,
-} from '@sendbird/uikit-react-native-foundation'
-import type { SendbirdMessage } from '@sendbird/uikit-utils'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement } from 'react'
+import { TouchableOpacity, View } from 'react-native'
 import { SbUserMetadata } from 'types'
 
+import { Avatar, createStyleSheet } from '@sendbird/uikit-react-native-foundation'
+
+import type { SendbirdMessage } from '@sendbird/uikit-utils'
 type Props = {
   message: SendbirdMessage
   grouping: boolean

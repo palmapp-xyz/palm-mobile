@@ -1,7 +1,6 @@
+import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TextInput, TextInputProps } from 'react-native'
-
-import { COLOR } from 'consts'
 
 const FormInput = (props: TextInputProps): ReactElement => {
   const { style, ...rest } = props

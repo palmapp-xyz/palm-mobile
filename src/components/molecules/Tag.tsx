@@ -1,8 +1,7 @@
+import { FormText } from 'components'
+import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-
-import { COLOR } from 'consts'
-import { FormText } from 'components'
 
 const Tag = ({ title }: { title: string }): ReactElement => {
   return (

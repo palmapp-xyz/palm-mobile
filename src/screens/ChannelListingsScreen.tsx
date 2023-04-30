@@ -1,16 +1,14 @@
+import { Container, Header } from 'components'
+import FbListingItem from 'components/fbListing/FbListingItem'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { recordError } from 'libs/logger'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement, useState } from 'react'
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-
-import { Container, Header } from 'components'
-
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useFsChannel from 'hooks/firestore/useFsChannel'
-import { Routes } from 'libs/navigation'
-
 import { FbListing } from 'types'
-import FbListingItem from 'components/fbListing/FbListingItem'
-import { recordError } from 'libs/logger'
+
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const [isFetching, setIsFetching] = useState<boolean>(true)

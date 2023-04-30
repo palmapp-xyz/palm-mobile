@@ -1,15 +1,7 @@
 import { COLOR } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
-
-import {
-  FlatList,
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { FlatList, ImageStyle, StyleProp, StyleSheet, Text, View } from 'react-native'
 
 const NftAttributes = ({
   attributes,

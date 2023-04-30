@@ -1,5 +1,6 @@
 import { IPFS } from 'consts'
 import * as mime from 'mime'
+
 import { unescape } from './utils'
 
 export function resolveIpfsUri(

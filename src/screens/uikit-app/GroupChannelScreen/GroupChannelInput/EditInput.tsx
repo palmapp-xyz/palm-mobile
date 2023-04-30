@@ -1,30 +1,20 @@
 import React, { forwardRef } from 'react'
 import {
-  NativeSyntheticEvent,
-  Platform,
-  TextInput as RNTextInput,
-  TextInputSelectionChangeEventData,
-  View,
+  NativeSyntheticEvent, Platform, TextInput as RNTextInput, TextInputSelectionChangeEventData, View
 } from 'react-native'
 
 import { MentionType } from '@sendbird/chat/message'
 import {
-  Button,
-  TextInput,
-  createStyleSheet,
-  useToast,
+  GroupChannelProps, MentionedUser, useLocalization, useSendbirdChat
+} from '@sendbird/uikit-react-native'
+import {
+  Button, createStyleSheet, TextInput, useToast
 } from '@sendbird/uikit-react-native-foundation'
+
 import type {
   SendbirdFileMessage,
   SendbirdUserMessage,
 } from '@sendbird/uikit-utils'
-
-import {
-  GroupChannelProps,
-  MentionedUser,
-  useLocalization,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
 
 type EditInputProps = GroupChannelProps['Input'] & {
   text: string

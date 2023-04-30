@@ -1,20 +1,12 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
 import FormButton from 'components/atoms/FormButton'
+import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import { COLOR, UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-
-import { COLOR, UTIL } from 'consts'
-
-import {
-  ContractAddr,
-  NftType,
-  SbBuyNftDataType,
-  SupportedNetworkEnum,
-} from 'types'
-
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import React, { ReactElement } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { ContractAddr, NftType, SbBuyNftDataType, SupportedNetworkEnum } from 'types'
 
 const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()

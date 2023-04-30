@@ -1,20 +1,14 @@
-import _ from 'lodash'
 import * as axiosjs from 'axios'
-import { AxiosResponse } from 'axios'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-
 import useAuth from 'hooks/auth/useAuth'
-import {
-  ApiEnum,
-  ApiFetchResult,
-  ApiParamFabricated,
-  ApiParams,
-  ApiResponse,
-} from 'types'
-import useNetwork from './useNetwork'
+import { recordError } from 'libs/logger'
+import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 import fetchApiStore from 'store/fetchApiStore'
-import { recordError } from 'libs/logger'
+import { ApiEnum, ApiFetchResult, ApiParamFabricated, ApiParams, ApiResponse } from 'types'
+
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+
+import useNetwork from './useNetwork'
 
 export type UseApiReturn = {
   getApi: <T extends ApiEnum>(props: {

@@ -1,12 +1,11 @@
-import { useEffect, useMemo } from 'react'
+import apiV1Fabricator from 'libs/apiV1Fabricator'
 import _ from 'lodash'
+import { useEffect, useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
-
 import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
-import useNetwork from '../complex/useNetwork'
 import useApi from '../complex/useApi'
-import apiV1Fabricator from 'libs/apiV1Fabricator'
+import useNetwork from '../complex/useNetwork'
 
 export type UseUserNftCollectionListReturn = {
   nftCollectionList: Moralis.NftCollection[]

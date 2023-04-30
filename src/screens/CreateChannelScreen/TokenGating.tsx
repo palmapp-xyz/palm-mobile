@@ -1,29 +1,16 @@
+import {
+  Container, FormButton, FormImage, FormText, Header, KeyboardAvoidingView, SupportedNetworkRow
+} from 'components'
+import { COLOR, NETWORK } from 'consts'
+import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
+import useAuth from 'hooks/auth/useAuth'
+import { UseCreateChannelReturn } from 'hooks/page/groupChannel/useCreateChannel'
+import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
+  ActivityIndicator, ScrollView, StyleSheet, TextInput, TouchableOpacity, View
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import _ from 'lodash'
-
-import { COLOR, NETWORK } from 'consts'
-import useAuth from 'hooks/auth/useAuth'
-import {
-  Container,
-  FormButton,
-  FormImage,
-  FormText,
-  Header,
-  //MoralisNftRenderer,
-  KeyboardAvoidingView,
-  SupportedNetworkRow,
-} from 'components'
-import { UseCreateChannelReturn } from 'hooks/page/groupChannel/useCreateChannel'
-import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 
 const Radio = ({ selected }: { selected: boolean }): ReactElement => {
   return (

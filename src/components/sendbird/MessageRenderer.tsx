@@ -1,35 +1,25 @@
 import React, { ReactElement } from 'react'
 import { Pressable, PressableProps, View } from 'react-native'
 
+import { GroupChannelProps, ReactionAddons, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
-import type { SendbirdMessage } from '@sendbird/uikit-utils'
-import {
-  calcMessageGrouping,
-  conditionChaining,
-  isMyMessage,
-  shouldRenderReaction,
-  useIIFE,
-} from '@sendbird/uikit-utils'
-import {
-  GroupChannelProps,
-  ReactionAddons,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-
+import AdminMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/AdminMessage'
 import MessageContainer from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageContainer'
 import MessageDateSeparator from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageDateSeparator'
 import MessageIncomingSenderName from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageIncomingSenderName'
 import MessageOutgoingStatus from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageOutgoingStatus'
 import MessageTime from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageTime'
-
-import UserMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UserMessage'
-import AdminMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/AdminMessage'
 import UnknownMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UnknownMessage'
-
+import UserMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UserMessage'
 import { DEFAULT_LONG_PRESS_DELAY } from '@sendbird/uikit-react-native/src/constants'
-import NftMessage from './NftMessage'
-import MessageIncomingAvatar from './MessageIncomingAvatar'
+import {
+  calcMessageGrouping, conditionChaining, isMyMessage, shouldRenderReaction, useIIFE
+} from '@sendbird/uikit-utils'
 
+import MessageIncomingAvatar from './MessageIncomingAvatar'
+import NftMessage from './NftMessage'
+
+import type { SendbirdMessage } from '@sendbird/uikit-utils'
 type MessageStyleVariant = 'outgoing' | 'incoming'
 export type MessageRendererInterface<
   T = SendbirdMessage,

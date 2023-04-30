@@ -1,14 +1,10 @@
-import { toHex } from 'web3-utils'
-
-import {
-  AddEthereumChainParameter,
-  ChainNetworkEnum,
-  NetworkTypeEnum,
-  SupportedNetworkEnum,
-  TokenSymbolEnum,
-} from 'types'
-import Config from 'react-native-config'
 import images from 'assets/images'
+import Config from 'react-native-config'
+import {
+  AddEthereumChainParameter, ChainNetworkEnum, NetworkTypeEnum, SupportedNetworkEnum,
+  TokenSymbolEnum
+} from 'types'
+import { toHex } from 'web3-utils'
 
 const chainId: Record<ChainNetworkEnum, number> = {
   [ChainNetworkEnum.ETHEREUM]: 1,

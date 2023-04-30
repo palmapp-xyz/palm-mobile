@@ -1,18 +1,16 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
 import FormButton from 'components/atoms/FormButton'
+import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import { COLOR, UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import React, { ReactElement } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR, UTIL } from 'consts'
-
 import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
 
-import Row from '../../atoms/Row'
 import LinkExplorer from '../../atoms/LinkExplorer'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import Row from '../../atoms/Row'
 
 const SendNftMessage = ({
   data,

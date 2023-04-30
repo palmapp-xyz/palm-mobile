@@ -1,10 +1,11 @@
+import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 
 import { createGroupChannelCreateFragment } from '@sendbird/uikit-react-native'
-import type { SendbirdUser } from '@sendbird/uikit-utils'
 
 import { useAppNavigation } from '../../hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
+
+import type { SendbirdUser } from '@sendbird/uikit-utils'
 
 const GroupChannelCreateFragment =
   createGroupChannelCreateFragment<SendbirdUser>()

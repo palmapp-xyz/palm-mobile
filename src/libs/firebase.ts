@@ -1,10 +1,8 @@
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
 import _ from 'lodash'
-
 import { FbChannelField } from 'types'
+
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 
 export const formatValues = <T>(object: T): T => {
   if (!object) {

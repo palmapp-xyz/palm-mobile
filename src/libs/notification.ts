@@ -1,22 +1,13 @@
 import { Platform } from 'react-native'
 
-import Notifee, {
-  AndroidImportance,
-  Event,
-  EventType,
-} from '@notifee/react-native'
+import Notifee, { AndroidImportance, Event, EventType } from '@notifee/react-native'
 import PushNotificationIOS, {
-  PushNotification,
+  PushNotification
 } from '@react-native-community/push-notification-ios'
 import { FirebaseMessagingTypes } from '@react-native-firebase/messaging'
+import { isSendbirdNotification, NOOP, parseSendbirdNotification } from '@sendbird/uikit-utils'
 
-import {
-  NOOP,
-  isSendbirdNotification,
-  parseSendbirdNotification,
-} from '@sendbird/uikit-utils'
-
-import { Routes, navigationRef, runAfterAppReady } from './navigation'
+import { navigationRef, Routes, runAfterAppReady } from './navigation'
 
 export const onNotificationAndroid: (event: Event) => Promise<void> = async ({
   type,

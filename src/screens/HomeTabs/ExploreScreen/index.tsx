@@ -1,22 +1,15 @@
-import React, { ReactElement, useEffect, useRef } from 'react'
-import {
-  Animated,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import Ionicon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR } from 'consts'
-
+import images from 'assets/images'
 import { Container, FormImage, FormInput, Row } from 'components'
+import { COLOR } from 'consts'
+import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import images from 'assets/images'
+import React, { ReactElement, useEffect, useRef } from 'react'
+import { Animated, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Ionicon from 'react-native-vector-icons/Ionicons'
+
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
-import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 
 const HEADER_HEIGHT = 72
 

@@ -1,32 +1,21 @@
+import { ChainLogoWrapper, Container, MoralisNftRenderer, NftItemMenu } from 'components'
+import ProfileFooter from 'components/ProfileFooter'
+import { COLOR } from 'consts'
+import useProfile from 'hooks/auth/useProfile'
+import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { recordError } from 'libs/logger'
+import { Routes } from 'libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useCallback, useState } from 'react'
 import {
-  StyleSheet,
-  Text,
-  FlatList,
-  View,
-  TouchableWithoutFeedback,
-  RefreshControl,
-  useWindowDimensions,
+  FlatList, RefreshControl, StyleSheet, Text, TouchableWithoutFeedback, useWindowDimensions, View
 } from 'react-native'
+import { Moralis, SupportedNetworkEnum } from 'types'
+
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
-import { COLOR } from 'consts'
-
-import { Routes } from 'libs/navigation'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import ProfileHeader from '../../components/ProfileHeader'
-import {
-  ChainLogoWrapper,
-  Container,
-  MoralisNftRenderer,
-  NftItemMenu,
-} from 'components'
-import { Moralis, SupportedNetworkEnum } from 'types'
-import ProfileFooter from 'components/ProfileFooter'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import useProfile from 'hooks/auth/useProfile'
-import { recordError } from 'libs/logger'
 
 const MyPageScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()

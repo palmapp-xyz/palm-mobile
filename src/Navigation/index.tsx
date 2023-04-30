@@ -1,24 +1,18 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from '@react-navigation/native'
+import LoadingPage from 'components/atoms/LoadingPage'
+import useAuth from 'hooks/auth/useAuth'
+import useCrashlytics from 'hooks/independent/useCrashlytics'
+import useAppearance from 'hooks/useAppearance'
+import { navigationRef, Routes } from 'libs/navigation'
+import React, { ReactElement } from 'react'
+import { SupportedNetworkEnum } from 'types'
+
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import React, { ReactElement } from 'react'
-
-import useAppearance from 'hooks/useAppearance'
-import useAuth from 'hooks/auth/useAuth'
-
-import { Routes, navigationRef } from 'libs/navigation'
-
 import { SignInWithLens } from '../screens'
-import PostTxResult from './PostTxResult'
-import MainNavigator from './MainNavigator'
 import AuthNavigator from './AuthNavigator'
-import { SupportedNetworkEnum } from 'types'
-import LoadingPage from 'components/atoms/LoadingPage'
-import useCrashlytics from 'hooks/independent/useCrashlytics'
+import MainNavigator from './MainNavigator'
+import PostTxResult from './PostTxResult'
 
 const RootStack = createNativeStackNavigator()
 

@@ -1,12 +1,12 @@
-import { useMemo, useState } from 'react'
 import { validateMnemonic } from 'bip39'
-import Clipboard from '@react-native-clipboard/clipboard'
-import _ from 'lodash'
-import { Alert } from 'react-native'
-
 import useAuth from 'hooks/auth/useAuth'
 import { savePkey } from 'libs/account'
 import { recordError } from 'libs/logger'
+import _ from 'lodash'
+import { useMemo, useState } from 'react'
+import { Alert } from 'react-native'
+
+import Clipboard from '@react-native-clipboard/clipboard'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean

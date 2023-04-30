@@ -1,24 +1,21 @@
-import React, { ReactElement, useEffect, useMemo } from 'react'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { BackHandler, Platform } from 'react-native'
-import {
-  createGroupChannelFragment,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
-
+import { MessageRenderer } from 'components'
+import ChannelGatingChecker from 'components/ChannelGatingChecker'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement, useEffect, useMemo } from 'react'
+import { BackHandler, Platform } from 'react-native'
+
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { createGroupChannelFragment, useSendbirdChat } from '@sendbird/uikit-react-native'
 
 import GroupChannelHeader from './GroupChannelHeader'
 import GroupChannelInput from './GroupChannelInput'
 import GroupChannelMessageList from './GroupChannelMessageList'
-import { MessageRenderer } from 'components'
-import useFsChannel from 'hooks/firestore/useFsChannel'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import ChannelGatingChecker from 'components/ChannelGatingChecker'
 
+import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
   Header: GroupChannelHeader,

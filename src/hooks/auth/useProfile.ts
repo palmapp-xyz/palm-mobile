@@ -1,24 +1,18 @@
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-
-import {
-  ContractAddr,
-  FbProfile,
-  Moralis,
-  SupportedNetworkEnum,
-  TrueOrErrReturn,
-} from 'types'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import useLensProfile from 'hooks/lens/useLensProfile'
-import { useQuery } from 'react-query'
-import { profilesDeepCompare } from 'libs/profile'
-import useLens from 'hooks/lens/useLens'
-import { fetchNftImage } from 'libs/fetchTokenUri'
-import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 import { Profile, ProfileMedia } from 'graphqls/__generated__/graphql'
 import useNetwork from 'hooks/complex/useNetwork'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import useLens from 'hooks/lens/useLens'
+import useLensProfile from 'hooks/lens/useLensProfile'
+import { fetchNftImage } from 'libs/fetchTokenUri'
 import { formatValues } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
+import { profilesDeepCompare } from 'libs/profile'
+import { useQuery } from 'react-query'
+import { ContractAddr, FbProfile, Moralis, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
+
+import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 export type UseProfileReturn = {
   profile: FbProfile | undefined

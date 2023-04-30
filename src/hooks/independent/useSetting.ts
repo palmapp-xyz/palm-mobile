@@ -1,11 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useQuery } from 'react-query'
-import RNRestart from 'react-native-restart'
-
 import { UTIL } from 'consts'
-
-import { LocalStorageKey, SettingStorageType } from 'types'
 import { useEffect, useState } from 'react'
+import RNRestart from 'react-native-restart'
+import { useQuery } from 'react-query'
+import { LocalStorageKey, SettingStorageType } from 'types'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type UseSettingReturn = {
   setting: SettingStorageType

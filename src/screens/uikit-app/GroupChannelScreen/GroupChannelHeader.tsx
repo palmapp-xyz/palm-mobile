@@ -1,24 +1,19 @@
+import { FormImage } from 'components'
+import useAuth from 'hooks/auth/useAuth'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement, useContext } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import {
-  Avatar,
-  Header,
-  createStyleSheet,
-  useHeaderStyle,
-} from '@sendbird/uikit-react-native-foundation'
-import {
-  GroupChannelProps,
-  GroupChannelContexts,
-  useLocalization,
-} from '@sendbird/uikit-react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import { Routes } from 'libs/navigation'
 import { ContractAddr, SbUserMetadata } from 'types'
-import { useAppNavigation } from 'hooks/useAppNavigation'
+
 import { Member } from '@sendbird/chat/groupChannel'
-import useAuth from 'hooks/auth/useAuth'
-import { FormImage } from 'components'
+import {
+  GroupChannelContexts, GroupChannelProps, useLocalization
+} from '@sendbird/uikit-react-native'
+import {
+  Avatar, createStyleSheet, Header, useHeaderStyle
+} from '@sendbird/uikit-react-native-foundation'
 
 const GroupChannelHeader = ({
   onPressHeaderLeft,

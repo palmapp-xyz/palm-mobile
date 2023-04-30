@@ -1,6 +1,7 @@
-import { ApiEnum, TrueOrErrReturn } from 'types'
-import useApi from './useApi'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
+import { ApiEnum, TrueOrErrReturn } from 'types'
+
+import useApi from './useApi'
 
 type UseIpfsReturn = {
   uploadFolder: (

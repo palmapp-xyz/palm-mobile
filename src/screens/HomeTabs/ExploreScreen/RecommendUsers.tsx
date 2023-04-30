@@ -1,12 +1,11 @@
+import { FormImage, FormText, Row } from 'components'
+import RecommendUsersCard from 'components/exploreTab/RecommendUsersCard'
+import { COLOR } from 'consts'
+import useExploreRecommendUsers from 'hooks/page/explore/useExploreRecommendUsers'
+import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
-import _ from 'lodash'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR } from 'consts'
-import { FormImage, FormText, Row } from 'components'
-import useExploreRecommendUsers from 'hooks/page/explore/useExploreRecommendUsers'
-import RecommendUsersCard from 'components/exploreTab/RecommendUsersCard'
 
 const RecommendUsers = (): ReactElement => {
   const [selectedOption, setSelectedOption] = useState('')

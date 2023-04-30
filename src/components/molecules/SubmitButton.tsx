@@ -1,12 +1,11 @@
-import { useRecoilValue } from 'recoil'
-import React, { ReactElement } from 'react'
-import { Text, View } from 'react-native'
-
-import { COLOR } from 'consts'
-import { PostTxStatus, SupportedNetworkEnum } from 'types'
-import postTxStore from 'store/postTxStore'
 import FormButton, { FormButtonProps } from 'components/atoms/FormButton'
 import LinkExplorer from 'components/atoms/LinkExplorer'
+import { COLOR } from 'consts'
+import React, { ReactElement } from 'react'
+import { Text, View } from 'react-native'
+import { useRecoilValue } from 'recoil'
+import postTxStore from 'store/postTxStore'
+import { PostTxStatus, SupportedNetworkEnum } from 'types'
 
 const SubmitButton = ({
   network,

@@ -1,12 +1,9 @@
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { UTIL } from 'consts'
 import { v5 as uuidv5 } from 'uuid'
 
-import {
-  GroupChannel,
-  GroupChannelCreateParams,
-} from '@sendbird/chat/groupChannel'
 import { FileCompat } from '@sendbird/chat'
-import { UTIL } from 'consts'
+import { GroupChannel, GroupChannelCreateParams } from '@sendbird/chat/groupChannel'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 export type CreateGroupChatParam = {
   invitedUserIds: string[]

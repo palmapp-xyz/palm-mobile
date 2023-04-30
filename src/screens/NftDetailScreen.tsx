@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet } from 'react-native'
-
 import { Container, Header } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement } from 'react'
+import { StyleSheet } from 'react-native'
+
 import NftDetails from './NftDetails'
 
 const NftDetailScreen = (): ReactElement => {

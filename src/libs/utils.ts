@@ -3,11 +3,7 @@ import { NETWORK, UTIL } from 'consts'
 import Config from 'react-native-config'
 import { URL } from 'react-native-url-polyfill'
 import {
-  ChainNetworkEnum,
-  ContractAddr,
-  JwtToken,
-  NetworkTypeEnum,
-  SupportedNetworkEnum,
+  ChainNetworkEnum, ContractAddr, JwtToken, NetworkTypeEnum, SupportedNetworkEnum
 } from 'types'
 
 export const getContrastColor = (

@@ -1,5 +1,5 @@
-import React, { ReactElement, ReactNode } from 'react'
 import { COLOR, STYLE } from 'consts'
+import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
 import { FontType } from 'types'
 

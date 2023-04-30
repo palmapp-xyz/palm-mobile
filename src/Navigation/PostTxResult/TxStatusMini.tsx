@@ -1,22 +1,14 @@
-import React, { ReactElement } from 'react'
-import styled from 'styled-components/native'
-import { useRecoilValue } from 'recoil'
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
-
-import { COLOR, UTIL } from 'consts'
 import images from 'assets/images'
-
+import { Card, FormImage, LinkExplorer } from 'components'
+import { COLOR, UTIL } from 'consts'
+import React, { ReactElement } from 'react'
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useRecoilValue } from 'recoil'
 import postTxStore from 'store/postTxStore'
+import styled from 'styled-components/native'
 import { PostTxStatus, SupportedNetworkEnum } from 'types'
 
-import { FormImage, Card, LinkExplorer } from 'components'
+import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 const StyledTextBox = styled(View)`
   align-items: center;

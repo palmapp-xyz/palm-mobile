@@ -1,29 +1,23 @@
-import React, { ReactElement, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { useRecoilValue } from 'recoil'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-
+import { Container, Header, MoralisNftRenderer, Row, SubmitButton } from 'components'
 import { UTIL } from 'consts'
-import { FbProfile, Moralis, SupportedNetworkEnum } from 'types'
-import selectNftStore from 'store/selectNftStore'
-import {
-  Header,
-  SubmitButton,
-  Container,
-  Row,
-  MoralisNftRenderer,
-} from 'components'
+import useAuth from 'hooks/auth/useAuth'
+import useFsProfile from 'hooks/firestore/useFsProfile'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
-import useAuth from 'hooks/auth/useAuth'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import useFsProfile from 'hooks/firestore/useFsProfile'
+import React, { ReactElement, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { useRecoilValue } from 'recoil'
+import selectNftStore from 'store/selectNftStore'
+import { FbProfile, Moralis, SupportedNetworkEnum } from 'types'
+
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { Icon } from '@sendbird/uikit-react-native-foundation'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 const Contents = ({
   selectedNft,

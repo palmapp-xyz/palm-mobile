@@ -1,18 +1,12 @@
-import { Maybe } from '@toruslabs/openlogin'
 import { UTIL } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
+import { FlatList, ImageStyle, StyleProp, StyleSheet, Text, View } from 'react-native'
 
-import {
-  FlatList,
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
-import NftAttributes from './NftAttributes'
+import { Maybe } from '@toruslabs/openlogin'
+
 import LinkRenderer from './LinkRenderer'
+import NftAttributes from './NftAttributes'
 
 const NftMetadata = ({
   metadata,

@@ -1,4 +1,5 @@
 import { ContractAddr } from 'types'
+
 import { compareContractAddr } from './utils'
 
 export const isENS = (nftContract: string | ContractAddr): boolean =>

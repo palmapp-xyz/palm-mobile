@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
-
 import { useRecoilValue } from 'recoil'
-
-import { PostTxStatus, StreamResultType } from 'types'
 import postTxStore from 'store/postTxStore'
+import { PostTxStatus, StreamResultType } from 'types'
 
 export type EffectListType = {
   when: PostTxStatus[]

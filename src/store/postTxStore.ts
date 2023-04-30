@@ -1,5 +1,6 @@
 import { atom } from 'recoil'
 import { PostTxStatus, StreamResultType, SupportedNetworkEnum } from 'types'
+
 import storeKeys from './storeKeys'
 
 const postTxResult = atom<StreamResultType>({

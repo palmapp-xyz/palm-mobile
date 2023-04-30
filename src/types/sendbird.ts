@@ -1,7 +1,8 @@
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
+
 import { Moralis } from './api'
-import { pToken } from './currencies'
 import { ContractAddr } from './contracts'
+import { pToken } from './currencies'
 
 export type SbNftDataType =
   | SbBuyNftDataType

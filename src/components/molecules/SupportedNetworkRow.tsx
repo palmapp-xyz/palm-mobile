@@ -1,16 +1,9 @@
-import React, { ReactElement } from 'react'
-import {
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  TouchableOpacity,
-} from 'react-native'
-import _ from 'lodash'
-
-import { SupportedNetworkEnum } from 'types'
-
-import { COLOR, NETWORK } from 'consts'
 import { FormImage, FormText, Row } from 'components'
+import { COLOR, NETWORK } from 'consts'
+import _ from 'lodash'
+import React, { ReactElement } from 'react'
+import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native'
+import { SupportedNetworkEnum } from 'types'
 
 const SupportedNetworkRow = ({
   selectedNetwork,

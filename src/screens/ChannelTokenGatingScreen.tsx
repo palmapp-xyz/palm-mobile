@@ -1,42 +1,21 @@
-import React, { ReactElement, useMemo, useState } from 'react'
 import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import _ from 'lodash'
-import { utils } from 'ethers'
-
-import { COLOR } from 'consts'
-
-import {
-  ChainLogoWrapper,
-  Container,
-  FormButton,
-  FormInput,
-  Header,
-  MoralisNftRenderer,
-  Row,
+  ChainLogoWrapper, Container, FormButton, FormInput, Header, MoralisNftRenderer, Row
 } from 'components'
-import {
-  ContractAddr,
-  NftType,
-  QueryKeyEnum,
-  SupportedNetworkEnum,
-} from 'types'
-import { Routes } from 'libs/navigation'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useFsChannel from 'hooks/firestore/useFsChannel'
+import MediaRenderer, { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import { COLOR } from 'consts'
+import { utils } from 'ethers'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/auth/useAuth'
-import useNftImage from 'hooks/independent/useNftImage'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
-import MediaRenderer, {
-  MediaRendererProps,
-} from 'components/molecules/MediaRenderer'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import useNftImage from 'hooks/independent/useNftImage'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
+import _ from 'lodash'
+import React, { ReactElement, useMemo, useState } from 'react'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ContractAddr, NftType, QueryKeyEnum, SupportedNetworkEnum } from 'types'
 
 const GatingToken = ({
   chain,

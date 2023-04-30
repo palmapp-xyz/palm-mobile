@@ -1,13 +1,9 @@
-import React, { ReactElement, useMemo } from 'react'
-import { StyleSheet, Pressable, FlatList, View } from 'react-native'
-
-import { COLOR } from 'consts'
-import {
-  StepAfterSelectNftType,
-  UseGcInputReturn,
-} from 'hooks/page/groupChannel/useGcInput'
-import { FormImage, FormText, Row } from 'components'
 import images from 'assets/images'
+import { FormImage, FormText, Row } from 'components'
+import { COLOR } from 'consts'
+import { StepAfterSelectNftType, UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import React, { ReactElement, useMemo } from 'react'
+import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 
 const BottomMenu = ({
   useGcInputReturn,

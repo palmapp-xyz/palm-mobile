@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios'
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useFsListing from 'hooks/firestore/useFsListing'
+import { QueryKeyEnum, SupportedNetworkEnum } from 'types'
 
 import useNetwork from '../complex/useNetwork'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { QueryKeyEnum, SupportedNetworkEnum } from 'types'
-import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
-import useFsListing from 'hooks/firestore/useFsListing'
 
 export type UseZxOrderReturn = {
   order?: PostOrderResponsePayload

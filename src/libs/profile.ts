@@ -1,5 +1,6 @@
 import { Profile } from 'graphqls/__generated__/graphql'
 import { ContractAddr, FbProfile } from 'types'
+
 import { getProfileMediaImg } from './lens'
 
 // returns boolean whether `second` user fields are all equally included in `first` user fields

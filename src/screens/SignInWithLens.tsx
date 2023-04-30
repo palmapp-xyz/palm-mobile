@@ -1,11 +1,9 @@
-import React, { ReactElement, useEffect } from 'react'
-import { Alert, StyleSheet, Text, View } from 'react-native'
-
-import { Container } from 'components'
 import LensLogo from 'assets/LensLogo'
-
+import { Container } from 'components'
 import useAuth from 'hooks/auth/useAuth'
 import { recordError } from 'libs/logger'
+import React, { ReactElement, useEffect } from 'react'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 
 const SignInWithLens = (): ReactElement => {
   const { lensLogin, logout } = useAuth()

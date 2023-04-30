@@ -1,4 +1,5 @@
 import { AuthChallengeInfo, AuthChallengeResult, FbProfile } from 'types'
+
 import { NominalType } from '../common'
 import { ContractAddr } from '../contracts'
 import { Accounts } from './accounts'

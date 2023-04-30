@@ -1,19 +1,15 @@
-import Notifee, { AuthorizationStatus } from '@notifee/react-native'
-import messaging from '@react-native-firebase/messaging'
-import { Platform } from 'react-native'
-
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-
-import {
-  backgroundMessageHandler,
-  onForegroundAndroid,
-  onForegroundIOS,
-  onNotificationAndroid,
-} from 'libs/notification'
-import { useEffect, useState } from 'react'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import { recordError } from 'libs/logger'
+import {
+  backgroundMessageHandler, onForegroundAndroid, onForegroundIOS, onNotificationAndroid
+} from 'libs/notification'
+import { useEffect, useState } from 'react'
+import { Platform } from 'react-native'
+
+import Notifee, { AuthorizationStatus } from '@notifee/react-native'
+import messaging from '@react-native-firebase/messaging'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 export type UseNotificationReturn = {
   channelId: string

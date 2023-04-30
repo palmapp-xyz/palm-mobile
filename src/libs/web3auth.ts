@@ -1,12 +1,8 @@
 import Config from 'react-native-config'
 import EncryptedStorage from 'react-native-encrypted-storage'
 
-import Web3Auth, {
-  LOGIN_PROVIDER,
-  OPENLOGIN_NETWORK,
-  State,
-} from '@web3auth/react-native-sdk'
 import * as WebBrowser from '@toruslabs/react-native-web-browser'
+import Web3Auth, { LOGIN_PROVIDER, OPENLOGIN_NETWORK, State } from '@web3auth/react-native-sdk'
 
 const clientId = Config.WEB3_AUTH_CLIENT_ID || ''
 

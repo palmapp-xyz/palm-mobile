@@ -1,26 +1,24 @@
-import * as ImageResizer from '@bam.tech/react-native-image-resizer'
-import { CameraRoll } from '@react-native-camera-roll/camera-roll'
-import Clipboard from '@react-native-clipboard/clipboard'
-import RNFBMessaging from '@react-native-firebase/messaging'
 import axios, { AxiosInstance } from 'axios'
+import { UTIL } from 'consts'
 import { Platform, StatusBar } from 'react-native'
-import * as CreateThumbnail from '@skqksh/react-native-create-thumbnail'
+import Config from 'react-native-config'
 import * as DocumentPicker from 'react-native-document-picker'
 import * as FileAccess from 'react-native-file-access'
 import * as ImagePicker from 'react-native-image-picker'
 import * as Permissions from 'react-native-permissions'
 import Video from 'react-native-video'
-import Config from 'react-native-config'
+import { SbNftDataType } from 'types/sendbird'
 
+import * as ImageResizer from '@bam.tech/react-native-image-resizer'
+import { CameraRoll } from '@react-native-camera-roll/camera-roll'
+import Clipboard from '@react-native-clipboard/clipboard'
+import RNFBMessaging from '@react-native-firebase/messaging'
 import {
-  createNativeClipboardService,
-  createNativeFileService,
-  createNativeMediaService,
-  createNativeNotificationService,
+  createNativeClipboardService, createNativeFileService, createNativeMediaService,
+  createNativeNotificationService
 } from '@sendbird/uikit-react-native'
 import { Logger, SendbirdChatSDK } from '@sendbird/uikit-utils'
-import { SbNftDataType } from 'types/sendbird'
-import { UTIL } from 'consts'
+import * as CreateThumbnail from '@skqksh/react-native-create-thumbnail'
 
 const APP_ID = Config.SENDBIRD_APP_ID || ''
 

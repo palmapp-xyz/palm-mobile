@@ -1,9 +1,7 @@
+import { COLOR, UTIL } from 'consts'
+import useExplorer from 'hooks/complex/useExplorer'
 import React, { ReactElement, ReactNode } from 'react'
 import { Linking, Text, TouchableOpacity } from 'react-native'
-
-import { COLOR, UTIL } from 'consts'
-
-import useExplorer from 'hooks/complex/useExplorer'
 import { SupportedNetworkEnum } from 'types'
 
 const LinkExplorer = ({

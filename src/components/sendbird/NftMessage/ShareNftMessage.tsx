@@ -1,16 +1,13 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
+import FormText from 'components/atoms/FormText'
+import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
+import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-
-import { COLOR } from 'consts'
-
-import { SbShareNftDataType, SupportedNetworkEnum } from 'types'
-
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
-import FormText from 'components/atoms/FormText'
-import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
+import React, { ReactElement } from 'react'
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
+import { SbShareNftDataType, SupportedNetworkEnum } from 'types'
 
 const ShareNftMessage = ({
   data,

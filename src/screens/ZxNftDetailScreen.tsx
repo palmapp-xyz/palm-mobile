@@ -1,21 +1,21 @@
+import { Container, Header } from 'components'
+import useAuth from 'hooks/auth/useAuth'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useZxBuyNft from 'hooks/zx/useZxBuyNft'
+import useZxCancelNft from 'hooks/zx/useZxCancelNft'
+import useZxOrder from 'hooks/zx/useZxOrder'
+import { navigationRef, Routes } from 'libs/navigation'
+import { nftUriFetcher } from 'libs/nft'
+import { stringifySendFileData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
-
-import { Maybe } from '@toruslabs/openlogin'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-
 import { ContractAddr, NftType, QueryKeyEnum } from 'types'
-import { Container, Header } from 'components'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useAuth from 'hooks/auth/useAuth'
-import useZxCancelNft from 'hooks/zx/useZxCancelNft'
-import useZxBuyNft from 'hooks/zx/useZxBuyNft'
-import { navigationRef, Routes } from 'libs/navigation'
-import useZxOrder from 'hooks/zx/useZxOrder'
-import { nftUriFetcher } from 'libs/nft'
-import { stringifySendFileData } from 'libs/sendbird'
+
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { Maybe } from '@toruslabs/openlogin'
+
 import NftDetails from './NftDetails'
 
 const ZxNftDetailScreen = (): ReactElement => {

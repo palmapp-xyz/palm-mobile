@@ -1,19 +1,12 @@
-import React, { ReactElement } from 'react'
-import {
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-
 import { Container, Header, NftRenderer } from 'components'
-
-import useZxOrders from 'hooks/zx/useZxOrders'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useZxOrders from 'hooks/zx/useZxOrders'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import React, { ReactElement } from 'react'
+import {
+  FlatList, RefreshControl, ScrollView, StyleSheet, TouchableOpacity, View
+} from 'react-native'
 import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 
 const NftListScreen = ({

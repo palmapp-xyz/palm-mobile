@@ -1,14 +1,14 @@
-import React, { ReactElement, useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
-
 import { Container, FormButton, FormInput } from 'components'
 import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
+import { recordError } from 'libs/logger'
+import { isMainnet } from 'libs/utils'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import useProfile from 'hooks/auth/useProfile'
-import { isMainnet } from 'libs/utils'
-import { recordError } from 'libs/logger'
+
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 const CreateProfileScreen = (): ReactElement => {
   const { user } = useAuth()

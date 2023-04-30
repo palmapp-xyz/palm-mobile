@@ -1,15 +1,14 @@
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
 import useWeb3 from 'hooks/complex/useWeb3'
+import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 import { useSetRecoilState } from 'recoil'
-import { Account } from 'web3-core'
-
 import appStore from 'store/appStore'
 import { AuthChallengeInfo, ContractAddr, SupportedNetworkEnum } from 'types'
-import { recordError } from 'libs/logger'
+import { Account } from 'web3-core'
 
 export type UseSign4AuthReturn = {
   challenge?: AuthChallengeInfo

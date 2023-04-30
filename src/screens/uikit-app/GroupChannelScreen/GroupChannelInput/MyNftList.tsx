@@ -1,20 +1,16 @@
-import React, { ReactElement, useMemo, useState } from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
-import BottomSheet from '@gorhom/bottom-sheet'
-import { TouchableOpacity, FlatList } from 'react-native-gesture-handler'
-import Icon from 'react-native-vector-icons/Ionicons'
-
+import { FormText, MoralisNftRenderer, Row, SupportedNetworkRow } from 'components'
 import { COLOR } from 'consts'
-import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/auth/useAuth'
+import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import React, { ReactElement, useMemo, useState } from 'react'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/Ionicons'
 import { SupportedNetworkEnum } from 'types'
-import {
-  FormText,
-  MoralisNftRenderer,
-  Row,
-  SupportedNetworkRow,
-} from 'components'
+
+import BottomSheet from '@gorhom/bottom-sheet'
+
 import BottomMenu from './BottomMenu'
 
 const MyNftList = ({

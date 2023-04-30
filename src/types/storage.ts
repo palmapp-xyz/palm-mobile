@@ -1,7 +1,8 @@
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
+
+import { AuthChallengeResult } from './auth'
 import { ContractAddr } from './contracts'
 import { ThemeModeType } from './theme'
-import { AuthChallengeResult } from './auth'
 
 export enum KeyChainEnum {
   PK = 'PK',

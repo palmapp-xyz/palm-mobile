@@ -1,21 +1,16 @@
-import React, { ReactElement, useCallback, useState } from 'react'
-import {
-  FlatList,
-  View,
-  RefreshControl,
-  TouchableWithoutFeedback,
-} from 'react-native'
-
-import { Routes } from 'libs/navigation'
 import { Container, MoralisNftRenderer } from 'components'
-import { useAppNavigation } from 'hooks/useAppNavigation'
+import ProfileFooter from 'components/ProfileFooter'
+import { COLOR } from 'consts'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useUserBalance from 'hooks/independent/useUserBalance'
-import ProfileHeader from '../components/ProfileHeader'
-import ProfileFooter from 'components/ProfileFooter'
-import { SupportedNetworkEnum } from 'types'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import { COLOR } from 'consts'
+import React, { ReactElement, useCallback, useState } from 'react'
+import { FlatList, RefreshControl, TouchableWithoutFeedback, View } from 'react-native'
+import { SupportedNetworkEnum } from 'types'
+
+import ProfileHeader from '../components/ProfileHeader'
 
 const UserProfileScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.UserProfile>()

@@ -1,3 +1,4 @@
+import useWeb3Auth from 'hooks/independent/useWeb3Auth'
 import React, { ReactElement } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 
@@ -5,7 +6,6 @@ import { Button, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
 
 import Versions from '../components/Versions'
 
-import useWeb3Auth from 'hooks/independent/useWeb3Auth'
 // import { Routes } from 'libs/navigation'
 
 const Web3AuthScreen = (): ReactElement => {

@@ -1,7 +1,7 @@
-import firestore from '@react-native-firebase/firestore'
-
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { FbTags, FirestoreKeyEnum } from 'types'
+
+import firestore from '@react-native-firebase/firestore'
 
 export type UseFsTagsReturn = {
   fsTags?: FbTags

@@ -1,30 +1,20 @@
+import { COLOR } from 'consts'
+import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { forwardRef } from 'react'
 import {
-  NativeSyntheticEvent,
-  Platform,
-  TextInput as RNTextInput,
-  TextInputSelectionChangeEventData,
-  TouchableOpacity,
-  View,
+  NativeSyntheticEvent, Platform, TextInput as RNTextInput, TextInputSelectionChangeEventData,
+  TouchableOpacity, View
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+
 import { MentionType } from '@sendbird/chat/message'
 import {
-  TextInput,
-  createStyleSheet,
-  useToast,
-  useUIKitTheme,
+  GroupChannelProps, MentionedUser, useLocalization, useSendbirdChat
+} from '@sendbird/uikit-react-native'
+import {
+  createStyleSheet, TextInput, useToast, useUIKitTheme
 } from '@sendbird/uikit-react-native-foundation'
 import { conditionChaining } from '@sendbird/uikit-utils'
-
-import {
-  GroupChannelProps,
-  MentionedUser,
-  useLocalization,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
-import { COLOR } from 'consts'
 
 type SendInputProps = GroupChannelProps['Input'] & {
   text: string

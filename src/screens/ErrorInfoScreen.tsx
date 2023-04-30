@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react'
 import { SectionList, View } from 'react-native'
 
-import type { ErrorBoundaryProps } from '@sendbird/uikit-react-native'
 import { Button, Palette, Text } from '@sendbird/uikit-react-native-foundation'
 
+import type { ErrorBoundaryProps } from '@sendbird/uikit-react-native'
 const ErrorInfoScreen = (props: ErrorBoundaryProps): ReactElement => {
   const renderHeader = (subProps: {
     section: { title: string }

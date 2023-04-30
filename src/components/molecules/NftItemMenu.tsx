@@ -1,12 +1,7 @@
 import { COLOR } from 'consts'
 import { isMainnet } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu'
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Moralis, SupportedNetworkEnum } from 'types'
 

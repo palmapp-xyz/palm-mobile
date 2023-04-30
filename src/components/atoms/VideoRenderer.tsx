@@ -1,9 +1,11 @@
 import React, { ReactElement, useState } from 'react'
 import Video from 'react-native-video'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { MediaRendererProps } from '../molecules/MediaRenderer'
+
 import { usePlatformService } from '@sendbird/uikit-react-native'
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
+
+import { MediaRendererProps } from '../molecules/MediaRenderer'
 
 const VideoRenderer = ({
   src,

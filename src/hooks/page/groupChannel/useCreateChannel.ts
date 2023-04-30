@@ -1,22 +1,17 @@
-import { useState } from 'react'
-import { FilePickerResponse } from '@sendbird/uikit-react-native'
-
+import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
 import useFsTags from 'hooks/firestore/useFsTags'
-import { useAppNavigation } from 'hooks/useAppNavigation'
 import useSendbird from 'hooks/sendbird/useSendbird'
-import useAuth from 'hooks/auth/useAuth'
-import { Routes } from 'libs/navigation'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getFsChannel } from 'libs/firebase'
+import { Routes } from 'libs/navigation'
+import { useState } from 'react'
 import {
-  ContractAddr,
-  FbChannelNativeGatingField,
-  FbChannelNFTGatingField,
-  FbTags,
-  Moralis,
-  SupportedNetworkEnum,
-  TokenSymbolEnum,
+  ContractAddr, FbChannelNativeGatingField, FbChannelNFTGatingField, FbTags, Moralis,
+  SupportedNetworkEnum, TokenSymbolEnum
 } from 'types'
+
+import { FilePickerResponse } from '@sendbird/uikit-react-native'
 
 export type UseCreateChannelReturn = {
   fsTags?: FbTags

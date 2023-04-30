@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+
 import storeKeys from './storeKeys'
 
 const isFetchingPostApiStore = atom<boolean>({

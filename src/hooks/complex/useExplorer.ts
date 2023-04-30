@@ -1,8 +1,7 @@
-import { useCallback } from 'react'
-
 import { NETWORK } from 'consts'
-import { NetworkTypeEnum, SupportedNetworkEnum } from 'types'
 import { isMainnet } from 'libs/utils'
+import { useCallback } from 'react'
+import { NetworkTypeEnum, SupportedNetworkEnum } from 'types'
 
 export type UseExplorerReturn = {
   getLink: (props: { address: string; type: 'tx' | 'address' }) => string

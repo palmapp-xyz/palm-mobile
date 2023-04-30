@@ -1,24 +1,15 @@
 import {
-  ApolloQueryResult,
-  FetchResult,
-  MutationOptions,
-  OperationVariables,
-  QueryOptions,
-  useApolloClient,
-} from '@apollo/client'
-import _ from 'lodash'
-
-import useWeb3 from 'hooks/complex/useWeb3'
-import { SupportedNetworkEnum, TrueOrErrReturn } from 'types'
-import {
-  AuthenticateDocument,
-  ChallengeDocument,
-  AuthenticationResult,
-  RefreshDocument,
-  VerifyDocument,
+  AuthenticateDocument, AuthenticationResult, ChallengeDocument, RefreshDocument, VerifyDocument
 } from 'graphqls/__generated__/graphql'
-import { parseJwt } from 'libs/utils'
+import useWeb3 from 'hooks/complex/useWeb3'
 import { recordError } from 'libs/logger'
+import { parseJwt } from 'libs/utils'
+import _ from 'lodash'
+import { SupportedNetworkEnum, TrueOrErrReturn } from 'types'
+
+import {
+  ApolloQueryResult, FetchResult, MutationOptions, OperationVariables, QueryOptions, useApolloClient
+} from '@apollo/client'
 
 export type UseLensAuthReturn = {
   authenticate: () => Promise<TrueOrErrReturn<AuthenticationResult | null>>

@@ -1,9 +1,7 @@
 import { utils, Wallet } from 'ethers'
 import { mnemonicToSeed } from 'ethers/lib/utils'
 import {
-  getInternetCredentials,
-  setInternetCredentials,
-  resetInternetCredentials,
+  getInternetCredentials, resetInternetCredentials, setInternetCredentials
 } from 'react-native-keychain'
 import { KeyChainEnum } from 'types'
 

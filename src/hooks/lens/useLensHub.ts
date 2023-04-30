@@ -1,13 +1,13 @@
+import { ethers } from 'ethers'
+import useEthers from 'hooks/complex/useEthers'
+import useNetwork from 'hooks/complex/useNetwork'
 import { useMemo, useState } from 'react'
+import { SupportedNetworkEnum } from 'types'
+
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import lensHubAbi from '../../abi/lens-hub-contract-abi.json'
 import lensPeripheryAbi from '../../abi/lens-periphery-data-provider.json'
-
-import { SupportedNetworkEnum } from 'types'
-import useNetwork from 'hooks/complex/useNetwork'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { ethers } from 'ethers'
-import useEthers from 'hooks/complex/useEthers'
 
 export type UseLensHubReturn = {
   lensHub: ethers.Contract | undefined

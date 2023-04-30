@@ -1,4 +1,5 @@
 import { SupportedNetworkEnum } from 'types/network'
+
 import { NominalType } from '../common'
 
 export type ContractAddr = string & NominalType<'ContractAddr'>

@@ -1,9 +1,4 @@
-import {
-  useQuery,
-  UseQueryOptions,
-  UseQueryResult,
-  QueryFunction,
-} from 'react-query'
+import { QueryFunction, useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
 
 const useReactQuery = <
   TQueryFnData = unknown,

@@ -1,11 +1,10 @@
-import Web3 from 'web3'
-import { Account } from 'web3-core'
-import { useMemo } from 'react'
-
 import { NETWORK } from 'consts'
 import { getPkey } from 'libs/account'
-import { ChainNetworkEnum, SupportedNetworkEnum } from 'types'
 import { isMainnet } from 'libs/utils'
+import { useMemo } from 'react'
+import { ChainNetworkEnum, SupportedNetworkEnum } from 'types'
+import Web3 from 'web3'
+import { Account } from 'web3-core'
 
 type UseWeb3Return = {
   web3: Web3

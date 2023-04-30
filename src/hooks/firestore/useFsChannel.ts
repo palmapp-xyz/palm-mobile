@@ -1,16 +1,11 @@
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
-
 import useReactQuery from 'hooks/complex/useReactQuery'
-import {
-  ContractAddr,
-  FbChannelField,
-  FirestoreKeyEnum,
-  SupportedNetworkEnum,
-} from 'types'
-import { useMemo, useState } from 'react'
 import { getFsChannel } from 'libs/firebase'
+import { useMemo, useState } from 'react'
+import { ContractAddr, FbChannelField, FirestoreKeyEnum, SupportedNetworkEnum } from 'types'
+
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 export type UseFsChannelReturn = {
   fsChannel?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>

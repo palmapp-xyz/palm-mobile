@@ -1,19 +1,16 @@
-import React, { ReactElement, useCallback, useState } from 'react'
-import { StyleProp, FlexStyle } from 'react-native'
-import FastImage, {
-  ImageStyle as RNFastImageStyle,
-} from 'react-native-fast-image'
-import * as Progress from 'react-native-progress'
-
+import Card from 'components/atoms/Card'
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
 import { isValidHttpUrl } from 'libs/utils'
+import React, { ReactElement, useCallback, useState } from 'react'
+import { FlexStyle, StyleProp } from 'react-native'
+import FastImage, { ImageStyle as RNFastImageStyle } from 'react-native-fast-image'
+import * as Progress from 'react-native-progress'
 
+import FallbackMediaRenderer from '../atoms/FallbackMediaRenderer'
 import IframePlayer from '../atoms/IframeRenderer'
 import SvgRenderer from '../atoms/SvgRenderer'
-import FallbackMediaRenderer from '../atoms/FallbackMediaRenderer'
 import VideoRenderer from '../atoms/VideoRenderer'
-import Card from 'components/atoms/Card'
 
 /**
  *

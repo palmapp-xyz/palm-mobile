@@ -1,8 +1,7 @@
-import _ from 'lodash'
-
 import useAuth from 'hooks/auth/useAuth'
-import { useEffect, useMemo, useState } from 'react'
 import { recordError } from 'libs/logger'
+import _ from 'lodash'
+import { useEffect, useMemo, useState } from 'react'
 
 type WordListType = {
   index: number

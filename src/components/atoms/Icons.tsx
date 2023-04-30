@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Svg, { SvgProps, Circle, Path } from 'react-native-svg'
+import Svg, { Circle, Path, SvgProps } from 'react-native-svg'
 
 const CarbonDocumentUnknown = (props: SvgProps): React.ReactElement => (
   <Svg width="1em" height="1em" viewBox="0 0 32 32" {...props}>

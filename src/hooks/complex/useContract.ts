@@ -1,8 +1,8 @@
-import { AbiItem } from 'web3-utils'
-import { Contract } from 'web3-eth-contract'
 import { useCallback } from 'react'
-
 import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
+import { Contract } from 'web3-eth-contract'
+import { AbiItem } from 'web3-utils'
+
 import useWeb3 from './useWeb3'
 
 type UseContractReturn = {

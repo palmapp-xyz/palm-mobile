@@ -1,54 +1,30 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { ReactElement, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { ListRenderItem, Platform, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import type { BottomSheetItem } from '@sendbird/uikit-react-native-foundation'
 import {
-  ChannelFrozenBanner,
-  createStyleSheet,
-  useAlert,
-  useBottomSheet,
-  useToast,
-  useUIKitTheme,
+  GroupChannelContexts, GroupChannelProps, ReactionAddons, useLocalization, usePlatformService,
+  useSendbirdChat
+} from '@sendbird/uikit-react-native'
+import {
+  ChannelFrozenBanner, createStyleSheet, useAlert, useBottomSheet, useToast, useUIKitTheme
 } from '@sendbird/uikit-react-native-foundation'
+import ChatFlatList, {
+  ChatFlatListRef
+} from '@sendbird/uikit-react-native/src/components/ChatFlatList'
+import { DEPRECATION_WARNING } from '@sendbird/uikit-react-native/src/constants'
+import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
+import {
+  getAvailableUriFromFileMessage, getFileExtension, getFileType, isMyMessage, Logger,
+  messageKeyExtractor, shouldRenderReaction, toMegabyte, useFreshCallback
+} from '@sendbird/uikit-utils'
+
+import type { BottomSheetItem } from '@sendbird/uikit-react-native-foundation'
 import type {
   SendbirdFileMessage,
   SendbirdMessage,
   SendbirdUserMessage,
 } from '@sendbird/uikit-utils'
-import {
-  Logger,
-  getAvailableUriFromFileMessage,
-  getFileExtension,
-  getFileType,
-  isMyMessage,
-  messageKeyExtractor,
-  shouldRenderReaction,
-  toMegabyte,
-  useFreshCallback,
-} from '@sendbird/uikit-utils'
-
-import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
-import {
-  GroupChannelContexts,
-  GroupChannelProps,
-  ReactionAddons,
-  useLocalization,
-  usePlatformService,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
-import ChatFlatList, {
-  ChatFlatListRef,
-} from '@sendbird/uikit-react-native/src/components/ChatFlatList'
-import { DEPRECATION_WARNING } from '@sendbird/uikit-react-native/src/constants'
-
 const HANDLE_NEXT_MSG_SEPARATELY = Platform.select({ default: true })
 
 const GroupChannelMessageList = ({

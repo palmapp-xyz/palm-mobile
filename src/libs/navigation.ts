@@ -1,16 +1,13 @@
-import {
-  Route,
-  StackActions,
-  createNavigationContainerRef,
-} from '@react-navigation/native'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
+
+import { createNavigationContainerRef, Route, StackActions } from '@react-navigation/native'
+
+import { GetSendbirdSDK } from './sendbird'
+
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
-
-import { GetSendbirdSDK } from './sendbird'
-
 export enum Routes {
   MainNavigator = 'MainNavigator',
   AuthNavigator = 'AuthNavigator',

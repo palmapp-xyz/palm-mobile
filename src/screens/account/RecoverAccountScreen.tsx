@@ -1,28 +1,19 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useRecoilState } from 'recoil'
-import Icon from 'react-native-vector-icons/Ionicons'
-import Clipboard from '@react-native-clipboard/clipboard'
-import { FlatList } from 'react-native'
-
-import { COLOR } from 'consts'
-
 import {
-  Container,
-  ErrorMessage,
-  FormButton,
-  Row,
-  FormInput,
-  FormText,
-  Header,
-  MenuItem,
-  KeyboardAvoidingView,
+  Container, ErrorMessage, FormButton, FormInput, FormText, Header, KeyboardAvoidingView, MenuItem,
+  Row
 } from 'components'
+import Loading from 'components/atoms/Loading'
+import { COLOR } from 'consts'
 import useRecoverAccount from 'hooks/page/account/useRecoverAccount'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement } from 'react'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import Loading from 'components/atoms/Loading'
+
+import Clipboard from '@react-native-clipboard/clipboard'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {

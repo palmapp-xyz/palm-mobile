@@ -1,19 +1,13 @@
-import { useSetRecoilState } from 'recoil'
-import _ from 'lodash'
-
 import useAuth from 'hooks/auth/useAuth'
-import postTxStore from 'store/postTxStore'
-
-import {
-  ContractAddr,
-  EncodedTxData,
-  PostTxReturn,
-  PostTxStatus,
-  SupportedNetworkEnum,
-  pToken,
-} from 'types'
-import useWeb3 from './useWeb3'
 import { getPkey } from 'libs/account'
+import _ from 'lodash'
+import { useSetRecoilState } from 'recoil'
+import postTxStore from 'store/postTxStore'
+import {
+  ContractAddr, EncodedTxData, PostTxReturn, PostTxStatus, pToken, SupportedNetworkEnum
+} from 'types'
+
+import useWeb3 from './useWeb3'
 
 type UsePostTxReturn = {
   postTx: (props: {

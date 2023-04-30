@@ -1,22 +1,16 @@
-import React, { ReactElement, useState } from 'react'
-import {
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 import { LinkExplorer, SubmitButton } from 'components'
-import useNft from 'hooks/contract/useNft'
-import useAuth from 'hooks/auth/useAuth'
+import MediaRenderer, { MediaRendererProps } from 'components/molecules/MediaRenderer'
 import NftMetadata from 'components/molecules/NftMetadata'
+import useAuth from 'hooks/auth/useAuth'
+import useNft from 'hooks/contract/useNft'
 import useNftImage from 'hooks/independent/useNftImage'
-import { MediaRendererProps } from 'components/molecules/MediaRenderer'
-import MediaRenderer from 'components/molecules/MediaRenderer'
+import React, { ReactElement, useState } from 'react'
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
+
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { Maybe } from '@toruslabs/openlogin'
+
 import NftListingChannels from './NftListingChannels'
 
 const NftDetails = ({

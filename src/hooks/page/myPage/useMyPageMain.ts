@@ -1,10 +1,7 @@
-import { SupportedNetworkEnum, User } from 'types'
-
 import useUserNftList, { UseUserNftListReturn } from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/auth/useAuth'
-import useUserBalance, {
-  UseUserBalanceReturn,
-} from 'hooks/independent/useUserBalance'
+import useUserBalance, { UseUserBalanceReturn } from 'hooks/independent/useUserBalance'
+import { SupportedNetworkEnum, User } from 'types'
 
 export type UseMyPageMainReturn = {
   user?: User

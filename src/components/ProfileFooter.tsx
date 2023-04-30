@@ -1,10 +1,7 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-
 import { COLOR } from 'consts'
-
 import { UseUserNftListReturn } from 'hooks/api/useUserNftList'
-import { ActivityIndicator } from 'react-native'
+import React, { ReactElement } from 'react'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
 const ProfileFooter = ({
   useUserNftListReturn,

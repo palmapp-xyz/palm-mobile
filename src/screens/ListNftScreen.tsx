@@ -1,33 +1,27 @@
-import React, { ReactElement } from 'react'
-import { Keyboard, StyleSheet, Text, View } from 'react-native'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
-import { useRecoilValue } from 'recoil'
-import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import Ionicon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR, UTIL } from 'consts'
-import { Moralis, QueryKeyEnum, SupportedNetworkEnum, Token } from 'types'
 import {
-  Header,
-  SubmitButton,
-  FormInput,
-  Container,
-  Row,
-  ChainLogoWrapper,
-  KeyboardAvoidingView,
-  MoralisNftRenderer,
+  ChainLogoWrapper, Container, FormInput, Header, KeyboardAvoidingView, MoralisNftRenderer, Row,
+  SubmitButton
 } from 'components'
+import { COLOR, UTIL } from 'consts'
+import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useNft from 'hooks/contract/useNft'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import useZxListNft from 'hooks/zx/useZxListNft'
 import { Routes } from 'libs/navigation'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import selectNftStore from 'store/selectNftStore'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
-import useNft from 'hooks/contract/useNft'
-import useReactQuery from 'hooks/complex/useReactQuery'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import React, { ReactElement } from 'react'
+import { Keyboard, StyleSheet, Text, View } from 'react-native'
+import Ionicon from 'react-native-vector-icons/Ionicons'
+import { useRecoilValue } from 'recoil'
+import selectNftStore from 'store/selectNftStore'
+import { Moralis, QueryKeyEnum, SupportedNetworkEnum, Token } from 'types'
+
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 const Contents = ({
   channelUrl,

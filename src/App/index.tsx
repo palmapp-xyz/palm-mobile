@@ -1,8 +1,8 @@
+import Loading from 'components/atoms/Loading'
 import React, { ReactElement } from 'react'
 import { LogBox } from 'react-native'
 
 import Navigation from '../Navigation'
-import Loading from 'components/atoms/Loading'
 import AppProviderWrapper from './AppProvider'
 
 const App = (): ReactElement => {

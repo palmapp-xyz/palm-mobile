@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { SafeAreaView, Modal, ModalProps } from 'react-native'
+import { Modal, ModalProps, SafeAreaView } from 'react-native'
 
 const FormModal = (props: ModalProps): ReactElement => {
   const { children, ...rest } = props

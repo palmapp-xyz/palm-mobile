@@ -1,13 +1,14 @@
+import { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import useNftImage from 'hooks/independent/useNftImage'
 import React, { ReactElement } from 'react'
-
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 import { FlexStyle, StyleProp } from 'react-native'
 import { ImageStyle as RNFastImageStyle } from 'react-native-fast-image'
-import useNftImage from 'hooks/independent/useNftImage'
-import MediaRenderer from './MediaRenderer'
-import { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
+
 import { Maybe } from '@toruslabs/openlogin'
+
 import ChainLogoWrapper from './ChainLogoWrapper'
+import MediaRenderer from './MediaRenderer'
 
 export type NftRendererProp = {
   nftContract: ContractAddr

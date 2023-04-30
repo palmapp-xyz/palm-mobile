@@ -1,12 +1,12 @@
-import React, { ReactElement, useMemo } from 'react'
-import { Alert, FlatList, StyleSheet, View } from 'react-native'
-import Clipboard from '@react-native-clipboard/clipboard'
 import { generateMnemonic } from 'bip39'
-
+import { Container, FormButton, FormText, Header, Row } from 'components'
 import { COLOR } from 'consts'
-import { Container, FormButton, Row, Header, FormText } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement, useMemo } from 'react'
+import { Alert, FlatList, StyleSheet, View } from 'react-native'
+
+import Clipboard from '@react-native-clipboard/clipboard'
 
 const NewAccountScreen = (): ReactElement => {
   const mnemonic = useMemo(() => generateMnemonic(128), [])

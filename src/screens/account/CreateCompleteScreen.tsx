@@ -1,15 +1,15 @@
-import React, { ReactElement } from 'react'
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useRecoilState } from 'recoil'
-import Icon from 'react-native-vector-icons/Ionicons'
-
+import { Container, FormButton, FormText, Header } from 'components'
+import Loading from 'components/atoms/Loading'
 import { COLOR } from 'consts'
-import { Container, FormButton, Header, FormText } from 'components'
+import useCreateComplete from 'hooks/page/account/useCreateComplete'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import Loading from 'components/atoms/Loading'
+import React, { ReactElement } from 'react'
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import useCreateComplete from 'hooks/page/account/useCreateComplete'
+
 import Clipboard from '@react-native-clipboard/clipboard'
 
 const CreateCompleteScreen = (): ReactElement => {

@@ -1,19 +1,18 @@
+import { Container, FormButton, FormInput, Header } from 'components'
+import { COLOR } from 'consts'
+import { PublicationMetadataStatusType } from 'graphqls/__generated__/graphql'
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { getAttributesData } from 'libs/lens'
+import { isLensProfile } from 'libs/profile'
 import React, { ReactElement, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
-
-import { COLOR } from 'consts'
-import { Container, FormButton, FormInput, Header } from 'components'
-import useAuth from 'hooks/auth/useAuth'
-
-import { useAppNavigation } from 'hooks/useAppNavigation'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import useProfile from 'hooks/auth/useProfile'
+
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
-import { getAttributesData } from 'libs/lens'
-import { PublicationMetadataStatusType } from 'graphqls/__generated__/graphql'
-import { isLensProfile } from 'libs/profile'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 const UpdateLensProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()

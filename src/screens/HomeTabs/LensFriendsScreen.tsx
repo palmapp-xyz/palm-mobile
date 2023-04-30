@@ -1,34 +1,27 @@
+import { Container } from 'components'
+import useAuthChallenge from 'hooks/api/useAuthChallenge'
+import useAuth from 'hooks/auth/useAuth'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import useLens from 'hooks/lens/useLens'
+import useSendbird from 'hooks/sendbird/useSendbird'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { formatValues } from 'libs/firebase'
+import { getProfileMediaImg } from 'libs/lens'
+import { recordError } from 'libs/logger'
+import { Routes } from 'libs/navigation'
+import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
-
-import { Container } from 'components'
-
-import {
-  ExtendedProfile,
-  ProfileMetadata,
-  Search,
-} from '@lens-protocol/react-native-lens-ui-kit'
-import firestore from '@react-native-firebase/firestore'
-
-import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
-
-import { Routes } from 'libs/navigation'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useAuth from 'hooks/auth/useAuth'
-import useSendbird from 'hooks/sendbird/useSendbird'
-import useLens from 'hooks/lens/useLens'
-import { getProfileMediaImg } from 'libs/lens'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { ContractAddr, FbProfile, SbUserMetadata } from 'types'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import _ from 'lodash'
-import { formatValues } from 'libs/firebase'
+import { ContractAddr, FbProfile, SbUserMetadata } from 'types'
+
+import { ExtendedProfile, ProfileMetadata, Search } from '@lens-protocol/react-native-lens-ui-kit'
+import firestore from '@react-native-firebase/firestore'
+import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 import { Maybe } from '@toruslabs/openlogin'
-import useAuthChallenge from 'hooks/api/useAuthChallenge'
-import { recordError } from 'libs/logger'
 
 const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()

@@ -1,11 +1,9 @@
-import { fixTokenUri } from './ipfs'
+import { Attribute, Profile, ProfileMedia } from 'graphqls/__generated__/graphql'
+
 import { AttributeData } from '@lens-protocol/react-native-lens-ui-kit'
 import { Maybe } from '@toruslabs/openlogin'
-import {
-  Attribute,
-  Profile,
-  ProfileMedia,
-} from 'graphqls/__generated__/graphql'
+
+import { fixTokenUri } from './ipfs'
 
 export const getProfileMediaImg = (
   picture: Maybe<ProfileMedia>

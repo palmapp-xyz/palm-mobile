@@ -1,10 +1,8 @@
-import React, { ReactElement } from 'react'
-
-import Icons from 'components/atoms/Icons'
-
 import Card from 'components/atoms/Card'
+import Icons from 'components/atoms/Icons'
 import LinkRenderer from 'components/molecules/LinkRenderer'
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import React, { ReactElement } from 'react'
 
 const FallbackMediaRenderer = ({
   src,

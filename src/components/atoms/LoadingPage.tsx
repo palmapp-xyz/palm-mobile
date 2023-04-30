@@ -1,7 +1,8 @@
 import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
+
 import Container from './Container'
-import { View, ActivityIndicator, StyleSheet } from 'react-native'
 
 const LoadingPage = (): ReactElement => {
   return (

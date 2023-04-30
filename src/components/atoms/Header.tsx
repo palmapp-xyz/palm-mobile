@@ -1,16 +1,11 @@
+import { COLOR } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
 import {
-  StyleSheet,
-  Text,
-  TextProps,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
+  StyleSheet, Text, TextProps, TouchableOpacity, TouchableOpacityProps, View
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { conditionChaining } from '@sendbird/uikit-utils'
 
-import { COLOR } from 'consts'
+import { conditionChaining } from '@sendbird/uikit-utils'
 
 export type HeaderProps = {
   title?: ReactNode

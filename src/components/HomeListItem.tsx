@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
+
 import { Text, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
 
 type Props = React.PropsWithChildren<{

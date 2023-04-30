@@ -1,36 +1,24 @@
-import React, { ReactElement, ReactNode } from 'react'
-import { RecoilRoot } from 'recoil'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import Config from 'react-native-config'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { MenuProvider } from 'react-native-popup-menu'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { QueryClient, QueryClientProvider } from 'react-query'
-
-import {
-  LensProvider,
-  Environment,
-  Theme,
-} from '@lens-protocol/react-native-lens-ui-kit'
-import { SendbirdUIKitContainer } from '@sendbird/uikit-react-native'
-import {
-  DarkUIKitTheme,
-  LightUIKitTheme,
-} from '@sendbird/uikit-react-native-foundation'
-
+import useSetting from 'hooks/independent/useSetting'
+import useAppearance from 'hooks/useAppearance'
 import { navigationActions, Routes } from 'libs/navigation'
 import {
-  SetSendbirdSDK,
-  FileService,
-  NotificationService,
-  ClipboardService,
-  MediaService,
-  GetTranslucent,
+  ClipboardService, FileService, GetTranslucent, MediaService, NotificationService, SetSendbirdSDK
 } from 'libs/sendbird'
-import { ErrorInfoScreen } from '../screens'
-import useAppearance from 'hooks/useAppearance'
-import useSetting from 'hooks/independent/useSetting'
 import { isMainnet } from 'libs/utils'
+import React, { ReactElement, ReactNode } from 'react'
+import Config from 'react-native-config'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { MenuProvider } from 'react-native-popup-menu'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { RecoilRoot } from 'recoil'
+
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { Environment, LensProvider, Theme } from '@lens-protocol/react-native-lens-ui-kit'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { SendbirdUIKitContainer } from '@sendbird/uikit-react-native'
+import { DarkUIKitTheme, LightUIKitTheme } from '@sendbird/uikit-react-native-foundation'
+
+import { ErrorInfoScreen } from '../screens'
 
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()

@@ -1,19 +1,18 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import React, { ReactElement } from 'react'
-import { useTotalUnreadMessageCount } from '@sendbird/uikit-chat-hooks'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
-
 import { COLOR } from 'consts'
-
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement } from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-import GroupChannelListScreen from './GroupChannelListScreen'
-import MyPageScreen from './MyPageScreen'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { useTotalUnreadMessageCount } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+
 import ExploreScreen from './ExploreScreen'
+import GroupChannelListScreen from './GroupChannelListScreen'
 // import NftListScreen from './NftListScreen'
 import LensFriendsScreen from './LensFriendsScreen'
+import MyPageScreen from './MyPageScreen'
 
 const Tab = createBottomTabNavigator()
 

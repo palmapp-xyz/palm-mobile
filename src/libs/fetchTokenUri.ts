@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { UTIL } from 'consts'
-import { fixTokenUri } from './ipfs'
-import { Maybe } from '@toruslabs/openlogin'
 import { ContractAddr } from 'types'
+
+import { Maybe } from '@toruslabs/openlogin'
+
 import { isENS } from './ens'
+import { fixTokenUri } from './ipfs'
 import { recordError } from './logger'
 
 export type FetchNftImageReturn = {

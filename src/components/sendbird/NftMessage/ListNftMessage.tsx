@@ -1,19 +1,17 @@
+import FormButton from 'components/atoms/FormButton'
+import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import { COLOR, UTIL } from 'consts'
+import useEthPrice from 'hooks/independent/useEthPrice'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useZxOrder from 'hooks/zx/useZxOrder'
+import { Routes } from 'libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import FormButton from 'components/atoms/FormButton'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR, UTIL } from 'consts'
-
 import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
-import useZxOrder from 'hooks/zx/useZxOrder'
-import useEthPrice from 'hooks/independent/useEthPrice'
 
 import Row from '../../atoms/Row'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 
 const ListNftMessage = ({
   data,

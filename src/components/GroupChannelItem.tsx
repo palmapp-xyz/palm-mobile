@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react'
-
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { COLOR } from 'consts'
+
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 const GroupChannelItem = ({
   channelUrl,

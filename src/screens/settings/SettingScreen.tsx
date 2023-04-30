@@ -1,11 +1,10 @@
+import { Container, Header, Row } from 'components'
+import { COLOR } from 'consts'
+import useAuth from 'hooks/auth/useAuth'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import { COLOR } from 'consts'
-import { Container, Header, Row } from 'components'
-import useAuth from 'hooks/auth/useAuth'
-import { useAppNavigation } from 'hooks/useAppNavigation'
 
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()
