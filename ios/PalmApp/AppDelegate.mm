@@ -32,7 +32,8 @@
   [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
   [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
 
-  [MSACAppCenter start:@"cfbf892f-d28b-48b0-ac41-c652904513d3" withServices:@[[MSACDistribute class]]];
+  NSString *appcenterSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppCenterSecret"];
+  [MSACAppCenter start:appcenterSecret withServices:@[[MSACDistribute class]]];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

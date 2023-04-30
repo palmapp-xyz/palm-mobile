@@ -20,12 +20,14 @@
 	<string>$(MARKETING_VERSION)($(CURRENT_PROJECT_VERSION))</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>AppCenterSecret</key>
+	<string>15276d7f-e1c8-4785-9819-44708e71da4e</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>appcenter-cfbf892f-d28b-48b0-ac41-c652904513d3</string>
+				<string>appcenter-$(AppCenterSecret)</string>
 			</array>
 		</dict>
 	</array>
