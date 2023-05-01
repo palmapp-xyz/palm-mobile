@@ -1,11 +1,19 @@
 import { LinkExplorer, SubmitButton } from 'components'
-import MediaRenderer, { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import MediaRenderer, {
+  MediaRendererProps,
+} from 'components/molecules/MediaRenderer'
 import NftMetadata from 'components/molecules/NftMetadata'
 import useAuth from 'hooks/auth/useAuth'
 import useNft from 'hooks/contract/useNft'
 import useNftImage from 'hooks/independent/useNftImage'
 import React, { ReactElement, useState } from 'react'
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
@@ -90,7 +98,12 @@ const NftDetails = ({
             </View>
             <View style={styles.item}>
               <Text style={styles.headText}>Token ID</Text>
-              <Text>{tokenId}</Text>
+              <LinkExplorer
+                type="nft"
+                address={nftContract}
+                tokenId={tokenId}
+                network={chain}
+              />
             </View>
             <NftMetadata metadata={metadata} style={styles.item} />
             {isMine && (

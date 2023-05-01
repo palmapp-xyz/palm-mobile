@@ -15,10 +15,15 @@ import { isLensProfile } from 'libs/profile'
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import {
-  FlatList, ImageBackground, Pressable, StyleSheet, TouchableOpacity, View
+  FlatList,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, pToken, SupportedNetworkEnum } from 'types'
+import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'

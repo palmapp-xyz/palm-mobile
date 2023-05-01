@@ -14,9 +14,11 @@ const VideoRenderer = ({
   height,
   audioOnly,
   onError,
+  onLoadEnd,
 }: MediaRendererProps & {
   audioOnly?: boolean
   onError?: (error) => void
+  onLoadEnd?: () => void
 }): ReactElement => {
   const [thumbnail, setThumbnail] = useState('')
   const { mediaService } = usePlatformService()
@@ -46,6 +48,7 @@ const VideoRenderer = ({
       audioOnly={audioOnly}
       style={[{ position: 'relative', width, height }, style]}
       onError={onError}
+      onLoad={onLoadEnd}
     />
   )
 }

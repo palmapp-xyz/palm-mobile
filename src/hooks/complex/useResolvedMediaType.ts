@@ -19,7 +19,7 @@ export function useResolvedMediaType(uri: string): UseResolvedMediaTypeReturn {
   )
 
   return {
-    url: resolvedUrl,
+    url: String(resolvedUrl).replace('data:image/svg+xml,', ''),
     mimeType: resolvedMimType.data,
     isLoading: resolvedMimType.isLoading,
   }

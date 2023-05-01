@@ -1,0 +1,136 @@
+// @flow
+
+import { UTIL } from 'consts'
+import React, { ReactElement, useEffect, useState } from 'react'
+import {
+  ImageURISource,
+  Platform,
+  StyleProp,
+  View,
+  ViewStyle,
+} from 'react-native'
+import { ImageStyle } from 'react-native-fast-image'
+import { WebView } from 'react-native-webview'
+
+const heightUnits = Platform.OS === 'ios' ? 'vh' : '%'
+
+const getHTML = (
+  key: string,
+  svgContent: string,
+  style?: ImageStyle
+): string => `
+<html data-key="key-${key}">
+  <head>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100${heightUnits};
+        width: 100${heightUnits};
+        overflow: hidden;
+        background-color: transparent;
+      }
+      svg {
+        width: ${
+          typeof style?.width === 'number'
+            ? `${style.width}px`
+            : style?.width ?? '100%'
+        };
+        height: ${
+          typeof style?.height === 'number'
+            ? `${style.height}px`
+            : style?.height ?? '100%'
+        };
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    ${svgContent}
+  </body>
+</html>
+`
+
+export type SvgImageImageProps = {
+  key: string
+  source: ImageURISource
+  onLoadStart?: () => void
+  onLoadEnd?: () => void
+  onError?: (error) => void
+  style?: StyleProp<ImageStyle>
+  containerStyle?: StyleProp<ViewStyle>
+}
+
+function SvgImage({
+  key,
+  source,
+  onLoadStart,
+  onLoadEnd,
+  onError,
+  style,
+  containerStyle,
+}: SvgImageImageProps): ReactElement {
+  const [svgContent, setSvgContent] = useState<string | null>(null)
+
+  const uri = source && source.uri
+  useEffect(() => {
+    const controller = new AbortController()
+    const signal = controller.signal
+
+    async function doFetch(): Promise<void> {
+      if (uri) {
+        onLoadStart && onLoadStart()
+        const index = uri.indexOf('<svg')
+        if (index !== -1) {
+          setSvgContent(uri.slice(index))
+        } else {
+          try {
+            const res = await fetch(uri, { signal })
+            const text = await res.text()
+            setSvgContent(text)
+          } catch (err) {
+            console.error(
+              '[WebviewSvgImage]:',
+              UTIL.truncate(uri, [100, 10]),
+              err
+            )
+            onError && onError(err)
+          }
+        }
+        onLoadEnd && onLoadEnd()
+      }
+    }
+
+    doFetch()
+
+    return (): void => {
+      controller.abort()
+    }
+  }, [uri])
+
+  if (svgContent) {
+    const html = getHTML(key, svgContent, (style ?? {}) as ImageStyle)
+
+    return (
+      <View
+        pointerEvents="none"
+        style={[style, containerStyle]}
+        renderToHardwareTextureAndroid={true}>
+        <WebView
+          originWhitelist={['*']}
+          scalesPageToFit={true}
+          useWebKit={false}
+          style={style}
+          scrollEnabled={false}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          source={{ html }}
+        />
+      </View>
+    )
+  } else {
+    return <View pointerEvents="none" style={[containerStyle, style]} />
+  }
+}
+
+export default SvgImage

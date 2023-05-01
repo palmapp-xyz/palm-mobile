@@ -1,4 +1,9 @@
-import { ChainLogoWrapper, Container, MoralisNftRenderer, NftItemMenu } from 'components'
+import {
+  ChainLogoWrapper,
+  Container,
+  MoralisNftRenderer,
+  NftItemMenu,
+} from 'components'
 import ProfileFooter from 'components/ProfileFooter'
 import { COLOR } from 'consts'
 import useProfile from 'hooks/auth/useProfile'
@@ -9,7 +14,13 @@ import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useCallback, useState } from 'react'
 import {
-  FlatList, RefreshControl, StyleSheet, Text, TouchableWithoutFeedback, useWindowDimensions, View
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+  useWindowDimensions,
 } from 'react-native'
 import { Moralis, SupportedNetworkEnum } from 'types'
 
@@ -93,8 +104,8 @@ const MyPageScreen = (): ReactElement => {
         data={useMyNftListReturn.nftList.filter(x => !!x)}
         keyExtractor={(_, index): string => `nftList-${index}`}
         numColumns={2}
-        contentContainerStyle={{ rowGap: 8 }}
-        columnWrapperStyle={{ columnGap: 16, paddingHorizontal: 20 }}
+        contentContainerStyle={{ rowGap: gap }}
+        columnWrapperStyle={{ columnGap: gap / 2, paddingHorizontal: gap / 2 }}
         onEndReached={(): void => {
           if (useMyNftListReturn.hasNextPage) {
             useMyNftListReturn.fetchNextPage()

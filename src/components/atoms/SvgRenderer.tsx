@@ -1,12 +1,9 @@
 import { UseResolvedMediaTypeReturn } from 'hooks/complex/useResolvedMediaType'
-import { recordError } from 'libs/logger'
 import React, { ReactElement, useEffect, useState } from 'react'
 import base64 from 'react-native-base64'
-import { SvgUri, SvgWithCss } from 'react-native-svg'
-import { parseString } from 'react-native-xml2js'
 
 import { MediaRendererProps } from '../molecules/MediaRenderer'
-import FallbackMediaRenderer from './FallbackMediaRenderer'
+import SvgImage from './SvgImage'
 
 const SvgRenderer = ({
   alt,
@@ -15,9 +12,11 @@ const SvgRenderer = ({
   height,
   mediaType,
   onError,
+  onLoadEnd,
 }: MediaRendererProps & {
   mediaType: UseResolvedMediaTypeReturn
   onError?: (error) => void
+  onLoadEnd?: () => void
 }): ReactElement => {
   const [xml, setXml] = useState<string | undefined>()
 
@@ -27,57 +26,19 @@ const SvgRenderer = ({
       decoded = base64.decode(
         mediaType.url?.replace('data:image/svg+xml;base64,', '') || ''
       )
-    } else if (mediaType.mimeType === 'data:image/svg+xml') {
-      decoded = mediaType.url?.replace('data:image/svg+xml,', '')
-    }
-
-    if (decoded) {
-      parseString(decoded, (err, result) => {
-        if (err || !result) {
-          recordError(err)
-          onError?.(err)
-        } else {
-          setXml(
-            decoded
-              ?.replace(/(\d+)%(\d+)/g, '$1%')
-              ?.replace(/transform:translate.*\(.*\)/g, '')
-          )
-        }
-      })
+      setXml(`data:image/svg+xml,${decoded}`)
+    } else {
+      setXml(mediaType.url)
     }
   }, [mediaType])
 
-  if (!mediaType.url || !xml) {
-    return (
-      <FallbackMediaRenderer
-        width={width}
-        height={height}
-        style={style}
-        src={mediaType.url}
-        alt={alt}
-      />
-    )
-  } else if (
-    !mediaType.mimeType?.startsWith('data') &&
-    mediaType.mimeType?.includes('image/svg+xml')
-  ) {
-    return (
-      <SvgUri
-        width={width}
-        height={height}
-        style={style}
-        uri={mediaType.url || null}
-      />
-    )
-  }
-
   return (
-    <SvgWithCss
-      width={width}
-      height={height}
+    <SvgImage
+      key={alt}
+      style={[{ width, height }, style]}
+      source={{ uri: xml }}
       onError={onError}
-      style={style}
-      xml={xml}
+      onLoadEnd={onLoadEnd}
     />
   )
 }

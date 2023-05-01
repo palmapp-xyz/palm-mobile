@@ -6,12 +6,14 @@ import { SupportedNetworkEnum } from 'types'
 
 const LinkExplorer = ({
   address,
+  tokenId,
   type,
   children,
   network,
 }: {
   address: string
-  type: 'tx' | 'address'
+  tokenId?: string
+  type: 'tx' | 'address' | 'nft'
   children?: ReactNode
   network: SupportedNetworkEnum
 }): ReactElement => {
@@ -20,7 +22,7 @@ const LinkExplorer = ({
   return (
     <TouchableOpacity
       onPress={(): void => {
-        Linking.openURL(getLink({ address, type }))
+        Linking.openURL(getLink({ address, type, tokenId }))
       }}>
       {children || (
         <Text style={{ color: COLOR.primary._400 }}>
