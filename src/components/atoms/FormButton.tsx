@@ -1,6 +1,12 @@
 import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
-import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, ViewStyle } from 'react-native'
+import {
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native'
 
 import FormText from './FormText'
 
@@ -50,7 +56,8 @@ const FormButton = ({
         containerStyle,
       ]}
       disabled={disabled}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <FormText fontType={fontType} style={[{ color: fontColor }, textStyle]}>
         {children}
       </FormText>

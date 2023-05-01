@@ -2,7 +2,13 @@ import images from 'assets/images'
 import { Card, FormButton, FormImage, LinkExplorer } from 'components'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useRecoilValue } from 'recoil'
 import postTxStore from 'store/postTxStore'
 import styled from 'styled-components'
@@ -56,7 +62,8 @@ const TxStatus = ({
           style={styles.closeBtn}
           onPress={(): void => {
             setMinimized(true)
-          }}>
+          }}
+        >
           <Icon icon="ban" size={20} />
         </TouchableOpacity>
         <View>
@@ -118,7 +125,8 @@ const TxStatus = ({
                   backgroundColor: '#eeeeee',
                   padding: 10,
                   marginBottom: 10,
-                }}>
+                }}
+              >
                 <Text>
                   {typeof postTxResult.error === 'object'
                     ? JSON.stringify(postTxResult.error)

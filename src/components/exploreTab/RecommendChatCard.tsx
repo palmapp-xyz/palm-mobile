@@ -22,7 +22,8 @@ const RecommendChatCard = ({ chat }: { chat: ChatItem }): ReactElement => {
                   {
                     marginLeft: displayUsers.length > j + 1 ? -42 : 0,
                   },
-                ]}>
+                ]}
+              >
                 <FormImage source={user.img} size={56} />
               </View>
             )

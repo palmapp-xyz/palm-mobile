@@ -1,4 +1,7 @@
-query publicationEncrypted($request: PublicationQueryRequest!, $profileId: ProfileId!) {
+query publicationEncrypted(
+  $request: PublicationQueryRequest!
+  $profileId: ProfileId!
+) {
   publication(request: $request) {
     __typename
     ... on Post {

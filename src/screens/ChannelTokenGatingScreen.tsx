@@ -1,7 +1,15 @@
 import {
-  ChainLogoWrapper, Container, FormButton, FormInput, Header, MoralisNftRenderer, Row
+  ChainLogoWrapper,
+  Container,
+  FormButton,
+  FormInput,
+  Header,
+  MoralisNftRenderer,
+  Row,
 } from 'components'
-import MediaRenderer, { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import MediaRenderer, {
+  MediaRendererProps,
+} from 'components/molecules/MediaRenderer'
 import { COLOR } from 'consts'
 import { utils } from 'ethers'
 import useUserNftList from 'hooks/api/useUserNftList'
@@ -14,8 +22,19 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import _ from 'lodash'
 import React, { ReactElement, useMemo, useState } from 'react'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { ContractAddr, NftType, QueryKeyEnum, SupportedNetworkEnum } from 'types'
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import {
+  ContractAddr,
+  NftType,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+} from 'types'
 
 const GatingToken = ({
   chain,
@@ -108,7 +127,8 @@ const ChannelTokenGatingScreen = (): ReactElement => {
               borderBottomWidth: 1,
               paddingBottom: 10,
               marginBottom: 10,
-            }}>
+            }}
+          >
             <Text>Gating Token</Text>
             {fsChannelField?.gating &&
             fsChannelField?.gating?.gatingType === 'NFT' ? (
@@ -153,7 +173,8 @@ const ChannelTokenGatingScreen = (): ReactElement => {
                     type: item.contract_type,
                     chain: SupportedNetworkEnum.ETHEREUM,
                   })
-                }}>
+                }}
+              >
                 <View style={{ borderRadius: 10, flex: 1 }}>
                   <MoralisNftRenderer item={item} width={'100%'} height={180} />
                 </View>
@@ -166,7 +187,8 @@ const ChannelTokenGatingScreen = (): ReactElement => {
             disabled={isFetching}
             onPress={(): void => {
               updateGatingToken(editGatingToken.contract, editGatingToken.chain)
-            }}>
+            }}
+          >
             Confirm
           </FormButton>
         </View>

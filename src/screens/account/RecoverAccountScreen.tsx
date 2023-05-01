@@ -1,6 +1,13 @@
 import {
-  Container, ErrorMessage, FormButton, FormInput, FormText, Header, KeyboardAvoidingView, MenuItem,
-  Row
+  Container,
+  ErrorMessage,
+  FormButton,
+  FormInput,
+  FormText,
+  Header,
+  KeyboardAvoidingView,
+  MenuItem,
+  Row,
 } from 'components'
 import Loading from 'components/atoms/Loading'
 import { COLOR } from 'consts'
@@ -67,7 +74,8 @@ const RecoverAccountScreen = (): ReactElement => {
             paddingTop: 40,
             paddingBottom: 28,
             justifyContent: 'center',
-          }}>
+          }}
+        >
           <MenuItem
             value={true}
             title="Enter a private key"
@@ -93,7 +101,8 @@ const RecoverAccountScreen = (): ReactElement => {
                 Clipboard.getString().then(text => {
                   setPrivateKey(text)
                 })
-              }}>
+              }}
+            >
               <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
                 <Icon name="copy-outline" size={14} />
                 <FormText fontType="R.12">Paste from Clipboard</FormText>
@@ -136,7 +145,8 @@ const RecoverAccountScreen = (): ReactElement => {
           <FormButton
             size="lg"
             disabled={!isValidForm || loading}
-            onPress={onPressConfirm}>
+            onPress={onPressConfirm}
+          >
             {isSignUp ? 'Import the Wallet' : 'Verify'}
           </FormButton>
         </View>

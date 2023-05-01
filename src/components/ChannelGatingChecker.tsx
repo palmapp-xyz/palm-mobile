@@ -6,7 +6,10 @@ import useFsChannel from 'hooks/firestore/useFsChannel'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import React, { ReactElement, useEffect, useMemo } from 'react'
 import {
-  FbChannelGatingField, FbChannelNativeGatingField, FbChannelNFTGatingField, QueryKeyEnum
+  FbChannelGatingField,
+  FbChannelNativeGatingField,
+  FbChannelNFTGatingField,
+  QueryKeyEnum,
 } from 'types'
 
 const NftChecker = ({

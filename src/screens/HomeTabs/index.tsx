@@ -39,7 +39,8 @@ const HomeTabs = (): ReactElement => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-      }}>
+      }}
+    >
       <Tab.Screen
         name={Routes.Explore}
         component={ExploreScreen}

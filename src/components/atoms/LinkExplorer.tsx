@@ -23,7 +23,8 @@ const LinkExplorer = ({
     <TouchableOpacity
       onPress={(): void => {
         Linking.openURL(getLink({ address, type, tokenId }))
-      }}>
+      }}
+    >
       {children || (
         <Text style={{ color: COLOR.primary._400 }}>
           {UTIL.truncate(address, [10, 10])}

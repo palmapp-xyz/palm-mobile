@@ -13,7 +13,8 @@ const Container = ({
 }): ReactElement => {
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}>
+      style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}
+    >
       <View style={style}>{children}</View>
     </SafeAreaView>
   )

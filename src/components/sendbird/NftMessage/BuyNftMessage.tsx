@@ -6,7 +6,12 @@ import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { ContractAddr, NftType, SbBuyNftDataType, SupportedNetworkEnum } from 'types'
+import {
+  ContractAddr,
+  NftType,
+  SbBuyNftDataType,
+  SupportedNetworkEnum,
+} from 'types'
 
 const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -34,7 +39,8 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
           numberOfLines={2}
           style={{
             color: 'black',
-          }}>{`${UTIL.truncate(data.buyer)} bought #${item.nftTokenId}`}</Text>
+          }}
+        >{`${UTIL.truncate(data.buyer)} bought #${item.nftTokenId}`}</Text>
 
         <FormButton
           size="sm"
@@ -45,7 +51,8 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
               tokenId: item.nftTokenId,
               chain,
             })
-          }}>
+          }}
+        >
           Details
         </FormButton>
       </View>

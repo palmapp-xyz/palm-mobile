@@ -1,7 +1,10 @@
 import images from 'assets/images'
 import { FormImage, FormText, Row } from 'components'
 import { COLOR } from 'consts'
-import { StepAfterSelectNftType, UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import {
+  StepAfterSelectNftType,
+  UseGcInputReturn,
+} from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo } from 'react'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 
@@ -72,7 +75,8 @@ const BottomMenu = ({
                   {
                     backgroundColor: selected ? COLOR.main_light : 'white',
                   },
-                ]}>
+                ]}
+              >
                 <View>{item.icon}</View>
                 <FormText fontType="B.12" color={COLOR.primary._400}>
                   {item.title}

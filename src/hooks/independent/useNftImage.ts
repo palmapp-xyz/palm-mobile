@@ -2,7 +2,12 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import { isENS } from 'libs/ens'
 import { fetchNftImage } from 'libs/fetchTokenUri'
-import { ContractAddr, NftType, QueryKeyEnum, SupportedNetworkEnum } from 'types'
+import {
+  ContractAddr,
+  NftType,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+} from 'types'
 
 import { Maybe } from '@toruslabs/openlogin'
 

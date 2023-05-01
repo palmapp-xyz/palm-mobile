@@ -2,17 +2,27 @@ import { COLOR } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { forwardRef } from 'react'
 import {
-  NativeSyntheticEvent, Platform, TextInput as RNTextInput, TextInputSelectionChangeEventData,
-  TouchableOpacity, View
+  NativeSyntheticEvent,
+  Platform,
+  TextInput as RNTextInput,
+  TextInputSelectionChangeEventData,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { MentionType } from '@sendbird/chat/message'
 import {
-  GroupChannelProps, MentionedUser, useLocalization, useSendbirdChat
+  GroupChannelProps,
+  MentionedUser,
+  useLocalization,
+  useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import {
-  createStyleSheet, TextInput, useToast, useUIKitTheme
+  createStyleSheet,
+  TextInput,
+  useToast,
+  useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import { conditionChaining } from '@sendbird/uikit-utils'
 
@@ -70,7 +80,8 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
         onPress={(): void => {
           setOpenBottomMenu(!openBottomMenu)
         }}
-        disabled={disabled}>
+        disabled={disabled}
+      >
         <Icon
           color={disabled ? COLOR.primary._100 : COLOR.primary._400}
           name={openBottomMenu ? 'close-circle' : 'add-circle'}
@@ -106,7 +117,8 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
             STRINGS.GROUP_CHANNEL.INPUT_PLACEHOLDER_MUTED,
             STRINGS.GROUP_CHANNEL.INPUT_PLACEHOLDER_ACTIVE,
           ]
-        )}>
+        )}
+      >
         {mentionManager.textToMentionedComponents(text, mentionedUsers)}
       </TextInput>
 

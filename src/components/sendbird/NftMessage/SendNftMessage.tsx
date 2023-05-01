@@ -47,7 +47,8 @@ const SendNftMessage = ({
           />
           <Text
             numberOfLines={2}
-            style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
+            style={{ color: 'black' }}
+          >{`${item.name} #${item.token_id}`}</Text>
         </Row>
         <View>
           <Text style={{ color: COLOR.primary._400 }}>Send NFT</Text>
@@ -67,7 +68,8 @@ const SendNftMessage = ({
               nftContractType: item.contract_type,
               chain,
             })
-          }}>
+          }}
+        >
           Details
         </FormButton>
       </View>

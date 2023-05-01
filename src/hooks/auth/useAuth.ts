@@ -10,8 +10,14 @@ import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import {
-  AuthChallengeResult, AuthStorageType, ContractAddr, FbProfile, LocalStorageKey, SbUserMetadata,
-  TrueOrErrReturn, User
+  AuthChallengeResult,
+  AuthStorageType,
+  ContractAddr,
+  FbProfile,
+  LocalStorageKey,
+  SbUserMetadata,
+  TrueOrErrReturn,
+  User,
 } from 'types'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'

@@ -7,7 +7,12 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useCallback, useState } from 'react'
-import { FlatList, RefreshControl, TouchableWithoutFeedback, View } from 'react-native'
+import {
+  FlatList,
+  RefreshControl,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native'
 import { SupportedNetworkEnum } from 'types'
 
 import ProfileHeader from '../components/ProfileHeader'
@@ -49,7 +54,8 @@ const UserProfileScreen = (): ReactElement => {
 
   return (
     <Container
-      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}>
+      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}
+    >
       <FlatList
         refreshControl={
           <RefreshControl
@@ -78,7 +84,8 @@ const UserProfileScreen = (): ReactElement => {
                   chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                   SupportedNetworkEnum.ETHEREUM,
               })
-            }}>
+            }}
+          >
             <View style={{ borderRadius: 10, flex: 1 }}>
               <MoralisNftRenderer item={item} width={'100%'} height={180} />
             </View>

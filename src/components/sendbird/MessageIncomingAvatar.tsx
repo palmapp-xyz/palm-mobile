@@ -4,7 +4,10 @@ import React, { ReactElement } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { SbUserMetadata } from 'types'
 
-import { Avatar, createStyleSheet } from '@sendbird/uikit-react-native-foundation'
+import {
+  Avatar,
+  createStyleSheet,
+} from '@sendbird/uikit-react-native-foundation'
 
 import type { SendbirdMessage } from '@sendbird/uikit-utils'
 type Props = {
@@ -26,7 +29,8 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
               address: (sender.metaData as SbUserMetadata).address,
               profileId: sender.userId,
             })
-          }}>
+          }}
+        >
           <Avatar size={26} uri={message.sender?.profileUrl} />
         </TouchableOpacity>
       )}

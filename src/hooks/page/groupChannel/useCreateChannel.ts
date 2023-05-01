@@ -7,8 +7,13 @@ import { getFsChannel } from 'libs/firebase'
 import { Routes } from 'libs/navigation'
 import { useState } from 'react'
 import {
-  ContractAddr, FbChannelNativeGatingField, FbChannelNFTGatingField, FbTags, Moralis,
-  SupportedNetworkEnum, TokenSymbolEnum
+  ContractAddr,
+  FbChannelNativeGatingField,
+  FbChannelNFTGatingField,
+  FbTags,
+  Moralis,
+  SupportedNetworkEnum,
+  TokenSymbolEnum,
 } from 'types'
 
 import { FilePickerResponse } from '@sendbird/uikit-react-native'

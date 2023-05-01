@@ -9,7 +9,10 @@ import { BackHandler, Platform } from 'react-native'
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { createGroupChannelFragment, useSendbirdChat } from '@sendbird/uikit-react-native'
+import {
+  createGroupChannelFragment,
+  useSendbirdChat,
+} from '@sendbird/uikit-react-native'
 
 import GroupChannelHeader from './GroupChannelHeader'
 import GroupChannelInput from './GroupChannelInput'

@@ -3,7 +3,12 @@ import useNetwork from 'hooks/complex/useNetwork'
 // import useApi from 'hooks/complex/useApi'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
 import {
-  ApiEnum, ApiResponse, AuthChallengeInfo, AuthChallengeResult, ContractAddr, SupportedNetworkEnum
+  ApiEnum,
+  ApiResponse,
+  AuthChallengeInfo,
+  AuthChallengeResult,
+  ContractAddr,
+  SupportedNetworkEnum,
 } from 'types'
 
 export type UseAuthChallengeReturn = {

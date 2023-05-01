@@ -1,6 +1,10 @@
 import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 
-import { createNavigationContainerRef, Route, StackActions } from '@react-navigation/native'
+import {
+  createNavigationContainerRef,
+  Route,
+  StackActions,
+} from '@react-navigation/native'
 
 import { GetSendbirdSDK } from './sendbird'
 

@@ -2,7 +2,13 @@ import { COLOR } from 'consts'
 import { fixTokenUri } from 'libs/ipfs'
 import React, { ReactElement } from 'react'
 import {
-  ImageStyle, Linking, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity
+  ImageStyle,
+  Linking,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
 } from 'react-native'
 
 import { Maybe } from '@toruslabs/openlogin'
@@ -33,7 +39,8 @@ const LinkRenderer = ({
           Linking.openURL(fixedUrl)
         }
       }}
-      style={containerStyle}>
+      style={containerStyle}
+    >
       <Text style={[styles.text, textStyle]} numberOfLines={numberOfLines}>
         {alt || src}
       </Text>

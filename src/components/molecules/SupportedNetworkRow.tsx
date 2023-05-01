@@ -2,7 +2,12 @@ import { FormImage, FormText, Row } from 'components'
 import { COLOR, NETWORK } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
-import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native'
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native'
 import { SupportedNetworkEnum } from 'types'
 
 const SupportedNetworkRow = ({
@@ -26,11 +31,13 @@ const SupportedNetworkRow = ({
                 styles.optionItem,
                 { backgroundColor: selected ? COLOR.main_light : 'white' },
               ]}
-              onPress={(): void => onNetworkSelected?.(network)}>
+              onPress={(): void => onNetworkSelected?.(network)}
+            >
               <FormImage source={NETWORK.getNetworkLogo(network)} size={16} />
               <FormText
                 fontType="SB.12"
-                color={selected ? COLOR.primary._400 : COLOR.black._400}>
+                color={selected ? COLOR.primary._400 : COLOR.black._400}
+              >
                 {_.capitalize(network)}
               </FormText>
             </TouchableOpacity>

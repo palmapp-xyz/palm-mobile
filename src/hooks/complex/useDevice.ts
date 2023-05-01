@@ -1,5 +1,7 @@
 import {
-  FilePickerResponse, useLocalization, usePlatformService
+  FilePickerResponse,
+  useLocalization,
+  usePlatformService,
 } from '@sendbird/uikit-react-native'
 import { useAlert, useToast } from '@sendbird/uikit-react-native-foundation'
 import SBUError from '@sendbird/uikit-react-native/src/libs/SBUError'

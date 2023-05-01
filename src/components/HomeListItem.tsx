@@ -23,7 +23,8 @@ const HomeListItem = ({ title, desc, image, onPress }: Props): ReactElement => {
             dark: colors.onBackground04,
           }),
         },
-      ]}>
+      ]}
+    >
       <View style={styles.infoContainer}>
         <View style={styles.infoText}>
           <Text h2 color={colors.onBackground01} style={{ marginBottom: 8 }}>

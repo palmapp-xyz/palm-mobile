@@ -23,7 +23,7 @@ import {
   View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
+import { ContractAddr, pToken, SupportedNetworkEnum } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
@@ -92,14 +92,16 @@ const ProfileHeader = ({
         <ImageBackground
           source={{ uri: profile?.coverPicture }}
           resizeMode="cover"
-          style={{ flex: 1 }}>
+          style={{ flex: 1 }}
+        >
           {isMyPage ? (
             <View style={{ alignItems: 'flex-end' }}>
               <Pressable
                 style={styles.headerButton}
                 onPress={(): void => {
                   navigation.navigate(Routes.Setting)
-                }}>
+                }}
+              >
                 <Icon name={'settings-outline'} size={24} />
               </Pressable>
             </View>
@@ -109,7 +111,8 @@ const ProfileHeader = ({
                 style={styles.headerButton}
                 onPress={(): void => {
                   navigation.goBack()
-                }}>
+                }}
+              >
                 <Icon
                   name="ios-chevron-back"
                   color={COLOR.black._800}
@@ -149,7 +152,8 @@ const ProfileHeader = ({
               }
               alert({ title: 'Address copied', message: userAddress })
               Clipboard.setString(userAddress)
-            }}>
+            }}
+          >
             <Row style={{ alignItems: 'center', columnGap: 10 }}>
               <Icon name="wallet" color={COLOR.primary._400} size={20} />
               <View>
@@ -188,7 +192,8 @@ const ProfileHeader = ({
               justifyContent: 'space-between',
               alignItems: 'center',
               paddingBottom: 12,
-            }}>
+            }}
+          >
             <FormText fontType="B.14">My Balance</FormText>
             <FormText fontType="R.10" color={COLOR.black._200}>
               Only visible to you
@@ -270,7 +275,8 @@ const ProfileHeader = ({
           <View
             style={{
               padding: 6,
-            }}>
+            }}
+          >
             <FlatList
               data={profile.attributes}
               keyExtractor={(item, index): string =>
@@ -291,7 +297,8 @@ const ProfileHeader = ({
                     style={{
                       marginHorizontal: 15,
                       alignItems: 'center',
-                    }}>
+                    }}
+                  >
                     <FormText style={styles.attribute}>{item.key}</FormText>
                     <FormText>{item.value}</FormText>
                   </View>

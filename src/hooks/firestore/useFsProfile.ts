@@ -2,7 +2,9 @@ import { getProfileMediaImg } from 'libs/lens'
 import { useEffect, useState } from 'react'
 import { FbProfile } from 'types'
 
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 export type UseFsProfileReturn = {

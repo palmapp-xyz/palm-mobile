@@ -1,22 +1,45 @@
-import React, { ReactElement, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { ListRenderItem, Platform, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import {
-  GroupChannelContexts, GroupChannelProps, ReactionAddons, useLocalization, usePlatformService,
-  useSendbirdChat
+  GroupChannelContexts,
+  GroupChannelProps,
+  ReactionAddons,
+  useLocalization,
+  usePlatformService,
+  useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import {
-  ChannelFrozenBanner, createStyleSheet, useAlert, useBottomSheet, useToast, useUIKitTheme
+  ChannelFrozenBanner,
+  createStyleSheet,
+  useAlert,
+  useBottomSheet,
+  useToast,
+  useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import ChatFlatList, {
-  ChatFlatListRef
+  ChatFlatListRef,
 } from '@sendbird/uikit-react-native/src/components/ChatFlatList'
 import { DEPRECATION_WARNING } from '@sendbird/uikit-react-native/src/constants'
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 import {
-  getAvailableUriFromFileMessage, getFileExtension, getFileType, isMyMessage, Logger,
-  messageKeyExtractor, shouldRenderReaction, toMegabyte, useFreshCallback
+  getAvailableUriFromFileMessage,
+  getFileExtension,
+  getFileType,
+  isMyMessage,
+  Logger,
+  messageKeyExtractor,
+  shouldRenderReaction,
+  toMegabyte,
+  useFreshCallback,
 } from '@sendbird/uikit-utils'
 
 import type { BottomSheetItem } from '@sendbird/uikit-react-native-foundation'
@@ -101,7 +124,8 @@ const GroupChannelMessageList = ({
 
   return (
     <View
-      style={[{ flex: 1, backgroundColor: colors.background }, safeAreaLayout]}>
+      style={[{ flex: 1, backgroundColor: colors.background }, safeAreaLayout]}
+    >
       {channel.isFrozen && (
         <ChannelFrozenBanner
           style={styles.frozenBanner}
@@ -141,7 +165,8 @@ const GroupChannelMessageList = ({
       {renderScrollToBottomButton && (
         <View
           pointerEvents={scrollLeaveBottom ? 'auto' : 'none'}
-          style={[styles.scrollButton, safeAreaLayout]}>
+          style={[styles.scrollButton, safeAreaLayout]}
+        >
           {renderScrollToBottomButton({
             visible: scrollLeaveBottom,
             onPress: () => scrollRef.current?.scrollToBottom(false),

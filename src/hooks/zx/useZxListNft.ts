@@ -1,7 +1,9 @@
 import { UTIL } from 'consts'
 import {
-  SignedNftOrderV4, SignedNftOrderV4Serialized, UserFacingERC20AssetDataSerializedV4,
-  UserFacingERC721AssetDataSerializedV4
+  SignedNftOrderV4,
+  SignedNftOrderV4Serialized,
+  UserFacingERC20AssetDataSerializedV4,
+  UserFacingERC721AssetDataSerializedV4,
 } from 'evm-nft-swap'
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import useAuth from 'hooks/auth/useAuth'
@@ -15,7 +17,12 @@ import { useMemo, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
 import {
-  ContractAddr, FbListing, PostTxStatus, QueryKeyEnum, SupportedNetworkEnum, Token
+  ContractAddr,
+  FbListing,
+  PostTxStatus,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+  Token,
 } from 'types'
 
 import firestore from '@react-native-firebase/firestore'

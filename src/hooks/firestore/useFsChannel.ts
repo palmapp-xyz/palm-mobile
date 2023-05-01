@@ -1,7 +1,12 @@
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { getFsChannel } from 'libs/firebase'
 import { useMemo, useState } from 'react'
-import { ContractAddr, FbChannelField, FirestoreKeyEnum, SupportedNetworkEnum } from 'types'
+import {
+  ContractAddr,
+  FbChannelField,
+  FirestoreKeyEnum,
+  SupportedNetworkEnum,
+} from 'types'
 
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'

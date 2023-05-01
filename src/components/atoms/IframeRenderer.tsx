@@ -14,7 +14,8 @@ const IframePlayer = ({
   return (
     <View
       style={[{ position: 'relative', width, height }, style]}
-      {...restProps}>
+      {...restProps}
+    >
       <WebView
         source={{ html: "<iFrame src='" + src + "' />" }}
         originWhitelist={['*']}

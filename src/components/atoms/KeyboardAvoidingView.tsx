@@ -1,5 +1,10 @@
 import React, { ReactElement, ReactNode } from 'react'
-import { KeyboardAvoidingView as KAV, Platform, StyleProp, ViewStyle } from 'react-native'
+import {
+  KeyboardAvoidingView as KAV,
+  Platform,
+  StyleProp,
+  ViewStyle,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const KEYBOARD_AVOID_VIEW_BEHAVIOR = Platform.select({
@@ -20,7 +25,8 @@ const KeyboardAvoidingView = ({
     <KAV
       style={style}
       keyboardVerticalOffset={bottom}
-      behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}>
+      behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}
+    >
       {children}
     </KAV>
   )

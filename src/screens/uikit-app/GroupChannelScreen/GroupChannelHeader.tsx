@@ -9,10 +9,15 @@ import { ContractAddr, SbUserMetadata } from 'types'
 
 import { Member } from '@sendbird/chat/groupChannel'
 import {
-  GroupChannelContexts, GroupChannelProps, useLocalization
+  GroupChannelContexts,
+  GroupChannelProps,
+  useLocalization,
 } from '@sendbird/uikit-react-native'
 import {
-  Avatar, createStyleSheet, Header, useHeaderStyle
+  Avatar,
+  createStyleSheet,
+  Header,
+  useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
 
 const GroupChannelHeader = ({
@@ -50,7 +55,8 @@ const GroupChannelHeader = ({
                   address: (otherDMUser.metaData as SbUserMetadata).address,
                   profileId: otherDMUser.userId,
                 })
-              }}>
+              }}
+            >
               <Avatar
                 size={36}
                 uri={otherDMUser.profileUrl}

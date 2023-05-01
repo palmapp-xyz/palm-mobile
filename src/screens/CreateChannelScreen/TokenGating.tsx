@@ -1,5 +1,11 @@
 import {
-  Container, FormButton, FormImage, FormText, Header, KeyboardAvoidingView, SupportedNetworkRow
+  Container,
+  FormButton,
+  FormImage,
+  FormText,
+  Header,
+  KeyboardAvoidingView,
+  SupportedNetworkRow,
 } from 'components'
 import { COLOR, NETWORK } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
@@ -8,7 +14,12 @@ import { UseCreateChannelReturn } from 'hooks/page/groupChannel/useCreateChannel
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import {
-  ActivityIndicator, ScrollView, StyleSheet, TextInput, TouchableOpacity, View
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -100,12 +111,14 @@ const TokenGating = ({
             style={{
               flex: 1,
               backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
-            }}>
+            }}
+          >
             <TouchableOpacity
               onPress={(): void => {
                 setSelectedGatingToken(nativeToken)
               }}
-              style={styles.tokenItem}>
+              style={styles.tokenItem}
+            >
               <Radio selected={gateTokenAddr === nativeToken} />
               <FormImage
                 source={NETWORK.getNetworkLogo(gatingTokenNetwork)}
@@ -131,7 +144,8 @@ const TokenGating = ({
                     style={styles.tokenItem}
                     onPress={(): void => {
                       setSelectedGatingToken(item)
-                    }}>
+                    }}
+                  >
                     {/* <MoralisNftRenderer
                 item={item}
                 width={'100%'}
@@ -172,7 +186,8 @@ const TokenGating = ({
               disabled={!gateTokenAddr}
               onPress={(): void => {
                 setStep(2)
-              }}>
+              }}
+            >
               Next
             </FormButton>
           ) : (
@@ -180,7 +195,8 @@ const TokenGating = ({
               disabled={!gatingTokenAmount}
               onPress={(): void => {
                 setShowTokenGating(false)
-              }}>
+              }}
+            >
               Done
             </FormButton>
           )}

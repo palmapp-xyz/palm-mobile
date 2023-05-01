@@ -1,5 +1,9 @@
 import {
-  AuthenticateDocument, AuthenticationResult, ChallengeDocument, RefreshDocument, VerifyDocument
+  AuthenticateDocument,
+  AuthenticationResult,
+  ChallengeDocument,
+  RefreshDocument,
+  VerifyDocument,
 } from 'graphqls/__generated__/graphql'
 import useWeb3 from 'hooks/complex/useWeb3'
 import { recordError } from 'libs/logger'
@@ -8,7 +12,12 @@ import _ from 'lodash'
 import { SupportedNetworkEnum, TrueOrErrReturn } from 'types'
 
 import {
-  ApolloQueryResult, FetchResult, MutationOptions, OperationVariables, QueryOptions, useApolloClient
+  ApolloQueryResult,
+  FetchResult,
+  MutationOptions,
+  OperationVariables,
+  QueryOptions,
+  useApolloClient,
 } from '@apollo/client'
 
 export type UseLensAuthReturn = {

@@ -14,8 +14,10 @@ import { CameraRoll } from '@react-native-camera-roll/camera-roll'
 import Clipboard from '@react-native-clipboard/clipboard'
 import RNFBMessaging from '@react-native-firebase/messaging'
 import {
-  createNativeClipboardService, createNativeFileService, createNativeMediaService,
-  createNativeNotificationService
+  createNativeClipboardService,
+  createNativeFileService,
+  createNativeMediaService,
+  createNativeNotificationService,
 } from '@sendbird/uikit-react-native'
 import { Logger, SendbirdChatSDK } from '@sendbird/uikit-utils'
 import * as CreateThumbnail from '@skqksh/react-native-create-thumbnail'

@@ -115,7 +115,8 @@ function SvgImage({
       <View
         pointerEvents="none"
         style={[style, containerStyle]}
-        renderToHardwareTextureAndroid={true}>
+        renderToHardwareTextureAndroid={true}
+      >
         <WebView
           originWhitelist={['*']}
           scalesPageToFit={true}

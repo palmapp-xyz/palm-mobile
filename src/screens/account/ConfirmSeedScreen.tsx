@@ -83,7 +83,8 @@ const ConfirmSeedScreen = (): ReactElement => {
                         newList[newList.findIndex(x => x === targetWord)] = ''
                         return newList
                       })
-                    }}>
+                    }}
+                  >
                     <FormText fontType="R.14">{targetWord || ' '}</FormText>
                   </TouchableOpacity>
                 </Row>
@@ -107,7 +108,8 @@ const ConfirmSeedScreen = (): ReactElement => {
                         newList[emptyFistIndex] = item.word
                         return newList
                       })
-                    }}>
+                    }}
+                  >
                     {item.word}
                   </FormButton>
                 </View>
@@ -121,7 +123,8 @@ const ConfirmSeedScreen = (): ReactElement => {
         <FormButton
           size="lg"
           disabled={!isValidForm || loading}
-          onPress={onPressConfirm}>
+          onPress={onPressConfirm}
+        >
           Next
         </FormButton>
       </View>

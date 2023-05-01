@@ -28,7 +28,8 @@ const MainAccountScreen = (): ReactElement => {
           <FormButton
             onPress={(): void => {
               navigation.navigate(Routes.RecoverAccount, { isSignUp: false })
-            }}>
+            }}
+          >
             Restore My Account
           </FormButton>
           <FormButton
@@ -36,7 +37,8 @@ const MainAccountScreen = (): ReactElement => {
             onPress={(): void => {
               setShowBottomSheet(true)
               bottomSheetRef?.current?.snapToIndex(1)
-            }}>
+            }}
+          >
             Sign up with a Wallet
           </FormButton>
         </View>
@@ -50,13 +52,15 @@ const MainAccountScreen = (): ReactElement => {
             enablePanDownToClose
             onClose={(): void => {
               setShowBottomSheet(false)
-            }}>
+            }}
+          >
             <Row style={styles.bottomSheet}>
               <TouchableOpacity
                 style={styles.bottomItem}
                 onPress={(): void => {
                   navigation.navigate(Routes.NewAccount)
-                }}>
+                }}
+              >
                 <FormImage source={images.plus} size={32} />
                 <FormText fontType="R.12" style={{ textAlign: 'center' }}>
                   {'Create a\nnew wallet'}
@@ -68,7 +72,8 @@ const MainAccountScreen = (): ReactElement => {
                   navigation.navigate(Routes.RecoverAccount, {
                     isSignUp: true,
                   })
-                }}>
+                }}
+              >
                 <FormImage source={images.import} size={32} />
                 <FormText fontType="R.12" style={{ textAlign: 'center' }}>
                   {'Import\na wallet'}

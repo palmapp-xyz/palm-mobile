@@ -1,7 +1,14 @@
 import { UTIL } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
-import { FlatList, ImageStyle, StyleProp, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  ImageStyle,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 
 import { Maybe } from '@toruslabs/openlogin'
 

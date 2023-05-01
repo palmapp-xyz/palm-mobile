@@ -6,13 +6,32 @@ import React, { ReactElement } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import {
-  ChannelListingsScreen, ChannelTokenGatingScreen, CreateChannelScreen, CreateProfileScreen,
-  FileViewerScreen, GroupChannelBannedUsersScreen, GroupChannelCreateScreen,
-  GroupChannelInviteScreen, GroupChannelMembersScreen, GroupChannelModerationScreen,
-  GroupChannelMutedMembersScreen, GroupChannelNotificationsScreen, GroupChannelOperatorsScreen,
-  GroupChannelRegisterOperatorScreen, GroupChannelScreen, GroupChannelSettingsScreen, HomeTabs,
-  InitExploreScreen, ListNftScreen, NftDetailScreen, SendNftScreen, SettingScreen,
-  TokenGatingInfoScreen, UpdateLensProfileScreen, UserProfileScreen, ZxNftDetailScreen
+  ChannelListingsScreen,
+  ChannelTokenGatingScreen,
+  CreateChannelScreen,
+  CreateProfileScreen,
+  FileViewerScreen,
+  GroupChannelBannedUsersScreen,
+  GroupChannelCreateScreen,
+  GroupChannelInviteScreen,
+  GroupChannelMembersScreen,
+  GroupChannelModerationScreen,
+  GroupChannelMutedMembersScreen,
+  GroupChannelNotificationsScreen,
+  GroupChannelOperatorsScreen,
+  GroupChannelRegisterOperatorScreen,
+  GroupChannelScreen,
+  GroupChannelSettingsScreen,
+  HomeTabs,
+  InitExploreScreen,
+  ListNftScreen,
+  NftDetailScreen,
+  SendNftScreen,
+  SettingScreen,
+  TokenGatingInfoScreen,
+  UpdateLensProfileScreen,
+  UserProfileScreen,
+  ZxNftDetailScreen,
 } from '../screens'
 
 const MainStack = createNativeStackNavigator()
@@ -116,7 +135,8 @@ const MainNavigator = (): ReactElement => {
             screenOptions={{
               animation: 'slide_from_bottom',
               headerShown: false,
-            }}>
+            }}
+          >
             <MainStack.Screen
               name={Routes.FileViewer}
               component={FileViewerScreen}

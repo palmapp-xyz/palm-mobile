@@ -1,4 +1,9 @@
-import { ContractAddr, ContractMap, NetworkTypeEnum, SupportedNetworkEnum } from 'types'
+import {
+  ContractAddr,
+  ContractMap,
+  NetworkTypeEnum,
+  SupportedNetworkEnum,
+} from 'types'
 
 const contractMap: Record<NetworkTypeEnum, ContractMap> = {
   [NetworkTypeEnum.MAINNET]: {

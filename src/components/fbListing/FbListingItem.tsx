@@ -46,7 +46,8 @@ const FbListingItem = ({ item }: { item: FbListing }): ReactElement => {
           nonce: order.order.nonce,
           chain,
         })
-      }}>
+      }}
+    >
       <View style={{ alignItems: 'center' }}>
         <NftRenderer
           tokenId={getOrderTokenId(order.order)}
@@ -85,9 +86,8 @@ const FbListingItem = ({ item }: { item: FbListing }): ReactElement => {
         <View>
           <FormText
             fontType="R.10"
-            color={COLOR.black._400}>{`Listed by ...${order.order.maker.slice(
-            -5
-          )}`}</FormText>
+            color={COLOR.black._400}
+          >{`Listed by ...${order.order.maker.slice(-5)}`}</FormText>
         </View>
       </View>
     </TouchableOpacity>

@@ -28,7 +28,8 @@ const GroupChannelItem = ({
           return
         }
         navigation.navigate(Routes.GroupChannel, { channelUrl })
-      }}>
+      }}
+    >
       <Text>{channel.url}</Text>
     </TouchableOpacity>
   )

@@ -4,7 +4,13 @@ import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 
@@ -37,7 +43,8 @@ const SelectReceiverModal = ({
                       receiverId: item.userId,
                       channelUrl: channel.url,
                     })
-                  }}>
+                  }}
+                >
                   <Text style={{ fontSize: 20 }} numberOfLines={1}>
                     {item.nickname}
                   </Text>

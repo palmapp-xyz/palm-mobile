@@ -6,7 +6,11 @@ import { navigationRef, Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { SupportedNetworkEnum } from 'types'
 
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native'
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { SignInWithLens } from '../screens'
@@ -29,7 +33,8 @@ const Navigation = (): ReactElement => {
   return (
     <NavigationContainer
       ref={navigationRef}
-      theme={isLightTheme ? DefaultTheme : DarkTheme}>
+      theme={isLightTheme ? DefaultTheme : DarkTheme}
+    >
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         {user?.auth ? (
           user?.lensAuth !== undefined ? (

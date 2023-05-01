@@ -2,7 +2,8 @@ import React, { ReactElement } from 'react'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import {
-  createGroupChannelNotificationsFragment, useSendbirdChat
+  createGroupChannelNotificationsFragment,
+  useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
 import { useAppNavigation } from '../../hooks/useAppNavigation'

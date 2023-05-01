@@ -32,7 +32,8 @@ const SignInWithLens = (): ReactElement => {
           height: 300,
           alignItems: 'center',
           justifyContent: 'center',
-        }}>
+        }}
+      >
         <LensLogo />
         <Text style={{ fontSize: 16 }}>{'Signing in ...'}</Text>
       </View>

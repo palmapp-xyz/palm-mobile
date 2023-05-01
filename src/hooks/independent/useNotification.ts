@@ -1,7 +1,10 @@
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import { recordError } from 'libs/logger'
 import {
-  backgroundMessageHandler, onForegroundAndroid, onForegroundIOS, onNotificationAndroid
+  backgroundMessageHandler,
+  onForegroundAndroid,
+  onForegroundIOS,
+  onNotificationAndroid,
 } from 'libs/notification'
 import { useEffect, useState } from 'react'
 import { Platform } from 'react-native'

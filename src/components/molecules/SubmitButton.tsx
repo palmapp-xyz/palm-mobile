@@ -19,7 +19,8 @@ const SubmitButton = ({
       <LinkExplorer
         address={postTxResult.transactionHash}
         type="tx"
-        network={network}>
+        network={network}
+      >
         <Text style={{ color: COLOR.primary._400, paddingLeft: 10 }}>
           Link to pending TX
         </Text>

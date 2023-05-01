@@ -20,10 +20,12 @@ const MenuItem = <T,>({
         styles.item,
         { backgroundColor: selected ? COLOR.main_light : 'white' },
       ]}
-      onPress={(): void => setSelected(value)}>
+      onPress={(): void => setSelected(value)}
+    >
       <FormText
         fontType="SB.14"
-        color={selected ? COLOR.primary._400 : COLOR.black._400}>
+        color={selected ? COLOR.primary._400 : COLOR.black._400}
+      >
         {title}
       </FormText>
     </TouchableOpacity>

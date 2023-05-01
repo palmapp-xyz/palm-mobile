@@ -4,7 +4,12 @@ import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
 import {
-  ContractAddr, EncodedTxData, PostTxReturn, PostTxStatus, pToken, SupportedNetworkEnum
+  ContractAddr,
+  EncodedTxData,
+  PostTxReturn,
+  PostTxStatus,
+  pToken,
+  SupportedNetworkEnum,
 } from 'types'
 
 import useWeb3 from './useWeb3'

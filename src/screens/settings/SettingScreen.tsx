@@ -19,7 +19,8 @@ const SettingScreen = (): ReactElement => {
             style={styles.item}
             onPress={(): void => {
               console.log('bio auth')
-            }}>
+            }}
+          >
             <Text>Face ID / Touch ID</Text>
             <Row>
               <Switch />
@@ -29,7 +30,8 @@ const SettingScreen = (): ReactElement => {
             style={styles.item}
             onPress={(): void => {
               console.log('Push Notifications')
-            }}>
+            }}
+          >
             <Text>Push Notifications</Text>
             <Row>
               <Switch />
@@ -41,7 +43,8 @@ const SettingScreen = (): ReactElement => {
             style={styles.item}
             onPress={(): void => {
               console.log('Service Agreement')
-            }}>
+            }}
+          >
             <Text>Service Agreement</Text>
             <Icon
               name="ios-chevron-forward"
@@ -53,7 +56,8 @@ const SettingScreen = (): ReactElement => {
             style={styles.item}
             onPress={(): void => {
               console.log('Privacy')
-            }}>
+            }}
+          >
             <Text>Privacy</Text>
             <Icon
               name="ios-chevron-forward"
@@ -65,7 +69,8 @@ const SettingScreen = (): ReactElement => {
             style={styles.item}
             onPress={(): void => {
               console.log('Contact')
-            }}>
+            }}
+          >
             <Text>Version</Text>
             <Text style={{ color: COLOR.primary._400 }}>0.0.1</Text>
           </TouchableOpacity>
@@ -73,7 +78,8 @@ const SettingScreen = (): ReactElement => {
             style={styles.item}
             onPress={(): void => {
               console.log('Version')
-            }}>
+            }}
+          >
             <Text>Contact</Text>
             <Icon
               name="ios-chevron-forward"
@@ -85,7 +91,8 @@ const SettingScreen = (): ReactElement => {
         <View style={styles.itemGroup}>
           <TouchableOpacity
             style={[styles.item, { justifyContent: 'center' }]}
-            onPress={logout}>
+            onPress={logout}
+          >
             <Text style={{ color: COLOR.error }}>Sign Out</Text>
           </TouchableOpacity>
         </View>

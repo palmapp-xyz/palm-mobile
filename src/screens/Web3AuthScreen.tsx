@@ -33,7 +33,8 @@ const Web3AuthScreen = (): ReactElement => {
           await login(async () => {
             // navigation.navigate(Routes.Sign4Auth)
           })
-        }}>
+        }}
+      >
         {'Wen3Auth'}
       </Button>
 

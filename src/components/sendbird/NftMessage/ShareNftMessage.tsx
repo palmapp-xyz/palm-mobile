@@ -42,12 +42,14 @@ const ShareNftMessage = ({
           nftContractType: item.contract_type,
           chain,
         })
-      }}>
+      }}
+    >
       <View style={styles.container}>
         <View style={styles.header}>
           <FormText
             numberOfLines={1}
-            fontType="B.10">{`${item.name} #${item.token_id}`}</FormText>
+            fontType="B.10"
+          >{`${item.name} #${item.token_id}`}</FormText>
         </View>
         <VerifiedWrapper>
           <NftRenderer

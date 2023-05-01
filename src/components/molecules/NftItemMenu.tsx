@@ -1,7 +1,12 @@
 import { COLOR } from 'consts'
 import { isMainnet } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu'
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Moralis, SupportedNetworkEnum } from 'types'
 
@@ -32,7 +37,8 @@ const NftItemMenu = ({
       onSelect={(selected: string): void => {
         setNftMenuOpen(false)
         onSelect(item, selected)
-      }}>
+      }}
+    >
       <MenuTrigger onPress={(): void => setNftMenuOpen(!nftMenuOpen)}>
         {triggerComponent || (
           <Icon
@@ -51,7 +57,8 @@ const NftItemMenu = ({
           borderRadius: 5,
           paddingHorizontal: 10,
           paddingVertical: 5,
-        }}>
+        }}
+      >
         <MenuOption
           text={`Set as NFT profile ${
             disabled

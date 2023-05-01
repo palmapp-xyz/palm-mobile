@@ -1,19 +1,30 @@
 import { COLOR } from 'consts'
 import useGcInput from 'hooks/page/groupChannel/useGcInput'
 import React, {
-  MutableRefObject, ReactElement, useContext, useEffect, useRef, useState
+  MutableRefObject,
+  ReactElement,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
 } from 'react'
 import { KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import {
-  GroupChannelContexts, GroupChannelProps, useSendbirdChat
+  GroupChannelContexts,
+  GroupChannelProps,
+  useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 import useMentionTextInput from '@sendbird/uikit-react-native/src/hooks/useMentionTextInput'
 import {
-  getGroupChannelChatAvailableState, replace, SendbirdFileMessage, SendbirdGroupChannel,
-  SendbirdUserMessage, useIIFE
+  getGroupChannelChatAvailableState,
+  replace,
+  SendbirdFileMessage,
+  SendbirdGroupChannel,
+  SendbirdUserMessage,
+  useIIFE,
 } from '@sendbird/uikit-utils'
 
 import BottomMenu from './BottomMenu'
@@ -123,16 +134,19 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           zIndex: 1,
         }}
         keyboardVerticalOffset={keyboardAvoidOffset - bottom}
-        behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}>
+        behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}
+      >
         <View
           style={{
             paddingLeft: left,
             paddingRight: right,
             backgroundColor: '#FFFFFFdd',
-          }}>
+          }}
+        >
           <View
             onLayout={(e): void => setInputHeight(e.nativeEvent.layout.height)}
-            style={styles.inputContainer}>
+            style={styles.inputContainer}
+          >
             {inputMode === 'send' && (
               <SendInput
                 {...props}

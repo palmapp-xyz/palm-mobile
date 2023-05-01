@@ -7,7 +7,7 @@ export function mergeRefs<T = any>(
         ref(value)
       } else if (ref != null) {
         // eslint-disable-next-line prettier/prettier
-        (ref as React.MutableRefObject<T | null>).current = value
+        ;(ref as React.MutableRefObject<T | null>).current = value
       }
     })
   }

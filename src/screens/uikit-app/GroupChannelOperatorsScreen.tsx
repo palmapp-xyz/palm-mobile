@@ -2,7 +2,10 @@ import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { createGroupChannelOperatorsFragment, useSendbirdChat } from '@sendbird/uikit-react-native'
+import {
+  createGroupChannelOperatorsFragment,
+  useSendbirdChat,
+} from '@sendbird/uikit-react-native'
 
 import { useAppNavigation } from '../../hooks/useAppNavigation'
 

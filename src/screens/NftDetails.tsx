@@ -66,7 +66,8 @@ const NftDetails = ({
     <ScrollView
       refreshControl={
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-      }>
+      }
+    >
       <View style={styles.body}>
         <View style={styles.imageBox}>
           <MediaRenderer {...nftRenderProps} />
@@ -125,7 +126,8 @@ const NftDetails = ({
               marginTop: 0,
             }}
             network={SupportedNetworkEnum.ETHEREUM}
-            onPress={(): Promise<void> => onSubmit(uri, metadata)}>
+            onPress={(): Promise<void> => onSubmit(uri, metadata)}
+          >
             {isMine ? 'Cancel' : 'Buy'}
           </SubmitButton>
         )}

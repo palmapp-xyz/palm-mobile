@@ -19,8 +19,8 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native'
 import { Moralis, SupportedNetworkEnum } from 'types'
 
@@ -85,7 +85,8 @@ const MyPageScreen = (): ReactElement => {
 
   return (
     <Container
-      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}>
+      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}
+    >
       <FlatList
         refreshControl={
           <RefreshControl
@@ -124,7 +125,8 @@ const MyPageScreen = (): ReactElement => {
                   chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                   SupportedNetworkEnum.ETHEREUM,
               })
-            }}>
+            }}
+          >
             <View style={{ borderRadius: 10, flex: 1 }}>
               <ChainLogoWrapper chain={selectedNetwork}>
                 <MoralisNftRenderer

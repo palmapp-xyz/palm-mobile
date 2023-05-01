@@ -36,7 +36,8 @@ const NewAccountScreen = (): ReactElement => {
             paddingVertical: 12,
             paddingHorizontal: 16,
             borderRadius: 14,
-          }}>
+          }}
+        >
           <FormText fontType="R.12" color={COLOR.yellow}>
             Notice that your generated wallet's Privatekey is not stored on the
             server and is stored on your mobile device.
@@ -48,7 +49,8 @@ const NewAccountScreen = (): ReactElement => {
             onPress={(): void => {
               Alert.alert('Copied')
               Clipboard.setString(mnemonic!)
-            }}>
+            }}
+          >
             Copy the Set of Seed Phrase
           </FormButton>
         </View>
@@ -71,7 +73,8 @@ const NewAccountScreen = (): ReactElement => {
                     borderStyle: 'solid',
                     paddingVertical: 4,
                     paddingHorizontal: 12,
-                  }}>
+                  }}
+                >
                   <FormText fontType="R.14">{item}</FormText>
                 </View>
               </Row>
@@ -85,7 +88,8 @@ const NewAccountScreen = (): ReactElement => {
           size="lg"
           onPress={(): void => {
             navigation.navigate(Routes.ConfirmSeed, { mnemonic })
-          }}>
+          }}
+        >
           Next
         </FormButton>
       </View>

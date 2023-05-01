@@ -1,7 +1,13 @@
 import useContract from 'hooks/complex/useContract'
 import useNetwork from 'hooks/complex/useNetwork'
 import { useMemo } from 'react'
-import { ContractAddr, EncodedTxData, Escrow, pToken, SupportedNetworkEnum } from 'types'
+import {
+  ContractAddr,
+  EncodedTxData,
+  Escrow,
+  pToken,
+  SupportedNetworkEnum,
+} from 'types'
 import { AbiItem } from 'web3-utils'
 
 import escrow from '../../abi/Escrow.json'

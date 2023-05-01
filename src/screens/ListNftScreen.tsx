@@ -1,6 +1,12 @@
 import {
-  ChainLogoWrapper, Container, FormInput, Header, KeyboardAvoidingView, MoralisNftRenderer, Row,
-  SubmitButton
+  ChainLogoWrapper,
+  Container,
+  FormInput,
+  Header,
+  KeyboardAvoidingView,
+  MoralisNftRenderer,
+  Row,
+  SubmitButton,
 } from 'components'
 import { COLOR, UTIL } from 'consts'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
@@ -134,13 +140,15 @@ const Contents = ({
                       position: 'absolute',
                       right: 20,
                       top: 15,
-                    }}>
+                    }}
+                  >
                     ETH
                   </Text>
                 </View>
               </View>
               <View
-                style={{ paddingHorizontal: 25, gap: 5, paddingVertical: 10 }}>
+                style={{ paddingHorizontal: 25, gap: 5, paddingVertical: 10 }}
+              >
                 <Row style={{ alignItems: 'flex-start' }}>
                   <Ionicon name="checkmark-circle-outline" size={14} />
                   <Text style={{ fontSize: 14, paddingRight: 15 }}>
@@ -163,7 +171,8 @@ const Contents = ({
                   Keyboard.dismiss()
                   const order = await onClickConfirm()
                   onSubmit(selectedNft.token_uri, order)
-                }}>
+                }}
+              >
                 List up to sell
               </SubmitButton>
             </View>
@@ -180,7 +189,8 @@ const Contents = ({
                 onPress={(): void => {
                   Keyboard.dismiss()
                   onClickApprove()
-                }}>
+                }}
+              >
                 Approve
               </SubmitButton>
             </View>

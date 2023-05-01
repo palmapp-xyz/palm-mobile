@@ -15,7 +15,8 @@ const ErrorInfoScreen = (props: ErrorBoundaryProps): ReactElement => {
         backgroundColor: Palette.background300,
         paddingHorizontal: 8,
         paddingVertical: 4,
-      }}>
+      }}
+    >
       {subProps.section.title}
     </Text>
   )

@@ -49,7 +49,8 @@ const CreateCompleteScreen = (): ReactElement => {
               onPress={(): void => {
                 Alert.alert('Copied')
                 Clipboard.setString(account?.address || '')
-              }}>
+              }}
+            >
               <View style={{ flex: 1 }}>
                 <FormText fontType="R.14">{account?.address}</FormText>
               </View>

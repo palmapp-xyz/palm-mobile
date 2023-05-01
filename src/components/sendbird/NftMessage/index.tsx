@@ -3,9 +3,12 @@ import { parseSendFileData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
 import { Text, View } from 'react-native'
 
-import { createStyleSheet, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
+import {
+  createStyleSheet,
+  useUIKitTheme,
+} from '@sendbird/uikit-react-native-foundation'
 import FileMessage, {
-  FileMessageProps
+  FileMessageProps,
 } from '@sendbird/uikit-react-native/src/components/MessageRenderer/FileMessage'
 
 import BuyNftMessage from './BuyNftMessage'
@@ -41,16 +44,19 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
         {
           backgroundColor: colors.ui.message[variant].enabled.background,
         },
-      ]}>
+      ]}
+    >
       <View
         style={[
           styles.image,
           {
             backgroundColor: colors.onBackground04,
           },
-        ]}>
+        ]}
+      >
         <Text
-          style={{ color: colors.secondary, fontSize: 16, marginBottom: 12 }}>
+          style={{ color: colors.secondary, fontSize: 16, marginBottom: 12 }}
+        >
           {message.customType}
         </Text>
         <MediaRenderer

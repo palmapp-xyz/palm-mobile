@@ -11,7 +11,12 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { FbChannelNativeGatingField, FbChannelNFTGatingField, NftType, QueryKeyEnum } from 'types'
+import {
+  FbChannelNativeGatingField,
+  FbChannelNFTGatingField,
+  NftType,
+  QueryKeyEnum,
+} from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
@@ -83,14 +88,16 @@ const NftGating = ({
           width: 120,
           borderRadius: 999,
           borderColor: COLOR.primary._50,
-        }}>
+        }}
+      >
         <NftRenderer {...nftRendererProps} width={120} height={120} />
       </View>
       <Text
         style={{
           fontSize: 20,
           fontWeight: 'bold',
-        }}>{`${tokenName} holders`}</Text>
+        }}
+      >{`${tokenName} holders`}</Text>
 
       <Text style={{ fontSize: 16 }}>Entry requirement</Text>
       <Row style={{ alignItems: 'center', columnGap: 10 }}>

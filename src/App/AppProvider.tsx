@@ -2,7 +2,12 @@ import useSetting from 'hooks/independent/useSetting'
 import useAppearance from 'hooks/useAppearance'
 import { navigationActions, Routes } from 'libs/navigation'
 import {
-  ClipboardService, FileService, GetTranslucent, MediaService, NotificationService, SetSendbirdSDK
+  ClipboardService,
+  FileService,
+  GetTranslucent,
+  MediaService,
+  NotificationService,
+  SetSendbirdSDK,
 } from 'libs/sendbird'
 import { isMainnet } from 'libs/utils'
 import React, { ReactElement, ReactNode } from 'react'
@@ -13,10 +18,17 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil'
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
-import { Environment, LensProvider, Theme } from '@lens-protocol/react-native-lens-ui-kit'
+import {
+  Environment,
+  LensProvider,
+  Theme,
+} from '@lens-protocol/react-native-lens-ui-kit'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SendbirdUIKitContainer } from '@sendbird/uikit-react-native'
-import { DarkUIKitTheme, LightUIKitTheme } from '@sendbird/uikit-react-native-foundation'
+import {
+  DarkUIKitTheme,
+  LightUIKitTheme,
+} from '@sendbird/uikit-react-native-foundation'
 
 import { ErrorInfoScreen } from '../screens'
 
@@ -36,7 +48,8 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   return (
     <LensProvider
       environment={lensEnv}
-      theme={setting.themeMode === 'dark' ? Theme.dark : Theme.light}>
+      theme={setting.themeMode === 'dark' ? Theme.dark : Theme.light}
+    >
       <ApolloProvider client={client}>
         <MenuProvider>
           <SendbirdUIKitContainer
@@ -69,7 +82,8 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
                   })
                 }
               },
-            }}>
+            }}
+          >
             <GestureHandlerRootView style={{ flex: 1 }}>
               {children}
             </GestureHandlerRootView>

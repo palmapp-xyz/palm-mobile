@@ -1,4 +1,10 @@
-import { Container, Header, MoralisNftRenderer, Row, SubmitButton } from 'components'
+import {
+  Container,
+  Header,
+  MoralisNftRenderer,
+  Row,
+  SubmitButton,
+} from 'components'
 import { UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useFsProfile from 'hooks/firestore/useFsProfile'
@@ -86,7 +92,8 @@ const Contents = ({
           if (res?.success) {
             onSubmit(selectedNft.token_uri)
           }
-        }}>
+        }}
+      >
         Send
       </SubmitButton>
     </View>

@@ -2,7 +2,13 @@ import images from 'assets/images'
 import { Card, FormImage, LinkExplorer } from 'components'
 import { COLOR, UTIL } from 'consts'
 import React, { ReactElement } from 'react'
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useRecoilValue } from 'recoil'
 import postTxStore from 'store/postTxStore'
 import styled from 'styled-components/native'
@@ -34,7 +40,8 @@ const TxStatusMini = ({
       style={styles.container}
       onPress={(): void => {
         setMinimized(false)
-      }}>
+      }}
+    >
       {[PostTxStatus.POST, PostTxStatus.BROADCAST].includes(
         postTxResult.status
       ) === false && (
@@ -43,7 +50,8 @@ const TxStatusMini = ({
           onPress={(e): void => {
             onPressClose()
             e.stopPropagation()
-          }}>
+          }}
+        >
           <Icon icon="close" size={20} />
         </TouchableOpacity>
       )}
@@ -69,7 +77,8 @@ const TxStatusMini = ({
               <LinkExplorer
                 type="tx"
                 address={postTxResult.transactionHash}
-                network={network}>
+                network={network}
+              >
                 <Text style={{ color: COLOR.primary._400 }}>
                   {UTIL.truncate(postTxResult.transactionHash, [4, 4])}
                 </Text>
@@ -88,7 +97,8 @@ const TxStatusMini = ({
                 <LinkExplorer
                   type="tx"
                   address={postTxResult.value.transactionHash}
-                  network={network}>
+                  network={network}
+                >
                   <Text style={{ color: COLOR.primary._400 }}>
                     {UTIL.truncate(postTxResult.value.transactionHash, [4, 4])}
                   </Text>

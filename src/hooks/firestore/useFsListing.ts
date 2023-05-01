@@ -2,7 +2,9 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 import { useMemo } from 'react'
 import { FbListing, FirestoreKeyEnum } from 'types'
 
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore'
 import { Maybe } from '@toruslabs/openlogin'
 
 export type UseFsListingReturn = {

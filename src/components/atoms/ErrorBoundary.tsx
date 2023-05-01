@@ -46,7 +46,8 @@ class ErrorBoundary extends React.Component<
                 justifyContent: 'center',
               },
               this.props.style,
-            ]}>
+            ]}
+          >
             <Text>Something happened!</Text>
             <Text>{this.state.error.toString()}</Text>
           </View>

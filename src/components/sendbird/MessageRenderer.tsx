@@ -1,7 +1,11 @@
 import React, { ReactElement } from 'react'
 import { Pressable, PressableProps, View } from 'react-native'
 
-import { GroupChannelProps, ReactionAddons, useSendbirdChat } from '@sendbird/uikit-react-native'
+import {
+  GroupChannelProps,
+  ReactionAddons,
+  useSendbirdChat,
+} from '@sendbird/uikit-react-native'
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 import AdminMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/AdminMessage'
 import MessageContainer from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageContainer'
@@ -13,7 +17,11 @@ import UnknownMessage from '@sendbird/uikit-react-native/src/components/MessageR
 import UserMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UserMessage'
 import { DEFAULT_LONG_PRESS_DELAY } from '@sendbird/uikit-react-native/src/constants'
 import {
-  calcMessageGrouping, conditionChaining, isMyMessage, shouldRenderReaction, useIIFE
+  calcMessageGrouping,
+  conditionChaining,
+  isMyMessage,
+  shouldRenderReaction,
+  useIIFE,
 } from '@sendbird/uikit-utils'
 
 import MessageIncomingAvatar from './MessageIncomingAvatar'
@@ -92,7 +100,8 @@ const MessageRenderer: GroupChannelProps['Fragment']['renderMessage'] = ({
               pressed={pressed}
               onLongPressURL={onLongPress}
               onLongPressMentionedUser={onLongPress}
-              {...messageProps}>
+              {...messageProps}
+            >
               {reactionChildren}
             </UserMessage>
           )}
@@ -143,7 +152,8 @@ const MessageRenderer: GroupChannelProps['Fragment']['renderMessage'] = ({
               [groupWithNext, Boolean(rest.nextMessage)],
               [styles.chatGroup, styles.chatNonGroup, styles.chatLastMessage]
             ),
-          ]}>
+          ]}
+        >
           {isOutgoing && (
             <View style={styles.outgoingContainer}>
               <MessageOutgoingStatus channel={channel} message={message} />

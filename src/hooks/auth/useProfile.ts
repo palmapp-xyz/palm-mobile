@@ -9,7 +9,13 @@ import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
 import { profilesDeepCompare } from 'libs/profile'
 import { useQuery } from 'react-query'
-import { ContractAddr, FbProfile, Moralis, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
+import {
+  ContractAddr,
+  FbProfile,
+  Moralis,
+  SupportedNetworkEnum,
+  TrueOrErrReturn,
+} from 'types'
 
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 import { useAsyncEffect } from '@sendbird/uikit-utils'

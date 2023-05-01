@@ -12,7 +12,10 @@ import selectNftStore from 'store/selectNftStore'
 import { Moralis } from 'types'
 
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
-import { GroupChannelProps, useLocalization } from '@sendbird/uikit-react-native'
+import {
+  GroupChannelProps,
+  useLocalization,
+} from '@sendbird/uikit-react-native'
 import { useToast } from '@sendbird/uikit-react-native-foundation'
 
 export type UseGcInputReturn = {

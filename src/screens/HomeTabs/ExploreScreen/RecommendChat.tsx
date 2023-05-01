@@ -50,7 +50,8 @@ const RecommendChat = (): ReactElement => {
               alignItems: 'center',
               paddingBottom: 12,
               columnGap: 4,
-            }}>
+            }}
+          >
             <Icon name="refresh" />
             <FormText fontType="R.12" color={COLOR.black._500}>
               Refresh List

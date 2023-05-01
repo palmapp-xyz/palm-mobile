@@ -51,7 +51,8 @@ const ListNftMessage = ({
             borderRadius: 5,
             margin: 5,
             right: 0,
-          }}>
+          }}
+        >
           <Text style={{ color: 'white' }}>Sold</Text>
         </View>
       )}
@@ -64,7 +65,8 @@ const ListNftMessage = ({
           />
           <Text
             numberOfLines={2}
-            style={{ color: 'black' }}>{`${item.name} #${item.token_id}`}</Text>
+            style={{ color: 'black' }}
+          >{`${item.name} #${item.token_id}`}</Text>
         </Row>
         <View style={styles.priceBox}>
           <Row style={styles.priceRow}>
@@ -74,7 +76,8 @@ const ListNftMessage = ({
                 color: COLOR.primary._400,
                 fontSize: 16,
                 fontWeight: 'bold',
-              }}>
+              }}
+            >
               {UTIL.formatAmountP((data.ethAmount || '0') as pToken)}
             </Text>
           </Row>
@@ -107,7 +110,8 @@ const ListNftMessage = ({
                   nftContractType: item.contract_type,
                   chain,
                 })
-          }}>
+          }}
+        >
           Details
         </FormButton>
       </View>

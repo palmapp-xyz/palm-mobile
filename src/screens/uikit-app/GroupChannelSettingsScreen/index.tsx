@@ -4,7 +4,10 @@ import React, { ReactElement } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { createGroupChannelSettingsFragment, useSendbirdChat } from '@sendbird/uikit-react-native'
+import {
+  createGroupChannelSettingsFragment,
+  useSendbirdChat,
+} from '@sendbird/uikit-react-native'
 import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
 
 import { useAppNavigation } from '../../../hooks/useAppNavigation'

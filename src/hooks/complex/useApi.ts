@@ -4,7 +4,13 @@ import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 import fetchApiStore from 'store/fetchApiStore'
-import { ApiEnum, ApiFetchResult, ApiParamFabricated, ApiParams, ApiResponse } from 'types'
+import {
+  ApiEnum,
+  ApiFetchResult,
+  ApiParamFabricated,
+  ApiParams,
+  ApiResponse,
+} from 'types'
 
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 

@@ -6,7 +6,12 @@ import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
-import { FbListing, PostTxStatus, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
+import {
+  FbListing,
+  PostTxStatus,
+  SupportedNetworkEnum,
+  TrueOrErrReturn,
+} from 'types'
 
 import useZx from './useZx'
 

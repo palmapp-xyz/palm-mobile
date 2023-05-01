@@ -1,4 +1,9 @@
-import { FormText, MoralisNftRenderer, Row, SupportedNetworkRow } from 'components'
+import {
+  FormText,
+  MoralisNftRenderer,
+  Row,
+  SupportedNetworkRow,
+} from 'components'
 import { COLOR } from 'consts'
 import useUserNftList from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/auth/useAuth'
@@ -40,7 +45,8 @@ const MyNftList = ({
             onPress={(): void => {
               useGcInputReturn.setOpenBottomMenu(false)
               useGcInputReturn.setStepAfterSelectNft(undefined)
-            }}>
+            }}
+          >
             <Icon color={COLOR.primary._400} name={'close-outline'} size={36} />
           </TouchableOpacity>
           {useGcInputReturn.runningNextStep ? (
@@ -58,7 +64,8 @@ const MyNftList = ({
                 },
               ]}
               disabled={disabledNext}
-              onPress={useGcInputReturn.onClickNextStep}>
+              onPress={useGcInputReturn.onClickNextStep}
+            >
               <Icon name="arrow-up" color={'white'} size={24} />
             </TouchableOpacity>
           )}
@@ -111,7 +118,8 @@ const MyNftList = ({
                     } else {
                       useGcInputReturn.setSelectedNftList([item])
                     }
-                  }}>
+                  }}
+                >
                   <MoralisNftRenderer item={item} width={104} height={104} />
                   <View
                     style={[
@@ -120,7 +128,8 @@ const MyNftList = ({
                         backgroundColor:
                           selectedIndex > -1 ? COLOR.primary._400 : 'white',
                       },
-                    ]}>
+                    ]}
+                  >
                     {selectedIndex > -1 && (
                       <FormText fontType="B.12" color="white">
                         {selectedIndex + 1}
@@ -130,7 +139,8 @@ const MyNftList = ({
                   <View style={styles.nftTitle}>
                     <FormText
                       numberOfLines={1}
-                      style={{ fontSize: 10 }}>{`#${item.token_id}`}</FormText>
+                      style={{ fontSize: 10 }}
+                    >{`#${item.token_id}`}</FormText>
                   </View>
                 </TouchableOpacity>
               </View>

@@ -1,15 +1,33 @@
 import { utils } from 'ethers'
 import {
-  AuthenticationResult, BroadcastDocument, BroadcastMutation, BroadcastRequest,
-  CreateProfileDocument, CreateProfileMutation, CreateProfileRequest,
-  CreatePublicSetProfileMetadataUriRequest, CreateSetProfileImageUriTypedDataDocument,
-  CreateSetProfileMetadataTypedDataDocument, CreateSetProfileMetadataTypedDataMutation,
-  CreateSetProfileMetadataViaDispatcherDocument, CreateSetProfileMetadataViaDispatcherMutation,
-  DefaultProfileDocument, HasTxHashBeenIndexedDocument, HasTxHashBeenIndexedQuery,
-  HasTxHashBeenIndexedRequest, NftOwnershipChallengeDocument, NftOwnershipChallengeRequest,
-  NftOwnershipChallengeResult, PaginatedProfileResult, Profile, ProfileDocument,
-  ProfileQueryRequest, ProfilesDocument, PublicationMetadataStatusType, TransactionReceipt,
-  UpdateProfileImageRequest
+  AuthenticationResult,
+  BroadcastDocument,
+  BroadcastMutation,
+  BroadcastRequest,
+  CreateProfileDocument,
+  CreateProfileMutation,
+  CreateProfileRequest,
+  CreatePublicSetProfileMetadataUriRequest,
+  CreateSetProfileImageUriTypedDataDocument,
+  CreateSetProfileMetadataTypedDataDocument,
+  CreateSetProfileMetadataTypedDataMutation,
+  CreateSetProfileMetadataViaDispatcherDocument,
+  CreateSetProfileMetadataViaDispatcherMutation,
+  DefaultProfileDocument,
+  HasTxHashBeenIndexedDocument,
+  HasTxHashBeenIndexedQuery,
+  HasTxHashBeenIndexedRequest,
+  NftOwnershipChallengeDocument,
+  NftOwnershipChallengeRequest,
+  NftOwnershipChallengeResult,
+  PaginatedProfileResult,
+  Profile,
+  ProfileDocument,
+  ProfileQueryRequest,
+  ProfilesDocument,
+  PublicationMetadataStatusType,
+  TransactionReceipt,
+  UpdateProfileImageRequest,
 } from 'graphqls/__generated__/graphql'
 import useEthers from 'hooks/complex/useEthers'
 import useIpfs from 'hooks/complex/useIpfs'
@@ -19,14 +37,27 @@ import { isMainnet } from 'libs/utils'
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 import postTxStore from 'store/postTxStore'
-import { ContractAddr, PostTxStatus, SupportedNetworkEnum, TrueOrErrReturn } from 'types'
+import {
+  ContractAddr,
+  PostTxStatus,
+  SupportedNetworkEnum,
+  TrueOrErrReturn,
+} from 'types'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
-  ApolloQueryResult, FetchResult, MutationOptions, OperationVariables, QueryOptions, useApolloClient
+  ApolloQueryResult,
+  FetchResult,
+  MutationOptions,
+  OperationVariables,
+  QueryOptions,
+  useApolloClient,
 } from '@apollo/client'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Environment, ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
+import {
+  Environment,
+  ProfileMetadata,
+} from '@lens-protocol/react-native-lens-ui-kit'
 
 import useAuth from '../auth/useAuth'
 import useLensAuth from './useLensAuth'

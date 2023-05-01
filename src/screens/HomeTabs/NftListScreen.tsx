@@ -5,7 +5,12 @@ import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import {
-  FlatList, RefreshControl, ScrollView, StyleSheet, TouchableOpacity, View
+  FlatList,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 
@@ -27,7 +32,8 @@ const NftListScreen = ({
             refetch()
           }}
         />
-      }>
+      }
+    >
       <Container style={styles.container}>
         <Header title="Listed NFTs" />
         <View style={styles.body}>
@@ -54,7 +60,8 @@ const NftListScreen = ({
                         chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                         SupportedNetworkEnum.ETHEREUM,
                     })
-                  }}>
+                  }}
+                >
                   <NftRenderer
                     tokenId={item.nftTokenId}
                     nftContract={item.nftToken as ContractAddr}

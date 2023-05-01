@@ -4,9 +4,20 @@ import { COLOR } from 'consts'
 import useInitExplore, { InterestItem } from 'hooks/page/explore/useInitExplore'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import {
-  Animated, BackHandler, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View
+  Animated,
+  BackHandler,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -123,12 +134,14 @@ const InitExploreScreen = (): ReactElement => {
         <TouchableOpacity
           onPress={(): void => {
             updateSelectedInterestList(item.id)
-          }}>
+          }}
+        >
           <Row
             style={[
               styles.interestItem,
               { backgroundColor: selected ? COLOR.main_light : 'white' },
-            ]}>
+            ]}
+          >
             {!!item.img && (
               <FormImage
                 source={item.img}
@@ -138,7 +151,8 @@ const InitExploreScreen = (): ReactElement => {
             )}
             <FormText
               fontType="SB.14"
-              color={selected ? COLOR.primary._400 : COLOR.black._400}>
+              color={selected ? COLOR.primary._400 : COLOR.black._400}
+            >
               {item.title}
             </FormText>
           </Row>
@@ -167,7 +181,8 @@ const InitExploreScreen = (): ReactElement => {
               showText3()
               break
           }
-        }}>
+        }}
+      >
         <View style={styles.contents}>
           <Animated.View
             style={[
@@ -195,10 +210,12 @@ const InitExploreScreen = (): ReactElement => {
                   },
                 ],
               },
-            ]}>
+            ]}
+          >
             <FormText
               fontType="B.24"
-              color={showStep === 1 ? COLOR.black._900 : COLOR.black._400}>
+              color={showStep === 1 ? COLOR.black._900 : COLOR.black._400}
+            >
               {'Hi, there!\nWelcome to Palm.'}
             </FormText>
           </Animated.View>
@@ -216,7 +233,8 @@ const InitExploreScreen = (): ReactElement => {
                   },
                 ],
               },
-            ]}>
+            ]}
+          >
             <FormText fontType="B.24">
               {'Tell us what you\ninterested in.'}
             </FormText>
@@ -234,7 +252,8 @@ const InitExploreScreen = (): ReactElement => {
                   },
                 ],
               },
-            ]}>
+            ]}
+          >
             {showStep === 3 && (
               <>
                 <View style={styles.text3Box}>
@@ -246,7 +265,8 @@ const InitExploreScreen = (): ReactElement => {
                   style={{ flexDirection: 'row', alignItems: 'center' }}
                   onPress={(): void => {
                     navigation.goBack()
-                  }}>
+                  }}
+                >
                   <Icon
                     name="ios-arrow-forward"
                     size={14}
@@ -266,7 +286,8 @@ const InitExploreScreen = (): ReactElement => {
           disabled={selectedInterestList.length < 1}
           onPress={(): void => {
             navigation.goBack()
-          }}>
+          }}
+        >
           It's all done
         </FormButton>
       </View>

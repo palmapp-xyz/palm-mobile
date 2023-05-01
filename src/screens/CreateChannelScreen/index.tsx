@@ -1,5 +1,13 @@
 import images from 'assets/images'
-import { Container, FormImage, FormInput, FormText, Header, Row, Tag } from 'components'
+import {
+  Container,
+  FormImage,
+  FormInput,
+  FormText,
+  Header,
+  Row,
+  Tag,
+} from 'components'
 import { COLOR, UTIL } from 'consts'
 import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -100,7 +108,8 @@ const CreateChannelScreen = (): ReactElement => {
                           ? [...oriList].filter(x => x !== id)
                           : [...oriList, id]
                       )
-                    }}>
+                    }}
+                  >
                     <Tag title={tag} />
                   </TouchableOpacity>
                 )
@@ -119,7 +128,8 @@ const CreateChannelScreen = (): ReactElement => {
                   onPress={(): void => {
                     setSelectedGatingToken(undefined)
                     setGatingTokenAmount('')
-                  }}>
+                  }}
+                >
                   <View style={{ rowGap: 4, flex: 1 }}>
                     <FormText fontType="R.14">
                       {typeof selectedGatingToken === 'string'
@@ -140,7 +150,8 @@ const CreateChannelScreen = (): ReactElement => {
                   style={styles.editTokenGating}
                   onPress={(): void => {
                     setShowTokenGating(true)
-                  }}>
+                  }}
+                >
                   <FormText fontType="R.14" color={COLOR.black._200}>
                     Edit Token Gating
                   </FormText>
@@ -156,7 +167,8 @@ const CreateChannelScreen = (): ReactElement => {
                 style={styles.tokenGatingSelectBox}
                 onPress={(): void => {
                   setShowTokenGating(true)
-                }}>
+                }}
+              >
                 <View
                   style={{
                     borderRadius: 14,
@@ -168,7 +180,8 @@ const CreateChannelScreen = (): ReactElement => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     backgroundColor: 'white',
-                  }}>
+                  }}
+                >
                   <Icon name="add" size={38} color={COLOR.black._100} />
                 </View>
                 <FormText fontType="R.14" color={COLOR.black._200}>

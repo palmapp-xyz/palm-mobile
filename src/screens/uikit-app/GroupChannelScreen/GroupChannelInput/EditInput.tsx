@@ -1,14 +1,24 @@
 import React, { forwardRef } from 'react'
 import {
-  NativeSyntheticEvent, Platform, TextInput as RNTextInput, TextInputSelectionChangeEventData, View
+  NativeSyntheticEvent,
+  Platform,
+  TextInput as RNTextInput,
+  TextInputSelectionChangeEventData,
+  View,
 } from 'react-native'
 
 import { MentionType } from '@sendbird/chat/message'
 import {
-  GroupChannelProps, MentionedUser, useLocalization, useSendbirdChat
+  GroupChannelProps,
+  MentionedUser,
+  useLocalization,
+  useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import {
-  Button, createStyleSheet, TextInput, useToast
+  Button,
+  createStyleSheet,
+  TextInput,
+  useToast,
 } from '@sendbird/uikit-react-native-foundation'
 
 import type {
@@ -83,7 +93,8 @@ const EditInput = forwardRef<RNTextInput, EditInputProps>(function EditInput(
           onChangeText={onChangeText}
           style={styles.input}
           placeholder={STRINGS.GROUP_CHANNEL.INPUT_PLACEHOLDER_ACTIVE}
-          onSelectionChange={onSelectionChange}>
+          onSelectionChange={onSelectionChange}
+        >
           {mentionManager.textToMentionedComponents(text, mentionedUsers)}
         </TextInput>
       </View>

@@ -1,7 +1,7 @@
 import crashlytics from '@react-native-firebase/crashlytics'
 
 export const log = (message: string, ...optionalParams: any[]): void => {
-  const msg: string = `${message}: ${optionalParams.join(',')}`
+  const msg: string = `${message}: ${optionalParams.join(', ')}`
   if (crashlytics().isCrashlyticsCollectionEnabled) {
     crashlytics().log(msg)
   } else {

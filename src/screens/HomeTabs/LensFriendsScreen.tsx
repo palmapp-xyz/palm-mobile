@@ -17,7 +17,11 @@ import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import { ContractAddr, FbProfile, SbUserMetadata } from 'types'
 
-import { ExtendedProfile, ProfileMetadata, Search } from '@lens-protocol/react-native-lens-ui-kit'
+import {
+  ExtendedProfile,
+  ProfileMetadata,
+  Search,
+} from '@lens-protocol/react-native-lens-ui-kit'
 import firestore from '@react-native-firebase/firestore'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'

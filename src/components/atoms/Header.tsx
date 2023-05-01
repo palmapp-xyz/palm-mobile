@@ -1,7 +1,12 @@
 import { COLOR } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
 import {
-  StyleSheet, Text, TextProps, TouchableOpacity, TouchableOpacityProps, View
+  StyleSheet,
+  Text,
+  TextProps,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -86,7 +91,8 @@ const HeaderTitle = ({
     <Text
       {...props}
       numberOfLines={1}
-      style={[style, { fontSize: 19, color: 'black' }]}>
+      style={[style, { fontSize: 19, color: 'black' }]}
+    >
       {children}
     </Text>
   )
@@ -105,7 +111,8 @@ const HeaderButton = ({
       {...props}
       disabled={!onPress || disabled}
       onPress={(e): void => onPress?.(e)}
-      activeOpacity={0.7}>
+      activeOpacity={0.7}
+    >
       {conditionChaining(
         [typeof children === 'string' || typeof children === 'number'],
         [

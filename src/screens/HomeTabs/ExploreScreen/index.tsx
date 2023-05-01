@@ -5,7 +5,13 @@ import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useEffect, useRef } from 'react'
-import { Animated, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  Animated,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
 import RecommendChat from './RecommendChat'
@@ -41,7 +47,8 @@ const ExploreScreen = (): ReactElement => {
               },
             ],
           },
-        ]}>
+        ]}
+      >
         <Animated.View
           style={{
             opacity: scrollOffsetY.interpolate({
@@ -49,7 +56,8 @@ const ExploreScreen = (): ReactElement => {
               outputRange: [1, 0],
               extrapolate: 'clamp',
             }),
-          }}>
+          }}
+        >
           <Row style={styles.header}>
             <FormImage source={images.palm_logo} size={44} />
           </Row>
@@ -64,7 +72,8 @@ const ExploreScreen = (): ReactElement => {
               onChangeText={setInputSearch}
             />
             <View
-              style={{ position: 'absolute', right: 10, top: 8, zIndex: 1 }}>
+              style={{ position: 'absolute', right: 10, top: 8, zIndex: 1 }}
+            >
               <TouchableOpacity disabled={isSearching} onPress={onClickConfirm}>
                 <Ionicon
                   name="ios-search"
@@ -83,7 +92,8 @@ const ExploreScreen = (): ReactElement => {
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }],
           { useNativeDriver: false }
-        )}>
+        )}
+      >
         <RecommendChat />
         <RecommendUsers />
       </ScrollView>

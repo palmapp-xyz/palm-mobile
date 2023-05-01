@@ -51,7 +51,8 @@ export const AppearanceProvider = ({
           setScheme(value)
           await SchemeManager.set(value)
         },
-      }}>
+      }}
+    >
       {children}
     </AppearanceContext.Provider>
   )

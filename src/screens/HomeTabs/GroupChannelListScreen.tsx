@@ -32,7 +32,8 @@ const GroupChannelListScreen = (): ReactElement => {
         <TouchableOpacity
           onPress={(): void => {
             navigation.navigate(Routes.CreateChannel)
-          }}>
+          }}
+        >
           <FormImage source={images.create_channel} size={28} />
         </TouchableOpacity>
       </Row>
