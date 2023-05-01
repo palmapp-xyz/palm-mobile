@@ -11,15 +11,12 @@ import {
 } from 'react-native'
 import { ImageStyle } from 'react-native-fast-image'
 import { WebView } from 'react-native-webview'
+import { v4 as uuidv4 } from 'uuid'
 
 const heightUnits = Platform.OS === 'ios' ? 'vh' : '%'
 
-const getHTML = (
-  key: string,
-  svgContent: string,
-  style?: ImageStyle
-): string => `
-<html data-key="key-${key}">
+const getHTML = (svgContent: string, style?: ImageStyle): string => `
+<html data-key="key-${uuidv4()}">
   <head>
     <style>
       html, body {
@@ -52,7 +49,6 @@ const getHTML = (
 `
 
 export type SvgImageImageProps = {
-  key: string
   source: ImageURISource
   onLoadStart?: () => void
   onLoadEnd?: () => void
@@ -62,7 +58,6 @@ export type SvgImageImageProps = {
 }
 
 function SvgImage({
-  key,
   source,
   onLoadStart,
   onLoadEnd,
@@ -109,7 +104,7 @@ function SvgImage({
   }, [uri])
 
   if (svgContent) {
-    const html = getHTML(key, svgContent, (style ?? {}) as ImageStyle)
+    const html = getHTML(svgContent, (style ?? {}) as ImageStyle)
 
     return (
       <View

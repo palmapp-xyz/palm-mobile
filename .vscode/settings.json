@@ -13,5 +13,8 @@
   "java.configuration.updateBuildConfiguration": "automatic",
   "importSorter.importStringConfiguration.hasSemicolon": false,
   "importSorter.generalConfiguration.sortOnBeforeSave": true,
-  "importSorter.importStringConfiguration.tabSize": 2
+  "importSorter.importStringConfiguration.tabSize": 2,
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 80,
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimit",
+  "importSorter.importStringConfiguration.trailingComma": "multiLine"
 }

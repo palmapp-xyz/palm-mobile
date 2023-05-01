@@ -59,7 +59,10 @@ const useAuth = (): UseAuthReturn => {
       return
     }
 
-    if (user.address && firebaseUser) {
+    if (user.auth && firebaseUser) {
+      const authToken: string = await firebaseUser.getIdToken(true)
+      await setAuth({ ...user.auth, authToken })
+
       setUser({
         ...user,
         userCredential: { ...user.userCredential, user: firebaseUser },
