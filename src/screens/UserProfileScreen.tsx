@@ -9,6 +9,7 @@ import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useCallback, useState } from 'react'
 import {
   FlatList,
+  Platform,
   RefreshControl,
   TouchableWithoutFeedback,
   View,
@@ -55,6 +56,7 @@ const UserProfileScreen = (): ReactElement => {
   return (
     <Container
       safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}
+      style={{ marginBottom: Platform.select({ ios: -30 }) }}
     >
       <FlatList
         refreshControl={
