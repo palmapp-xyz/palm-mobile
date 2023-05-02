@@ -8,7 +8,6 @@ import { formatValues } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
 import { profilesDeepCompare } from 'libs/profile'
-import { useQuery } from 'react-query'
 import {
   ContractAddr,
   FbProfile,
@@ -90,14 +89,6 @@ const useProfile = ({
       } as Partial<FbProfile>)
     }
   }, [fsProfileField, lensProfile])
-
-  useQuery(
-    ['refetchUseLensProfile'],
-    () => {
-      refetchLensProfile()
-    },
-    { enabled: !!profileId, refetchInterval: 10000 }
-  )
 
   const createProfile = async (
     handle: string,

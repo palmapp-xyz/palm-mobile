@@ -109,7 +109,7 @@ const useApi = (): UseApiReturn => {
     try {
       const apiUrl = `${apiPath}${path}`
 
-      const fetchRes: AxiosResponse<ApiResponse[T]['GET'], any> =
+      const fetchRes: axiosjs.AxiosResponse<ApiResponse[T]['GET'], any> =
         await axios.get(apiUrl, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
@@ -145,7 +145,7 @@ const useApi = (): UseApiReturn => {
 
       const formData = getFormData(params)
 
-      const fetchRes: AxiosResponse<ApiResponse[T]['POST'], any> =
+      const fetchRes: axiosjs.AxiosResponse<ApiResponse[T]['POST'], any> =
         await axios.post(apiUrl, useFormData ? formData : params, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
@@ -185,7 +185,7 @@ const useApi = (): UseApiReturn => {
 
       const formData = getFormData(params)
 
-      const fetchRes: AxiosResponse<ApiResponse[T]['PUT'], any> =
+      const fetchRes: axiosjs.AxiosResponse<ApiResponse[T]['PUT'], any> =
         await axios.put(apiUrl, useFormData ? formData : params, {
           headers: {
             Authorization: accessToken ? `Bearer ${accessToken}` : '',
@@ -220,7 +220,7 @@ const useApi = (): UseApiReturn => {
     try {
       const apiUrl = `${apiPath}${path}`
 
-      const fetchRes: AxiosResponse<ApiResponse[T]['DEL'], any> =
+      const fetchRes: axiosjs.AxiosResponse<ApiResponse[T]['DEL'], any> =
         await axios.delete(apiUrl, {
           data: params,
           headers: {

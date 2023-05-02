@@ -1,7 +1,6 @@
 import images from 'assets/images'
 import { FormImage, FormText, MediaRenderer, Row } from 'components'
 import { COLOR, UTIL } from 'consts'
-import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useProfile from 'hooks/auth/useProfile'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
@@ -9,11 +8,9 @@ import useMaticPrice from 'hooks/independent/useMaticPrice'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getProfileMediaImg } from 'libs/lens'
-import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import { isLensProfile } from 'libs/profile'
-import _ from 'lodash'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import {
   FlatList,
   ImageBackground,
@@ -23,11 +20,10 @@ import {
   View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, pToken, SupportedNetworkEnum } from 'types'
+import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 
@@ -51,7 +47,6 @@ const ProfileHeader = ({
   const { getKlayPrice } = useKlayPrice()
   const { getMaticPrice } = useMaticPrice()
   const { alert } = useAlert()
-  const { fetchUserProfileId } = useAuthChallenge()
 
   const { balance: ethBalance } = useUserBalance({
     address: userAddress,
@@ -66,25 +61,8 @@ const ProfileHeader = ({
     chain: SupportedNetworkEnum.POLYGON,
   })
 
-  const [profileId, setProfileId] = useState<string | undefined>(userProfileId)
-  const { profile } = useProfile({ profileId })
+  const { profile } = useProfile({ profileId: userProfileId })
   const profileImg = getProfileMediaImg(profile?.picture)
-
-  useAsyncEffect(async () => {
-    if (profileId || !userAddress) {
-      return
-    }
-    try {
-      const fetchedProfileId = await fetchUserProfileId(userAddress)
-      setProfileId(fetchedProfileId)
-    } catch (e) {
-      recordError(e)
-      alert({ title: 'Unknown Error', message: _.toString(e) })
-      if (navigation.canGoBack()) {
-        navigation.goBack()
-      }
-    }
-  }, [userAddress])
 
   return (
     <View style={styles.container}>

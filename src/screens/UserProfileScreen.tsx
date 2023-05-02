@@ -53,6 +53,8 @@ const UserProfileScreen = (): ReactElement => {
     [userAddress]
   )
 
+  const gap = 4
+
   return (
     <Container
       safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}
@@ -70,11 +72,18 @@ const UserProfileScreen = (): ReactElement => {
         }
         ListHeaderComponent={profileHeader}
         ListFooterComponent={profileFooter}
-        data={useUserNftListReturn.nftList}
+        data={useUserNftListReturn.nftList.filter(x => !!x)}
         keyExtractor={(_, index): string => `nftList-${index}`}
         numColumns={2}
-        contentContainerStyle={{ rowGap: 8 }}
-        columnWrapperStyle={{ columnGap: 16, paddingHorizontal: 20 }}
+        contentContainerStyle={{ rowGap: gap }}
+        columnWrapperStyle={{ columnGap: gap / 2, paddingHorizontal: gap / 2 }}
+        onEndReached={(): void => {
+          if (useUserNftListReturn.hasNextPage) {
+            useUserNftListReturn.fetchNextPage()
+          }
+        }}
+        onEndReachedThreshold={0.5}
+        initialNumToRender={10}
         renderItem={({ item }): ReactElement => (
           <TouchableWithoutFeedback
             onPress={(): void => {

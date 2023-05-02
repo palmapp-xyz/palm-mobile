@@ -20,8 +20,8 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native'
 import { Moralis, SupportedNetworkEnum } from 'types'
 

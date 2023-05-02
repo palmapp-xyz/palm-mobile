@@ -1,6 +1,7 @@
 import apiV1Fabricator from 'libs/apiV1Fabricator'
+import { recordError } from 'libs/logger'
 import _ from 'lodash'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
 import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
@@ -52,6 +53,8 @@ const useUserNftList = ({
 
         if (fetchResult.success) {
           return fetchResult.data
+        } else {
+          recordError(new Error(fetchResult.errMsg), 'useUserNftList')
         }
       }
       return {
@@ -70,11 +73,6 @@ const useUserNftList = ({
     () => _.flatten(data?.pages.map(x => x.result)),
     [data]
   )
-
-  useEffect(() => {
-    remove()
-    refetch()
-  }, [connectedNetworkId])
 
   return {
     nftList,

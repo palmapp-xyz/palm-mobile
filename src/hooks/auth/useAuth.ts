@@ -131,8 +131,23 @@ const useAuth = (): UseAuthReturn => {
       }
     )
 
-    const [_userCredential, sbUser, authenticatedUser] = await Promise.all([
-      auth().signInWithCustomToken(authResult.authToken),
+    const authSignIn = async (): Promise<void> => {
+      try {
+        auth().currentUser
+          ? auth()
+              .currentUser?.getIdToken(true)
+              .then((authToken: string) => {
+                setAuth({ ...authResult, authToken })
+              })
+          : auth().signInWithCustomToken(authResult.authToken)
+      } catch (e) {
+        recordError(e, `authSignIn:${authResult.authToken}`)
+        throw e
+      }
+    }
+
+    const [_void, sbUser, authenticatedUser] = await Promise.all([
+      authSignIn(),
       connect(authResult.profileId),
       setAuth(authResult),
     ])
