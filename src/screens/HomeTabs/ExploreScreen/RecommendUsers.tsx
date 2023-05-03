@@ -1,5 +1,5 @@
 import { FormImage, FormText, Row } from 'components'
-import RecommendUsersCard from 'components/exploreTab/RecommendUsersCard'
+import UserCard from 'components/exploreTab/UserCard'
 import { COLOR } from 'consts'
 import useExploreRecommendUsers from 'hooks/page/explore/useExploreRecommendUsers'
 import _ from 'lodash'
@@ -20,7 +20,7 @@ const RecommendUsers = (): ReactElement => {
     { id: '7', img: require('assets/temp/thumbs7.png') },
   ]
 
-  const { userList } = useExploreRecommendUsers()
+  const { fsProfileList } = useExploreRecommendUsers()
 
   return (
     <View style={styles.container}>
@@ -71,8 +71,8 @@ const RecommendUsers = (): ReactElement => {
           </Row>
         </TouchableOpacity>
         <View style={styles.optionResultList}>
-          {_.map(userList, (user, index) => (
-            <RecommendUsersCard key={`userList-${index}`} user={user} />
+          {_.map(fsProfileList, (user, index) => (
+            <UserCard key={`userList-${index}`} user={user} />
           ))}
         </View>
       </View>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   optionItem: { borderRadius: 8, overflow: 'hidden' },
   body: {
-    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
+    backgroundColor: COLOR.black._90005,
     paddingHorizontal: 20,
     paddingTop: 16,
     paddingBottom: 24,

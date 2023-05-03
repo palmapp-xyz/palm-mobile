@@ -3,7 +3,7 @@ import { getFsChannel } from 'libs/firebase'
 import { useMemo, useState } from 'react'
 import {
   ContractAddr,
-  FbChannelField,
+  FbChannel,
   FirestoreKeyEnum,
   SupportedNetworkEnum,
 } from 'types'
@@ -14,7 +14,7 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 export type UseFsChannelReturn = {
   fsChannel?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
-  fsChannelField?: FbChannelField
+  fsChannelField?: FbChannel
   updateGatingToken: (
     gatingToken: ContractAddr,
     chain: SupportedNetworkEnum
@@ -52,7 +52,7 @@ const useFsChannel = ({
     [FirestoreKeyEnum.ChannelField, fsChannel?.id],
     async () => {
       if (fsChannel) {
-        return (await fsChannel?.get()).data() as FbChannelField
+        return (await fsChannel?.get()).data() as FbChannel
       }
     },
     {

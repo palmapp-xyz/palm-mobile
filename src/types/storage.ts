@@ -12,6 +12,7 @@ export enum KeyChainEnum {
 export enum LocalStorageKey {
   SETTING = 'SETTING',
   AUTH = 'AUTH',
+  RECENTLY_SEARCHED = 'RECENTLY_SEARCHED',
 }
 
 export type AuthStorageType = {
@@ -22,4 +23,10 @@ export type AuthStorageType = {
 
 export type SettingStorageType = {
   themeMode: ThemeModeType
+}
+
+export type RecentlySearchItemStorageType = {
+  id: string
+  search: string
+  date: string
 }

@@ -29,10 +29,12 @@ export type FbChannelGatingField =
   | FbChannelFTGatingField
   | FbChannelNFTGatingField
 
-export type FbChannelField = {
+export type FbChannel = {
   url: string
+  coverImage?: string
   channelType: ChannelType
   tags: string[]
+  name: string
   desc: string
   gating?: FbChannelGatingField
 }

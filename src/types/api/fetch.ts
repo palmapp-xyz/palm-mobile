@@ -1,4 +1,9 @@
-import { AuthChallengeInfo, AuthChallengeResult, FbProfile } from 'types'
+import {
+  AuthChallengeInfo,
+  AuthChallengeResult,
+  FbChannel,
+  FbProfile,
+} from 'types'
 
 import { NominalType } from '../common'
 import { ContractAddr } from '../contracts'
@@ -138,19 +143,11 @@ export type ApiResponse = {
 
   [ApiEnum.SEARCH]: Override<{
     POST: {
-      response: {
-        hits: {
-          total: {
-            value: number
-            relation: string
-          }
-          hits: {
-            _index: string
-            _id: string
-            _source: FbProfile
-          }[]
-        }
-      }
+      result: {
+        _index: string
+        _id: string
+        _source: FbProfile | FbChannel
+      }[]
     }
   }>
 }

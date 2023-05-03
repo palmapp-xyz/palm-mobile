@@ -1,5 +1,12 @@
 import images from 'assets/images'
-import { Container, FormButton, FormImage, FormText, Row } from 'components'
+import {
+  Container,
+  FormBottomSheet,
+  FormButton,
+  FormImage,
+  FormText,
+  Row,
+} from 'components'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -43,46 +50,39 @@ const MainAccountScreen = (): ReactElement => {
           </FormButton>
         </View>
       </Container>
-      {showBottomSheet && (
-        <View style={styles.bottomSheetOverlay}>
-          <BottomSheet
-            ref={bottomSheetRef}
-            snapPoints={snapPoints}
-            enableOverDrag={false}
-            enablePanDownToClose
-            onClose={(): void => {
-              setShowBottomSheet(false)
+      <FormBottomSheet
+        bottomSheetRef={bottomSheetRef}
+        showBottomSheet={showBottomSheet}
+        snapPoints={snapPoints}
+        onClose={(): void => setShowBottomSheet(false)}
+      >
+        <Row style={styles.bottomSheet}>
+          <TouchableOpacity
+            style={styles.bottomItem}
+            onPress={(): void => {
+              navigation.navigate(Routes.NewAccount)
             }}
           >
-            <Row style={styles.bottomSheet}>
-              <TouchableOpacity
-                style={styles.bottomItem}
-                onPress={(): void => {
-                  navigation.navigate(Routes.NewAccount)
-                }}
-              >
-                <FormImage source={images.plus} size={32} />
-                <FormText fontType="R.12" style={{ textAlign: 'center' }}>
-                  {'Create a\nnew wallet'}
-                </FormText>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.bottomItem}
-                onPress={(): void => {
-                  navigation.navigate(Routes.RecoverAccount, {
-                    isSignUp: true,
-                  })
-                }}
-              >
-                <FormImage source={images.import} size={32} />
-                <FormText fontType="R.12" style={{ textAlign: 'center' }}>
-                  {'Import\na wallet'}
-                </FormText>
-              </TouchableOpacity>
-            </Row>
-          </BottomSheet>
-        </View>
-      )}
+            <FormImage source={images.plus} size={32} />
+            <FormText fontType="R.12" style={{ textAlign: 'center' }}>
+              {'Create a\nnew wallet'}
+            </FormText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.bottomItem}
+            onPress={(): void => {
+              navigation.navigate(Routes.RecoverAccount, {
+                isSignUp: true,
+              })
+            }}
+          >
+            <FormImage source={images.import} size={32} />
+            <FormText fontType="R.12" style={{ textAlign: 'center' }}>
+              {'Import\na wallet'}
+            </FormText>
+          </TouchableOpacity>
+        </Row>
+      </FormBottomSheet>
     </>
   )
 }
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   bottomItem: {
     borderRadius: 14,
-    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
+    backgroundColor: COLOR.black._90005,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,

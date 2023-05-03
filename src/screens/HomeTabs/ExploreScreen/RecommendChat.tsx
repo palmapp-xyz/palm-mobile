@@ -1,13 +1,20 @@
 import { FormText, MenuItem, Row } from 'components'
-import RecommendChatCard from 'components/exploreTab/RecommendChatCard'
+import ChatCard from 'components/exploreTab/ChatCard'
 import { COLOR } from 'consts'
 import useExploreRecommendChat from 'hooks/page/explore/useExploreRecommendChat'
+import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-const RecommendChat = (): ReactElement => {
+const RecommendChat = ({
+  useExploreSearchReturn,
+}: {
+  useExploreSearchReturn: UseExploreSearchReturn
+}): ReactElement => {
+  const { setSelectedChannel } = useExploreSearchReturn
+
   const [selectedOption, setSelectedOption] = useState('')
 
   const optionList = [
@@ -17,7 +24,7 @@ const RecommendChat = (): ReactElement => {
     { id: '4', title: 'sample2' },
   ]
 
-  const { chatList } = useExploreRecommendChat()
+  const { fsChannelList } = useExploreRecommendChat()
 
   return (
     <View style={styles.container}>
@@ -59,8 +66,12 @@ const RecommendChat = (): ReactElement => {
           </Row>
         </TouchableOpacity>
         <View style={styles.optionResultList}>
-          {_.map(chatList, (chat, index) => (
-            <RecommendChatCard key={`chatList-${index}`} chat={chat} />
+          {_.map(fsChannelList, (chat, index) => (
+            <ChatCard
+              key={`fsChannelList-${index}`}
+              chat={chat}
+              onClick={setSelectedChannel}
+            />
           ))}
         </View>
       </View>
@@ -84,7 +95,7 @@ const styles = StyleSheet.create({
     borderColor: COLOR.black._50,
   },
   body: {
-    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
+    backgroundColor: COLOR.black._90005,
     paddingHorizontal: 20,
     paddingTop: 16,
     paddingBottom: 24,

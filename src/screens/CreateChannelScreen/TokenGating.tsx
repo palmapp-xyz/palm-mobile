@@ -110,7 +110,7 @@ const TokenGating = ({
           <ScrollView
             style={{
               flex: 1,
-              backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
+              backgroundColor: COLOR.black._90005,
             }}
           >
             <TouchableOpacity
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   processBar: {
-    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
+    backgroundColor: COLOR.black._90005,
   },
   process: {
     backgroundColor: COLOR.primary._400,
@@ -231,14 +231,14 @@ const styles = StyleSheet.create({
     columnGap: 16,
   },
   selectedItem: {
-    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
+    backgroundColor: COLOR.black._90005,
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderRadius: 12,
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    borderTopColor: COLOR.black._90010,
     paddingVertical: 12,
     paddingHorizontal: 20,
   },

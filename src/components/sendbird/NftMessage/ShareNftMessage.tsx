@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     width: 230,
     borderRadius: 18,
-    borderColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    borderColor: COLOR.black._90010,
     borderWidth: 1,
     borderStyle: 'solid',
   },

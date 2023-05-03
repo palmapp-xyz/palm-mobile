@@ -23,6 +23,7 @@ const primary = {
 const main_light = '#D7E4FF'
 
 const black = {
+  _10: '#f3f3f3',
   _50: '#EBECED',
   _100: '#C9CBCF',
   _200: '#A7ABB4',
@@ -33,6 +34,8 @@ const black = {
   _700: '#32363E',
   _800: '#21252B',
   _900: '#0D0E10',
+  _90010: '#0D0E101a',
+  _90005: '#0D0E100d',
 }
 
 const text = white

@@ -4,28 +4,40 @@ import { COLOR } from 'consts'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import React, { ReactElement, useEffect, useRef } from 'react'
+//import { useAppNavigation } from 'hooks/useAppNavigation'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import {
   Animated,
   ScrollView,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
+import RecentlySearched from './RecentlySearched'
 
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
+import SearchResult from './SearchResult'
+import SelectedChannel from './SelectedChannel'
 
 const HEADER_HEIGHT = 72
 
 const ExploreScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
 
-  const scrollOffsetY = useRef(new Animated.Value(0)).current
+  const [searchFocused, setSearchFocused] = useState(false)
+  const inputRef = useRef<TextInput>(null)
 
-  const { inputSearch, setInputSearch, isSearching, onClickConfirm } =
-    useExploreSearch()
+  const useExploreSearchReturn = useExploreSearch()
+  const {
+    scrollOffsetY,
+    inputSearch,
+    setInputSearch,
+    isSearching,
+    onClickConfirm,
+  } = useExploreSearchReturn
 
   useEffect(() => {
     navigation.navigate(Routes.InitExplore)
@@ -65,16 +77,33 @@ const ExploreScreen = (): ReactElement => {
         <View style={styles.searchBox}>
           <View style={{ position: 'relative' }}>
             <FormInput
+              inputRef={inputRef}
               placeholder="Search by username, tag, chat room name..."
               style={{ paddingRight: 40 }}
               maxLength={20}
               value={inputSearch}
               onChangeText={setInputSearch}
+              onFocus={(): void => {
+                setSearchFocused(true)
+              }}
+              onBlur={(): void => {
+                setSearchFocused(false)
+              }}
+              onSubmitEditing={(): void => {
+                onClickConfirm()
+              }}
+              returnKeyType="search"
             />
             <View
               style={{ position: 'absolute', right: 10, top: 8, zIndex: 1 }}
             >
-              <TouchableOpacity disabled={isSearching} onPress={onClickConfirm}>
+              <TouchableOpacity
+                disabled={isSearching}
+                onPress={(): void => {
+                  inputRef.current?.blur()
+                  onClickConfirm()
+                }}
+              >
                 <Ionicon
                   name="ios-search"
                   size={20}
@@ -86,17 +115,63 @@ const ExploreScreen = (): ReactElement => {
         </View>
       </Animated.View>
 
-      <ScrollView
-        style={{ backgroundColor: 'white', paddingTop: HEADER_HEIGHT + 60 }}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }],
-          { useNativeDriver: false }
-        )}
-      >
-        <RecommendChat />
-        <RecommendUsers />
-      </ScrollView>
+      {inputSearch.length > 0 ? (
+        <View
+          style={{ backgroundColor: 'white', paddingTop: HEADER_HEIGHT + 60 }}
+        >
+          <SearchResult useExploreSearchReturn={useExploreSearchReturn} />
+        </View>
+      ) : (
+        <ScrollView
+          style={{
+            backgroundColor: 'white',
+            paddingTop: HEADER_HEIGHT + 60,
+          }}
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }],
+            { useNativeDriver: false }
+          )}
+        >
+          <RecommendChat useExploreSearchReturn={useExploreSearchReturn} />
+          <RecommendUsers />
+          <View style={{ height: 140 }} />
+        </ScrollView>
+      )}
+      {inputSearch.length > 0 && searchFocused && (
+        <View
+          style={{
+            position: 'absolute',
+            top: HEADER_HEIGHT + 60,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'white',
+          }}
+        >
+          <Animated.View
+            style={[
+              styles.headAnimationBox,
+              {
+                transform: [
+                  {
+                    translateY: scrollOffsetY.interpolate({
+                      inputRange: [0, HEADER_HEIGHT],
+                      outputRange: [0, -HEADER_HEIGHT],
+                      extrapolate: 'clamp',
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
+            <RecentlySearched
+              inputRef={inputRef}
+              useExploreSearchReturn={useExploreSearchReturn}
+            />
+          </Animated.View>
+        </View>
+      )}
+      <SelectedChannel useExploreSearchReturn={useExploreSearchReturn} />
     </Container>
   )
 }
@@ -120,5 +195,14 @@ const styles = StyleSheet.create({
   searchBox: {
     paddingVertical: 12,
     paddingHorizontal: 20,
+  },
+  bottomHeader: {
+    paddingTop: 40,
+    paddingHorizontal: 20,
+  },
+  bottomChannelImg: {
+    borderRadius: 999,
+    overflow: 'hidden',
+    alignSelf: 'flex-start',
   },
 })

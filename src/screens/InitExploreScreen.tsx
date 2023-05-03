@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    borderTopColor: COLOR.black._90010,
     paddingVertical: 12,
     paddingHorizontal: 20,
   },

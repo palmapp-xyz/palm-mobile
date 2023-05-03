@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { FbChannelField } from 'types'
+import { FbChannel } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,
@@ -31,11 +31,12 @@ export const getFsChannel = async ({
   const channelDoc = await fsChannel.get()
 
   if (!channelDoc.exists) {
-    const fbChannelField: FbChannelField = {
+    const fbChannelField: FbChannel = {
       url: channel.url,
       channelType: channel.channelType,
       tags: [],
       desc: '',
+      name: '',
     }
     await fsChannel.set(fbChannelField)
   }

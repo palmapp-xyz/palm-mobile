@@ -5,7 +5,7 @@ import { Routes } from 'libs/navigation'
 import React, { ReactElement, useContext } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, SbUserMetadata } from 'types'
+import { SbUserMetadata } from 'types'
 
 import { Member } from '@sendbird/chat/groupChannel'
 import {

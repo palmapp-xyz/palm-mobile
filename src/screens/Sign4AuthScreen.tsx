@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   tabItem: { padding: 10, borderRadius: 10 },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    borderTopColor: COLOR.black._90010,
     paddingVertical: 12,
     paddingHorizontal: 20,
   },

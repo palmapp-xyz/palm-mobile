@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   container: { backgroundColor: 'white' },
   header: {
     height: 168,
-    backgroundColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    backgroundColor: COLOR.black._90010,
   },
   profileImgBox: {
     borderRadius: 999,
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
   balanceItemCard: {
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: `${COLOR.black._900}${COLOR.opacity._05}`,
+    backgroundColor: COLOR.black._90005,
     borderRadius: 16,
   },
   headerButton: {

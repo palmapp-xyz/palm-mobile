@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   body: { flex: 1, paddingHorizontal: 20, paddingVertical: 12 },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: `${COLOR.black._900}${COLOR.opacity._10}`,
+    borderTopColor: COLOR.black._90010,
     paddingVertical: 12,
     paddingHorizontal: 20,
   },

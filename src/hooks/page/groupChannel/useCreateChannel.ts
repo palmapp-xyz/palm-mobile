@@ -1,16 +1,14 @@
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
-import useFsTags from 'hooks/firestore/useFsTags'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getFsChannel } from 'libs/firebase'
 import { Routes } from 'libs/navigation'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   ContractAddr,
   FbChannelNativeGatingField,
   FbChannelNFTGatingField,
-  FbTags,
   Moralis,
   SupportedNetworkEnum,
   TokenSymbolEnum,
@@ -19,13 +17,13 @@ import {
 import { FilePickerResponse } from '@sendbird/uikit-react-native'
 
 export type UseCreateChannelReturn = {
-  fsTags?: FbTags
   channelImage?: FilePickerResponse
   setChannelImage: React.Dispatch<
     React.SetStateAction<FilePickerResponse | undefined>
   >
-  selectedTagIds: string[]
-  setSelectedTagIds: React.Dispatch<React.SetStateAction<string[]>>
+  tags: string[]
+  inputTag: string
+  setInputTag: React.Dispatch<React.SetStateAction<string>>
   channelName: string
   setChannelName: React.Dispatch<React.SetStateAction<string>>
   desc: string
@@ -50,8 +48,8 @@ export type UseCreateChannelReturn = {
 
 const useCreateChannel = (): UseCreateChannelReturn => {
   const { navigation } = useAppNavigation()
-  const [channelImage, setChannelImage] = useState<FilePickerResponse>()
-  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
+  const [coverImage, setCoverImage] = useState<FilePickerResponse>()
+  const [inputTag, setInputTag] = useState('')
   const [channelName, setChannelName] = useState('')
   const [desc, setDesc] = useState('')
   const [showTokenGating, setShowTokenGating] = useState(false)
@@ -66,17 +64,24 @@ const useCreateChannel = (): UseCreateChannelReturn => {
   const [gatingTokenNetwork, setGatingTokenNetwork] =
     useState<SupportedNetworkEnum>(SupportedNetworkEnum.ETHEREUM)
 
+  const tags = useMemo(
+    () =>
+      inputTag
+        .split(',')
+        .map(x => x.trim())
+        .filter(x => !!x),
+    [inputTag]
+  )
   const { user } = useAuth()
   const { createGroupChat } = useSendbird()
 
   const { getMediaFile } = useDevice()
-  const { fsTags } = useFsTags()
 
   const isValidForm = !!channelName
 
   const onClickGetFile = async (): Promise<void> => {
     const mediaFile = await getMediaFile()
-    setChannelImage(mediaFile)
+    setCoverImage(mediaFile)
   }
 
   const onClickConfirm = async (): Promise<void> => {
@@ -85,7 +90,7 @@ const useCreateChannel = (): UseCreateChannelReturn => {
         const channel = await createGroupChat({
           invitedUserIds: [user.auth!.profileId],
           operatorUserIds: [user.auth!.profileId],
-          coverImage: channelImage,
+          coverImage,
           channelName,
         })
 
@@ -95,8 +100,10 @@ const useCreateChannel = (): UseCreateChannelReturn => {
         })
 
         const updateParam: any = {
-          tags: selectedTagIds.map(key => fsTags?.[key]),
+          name: channelName,
+          tags,
           desc,
+          coverImage: channel.coverUrl,
         }
 
         if (selectedGatingToken) {
@@ -131,11 +138,11 @@ const useCreateChannel = (): UseCreateChannelReturn => {
   }
 
   return {
-    fsTags,
-    channelImage,
-    setChannelImage,
-    selectedTagIds,
-    setSelectedTagIds,
+    channelImage: coverImage,
+    setChannelImage: setCoverImage,
+    tags,
+    inputTag,
+    setInputTag,
     channelName,
     setChannelName,
     desc,
