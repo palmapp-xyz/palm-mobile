@@ -35,267 +35,271 @@ export type ProfileHeaderProps = {
   onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
 }
 
-const ProfileHeader = ({
-  userAddress,
-  userProfileId,
-  isMyPage,
-  selectedNetwork,
-  onNetworkSelected,
-}: ProfileHeaderProps): ReactElement => {
-  const { navigation } = useAppNavigation()
-  const { getEthPrice } = useEthPrice()
-  const { getKlayPrice } = useKlayPrice()
-  const { getMaticPrice } = useMaticPrice()
-  const { alert } = useAlert()
+const ProfileHeader = React.memo(
+  ({
+    userAddress,
+    userProfileId,
+    isMyPage,
+    selectedNetwork,
+    onNetworkSelected,
+  }: ProfileHeaderProps): ReactElement => {
+    const { navigation } = useAppNavigation()
+    const { getEthPrice } = useEthPrice()
+    const { getKlayPrice } = useKlayPrice()
+    const { getMaticPrice } = useMaticPrice()
+    const { alert } = useAlert()
 
-  const { balance: ethBalance } = useUserBalance({
-    address: userAddress,
-    chain: SupportedNetworkEnum.ETHEREUM,
-  })
-  const { balance: klayBalance } = useUserBalance({
-    address: userAddress,
-    chain: SupportedNetworkEnum.KLAYTN,
-  })
-  const { balance: maticBalance } = useUserBalance({
-    address: userAddress,
-    chain: SupportedNetworkEnum.POLYGON,
-  })
+    const { balance: ethBalance } = useUserBalance({
+      address: userAddress,
+      chain: SupportedNetworkEnum.ETHEREUM,
+    })
+    const { balance: klayBalance } = useUserBalance({
+      address: userAddress,
+      chain: SupportedNetworkEnum.KLAYTN,
+    })
+    const { balance: maticBalance } = useUserBalance({
+      address: userAddress,
+      chain: SupportedNetworkEnum.POLYGON,
+    })
 
-  const { profile } = useProfile({ profileId: userProfileId })
-  const profileImg = getProfileMediaImg(profile?.picture)
+    const { profile } = useProfile({ profileId: userProfileId })
+    const profileImg = getProfileMediaImg(profile?.picture)
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <ImageBackground
-          source={{ uri: profile?.coverPicture }}
-          resizeMode="cover"
-          style={{ flex: 1 }}
-        >
-          {isMyPage ? (
-            <View style={{ alignItems: 'flex-end' }}>
-              <Pressable
-                style={styles.headerButton}
-                onPress={(): void => {
-                  navigation.navigate(Routes.Setting)
-                }}
-              >
-                <Icon name={'settings-outline'} size={24} />
-              </Pressable>
-            </View>
-          ) : (
-            <View style={{ alignItems: 'flex-start' }}>
-              <Pressable
-                style={styles.headerButton}
-                onPress={(): void => {
-                  navigation.goBack()
-                }}
-              >
-                <Icon
-                  name="ios-chevron-back"
-                  color={COLOR.black._800}
-                  size={24}
-                />
-              </Pressable>
-            </View>
-          )}
-        </ImageBackground>
-      </View>
-      <View style={{ backgroundColor: 'white', paddingHorizontal: 20 }}>
-        <View style={styles.profileImgBox}>
-          {profileImg ? (
-            <MediaRenderer
-              src={profileImg}
-              width={100}
-              height={100}
-              style={{ borderRadius: 50 }}
-            />
-          ) : (
-            <FormImage
-              source={images.profile_temp}
-              size={100}
-              style={{ borderRadius: 50 }}
-            />
-          )}
-        </View>
-
-        <View style={styles.section}>
-          <FormText fontType="B.20">{profile?.handle}</FormText>
-        </View>
-        <View style={styles.section}>
-          <TouchableOpacity
-            onPress={(): void => {
-              if (!userAddress) {
-                return
-              }
-              alert({ title: 'Address copied', message: userAddress })
-              Clipboard.setString(userAddress)
-            }}
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <ImageBackground
+            source={{ uri: profile?.coverPicture }}
+            resizeMode="cover"
+            style={{ flex: 1 }}
           >
-            <Row style={{ alignItems: 'center', columnGap: 10 }}>
-              <Icon name="wallet" color={COLOR.primary._400} size={20} />
-              <View>
-                <FormText>{UTIL.truncate(userAddress || '')}</FormText>
+            {isMyPage ? (
+              <View style={{ alignItems: 'flex-end' }}>
+                <Pressable
+                  style={styles.headerButton}
+                  onPress={(): void => {
+                    navigation.navigate(Routes.Setting)
+                  }}
+                >
+                  <Icon name={'settings-outline'} size={24} />
+                </Pressable>
               </View>
-            </Row>
-          </TouchableOpacity>
+            ) : (
+              <View style={{ alignItems: 'flex-start' }}>
+                <Pressable
+                  style={styles.headerButton}
+                  onPress={(): void => {
+                    navigation.goBack()
+                  }}
+                >
+                  <Icon
+                    name="ios-chevron-back"
+                    color={COLOR.black._800}
+                    size={24}
+                  />
+                </Pressable>
+              </View>
+            )}
+          </ImageBackground>
         </View>
-        <View style={styles.section}>
-          <FormText fontType="R.12" color={COLOR.black._200}>
-            User profile description User profile description User profile
-            description User profile description User profile description User
-            profile description User profile description User profile
-            description User profile description User profile description
-          </FormText>
-        </View>
-        <Row style={{ alignItems: 'center', columnGap: 8 }}>
-          <Row>
-            <FormText fontType="R.12">Followers</FormText>
-            <FormText fontType="B.12">123k</FormText>
-          </Row>
-          <FormText fontType="R.12">∙</FormText>
-          <Row>
-            <FormText fontType="R.12">Following</FormText>
-            <FormText fontType="B.12">123k</FormText>
-          </Row>
-          <FormText fontType="R.12">∙</FormText>
-          <Row>
-            <FormText fontType="R.12">NFT</FormText>
-            <FormText fontType="B.12">123,456</FormText>
-          </Row>
-        </Row>
-        <View style={styles.walletBalanceBox}>
-          <Row
-            style={{
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              paddingBottom: 12,
-            }}
-          >
-            <FormText fontType="B.14">My Balance</FormText>
-            <FormText fontType="R.10" color={COLOR.black._200}>
-              Only visible to you
+        <View style={{ backgroundColor: 'white', paddingHorizontal: 20 }}>
+          <View style={styles.profileImgBox}>
+            {profileImg ? (
+              <MediaRenderer
+                src={profileImg}
+                width={100}
+                height={100}
+                style={{ borderRadius: 50 }}
+              />
+            ) : (
+              <FormImage
+                source={images.profile_temp}
+                size={100}
+                style={{ borderRadius: 50 }}
+              />
+            )}
+          </View>
+
+          <View style={styles.section}>
+            <FormText fontType="B.20">{profile?.handle}</FormText>
+          </View>
+          <View style={styles.section}>
+            <TouchableOpacity
+              onPress={(): void => {
+                if (!userAddress) {
+                  return
+                }
+                alert({ title: 'Address copied', message: userAddress })
+                Clipboard.setString(userAddress)
+              }}
+            >
+              <Row style={{ alignItems: 'center', columnGap: 10 }}>
+                <Icon name="wallet" color={COLOR.primary._400} size={20} />
+                <View>
+                  <FormText>{UTIL.truncate(userAddress || '')}</FormText>
+                </View>
+              </Row>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.section}>
+            <FormText fontType="R.12" color={COLOR.black._200}>
+              User profile description User profile description User profile
+              description User profile description User profile description User
+              profile description User profile description User profile
+              description User profile description User profile description
             </FormText>
+          </View>
+          <Row style={{ alignItems: 'center', columnGap: 8 }}>
+            <Row>
+              <FormText fontType="R.12">Followers</FormText>
+              <FormText fontType="B.12">123k</FormText>
+            </Row>
+            <FormText fontType="R.12">∙</FormText>
+            <Row>
+              <FormText fontType="R.12">Following</FormText>
+              <FormText fontType="B.12">123k</FormText>
+            </Row>
+            <FormText fontType="R.12">∙</FormText>
+            <Row>
+              <FormText fontType="R.12">NFT</FormText>
+              <FormText fontType="B.12">123,456</FormText>
+            </Row>
           </Row>
-          <View style={{ rowGap: 8 }}>
-            <View style={styles.balanceItemCard}>
-              <Row style={{ alignItems: 'center', columnGap: 12 }}>
-                <FormImage source={images.eth_logo} size={28} />
-                <View>
-                  <Row>
-                    <FormText fontType="B.16">
-                      {UTIL.formatAmountP(ethBalance || ('0' as pToken), {
-                        toFix: 4,
-                      })}{' '}
+          <View style={styles.walletBalanceBox}>
+            <Row
+              style={{
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingBottom: 12,
+              }}
+            >
+              <FormText fontType="B.14">My Balance</FormText>
+              <FormText fontType="R.10" color={COLOR.black._200}>
+                Only visible to you
+              </FormText>
+            </Row>
+            <View style={{ rowGap: 8 }}>
+              <View style={styles.balanceItemCard}>
+                <Row style={{ alignItems: 'center', columnGap: 12 }}>
+                  <FormImage source={images.eth_logo} size={28} />
+                  <View>
+                    <Row>
+                      <FormText fontType="B.16">
+                        {UTIL.formatAmountP(ethBalance || ('0' as pToken), {
+                          toFix: 4,
+                        })}{' '}
+                      </FormText>
+                      <FormText fontType="R.16">ETH</FormText>
+                    </Row>
+                    <FormText fontType="R.10" color={COLOR.black._400}>
+                      {`(≈$${UTIL.formatAmountP(
+                        getEthPrice(ethBalance || ('0' as pToken)),
+                        {
+                          toFix: 0,
+                        }
+                      )})`}
                     </FormText>
-                    <FormText fontType="R.16">ETH</FormText>
-                  </Row>
-                  <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈$${UTIL.formatAmountP(
-                      getEthPrice(ethBalance || ('0' as pToken)),
-                      {
-                        toFix: 0,
-                      }
-                    )})`}
-                  </FormText>
-                </View>
-              </Row>
-            </View>
-            <View style={styles.balanceItemCard}>
-              <Row style={{ alignItems: 'center', columnGap: 12 }}>
-                <FormImage source={images.klay_logo} size={28} />
-                <View>
-                  <Row>
-                    <FormText fontType="B.16">
-                      {UTIL.formatAmountP(klayBalance || ('0' as pToken), {
-                        toFix: 4,
-                      })}{' '}
+                  </View>
+                </Row>
+              </View>
+              <View style={styles.balanceItemCard}>
+                <Row style={{ alignItems: 'center', columnGap: 12 }}>
+                  <FormImage source={images.klay_logo} size={28} />
+                  <View>
+                    <Row>
+                      <FormText fontType="B.16">
+                        {UTIL.formatAmountP(klayBalance || ('0' as pToken), {
+                          toFix: 4,
+                        })}{' '}
+                      </FormText>
+                      <FormText fontType="R.16">KLAY</FormText>
+                    </Row>
+                    <FormText fontType="R.10" color={COLOR.black._400}>
+                      {`(≈$${UTIL.formatAmountP(
+                        getKlayPrice(klayBalance || ('0' as pToken)),
+                        {
+                          toFix: 0,
+                        }
+                      )})`}
                     </FormText>
-                    <FormText fontType="R.16">KLAY</FormText>
-                  </Row>
-                  <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈$${UTIL.formatAmountP(
-                      getKlayPrice(klayBalance || ('0' as pToken)),
-                      {
-                        toFix: 0,
-                      }
-                    )})`}
-                  </FormText>
-                </View>
-              </Row>
-            </View>
-            <View style={styles.balanceItemCard}>
-              <Row style={{ alignItems: 'center', columnGap: 12 }}>
-                <FormImage source={images.matic_logo} size={28} />
-                <View>
-                  <Row>
-                    <FormText fontType="B.16">
-                      {UTIL.formatAmountP(maticBalance || ('0' as pToken), {
-                        toFix: 4,
-                      })}{' '}
+                  </View>
+                </Row>
+              </View>
+              <View style={styles.balanceItemCard}>
+                <Row style={{ alignItems: 'center', columnGap: 12 }}>
+                  <FormImage source={images.matic_logo} size={28} />
+                  <View>
+                    <Row>
+                      <FormText fontType="B.16">
+                        {UTIL.formatAmountP(maticBalance || ('0' as pToken), {
+                          toFix: 4,
+                        })}{' '}
+                      </FormText>
+                      <FormText fontType="R.16">MATIC</FormText>
+                    </Row>
+                    <FormText fontType="R.10" color={COLOR.black._400}>
+                      {`(≈$${UTIL.formatAmountP(
+                        getMaticPrice(maticBalance || ('0' as pToken)),
+                        {
+                          toFix: 0,
+                        }
+                      )})`}
                     </FormText>
-                    <FormText fontType="R.16">MATIC</FormText>
-                  </Row>
-                  <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈$${UTIL.formatAmountP(
-                      getMaticPrice(maticBalance || ('0' as pToken)),
-                      {
-                        toFix: 0,
-                      }
-                    )})`}
-                  </FormText>
-                </View>
-              </Row>
+                  </View>
+                </Row>
+              </View>
             </View>
           </View>
-        </View>
-        {profile && isLensProfile(profile) && !!profile?.attributes?.length && (
-          <View
-            style={{
-              padding: 6,
-            }}
-          >
-            <FlatList
-              data={profile.attributes}
-              keyExtractor={(item, index): string =>
-                `profile-attribute-${index}`
-              }
-              horizontal
-              contentContainerStyle={{
-                gap: 20,
-                marginHorizontal: '5%',
-              }}
-              renderItem={({
-                item,
-              }: {
-                item: { key: string; value: string }
-              }): ReactElement | null =>
-                item.key === 'app' ? null : (
-                  <View
-                    style={{
-                      marginHorizontal: 15,
-                      alignItems: 'center',
-                    }}
-                  >
-                    <FormText style={styles.attribute}>{item.key}</FormText>
-                    <FormText>{item.value}</FormText>
-                  </View>
-                )
-              }
+          {profile &&
+            isLensProfile(profile) &&
+            !!profile?.attributes?.length && (
+              <View
+                style={{
+                  padding: 6,
+                }}
+              >
+                <FlatList
+                  data={profile.attributes}
+                  keyExtractor={(item, index): string =>
+                    `profile-attribute-${index}`
+                  }
+                  horizontal
+                  contentContainerStyle={{
+                    gap: 20,
+                    marginHorizontal: '5%',
+                  }}
+                  renderItem={({
+                    item,
+                  }: {
+                    item: { key: string; value: string }
+                  }): ReactElement | null =>
+                    item.key === 'app' ? null : (
+                      <View
+                        style={{
+                          marginHorizontal: 15,
+                          alignItems: 'center',
+                        }}
+                      >
+                        <FormText style={styles.attribute}>{item.key}</FormText>
+                        <FormText>{item.value}</FormText>
+                      </View>
+                    )
+                  }
+                />
+              </View>
+            )}
+          <View style={{ paddingTop: 32, rowGap: 12, paddingBottom: 12 }}>
+            <FormText fontType="B.14">NFT List</FormText>
+            <SupportedNetworkRow
+              selectedNetwork={selectedNetwork}
+              onNetworkSelected={onNetworkSelected}
             />
           </View>
-        )}
-        <View style={{ paddingTop: 32, rowGap: 12, paddingBottom: 12 }}>
-          <FormText fontType="B.14">NFT List</FormText>
-          <SupportedNetworkRow
-            selectedNetwork={selectedNetwork}
-            onNetworkSelected={onNetworkSelected}
-          />
         </View>
       </View>
-    </View>
-  )
-}
+    )
+  }
+)
 
 export default ProfileHeader
 

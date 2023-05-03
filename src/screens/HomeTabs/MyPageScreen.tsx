@@ -12,7 +12,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import React, { ReactElement, useCallback, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import {
   FlatList,
   Platform,
@@ -48,22 +48,18 @@ const MyPageScreen = (): ReactElement => {
     profileId: user?.auth?.profileId,
   })
 
-  const profileHeader = useCallback(
-    () => (
-      <ProfileHeader
-        isMyPage
-        userProfileId={user?.auth?.profileId}
-        userAddress={user?.address}
-        selectedNetwork={selectedNetwork}
-        onNetworkSelected={setSelectedNetwork}
-      />
-    ),
-    [user?.address, selectedNetwork]
+  const profileHeader = (
+    <ProfileHeader
+      isMyPage
+      userProfileId={user?.auth?.profileId}
+      userAddress={user?.address}
+      selectedNetwork={selectedNetwork}
+      onNetworkSelected={setSelectedNetwork}
+    />
   )
 
-  const profileFooter = useCallback(
-    () => <ProfileFooter useUserNftListReturn={useMyNftListReturn} />,
-    [useMyNftListReturn]
+  const profileFooter = (
+    <ProfileFooter useUserNftListReturn={useMyNftListReturn} />
   )
 
   const doUpdateProfileImage = async (

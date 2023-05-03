@@ -8,7 +8,6 @@ import {
 import useWeb3 from 'hooks/complex/useWeb3'
 import { recordError } from 'libs/logger'
 import { parseJwt } from 'libs/utils'
-import _ from 'lodash'
 import { SupportedNetworkEnum, TrueOrErrReturn } from 'types'
 
 import {
@@ -165,7 +164,7 @@ const useLensAuth = (): UseLensAuthReturn => {
       return { success: true, value: res.value }
     } catch (e) {
       recordError(e, 'useLens:refreshIfExpired error')
-      return { success: false, errMsg: _.toString(e) }
+      return { success: false, errMsg: JSON.stringify(e) }
     }
   }
 

@@ -6,7 +6,7 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import React, { ReactElement, useCallback, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import {
   FlatList,
   Platform,
@@ -35,22 +35,18 @@ const UserProfileScreen = (): ReactElement => {
     chain: SupportedNetworkEnum.ETHEREUM,
   })
 
-  const profileHeader = useCallback(
-    () => (
-      <ProfileHeader
-        isMyPage={false}
-        userProfileId={profileId}
-        userAddress={userAddress}
-        selectedNetwork={selectedNetwork}
-        onNetworkSelected={setSelectedNetwork}
-      />
-    ),
-    [userAddress]
+  const profileHeader = (
+    <ProfileHeader
+      isMyPage={false}
+      userProfileId={profileId}
+      userAddress={userAddress}
+      selectedNetwork={selectedNetwork}
+      onNetworkSelected={setSelectedNetwork}
+    />
   )
 
-  const profileFooter = useCallback(
-    () => <ProfileFooter useUserNftListReturn={useUserNftListReturn} />,
-    [userAddress]
+  const profileFooter = (
+    <ProfileFooter useUserNftListReturn={useUserNftListReturn} />
   )
 
   const gap = 4
