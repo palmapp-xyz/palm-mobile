@@ -37,6 +37,7 @@ const HomeTabs = (): ReactElement => {
     <Tab.Navigator
       initialRouteName={Routes.GroupChannelList}
       screenOptions={{
+        lazy: true,
         headerShown: false,
         tabBarShowLabel: false,
       }}
@@ -51,11 +52,6 @@ const HomeTabs = (): ReactElement => {
         component={LensFriendsScreen}
         options={{ tabBarIcon: TabIcon({ name: 'ios-people' }) }}
       />
-      {/* <Tab.Screen
-        name={Routes.NftList}
-        component={NftListScreen}
-        options={{ tabBarIcon: TabIcon({ name: 'ios-images' }) }}
-      /> */}
       <Tab.Screen
         name={Routes.GroupChannelList}
         component={GroupChannelListScreen}
