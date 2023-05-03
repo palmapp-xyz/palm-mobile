@@ -9,8 +9,12 @@ export function resolveIpfsUri(
 ): string {
   if (uri.startsWith && uri.startsWith('ipfs://')) {
     return uri.replace('ipfs://', options.gatewayUrl)
+  } // handle arweave assets
+  else if (uri.startsWith && uri.startsWith('ar://')) {
+    return uri.replace('ar://', 'https://arweave.net/')
+  } else {
+    return uri
   }
-  return uri
 }
 
 export async function resolveMimeType(
