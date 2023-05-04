@@ -1,6 +1,7 @@
 import images from 'assets/images'
 import { Container, FormImage, FormInput, Row } from 'components'
 import { COLOR } from 'consts'
+import useInterest from 'hooks/independent/useInterest'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -39,9 +40,13 @@ const ExploreScreen = (): ReactElement => {
     onClickConfirm,
   } = useExploreSearchReturn
 
+  const { isLoading: isLoadingInterest, interestList } = useInterest()
+
   useEffect(() => {
-    navigation.navigate(Routes.InitExplore)
-  }, [])
+    if (isLoadingInterest === false && interestList.length < 1) {
+      navigation.navigate(Routes.InitExplore)
+    }
+  }, [isLoadingInterest])
 
   return (
     <Container style={styles.container}>

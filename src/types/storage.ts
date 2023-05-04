@@ -11,6 +11,7 @@ export enum KeyChainEnum {
 }
 
 export enum LocalStorageKey {
+  INTEREST = 'INTEREST',
   SETTING = 'SETTING',
   AUTH = 'AUTH',
   RECENTLY_SEARCHED = 'RECENTLY_SEARCHED',

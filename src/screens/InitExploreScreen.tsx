@@ -1,6 +1,7 @@
 import images from 'assets/images'
 import { Container, FormButton, FormImage, FormText, Row } from 'components'
 import { COLOR } from 'consts'
+import useInterest from 'hooks/independent/useInterest'
 import useInitExplore, { InterestItem } from 'hooks/page/explore/useInitExplore'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
@@ -23,6 +24,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 const InitExploreScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { addInterestList } = useInterest()
   const { interestList, selectedInterestList, updateSelectedInterestList } =
     useInitExplore()
   const [showStep, setShowStep] = useState<0 | 1 | 2 | 3>(0)
@@ -284,7 +286,8 @@ const InitExploreScreen = (): ReactElement => {
       <View style={styles.footer}>
         <FormButton
           disabled={selectedInterestList.length < 1}
-          onPress={(): void => {
+          onPress={async (): Promise<void> => {
+            addInterestList(selectedInterestList)
             navigation.goBack()
           }}
         >
