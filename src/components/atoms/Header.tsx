@@ -1,12 +1,14 @@
 import { COLOR } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
 import {
+  StyleProp,
   StyleSheet,
   Text,
   TextProps,
   TouchableOpacity,
   TouchableOpacityProps,
   View,
+  ViewStyle,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -18,6 +20,7 @@ export type HeaderProps = {
   right?: ReactNode
   onPressLeft?: () => void
   onPressRight?: () => void
+  containerStyle?: StyleProp<ViewStyle>
 }
 
 const Header = ({
@@ -26,13 +29,14 @@ const Header = ({
   right = undefined,
   onPressLeft,
   onPressRight,
+  containerStyle,
 }: HeaderProps): ReactElement => {
   if (left === 'back') {
     left = <Icon name="ios-chevron-back" color={COLOR.black._900} size={28} />
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <View style={styles.header}>
         <LeftSide children={left} onPress={onPressLeft} />
         <View style={styles.title}>

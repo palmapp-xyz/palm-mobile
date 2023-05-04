@@ -8,8 +8,10 @@ import {
   Row,
   Tag,
 } from 'components'
-import { COLOR, NETWORK, UTIL } from 'consts'
+import { COLOR, NETWORK } from 'consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 import _ from 'lodash'
 import React, { ReactElement, useMemo, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -20,6 +22,7 @@ const SelectedChannel = ({
 }: {
   useExploreSearchReturn: UseExploreSearchReturn
 }): ReactElement => {
+  const { navigation } = useAppNavigation()
   const snapPoints = useMemo(() => ['80%'], [])
   const bottomSheetRef = useRef<BottomSheet>(null)
 
@@ -58,7 +61,7 @@ const SelectedChannel = ({
                   {selectedChannel.desc}
                 </FormText>
               </View>
-              {!!selectedChannel.gating && (
+              {!!selectedChannel.gating?.amount && (
                 <View style={styles.section}>
                   <Row style={styles.gatingTokeBox}>
                     <Icon
@@ -89,9 +92,7 @@ const SelectedChannel = ({
                         ) : (
                           <View>
                             <FormText fontType="B.12">
-                              {UTIL.truncate(
-                                selectedChannel.gating.tokenAddress
-                              )}
+                              {selectedChannel.gating.name}
                             </FormText>
                           </View>
                         )}
@@ -103,17 +104,23 @@ const SelectedChannel = ({
               )}
               <View style={styles.section}>
                 <Row style={{ flexWrap: 'wrap', gap: 4 }}>
-                  {_.map(selectedChannel.tags, (item, index) => {
-                    return (
-                      <Tag key={`selectedChannel.tags-${index}`} title={item} />
-                    )
-                  })}
+                  {_.map(selectedChannel.tags, (item, index) => (
+                    <Tag key={`selectedChannel.tags-${index}`} title={item} />
+                  ))}
                 </Row>
               </View>
             </View>
           </View>
           <View style={styles.footer}>
-            <FormButton>Join</FormButton>
+            <FormButton
+              onPress={(): void => {
+                navigation.navigate(Routes.GroupChannel, {
+                  channelUrl: selectedChannel.url,
+                })
+              }}
+            >
+              Join
+            </FormButton>
           </View>
         </FormBottomSheet>
       )}

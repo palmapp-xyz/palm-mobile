@@ -9,8 +9,9 @@ import {
   Tag,
 } from 'components'
 import { COLOR, UTIL } from 'consts'
-import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'
+import useEditChannel from 'hooks/page/groupChannel/useEditChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -19,9 +20,10 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import TokenGating from './TokenGating'
 
 const CreateChannelScreen = (): ReactElement => {
-  const { navigation } = useAppNavigation()
-  const useCreateChannelReturn = useCreateChannel()
+  const { navigation, params } = useAppNavigation<Routes.EditChannel>()
+  const useEditChannelReturn = useEditChannel({ channelUrl: params.channelUrl })
   const {
+    prevCoverImage,
     channelImage,
     tags,
     inputTag,
@@ -38,7 +40,7 @@ const CreateChannelScreen = (): ReactElement => {
     selectedGatingToken,
     setSelectedGatingToken,
     defaultGatingToken,
-  } = useCreateChannelReturn
+  } = useEditChannelReturn
 
   return (
     <>
@@ -58,9 +60,12 @@ const CreateChannelScreen = (): ReactElement => {
           />
           <View style={styles.selectImageSection}>
             <TouchableOpacity onPress={onClickGetFile}>
-              {channelImage ? (
+              {channelImage || prevCoverImage ? (
                 <View style={{ borderRadius: 999, overflow: 'hidden' }}>
-                  <FormImage source={channelImage} size={100} />
+                  <FormImage
+                    source={channelImage || { uri: prevCoverImage }}
+                    size={100}
+                  />
                 </View>
               ) : (
                 <FormImage
@@ -115,7 +120,9 @@ const CreateChannelScreen = (): ReactElement => {
                   >
                     <View style={{ rowGap: 4, flex: 1 }}>
                       <FormText fontType="R.14">
-                        {selectedGatingToken.name}
+                        {typeof selectedGatingToken === 'string'
+                          ? selectedGatingToken
+                          : selectedGatingToken.name}
                       </FormText>
                       <FormText fontType="R.14" color={COLOR.black._200}>
                         {`(minimum: ${UTIL.setComma(
@@ -178,7 +185,7 @@ const CreateChannelScreen = (): ReactElement => {
       </Container>
       {showTokenGating && (
         <View style={{ position: 'absolute', width: '100%', height: '100%' }}>
-          <TokenGating useCreateChannelReturn={useCreateChannelReturn} />
+          <TokenGating useEditChannelReturn={useEditChannelReturn} />
         </View>
       )}
     </>

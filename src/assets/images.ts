@@ -10,6 +10,7 @@ export default {
   arrow_right: require('./arrow_right.png'),
   list: require('./list.png'),
   NFT: require('./NFT.png'),
+  NFT_black: require('./NFT_black.png'),
   image_blue: require('./image_blue.png'),
   select_image: require('./select_image.png'),
   create_channel: require('./create_channel.png'),

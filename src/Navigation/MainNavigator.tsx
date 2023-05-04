@@ -7,9 +7,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import {
   ChannelListingsScreen,
-  ChannelTokenGatingScreen,
+  ChannelSettingScreen,
   CreateChannelScreen,
   CreateProfileScreen,
+  EditChannelScreen,
   FileViewerScreen,
   GroupChannelBannedUsersScreen,
   GroupChannelCreateScreen,
@@ -61,10 +62,6 @@ const MainNavigator = (): ReactElement => {
           <MainStack.Screen
             name={Routes.ChannelListings}
             component={ChannelListingsScreen}
-          />
-          <MainStack.Screen
-            name={Routes.ChannelTokenGating}
-            component={ChannelTokenGatingScreen}
           />
           <MainStack.Screen
             name={Routes.UserProfile}
@@ -145,6 +142,14 @@ const MainNavigator = (): ReactElement => {
           <MainStack.Screen
             name={Routes.CreateChannel}
             component={CreateChannelScreen}
+          />
+          <MainStack.Screen
+            name={Routes.EditChannel}
+            component={EditChannelScreen}
+          />
+          <MainStack.Screen
+            name={Routes.ChannelSetting}
+            component={ChannelSettingScreen}
           />
         </>
       ) : (

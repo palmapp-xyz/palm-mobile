@@ -24,6 +24,7 @@ const GroupChannelSettingsScreen = (): ReactElement => {
   const { fsChannel } = useFsChannel({
     channelUrl: params.channelUrl,
   })
+
   if (!channel) {
     return <></>
   }
@@ -56,10 +57,10 @@ const GroupChannelSettingsScreen = (): ReactElement => {
         if (channel.myRole === 'operator') {
           items.unshift({
             icon: 'ban',
-            name: 'Token Gating',
+            name: 'Edit Chat Room Profile',
             actionItem: <Icon name={'chevron-forward-outline'} size={28} />,
             onPress: () => {
-              navigation.navigate(Routes.ChannelTokenGating, params)
+              navigation.navigate(Routes.EditChannel, params)
             },
           })
         }

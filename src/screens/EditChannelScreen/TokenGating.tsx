@@ -10,7 +10,7 @@ import {
 import { COLOR, NETWORK } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useAuth from 'hooks/auth/useAuth'
-import { UseCreateChannelReturn } from 'hooks/page/groupChannel/useCreateChannel'
+import { UseEditChannelReturn } from 'hooks/page/groupChannel/useEditChannel'
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import {
@@ -39,9 +39,9 @@ const Radio = ({ selected }: { selected: boolean }): ReactElement => {
 }
 
 const TokenGating = ({
-  useCreateChannelReturn,
+  useEditChannelReturn,
 }: {
-  useCreateChannelReturn: UseCreateChannelReturn
+  useEditChannelReturn: UseEditChannelReturn
 }): ReactElement => {
   const {
     setShowTokenGating,
@@ -49,12 +49,12 @@ const TokenGating = ({
     setSelectedGatingToken,
     updateGatingTokenNetwork,
     updateGatingTokenAmount,
-  } = useCreateChannelReturn
+  } = useEditChannelReturn
 
   const [step, setStep] = useState<1 | 2>(1)
 
   const { user } = useAuth()
-  console.log('selectedGatingToken : ', selectedGatingToken)
+
   const gatingTokenNetwork =
     selectedGatingToken?.chain || SupportedNetworkEnum.ETHEREUM
   const gatingTokenAmount = selectedGatingToken?.amount || ''
@@ -147,7 +147,6 @@ const TokenGating = ({
                 const selected =
                   selectedGatingToken.gatingType === 'NFT' &&
                   item.token_address === selectedGatingToken.tokenAddress
-
                 return (
                   <TouchableOpacity
                     key={`nftCollectionList-${index}`}

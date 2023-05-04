@@ -129,13 +129,19 @@ const GroupChannelScreen = (): ReactElement => {
   })
   const gating = useMemo(() => fsChannelField?.gating, [fsChannelField])
 
+  useEffect(() => {
+    if (channel && channel.myMemberState === 'none') {
+      channel.join()
+    }
+  }, [!!channel])
+
   if (!channel || !fsChannel || !fsChannelField) {
     return <></>
   }
 
   return (
     <>
-      {channel.myRole !== 'operator' && gating && <HasGatingToken />}
+      {channel.myRole !== 'operator' && gating?.amount && <HasGatingToken />}
       <Contents channel={channel} sdk={sdk} fsChannel={fsChannel} />
     </>
   )

@@ -1,4 +1,4 @@
-import { FormImage } from 'components'
+import { FormImage, Row } from 'components'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -19,13 +19,13 @@ import {
   Header,
   useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
+import images from 'assets/images'
 
 const GroupChannelHeader = ({
   onPressHeaderLeft,
-  onPressHeaderRight,
 }: GroupChannelProps['Header']): ReactElement => {
   const { user } = useAuth()
-  const { navigation } = useAppNavigation<Routes.GroupChannel>()
+  const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
   const { headerTitle, channel } = useContext(GroupChannelContexts.Fragment)
   const { typingUsers } = useContext(GroupChannelContexts.TypingIndicator)
   const { STRINGS } = useLocalization()
@@ -84,8 +84,24 @@ const GroupChannelHeader = ({
       }
       left={<Icon name="chevron-back-outline" size={28} />}
       onPressLeft={onPressHeaderLeft}
-      right={<Icon name="menu-outline" size={28} />}
-      onPressRight={onPressHeaderRight}
+      right={
+        <Row style={{ columnGap: 16 }}>
+          <TouchableOpacity
+            onPress={(): void => {
+              navigation.navigate(Routes.ChannelListings, params)
+            }}
+          >
+            <FormImage source={images.NFT_black} size={28} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={(): void => {
+              navigation.navigate(Routes.ChannelSetting, params)
+            }}
+          >
+            <Icon name="menu-outline" size={28} />
+          </TouchableOpacity>
+        </Row>
+      }
     />
   )
 }

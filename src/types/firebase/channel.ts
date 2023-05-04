@@ -3,25 +3,26 @@ import { ChannelType } from '@sendbird/chat'
 import { ContractAddr, NftType } from '../contracts'
 import { SupportedNetworkEnum } from '../network'
 
-export type FbChannelNativeGatingField = {
-  gatingType: 'Native'
+type GatingDefault = {
+  gatingType: 'Native' | 'FT' | 'NFT'
   amount: string
   chain: SupportedNetworkEnum
+  name: string
 }
 
-export type FbChannelFTGatingField = {
+export type FbChannelNativeGatingField = GatingDefault & {
+  gatingType: 'Native'
+}
+
+export type FbChannelFTGatingField = GatingDefault & {
   gatingType: 'FT'
   tokenAddress: ContractAddr
-  amount: string
-  chain: SupportedNetworkEnum
 }
 
-export type FbChannelNFTGatingField = {
+export type FbChannelNFTGatingField = GatingDefault & {
   gatingType: 'NFT'
   tokenAddress: ContractAddr
   tokenType: NftType
-  amount: string
-  chain: SupportedNetworkEnum
 }
 
 export type FbChannelGatingField =

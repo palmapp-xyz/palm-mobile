@@ -39,7 +39,7 @@ const ChatCard = ({
             renderItem={({ item }): ReactElement => <Tag title={item} />}
           />
         </View>
-        {!!chat.gating && (
+        {!!chat.gating?.amount && (
           <View style={styles.section}>
             <Row style={styles.gatingTokeBox}>
               <Icon color={COLOR.black._100} size={16} name="alert-circle" />

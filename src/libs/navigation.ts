@@ -40,7 +40,6 @@ export enum Routes {
   ListNft = 'ListNft',
   SendNft = 'SendNft',
   ChannelListings = 'ChannelListings',
-  ChannelTokenGating = 'ChannelTokenGating',
 
   GroupChannel = 'GroupChannel',
   TokenGatingInfo = 'TokenGatingInfo',
@@ -60,6 +59,8 @@ export enum Routes {
   FileViewer = 'FileViewer',
 
   CreateChannel = 'CreateChannel',
+  EditChannel = 'EditChannel',
+  ChannelSetting = 'ChannelSetting',
 }
 
 type AuthRouteParamsUnion =
@@ -167,10 +168,6 @@ type MainRouteParamsUnion =
       params: { channelUrl: string }
     }
   | {
-      route: Routes.ChannelTokenGating
-      params: { channelUrl: string }
-    }
-  | {
       route: Routes.Setting
       params: undefined
     }
@@ -234,6 +231,14 @@ type MainRouteParamsUnion =
   | {
       route: Routes.CreateChannel
       params: undefined
+    }
+  | {
+      route: Routes.EditChannel
+      params: { channelUrl: string }
+    }
+  | {
+      route: Routes.ChannelSetting
+      params: { channelUrl: string }
     }
 
 export type RouteParamsUnion =

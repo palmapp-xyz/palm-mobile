@@ -1,16 +1,20 @@
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
-import useSendbird from 'hooks/sendbird/useSendbird'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { getFsChannel } from 'libs/firebase'
-import { Routes } from 'libs/navigation'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { FbChannelGatingField, SupportedNetworkEnum } from 'types'
 
-import { FilePickerResponse } from '@sendbird/uikit-react-native'
+import {
+  FilePickerResponse,
+  useSendbirdChat,
+} from '@sendbird/uikit-react-native'
 import { NETWORK } from 'consts'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Alert } from 'react-native'
 
-export type UseCreateChannelReturn = {
+export type UseEditChannelReturn = {
+  prevCoverImage: string
   channelImage?: FilePickerResponse
   setChannelImage: React.Dispatch<
     React.SetStateAction<FilePickerResponse | undefined>
@@ -36,8 +40,18 @@ export type UseCreateChannelReturn = {
   onClickConfirm: () => Promise<void>
 }
 
-const useCreateChannel = (): UseCreateChannelReturn => {
+const useEditChannel = ({
+  channelUrl,
+}: {
+  channelUrl: string
+}): UseEditChannelReturn => {
   const { navigation } = useAppNavigation()
+  const { fsChannel, fsChannelField } = useFsChannel({ channelUrl })
+
+  const { sdk } = useSendbirdChat()
+  const { channel } = useGroupChannel(sdk, channelUrl)
+
+  const [prevCoverImage, setPrevCoverImage] = useState('')
   const [coverImage, setCoverImage] = useState<FilePickerResponse>()
   const [inputTag, setInputTag] = useState('')
   const [channelName, setChannelName] = useState('')
@@ -61,9 +75,18 @@ const useCreateChannel = (): UseCreateChannelReturn => {
     [inputTag]
   )
   const { user } = useAuth()
-  const { createGroupChat } = useSendbird()
 
   const { getMediaFile } = useDevice()
+
+  useEffect(() => {
+    if (fsChannelField) {
+      setInputTag(fsChannelField.tags.join(','))
+      setChannelName(fsChannelField.name)
+      setDesc(fsChannelField.desc)
+      setSelectedGatingToken(fsChannelField.gating || defaultGatingToken)
+      setPrevCoverImage(fsChannelField.coverImage || '')
+    }
+  }, [fsChannelField])
 
   const isValidForm = !!channelName
 
@@ -85,19 +108,12 @@ const useCreateChannel = (): UseCreateChannelReturn => {
   }
 
   const onClickConfirm = async (): Promise<void> => {
-    if (user) {
+    if (user && fsChannel && channel) {
       try {
-        const channel = await createGroupChat({
-          invitedUserIds: [user.auth!.profileId],
-          operatorUserIds: [user.auth!.profileId],
-          coverImage,
-          channelName,
-        })
-
-        const fsChannel = await getFsChannel({
-          channel,
-          channelUrl: channel.url,
-        })
+        if (coverImage) {
+          await channel.updateChannel({ coverImage })
+        }
+        await channel.updateChannel({ name: channelName })
 
         const updateParam: any = {
           name: channelName,
@@ -112,9 +128,9 @@ const useCreateChannel = (): UseCreateChannelReturn => {
 
         await fsChannel.update(updateParam)
 
-        navigation.replace(Routes.GroupChannel, {
-          channelUrl: channel.url,
-        })
+        Alert.alert('Saved')
+
+        navigation.goBack()
       } catch (error) {
         console.log('error : ', JSON.stringify(error))
       }
@@ -122,6 +138,7 @@ const useCreateChannel = (): UseCreateChannelReturn => {
   }
 
   return {
+    prevCoverImage,
     channelImage: coverImage,
     setChannelImage: setCoverImage,
     tags,
@@ -133,8 +150,8 @@ const useCreateChannel = (): UseCreateChannelReturn => {
     setDesc,
     showTokenGating,
     setShowTokenGating,
-    defaultGatingToken,
     selectedGatingToken,
+    defaultGatingToken,
     setSelectedGatingToken,
     updateGatingTokenAmount,
     updateGatingTokenNetwork,
@@ -144,4 +161,4 @@ const useCreateChannel = (): UseCreateChannelReturn => {
   }
 }
 
-export default useCreateChannel
+export default useEditChannel
