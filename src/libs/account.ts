@@ -7,6 +7,14 @@ import {
 } from 'react-native-keychain'
 import { KeyChainEnum } from 'types'
 
+export const saveMnemonic = async (mnemonic: string): Promise<void> => {
+  await setInternetCredentials(
+    KeyChainEnum.MNEMONIC,
+    KeyChainEnum.MNEMONIC,
+    mnemonic
+  )
+}
+
 export const savePkey = async (privateKey: string): Promise<void> => {
   await setInternetCredentials(KeyChainEnum.PK, KeyChainEnum.PK, privateKey)
 }
@@ -27,9 +35,18 @@ export const getPkey = async (): Promise<string> => {
   return ''
 }
 
+export const getMnemonic = async (): Promise<string> => {
+  const res = await getInternetCredentials(KeyChainEnum.MNEMONIC)
+  if (res) {
+    return res.password
+  }
+  return ''
+}
+
 export const removeKeys = async (): Promise<void> => {
   await resetInternetCredentials(KeyChainEnum.PK)
   await resetInternetCredentials(KeyChainEnum.PK_PWD)
+  await resetInternetCredentials(KeyChainEnum.MNEMONIC)
 }
 
 export const getPkeyPwd = async (): Promise<string> => {

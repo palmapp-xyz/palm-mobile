@@ -3,7 +3,12 @@ import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import useNotification from 'hooks/independent/useNotification'
 import useLensAuth from 'hooks/lens/useLensAuth'
-import { generateEvmHdAccount, removeKeys, savePkey } from 'libs/account'
+import {
+  generateEvmHdAccount,
+  removeKeys,
+  saveMnemonic,
+  savePkey,
+} from 'libs/account'
 import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useState } from 'react'
@@ -73,6 +78,7 @@ const useAuth = (): UseAuthReturn => {
   const registerMnemonic = async (mnemonic: string): Promise<void> => {
     const wallet = await generateEvmHdAccount(mnemonic)
     await savePkey(wallet.privateKey)
+    await saveMnemonic(mnemonic)
   }
 
   const restoreAuth = async (restore: AuthStorageType): Promise<void> => {

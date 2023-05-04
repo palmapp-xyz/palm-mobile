@@ -1,9 +1,10 @@
-import { Container, Header, Row } from 'components'
+import { Container, Header } from 'components'
 import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const SettingScreen = (): ReactElement => {
@@ -16,6 +17,19 @@ const SettingScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={styles.itemGroup}>
           <TouchableOpacity
+            style={styles.item}
+            onPress={(): void => {
+              navigation.navigate(Routes.ExportPrivate)
+            }}
+          >
+            <Text>Export key</Text>
+            <Icon
+              name="ios-chevron-forward"
+              color={COLOR.black._800}
+              size={20}
+            />
+          </TouchableOpacity>
+          {/* <TouchableOpacity
             style={styles.item}
             onPress={(): void => {
               console.log('bio auth')
@@ -37,8 +51,7 @@ const SettingScreen = (): ReactElement => {
               <Switch />
             </Row>
           </TouchableOpacity>
-        </View>
-        <View style={styles.itemGroup}>
+
           <TouchableOpacity
             style={styles.item}
             onPress={(): void => {
@@ -64,17 +77,12 @@ const SettingScreen = (): ReactElement => {
               color={COLOR.black._800}
               size={20}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={(): void => {
-              console.log('Contact')
-            }}
-          >
+          </TouchableOpacity> */}
+          <View style={styles.item}>
             <Text>Version</Text>
             <Text style={{ color: COLOR.primary._400 }}>0.0.1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </View>
+          {/* <TouchableOpacity
             style={styles.item}
             onPress={(): void => {
               console.log('Version')
@@ -86,7 +94,7 @@ const SettingScreen = (): ReactElement => {
               color={COLOR.black._800}
               size={20}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.itemGroup}>
           <TouchableOpacity

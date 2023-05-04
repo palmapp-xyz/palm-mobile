@@ -56,6 +56,7 @@ export enum Routes {
   GroupChannelCreate = 'GroupChannelCreate',
   GroupChannelInvite = 'GroupChannelInvite',
   Setting = 'Setting',
+  ExportPrivate = 'ExportPrivate',
   FileViewer = 'FileViewer',
 
   CreateChannel = 'CreateChannel',
@@ -169,6 +170,10 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.Setting
+      params: undefined
+    }
+  | {
+      route: Routes.ExportPrivate
       params: undefined
     }
   | {

@@ -11,6 +11,7 @@ import {
   CreateChannelScreen,
   CreateProfileScreen,
   EditChannelScreen,
+  ExportPrivateScreen,
   FileViewerScreen,
   GroupChannelBannedUsersScreen,
   GroupChannelCreateScreen,
@@ -74,6 +75,10 @@ const MainNavigator = (): ReactElement => {
           <MainStack.Screen name={Routes.SendNft} component={SendNftScreen} />
           <MainStack.Screen name={Routes.ListNft} component={ListNftScreen} />
           <MainStack.Screen name={Routes.Setting} component={SettingScreen} />
+          <MainStack.Screen
+            name={Routes.ExportPrivate}
+            component={ExportPrivateScreen}
+          />
           <MainStack.Group>
             <MainStack.Screen
               name={Routes.GroupChannel}

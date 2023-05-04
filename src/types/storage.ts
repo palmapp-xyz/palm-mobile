@@ -5,6 +5,7 @@ import { ContractAddr } from './contracts'
 import { ThemeModeType } from './theme'
 
 export enum KeyChainEnum {
+  MNEMONIC = 'MNEMONIC',
   PK = 'PK',
   PK_PWD = 'PK_PWD',
 }
