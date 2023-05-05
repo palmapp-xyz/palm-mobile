@@ -14,7 +14,7 @@ import {
   Text,
   View,
 } from 'react-native'
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
+import { ContractAddr, Moralis, NftType, SupportedNetworkEnum } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { Maybe } from '@toruslabs/openlogin'
@@ -26,12 +26,14 @@ const NftDetails = ({
   tokenId,
   type,
   chain,
+  item,
   onSubmit,
 }: {
   nftContract: ContractAddr
   tokenId: string
   type: NftType
   chain: SupportedNetworkEnum
+  item?: Moralis.NftItem
   onSubmit?: (uri: string | undefined, metadata: Maybe<string>) => Promise<void>
 }): ReactElement => {
   const { ownerOf } = useNft({ nftContract, chain })
@@ -46,15 +48,17 @@ const NftDetails = ({
     tokenId,
     type,
     chain,
+    metadata: item?.metadata,
   })
 
   const nftRenderProps: MediaRendererProps = {
-    src: uri,
+    src:
+      uri ||
+      item?.media?.media_collection?.high?.url ||
+      item?.media?.original_media_url,
     alt: `${nftContract}:${tokenId}`,
     loading,
-    style: { flex: 1 },
-    width: '100%',
-    height: '100%',
+    height: 300,
   }
 
   useAsyncEffect(async (): Promise<void> => {
@@ -143,7 +147,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-  imageBox: { width: '100%', height: 250, marginBottom: 10 },
+  imageBox: {
+    marginBottom: 10,
+    alignItems: 'center',
+  },
   item: {
     marginVertical: 3,
   },

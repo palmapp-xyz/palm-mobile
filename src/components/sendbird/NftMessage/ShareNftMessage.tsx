@@ -41,6 +41,7 @@ const ShareNftMessage = ({
           tokenId: item.token_id,
           nftContractType: item.contract_type,
           chain,
+          item,
         })
       }}
     >

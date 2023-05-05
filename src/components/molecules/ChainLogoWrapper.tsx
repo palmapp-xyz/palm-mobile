@@ -1,18 +1,20 @@
 import FormImage from 'components/atoms/FormImage'
 import { NETWORK } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { SupportedNetworkEnum } from 'types'
 
 const ChainLogoWrapper = ({
   chain,
+  containerStyle,
   children,
 }: {
   chain: SupportedNetworkEnum
+  containerStyle?: StyleProp<ViewStyle>
   children: ReactNode
 }): ReactElement => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       {children}
       <View style={styles.imgBox}>
         <FormImage source={NETWORK.getNetworkLogo(chain)} size={24} />

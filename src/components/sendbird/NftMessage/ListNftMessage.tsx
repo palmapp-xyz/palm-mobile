@@ -9,7 +9,7 @@ import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
+import { SbListNftDataType, SupportedNetworkEnum, pToken } from 'types'
 
 import Row from '../../atoms/Row'
 
@@ -103,12 +103,14 @@ const ListNftMessage = ({
                     chainIdToSupportedNetworkEnum(
                       item.chainId || data.selectedNft.chainId || '0x1'
                     ) || SupportedNetworkEnum.ETHEREUM,
+                  item,
                 })
               : navigation.navigate(Routes.NftDetail, {
                   nftContract: item.token_address,
                   tokenId: item.token_id,
                   nftContractType: item.contract_type,
                   chain,
+                  item,
                 })
           }}
         >

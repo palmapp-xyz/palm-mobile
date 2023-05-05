@@ -4,7 +4,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useZxBuyNft from 'hooks/zx/useZxBuyNft'
 import useZxCancelNft from 'hooks/zx/useZxCancelNft'
 import useZxOrder from 'hooks/zx/useZxOrder'
-import { navigationRef, Routes } from 'libs/navigation'
+import { Routes, navigationRef } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
@@ -21,7 +21,7 @@ import NftDetails from './NftDetails'
 const ZxNftDetailScreen = (): ReactElement => {
   const {
     navigation,
-    params: { nonce, channelUrl, chain },
+    params: { nonce, channelUrl, chain, item },
   } = useAppNavigation<Routes.ZxNftDetail>()
   const { order } = useZxOrder({ nonce, chain })
 
@@ -92,6 +92,7 @@ const ZxNftDetailScreen = (): ReactElement => {
             type={order.nftType as NftType}
             chain={chain}
             onSubmit={onSubmit}
+            item={item}
           />
         </View>
       )}

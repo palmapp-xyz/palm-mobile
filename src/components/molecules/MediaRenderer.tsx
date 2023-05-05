@@ -41,8 +41,8 @@ const MediaRenderer = ({
   src,
   alt,
   style,
-  width,
-  height,
+  width = '100%',
+  height = '100%',
   loading,
 }: MediaRendererProps): ReactElement => {
   const [hasError, setError] = useState(false)
@@ -57,7 +57,12 @@ const MediaRenderer = ({
 
   const containerStyle: StyleProp<RNFastImageStyle> = [
     style,
-    { width, height, maxWidth: dim, maxHeight: dim },
+    {
+      width,
+      height,
+      maxWidth: dim,
+      maxHeight: dim,
+    },
   ]
 
   const videoOrImageSrc = useResolvedMediaType(src ?? '')

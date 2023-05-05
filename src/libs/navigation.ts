@@ -1,4 +1,4 @@
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
+import { ContractAddr, Moralis, NftType, SupportedNetworkEnum } from 'types'
 
 import {
   createNavigationContainerRef,
@@ -142,6 +142,7 @@ type MainRouteParamsUnion =
         nonce: string
         channelUrl?: string
         chain: SupportedNetworkEnum
+        item?: Moralis.NftItem
       }
     }
   | {
@@ -151,6 +152,7 @@ type MainRouteParamsUnion =
         tokenId: string
         nftContractType: NftType
         chain: SupportedNetworkEnum
+        item?: Moralis.NftItem
       }
     }
   | {

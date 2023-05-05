@@ -47,6 +47,9 @@ const useNftImage = ({
           ? await tokenURI({ tokenId })
           : await URI({ tokenId })
       return uri?.trim()
+    },
+    {
+      enabled: !!metadata,
     }
   )
 

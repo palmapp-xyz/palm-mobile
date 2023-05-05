@@ -43,7 +43,7 @@ const CollectionNftItems = ({
   })
 
   const gap = 4
-
+  const dim = (size.width - gap) / 2.0
   if (!userAddress || isLoading) {
     return <ActivityIndicator size="small" color={COLOR.primary._400} />
   }
@@ -51,7 +51,7 @@ const CollectionNftItems = ({
   return (
     <FlatList
       data={items.filter(x => !!x)}
-      keyExtractor={(_, index): string => `nftList-${index}`}
+      keyExtractor={(item): string => `${item.token_address}:${item.token_id}`}
       numColumns={2}
       contentContainerStyle={{ rowGap: gap }}
       columnWrapperStyle={{ columnGap: gap / 2, paddingHorizontal: gap / 2 }}
@@ -72,16 +72,16 @@ const CollectionNftItems = ({
               chain:
                 chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                 SupportedNetworkEnum.ETHEREUM,
+              item,
             })
           }}
         >
           <View style={{ borderRadius: 10, flex: 1 }}>
-            <ChainLogoWrapper chain={selectedNetwork}>
-              <MoralisNftRenderer
-                item={item}
-                width={'100%'}
-                height={(size.width - gap) / 2.0}
-              />
+            <ChainLogoWrapper
+              chain={selectedNetwork}
+              containerStyle={{ width: dim, height: dim }}
+            >
+              <MoralisNftRenderer item={item} />
               {onNftMenuSelected && (
                 <NftItemMenu
                   chainId={selectedNetwork}
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     margin: 10,
+    alignSelf: 'center',
     bottom: 0,
     flex: 1,
   },
