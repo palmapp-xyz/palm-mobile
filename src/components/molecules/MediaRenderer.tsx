@@ -50,10 +50,20 @@ const MediaRenderer = ({
     setError(true)
   }, [])
 
+  const widthNum = typeof width === 'number' ? width : 0
+  const heightNum = typeof height === 'number' ? height : 0
+  let dim: number | undefined = Math.max(widthNum, heightNum)
+  dim = dim > 0 ? dim : undefined
+
+  const containerStyle: StyleProp<RNFastImageStyle> = [
+    style,
+    { width, height, maxWidth: dim, maxHeight: dim },
+  ]
+
   const videoOrImageSrc = useResolvedMediaType(src ?? '')
   if (videoOrImageSrc.isLoading || loading) {
     return (
-      <Card center={true} style={[style, { width, height }]}>
+      <Card center={true} style={containerStyle}>
         <Progress.Pie size={20} indeterminate={true} />
       </Card>
     )
@@ -63,7 +73,7 @@ const MediaRenderer = ({
     <FallbackMediaRenderer
       width={width}
       height={height}
-      style={style}
+      style={containerStyle}
       src={videoOrImageSrc.url}
       alt={alt}
     />
@@ -80,7 +90,7 @@ const MediaRenderer = ({
     return (
       <SvgRenderer
         alt={alt}
-        style={style}
+        style={containerStyle}
         width={width}
         height={height}
         mediaType={videoOrImageSrc}
@@ -88,11 +98,11 @@ const MediaRenderer = ({
       />
     )
   } else if (videoOrImageSrc.mimeType === 'text/html') {
-    return <IframePlayer style={style} src={videoOrImageSrc.url} />
+    return <IframePlayer style={containerStyle} src={videoOrImageSrc.url} />
   } else if (shouldRenderVideoTag(videoOrImageSrc.mimeType)) {
     return (
       <VideoRenderer
-        style={style}
+        style={containerStyle}
         width={width}
         height={height}
         src={videoOrImageSrc.url}
@@ -103,7 +113,7 @@ const MediaRenderer = ({
     return (
       <VideoRenderer
         audioOnly={true}
-        style={style}
+        style={containerStyle}
         width={width}
         height={height}
         src={videoOrImageSrc.url}
@@ -116,7 +126,7 @@ const MediaRenderer = ({
   ) {
     return (
       <FastImage
-        style={[{ width, height }, style]}
+        style={containerStyle}
         source={{
           uri: videoOrImageSrc.url,
         }}

@@ -28,7 +28,7 @@ const MyNftList = ({
     SupportedNetworkEnum.ETHEREUM
   )
 
-  const { nftList } = useUserNftList({
+  const { items: nftList } = useUserNftList({
     userAddress: user?.address,
     selectedNetwork,
   })

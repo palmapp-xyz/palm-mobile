@@ -1,27 +1,16 @@
-import {
-  ChainLogoWrapper,
-  Container,
-  MoralisNftRenderer,
-  NftItemMenu,
-} from 'components'
+import { Container } from 'components'
+import CollectionNftItemsCollapsible from 'components/molecules/CollectionNftItemsCollapsible'
 import ProfileFooter from 'components/ProfileFooter'
 import { COLOR } from 'consts'
 import useProfile from 'hooks/auth/useProfile'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
-import { useAppNavigation } from 'hooks/useAppNavigation'
 import { recordError } from 'libs/logger'
-import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
 import {
   FlatList,
+  ListRenderItemInfo,
   Platform,
   RefreshControl,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-  useWindowDimensions,
 } from 'react-native'
 import { Moralis, SupportedNetworkEnum } from 'types'
 
@@ -30,17 +19,13 @@ import { useAlert } from '@sendbird/uikit-react-native-foundation'
 import ProfileHeader from '../../components/ProfileHeader'
 
 const MyPageScreen = (): ReactElement => {
-  const { navigation } = useAppNavigation()
-
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
   )
 
-  const gap = 4
-  const size = useWindowDimensions()
   const { alert } = useAlert()
 
-  const { user, useMyNftListReturn, useMyBalanceReturn } = useMyPageMain({
+  const { user, useMyNftCollectionReturn, useMyBalanceReturn } = useMyPageMain({
     selectedNetwork,
   })
 
@@ -59,8 +44,21 @@ const MyPageScreen = (): ReactElement => {
   )
 
   const profileFooter = (
-    <ProfileFooter useUserNftListReturn={useMyNftListReturn} />
+    <ProfileFooter useUserAssetsReturn={useMyNftCollectionReturn} />
   )
+
+  const onNftMenuSelected = async (
+    selectedItem: Moralis.NftItem,
+    selectedOption: string
+  ): Promise<void> => {
+    try {
+      if (selectedOption === 'set_nft_profile') {
+        await doUpdateProfileImage(selectedItem)
+      }
+    } catch (e) {
+      recordError(e, 'doUpdateProfileImage')
+    }
+  }
 
   const doUpdateProfileImage = async (
     selectedItem: Moralis.NftItem
@@ -88,11 +86,15 @@ const MyPageScreen = (): ReactElement => {
       <FlatList
         refreshControl={
           <RefreshControl
-            refreshing={useMyNftListReturn.isRefetching}
+            refreshing={
+              useMyNftCollectionReturn.isRefetching ||
+              useMyBalanceReturn.isRefetching
+            }
             onRefresh={(): void => {
-              useMyNftListReturn.remove()
+              useMyBalanceReturn.remove()
+              useMyNftCollectionReturn.remove()
               Promise.all([
-                useMyNftListReturn.refetch(),
+                useMyNftCollectionReturn.refetch(),
                 useMyBalanceReturn.refetch(),
               ])
             }}
@@ -100,62 +102,28 @@ const MyPageScreen = (): ReactElement => {
         }
         ListHeaderComponent={profileHeader}
         ListFooterComponent={profileFooter}
-        data={useMyNftListReturn.nftList.filter(x => !!x)}
-        keyExtractor={(_, index): string => `nftList-${index}`}
-        numColumns={2}
-        contentContainerStyle={{ rowGap: gap }}
-        columnWrapperStyle={{ columnGap: gap / 2, paddingHorizontal: gap / 2 }}
+        data={useMyNftCollectionReturn.items.filter(x => !!x)}
+        keyExtractor={(item: Moralis.NftCollection): string =>
+          `${user?.address}:${item.token_address}`
+        }
+        contentContainerStyle={{ rowGap: 4 }}
         onEndReached={(): void => {
-          if (useMyNftListReturn.hasNextPage) {
-            useMyNftListReturn.fetchNextPage()
+          if (useMyNftCollectionReturn.hasNextPage) {
+            useMyNftCollectionReturn.fetchNextPage()
           }
         }}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
-        renderItem={({ item }): ReactElement => (
-          <TouchableWithoutFeedback
-            onPress={(): void => {
-              navigation.navigate(Routes.NftDetail, {
-                nftContract: item.token_address,
-                tokenId: item.token_id,
-                nftContractType: item.contract_type,
-                chain:
-                  chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-                  SupportedNetworkEnum.ETHEREUM,
-              })
-            }}
-          >
-            <View style={{ borderRadius: 10, flex: 1 }}>
-              <ChainLogoWrapper chain={selectedNetwork}>
-                <MoralisNftRenderer
-                  item={item}
-                  width={'100%'}
-                  height={(size.width - gap) / 2.0}
-                />
-                <NftItemMenu
-                  chainId={selectedNetwork}
-                  item={item}
-                  triggerComponent={
-                    <View style={styles.nftTitle}>
-                      <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
-                    </View>
-                  }
-                  onSelect={async (
-                    selectedItem: Moralis.NftItem,
-                    selectedOption: string
-                  ): Promise<void> => {
-                    try {
-                      if (selectedOption === 'set_nft_profile') {
-                        await doUpdateProfileImage(selectedItem)
-                      }
-                    } catch (e) {
-                      recordError(e, 'doUpdateProfileImage')
-                    }
-                  }}
-                />
-              </ChainLogoWrapper>
-            </View>
-          </TouchableWithoutFeedback>
+        renderItem={({
+          item,
+        }: ListRenderItemInfo<Moralis.NftCollection>): ReactElement => (
+          <CollectionNftItemsCollapsible
+            userAddress={user?.address}
+            contractAddress={item.token_address}
+            selectedNetwork={selectedNetwork}
+            headerText={`${item.name}${item.symbol ? ` (${item.symbol})` : ''}`}
+            onNftMenuSelected={onNftMenuSelected}
+          />
         )}
       />
     </Container>
@@ -163,17 +131,3 @@ const MyPageScreen = (): ReactElement => {
 }
 
 export default MyPageScreen
-
-const styles = StyleSheet.create({
-  nftTitle: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    margin: 10,
-    alignSelf: 'center',
-    bottom: 0,
-    flex: 1,
-  },
-})

@@ -59,7 +59,7 @@ const TokenGating = ({
     selectedGatingToken?.chain || SupportedNetworkEnum.ETHEREUM
   const gatingTokenAmount = selectedGatingToken?.amount || ''
 
-  const { nftCollectionList, isLoading } = useUserNftCollectionList({
+  const { items: nftCollectionList, isLoading } = useUserNftCollectionList({
     selectedNetwork: gatingTokenNetwork,
     userAddress: user?.address,
     limit: 30,

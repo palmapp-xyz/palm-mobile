@@ -48,6 +48,27 @@ export default {
         cursor ? `&cursor=${cursor}` : ''
       }` as ApiParamFabricated,
   },
+  [ApiEnum.COLLECTION_ASSETS]: {
+    get: ({
+      userAddress,
+      contractAddress,
+      connectedNetworkId,
+      limit,
+      cursor,
+    }: {
+      userAddress: ContractAddr
+      contractAddress: ContractAddr
+      connectedNetworkId: number
+      limit?: number
+      cursor?: string
+    }): ApiParamFabricated => {
+      return `/api/evm-api-proxy/${userAddress}/nft?chain=${utils.hexValue(
+        connectedNetworkId
+      )}&token_addresses=${contractAddress}&media_items=true&limit=${
+        limit || 10
+      }${cursor ? `&cursor=${cursor}` : ''}` as ApiParamFabricated
+    },
+  },
   [ApiEnum.ACCOUNTS]: {
     get: (): ApiParamFabricated => '/accounts' as ApiParamFabricated,
     post: (): ApiParamFabricated => '/accounts' as ApiParamFabricated,

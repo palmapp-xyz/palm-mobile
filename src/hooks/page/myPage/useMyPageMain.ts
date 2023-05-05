@@ -1,14 +1,15 @@
-import useUserNftList, { UseUserNftListReturn } from 'hooks/api/useUserNftList'
+import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
+import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/auth/useAuth'
 import useUserBalance, {
   UseUserBalanceReturn,
 } from 'hooks/independent/useUserBalance'
-import { SupportedNetworkEnum, User } from 'types'
+import { Moralis, SupportedNetworkEnum, User } from 'types'
 
 export type UseMyPageMainReturn = {
   user?: User
   useMyBalanceReturn: UseUserBalanceReturn
-  useMyNftListReturn: UseUserNftListReturn
+  useMyNftCollectionReturn: UseUserAssetsReturn<Moralis.NftCollection>
 }
 
 const useMyPageMain = ({
@@ -18,7 +19,7 @@ const useMyPageMain = ({
 }): UseMyPageMainReturn => {
   const { user } = useAuth()
 
-  const useMyNftListReturn = useUserNftList({
+  const useMyNftCollectionReturn = useUserNftCollectionList({
     userAddress: user?.address,
     selectedNetwork,
   })
@@ -28,7 +29,7 @@ const useMyPageMain = ({
     chain: selectedNetwork,
   })
 
-  return { user, useMyBalanceReturn, useMyNftListReturn }
+  return { user, useMyBalanceReturn, useMyNftCollectionReturn }
 }
 
 export default useMyPageMain

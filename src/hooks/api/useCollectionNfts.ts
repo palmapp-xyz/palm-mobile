@@ -7,17 +7,28 @@ import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
 import useApi from '../complex/useApi'
 import useNetwork from '../complex/useNetwork'
-import { UseUserAssetsReturn } from './useUserNftList'
 
-const useUserNftCollectionList = ({
+export type UseCollectionNftsReturn = {
+  items: Moralis.NftItem[]
+  fetchNextPage: () => void
+  hasNextPage: boolean
+  refetch: () => void
+  remove: () => void
+  isRefetching: boolean
+  isLoading: boolean
+}
+
+const useCollectionNfts = ({
   selectedNetwork,
   userAddress,
+  contractAddress,
   limit,
 }: {
   selectedNetwork: SupportedNetworkEnum
   userAddress?: ContractAddr
+  contractAddress: ContractAddr
   limit?: number
-}): UseUserAssetsReturn<Moralis.NftCollection> => {
+}): UseCollectionNftsReturn => {
   const { connectedNetworkIds } = useNetwork()
   const connectedNetworkId = connectedNetworkIds[selectedNetwork]
   const { getApi } = useApi()
@@ -31,27 +42,34 @@ const useUserNftCollectionList = ({
     isRefetching,
     isLoading,
   } = useInfiniteQuery(
-    [ApiEnum.COLLECTIONS, userAddress, connectedNetworkId],
+    [
+      ApiEnum.COLLECTION_ASSETS,
+      userAddress,
+      contractAddress,
+      connectedNetworkId,
+    ],
     async ({ pageParam = '' }) => {
       if (userAddress) {
-        const path = apiV1Fabricator[ApiEnum.COLLECTIONS].get({
+        const path = apiV1Fabricator[ApiEnum.COLLECTION_ASSETS].get({
           userAddress,
+          contractAddress,
           connectedNetworkId,
           limit,
           cursor: pageParam,
         })
-        const fetchResult = await getApi<ApiEnum.COLLECTIONS>({ path })
+        const fetchResult = await getApi<ApiEnum.COLLECTION_ASSETS>({ path })
+
         if (fetchResult.success) {
           return fetchResult.data
         } else {
-          recordError(new Error(fetchResult.errMsg), 'useUserNftCollectionList')
+          recordError(new Error(fetchResult.errMsg), 'useCollectionNfts')
         }
       }
       return {
         page: 0,
         page_size: 0,
         cursor: null,
-        result: [] as Moralis.NftCollection[],
+        result: [] as Moralis.NftItem[],
       }
     },
     {
@@ -73,4 +91,4 @@ const useUserNftCollectionList = ({
   }
 }
 
-export default useUserNftCollectionList
+export default useCollectionNfts

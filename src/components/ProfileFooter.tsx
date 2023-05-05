@@ -1,21 +1,24 @@
 import { COLOR } from 'consts'
-import { UseUserNftListReturn } from 'hooks/api/useUserNftList'
+import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
 import React, { ReactElement } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { Moralis } from 'types'
 
 const ProfileFooter = React.memo(
   ({
-    useUserNftListReturn,
+    useUserAssetsReturn,
   }: {
-    useUserNftListReturn: UseUserNftListReturn
+    useUserAssetsReturn: UseUserAssetsReturn<
+      Moralis.NftItem | Moralis.NftCollection
+    >
   }): ReactElement => {
     return (
       <View style={[styles.footer]}>
-        {useUserNftListReturn.isLoading ? (
+        {useUserAssetsReturn.isLoading ? (
           <ActivityIndicator size="small" color={COLOR.primary._400} />
-        ) : useUserNftListReturn.nftList.length === 0 ? (
+        ) : useUserAssetsReturn.items.length === 0 ? (
           <Text style={styles.text}>{'The user has no NFTs yet.'}</Text>
-        ) : !useUserNftListReturn.hasNextPage ? (
+        ) : !useUserAssetsReturn.hasNextPage ? (
           <Text style={styles.text}>{'End of List'}</Text>
         ) : null}
       </View>

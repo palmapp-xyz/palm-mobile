@@ -6,6 +6,7 @@ export type FbProfile = {
   address: ContractAddr
   profileId: string
   verified: boolean
+  name?: string
   bio?: string
   coverPicture?: string
   attributes?: Array<Attribute>

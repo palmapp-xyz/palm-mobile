@@ -17,8 +17,8 @@ export enum ApiEnum {
   ACCOUNTS = 'ACCOUNTS',
   ASSETS = 'ASSETS',
   COLLECTIONS = 'COLLECTIONS',
+  COLLECTION_ASSETS = 'COLLECTION_ASSETS',
 
-  FRIENDS = 'FRIENDS',
   CHANNELS = 'CHANNELS',
   CHANNEL = 'CHANNEL',
 
@@ -54,7 +54,7 @@ export type ApiParams = {
 
   [ApiEnum.ASSETS]: DefaultMethods
   [ApiEnum.COLLECTIONS]: DefaultMethods
-  [ApiEnum.FRIENDS]: DefaultMethods
+  [ApiEnum.COLLECTION_ASSETS]: DefaultMethods
 
   [ApiEnum.CHANNELS]: DefaultMethods
   [ApiEnum.CHANNEL]: DefaultMethods
@@ -131,8 +131,14 @@ export type ApiResponse = {
       result: Moralis.NftCollection[]
     }
   }>
-
-  [ApiEnum.FRIENDS]: DefaultMethods
+  [ApiEnum.COLLECTION_ASSETS]: Override<{
+    GET: {
+      page: number
+      page_size: number
+      cursor: string
+      result: Moralis.NftItem[]
+    }
+  }>
 
   [ApiEnum.CHANNELS]: DefaultMethods
   [ApiEnum.CHANNEL]: DefaultMethods

@@ -1,36 +1,35 @@
-import { Container, MoralisNftRenderer } from 'components'
+import { Container } from 'components'
+import CollectionNftItemsCollapsible from 'components/molecules/CollectionNftItemsCollapsible'
 import ProfileFooter from 'components/ProfileFooter'
 import { COLOR } from 'consts'
-import useUserNftList from 'hooks/api/useUserNftList'
+import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
 import {
   FlatList,
+  ListRenderItemInfo,
   Platform,
   RefreshControl,
-  TouchableWithoutFeedback,
-  View,
 } from 'react-native'
-import { SupportedNetworkEnum } from 'types'
+import { Moralis, SupportedNetworkEnum } from 'types'
 
 import ProfileHeader from '../components/ProfileHeader'
 
 const UserProfileScreen = (): ReactElement => {
-  const { navigation, params } = useAppNavigation<Routes.UserProfile>()
+  const { params } = useAppNavigation<Routes.UserProfile>()
   const { address: userAddress, profileId } = params
 
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
   )
 
-  const useUserNftListReturn = useUserNftList({
+  const useUserNftCollectionReturn = useUserNftCollectionList({
     userAddress,
     selectedNetwork,
   })
-  const { refetch: balanceRefetch } = useUserBalance({
+  const useUserBalanceReturn = useUserBalance({
     address: userAddress,
     chain: SupportedNetworkEnum.ETHEREUM,
   })
@@ -46,10 +45,8 @@ const UserProfileScreen = (): ReactElement => {
   )
 
   const profileFooter = (
-    <ProfileFooter useUserNftListReturn={useUserNftListReturn} />
+    <ProfileFooter useUserAssetsReturn={useUserNftCollectionReturn} />
   )
-
-  const gap = 4
 
   return (
     <Container
@@ -59,44 +56,43 @@ const UserProfileScreen = (): ReactElement => {
       <FlatList
         refreshControl={
           <RefreshControl
-            refreshing={useUserNftListReturn.isRefetching}
+            refreshing={
+              useUserNftCollectionReturn.isRefetching ||
+              useUserBalanceReturn.isRefetching
+            }
             onRefresh={(): void => {
-              useUserNftListReturn.remove()
-              Promise.all([useUserNftListReturn.refetch(), balanceRefetch()])
+              useUserBalanceReturn.remove()
+              useUserNftCollectionReturn.remove()
+              Promise.all([
+                useUserNftCollectionReturn.refetch(),
+                useUserBalanceReturn.refetch(),
+              ])
             }}
           />
         }
         ListHeaderComponent={profileHeader}
         ListFooterComponent={profileFooter}
-        data={useUserNftListReturn.nftList.filter(x => !!x)}
-        keyExtractor={(_, index): string => `nftList-${index}`}
-        numColumns={2}
-        contentContainerStyle={{ rowGap: gap }}
-        columnWrapperStyle={{ columnGap: gap / 2, paddingHorizontal: gap / 2 }}
+        data={useUserNftCollectionReturn.items.filter(x => !!x)}
+        keyExtractor={(item: Moralis.NftCollection): string =>
+          `${userAddress}:${item.token_address}`
+        }
+        contentContainerStyle={{ rowGap: 4 }}
         onEndReached={(): void => {
-          if (useUserNftListReturn.hasNextPage) {
-            useUserNftListReturn.fetchNextPage()
+          if (useUserNftCollectionReturn.hasNextPage) {
+            useUserNftCollectionReturn.fetchNextPage()
           }
         }}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
-        renderItem={({ item }): ReactElement => (
-          <TouchableWithoutFeedback
-            onPress={(): void => {
-              navigation.navigate(Routes.NftDetail, {
-                nftContract: item.token_address,
-                tokenId: item.token_id,
-                nftContractType: item.contract_type,
-                chain:
-                  chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-                  SupportedNetworkEnum.ETHEREUM,
-              })
-            }}
-          >
-            <View style={{ borderRadius: 10, flex: 1 }}>
-              <MoralisNftRenderer item={item} width={'100%'} height={180} />
-            </View>
-          </TouchableWithoutFeedback>
+        renderItem={({
+          item,
+        }: ListRenderItemInfo<Moralis.NftCollection>): ReactElement => (
+          <CollectionNftItemsCollapsible
+            userAddress={userAddress}
+            contractAddress={item.token_address}
+            selectedNetwork={selectedNetwork}
+            headerText={`${item.name}${item.symbol ? ` (${item.symbol})` : ''}`}
+          />
         )}
       />
     </Container>

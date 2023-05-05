@@ -5,7 +5,9 @@ import { ContractAddr, pToken, QueryKeyEnum, SupportedNetworkEnum } from 'types'
 export type UseUserBalanceReturn = {
   balance: pToken
   refetch: () => void
+  remove: () => void
   isLoading: boolean
+  isRefetching: boolean
 }
 
 const useUserBalance = ({
@@ -18,8 +20,10 @@ const useUserBalance = ({
   const { web3 } = useWeb3(chain)
   const {
     data: balance = '0',
-    refetch: refetchEth,
+    refetch,
+    remove,
     isLoading,
+    isRefetching,
   } = useReactQuery(
     [QueryKeyEnum.NATIVE_TOKEN_BALANCE, address, chain],
     async () => {
@@ -32,14 +36,12 @@ const useUserBalance = ({
     }
   )
 
-  const refetch = async (): Promise<void> => {
-    await Promise.all([refetchEth()])
-  }
-
   return {
     balance: balance as pToken,
     refetch,
+    remove,
     isLoading,
+    isRefetching,
   }
 }
 

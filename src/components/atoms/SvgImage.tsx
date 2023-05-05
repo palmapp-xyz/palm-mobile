@@ -70,7 +70,6 @@ function SvgImage({
   const uri = source && source.uri
   useEffect(() => {
     const controller = new AbortController()
-    const signal = controller.signal
 
     async function doFetch(): Promise<void> {
       if (uri) {
@@ -80,7 +79,7 @@ function SvgImage({
           setSvgContent(uri.slice(index))
         } else {
           try {
-            const res = await fetch(uri, { signal })
+            const res = await fetch(uri)
             const text = await res.text()
             setSvgContent(text)
           } catch (err) {
