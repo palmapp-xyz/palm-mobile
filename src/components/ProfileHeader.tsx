@@ -75,14 +75,24 @@ const ProfileHeader = React.memo(
           >
             {isMyPage ? (
               <View style={{ alignItems: 'flex-end' }}>
-                <Pressable
-                  style={styles.headerButton}
-                  onPress={(): void => {
-                    navigation.navigate(Routes.Setting)
-                  }}
-                >
-                  <Icon name={'settings-outline'} size={24} />
-                </Pressable>
+                <Row style={styles.headerButtons}>
+                  <Pressable
+                    style={styles.headerButton}
+                    onPress={(): void => {
+                      navigation.navigate(Routes.UpdateProfile)
+                    }}
+                  >
+                    <Icon name={'pencil'} size={24} />
+                  </Pressable>
+                  <Pressable
+                    style={styles.headerButton}
+                    onPress={(): void => {
+                      navigation.navigate(Routes.Setting)
+                    }}
+                  >
+                    <Icon name={'settings-outline'} size={24} />
+                  </Pressable>
+                </Row>
               </View>
             ) : (
               <View style={{ alignItems: 'flex-start' }}>
@@ -143,10 +153,7 @@ const ProfileHeader = React.memo(
           </View>
           <View style={styles.section}>
             <FormText fontType="R.12" color={COLOR.black._200}>
-              User profile description User profile description User profile
-              description User profile description User profile description User
-              profile description User profile description User profile
-              description User profile description User profile description
+              {profile?.bio}
             </FormText>
           </View>
           <Row style={{ alignItems: 'center', columnGap: 8 }}>
@@ -329,8 +336,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.black._90005,
     borderRadius: 16,
   },
+  headerButtons: {
+    padding: 10,
+  },
   headerButton: {
-    margin: 10,
+    marginHorizontal: 5,
     padding: 5,
   },
   attribute: {

@@ -25,6 +25,7 @@ export type UseProfileReturn = {
   isLoadingLensProfile: boolean
   createProfile: (
     handle: string,
+    bio: string,
     createOnLens?: boolean
   ) => Promise<TrueOrErrReturn<FbProfile>>
   updateProfileImage: (
@@ -92,6 +93,7 @@ const useProfile = ({
 
   const createProfile = async (
     handle: string,
+    bio: string,
     createOnLens?: boolean
   ): Promise<TrueOrErrReturn<FbProfile>> => {
     if (!fsProfile) {
@@ -105,6 +107,10 @@ const useProfile = ({
         })
 
         if (res.success) {
+          const result = await setMetadata({ bio } as Partial<ProfileMetadata>)
+          if (!result.success) {
+            recordError(new Error(result.errMsg), 'createProfile:setMetadata')
+          }
           await refetchLensProfile()
         } else {
           return { success: false, errMsg: res.errMsg }
@@ -115,8 +121,11 @@ const useProfile = ({
       }
     }
 
-    await fsProfile.update({ handle })
-    return { success: true, value: { ...fsProfileField, handle } as FbProfile }
+    await fsProfile.update({ handle, bio } as FbProfile)
+    return {
+      success: true,
+      value: { ...fsProfileField, handle, bio } as FbProfile,
+    }
   }
 
   const updateProfileImage = async (

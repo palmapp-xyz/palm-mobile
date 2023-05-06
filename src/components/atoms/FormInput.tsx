@@ -1,16 +1,21 @@
-import { COLOR } from 'consts'
+import { COLOR, STYLE } from 'consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TextInput, TextInputProps } from 'react-native'
+import { FontType } from 'types'
 
 const FormInput = (
-  props: { inputRef?: React.LegacyRef<TextInput> } & TextInputProps
+  props: {
+    inputRef?: React.LegacyRef<TextInput>
+    fontType?: FontType
+  } & TextInputProps
 ): ReactElement => {
-  const { style, ...rest } = props
+  const { style, fontType = 'R.16', ...rest } = props
+  const fontStyle = STYLE.getFontStyle(fontType)
 
   return (
     <TextInput
       ref={props.inputRef}
-      style={[styles.container, style]}
+      style={[styles.container, style, fontStyle]}
       {...rest}
     />
   )

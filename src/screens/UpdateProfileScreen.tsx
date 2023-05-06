@@ -14,7 +14,7 @@ import appStore from 'store/appStore'
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
-const UpdateLensProfileScreen = (): ReactElement => {
+const UpdateProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
   const { user } = useAuth()
   const { alert } = useAlert()
@@ -109,7 +109,7 @@ const UpdateLensProfileScreen = (): ReactElement => {
   )
 }
 
-export default UpdateLensProfileScreen
+export default UpdateProfileScreen
 
 const styles = StyleSheet.create({
   container: { flex: 1 },

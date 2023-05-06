@@ -31,7 +31,7 @@ import {
   SendNftScreen,
   SettingScreen,
   TokenGatingInfoScreen,
-  UpdateLensProfileScreen,
+  UpdateProfileScreen,
   UserProfileScreen,
   ZxNftDetailScreen,
 } from '../screens'
@@ -69,8 +69,8 @@ const MainNavigator = (): ReactElement => {
             component={UserProfileScreen}
           />
           <MainStack.Screen
-            name={Routes.UpdateLensProfile}
-            component={UpdateLensProfileScreen}
+            name={Routes.UpdateProfile}
+            component={UpdateProfileScreen}
           />
           <MainStack.Screen name={Routes.SendNft} component={SendNftScreen} />
           <MainStack.Screen name={Routes.ListNft} component={ListNftScreen} />

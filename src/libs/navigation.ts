@@ -33,7 +33,7 @@ export enum Routes {
   GroupChannelList = 'GroupChannelList',
 
   UserProfile = 'UserProfile',
-  UpdateLensProfile = 'UpdateLensProfile',
+  UpdateProfile = 'UpdateProfile',
   NftDetail = 'NftDetail',
   ZxNftDetail = 'ZxNftDetail',
   InitExplore = 'InitExplore',
@@ -102,7 +102,7 @@ type MainRouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.UpdateLensProfile
+      route: Routes.UpdateProfile
       params: undefined
     }
   | {
