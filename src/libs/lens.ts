@@ -1,8 +1,4 @@
-import {
-  Attribute,
-  Profile,
-  ProfileMedia,
-} from 'graphqls/__generated__/graphql'
+import { Attribute, ProfileMedia } from 'graphqls/__generated__/graphql'
 
 import { AttributeData } from '@lens-protocol/react-native-lens-ui-kit'
 import { Maybe } from '@toruslabs/openlogin'
@@ -25,7 +21,7 @@ export const getProfileMediaImg = (
 }
 
 export const getAttributesData = (
-  profile: Profile | undefined
+  profile: { attributes?: Attribute[] | null } | undefined
 ): AttributeData[] => {
   return (
     profile?.attributes?.map(

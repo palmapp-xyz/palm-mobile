@@ -115,6 +115,7 @@ const CreateProfileScreen = (): ReactElement => {
               multiline={true}
               maxLength={maxBioLength}
               placeholder="Please write something you would like to introduce about yourself."
+              secureTextEntry
               style={{ marginVertical: 2, minHeight: 200 }}
             />
           </View>
@@ -140,21 +141,6 @@ const styles = StyleSheet.create({
     borderTopColor: COLOR.black._90010,
     paddingVertical: 12,
     paddingHorizontal: 20,
-  },
-  seedItem: {
-    flex: 1,
-    columnGap: 4,
-    alignItems: 'center',
-  },
-  copyBox: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: COLOR.black._200,
-    paddingHorizontal: 10,
-    paddingVertical: 12,
-    columnGap: 16,
-    alignItems: 'center',
-    borderRadius: 14,
   },
   rowSection: {
     rowGap: 4,

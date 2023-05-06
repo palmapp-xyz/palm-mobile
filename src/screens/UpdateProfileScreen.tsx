@@ -1,21 +1,23 @@
-import { Container, FormButton, FormInput, Header } from 'components'
+import { Container, FormButton, FormInput, FormText, Row } from 'components'
+import LoadingPage from 'components/atoms/LoadingPage'
+import UpdateProfileHeader from 'components/UpdateProfileHeader'
 import { COLOR } from 'consts'
 import { PublicationMetadataStatusType } from 'graphqls/__generated__/graphql'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
-import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getAttributesData } from 'libs/lens'
-import { isLensProfile } from 'libs/profile'
-import React, { ReactElement, useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
-import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
+import {
+  AttributeData,
+  ProfileMetadata,
+} from '@lens-protocol/react-native-lens-ui-kit'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 const UpdateProfileScreen = (): ReactElement => {
-  const { navigation } = useAppNavigation()
   const { user } = useAuth()
   const { alert } = useAlert()
 
@@ -25,23 +27,17 @@ const UpdateProfileScreen = (): ReactElement => {
     profileId: user?.auth?.profileId,
   })
 
-  const [updatedProfile, setUpdatedProfile] = useState<
-    Partial<ProfileMetadata>
-  >({
-    name:
-      profile && isLensProfile(profile)
-        ? profile?.name || undefined
-        : undefined,
-    bio: profile?.bio || undefined,
-    attributes:
-      profile && isLensProfile(profile)
-        ? getAttributesData(profile)
-        : undefined,
-  })
+  const [name, setName] = useState<string>()
+  const [bio, setBio] = useState<string>()
+  const [attributes, setAttributes] = useState<AttributeData[]>()
 
   const update = async (): Promise<void> => {
     if (profile) {
-      const result = await setMetadata(updatedProfile)
+      const result = await setMetadata({
+        name,
+        bio,
+        attributes,
+      } as Partial<ProfileMetadata>)
       setLoading(false)
       setTimeout(() => {
         if (!result.success) {
@@ -77,34 +73,85 @@ const UpdateProfileScreen = (): ReactElement => {
     }, 300)
   }
 
+  useEffect(() => {
+    if (
+      !profile ||
+      name !== undefined ||
+      bio !== undefined ||
+      attributes !== undefined
+    ) {
+      return
+    }
+
+    setName(profile.name)
+    setBio(profile.bio)
+    setAttributes(getAttributesData(profile))
+  }, [profile])
+
+  if (!profile) {
+    return <LoadingPage />
+  }
+
+  const maxBioLength = 300
+
   return (
     <Container style={styles.container}>
-      <Header title="Update Bio" left="back" onPressLeft={navigation.goBack} />
-      {!profile ? (
-        <View style={styles.body}>
-          <ActivityIndicator size="large" color={COLOR.primary._300} />
-        </View>
-      ) : (
-        <View style={styles.body}>
-          <View style={{ rowGap: 10, padding: 20 }}>
-            <Text style={styles.headText}>Bio</Text>
+      <UpdateProfileHeader
+        userProfileId={user?.auth?.profileId}
+        userAddress={user?.address}
+      />
+
+      <View style={styles.body}>
+        <View style={{ rowGap: 12 }}>
+          <View style={styles.rowSection}>
+            <FormText fontType="R.12">Username</FormText>
             <FormInput
-              style={{ height: 150, paddingTop: 10, paddingBottom: 10 }}
-              placeholder="Input your bio"
-              value={updatedProfile?.bio || ''}
-              onChangeText={(bio: string): void => {
-                setUpdatedProfile({ ...updatedProfile, bio })
+              value={profile.handle}
+              textContentType="username"
+              fontType="R.12"
+              placeholder="Enter your nickname"
+              autoCapitalize="none"
+              style={{
+                marginVertical: 2,
+                color: COLOR.black._500,
+                backgroundColor: COLOR.black._10,
               }}
-              textContentType="none"
-              multiline
-              secureTextEntry
+              editable={false}
             />
           </View>
-          <FormButton disabled={loading} onPress={onClickConfirm}>
-            Update profile
-          </FormButton>
+          <View style={styles.rowSection}>
+            <Row>
+              <FormText fontType="R.12">Description</FormText>
+              <FormText fontType="R.12">
+                ({bio?.length ?? 0}/{maxBioLength})
+              </FormText>
+            </Row>
+            <FormInput
+              value={bio}
+              onChangeText={(text: string): void => {
+                if (text.length <= maxBioLength) {
+                  setBio(text)
+                }
+              }}
+              fontType="R.12"
+              multiline={true}
+              maxLength={maxBioLength}
+              placeholder="Please write something you would like to introduce about yourself."
+              style={{ marginVertical: 2, minHeight: 200 }}
+            />
+          </View>
         </View>
-      )}
+      </View>
+
+      <View style={styles.footer}>
+        <FormButton
+          size="lg"
+          disabled={loading || bio === profile?.bio}
+          onPress={onClickConfirm}
+        >
+          Done
+        </FormButton>
+      </View>
     </Container>
   )
 }
@@ -113,19 +160,21 @@ export default UpdateProfileScreen
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  body: {
-    flex: 1,
-    gap: 20,
-    padding: 10,
-    justifyContent: 'space-between',
+  body: { flex: 1, paddingHorizontal: 20, paddingVertical: 12 },
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: COLOR.black._90010,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
   },
-  text: {
-    color: 'black',
-    fontSize: 16,
-    textAlign: 'center',
+  rowSection: {
+    rowGap: 4,
+    marginBottom: 20,
   },
-  headText: {
-    fontWeight: 'bold',
-    margin: 4,
+  infoBox: {
+    borderRadius: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: COLOR.black._90010,
   },
 })
