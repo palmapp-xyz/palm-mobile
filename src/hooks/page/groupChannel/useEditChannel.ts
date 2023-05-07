@@ -1,17 +1,17 @@
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { NETWORK } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
+import useFsChannel from 'hooks/firestore/useFsChannel'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import { useEffect, useMemo, useState } from 'react'
-import { FbChannelGatingField, SupportedNetworkEnum } from 'types'
+import { FbChannel, FbChannelGatingField, SupportedNetworkEnum } from 'types'
 
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import {
   FilePickerResponse,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
-import { NETWORK } from 'consts'
-import useFsChannel from 'hooks/firestore/useFsChannel'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Alert } from 'react-native'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 export type UseEditChannelReturn = {
   prevCoverImage: string
@@ -50,6 +50,7 @@ const useEditChannel = ({
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const { alert } = useAlert()
 
   const [prevCoverImage, setPrevCoverImage] = useState('')
   const [coverImage, setCoverImage] = useState<FilePickerResponse>()
@@ -115,7 +116,7 @@ const useEditChannel = ({
         }
         await channel.updateChannel({ name: channelName })
 
-        const updateParam: any = {
+        const updateParam: Partial<FbChannel> = {
           name: channelName,
           tags,
           desc,
@@ -128,8 +129,9 @@ const useEditChannel = ({
 
         await fsChannel.update(updateParam)
 
-        Alert.alert('Saved')
-
+        alert({
+          message: 'Channel info updated',
+        })
         navigation.goBack()
       } catch (error) {
         console.log('error : ', JSON.stringify(error))

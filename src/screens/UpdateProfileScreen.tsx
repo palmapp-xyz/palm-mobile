@@ -59,7 +59,7 @@ const UpdateProfileScreen = (): ReactElement => {
             message: 'Profile updated',
           })
         }
-      }, 300)
+      }, 100)
     }
   }
 

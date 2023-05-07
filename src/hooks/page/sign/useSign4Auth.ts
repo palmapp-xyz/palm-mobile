@@ -4,11 +4,12 @@ import useWeb3 from 'hooks/complex/useWeb3'
 import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
-import { Alert } from 'react-native'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import { AuthChallengeInfo, ContractAddr, SupportedNetworkEnum } from 'types'
 import { Account } from 'web3-core'
+
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 export type UseSign4AuthReturn = {
   challenge?: AuthChallengeInfo
@@ -24,6 +25,7 @@ const useSign4Auth = (): UseSign4AuthReturn => {
   const { challengeRequest, challengeVerify } = useAuthChallenge(
     SupportedNetworkEnum.ETHEREUM
   )
+  const { alert } = useAlert()
 
   const signChallenge = async (): Promise<void> => {
     setLoading(true)
@@ -35,7 +37,7 @@ const useSign4Auth = (): UseSign4AuthReturn => {
         await appSignIn(result)
       } catch (e) {
         recordError(e, 'signChallenge')
-        Alert.alert(_.toString(e))
+        alert({ title: 'Failure', message: _.toString(e) })
       } finally {
         setLoading(false)
       }

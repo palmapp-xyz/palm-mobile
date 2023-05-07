@@ -1,19 +1,21 @@
-import React, { ReactElement, useEffect, useState } from 'react'
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
-
-import Clipboard from '@react-native-clipboard/clipboard'
 import { Container, FormText, Header } from 'components'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getMnemonic, getPkey } from 'libs/account'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+
+import Clipboard from '@react-native-clipboard/clipboard'
+import { useToast } from '@sendbird/uikit-react-native-foundation'
 
 const ExportPrivateScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ExportPrivate>()
   const [privateKey, setPrivateKey] = useState('')
   const [mnemonic, setMnemonic] = useState('')
   const [hideKey, setHideKey] = useState(true)
+  const toast = useToast()
 
   const displayKey = mnemonic || privateKey
 
@@ -50,7 +52,7 @@ const ExportPrivateScreen = (): ReactElement => {
         <TouchableOpacity
           style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}
           onPress={(): void => {
-            Alert.alert('Copied')
+            toast.show('Private key copied', 'success')
             Clipboard.setString(displayKey)
           }}
         >

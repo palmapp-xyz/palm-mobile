@@ -23,7 +23,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useToast } from '@sendbird/uikit-react-native-foundation'
 
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 
@@ -47,7 +47,7 @@ const ProfileHeader = React.memo(
     const { getEthPrice } = useEthPrice()
     const { getKlayPrice } = useKlayPrice()
     const { getMaticPrice } = useMaticPrice()
-    const { alert } = useAlert()
+    const toast = useToast()
 
     const { balance: ethBalance } = useUserBalance({
       address: userAddress,
@@ -139,7 +139,7 @@ const ProfileHeader = React.memo(
                 if (!userAddress) {
                   return
                 }
-                alert({ title: 'Address copied', message: userAddress })
+                toast.show('Address copied', 'success')
                 Clipboard.setString(userAddress)
               }}
             >

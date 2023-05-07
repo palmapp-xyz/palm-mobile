@@ -3,16 +3,19 @@ import { Container } from 'components'
 import useAuth from 'hooks/auth/useAuth'
 import { recordError } from 'libs/logger'
 import React, { ReactElement, useEffect } from 'react'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 const SignInWithLens = (): ReactElement => {
   const { lensLogin, logout } = useAuth()
+  const { alert } = useAlert()
 
   useEffect(() => {
     lensLogin().then(res => {
       if (!res.success) {
         recordError(new Error(res.errMsg), 'SignInWithLens:lensLogin')
-        Alert.alert(res.errMsg)
+        alert({ title: 'Failure', message: res.errMsg })
         logout()
       } else {
         if (res.value) {

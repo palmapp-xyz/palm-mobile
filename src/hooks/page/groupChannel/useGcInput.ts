@@ -6,7 +6,6 @@ import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import _ from 'lodash'
 import { useMemo, useState } from 'react'
-import { Alert } from 'react-native'
 import { SetterOrUpdater, useRecoilState } from 'recoil'
 import selectNftStore from 'store/selectNftStore'
 import { Moralis } from 'types'
@@ -16,7 +15,7 @@ import {
   GroupChannelProps,
   useLocalization,
 } from '@sendbird/uikit-react-native'
-import { useToast } from '@sendbird/uikit-react-native-foundation'
+import { useAlert, useToast } from '@sendbird/uikit-react-native-foundation'
 
 export type UseGcInputReturn = {
   receiverList: Member[]
@@ -57,6 +56,7 @@ const useGcInput = ({
     [channel.members]
   )
 
+  const { alert } = useAlert()
   const toast = useToast()
   const { STRINGS } = useLocalization()
 
@@ -101,7 +101,9 @@ const useGcInput = ({
               channelUrl: channel.url,
             })
           } else {
-            Alert.alert('No one to receive NFT here')
+            alert({
+              message: 'No one to receive NFT here.',
+            })
           }
         } else {
           setOpenSelectReceiver(true)

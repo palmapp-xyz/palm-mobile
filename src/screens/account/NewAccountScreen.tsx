@@ -4,13 +4,15 @@ import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo } from 'react'
-import { Alert, FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 
 import Clipboard from '@react-native-clipboard/clipboard'
+import { useToast } from '@sendbird/uikit-react-native-foundation'
 
 const NewAccountScreen = (): ReactElement => {
   const mnemonic = useMemo(() => generateMnemonic(128), [])
   const { navigation } = useAppNavigation()
+  const toast = useToast()
 
   const seedPhrase = mnemonic?.split(' ')
 
@@ -47,7 +49,7 @@ const NewAccountScreen = (): ReactElement => {
           <FormButton
             figure="outline"
             onPress={(): void => {
-              Alert.alert('Copied')
+              toast.show('Seed phrase copied', 'success')
               Clipboard.setString(mnemonic!)
             }}
           >

@@ -4,9 +4,9 @@ import { savePkey } from 'libs/account'
 import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useMemo, useState } from 'react'
-import { Alert } from 'react-native'
 
 import Clipboard from '@react-native-clipboard/clipboard'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
@@ -23,6 +23,7 @@ export type UseRecoverAccountReturn = {
 const useRecoverAccount = (): UseRecoverAccountReturn => {
   const { registerMnemonic } = useAuth()
   const [usePkey, setUsePkey] = useState(false)
+  const { alert } = useAlert()
 
   const [privateKey, setPrivateKey] = useState('')
   const [seedPhrase, setSeedPhrase] = useState<string[]>([])
@@ -73,7 +74,7 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
       }
     } catch (e) {
       recordError(e, 'useRecoverAccount:error')
-      Alert.alert(_.toString(e))
+      alert({ title: 'Failure', message: _.toString(e) })
     }
   }
 
