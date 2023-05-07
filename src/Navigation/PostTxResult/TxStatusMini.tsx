@@ -55,7 +55,7 @@ const TxStatusMini = ({
           <Icon icon="close" size={20} />
         </TouchableOpacity>
       )}
-      <Card style={styles.card}>
+      <Card borderRound={true} style={styles.card}>
         {postTxResult.status === PostTxStatus.POST && (
           <>
             <View style={styles.iconBox}>

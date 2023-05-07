@@ -11,7 +11,7 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
   const { navigation } = useAppNavigation()
 
   return (
-    <Card>
+    <Card borderRound={true}>
       <TouchableOpacity
         style={styles.userBox}
         onPress={(): void => {

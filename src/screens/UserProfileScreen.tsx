@@ -76,7 +76,7 @@ const UserProfileScreen = (): ReactElement => {
         keyExtractor={(item: Moralis.NftCollection): string =>
           `${userAddress}:${item.token_address}`
         }
-        contentContainerStyle={{ rowGap: 4 }}
+        contentContainerStyle={{ rowGap: 8, paddingHorizontal: 4 }}
         onEndReached={(): void => {
           if (useUserNftCollectionReturn.hasNextPage) {
             useUserNftCollectionReturn.fetchNextPage()

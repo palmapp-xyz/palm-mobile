@@ -15,7 +15,7 @@ const ChatCard = ({
   onClick: (value: FbChannel) => void
 }): ReactElement => {
   return (
-    <Card style={{ paddingRight: 0 }}>
+    <Card borderRound={true} style={{ paddingRight: 0 }}>
       <TouchableOpacity onPress={(): void => onClick(chat)}>
         <Row style={styles.channelBox}>
           <View style={styles.channelImg}>

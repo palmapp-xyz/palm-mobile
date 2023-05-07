@@ -1,5 +1,6 @@
+import Card from 'components/atoms/Card'
 import React, { ReactElement, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
@@ -23,18 +24,16 @@ const CollectionNftItemsCollapsible = ({
 }): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   return (
-    <View>
+    <Card borderRound={true} style={styles.container}>
       <TouchableOpacity
         onPress={(): void => {
           setIsOpen(!isOpen)
         }}
       >
-        <View style={styles.header}>
-          <Text style={styles.headerText}>{headerText ?? contractAddress}</Text>
-        </View>
+        <Text style={styles.headerText}>{headerText ?? contractAddress}</Text>
       </TouchableOpacity>
       {isOpen && (
-        <Collapsible collapsed={!isOpen}>
+        <Collapsible collapsed={!isOpen} style={{ marginTop: 20 }}>
           <CollectionNftItems
             userAddress={userAddress}
             contractAddress={contractAddress}
@@ -43,13 +42,13 @@ const CollectionNftItemsCollapsible = ({
           />
         </Collapsible>
       )}
-    </View>
+    </Card>
   )
 }
 
 export default CollectionNftItemsCollapsible
 
 const styles = StyleSheet.create({
-  header: { flex: 1, paddingHorizontal: 10, paddingVertical: 20 },
+  container: { flex: 1 },
   headerText: { fontSize: 16, fontWeight: '500' },
 })
