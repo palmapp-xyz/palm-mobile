@@ -157,16 +157,6 @@ const formatPercentage = (per: BigNumber): string => {
     : per.multipliedBy(100).toFixed(2)
 }
 
-const isURL = (value: string): boolean => {
-  try {
-    // eslint-disable-next-line no-new
-    new URL(value)
-    return true
-  } catch {
-    return false
-  }
-}
-
 const noUndefinedObj = <T extends object & { length?: never }>(obj: T): T => {
   return JSON.parse(JSON.stringify(obj)) as T
 }
@@ -193,6 +183,5 @@ export default {
   toBase64,
   fromBase64,
   formatPercentage,
-  isURL,
   noUndefinedObj,
 }

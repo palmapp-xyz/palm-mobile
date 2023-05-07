@@ -9,10 +9,8 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getProfileMediaImg } from 'libs/lens'
 import { Routes } from 'libs/navigation'
-import { isLensProfile } from 'libs/profile'
 import React, { ReactElement } from 'react'
 import {
-  FlatList,
   ImageBackground,
   Pressable,
   StyleSheet,
@@ -25,6 +23,7 @@ import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useToast } from '@sendbird/uikit-react-native-foundation'
 
+import LensProfileHeaderSection from './LensProfileHeaderSection'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 
 export type ProfileHeaderProps = {
@@ -62,7 +61,7 @@ const ProfileHeader = React.memo(
       chain: SupportedNetworkEnum.POLYGON,
     })
 
-    const { profile } = useProfile({ profileId: userProfileId })
+    const { profile, lensProfile } = useProfile({ profileId: userProfileId })
     const profileImg = getProfileMediaImg(profile?.picture)
 
     return (
@@ -156,22 +155,9 @@ const ProfileHeader = React.memo(
               {profile?.bio}
             </FormText>
           </View>
-          <Row style={{ alignItems: 'center', columnGap: 8 }}>
-            <Row>
-              <FormText fontType="R.12">Followers</FormText>
-              <FormText fontType="B.12">123k</FormText>
-            </Row>
-            <FormText fontType="R.12">∙</FormText>
-            <Row>
-              <FormText fontType="R.12">Following</FormText>
-              <FormText fontType="B.12">123k</FormText>
-            </Row>
-            <FormText fontType="R.12">∙</FormText>
-            <Row>
-              <FormText fontType="R.12">NFT</FormText>
-              <FormText fontType="B.12">123,456</FormText>
-            </Row>
-          </Row>
+          {lensProfile && (
+            <LensProfileHeaderSection lensProfile={lensProfile} />
+          )}
           <View style={styles.walletBalanceBox}>
             <Row
               style={{
@@ -257,44 +243,6 @@ const ProfileHeader = React.memo(
               </View>
             </View>
           </View>
-          {profile &&
-            isLensProfile(profile) &&
-            !!profile?.attributes?.length && (
-              <View
-                style={{
-                  padding: 6,
-                }}
-              >
-                <FlatList
-                  data={profile.attributes}
-                  keyExtractor={(item, index): string =>
-                    `profile-attribute-${index}`
-                  }
-                  horizontal
-                  contentContainerStyle={{
-                    gap: 20,
-                    marginHorizontal: '5%',
-                  }}
-                  renderItem={({
-                    item,
-                  }: {
-                    item: { key: string; value: string }
-                  }): ReactElement | null =>
-                    item.key === 'app' ? null : (
-                      <View
-                        style={{
-                          marginHorizontal: 15,
-                          alignItems: 'center',
-                        }}
-                      >
-                        <FormText style={styles.attribute}>{item.key}</FormText>
-                        <FormText>{item.value}</FormText>
-                      </View>
-                    )
-                  }
-                />
-              </View>
-            )}
           <View style={{ paddingTop: 32, rowGap: 12, paddingBottom: 12 }}>
             <FormText fontType="B.14">NFT List</FormText>
             <SupportedNetworkRow
@@ -329,7 +277,7 @@ const styles = StyleSheet.create({
     borderColor: COLOR.black._400,
     borderRadius: 20,
   },
-  walletBalanceBox: { paddingTop: 32 },
+  walletBalanceBox: { paddingTop: 24 },
   balanceItemCard: {
     paddingVertical: 12,
     paddingHorizontal: 16,

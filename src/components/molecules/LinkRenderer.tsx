@@ -1,5 +1,6 @@
 import { COLOR } from 'consts'
 import { fixTokenUri } from 'libs/ipfs'
+import { isValidHttpUrl } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import {
   ImageStyle,
@@ -33,9 +34,8 @@ const LinkRenderer = ({
   const fixedUrl = fixTokenUri(String(src))
   return (
     <TouchableOpacity
-      onPress={async (): Promise<void> => {
-        const canOpen = !!fixedUrl && (await Linking.canOpenURL(fixedUrl))
-        if (canOpen) {
+      onPress={(): void => {
+        if (isValidHttpUrl(fixedUrl)) {
           Linking.openURL(fixedUrl)
         }
       }}
