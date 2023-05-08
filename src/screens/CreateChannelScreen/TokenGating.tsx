@@ -4,7 +4,6 @@ import {
   FormImage,
   FormText,
   Header,
-  KeyboardAvoidingView,
   SupportedNetworkRow,
 } from 'components'
 import { COLOR, NETWORK } from 'consts'
@@ -66,7 +65,7 @@ const TokenGating = ({
   })
 
   return (
-    <Container style={styles.container}>
+    <Container style={styles.container} keyboardAvoiding={true}>
       <Header
         left={
           step === 2 ? (
@@ -189,28 +188,26 @@ const TokenGating = ({
           />
         </View>
       )}
-      <KeyboardAvoidingView>
-        <View style={styles.footer}>
-          {step === 1 ? (
-            <FormButton
-              onPress={(): void => {
-                setStep(2)
-              }}
-            >
-              Next
-            </FormButton>
-          ) : (
-            <FormButton
-              disabled={!gatingTokenAmount}
-              onPress={(): void => {
-                setShowTokenGating(false)
-              }}
-            >
-              Done
-            </FormButton>
-          )}
-        </View>
-      </KeyboardAvoidingView>
+      <View style={styles.footer}>
+        {step === 1 ? (
+          <FormButton
+            onPress={(): void => {
+              setStep(2)
+            }}
+          >
+            Next
+          </FormButton>
+        ) : (
+          <FormButton
+            disabled={!gatingTokenAmount}
+            onPress={(): void => {
+              setShowTokenGating(false)
+            }}
+          >
+            Done
+          </FormButton>
+        )}
+      </View>
     </Container>
   )
 }

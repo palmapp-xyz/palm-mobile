@@ -42,7 +42,7 @@ const CreateChannelScreen = (): ReactElement => {
 
   return (
     <>
-      <Container style={styles.container}>
+      <Container style={styles.container} keyboardAvoiding={true}>
         <ScrollView>
           <Header
             left="back"
@@ -81,7 +81,14 @@ const CreateChannelScreen = (): ReactElement => {
               <FormText fontType="R.12" color={COLOR.black._400}>
                 Description
               </FormText>
-              <FormInput value={desc} onChangeText={setDesc} />
+              <FormInput
+                value={desc}
+                onChangeText={setDesc}
+                fontType="R.12"
+                multiline={true}
+                placeholder="Please write something to describe about the channel."
+                style={{ height: 100 }}
+              />
             </View>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>

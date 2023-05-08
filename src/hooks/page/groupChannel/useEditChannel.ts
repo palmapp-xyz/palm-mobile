@@ -89,7 +89,7 @@ const useEditChannel = ({
     }
   }, [fsChannelField])
 
-  const isValidForm = !!channelName
+  const isValidForm = !!channelName && channel?.myRole === 'operator'
 
   const updateGatingTokenAmount = (amount: string): void => {
     setSelectedGatingToken(ori => ({ ...ori, amount }))

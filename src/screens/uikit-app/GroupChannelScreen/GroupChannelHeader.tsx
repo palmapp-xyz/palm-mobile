@@ -1,3 +1,4 @@
+import images from 'assets/images'
 import { FormImage, Row } from 'components'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -15,11 +16,10 @@ import {
 } from '@sendbird/uikit-react-native'
 import {
   Avatar,
-  createStyleSheet,
   Header,
+  createStyleSheet,
   useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
-import images from 'assets/images'
 
 const GroupChannelHeader = ({
   onPressHeaderLeft,

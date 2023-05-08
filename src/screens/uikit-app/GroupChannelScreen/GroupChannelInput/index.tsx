@@ -18,11 +18,11 @@ import {
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 import useMentionTextInput from '@sendbird/uikit-react-native/src/hooks/useMentionTextInput'
 import {
-  getGroupChannelChatAvailableState,
-  replace,
   SendbirdFileMessage,
   SendbirdGroupChannel,
   SendbirdUserMessage,
+  getGroupChannelChatAvailableState,
+  replace,
   useIIFE,
 } from '@sendbird/uikit-utils'
 

@@ -68,7 +68,7 @@ const CreateProfileScreen = (): ReactElement => {
   }
 
   return (
-    <Container style={styles.container}>
+    <Container style={styles.container} keyboardAvoiding={true}>
       <Header left="back" onPressLeft={navigation.goBack} />
 
       <View style={styles.body}>

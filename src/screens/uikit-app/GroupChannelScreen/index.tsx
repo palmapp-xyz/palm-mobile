@@ -3,10 +3,12 @@ import ChannelGatingChecker from 'components/ChannelGatingChecker'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import React, { ReactElement, useEffect, useMemo } from 'react'
+import React, { ReactElement, useCallback, useEffect, useMemo } from 'react'
 import { BackHandler, Platform } from 'react-native'
+import { AvoidSoftInput } from 'react-native-avoid-softinput'
 
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import { useFocusEffect } from '@react-navigation/native'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import {
@@ -92,8 +94,21 @@ const Contents = ({
     }
   }, [])
 
+  const onFocusEffect = useCallback(() => {
+    AvoidSoftInput.setAdjustNothing()
+    AvoidSoftInput.setEnabled(true)
+    return () => {
+      AvoidSoftInput.setEnabled(false)
+      AvoidSoftInput.setDefaultAppSoftInputMode()
+    }
+  }, [])
+
+  useFocusEffect(onFocusEffect)
+
   return (
     <GroupChannelFragment
+      keyboardAvoidOffset={-280}
+      enableTypingIndicator={true}
       channel={channel}
       onPressMediaMessage={(fileMessage, deleteMessage): void => {
         // Navigate to media viewer

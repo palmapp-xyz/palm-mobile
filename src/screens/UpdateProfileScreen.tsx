@@ -5,6 +5,7 @@ import { COLOR } from 'consts'
 import { PublicationMetadataStatusType } from 'graphqls/__generated__/graphql'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getAttributesData } from 'libs/lens'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -15,6 +16,7 @@ import {
   AttributeData,
   ProfileMetadata,
 } from '@lens-protocol/react-native-lens-ui-kit'
+import { useLocalization } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 const UpdateProfileScreen = (): ReactElement => {
@@ -22,6 +24,8 @@ const UpdateProfileScreen = (): ReactElement => {
   const { alert } = useAlert()
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
+  const { navigation } = useAppNavigation()
+  const { STRINGS } = useLocalization()
 
   const { profile, setMetadata } = useProfile({
     profileId: user?.auth?.profileId,
@@ -39,27 +43,31 @@ const UpdateProfileScreen = (): ReactElement => {
         attributes,
       } as Partial<ProfileMetadata>)
       setLoading(false)
-      setTimeout(() => {
-        if (!result.success) {
-          if (result.errMsg === PublicationMetadataStatusType.Pending) {
-            alert({
-              title: 'Pending',
-              message:
-                'Your profile will be reflected once update transaction gets indexed.',
-            })
-          } else {
-            alert({
-              title: 'Failure',
-              message: result.errMsg,
-            })
-          }
+      if (!result.success) {
+        if (result.errMsg === PublicationMetadataStatusType.Pending) {
+          alert({
+            title: 'Pending',
+            message:
+              'Your profile will be reflected once update transaction gets indexed.',
+          })
         } else {
           alert({
-            title: 'Success',
-            message: 'Profile updated',
+            title: 'Failure',
+            message: result.errMsg,
           })
         }
-      }, 100)
+      } else {
+        alert({
+          title: 'Success',
+          message: 'Profile updated',
+          buttons: [
+            {
+              text: STRINGS.DIALOG.ALERT_DEFAULT_OK,
+              onPress: () => navigation.goBack(),
+            },
+          ],
+        })
+      }
     }
   }
 
@@ -95,7 +103,7 @@ const UpdateProfileScreen = (): ReactElement => {
   const maxBioLength = 300
 
   return (
-    <Container style={styles.container}>
+    <Container style={styles.container} keyboardAvoiding={true}>
       <UpdateProfileHeader
         userProfileId={user?.auth?.profileId}
         userAddress={user?.address}

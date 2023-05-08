@@ -1,14 +1,14 @@
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { Switch } from '@sendbird/uikit-react-native-foundation'
-import React, { ReactElement, useState } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
-
 import { Container, FormText, Header } from 'components'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import React, { ReactElement, useState } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { Switch } from '@sendbird/uikit-react-native-foundation'
 
 const ChannelSettingScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelSetting>()
@@ -52,7 +52,9 @@ const ChannelSettingScreen = (): ReactElement => {
             navigation.navigate(Routes.EditChannel, params)
           }}
         >
-          <FormText>Edit Chat Room Profile</FormText>
+          <FormText>
+            {channel.myRole === 'operator' ? 'Edit ' : ''}Chat Room Profile
+          </FormText>
           <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
         </TouchableOpacity>
       </View>

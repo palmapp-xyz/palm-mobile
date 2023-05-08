@@ -5,7 +5,6 @@ import {
   FormInput,
   FormText,
   Header,
-  KeyboardAvoidingView,
   MenuItem,
   Row,
 } from 'components'
@@ -53,7 +52,7 @@ const RecoverAccountScreen = (): ReactElement => {
   }
 
   return (
-    <Container style={styles.container}>
+    <Container style={styles.container} keyboardAvoiding={true}>
       <Header left="back" onPressLeft={navigation.goBack} />
       <View style={styles.body}>
         <View style={{ rowGap: 8 }}>
@@ -140,17 +139,15 @@ const RecoverAccountScreen = (): ReactElement => {
         )}
       </View>
 
-      <KeyboardAvoidingView>
-        <View style={styles.footer}>
-          <FormButton
-            size="lg"
-            disabled={!isValidForm || loading}
-            onPress={onPressConfirm}
-          >
-            {isSignUp ? 'Import the Wallet' : 'Verify'}
-          </FormButton>
-        </View>
-      </KeyboardAvoidingView>
+      <View style={styles.footer}>
+        <FormButton
+          size="lg"
+          disabled={!isValidForm || loading}
+          onPress={onPressConfirm}
+        >
+          {isSignUp ? 'Import the Wallet' : 'Verify'}
+        </FormButton>
+      </View>
     </Container>
   )
 }

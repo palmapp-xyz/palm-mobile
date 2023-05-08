@@ -70,7 +70,6 @@ const useSendbird = (): UseSendbirdReturn => {
         coverImage,
         isDistinct,
         operatorUserIds,
-        isPublic: true,
       }
       channel = await sdk.groupChannel.createChannel(
         UTIL.noUndefinedObj(params)

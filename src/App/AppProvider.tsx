@@ -13,6 +13,7 @@ import { isMainnet } from 'libs/utils'
 import React, { ReactElement, ReactNode } from 'react'
 import Config from 'react-native-config'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { MenuProvider } from 'react-native-popup-menu'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil'
@@ -85,7 +86,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
             }}
           >
             <GestureHandlerRootView style={{ flex: 1 }}>
-              {children}
+              <KeyboardProvider>{children}</KeyboardProvider>
             </GestureHandlerRootView>
           </SendbirdUIKitContainer>
         </MenuProvider>
