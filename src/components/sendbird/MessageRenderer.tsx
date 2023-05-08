@@ -14,7 +14,6 @@ import MessageIncomingSenderName from '@sendbird/uikit-react-native/src/componen
 import MessageOutgoingStatus from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageOutgoingStatus'
 import MessageTime from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageTime'
 import UnknownMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UnknownMessage'
-import UserMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UserMessage'
 import { DEFAULT_LONG_PRESS_DELAY } from '@sendbird/uikit-react-native/src/constants'
 import {
   calcMessageGrouping,
@@ -28,6 +27,7 @@ import MessageIncomingAvatar from './MessageIncomingAvatar'
 import NftMessage from './NftMessage'
 
 import type { SendbirdMessage } from '@sendbird/uikit-utils'
+import UserMessage from './UserMessage'
 type MessageStyleVariant = 'outgoing' | 'incoming'
 export type MessageRendererInterface<
   T = SendbirdMessage,
@@ -89,7 +89,12 @@ const MessageRenderer: GroupChannelProps['Fragment']['renderMessage'] = ({
       onLongPress,
       delayLongPress: DEFAULT_LONG_PRESS_DELAY,
     }
-    const messageProps = { ...rest, variant, groupWithNext, groupWithPrev }
+    const messageProps = {
+      ...rest,
+      variant,
+      groupWithNext,
+      groupWithPrev,
+    }
 
     if (message.isUserMessage()) {
       return (

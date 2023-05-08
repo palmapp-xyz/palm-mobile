@@ -1,6 +1,6 @@
 import { COLOR } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Platform, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import BottomSheet from '@gorhom/bottom-sheet'
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
@@ -31,6 +31,7 @@ const FormBottomSheet = ({
             enablePanDownToClose
             onClose={onClose}
             backgroundStyle={backgroundStyle}
+            containerStyle={{ marginBottom: Platform.select({ android: 30 }) }}
           >
             {children}
           </BottomSheet>
