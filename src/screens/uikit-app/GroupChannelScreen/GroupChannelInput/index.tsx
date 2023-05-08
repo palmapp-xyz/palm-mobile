@@ -1,4 +1,3 @@
-import { COLOR } from 'consts'
 import useGcInput from 'hooks/page/groupChannel/useGcInput'
 import React, {
   MutableRefObject,
@@ -125,14 +124,14 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
   return (
     <>
       <KeyboardAvoidingView
-        style={{
-          position: 'absolute',
-          width: '100%',
-          bottom: 0,
-          borderTopColor: COLOR.black._100,
-          borderTopWidth: 1,
-          zIndex: 1,
-        }}
+        // style={{
+        //   position: 'absolute',
+        //   width: '100%',
+        //   bottom: 0,
+        //   borderTopColor: COLOR.black._100,
+        //   borderTopWidth: 1,
+        //   zIndex: 1,
+        // }}
         keyboardVerticalOffset={keyboardAvoidOffset - bottom}
         behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}
       >

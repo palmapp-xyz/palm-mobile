@@ -148,7 +148,6 @@ const GroupChannelMessageList = ({
           // { minHeight: '100%', justifyContent: 'flex-end' },
           channel.isFrozen && styles.frozenListPadding,
           flatListProps?.contentContainerStyle,
-          { paddingTop: 80 },
         ]}
       />
       {renderNewMessagesButton && (
