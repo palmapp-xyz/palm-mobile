@@ -54,7 +54,7 @@ const TokenGating = ({
   const [step, setStep] = useState<1 | 2>(1)
 
   const { user } = useAuth()
-  console.log('selectedGatingToken : ', selectedGatingToken)
+
   const gatingTokenNetwork =
     selectedGatingToken?.chain || SupportedNetworkEnum.ETHEREUM
   const gatingTokenAmount = selectedGatingToken?.amount || ''

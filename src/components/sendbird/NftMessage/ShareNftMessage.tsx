@@ -30,7 +30,6 @@ const ShareNftMessage = ({
     chain,
     width: '100%',
     height: 150,
-    style: { borderRadius: 10 },
   }
 
   return (
@@ -59,6 +58,7 @@ const ShareNftMessage = ({
               borderRadius: 18,
               borderTopLeftRadius: 0,
               borderTopRightRadius: 0,
+              maxWidth: 'auto',
             }}
           />
         </VerifiedWrapper>

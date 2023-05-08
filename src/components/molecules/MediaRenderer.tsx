@@ -56,16 +56,17 @@ const MediaRenderer = ({
   dim = dim > 0 ? dim : undefined
 
   const containerStyle: StyleProp<RNFastImageStyle> = [
-    style,
     {
       width,
       height,
       maxWidth: dim,
       maxHeight: dim,
     },
+    style,
   ]
 
   const videoOrImageSrc = useResolvedMediaType(src ?? '')
+
   if (videoOrImageSrc.isLoading || loading) {
     return (
       <Card center={true} style={containerStyle}>
