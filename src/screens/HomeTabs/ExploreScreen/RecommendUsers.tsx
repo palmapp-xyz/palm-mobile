@@ -1,24 +1,23 @@
-import { FormImage, FormText, Row } from 'components'
+import { FormText } from 'components'
 import UserCard from 'components/exploreTab/UserCard'
 import { COLOR } from 'consts'
 import useExploreRecommendUsers from 'hooks/page/explore/useExploreRecommendUsers'
 import _ from 'lodash'
-import React, { ReactElement, useState } from 'react'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import React, { ReactElement } from 'react'
+import { StyleSheet, View } from 'react-native'
 
 const RecommendUsers = (): ReactElement => {
-  const [selectedOption, setSelectedOption] = useState('')
+  // const [selectedOption, setSelectedOption] = useState('')
 
-  const optionList = [
-    { id: '1', img: require('assets/temp/thumbs1.png') },
-    { id: '2', img: require('assets/temp/thumbs2.png') },
-    { id: '3', img: require('assets/temp/thumbs3.png') },
-    { id: '4', img: require('assets/temp/thumbs4.png') },
-    { id: '5', img: require('assets/temp/thumbs5.png') },
-    { id: '6', img: require('assets/temp/thumbs6.png') },
-    { id: '7', img: require('assets/temp/thumbs7.png') },
-  ]
+  // const optionList = [
+  //   { id: '1', img: require('assets/temp/thumbs1.png') },
+  //   { id: '2', img: require('assets/temp/thumbs2.png') },
+  //   { id: '3', img: require('assets/temp/thumbs3.png') },
+  //   { id: '4', img: require('assets/temp/thumbs4.png') },
+  //   { id: '5', img: require('assets/temp/thumbs5.png') },
+  //   { id: '6', img: require('assets/temp/thumbs6.png') },
+  //   { id: '7', img: require('assets/temp/thumbs7.png') },
+  // ]
 
   const { fsProfileList } = useExploreRecommendUsers()
 
@@ -30,7 +29,7 @@ const RecommendUsers = (): ReactElement => {
             {'What about users\nwith similar tastes?'}
           </FormText>
         </View>
-        <FlatList
+        {/* <FlatList
           data={optionList}
           keyExtractor={(_item, index): string => `optionList-${index}`}
           horizontal
@@ -52,10 +51,10 @@ const RecommendUsers = (): ReactElement => {
               </TouchableOpacity>
             )
           }}
-        />
+        /> */}
       </View>
       <View style={styles.body}>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Row
             style={{
               justifyContent: 'flex-end',
@@ -69,7 +68,7 @@ const RecommendUsers = (): ReactElement => {
               Refresh List
             </FormText>
           </Row>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.optionResultList}>
           {_.map(fsProfileList, (user, index) => (
             <UserCard key={`userList-${index}`} user={user} />

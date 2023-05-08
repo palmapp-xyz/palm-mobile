@@ -1,12 +1,11 @@
-import { FormText, MenuItem, Row } from 'components'
+import { FormText } from 'components'
 import ChatCard from 'components/exploreTab/ChatCard'
 import { COLOR } from 'consts'
 import useExploreRecommendChat from 'hooks/page/explore/useExploreRecommendChat'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
-import React, { ReactElement, useState } from 'react'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import React, { ReactElement } from 'react'
+import { StyleSheet, View } from 'react-native'
 
 const RecommendChat = ({
   useExploreSearchReturn,
@@ -15,14 +14,14 @@ const RecommendChat = ({
 }): ReactElement => {
   const { setSelectedChannel } = useExploreSearchReturn
 
-  const [selectedOption, setSelectedOption] = useState('')
+  // const [selectedOption, setSelectedOption] = useState('')
 
-  const optionList = [
-    { id: '1', title: 'gogoKlay' },
-    { id: '2', title: 'stop falling' },
-    { id: '3', title: 'sample1' },
-    { id: '4', title: 'sample2' },
-  ]
+  // const optionList = [
+  //   { id: '1', title: 'gogoKlay' },
+  //   { id: '2', title: 'stop falling' },
+  //   { id: '3', title: 'sample1' },
+  //   { id: '4', title: 'sample2' },
+  // ]
 
   const { fsChannelList } = useExploreRecommendChat()
 
@@ -34,7 +33,7 @@ const RecommendChat = ({
             {'How about to join\na chat room?'}
           </FormText>
         </View>
-        <FlatList
+        {/* <FlatList
           data={optionList}
           keyExtractor={(_item, index): string => `optionList-${index}`}
           horizontal
@@ -47,10 +46,10 @@ const RecommendChat = ({
               setSelected={setSelectedOption}
             />
           )}
-        />
+        /> */}
       </View>
       <View style={styles.body}>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Row
             style={{
               justifyContent: 'flex-end',
@@ -64,7 +63,7 @@ const RecommendChat = ({
               Refresh List
             </FormText>
           </Row>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.optionResultList}>
           {_.map(fsChannelList, (chat, index) => (
             <ChatCard
