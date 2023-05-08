@@ -10,7 +10,6 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   useWindowDimensions,
   View,
 } from 'react-native'
@@ -60,9 +59,9 @@ const CollectionNftItems = ({
       onEndReachedThreshold={0.5}
       initialNumToRender={10}
       renderItem={({ item }): ReactElement => (
-        <TouchableWithoutFeedback
-          style={styles.item}
-          onPress={(): void => {
+        <View
+          style={{ flex: 1, alignItems: 'center' }}
+          onTouchEnd={(): void => {
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
@@ -96,7 +95,7 @@ const CollectionNftItems = ({
               />
             )}
           </ChainLogoWrapper>
-        </TouchableWithoutFeedback>
+        </View>
       )}
     />
   )
@@ -106,9 +105,6 @@ export default CollectionNftItems
 
 const styles = StyleSheet.create({
   item: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     margin: 4,
   },
   nftTitle: {

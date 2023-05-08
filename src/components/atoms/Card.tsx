@@ -22,8 +22,6 @@ export default Card
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
     paddingVertical: 16,
     paddingHorizontal: 20,
     backgroundColor: 'white',
@@ -32,6 +30,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   center: {
+    width: '100%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
