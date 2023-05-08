@@ -72,7 +72,7 @@ const UserProfileScreen = (): ReactElement => {
         }
         ListHeaderComponent={profileHeader}
         ListFooterComponent={profileFooter}
-        data={useUserNftCollectionReturn.items.filter(x => !!x)}
+        data={useUserNftCollectionReturn.items}
         keyExtractor={(item: Moralis.NftCollection): string =>
           `${userAddress}:${item.token_address}`
         }

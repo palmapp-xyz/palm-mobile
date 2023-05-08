@@ -2,13 +2,14 @@ import {
   ChainLogoWrapper,
   Container,
   FormInput,
+  FormText,
   Header,
   KeyboardAvoidingView,
   MoralisNftRenderer,
   Row,
   SubmitButton,
 } from 'components'
-import { COLOR, UTIL } from 'consts'
+import { COLOR, NETWORK, UTIL } from 'consts'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
@@ -18,8 +19,8 @@ import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import React, { ReactElement } from 'react'
-import { Keyboard, StyleSheet, Text, View } from 'react-native'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { FlatList, Keyboard, StyleSheet, View } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import { useRecoilValue } from 'recoil'
 import selectNftStore from 'store/selectNftStore'
@@ -27,7 +28,6 @@ import { Moralis, QueryKeyEnum, SupportedNetworkEnum, Token } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 const Contents = ({
   channelUrl,
@@ -39,6 +39,10 @@ const Contents = ({
   chain: SupportedNetworkEnum
 }): ReactElement => {
   const nftContract = selectedNft.token_address
+
+  const [attributes, setAttributes] = useState<
+    { trait_type: string; value: string }[]
+  >([])
   const { price, setPrice, isApproved, onClickApprove, onClickConfirm } =
     useZxListNft({
       nftContract,
@@ -73,10 +77,17 @@ const Contents = ({
     channel.sendFileMessage(imgInfo)
   }
 
+  useEffect(() => {
+    try {
+      setAttributes(JSON.parse(selectedNft.metadata || '')?.attributes)
+    } catch {}
+  }, [])
+
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.body}>
         <View style={{ paddingHorizontal: 20 }}>
+          <FormText fontType="B.14">I want to sell this NFT for</FormText>
           <Row style={{ paddingBottom: 10 }}>
             <View style={{ width: 100, height: 100, marginEnd: 10 }}>
               <ChainLogoWrapper chain={chain}>
@@ -84,29 +95,27 @@ const Contents = ({
               </ChainLogoWrapper>
             </View>
             <View style={{ rowGap: 10 }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
-                {tokenName}
-              </Text>
-              <Text>#{selectedNft.token_id}</Text>
+              <FormText style={{ fontWeight: 'bold' }}>{tokenName}</FormText>
+              <FormText>#{selectedNft.token_id}</FormText>
             </View>
           </Row>
           <Row style={styles.traitsBox}>
-            <View style={styles.traits}>
-              <Text>Background</Text>
-              <Text style={{ color: COLOR.primary._400 }}>Blue</Text>
-            </View>
-            <View style={styles.traits}>
-              <Text>Face</Text>
-              <Text style={{ color: COLOR.primary._400 }}>Default</Text>
-            </View>
-            <View style={styles.traits}>
-              <Text>Hair</Text>
-              <Text style={{ color: COLOR.primary._400 }}>Yellow Star</Text>
-            </View>
-            <View style={styles.traits}>
-              <Text>Hair</Text>
-              <Text style={{ color: COLOR.primary._400 }}>Yellow Star</Text>
-            </View>
+            <FlatList
+              data={attributes}
+              keyExtractor={(item, index): string => `attributes-${index}`}
+              horizontal
+              contentContainerStyle={{ gap: 10 }}
+              renderItem={({ item }): ReactElement => {
+                return (
+                  <View style={styles.traits}>
+                    <FormText>{item.trait_type}</FormText>
+                    <FormText style={{ color: COLOR.primary._400 }}>
+                      {item.value}
+                    </FormText>
+                  </View>
+                )
+              }}
+            />
           </Row>
         </View>
         <View>
@@ -114,16 +123,18 @@ const Contents = ({
             <View>
               <View style={styles.priceBox}>
                 <Row style={{ justifyContent: 'space-between' }}>
-                  <Text style={{ color: 'white' }}>Current Floor Price</Text>
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                  <FormText style={{ color: 'white' }}>
+                    Current Floor Price
+                  </FormText>
+                  <FormText style={{ color: 'white', fontWeight: 'bold' }}>
                     2.5 ETH
-                  </Text>
+                  </FormText>
                 </Row>
                 <Row style={{ justifyContent: 'space-between' }}>
-                  <Text style={{ color: 'white' }}>Gas Fee</Text>
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                  <FormText style={{ color: 'white' }}>Gas Fee</FormText>
+                  <FormText style={{ color: 'white', fontWeight: 'bold' }}>
                     0.01 ETH
-                  </Text>
+                  </FormText>
                 </Row>
                 <View style={{ position: 'relative' }}>
                   <FormInput
@@ -134,16 +145,15 @@ const Contents = ({
                       setPrice(value as Token)
                     }}
                   />
-                  <Text
+                  <FormText
                     style={{
-                      fontSize: 16,
                       position: 'absolute',
                       right: 20,
                       top: 15,
                     }}
                   >
-                    ETH
-                  </Text>
+                    {NETWORK.nativeToken[chain]}
+                  </FormText>
                 </View>
               </View>
               <View
@@ -151,21 +161,20 @@ const Contents = ({
               >
                 <Row style={{ alignItems: 'flex-start' }}>
                   <Ionicon name="checkmark-circle-outline" size={14} />
-                  <Text style={{ fontSize: 14, paddingRight: 15 }}>
+                  <FormText style={{ paddingRight: 15 }}>
                     The sale will be accepted and concluded unless you cancel
                     it.
-                  </Text>
+                  </FormText>
                 </Row>
                 <Row style={{ alignItems: 'flex-start' }}>
                   <Ionicon name="checkmark-circle-outline" size={14} />
-                  <Text style={{ fontSize: 14 }}>
+                  <FormText style={{}}>
                     The sale listing is valid for 24 hours.
-                  </Text>
+                  </FormText>
                 </Row>
               </View>
               <SubmitButton
                 network={SupportedNetworkEnum.ETHEREUM}
-                containerStyle={{ borderRadius: 0 }}
                 disabled={!price}
                 onPress={async (): Promise<void> => {
                   Keyboard.dismiss()
@@ -179,20 +188,21 @@ const Contents = ({
           ) : (
             <View>
               <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                <FormText style={{ fontWeight: 'bold' }}>
                   Approve to list your NFT
-                </Text>
+                </FormText>
               </View>
-              <SubmitButton
-                network={SupportedNetworkEnum.ETHEREUM}
-                containerStyle={{ borderRadius: 0 }}
-                onPress={(): void => {
-                  Keyboard.dismiss()
-                  onClickApprove()
-                }}
-              >
-                Approve
-              </SubmitButton>
+              <View style={styles.footer}>
+                <SubmitButton
+                  network={SupportedNetworkEnum.ETHEREUM}
+                  onPress={(): void => {
+                    Keyboard.dismiss()
+                    onClickApprove()
+                  }}
+                >
+                  Approve
+                </SubmitButton>
+              </View>
             </View>
           )}
         </View>
@@ -213,8 +223,7 @@ const ListNftScreen = (): ReactElement => {
   return (
     <Container style={{ flex: 1 }}>
       <Header
-        title="List NFT"
-        left={<Icon icon={'close'} />}
+        right={<Ionicon name={'close'} size={28} />}
         onPressLeft={navigation.goBack}
       />
       {selectedNftList.length > 0 && (
@@ -254,5 +263,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.primary._100,
     borderRadius: 15,
     padding: 20,
+  },
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: COLOR.black._90010,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
   },
 })

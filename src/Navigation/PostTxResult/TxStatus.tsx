@@ -127,11 +127,7 @@ const TxStatus = ({
                   marginBottom: 10,
                 }}
               >
-                <Text>
-                  {typeof postTxResult.error === 'object'
-                    ? JSON.stringify(postTxResult.error)
-                    : _.toString(postTxResult.error)}
-                </Text>
+                <Text>{_.toString(postTxResult.error)}</Text>
               </ScrollView>
               <FormButton onPress={onPressClose}>Close</FormButton>
             </>

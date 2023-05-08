@@ -40,6 +40,7 @@ const useUserNftCollectionList = ({
           limit,
           cursor: pageParam,
         })
+
         const fetchResult = await getApi<ApiEnum.COLLECTIONS>({ path })
         if (fetchResult.success) {
           return fetchResult.data
@@ -60,7 +61,10 @@ const useUserNftCollectionList = ({
     }
   )
 
-  const items = useMemo(() => _.flatten(data?.pages.map(x => x.result)), [data])
+  const items = useMemo(
+    () => _.flatten(data?.pages.map(x => x.result)).filter(x => !!x),
+    [data]
+  )
 
   return {
     items,

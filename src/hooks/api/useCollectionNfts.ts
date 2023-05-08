@@ -78,7 +78,10 @@ const useCollectionNfts = ({
     }
   )
 
-  const items = useMemo(() => _.flatten(data?.pages.map(x => x.result)), [data])
+  const items = useMemo(
+    () => _.flatten(data?.pages.map(x => x.result)).filter(x => !!x),
+    [data]
+  )
 
   return {
     items,

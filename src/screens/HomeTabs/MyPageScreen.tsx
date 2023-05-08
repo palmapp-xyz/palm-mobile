@@ -102,7 +102,7 @@ const MyPageScreen = (): ReactElement => {
         }
         ListHeaderComponent={profileHeader}
         ListFooterComponent={profileFooter}
-        data={useMyNftCollectionReturn.items.filter(x => !!x)}
+        data={useMyNftCollectionReturn.items}
         keyExtractor={(item: Moralis.NftCollection): string =>
           `${user?.address}:${item.token_address}`
         }

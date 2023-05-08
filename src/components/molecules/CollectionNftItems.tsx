@@ -48,7 +48,7 @@ const CollectionNftItems = ({
 
   return (
     <FlatList
-      data={items.filter(x => !!x)}
+      data={items}
       keyExtractor={(item): string => `${item.token_address}:${item.token_id}`}
       numColumns={2}
       onEndReached={(): void => {
