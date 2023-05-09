@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import TokenGating from './TokenGating'
 
-const CreateChannelScreen = (): ReactElement => {
+const EditChannelScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.EditChannel>()
   const useEditChannelReturn = useEditChannel({ channelUrl: params.channelUrl })
 
@@ -198,7 +198,7 @@ const CreateChannelScreen = (): ReactElement => {
   )
 }
 
-export default CreateChannelScreen
+export default EditChannelScreen
 
 const styles = StyleSheet.create({
   container: { flex: 1 },

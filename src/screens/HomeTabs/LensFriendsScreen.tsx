@@ -6,10 +6,10 @@ import useFsProfile from 'hooks/firestore/useFsProfile'
 import useLens from 'hooks/lens/useLens'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { formatValues } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
+import { filterUndefined } from 'libs/utils'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
@@ -32,7 +32,7 @@ const LensFriendsScreen = (): ReactElement => {
   const { connect } = useConnection()
   const { user } = useAuth()
   const { fetchUserProfileId } = useAuthChallenge()
-  const { createGroupChatIfNotExist, generateDmChannelUrl } = useSendbird()
+  const { createGroupChat, generateDmChannelUrl } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { getDefaultProfile } = useLens()
   const { fetchProfile } = useFsProfile({})
@@ -54,7 +54,7 @@ const LensFriendsScreen = (): ReactElement => {
 
     const userProfileId = await fetchUserProfileId(profile.ownedBy)
     const userProfile = await fetchProfile(userProfileId!)
-    const ret: FbProfile | undefined = formatValues<FbProfile>({
+    const ret: FbProfile | undefined = filterUndefined<FbProfile>({
       ...userProfile!,
       bio: profile.bio || undefined,
       name: profile.name || undefined,
@@ -98,11 +98,14 @@ const LensFriendsScreen = (): ReactElement => {
     setLoading(true)
     try {
       const userProfile = await createProfileFromLensProfile(profile)
-      const channel = await createGroupChatIfNotExist({
-        channelUrl: generateDmChannelUrl(
-          userProfile!.profileId,
-          user.auth!.profileId
-        ),
+      const dmChannelUrl: string = generateDmChannelUrl(
+        userProfile!.profileId,
+        user.auth!.profileId
+      )
+      const channel = await createGroupChat({
+        channelUrl: dmChannelUrl,
+        channelName: userProfile!.handle!,
+        coverImage: getProfileMediaImg(userProfile),
         isDistinct: true,
         invitedUserIds: [userProfile!.profileId!],
         operatorUserIds: [user.auth!.profileId, userProfile!.profileId!],

@@ -1,22 +1,13 @@
-import _ from 'lodash'
+import { UTIL } from 'consts'
 import { FbChannel } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
+import { MetaData } from '@sendbird/chat'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 
-export const formatValues = <T>(object: T): T => {
-  if (!object) {
-    return object
-  }
-  return _.omit(
-    object,
-    _.filter(_.keys(object), function (key) {
-      return _.isUndefined(object[key])
-    })
-  ) as T
-}
+import { filterUndefined } from './utils'
 
 export const getFsChannel = async ({
   channelUrl,
@@ -31,13 +22,16 @@ export const getFsChannel = async ({
   const channelDoc = await fsChannel.get()
 
   if (!channelDoc.exists) {
-    const fbChannelField: FbChannel = {
+    const metadata: MetaData = await channel.getAllMetaData()
+    const fbChannelField: FbChannel = filterUndefined<FbChannel>({
       url: channel.url,
       channelType: channel.channelType,
-      tags: [],
-      desc: '',
-      name: '',
-    }
+      tags: metadata.tags
+        ? UTIL.jsonTryParse<string[]>(metadata.tags) ?? []
+        : [],
+      desc: metadata.desc,
+      name: channel.name,
+    })
     await fsChannel.set(fbChannelField)
   }
 

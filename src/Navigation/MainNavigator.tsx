@@ -158,6 +158,10 @@ const MainNavigator = (): ReactElement => {
             component={CreateChannelScreen}
           />
           <MainStack.Screen
+            name={Routes.ChannelInfo}
+            component={ChannelInfoScreen}
+          />
+          <MainStack.Screen
             name={Routes.EditChannel}
             component={EditChannelScreen}
           />

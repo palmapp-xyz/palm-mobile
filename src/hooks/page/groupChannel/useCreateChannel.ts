@@ -1,14 +1,15 @@
+import { NETWORK } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getFsChannel } from 'libs/firebase'
+import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import { useMemo, useState } from 'react'
-import { FbChannelGatingField, SupportedNetworkEnum } from 'types'
+import { FbChannel, FbChannelGatingField, SupportedNetworkEnum } from 'types'
 
 import { FilePickerResponse } from '@sendbird/uikit-react-native'
-import { NETWORK } from 'consts'
 
 export type UseCreateChannelReturn = {
   channelImage?: FilePickerResponse
@@ -92,31 +93,26 @@ const useCreateChannel = (): UseCreateChannelReturn => {
           operatorUserIds: [user.auth!.profileId],
           coverImage,
           channelName,
-        })
-
-        const fsChannel = await getFsChannel({
-          channel,
-          channelUrl: channel.url,
-        })
-
-        const updateParam: any = {
-          name: channelName,
           tags,
           desc,
-          coverImage: channel.coverUrl,
-        }
+        })
 
         if (selectedGatingToken) {
-          updateParam.gating = selectedGatingToken
+          const fsChannel = await getFsChannel({
+            channel,
+            channelUrl: channel.url,
+          })
+          await fsChannel.update({
+            gating: selectedGatingToken,
+          } as Partial<FbChannel>)
         }
-
-        await fsChannel.update(updateParam)
 
         navigation.replace(Routes.GroupChannel, {
           channelUrl: channel.url,
         })
       } catch (error) {
-        console.log('error : ', JSON.stringify(error))
+        console.error(JSON.stringify(error))
+        recordError(error, 'useEditChannel:onClickConfirm')
       }
     }
   }

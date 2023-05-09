@@ -4,10 +4,10 @@ import useFsProfile from 'hooks/firestore/useFsProfile'
 import useLens from 'hooks/lens/useLens'
 import useLensProfile from 'hooks/lens/useLensProfile'
 import { fetchNftImage } from 'libs/fetchTokenUri'
-import { formatValues } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
 import { profilesDeepCompare } from 'libs/profile'
+import { filterUndefined } from 'libs/utils'
 import {
   ContractAddr,
   FbProfile,
@@ -71,7 +71,7 @@ const useProfile = ({
       return
     }
     if (profilesDeepCompare(fsProfileField, lensProfile) === false) {
-      const profileUpdate: Partial<FbProfile> = formatValues<
+      const profileUpdate: Partial<FbProfile> = filterUndefined<
         Partial<FbProfile>
       >({
         handle: lensProfile.handle,
@@ -174,7 +174,7 @@ const useProfile = ({
         tokenUri: item.token_uri,
       })
 
-      const picture: ProfileMedia | undefined = formatValues<ProfileMedia>({
+      const picture: ProfileMedia | undefined = filterUndefined<ProfileMedia>({
         __typename: 'NftImage',
         chainId: connectedNetworkIds[selectedNetwork]!,
         contractAddress: item.token_address!,
@@ -238,7 +238,7 @@ const useProfile = ({
     }
 
     try {
-      const profileUpdate: Partial<FbProfile> = formatValues<
+      const profileUpdate: Partial<FbProfile> = filterUndefined<
         Partial<FbProfile>
       >({
         name: metadata.name,

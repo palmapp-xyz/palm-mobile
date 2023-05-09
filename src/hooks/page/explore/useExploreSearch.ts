@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { UTIL } from 'consts'
 import { format } from 'date-fns'
 import useApi from 'hooks/complex/useApi'
@@ -13,6 +12,8 @@ import {
   LocalStorageKey,
   RecentlySearchItemStorageType,
 } from 'types'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type UseExploreSearchReturn = {
   scrollOffsetY: Animated.Value

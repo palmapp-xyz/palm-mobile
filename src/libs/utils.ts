@@ -1,5 +1,6 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
 import { NETWORK, UTIL } from 'consts'
+import _ from 'lodash'
 import Config from 'react-native-config'
 import { URL } from 'react-native-url-polyfill'
 import {
@@ -151,4 +152,16 @@ export const parseJwt = (token: string): JwtToken | undefined => {
   return UTIL.jsonTryParse<JwtToken>(
     Buffer.from(token.split('.')[1], 'base64').toString()
   )
+}
+
+export const filterUndefined = <T>(object: T): T => {
+  if (!object) {
+    return object
+  }
+  return _.omit(
+    object,
+    _.filter(_.keys(object), function (key) {
+      return _.isUndefined(object[key])
+    })
+  ) as T
 }

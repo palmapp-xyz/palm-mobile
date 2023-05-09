@@ -3,16 +3,21 @@ import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { recordError } from 'libs/logger'
+import { Routes } from 'libs/navigation'
+import { filterUndefined } from 'libs/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { FbChannel, FbChannelGatingField, SupportedNetworkEnum } from 'types'
 
+import { MetaData } from '@sendbird/chat'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import {
   FilePickerResponse,
+  useLocalization,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { Routes } from 'libs/navigation'
 
 export type UseEditChannelReturn = {
   prevCoverImage: string
@@ -52,6 +57,7 @@ const useEditChannel = ({
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
   const { alert } = useAlert()
+  const { STRINGS } = useLocalization()
 
   const [prevCoverImage, setPrevCoverImage] = useState('')
   const [coverImage, setCoverImage] = useState<FilePickerResponse>()
@@ -112,10 +118,22 @@ const useEditChannel = ({
   const onClickConfirm = async (): Promise<void> => {
     if (user && fsChannel && channel) {
       try {
+        const updates: Promise<GroupChannel | MetaData>[] = []
         if (coverImage) {
-          await channel.updateChannel({ coverImage })
+          updates.push(channel.updateChannel({ coverImage }))
         }
-        await channel.updateChannel({ name: channelName })
+        if (channelName !== channel.name) {
+          updates.push(channel.updateChannel({ name: channelName }))
+        }
+        updates.push(
+          channel.updateMetaData(
+            filterUndefined<{ [key: string]: string | undefined }>({
+              desc,
+              tags: JSON.stringify(tags),
+            }) as MetaData
+          )
+        )
+        await Promise.all(updates)
 
         const updateParam: Partial<FbChannel> = {
           name: channelName,
@@ -127,15 +145,21 @@ const useEditChannel = ({
         if (selectedGatingToken) {
           updateParam.gating = selectedGatingToken
         }
-
         await fsChannel.update(updateParam)
 
         alert({
           message: 'Channel info updated',
+          buttons: [
+            {
+              text: STRINGS.DIALOG.ALERT_DEFAULT_OK,
+              onPress: () =>
+                navigation.navigate(Routes.GroupChannel, { channelUrl }),
+            },
+          ],
         })
-        navigation.navigate(Routes.GroupChannel, { channelUrl })
       } catch (error) {
-        console.log('error : ', JSON.stringify(error))
+        console.error(JSON.stringify(error))
+        recordError(error, 'useEditChannel:onClickConfirm')
       }
     }
   }

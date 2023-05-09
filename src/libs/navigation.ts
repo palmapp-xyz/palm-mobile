@@ -60,6 +60,7 @@ export enum Routes {
   FileViewer = 'FileViewer',
 
   CreateChannel = 'CreateChannel',
+  ChannelInfo = 'ChannelInfo',
   EditChannel = 'EditChannel',
   ChannelInfo = 'ChannelInfo',
   ChannelSetting = 'ChannelSetting',
@@ -239,6 +240,10 @@ type MainRouteParamsUnion =
   | {
       route: Routes.CreateChannel
       params: undefined
+    }
+  | {
+      route: Routes.ChannelInfo
+      params: { channelUrl: string }
     }
   | {
       route: Routes.EditChannel

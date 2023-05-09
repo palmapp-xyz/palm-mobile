@@ -49,7 +49,12 @@ const ChannelSettingScreen = (): ReactElement => {
         <TouchableOpacity
           style={styles.menuItemRow}
           onPress={(): void => {
-            navigation.navigate(Routes.EditChannel, params)
+            navigation.navigate(
+              channel.myRole === 'operator'
+                ? Routes.EditChannel
+                : Routes.ChannelInfo,
+              params
+            )
           }}
         >
           <FormText>

@@ -1,5 +1,11 @@
 import React, { ReactElement, ReactNode } from 'react'
-import { ColorValue, StyleProp, View, ViewStyle } from 'react-native'
+import {
+  ColorValue,
+  ScrollView,
+  StyleProp,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import KeyboardAvoidingView from './KeyboardAvoidingView'
@@ -9,11 +15,13 @@ const Container = ({
   style,
   safeAreaBackgroundColor,
   keyboardAvoiding,
+  scrollable,
 }: {
   children: ReactNode
   style?: StyleProp<ViewStyle>
   safeAreaBackgroundColor?: ColorValue
   keyboardAvoiding?: boolean
+  scrollable?: boolean
 }): ReactElement => {
   return (
     <SafeAreaView
@@ -23,6 +31,16 @@ const Container = ({
         <KeyboardAvoidingView>
           <View style={style}>{children}</View>
         </KeyboardAvoidingView>
+      ) : scrollable ? (
+        <ScrollView
+          bounces={false}
+          contentContainerStyle={{ flex: 1 }}
+          contentInsetAdjustmentBehavior="always"
+          overScrollMode="always"
+          showsVerticalScrollIndicator={true}
+        >
+          <View style={style}>{children}</View>
+        </ScrollView>
       ) : (
         <View style={style}>{children}</View>
       )}
