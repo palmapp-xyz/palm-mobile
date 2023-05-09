@@ -62,7 +62,6 @@ export enum Routes {
   CreateChannel = 'CreateChannel',
   ChannelInfo = 'ChannelInfo',
   EditChannel = 'EditChannel',
-  ChannelInfo = 'ChannelInfo',
   ChannelSetting = 'ChannelSetting',
 }
 
