@@ -16,8 +16,8 @@ import {
 } from '@sendbird/uikit-react-native'
 import {
   Avatar,
-  Header,
   createStyleSheet,
+  Header,
   useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
 
@@ -95,7 +95,7 @@ const GroupChannelHeader = ({
           </TouchableOpacity>
           <TouchableOpacity
             onPress={(): void => {
-              navigation.navigate(Routes.ChannelSetting, params)
+              navigation.navigate(Routes.ChannelInfo, params)
             }}
           >
             <Icon name="menu-outline" size={28} />

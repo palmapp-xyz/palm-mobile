@@ -18,13 +18,11 @@ import {
 
 import GroupChannelHeader from './GroupChannelHeader'
 import GroupChannelInput from './GroupChannelInput'
-import GroupChannelMessageList from './GroupChannelMessageList'
 
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
   Header: GroupChannelHeader,
-  MessageList: GroupChannelMessageList,
 })
 
 const HasGatingToken = (): ReactElement => {
@@ -57,7 +55,12 @@ const Contents = ({
 
   const channelLeave = async (): Promise<boolean> => {
     // if there is no message in channel
-    if (!channel.lastMessage) {
+    if (
+      channel.myRole === 'operator' &&
+      !channel.lastMessage &&
+      channel.memberCount < 2
+    ) {
+      console.log('channelLeave', channel.myRole)
       await channel.leave()
       await sdk.clearCachedMessages([channel.url]).catch()
       await fsChannel.delete()
@@ -143,12 +146,6 @@ const GroupChannelScreen = (): ReactElement => {
     channelUrl: params.channelUrl,
   })
   const gating = useMemo(() => fsChannelField?.gating, [fsChannelField])
-
-  useEffect(() => {
-    if (channel && channel.myMemberState === 'none') {
-      channel.join()
-    }
-  }, [!!channel])
 
   if (!channel || !fsChannel || !fsChannelField) {
     return <></>

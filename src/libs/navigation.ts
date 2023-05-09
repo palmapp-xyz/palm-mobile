@@ -61,6 +61,7 @@ export enum Routes {
 
   CreateChannel = 'CreateChannel',
   EditChannel = 'EditChannel',
+  ChannelInfo = 'ChannelInfo',
   ChannelSetting = 'ChannelSetting',
 }
 
@@ -241,6 +242,10 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.EditChannel
+      params: { channelUrl: string }
+    }
+  | {
+      route: Routes.ChannelInfo
       params: { channelUrl: string }
     }
   | {

@@ -6,6 +6,7 @@ import React, { ReactElement } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import {
+  ChannelInfoScreen,
   ChannelListingsScreen,
   ChannelSettingScreen,
   CreateChannelScreen,
@@ -88,6 +89,14 @@ const MainNavigator = (): ReactElement => {
               name={Routes.TokenGatingInfo}
               component={TokenGatingInfoScreen}
             />
+            <MainStack.Screen
+              name={Routes.ChannelSetting}
+              component={ChannelSettingScreen}
+            />
+            <MainStack.Screen
+              name={Routes.ChannelInfo}
+              component={ChannelInfoScreen}
+            />
           </MainStack.Group>
           <MainStack.Group>
             <MainStack.Screen
@@ -151,10 +160,6 @@ const MainNavigator = (): ReactElement => {
           <MainStack.Screen
             name={Routes.EditChannel}
             component={EditChannelScreen}
-          />
-          <MainStack.Screen
-            name={Routes.ChannelSetting}
-            component={ChannelSettingScreen}
           />
         </>
       ) : (

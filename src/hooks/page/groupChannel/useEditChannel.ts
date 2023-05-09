@@ -12,6 +12,7 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { Routes } from 'libs/navigation'
 
 export type UseEditChannelReturn = {
   prevCoverImage: string
@@ -132,7 +133,7 @@ const useEditChannel = ({
         alert({
           message: 'Channel info updated',
         })
-        navigation.goBack()
+        navigation.navigate(Routes.GroupChannel, { channelUrl })
       } catch (error) {
         console.log('error : ', JSON.stringify(error))
       }

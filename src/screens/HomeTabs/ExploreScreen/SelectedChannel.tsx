@@ -1,4 +1,6 @@
 import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import images from 'assets/images'
 import {
   FormBottomSheet,
@@ -27,6 +29,20 @@ const SelectedChannel = ({
   const bottomSheetRef = useRef<BottomSheet>(null)
 
   const { selectedChannel, setSelectedChannel } = useExploreSearchReturn
+
+  const { sdk } = useSendbirdChat()
+  const { channel } = useGroupChannel(sdk, selectedChannel?.url || '')
+
+  const joinChannel = async (): Promise<void> => {
+    if (channel) {
+      if (channel.myMemberState === 'none') {
+        await channel.join()
+      }
+      navigation.navigate(Routes.GroupChannel, {
+        channelUrl: channel.url,
+      })
+    }
+  }
 
   return (
     <>
@@ -113,10 +129,9 @@ const SelectedChannel = ({
           </View>
           <View style={styles.footer}>
             <FormButton
+              disabled={!channel}
               onPress={(): void => {
-                navigation.navigate(Routes.GroupChannel, {
-                  channelUrl: selectedChannel.url,
-                })
+                joinChannel()
               }}
             >
               Join
