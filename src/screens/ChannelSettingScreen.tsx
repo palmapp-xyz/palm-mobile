@@ -40,26 +40,20 @@ const ChannelSettingScreen = (): ReactElement => {
         onPressLeft={navigation.goBack}
         containerStyle={{ backgroundColor: COLOR.black._10 }}
       />
+
       <View style={styles.sectionTitle}>
         <FormText fontType="B.12" color={COLOR.black._400}>
-          Token Gating
+          Channel Info
         </FormText>
       </View>
       <View style={{ paddingBottom: 12 }}>
         <TouchableOpacity
           style={styles.menuItemRow}
           onPress={(): void => {
-            navigation.navigate(
-              channel.myRole === 'operator'
-                ? Routes.EditChannel
-                : Routes.ChannelInfo,
-              params
-            )
+            navigation.navigate(Routes.EditChannel, params)
           }}
         >
-          <FormText>
-            {channel.myRole === 'operator' ? 'Edit ' : ''}Chat Room Profile
-          </FormText>
+          <FormText>Edit Channel</FormText>
           <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
         </TouchableOpacity>
       </View>

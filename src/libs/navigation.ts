@@ -249,10 +249,6 @@ type MainRouteParamsUnion =
       params: { channelUrl: string }
     }
   | {
-      route: Routes.ChannelInfo
-      params: { channelUrl: string }
-    }
-  | {
       route: Routes.ChannelSetting
       params: { channelUrl: string }
     }

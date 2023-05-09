@@ -50,13 +50,12 @@ const ChatCard = ({
                     {chat.gating.amount}
                   </FormText>
                   <FormText color={COLOR.black._500} fontType="R.12">
-                    of
+                    {' of'}
                   </FormText>
-                </Row>
-                <Row>
                   {chat.gating.gatingType === 'Native' ? (
                     <View>
                       <FormText fontType="B.12">
+                        {' '}
                         {NETWORK.nativeToken[chat.gating.chain]}
                       </FormText>
                     </View>
@@ -67,7 +66,7 @@ const ChatCard = ({
                       </FormText>
                     </View>
                   )}
-                  <FormText fontType="R.12"> are required</FormText>
+                  <FormText fontType="R.12"> required</FormText>
                 </Row>
               </View>
             </Row>

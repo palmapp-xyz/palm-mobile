@@ -1,6 +1,3 @@
-import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import images from 'assets/images'
 import {
   FormBottomSheet,
@@ -18,6 +15,10 @@ import _ from 'lodash'
 import React, { ReactElement, useMemo, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+
+import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 const SelectedChannel = ({
   useExploreSearchReturn,
@@ -112,7 +113,7 @@ const SelectedChannel = ({
                             </FormText>
                           </View>
                         )}
-                        <FormText fontType="R.12"> are required</FormText>
+                        <FormText fontType="R.12"> required</FormText>
                       </Row>
                     </View>
                   </Row>

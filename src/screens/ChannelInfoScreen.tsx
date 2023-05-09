@@ -1,7 +1,12 @@
+import images from 'assets/images'
 import { Container, FormImage, FormText, Header, Row, Tag } from 'components'
+import LoadingPage from 'components/atoms/LoadingPage'
 import { COLOR, NETWORK, UTIL } from 'consts'
+import { format } from 'date-fns'
+import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
+import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import {
   FlatList,
@@ -10,23 +15,33 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import images from 'assets/images'
-import { format } from 'date-fns'
-import useFsChannel from 'hooks/firestore/useFsChannel'
-import _ from 'lodash'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+
+import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 const ChannelInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelInfo>()
+  const { alert } = useAlert()
+  const { STRINGS } = useLocalization()
   const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, params.channelUrl)
-  const { fsChannelField } = useFsChannel({ channelUrl: params.channelUrl })
+  const { channel, channelName, tags, desc, gatingToken, loading } =
+    useChannelInfo({ channelUrl: params.channelUrl })
+
   const displayUsers = channel?.members.slice(0, 3) || []
 
-  if (!channel || !fsChannelField) {
+  if (loading) {
+    return <LoadingPage />
+  } else if (!channel) {
+    alert({
+      message: 'Could not retrieve channel info data. Please try again later.',
+      buttons: [
+        {
+          text: STRINGS.DIALOG.ALERT_DEFAULT_OK,
+          onPress: () => navigation.goBack(),
+        },
+      ],
+    })
     return <></>
   }
 
@@ -74,7 +89,7 @@ const ChannelInfoScreen = (): ReactElement => {
               )}
             </Row>
             <View style={{ paddingBottom: 8 }}>
-              <FormText fontType="B.16">{fsChannelField.name}</FormText>
+              <FormText fontType="B.16">{channelName}</FormText>
             </View>
             <View style={styles.section}>
               <FormText fontType="R.12">
@@ -83,10 +98,10 @@ const ChannelInfoScreen = (): ReactElement => {
               </FormText>
             </View>
             <View style={styles.section}>
-              <FormText fontType="R.12">{fsChannelField.desc}</FormText>
+              <FormText fontType="R.12">{desc}</FormText>
             </View>
 
-            {!!fsChannelField.gating?.amount && (
+            {gatingToken && Number(gatingToken.amount) > 0 && (
               <View style={styles.section}>
                 <Row style={styles.gatingTokeBox}>
                   <Ionicons
@@ -98,27 +113,27 @@ const ChannelInfoScreen = (): ReactElement => {
                   <View>
                     <Row>
                       <FormText color={COLOR.black._500} fontType="B.12">
-                        {fsChannelField.gating.amount}
+                        {gatingToken?.amount}
                       </FormText>
                       <FormText color={COLOR.black._500} fontType="R.12">
                         of
                       </FormText>
                     </Row>
                     <Row>
-                      {fsChannelField.gating.gatingType === 'Native' ? (
+                      {gatingToken?.gatingType === 'Native' ? (
                         <View>
                           <FormText fontType="B.12">
-                            {NETWORK.nativeToken[fsChannelField.gating.chain]}
+                            {NETWORK.nativeToken[gatingToken.chain]}
                           </FormText>
                         </View>
                       ) : (
                         <View>
                           <FormText fontType="B.12">
-                            {UTIL.truncate(fsChannelField.gating.tokenAddress)}
+                            {UTIL.truncate(gatingToken.tokenAddress)}
                           </FormText>
                         </View>
                       )}
-                      <FormText fontType="R.12"> are required</FormText>
+                      <FormText fontType="R.12"> required</FormText>
                     </Row>
                   </View>
                 </Row>
@@ -126,7 +141,7 @@ const ChannelInfoScreen = (): ReactElement => {
             )}
             <View style={styles.section}>
               <Row style={{ flexWrap: 'wrap', gap: 8 }}>
-                {_.map(fsChannelField.tags, (tag, index) => {
+                {_.map(tags, (tag, index) => {
                   return <Tag key={`inputTagList-${index}`} title={tag} />
                 })}
               </Row>
@@ -194,13 +209,15 @@ const ChannelInfoScreen = (): ReactElement => {
           >
             <Ionicons name="exit-outline" size={24} color={COLOR.error} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={(): void => {
-              navigation.navigate(Routes.ChannelSetting, params)
-            }}
-          >
-            <Ionicons name="settings-outline" size={24} />
-          </TouchableOpacity>
+          {channel.myRole === 'operator' && (
+            <TouchableOpacity
+              onPress={(): void => {
+                navigation.navigate(Routes.ChannelSetting, params)
+              }}
+            >
+              <Ionicons name="settings-outline" size={24} />
+            </TouchableOpacity>
+          )}
         </Row>
       </View>
     </Container>

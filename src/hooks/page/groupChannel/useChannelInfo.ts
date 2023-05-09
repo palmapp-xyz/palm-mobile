@@ -46,25 +46,20 @@ const useChannelInfo = ({
       if (fsChannelField.gating) {
         setGatingToken(fsChannelField.gating)
       }
-      setLoading(false)
     }
   }, [fsChannelField])
+
+  useEffect(() => {
+    if (!!channel && !!fsChannelField) {
+      setLoading(false)
+    }
+  }, [channel, fsChannelField])
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
     }, 1500)
   }, [])
-
-  // console.log(
-  //   fsChannelField,
-  //   channelImage,
-  //   tags,
-  //   channelName,
-  //   desc,
-  //   gatingToken,
-  //   loading
-  // )
 
   return {
     channel,

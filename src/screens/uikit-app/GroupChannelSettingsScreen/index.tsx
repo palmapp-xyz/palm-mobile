@@ -54,10 +54,10 @@ const GroupChannelSettingsScreen = (): ReactElement => {
         navigation.navigate(Routes.GroupChannelNotifications, params)
       }}
       menuItemsCreator={(items: MenuBarProps[]): MenuBarProps[] => {
-        if (channel.myRole === 'operator') {
+        if (channel.myRole === 'operator' && channel.isPublic) {
           items.unshift({
             icon: 'ban',
-            name: 'Edit Chat Room Profile',
+            name: 'Edit Channel',
             actionItem: <Icon name={'chevron-forward-outline'} size={28} />,
             onPress: () => {
               navigation.navigate(Routes.EditChannel, params)
