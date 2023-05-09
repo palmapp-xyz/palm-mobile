@@ -60,7 +60,6 @@ const Contents = ({
       !channel.lastMessage &&
       channel.memberCount < 2
     ) {
-      console.log('channelLeave', channel.myRole)
       await channel.leave()
       await sdk.clearCachedMessages([channel.url]).catch()
       await fsChannel.delete()

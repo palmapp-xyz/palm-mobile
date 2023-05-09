@@ -70,7 +70,6 @@ const useExploreSearch = (): UseExploreSearchReturn => {
   }
 
   const deleteRecentlySearch = async (id: string): Promise<void> => {
-    console.log(recentlySearchedList.map(x => x.id))
     await AsyncStorage.setItem(
       LocalStorageKey.RECENTLY_SEARCHED,
       JSON.stringify(recentlySearchedList.filter(x => x.id !== id))

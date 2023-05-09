@@ -34,7 +34,6 @@ const RecentlySearched = ({
                 gap: 16,
               }}
               onPress={async (): Promise<void> => {
-                console.log('id : ', item.id)
                 setInputSearch(item.search)
                 inputRef.current?.blur()
                 onClickConfirm(item.search)
