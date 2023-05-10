@@ -1,15 +1,16 @@
-import FormButton from 'components/atoms/FormButton'
+import FormText from 'components/atoms/FormText'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import { COLOR, UTIL } from 'consts'
+import useExplorer from 'hooks/complex/useExplorer'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
 
-import LinkExplorer from '../../atoms/LinkExplorer'
 import Row from '../../atoms/Row'
 
 const SendNftMessage = ({
@@ -32,48 +33,67 @@ const SendNftMessage = ({
     metadata: item.metadata,
     chain,
     width: '100%',
-    height: 150,
+    height: 232,
   }
+
+  const { getLink } = useExplorer(chain)
 
   return (
     <View style={styles.container}>
-      <NftRenderer {...nftRendererProps} />
-      <View style={styles.body}>
-        <Row style={{ alignItems: 'center', columnGap: 5 }}>
-          <Icon
-            name="ios-shield-checkmark"
-            color={COLOR.primary._400}
-            size={20}
-          />
-          <Text
-            numberOfLines={2}
-            style={{ color: 'black' }}
-          >{`${item.name} #${item.token_id}`}</Text>
+      <TouchableOpacity
+        style={styles.body}
+        onPress={(): void => {
+          navigation.navigate(Routes.NftDetail, {
+            nftContract: item.token_address,
+            tokenId: item.token_id,
+            nftContractType: item.contract_type,
+            chain,
+            item,
+          })
+        }}
+      >
+        <Row style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
+          <FormText fontType="B.10">Sent </FormText>
+          <FormText fontType="R.10">to {UTIL.truncate(data.to)}</FormText>
         </Row>
-        <View>
-          <Text style={{ color: COLOR.primary._400 }}>Send NFT</Text>
-          <LinkExplorer type="address" address={data.from} network={chain}>
-            <Text>{`from : ${UTIL.truncate(data.from)}`}</Text>
-          </LinkExplorer>
-          <LinkExplorer type="address" address={data.to} network={chain}>
-            <Text>{`to : ${UTIL.truncate(data.to)}`}</Text>
-          </LinkExplorer>
-        </View>
-        <FormButton
-          size="sm"
-          onPress={(): void => {
-            navigation.navigate(Routes.NftDetail, {
-              nftContract: item.token_address,
+        <VerifiedWrapper>
+          <NftRenderer
+            {...nftRendererProps}
+            style={{
+              borderRadius: 18,
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              maxWidth: 'auto',
+            }}
+          />
+        </VerifiedWrapper>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          alignSelf: 'flex-end',
+          paddingTop: 8,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+        onPress={(): void => {
+          Linking.openURL(
+            getLink({
+              address: item.token_address,
+              type: 'nft',
               tokenId: item.token_id,
-              nftContractType: item.contract_type,
-              chain,
-              item,
             })
-          }}
-        >
-          Details
-        </FormButton>
-      </View>
+          )
+        }}
+      >
+        <FormText color={COLOR.black._500} fontType="R.12">
+          View Transaction Detail{' '}
+        </FormText>
+        <Ionicons
+          color={COLOR.black._500}
+          name="ios-chevron-forward"
+          size={14}
+        />
+      </TouchableOpacity>
     </View>
   )
 }
@@ -82,15 +102,5 @@ export default SendNftMessage
 
 const styles = StyleSheet.create({
   container: { backgroundColor: 'white', width: 240 },
-  body: { padding: 10, gap: 10 },
-  priceBox: {
-    backgroundColor: COLOR.primary._50,
-    padding: 10,
-    rowGap: 5,
-    borderRadius: 10,
-  },
-  priceRow: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
+  body: { borderWidth: 1, borderColor: COLOR.black._90010, borderRadius: 18 },
 })

@@ -17,7 +17,7 @@ import { conditionChaining } from '@sendbird/uikit-utils'
 export type HeaderProps = {
   title?: ReactNode
   left?: 'back' | ReactElement
-  right?: ReactNode
+  right?: 'close' | ReactNode
   onPressLeft?: () => void
   onPressRight?: () => void
   containerStyle?: StyleProp<ViewStyle>
@@ -33,6 +33,10 @@ const Header = ({
 }: HeaderProps): ReactElement => {
   if (left === 'back') {
     left = <Icon name="ios-chevron-back" color={COLOR.black._900} size={28} />
+  }
+
+  if (right === 'close') {
+    right = <Icon name="close" color={COLOR.black._900} size={28} />
   }
 
   return (

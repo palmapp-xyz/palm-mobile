@@ -19,6 +19,7 @@ export type NftRendererProp = {
   width?: FlexStyle['width']
   height?: FlexStyle['height']
   style?: StyleProp<RNFastImageStyle>
+  hideChain?: boolean
 }
 
 const NftRenderer = ({
@@ -30,6 +31,7 @@ const NftRenderer = ({
   width,
   height,
   style,
+  hideChain,
 }: NftRendererProp): ReactElement => {
   const {
     loading,
@@ -53,7 +55,9 @@ const NftRenderer = ({
     metadata: _metadata,
   }
 
-  return (
+  return hideChain ? (
+    <MediaRenderer {...props} />
+  ) : (
     <ChainLogoWrapper chain={chain}>
       <MediaRenderer {...props} />
     </ChainLogoWrapper>

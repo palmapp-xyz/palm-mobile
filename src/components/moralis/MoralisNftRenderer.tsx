@@ -11,11 +11,13 @@ const MoralisNftRenderer = ({
   width,
   height,
   resolution = 'medium',
+  hideChain,
 }: {
   item: Moralis.NftItem
   width?: FlexStyle['width']
   height?: FlexStyle['height']
   resolution?: 'low' | 'medium' | 'high'
+  hideChain?: boolean
 }): ReactElement => {
   const chain: SupportedNetworkEnum =
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
@@ -39,6 +41,7 @@ const MoralisNftRenderer = ({
       chain={chain}
       width={width}
       height={height}
+      hideChain={hideChain}
     />
   )
 }

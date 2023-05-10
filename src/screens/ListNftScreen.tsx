@@ -222,10 +222,7 @@ const ListNftScreen = (): ReactElement => {
 
   return (
     <Container style={{ flex: 1 }}>
-      <Header
-        right={<Ionicon name={'close'} size={28} />}
-        onPressRight={navigation.goBack}
-      />
+      <Header right="close" onPressRight={navigation.goBack} />
       {selectedNftList.length > 0 && (
         <Contents
           channelUrl={params.channelUrl}

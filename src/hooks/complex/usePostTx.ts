@@ -1,3 +1,4 @@
+import { UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { getPkey } from 'libs/account'
 import _ from 'lodash'
@@ -15,11 +16,17 @@ import {
 import useWeb3 from './useWeb3'
 
 type UsePostTxReturn = {
+  getTxFee: (props: {
+    data?: EncodedTxData
+    nativeToken?: pToken
+  }) => Promise<pToken>
   postTx: (props: {
     data?: EncodedTxData
     nativeToken?: pToken
   }) => Promise<PostTxReturn>
 }
+
+const gas = '3000000'
 
 export const usePostTx = ({
   contractAddress,
@@ -31,6 +38,27 @@ export const usePostTx = ({
   const { user } = useAuth()
   const { web3 } = useWeb3(chain)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
+
+  const getTxFee = async ({
+    data,
+    nativeToken,
+  }: {
+    data?: EncodedTxData
+    nativeToken?: pToken
+  }): Promise<pToken> => {
+    if (user) {
+      const estimated = await web3.eth.estimateGas({
+        from: user.address,
+        to: contractAddress,
+        gas,
+        data,
+        value: nativeToken,
+      })
+      const price = await web3.eth.getGasPrice()
+      return UTIL.toBn(estimated).multipliedBy(price).toString(10) as pToken
+    }
+    return '0' as pToken
+  }
 
   const postTx = async ({
     data,
@@ -59,7 +87,7 @@ export const usePostTx = ({
           .sendTransaction({
             from: userAddress,
             to: contractAddress,
-            gas: '2000000',
+            gas,
             data,
             value: nativeToken,
           })
@@ -102,7 +130,7 @@ export const usePostTx = ({
     }
   }
 
-  return { postTx }
+  return { getTxFee, postTx }
 }
 
 export default usePostTx

@@ -8,7 +8,7 @@ import usePostTxStatusEffect, {
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { navigationRef, Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
 // import { UTIL } from 'consts'
 import {
@@ -17,6 +17,7 @@ import {
   Moralis,
   PostTxReturn,
   PostTxStatus,
+  pToken,
   SupportedNetworkEnum,
 } from 'types'
 
@@ -24,6 +25,7 @@ export type UseSendNftReturn = {
   isPosting: boolean
   onClickConfirm: () => Promise<PostTxReturn | undefined>
   isValidForm: boolean
+  estimatedGas: pToken
 }
 
 const useSendNft = ({
@@ -36,6 +38,7 @@ const useSendNft = ({
   const { navigation } = useAppNavigation()
 
   const [isPosting, setIsPosting] = useState(false)
+  const [estimatedGas, setEstimatedGas] = useState<pToken>('0' as pToken)
 
   const { user } = useAuth()
 
@@ -46,7 +49,7 @@ const useSendNft = ({
       SupportedNetworkEnum.ETHEREUM,
   })
 
-  const { postTx } = usePostTx({
+  const { getTxFee, postTx } = usePostTx({
     contractAddress: selectedNft.token_address,
     chain:
       chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
@@ -57,17 +60,25 @@ const useSendNft = ({
 
   const isValidForm = !!receiver
 
-  const onClickConfirm = async (): Promise<PostTxReturn | undefined> => {
+  const postData = useMemo(() => {
     if (user?.address && receiver) {
-      const data = transferFromData({
+      return transferFromData({
         from: user.address,
         to: receiver,
         tokenId: selectedNft.token_id,
       })
-
-      return postTx({ data })
     }
+  }, [user?.address, receiver])
+
+  const onClickConfirm = async (): Promise<PostTxReturn | undefined> => {
+    return postTx({ data: postData })
   }
+
+  useEffect(() => {
+    getTxFee({ data: postData }).then(val => {
+      setEstimatedGas(val)
+    })
+  }, [postData])
 
   const effectList: EffectListType = useMemo(
     () => [
@@ -75,26 +86,6 @@ const useSendNft = ({
         when: [PostTxStatus.POST],
         action: (): void => {
           setIsPosting(true)
-        },
-      },
-      {
-        when: [PostTxStatus.BROADCAST],
-        action: async (act): Promise<void> => {
-          if (user && act.status === PostTxStatus.BROADCAST && isPosting) {
-            // await showImage(selectedNft.token_uri)
-            // const hash = act.transactionHash
-            // await sendMessage(
-            //   `${UTIL.truncate(
-            //     user.address
-            //   )} is trying to send a NFT to ${UTIL.truncate(receiver)}\nID : ${
-            //     selectedNft.token_id
-            //   }`
-            // )
-            // await sendLink(
-            //   getLink({ address: hash, type: 'tx' }),
-            //   UTIL.truncate(hash)
-            // )
-          }
         },
       },
       {
@@ -119,6 +110,7 @@ const useSendNft = ({
     isPosting,
     onClickConfirm,
     isValidForm,
+    estimatedGas,
   }
 }
 
