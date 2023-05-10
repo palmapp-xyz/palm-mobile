@@ -16,8 +16,8 @@ import {
 } from '@sendbird/uikit-react-native'
 import {
   Button,
-  createStyleSheet,
   TextInput,
+  createStyleSheet,
   useToast,
 } from '@sendbird/uikit-react-native-foundation'
 
@@ -73,7 +73,7 @@ const EditInput = forwardRef<RNTextInput, EditInputProps>(function EditInput(
         type: MentionType.USERS,
       }
 
-      onUpdateUserMessage(text, messageToEdit, mention).catch(() =>
+      onUpdateUserMessage?.(text, messageToEdit, mention).catch(() =>
         toast.show(STRINGS.TOAST.UPDATE_MSG_ERROR, 'error')
       )
     }

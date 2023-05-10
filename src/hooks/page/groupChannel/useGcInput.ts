@@ -68,7 +68,7 @@ const useGcInput = ({
   const onPressAttachment = async (): Promise<void> => {
     const mediaFile = await getMediaFile()
     if (mediaFile) {
-      onSendFileMessage(mediaFile).catch(onFailureToSend)
+      onSendFileMessage?.(mediaFile).catch(onFailureToSend)
     }
   }
 

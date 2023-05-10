@@ -16,6 +16,7 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
+import { SuggestedMentionListProps } from '@sendbird/uikit-react-native/src/components/ChannelInput'
 import useMentionTextInput from '@sendbird/uikit-react-native/src/hooks/useMentionTextInput'
 import {
   SendbirdFileMessage,
@@ -121,17 +122,12 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
     return <SafeAreaBottom height={bottom} />
   }
 
+  const SuggestedMentionList =
+    props.SuggestedMentionList as React.FunctionComponent<SuggestedMentionListProps>
+
   return (
     <>
       <KeyboardAvoidingView
-        // style={{
-        //   position: 'absolute',
-        //   width: '100%',
-        //   bottom: 0,
-        //   borderTopColor: COLOR.black._100,
-        //   borderTopWidth: 1,
-        //   zIndex: 1,
-        // }}
         keyboardVerticalOffset={keyboardAvoidOffset - bottom}
         behavior={KEYBOARD_AVOID_VIEW_BEHAVIOR}
       >
@@ -183,7 +179,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
       </KeyboardAvoidingView>
       <MyNftList useGcInputReturn={useGcInputReturn} />
       {mentionAvailable && (
-        <props.SuggestedMentionList
+        <SuggestedMentionList
           text={text}
           selection={selection}
           inputHeight={inputHeight}

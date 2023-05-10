@@ -19,8 +19,8 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import {
-  createStyleSheet,
   TextInput,
+  createStyleSheet,
   useToast,
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
@@ -68,7 +68,7 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
       type: MentionType.USERS,
     }
 
-    onSendUserMessage(text, mention).catch(() =>
+    onSendUserMessage?.(text, mention).catch(() =>
       toast.show(STRINGS.TOAST.SEND_MSG_ERROR, 'error')
     )
     onChangeText('')
