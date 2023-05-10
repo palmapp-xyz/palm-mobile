@@ -1,9 +1,9 @@
 import images from 'assets/images'
 import { Card, FormImage, FormText, Row, Tag } from 'components'
 import { COLOR, NETWORK, UTIL } from 'consts'
+import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FbChannel } from 'types'
 
@@ -15,7 +15,7 @@ const ChatCard = ({
   onClick: (value: FbChannel) => void
 }): ReactElement => {
   return (
-    <Card borderRound={true} style={{ paddingRight: 0 }}>
+    <Card borderRound={true}>
       <TouchableOpacity onPress={(): void => onClick(chat)}>
         <Row style={styles.channelBox}>
           <View style={styles.channelImg}>
@@ -31,44 +31,41 @@ const ChatCard = ({
           <FormText fontType="SB.14">{chat.name}</FormText>
         </View>
         <View style={styles.section}>
-          <FlatList
-            data={chat.tags}
-            keyExtractor={(_item, index): string => `tagList-${index}`}
-            horizontal
-            contentContainerStyle={{ gap: 4 }}
-            renderItem={({ item }): ReactElement => <Tag title={item} />}
-          />
+          <Row style={{ flexWrap: 'wrap', gap: 4 }}>
+            {_.map(chat.tags, (item, index) => (
+              <Tag key={`chat.tags-${index}`} title={item} />
+            ))}
+          </Row>
         </View>
         {!!chat.gating?.amount && (
           <View style={styles.section}>
             <Row style={styles.gatingTokeBox}>
               <Icon color={COLOR.black._100} size={16} name="alert-circle" />
               {/* <FormImage source={chat.gating.img} size={40} /> */}
-              <View>
-                <Row>
-                  <FormText color={COLOR.black._500} fontType="B.12">
-                    {chat.gating.amount}
-                  </FormText>
-                  <FormText color={COLOR.black._500} fontType="R.12">
-                    {' of'}
-                  </FormText>
-                  {chat.gating.gatingType === 'Native' ? (
-                    <View>
-                      <FormText fontType="B.12">
-                        {' '}
-                        {NETWORK.nativeToken[chat.gating.chain]}
-                      </FormText>
-                    </View>
-                  ) : (
-                    <View>
-                      <FormText fontType="B.12">
-                        {UTIL.truncate(chat.gating.tokenAddress)}
-                      </FormText>
-                    </View>
-                  )}
-                  <FormText fontType="R.12"> required</FormText>
-                </Row>
-              </View>
+
+              <Row>
+                <FormText color={COLOR.black._500} fontType="B.12">
+                  {chat.gating.amount}
+                </FormText>
+                <FormText color={COLOR.black._500} fontType="R.12">
+                  {' of'}
+                </FormText>
+                {chat.gating.gatingType === 'Native' ? (
+                  <View>
+                    <FormText fontType="B.12">
+                      {' '}
+                      {NETWORK.nativeToken[chat.gating.chain]}
+                    </FormText>
+                  </View>
+                ) : (
+                  <View>
+                    <FormText fontType="B.12">
+                      {UTIL.truncate(chat.gating.tokenAddress)}
+                    </FormText>
+                  </View>
+                )}
+                <FormText fontType="R.12"> required to join</FormText>
+              </Row>
             </Row>
           </View>
         )}

@@ -116,10 +116,8 @@ const ChannelInfoScreen = (): ReactElement => {
                         {gatingToken?.amount}
                       </FormText>
                       <FormText color={COLOR.black._500} fontType="R.12">
-                        of
+                        {' of '}
                       </FormText>
-                    </Row>
-                    <Row>
                       {gatingToken?.gatingType === 'Native' ? (
                         <View>
                           <FormText fontType="B.12">
@@ -133,7 +131,7 @@ const ChannelInfoScreen = (): ReactElement => {
                           </FormText>
                         </View>
                       )}
-                      <FormText fontType="R.12"> required</FormText>
+                      <FormText fontType="R.12"> required to join</FormText>
                     </Row>
                   </View>
                 </Row>

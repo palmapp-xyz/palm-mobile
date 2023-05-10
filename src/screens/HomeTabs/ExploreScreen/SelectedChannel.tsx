@@ -92,10 +92,8 @@ const SelectedChannel = ({
                           {selectedChannel.gating.amount}
                         </FormText>
                         <FormText color={COLOR.black._500} fontType="R.12">
-                          of
+                          {' of '}
                         </FormText>
-                      </Row>
-                      <Row>
                         {selectedChannel.gating.gatingType === 'Native' ? (
                           <View>
                             <FormText fontType="B.12">
@@ -113,7 +111,7 @@ const SelectedChannel = ({
                             </FormText>
                           </View>
                         )}
-                        <FormText fontType="R.12"> required</FormText>
+                        <FormText fontType="R.12"> required to join</FormText>
                       </Row>
                     </View>
                   </Row>
