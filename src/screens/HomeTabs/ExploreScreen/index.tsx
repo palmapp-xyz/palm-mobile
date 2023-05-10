@@ -176,7 +176,12 @@ const ExploreScreen = (): ReactElement => {
           </Animated.View>
         </View>
       )}
-      <SelectedChannel useExploreSearchReturn={useExploreSearchReturn} />
+      {useExploreSearchReturn.selectedChannel && (
+        <SelectedChannel
+          selectedChannel={useExploreSearchReturn.selectedChannel}
+          useExploreSearchReturn={useExploreSearchReturn}
+        />
+      )}
     </Container>
   )
 }

@@ -22,8 +22,8 @@ import { FbProfile, Moralis, SupportedNetworkEnum } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { Icon } from '@sendbird/uikit-react-native-foundation'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import Ionicon from 'react-native-vector-icons/Ionicons'
 
 const Contents = ({
   selectedNft,
@@ -112,9 +112,8 @@ const SendNftScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title="Send NFT"
-        left={<Icon icon={'close'} />}
-        onPressLeft={navigation.goBack}
+        right={<Ionicon name={'close'} size={28} />}
+        onPressRight={navigation.goBack}
       />
       {selectedNftList.length > 0 && (
         <Contents

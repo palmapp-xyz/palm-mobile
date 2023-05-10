@@ -224,7 +224,7 @@ const ListNftScreen = (): ReactElement => {
     <Container style={{ flex: 1 }}>
       <Header
         right={<Ionicon name={'close'} size={28} />}
-        onPressLeft={navigation.goBack}
+        onPressRight={navigation.goBack}
       />
       {selectedNftList.length > 0 && (
         <Contents

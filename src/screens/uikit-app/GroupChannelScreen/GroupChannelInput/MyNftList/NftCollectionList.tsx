@@ -1,22 +1,21 @@
 import { FormText } from 'components'
 import { COLOR } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
+import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
+import { ContractAddr } from 'types'
 
 const NftCollectionList = ({
-  setSelectedCollection,
+  useGcInputReturn,
   userAddress,
-  selectedNetwork,
 }: {
-  setSelectedCollection: React.Dispatch<
-    React.SetStateAction<Moralis.NftCollection | undefined>
-  >
+  useGcInputReturn: UseGcInputReturn
   userAddress?: ContractAddr
-  selectedNetwork: SupportedNetworkEnum
 }): ReactElement => {
+  const { selectedNetwork, setSelectedCollection } = useGcInputReturn
+
   const { items, fetchNextPage, hasNextPage, isLoading } =
     useUserNftCollectionList({
       userAddress,

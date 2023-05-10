@@ -19,11 +19,11 @@ import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 import { SuggestedMentionListProps } from '@sendbird/uikit-react-native/src/components/ChannelInput'
 import useMentionTextInput from '@sendbird/uikit-react-native/src/hooks/useMentionTextInput'
 import {
+  getGroupChannelChatAvailableState,
+  replace,
   SendbirdFileMessage,
   SendbirdGroupChannel,
   SendbirdUserMessage,
-  getGroupChannelChatAvailableState,
-  replace,
   useIIFE,
 } from '@sendbird/uikit-utils'
 
@@ -189,10 +189,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           mentionedUsers={mentionedUsers}
         />
       )}
-      <SelectReceiverModal
-        useGcInputReturn={useGcInputReturn}
-        channel={channel}
-      />
+      <SelectReceiverModal useGcInputReturn={useGcInputReturn} />
     </>
   )
 }

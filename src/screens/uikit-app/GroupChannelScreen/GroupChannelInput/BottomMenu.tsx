@@ -6,13 +6,14 @@ import {
   UseGcInputReturn,
 } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo } from 'react'
-import { FlatList, Pressable, StyleSheet, View } from 'react-native'
+import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native'
 
 const BottomMenu = ({
   useGcInputReturn,
 }: {
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
+  const { receiverList, setOpenSelectReceiver } = useGcInputReturn
   const menuList: {
     key: StepAfterSelectNftType
     icon: JSX.Element
@@ -23,27 +24,26 @@ const BottomMenu = ({
       {
         key: 'list',
         icon: <FormImage source={images.list} />,
-        onPress: (): void => {
-          useGcInputReturn.setStepAfterSelectNft('list')
-          useGcInputReturn.setSelectedNftList([])
-        },
+        onPress: useGcInputReturn.onPressList,
         title: 'List NFT',
       },
       {
         key: 'share',
         icon: <FormImage source={images.NFT} />,
-        onPress: (): void => {
-          useGcInputReturn.setStepAfterSelectNft('share')
-          useGcInputReturn.setSelectedNftList([])
-        },
+        onPress: useGcInputReturn.onPressShow,
         title: 'Show NFT',
       },
       {
         key: 'send',
         icon: <FormImage source={images.arrow_right} />,
         onPress: (): void => {
-          useGcInputReturn.setStepAfterSelectNft('send')
-          useGcInputReturn.setSelectedNftList([])
+          if (receiverList.length > 1) {
+            setOpenSelectReceiver(true)
+          } else if (receiverList.length === 1) {
+            useGcInputReturn.onPressSend({ receiverId: receiverList[0].userId })
+          } else {
+            Alert.alert('No one to send NFT')
+          }
         },
         title: 'Send NFT',
       },
@@ -56,7 +56,7 @@ const BottomMenu = ({
         title: 'Album',
       },
     ],
-    []
+    [receiverList]
   )
   return useGcInputReturn.openBottomMenu ? (
     <View style={styles.container}>

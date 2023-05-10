@@ -4,6 +4,7 @@ import {
   FormImage,
   FormText,
   Header,
+  RadioIcon,
   SupportedNetworkRow,
 } from 'components'
 import { COLOR, NETWORK } from 'consts'
@@ -22,20 +23,6 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { SupportedNetworkEnum } from 'types'
-
-const Radio = ({ selected }: { selected: boolean }): ReactElement => {
-  return (
-    <View
-      style={{
-        borderColor: COLOR.primary._400,
-        borderWidth: selected ? 5 : 1,
-        borderRadius: 999,
-        width: 16,
-        height: 16,
-      }}
-    />
-  )
-}
 
 const TokenGating = ({
   useCreateChannelReturn,
@@ -123,7 +110,9 @@ const TokenGating = ({
               }}
               style={styles.tokenItem}
             >
-              <Radio selected={selectedGatingToken.gatingType === 'Native'} />
+              <RadioIcon
+                selected={selectedGatingToken.gatingType === 'Native'}
+              />
               <FormImage
                 source={NETWORK.getNetworkLogo(gatingTokenNetwork)}
                 size={40}
@@ -164,7 +153,7 @@ const TokenGating = ({
                       })
                     }}
                   >
-                    <Radio selected={selected} />
+                    <RadioIcon selected={selected} />
                     <FormText>{item.name}</FormText>
                   </TouchableOpacity>
                 )

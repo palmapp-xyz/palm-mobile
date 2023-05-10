@@ -12,27 +12,28 @@ import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import _ from 'lodash'
-import React, { ReactElement, useMemo, useRef } from 'react'
+import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { FbChannel } from 'types'
 
 const SelectedChannel = ({
+  selectedChannel,
   useExploreSearchReturn,
 }: {
+  selectedChannel: FbChannel
   useExploreSearchReturn: UseExploreSearchReturn
 }): ReactElement => {
   const { navigation } = useAppNavigation()
   const snapPoints = useMemo(() => ['80%'], [])
-  const bottomSheetRef = useRef<BottomSheet>(null)
 
-  const { selectedChannel, setSelectedChannel } = useExploreSearchReturn
+  const { setSelectedChannel } = useExploreSearchReturn
 
   const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, selectedChannel?.url || '')
+  const { channel } = useGroupChannel(sdk, selectedChannel.url)
 
   const joinChannel = async (): Promise<void> => {
     if (channel) {
@@ -46,99 +47,79 @@ const SelectedChannel = ({
   }
 
   return (
-    <>
-      {selectedChannel && (
-        <FormBottomSheet
-          bottomSheetRef={bottomSheetRef}
-          showBottomSheet={!!selectedChannel}
-          snapPoints={snapPoints}
-          onClose={(): void => setSelectedChannel(undefined)}
-          backgroundStyle={{
-            backgroundColor: COLOR.black._10,
-          }}
-        >
-          <View style={{ flex: 1 }}>
-            <View style={styles.header} />
-            <View style={styles.body}>
-              <View style={styles.channelImg}>
-                <FormImage
-                  source={
-                    selectedChannel.coverImage
-                      ? { uri: selectedChannel.coverImage }
-                      : images.palm_logo
-                  }
-                  size={100}
-                />
-              </View>
-              <View style={styles.section}>
-                <FormText fontType="B.16">{selectedChannel.name}</FormText>
-              </View>
-              <View style={styles.section}>
-                <FormText fontType="R.12" color={COLOR.black._200}>
-                  {selectedChannel.desc}
-                </FormText>
-              </View>
-              {!!selectedChannel.gating?.amount && (
-                <View style={styles.section}>
-                  <Row style={styles.gatingTokeBox}>
-                    <Icon
-                      color={COLOR.black._100}
-                      size={16}
-                      name="alert-circle"
-                    />
-                    <View>
-                      <Row>
-                        <FormText color={COLOR.black._500} fontType="B.12">
-                          {selectedChannel.gating.amount}
+    <FormBottomSheet
+      showBottomSheet={!!selectedChannel}
+      snapPoints={snapPoints}
+      onClose={(): void => setSelectedChannel(undefined)}
+      backgroundStyle={{
+        backgroundColor: COLOR.black._10,
+      }}
+    >
+      <View style={{ flex: 1 }}>
+        <View style={styles.header} />
+        <View style={styles.body}>
+          <View style={styles.channelImg}>
+            <FormImage
+              source={
+                selectedChannel.coverImage
+                  ? { uri: selectedChannel.coverImage }
+                  : images.palm_logo
+              }
+              size={100}
+            />
+          </View>
+          <View style={styles.section}>
+            <FormText fontType="B.16">{selectedChannel.name}</FormText>
+          </View>
+          <View style={styles.section}>
+            <FormText fontType="R.12" color={COLOR.black._200}>
+              {selectedChannel.desc}
+            </FormText>
+          </View>
+          {!!selectedChannel.gating?.amount && (
+            <View style={styles.section}>
+              <Row style={styles.gatingTokeBox}>
+                <Icon color={COLOR.black._100} size={16} name="alert-circle" />
+                <View>
+                  <Row>
+                    <FormText color={COLOR.black._500} fontType="B.12">
+                      {selectedChannel.gating.amount}
+                    </FormText>
+                    <FormText color={COLOR.black._500} fontType="R.12">
+                      {' of '}
+                    </FormText>
+                    {selectedChannel.gating.gatingType === 'Native' ? (
+                      <View>
+                        <FormText fontType="B.12">
+                          {NETWORK.nativeToken[selectedChannel.gating.chain]}
                         </FormText>
-                        <FormText color={COLOR.black._500} fontType="R.12">
-                          {' of '}
+                      </View>
+                    ) : (
+                      <View>
+                        <FormText fontType="B.12">
+                          {selectedChannel.gating.name}
                         </FormText>
-                        {selectedChannel.gating.gatingType === 'Native' ? (
-                          <View>
-                            <FormText fontType="B.12">
-                              {
-                                NETWORK.nativeToken[
-                                  selectedChannel.gating.chain
-                                ]
-                              }
-                            </FormText>
-                          </View>
-                        ) : (
-                          <View>
-                            <FormText fontType="B.12">
-                              {selectedChannel.gating.name}
-                            </FormText>
-                          </View>
-                        )}
-                        <FormText fontType="R.12"> required to join</FormText>
-                      </Row>
-                    </View>
+                      </View>
+                    )}
+                    <FormText fontType="R.12"> required to join</FormText>
                   </Row>
                 </View>
-              )}
-              <View style={styles.section}>
-                <Row style={{ flexWrap: 'wrap', gap: 4 }}>
-                  {_.map(selectedChannel.tags, (item, index) => (
-                    <Tag key={`selectedChannel.tags-${index}`} title={item} />
-                  ))}
-                </Row>
-              </View>
+              </Row>
             </View>
+          )}
+          <View style={styles.section}>
+            <Row style={{ flexWrap: 'wrap', gap: 4 }}>
+              {_.map(selectedChannel.tags, (item, index) => (
+                <Tag key={`selectedChannel.tags-${index}`} title={item} />
+              ))}
+            </Row>
           </View>
-          <View style={styles.footer}>
-            <FormButton
-              disabled={!channel}
-              onPress={(): void => {
-                joinChannel()
-              }}
-            >
-              Join
-            </FormButton>
-          </View>
-        </FormBottomSheet>
-      )}
-    </>
+        </View>
+      </View>
+      <View style={styles.footer}>
+        <FormButton onPress={joinChannel}>Join</FormButton>
+      </View>
+    </FormBottomSheet>
   )
 }
 

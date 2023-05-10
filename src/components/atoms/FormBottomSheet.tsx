@@ -13,7 +13,7 @@ const FormBottomSheet = ({
   onClose,
   backgroundStyle,
 }: {
-  bottomSheetRef: React.RefObject<BottomSheetMethods>
+  bottomSheetRef?: React.RefObject<BottomSheetMethods>
   children: ReactNode
   showBottomSheet: boolean
   snapPoints: string[]

@@ -6,23 +6,25 @@ import React, { ReactElement } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
+import { ContractAddr, Moralis } from 'types'
 
 const NftList = ({
   useGcInputReturn,
   userAddress,
   selectedCollection,
-  setSelectedCollection,
-  selectedNetwork,
 }: {
   useGcInputReturn: UseGcInputReturn
   userAddress?: ContractAddr
   selectedCollection: Moralis.NftCollection
-  setSelectedCollection: React.Dispatch<
-    React.SetStateAction<Moralis.NftCollection | undefined>
-  >
-  selectedNetwork: SupportedNetworkEnum
 }): ReactElement => {
+  const {
+    setSelectedCollection,
+    selectedNetwork,
+    selectedNftList,
+    setSelectedNftList,
+    stepAfterSelectNft,
+  } = useGcInputReturn
+
   const { items, fetchNextPage, hasNextPage, isLoading } = useCollectionNfts({
     selectedNetwork,
     userAddress,
@@ -70,7 +72,7 @@ const NftList = ({
       onEndReachedThreshold={0.5}
       initialNumToRender={10}
       renderItem={({ item }): ReactElement => {
-        const selectedIndex = useGcInputReturn.selectedNftList.findIndex(
+        const selectedIndex = selectedNftList.findIndex(
           x =>
             x.token_address === item.token_address &&
             x.token_id === item.token_id
@@ -80,13 +82,13 @@ const NftList = ({
           <View style={{ flex: 1 / 3, alignItems: 'center' }}>
             <TouchableOpacity
               onPress={(): void => {
-                if (useGcInputReturn.stepAfterSelectNft === 'share') {
-                  useGcInputReturn.setSelectedNftList(valOrUpdater => {
+                if (stepAfterSelectNft === 'share') {
+                  setSelectedNftList(valOrUpdater => {
                     if (selectedIndex > -1) {
                       return valOrUpdater.filter(x => x !== item)
                     } else {
                       // Send up to N at a time.
-                      if (useGcInputReturn.selectedNftList.length < 3) {
+                      if (selectedNftList.length < 3) {
                         return [...valOrUpdater, item]
                       } else {
                         return valOrUpdater
@@ -94,7 +96,7 @@ const NftList = ({
                     }
                   })
                 } else {
-                  useGcInputReturn.setSelectedNftList([item])
+                  setSelectedNftList([item])
                 }
               }}
             >

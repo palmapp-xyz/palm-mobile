@@ -8,14 +8,14 @@ import _ from 'lodash'
 import { useMemo, useState } from 'react'
 import { SetterOrUpdater, useRecoilState } from 'recoil'
 import selectNftStore from 'store/selectNftStore'
-import { Moralis } from 'types'
+import { Moralis, SupportedNetworkEnum } from 'types'
 
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
 import {
   GroupChannelProps,
   useLocalization,
 } from '@sendbird/uikit-react-native'
-import { useAlert, useToast } from '@sendbird/uikit-react-native-foundation'
+import { useToast } from '@sendbird/uikit-react-native-foundation'
 
 export type UseGcInputReturn = {
   receiverList: Member[]
@@ -23,13 +23,22 @@ export type UseGcInputReturn = {
   setOpenSelectReceiver: (value: boolean) => void
   openBottomMenu: boolean
   setOpenBottomMenu: (value: boolean) => void
+  selectedNetwork: SupportedNetworkEnum
+  selectedCollection?: Moralis.NftCollection
+  setSelectedCollection: React.Dispatch<
+    React.SetStateAction<Moralis.NftCollection | undefined>
+  >
   stepAfterSelectNft?: StepAfterSelectNftType
-  setStepAfterSelectNft: (value?: StepAfterSelectNftType) => void
+  onPressList: () => void
+  onPressShow: () => void
+  onPressSend: (props: { receiverId: string }) => void
+  onPressClose: () => void
   selectedNftList: Moralis.NftItem[]
   setSelectedNftList: SetterOrUpdater<Moralis.NftItem[]>
   onClickNextStep: () => Promise<void>
   runningNextStep: boolean
   onPressAttachment: () => void
+  onChangeNetwork: (value: SupportedNetworkEnum) => void
 }
 
 export type StepAfterSelectNftType = 'share' | 'send' | 'list' | 'album'
@@ -45,18 +54,47 @@ const useGcInput = ({
   const [openSelectReceiver, setOpenSelectReceiver] = useState(false)
   const { navigation } = useAppNavigation<Routes.GroupChannel>()
   const [openBottomMenu, setOpenBottomMenu] = useState(false)
+
+  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
+    SupportedNetworkEnum.ETHEREUM
+  )
+  const [selectedCollection, setSelectedCollection] =
+    useState<Moralis.NftCollection>()
+
   const [selectedNftList, setSelectedNftList] = useRecoilState(
     selectNftStore.selectedNftList
   )
+  const [nftReceiverId, setNftReceiverId] = useState('')
   const [stepAfterSelectNft, setStepAfterSelectNft] =
     useState<StepAfterSelectNftType>()
+
+  const onPressList = (): void => {
+    setStepAfterSelectNft('list')
+    setSelectedNftList([])
+  }
+
+  const onPressShow = (): void => {
+    setStepAfterSelectNft('share')
+    setSelectedNftList([])
+  }
+
+  const onPressSend = ({ receiverId }: { receiverId: string }): void => {
+    setOpenSelectReceiver(false)
+    setStepAfterSelectNft('send')
+    setSelectedNftList([])
+    setNftReceiverId(receiverId)
+  }
+
+  const onPressClose = (): void => {
+    setOpenBottomMenu(false)
+    setStepAfterSelectNft(undefined)
+  }
 
   const receiverList = useMemo(
     () => channel.members.filter(x => x.userId !== user?.auth?.profileId) || [],
     [channel.members]
   )
 
-  const { alert } = useAlert()
   const toast = useToast()
   const { STRINGS } = useLocalization()
 
@@ -70,6 +108,12 @@ const useGcInput = ({
     if (mediaFile) {
       onSendFileMessage?.(mediaFile).catch(onFailureToSend)
     }
+  }
+
+  const onChangeNetwork = (value: SupportedNetworkEnum): void => {
+    setSelectedNetwork(value)
+    setSelectedCollection(undefined)
+    setSelectedNftList([])
   }
 
   const onClickNextStep = async (): Promise<void> => {
@@ -87,27 +131,18 @@ const useGcInput = ({
           })
         )
         channel.sendFileMessages(fileMessages)
-        setSelectedNftList([])
+        onChangeNetwork(SupportedNetworkEnum.ETHEREUM)
       } else if (stepAfterSelectNft === 'list') {
         navigation.navigate(Routes.ListNft, { channelUrl: channel.url })
+        setSelectedNetwork(SupportedNetworkEnum.ETHEREUM)
+        setSelectedCollection(undefined)
       } else if (stepAfterSelectNft === 'send') {
-        if (channel.members.length < 3) {
-          const target = channel.members.find(
-            x => x.userId !== user?.auth?.profileId
-          )
-          if (target) {
-            navigation.navigate(Routes.SendNft, {
-              receiverId: target.userId,
-              channelUrl: channel.url,
-            })
-          } else {
-            alert({
-              message: 'No one to receive NFT here.',
-            })
-          }
-        } else {
-          setOpenSelectReceiver(true)
-        }
+        navigation.navigate(Routes.SendNft, {
+          receiverId: nftReceiverId,
+          channelUrl: channel.url,
+        })
+        setSelectedNetwork(SupportedNetworkEnum.ETHEREUM)
+        setSelectedCollection(undefined)
       }
     } else {
       // Should not be clickable this button without selectedNft
@@ -123,13 +158,20 @@ const useGcInput = ({
     setOpenSelectReceiver,
     openBottomMenu,
     setOpenBottomMenu,
+    selectedNetwork,
+    selectedCollection,
+    setSelectedCollection,
     stepAfterSelectNft,
-    setStepAfterSelectNft,
+    onPressList,
+    onPressShow,
+    onPressSend,
+    onPressClose,
     selectedNftList,
     setSelectedNftList,
     onClickNextStep,
     runningNextStep,
     onPressAttachment,
+    onChangeNetwork,
   }
 }
 

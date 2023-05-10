@@ -1,11 +1,11 @@
 import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
-import React, { ReactElement, useMemo, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Moralis, SupportedNetworkEnum } from 'types'
+import React, { ReactElement, useMemo } from 'react'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
 import BottomSheet from '@gorhom/bottom-sheet'
+import { FormButton } from 'components'
 import Header from './Header'
 import NftCollectionList from './NftCollectionList'
 import NftList from './NftList'
@@ -16,46 +16,51 @@ const MyNftList = ({
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
   const { user } = useAuth()
-  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
-    SupportedNetworkEnum.ETHEREUM
-  )
-  const [selectedCollection, setSelectedCollection] =
-    useState<Moralis.NftCollection>()
 
-  const onChangeNetwork = (value: SupportedNetworkEnum): void => {
-    setSelectedNetwork(value)
-    setSelectedCollection(undefined)
-  }
+  const {
+    runningNextStep,
+    selectedCollection,
+    stepAfterSelectNft,
+    selectedNftList,
+  } = useGcInputReturn
 
   const userAddress = user?.address
-
   const snapPoints = useMemo(() => ['100%'], [])
 
-  return useGcInputReturn.stepAfterSelectNft ? (
-    <View style={styles.container}>
-      <BottomSheet snapPoints={snapPoints} enableOverDrag={false}>
-        <Header
-          useGcInputReturn={useGcInputReturn}
-          selectedNetwork={selectedNetwork}
-          onChangeNetwork={onChangeNetwork}
-        />
+  return stepAfterSelectNft ? (
+    <BottomSheet snapPoints={snapPoints} enableOverDrag={false}>
+      <View style={styles.container}>
+        <Header useGcInputReturn={useGcInputReturn} />
         {selectedCollection ? (
-          <NftList
-            selectedCollection={selectedCollection}
-            userAddress={userAddress}
-            useGcInputReturn={useGcInputReturn}
-            selectedNetwork={selectedNetwork}
-            setSelectedCollection={setSelectedCollection}
-          />
+          <View style={{ flex: 1 }}>
+            <NftList
+              userAddress={userAddress}
+              useGcInputReturn={useGcInputReturn}
+              selectedCollection={selectedCollection}
+            />
+            <View style={styles.footer}>
+              {runningNextStep ? (
+                <View style={styles.nextStepIcon}>
+                  <ActivityIndicator size="large" color={COLOR.primary._400} />
+                </View>
+              ) : (
+                <FormButton
+                  disabled={selectedNftList.length < 1}
+                  onPress={useGcInputReturn.onClickNextStep}
+                >
+                  Select
+                </FormButton>
+              )}
+            </View>
+          </View>
         ) : (
           <NftCollectionList
-            setSelectedCollection={setSelectedCollection}
             userAddress={userAddress}
-            selectedNetwork={selectedNetwork}
+            useGcInputReturn={useGcInputReturn}
           />
         )}
-      </BottomSheet>
-    </View>
+      </View>
+    </BottomSheet>
   ) : (
     <></>
   )
@@ -65,12 +70,7 @@ export default MyNftList
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    backgroundColor: '#00000018',
-    width: '100%',
-    height: '100%',
-    bottom: 0,
-    zIndex: 1,
+    flex: 1,
   },
   inputHeader: {
     paddingVertical: 10,
@@ -105,15 +105,17 @@ const styles = StyleSheet.create({
   nextStepIcon: {
     width: 36,
     height: 36,
-    alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
     borderRadius: 999,
   },
   footer: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: 20,
-    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: COLOR.black._90010,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
+    marginBottom: 20,
   },
   text: {
     color: 'gray',
