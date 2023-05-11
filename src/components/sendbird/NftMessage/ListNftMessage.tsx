@@ -8,6 +8,8 @@ import { COLOR, NETWORK, UTIL } from 'consts'
 import { format } from 'date-fns'
 import useExplorer from 'hooks/complex/useExplorer'
 import useEthPrice from 'hooks/independent/useEthPrice'
+import useKlayPrice from 'hooks/independent/useKlayPrice'
+import useMaticPrice from 'hooks/independent/useMaticPrice'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useZxOrder from 'hooks/zx/useZxOrder'
 import { Routes } from 'libs/navigation'
@@ -18,6 +20,40 @@ import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
 
+const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
+  const { getKlayPrice } = useKlayPrice()
+
+  return (
+    <FormText fontType="R.10" color={COLOR.black._400}>
+      {`(≈$${UTIL.formatAmountP(getKlayPrice(amount || ('0' as pToken)), {
+        toFix: 0,
+      })})`}
+    </FormText>
+  )
+}
+const MaticPrice = ({ amount }: { amount: pToken }): ReactElement => {
+  const { getMaticPrice } = useMaticPrice()
+
+  return (
+    <FormText fontType="R.10" color={COLOR.black._400}>
+      {`(≈$${UTIL.formatAmountP(getMaticPrice(amount || ('0' as pToken)), {
+        toFix: 0,
+      })})`}
+    </FormText>
+  )
+}
+const EthPrice = ({ amount }: { amount: pToken }): ReactElement => {
+  const { getEthPrice } = useEthPrice()
+
+  return (
+    <FormText fontType="R.10" color={COLOR.black._400}>
+      {`(≈$${UTIL.formatAmountP(getEthPrice(amount || ('0' as pToken)), {
+        toFix: 0,
+      })})`}
+    </FormText>
+  )
+}
+
 const ListNftMessage = ({
   data,
 }: {
@@ -26,12 +62,12 @@ const ListNftMessage = ({
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
 
   const item = data.selectedNft
+
   const chain =
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const { order, isLoading } = useZxOrder({ nonce: data.nonce, chain })
-  const { getEthPrice } = useEthPrice()
 
   const nftRendererProps: NftRendererProp = {
     nftContract: item.token_address,
@@ -102,16 +138,19 @@ const ListNftMessage = ({
             <Row style={styles.priceRow}>
               <FormImage source={NETWORK.getNetworkLogo(chain)} size={18} />
               <FormText fontType="B.18">
-                {UTIL.formatAmountP((data.ethAmount || '0') as pToken)}
+                {UTIL.formatAmountP((data.amount || '0') as pToken)}
               </FormText>
             </Row>
             <Row style={styles.priceRow}>
-              <FormText fontType="R.10" color={COLOR.black._400}>
-                {`(≈$${UTIL.formatAmountP(
-                  getEthPrice(data.ethAmount || ('0' as pToken)),
-                  { toFix: 0 }
-                )})`}
-              </FormText>
+              {chain === SupportedNetworkEnum.ETHEREUM && (
+                <EthPrice amount={data.amount} />
+              )}
+              {chain === SupportedNetworkEnum.KLAYTN && (
+                <KlayPrice amount={data.amount} />
+              )}
+              {chain === SupportedNetworkEnum.POLYGON && (
+                <MaticPrice amount={data.amount} />
+              )}
             </Row>
           </View>
 

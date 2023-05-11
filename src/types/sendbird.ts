@@ -20,7 +20,7 @@ export type SbListNftDataType = {
   type: 'list'
   selectedNft: Moralis.NftItem
   nonce: string
-  ethAmount: pToken
+  amount: pToken
 }
 
 export type SbSendNftDataType = {

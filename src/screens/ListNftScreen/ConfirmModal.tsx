@@ -58,7 +58,7 @@ const ConfirmModal = ({
       type: 'list',
       selectedNft,
       nonce: order.nonce,
-      ethAmount: UTIL.microfyP(price),
+      amount: UTIL.microfyP(price),
     })
     channel.sendFileMessage(imgInfo)
   }
