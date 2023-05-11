@@ -25,7 +25,7 @@ export type UseSendNftReturn = {
   isPosting: boolean
   onClickConfirm: () => Promise<PostTxReturn | undefined>
   isValidForm: boolean
-  estimatedGas: pToken
+  estimatedTxFee: pToken
 }
 
 const useSendNft = ({
@@ -38,7 +38,7 @@ const useSendNft = ({
   const { navigation } = useAppNavigation()
 
   const [isPosting, setIsPosting] = useState(false)
-  const [estimatedGas, setEstimatedGas] = useState<pToken>('0' as pToken)
+  const [estimatedTxFee, setEstimatedTxFee] = useState<pToken>('0' as pToken)
 
   const { user } = useAuth()
 
@@ -76,7 +76,7 @@ const useSendNft = ({
 
   useEffect(() => {
     getTxFee({ data: postData }).then(val => {
-      setEstimatedGas(val)
+      setEstimatedTxFee(val)
     })
   }, [postData])
 
@@ -110,7 +110,7 @@ const useSendNft = ({
     isPosting,
     onClickConfirm,
     isValidForm,
-    estimatedGas,
+    estimatedTxFee,
   }
 }
 

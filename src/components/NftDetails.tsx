@@ -1,4 +1,4 @@
-import { LinkExplorer, SubmitButton } from 'components'
+import { FormButton, LinkExplorer } from 'components'
 import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
@@ -19,7 +19,7 @@ import { ContractAddr, Moralis, NftType, SupportedNetworkEnum } from 'types'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { Maybe } from '@toruslabs/openlogin'
 
-import NftListingChannels from './NftListingChannels'
+import NftListingChannels from '../screens/NftListingChannels'
 
 const NftDetails = ({
   nftContract,
@@ -123,17 +123,16 @@ const NftDetails = ({
           </View>
         </View>
         {onSubmit && (
-          <SubmitButton
+          <FormButton
             containerStyle={{
               marginBottom: 50,
               marginHorizontal: 30,
               marginTop: 0,
             }}
-            network={SupportedNetworkEnum.ETHEREUM}
             onPress={(): Promise<void> => onSubmit(uri, metadata)}
           >
             {isMine ? 'Cancel' : 'Buy'}
-          </SubmitButton>
+          </FormButton>
         )}
       </View>
     </ScrollView>

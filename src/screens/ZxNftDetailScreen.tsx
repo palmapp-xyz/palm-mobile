@@ -4,7 +4,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useZxBuyNft from 'hooks/zx/useZxBuyNft'
 import useZxCancelNft from 'hooks/zx/useZxCancelNft'
 import useZxOrder from 'hooks/zx/useZxOrder'
-import { Routes, navigationRef } from 'libs/navigation'
+import { navigationRef, Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
@@ -16,7 +16,7 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { Maybe } from '@toruslabs/openlogin'
 
-import NftDetails from './NftDetails'
+import NftDetails from '../components/NftDetails'
 
 const ZxNftDetailScreen = (): ReactElement => {
   const {

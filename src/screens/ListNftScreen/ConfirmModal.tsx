@@ -3,79 +3,65 @@ import {
   FormButton,
   FormImage,
   FormText,
-  MediaRenderer,
   MoralisNftRenderer,
   Row,
 } from 'components'
 import useAuth from 'hooks/auth/useAuth'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import useSendNft from 'hooks/page/groupChannel/useSendNft'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { FbProfile, Moralis, SupportedNetworkEnum } from 'types'
+import { Moralis, SupportedNetworkEnum } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-import images from 'assets/images'
 import { COLOR, NETWORK, UTIL } from 'consts'
-import { getProfileMediaImg } from 'libs/lens'
+import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
+import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import _ from 'lodash'
+import { Keyboard } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const ConfirmModal = ({
   selectedNft,
-  receiverId,
   channelUrl,
   showBottomSheet,
   setShowBottomSheet,
+  useZxListNftReturn,
 }: {
   selectedNft: Moralis.NftItem
-  receiverId: string
-  channelUrl?: string
+  channelUrl: string
   showBottomSheet: boolean
   setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>
+  useZxListNftReturn: UseZxListNftReturn
 }): ReactElement => {
   const { user } = useAuth()
-  const [receiver, setReceiver] = useState<FbProfile>()
   const chain: SupportedNetworkEnum =
     chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const receiverProfileImg = getProfileMediaImg(receiver?.picture)
-  const { isPosting, isValidForm, onClickConfirm, estimatedTxFee } = useSendNft(
-    {
-      selectedNft,
-      receiver: receiver?.address,
-    }
-  )
+  const { price, onClickConfirm } = useZxListNftReturn
 
   const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl ?? receiverId)
+  const { channel } = useGroupChannel(sdk, channelUrl)
 
-  const onSubmit = async (token_uri: string): Promise<void> => {
-    if (!channel || !user) {
+  const onSubmit = async (
+    token_uri: string,
+    order: SignedNftOrderV4Serialized | undefined
+  ): Promise<void> => {
+    if (!channel || !order) {
       return
     }
-
     const imgInfo = await nftUriFetcher(token_uri)
     imgInfo.data = stringifySendFileData({
-      type: 'send',
+      type: 'list',
       selectedNft,
-      from: user!.auth!.profileId,
-      to: receiverId,
+      nonce: order.nonce,
+      ethAmount: UTIL.microfyP(price),
     })
     channel.sendFileMessage(imgInfo)
   }
-
-  const { fetchProfile } = useFsProfile({})
-  useAsyncEffect(async () => {
-    const _receiver = await fetchProfile(receiverId)
-    setReceiver(_receiver)
-  }, [receiverId])
 
   return (
     <FormBottomSheet
@@ -96,8 +82,8 @@ const ConfirmModal = ({
             }}
           >
             <FormText fontType="R.12" color={COLOR.error}>
-              This action is irreversible. Again, make sure the transaction
-              detail is correct and reliable.
+              The sale will be accepted and concluded unless you cancel it. The
+              sale listing is valid for 24 hours.
             </FormText>
           </View>
         </View>
@@ -174,35 +160,9 @@ const ConfirmModal = ({
                 <FormText fontType="SB.12">To</FormText>
               </View>
               <Row>
-                {receiverProfileImg ? (
-                  <MediaRenderer
-                    src={receiverProfileImg}
-                    width={20}
-                    height={20}
-                    style={{ borderRadius: 50 }}
-                  />
-                ) : (
-                  <FormImage
-                    source={images.profile_temp}
-                    size={20}
-                    style={{ borderRadius: 50 }}
-                  />
-                )}
-
-                <FormText fontType="B.16">{receiver?.handle}</FormText>
+                <FormText fontType="B.16">List Contract</FormText>
               </Row>
-              <FormText fontType="R.12">
-                {`(${UTIL.truncate(receiver?.address || '')})`}
-              </FormText>
             </View>
-          </Row>
-        </View>
-        <View style={styles.txInfo}>
-          <Row style={{ justifyContent: 'space-between' }}>
-            <FormText fontType="B.14">Est. Gas Fee</FormText>
-            <FormText fontType="R.14">{`${UTIL.demicrofyP(estimatedTxFee)} ${
-              NETWORK.nativeToken[chain]
-            }`}</FormText>
           </Row>
         </View>
       </View>
@@ -217,12 +177,10 @@ const ConfirmModal = ({
         </FormButton>
         <FormButton
           containerStyle={{ flex: 1 }}
-          disabled={isPosting || !isValidForm}
           onPress={async (): Promise<void> => {
-            const res = await onClickConfirm()
-            if (res?.success) {
-              onSubmit(selectedNft.token_uri)
-            }
+            Keyboard.dismiss()
+            const order = await onClickConfirm()
+            onSubmit(selectedNft.token_uri, order)
           }}
         >
           Confirm
@@ -239,7 +197,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemInfo: { backgroundColor: COLOR.black._10, padding: 20 },
-  txInfo: { padding: 20 },
   footer: {
     borderTopWidth: 1,
     borderTopColor: COLOR.black._90010,

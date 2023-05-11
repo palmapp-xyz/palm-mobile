@@ -4,7 +4,7 @@ import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
 
-import NftDetails from './NftDetails'
+import NftDetails from '../components/NftDetails'
 
 const NftDetailScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.NftDetail>()

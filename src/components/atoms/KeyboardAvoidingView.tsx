@@ -3,7 +3,7 @@ import { ScrollView, StyleProp, ViewStyle } from 'react-native'
 import { AvoidSoftInput } from 'react-native-avoid-softinput'
 
 import { useFocusEffect } from '@react-navigation/native'
-
+1
 const KeyboardAvoidingView = ({
   children,
   style,
