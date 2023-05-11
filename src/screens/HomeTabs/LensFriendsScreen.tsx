@@ -1,9 +1,10 @@
 import { Container } from 'components'
+import LoadingPage from 'components/atoms/LoadingPage'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
-import useReactQuery from 'hooks/complex/useReactQuery'
+import useProfile from 'hooks/auth/useProfile'
+import useIpfs from 'hooks/complex/useIpfs'
 import useFsProfile from 'hooks/firestore/useFsProfile'
-import useLens from 'hooks/lens/useLens'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getProfileMediaImg } from 'libs/lens'
@@ -34,16 +35,19 @@ const LensFriendsScreen = (): ReactElement => {
   const { fetchUserProfileId } = useAuthChallenge()
   const { createGroupChat, generateDmChannelUrl } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
-  const { getDefaultProfile } = useLens()
   const { fetchProfile } = useFsProfile({})
   const { alert } = useAlert()
 
   const setLoading = useSetRecoilState(appStore.loading)
 
-  const { data: lensProfile } = useReactQuery(
-    ['getDefaultProfile', user?.address],
-    () => getDefaultProfile(user?.address ?? '')
-  )
+  const { lensProfile } = useProfile({ profileId: user?.auth?.profileId })
+  const { data: profileMetadata, loading } = useIpfs<ProfileMetadata>({
+    uri: lensProfile?.metadata,
+  })
+
+  if (loading) {
+    return <LoadingPage />
+  }
 
   const createProfileFromLensProfile = async (
     profile: ExtendedProfile
@@ -139,9 +143,7 @@ const LensFriendsScreen = (): ReactElement => {
   const props = {
     onFollowPress,
     onProfilePress,
-    signedInUser: lensProfile
-      ? (lensProfile as unknown as ProfileMetadata)
-      : undefined,
+    signedInUser: profileMetadata ? profileMetadata : undefined,
   }
 
   return (

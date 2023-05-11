@@ -1,9 +1,16 @@
+import axios from 'axios'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
+import { resolveIpfsUri } from 'libs/ipfs'
+import { recordError } from 'libs/logger'
+import { useMemo } from 'react'
+import { useQuery } from 'react-query'
 import { ApiEnum, TrueOrErrReturn } from 'types'
 
 import useApi from './useApi'
 
-type UseIpfsReturn = {
+type UseIpfsReturn<T> = {
+  data?: T | null
+  loading: boolean
   uploadFolder: (
     items: {
       path: string
@@ -12,7 +19,33 @@ type UseIpfsReturn = {
   ) => Promise<TrueOrErrReturn<{ path?: string }[]>>
 }
 
-const useIpfs = (): UseIpfsReturn => {
+const useIpfs = <T>({ uri }: { uri?: string }): UseIpfsReturn<T> => {
+  const resolvedUrl = useMemo(
+    () => (uri ? resolveIpfsUri(uri) : undefined),
+    [uri]
+  )
+
+  const { data, isFetching } = useQuery(
+    [resolvedUrl],
+    async () => {
+      if (!resolvedUrl) {
+        return null
+      }
+
+      try {
+        const axiosData = await axios.get<T>(resolvedUrl)
+        const ret: T | undefined = axiosData.data
+        return ret
+      } catch (e) {
+        recordError(e, 'useIpfs:fetch')
+      }
+      return null
+    },
+    {
+      enabled: !!resolvedUrl,
+    }
+  )
+
   const { postApi } = useApi()
 
   const uploadFolder = async (
@@ -39,7 +72,7 @@ const useIpfs = (): UseIpfsReturn => {
     }
   }
 
-  return { uploadFolder }
+  return { data, loading: isFetching, uploadFolder }
 }
 
 export default useIpfs

@@ -122,7 +122,7 @@ const useLens = (): UseLensReturn => {
   const { signedTypeData, getSigner: getEthersSigner } = useEthers()
   const { user, setLensAuth } = useAuth()
   const { query: aQuery, mutate: aMutate } = useApolloClient()
-  const { uploadFolder } = useIpfs()
+  const { uploadFolder } = useIpfs({})
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const { connectedNetworkIds } = useNetwork()
