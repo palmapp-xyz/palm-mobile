@@ -62,6 +62,7 @@ const Contents = ({
     ) {
       await channel.leave()
       await sdk.clearCachedMessages([channel.url]).catch()
+      await fsChannel.delete()
       return true
     }
     return false
