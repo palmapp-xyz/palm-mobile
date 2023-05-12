@@ -1,5 +1,4 @@
 import { Container, Header } from 'components'
-import FbListingItem from 'components/fbListing/FbListingItem'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { recordError } from 'libs/logger'
@@ -10,6 +9,8 @@ import { FbListing } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { COLOR } from 'consts'
+
+import FbListingItem from './FbListingItem'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const [isFetching, setIsFetching] = useState<boolean>(true)
@@ -68,7 +69,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
         columnWrapperStyle={{ gap: 10 }}
         renderItem={({ item }): ReactElement => (
           <View style={{ flex: 1 / 2 }}>
-            <FbListingItem item={item} />
+            <FbListingItem item={item} channelUrl={channelUrl} />
           </View>
         )}
       />

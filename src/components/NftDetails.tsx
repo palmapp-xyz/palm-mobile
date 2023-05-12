@@ -1,25 +1,24 @@
-import { FormButton, LinkExplorer } from 'components'
+import { FormText, VerifiedWrapper } from 'components'
 import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
-import NftMetadata from 'components/molecules/NftMetadata'
-import useAuth from 'hooks/auth/useAuth'
+import NftAttributes from 'components/molecules/NftAttributes'
 import useNft from 'hooks/contract/useNft'
 import useNftImage from 'hooks/independent/useNftImage'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 import {
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
-import { ContractAddr, Moralis, NftType, SupportedNetworkEnum } from 'types'
+  ContractAddr,
+  Moralis,
+  NftType,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+} from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { Maybe } from '@toruslabs/openlogin'
 
-import NftListingChannels from './NftListingChannels'
+import { COLOR } from 'consts'
+import useReactQuery from 'hooks/complex/useReactQuery'
 
 const NftDetails = ({
   nftContract,
@@ -27,21 +26,18 @@ const NftDetails = ({
   type,
   chain,
   item,
-  onSubmit,
 }: {
   nftContract: ContractAddr
   tokenId: string
   type: NftType
   chain: SupportedNetworkEnum
   item?: Moralis.NftItem
-  onSubmit?: (uri: string | undefined, metadata: Maybe<string>) => Promise<void>
 }): ReactElement => {
   const { ownerOf } = useNft({ nftContract, chain })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
-  const { user } = useAuth()
-
-  const isMine =
-    tokenOwner?.toLocaleLowerCase() === user?.address.toLocaleLowerCase()
+  const [attributes, setAttributes] = useState<
+    { trait_type: string; value: string }[]
+  >([])
 
   const { loading, uri, metadata, refetch, isRefetching } = useNftImage({
     nftContract,
@@ -51,6 +47,13 @@ const NftDetails = ({
     metadata: item?.metadata,
   })
 
+  const { name } = useNft({ nftContract, chain })
+
+  const { data: tokenName = '' } = useReactQuery(
+    [QueryKeyEnum.NFT_TOKEN_NAME, nftContract, chain],
+    async () => name()
+  )
+
   const nftRenderProps: MediaRendererProps = {
     src:
       uri ||
@@ -59,6 +62,7 @@ const NftDetails = ({
     alt: `${nftContract}:${tokenId}`,
     loading,
     height: 300,
+    width: '100%',
   }
 
   useAsyncEffect(async (): Promise<void> => {
@@ -66,76 +70,39 @@ const NftDetails = ({
     setTokenOwner(owner)
   }, [nftContract, tokenId])
 
+  useEffect(() => {
+    try {
+      setAttributes(JSON.parse(metadata || '')?.attributes)
+    } catch {}
+  }, [])
+
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-      }
-    >
-      <View style={styles.body}>
-        <View style={styles.imageBox}>
-          <MediaRenderer {...nftRenderProps} />
-        </View>
-        <View style={styles.info}>
-          <View style={styles.infoDetails}>
-            {tokenOwner && (
-              <View style={styles.item}>
-                <Text style={styles.headText}>Owner</Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <LinkExplorer
-                    type="address"
-                    address={tokenOwner}
-                    network={chain}
-                  />
-                  {isMine && (
-                    <Text style={{ marginHorizontal: 5 }}>(Mine)</Text>
-                  )}
-                </View>
-              </View>
-            )}
-            <View style={styles.item}>
-              <Text style={styles.headText}>Token Contract</Text>
-              <LinkExplorer
-                type="address"
-                address={nftContract}
-                network={chain}
-              />
+    <View style={{ flex: 1 }}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
+      >
+        <View style={styles.body}>
+          <View style={{ paddingBottom: 20, rowGap: 12 }}>
+            <FormText fontType="B.18">{`${tokenName} #${tokenId}`}</FormText>
+            <FormText
+              style={{ alignSelf: 'flex-end' }}
+              fontType="R.12"
+              color={COLOR.black._400}
+            >{`Listed by ...${tokenOwner?.slice(-5)}`}</FormText>
+          </View>
+          <VerifiedWrapper>
+            <View style={styles.imageBox}>
+              <MediaRenderer {...nftRenderProps} style={{ maxWidth: 'auto' }} />
             </View>
-            <View style={styles.item}>
-              <Text style={styles.headText}>Token ID</Text>
-              <LinkExplorer
-                type="nft"
-                address={nftContract}
-                tokenId={tokenId}
-                network={chain}
-              />
-            </View>
-            <NftMetadata metadata={metadata} style={styles.item} />
-            {isMine && (
-              <View style={styles.item}>
-                <Text style={styles.headText}>Listed Channels</Text>
-                <NftListingChannels
-                  nftContract={nftContract}
-                  tokenId={tokenId}
-                />
-              </View>
-            )}
+          </VerifiedWrapper>
+          <View style={styles.info}>
+            <NftAttributes attributes={attributes} />
           </View>
         </View>
-        {onSubmit && (
-          <FormButton
-            containerStyle={{
-              marginBottom: 50,
-              marginHorizontal: 30,
-              marginTop: 0,
-            }}
-            onPress={(): Promise<void> => onSubmit(uri, metadata)}
-          >
-            {isMine ? 'Cancel' : 'Buy'}
-          </FormButton>
-        )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 
@@ -145,22 +112,11 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     justifyContent: 'space-between',
+    padding: 20,
   },
-  imageBox: {
-    marginBottom: 10,
-    alignItems: 'center',
-  },
+  imageBox: { borderRadius: 18, overflow: 'hidden', marginBottom: 12 },
   item: {
     marginVertical: 3,
   },
-  info: {
-    flex: 1,
-    padding: 10,
-    justifyContent: 'space-between',
-  },
-  infoDetails: { rowGap: 10 },
-  headText: {
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
+  info: {},
 })

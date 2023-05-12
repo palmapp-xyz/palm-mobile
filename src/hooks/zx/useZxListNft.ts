@@ -197,6 +197,7 @@ const useZxListNft = ({
         navigation.replace(Routes.ZxNftDetail, {
           nonce: postedOrder!.order.nonce,
           chain,
+          channelUrl,
         })
 
         return postedOrder!.order

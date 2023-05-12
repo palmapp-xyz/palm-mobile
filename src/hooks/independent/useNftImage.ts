@@ -49,7 +49,7 @@ const useNftImage = ({
       return uri?.trim()
     },
     {
-      enabled: !!metadata,
+      enabled: !!metadata && !!tokenId,
     }
   )
 

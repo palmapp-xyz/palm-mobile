@@ -141,7 +141,7 @@ type MainRouteParamsUnion =
       route: Routes.ZxNftDetail
       params: {
         nonce: string
-        channelUrl?: string
+        channelUrl: string
         chain: SupportedNetworkEnum
         item?: Moralis.NftItem
       }

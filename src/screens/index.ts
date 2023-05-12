@@ -1,6 +1,6 @@
 export * from './account'
 export { default as ChannelInfoScreen } from './ChannelInfoScreen'
-export { default as ChannelListingsScreen } from './ChannelListingsScreen'
+export { default as ChannelListingsScreen } from './ChannelListingsScreen/index.tsx'
 export { default as ChannelSettingScreen } from './ChannelSettingScreen'
 export { default as CreateChannelScreen } from './CreateChannelScreen'
 export { default as CreateProfileScreen } from './CreateProfileScreen'

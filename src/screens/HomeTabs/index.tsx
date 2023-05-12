@@ -11,7 +11,6 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import ExploreScreen from './ExploreScreen'
 import GroupChannelListScreen from './GroupChannelListScreen'
 import LensFriendsScreen from './LensFriendsScreen'
-// import NftListScreen from './NftListScreen'
 import MyPageScreen from './MyPageScreen'
 
 const Tab = createBottomTabNavigator()

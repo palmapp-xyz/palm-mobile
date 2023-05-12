@@ -7,6 +7,7 @@ import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import { format } from 'date-fns'
 import useExplorer from 'hooks/complex/useExplorer'
+import useFsListing from 'hooks/firestore/useFsListing'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
@@ -67,8 +68,8 @@ const ListNftMessage = ({
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const { order, isLoading } = useZxOrder({ nonce: data.nonce, chain })
-
+  const { order } = useZxOrder({ nonce: data.nonce, chain })
+  const { fsListingField } = useFsListing({ nonce: data.nonce })
   const nftRendererProps: NftRendererProp = {
     nftContract: item.token_address,
     tokenId: item.token_id,
@@ -91,9 +92,9 @@ const ListNftMessage = ({
           <VerifiedWrapper>
             <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
           </VerifiedWrapper>
-          {isLoading === false && (
+          {order && fsListingField && (
             <>
-              {order ? (
+              {fsListingField.status === 'active' ? (
                 <Row
                   style={[
                     styles.floatRightLabel,
@@ -157,7 +158,7 @@ const ListNftMessage = ({
           <FormButton
             size="sm"
             onPress={(): void => {
-              order
+              fsListingField?.status === 'active'
                 ? navigation.navigate(Routes.ZxNftDetail, {
                     nonce: data.nonce,
                     channelUrl: params.channelUrl,

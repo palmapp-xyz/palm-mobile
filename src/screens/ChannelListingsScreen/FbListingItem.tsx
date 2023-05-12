@@ -13,7 +13,13 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { FbListing, NftType, pToken, SupportedNetworkEnum } from 'types'
 
-const FbListingItem = ({ item }: { item: FbListing }): ReactElement => {
+const FbListingItem = ({
+  item,
+  channelUrl,
+}: {
+  item: FbListing
+  channelUrl: string
+}): ReactElement => {
   const { navigation } = useAppNavigation()
   const { getEthPrice } = useEthPrice()
   const { getKlayPrice } = useKlayPrice()
@@ -45,6 +51,7 @@ const FbListingItem = ({ item }: { item: FbListing }): ReactElement => {
         navigation.navigate(Routes.ZxNftDetail, {
           nonce: order.order.nonce,
           chain,
+          channelUrl,
         })
       }}
     >

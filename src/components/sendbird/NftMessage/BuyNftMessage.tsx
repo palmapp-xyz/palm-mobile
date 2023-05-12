@@ -32,7 +32,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
 
   return (
     <View style={styles.container}>
-      <NftRenderer {...nftRendererProps} />
+      <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
       <View style={styles.body}>
         <Text style={{ color: COLOR.primary._400 }}>Bought NFT</Text>
         <Text
