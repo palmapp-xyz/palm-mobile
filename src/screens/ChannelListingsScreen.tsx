@@ -9,6 +9,7 @@ import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
 import { FbListing } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { COLOR } from 'consts'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const [isFetching, setIsFetching] = useState<boolean>(true)
@@ -79,8 +80,15 @@ const ChannelListingsScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelListings>()
 
   return (
-    <Container style={styles.container}>
-      <Header title="NFT List" left="back" onPressLeft={navigation.goBack} />
+    <Container
+      style={styles.container}
+      safeAreaBackgroundColor={COLOR.black._10}
+    >
+      <Header
+        right="close"
+        onPressRight={navigation.goBack}
+        containerStyle={{ backgroundColor: 'transparent' }}
+      />
       <Contents channelUrl={params.channelUrl} />
     </Container>
   )
@@ -89,6 +97,6 @@ const ChannelListingsScreen = (): ReactElement => {
 export default ChannelListingsScreen
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, backgroundColor: 'transparent' },
   body: { flex: 1 },
 })

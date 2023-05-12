@@ -19,7 +19,7 @@ import { ContractAddr, Moralis, NftType, SupportedNetworkEnum } from 'types'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 import { Maybe } from '@toruslabs/openlogin'
 
-import NftListingChannels from '../screens/NftListingChannels'
+import NftListingChannels from './NftListingChannels'
 
 const NftDetails = ({
   nftContract,

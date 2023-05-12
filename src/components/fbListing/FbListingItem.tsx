@@ -53,9 +53,11 @@ const FbListingItem = ({ item }: { item: FbListing }): ReactElement => {
           tokenId={getOrderTokenId(order.order)}
           nftContract={getOrderTokenAddress(order.order)}
           type={order.nftType as NftType}
-          width={130}
-          height={130}
+          width={'100%'}
+          height={156}
           chain={chain}
+          hideChain
+          style={{ maxWidth: 'auto' }}
         />
       </View>
       <View style={styles.verifiedBox}>
@@ -102,6 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 14,
+    overflow: 'hidden',
   },
   verifiedBox: {
     position: 'absolute',

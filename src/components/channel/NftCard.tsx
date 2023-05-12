@@ -1,7 +1,8 @@
 import React, { ReactElement, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { Card, FormText, MoralisNftRenderer, Row } from 'components'
+import NftAttributes from 'components/molecules/NftAttributes'
 import { COLOR } from 'consts'
 import { Moralis } from 'types'
 
@@ -41,24 +42,7 @@ const NftCard = ({
           </FormText>
         </View>
       </Row>
-      <Row style={styles.traitsBox}>
-        <FlatList
-          data={attributes}
-          keyExtractor={(item, index): string => `attributes-${index}`}
-          horizontal
-          contentContainerStyle={{ gap: 8 }}
-          renderItem={({ item }): ReactElement => {
-            return (
-              <View style={styles.traits}>
-                <FormText fontType="R.12">{item.trait_type}</FormText>
-                <FormText fontType="B.14" color={COLOR.black._900}>
-                  {item.value}
-                </FormText>
-              </View>
-            )
-          }}
-        />
-      </Row>
+      <NftAttributes attributes={attributes} />
     </Card>
   )
 }
@@ -67,7 +51,7 @@ export default NftCard
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLOR.black._90010,
+    backgroundColor: COLOR.black._10,
     borderRadius: 24,
     padding: 20,
     paddingRight: 0,
