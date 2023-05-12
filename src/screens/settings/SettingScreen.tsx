@@ -80,7 +80,7 @@ const SettingScreen = (): ReactElement => {
           </TouchableOpacity> */}
           <View style={styles.item}>
             <Text>Version</Text>
-            <Text style={{ color: COLOR.primary._400 }}>0.0.2</Text>
+            <Text style={{ color: COLOR.primary._400 }}>0.0.3</Text>
           </View>
           {/* <TouchableOpacity
             style={styles.item}
