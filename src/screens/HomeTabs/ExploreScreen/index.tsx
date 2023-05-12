@@ -6,7 +6,13 @@ import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import React, {
+  ReactElement,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import {
   Animated,
   ScrollView,
@@ -25,9 +31,19 @@ import SelectedChannel from './SelectedChannel'
 
 const HEADER_HEIGHT = 72
 
-const ExploreScreen = (): ReactElement => {
+const CallInterest = (): ReactElement => {
   const { navigation } = useAppNavigation()
 
+  const { isLoading: isLoadingInterest, interestList } = useInterest()
+  useEffect(() => {
+    if (isLoadingInterest === false && interestList.length < 1) {
+      navigation.navigate(Routes.InitExplore)
+    }
+  }, [isLoadingInterest])
+  return <View />
+}
+
+const ExploreScreen = (): ReactElement => {
   const [searchFocused, setSearchFocused] = useState(false)
   const inputRef = useRef<TextInput>(null)
 
@@ -40,16 +56,11 @@ const ExploreScreen = (): ReactElement => {
     onClickConfirm,
   } = useExploreSearchReturn
 
-  const { isLoading: isLoadingInterest, interestList } = useInterest()
-
-  useEffect(() => {
-    if (isLoadingInterest === false && interestList.length < 1) {
-      navigation.navigate(Routes.InitExplore)
-    }
-  }, [isLoadingInterest])
-
   return (
     <Container style={styles.container}>
+      <Suspense>
+        <CallInterest />
+      </Suspense>
       <Animated.View
         style={[
           styles.headAnimationBox,
