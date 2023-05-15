@@ -64,7 +64,10 @@ const SearchResult = ({
           <TabItem title="Chat Room" target={'chat'} />
           <TabItem title="User" target={'user'} />
         </Row>
-        <ScrollView style={styles.body}>
+        <ScrollView
+          style={styles.body}
+          contentContainerStyle={{ rowGap: 12, paddingBottom: 60 }}
+        >
           {selectedMenu === 'chat'
             ? _.map(searchChannelResult, (item, index) => {
                 return (
@@ -101,5 +104,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 20,
     height: '100%',
+    marginBottom: -100,
   },
 })
