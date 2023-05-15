@@ -4,7 +4,7 @@ import { UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { FbProfile } from 'types'
 
 const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
@@ -12,7 +12,7 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
 
   return (
     <Card borderRound={true}>
-      <TouchableOpacity
+      <Pressable
         style={styles.userBox}
         onPress={(): void => {
           navigation.navigate(Routes.UserProfile, {
@@ -42,7 +42,7 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
             </FormText>
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </Card>
   )
 }

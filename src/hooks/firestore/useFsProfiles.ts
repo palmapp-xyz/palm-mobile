@@ -8,12 +8,14 @@ export type UseFsProfilesReturn = {
 }
 
 const useFsProfiles = (): UseFsProfilesReturn => {
+  const limit = 5
   const { data: fsProfileList = [] } = useReactQuery(
     [FirestoreKeyEnum.Profiles],
     async () => {
       const list: FbProfile[] = []
       await firestore()
         .collection('profiles')
+        .limit(limit)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {

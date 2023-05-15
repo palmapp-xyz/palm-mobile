@@ -3,7 +3,7 @@ import { Card, FormImage, FormText, Row, Tag } from 'components'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FbChannel } from 'types'
 
@@ -16,7 +16,7 @@ const ChatCard = ({
 }): ReactElement => {
   return (
     <Card borderRound={true}>
-      <TouchableOpacity onPress={(): void => onClick(chat)}>
+      <Pressable onPress={(): void => onClick(chat)}>
         <Row style={styles.channelBox}>
           <View style={styles.channelImg}>
             <FormImage
@@ -69,7 +69,7 @@ const ChatCard = ({
             </Row>
           </View>
         )}
-      </TouchableOpacity>
+      </Pressable>
     </Card>
   )
 }

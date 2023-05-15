@@ -5,15 +5,18 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 
 export type UseFsChannelsReturn = {
   fsChannelList: FbChannel[]
+  isLoading: boolean
 }
 
 const useFsChannels = (): UseFsChannelsReturn => {
-  const { data: fsChannelList = [] } = useReactQuery(
+  const limit = 5
+  const { data: fsChannelList = [], isLoading } = useReactQuery(
     [FirestoreKeyEnum.Channels],
     async () => {
       const list: FbChannel[] = []
       await firestore()
         .collection('channels')
+        .limit(limit)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {
@@ -27,6 +30,7 @@ const useFsChannels = (): UseFsChannelsReturn => {
 
   return {
     fsChannelList,
+    isLoading,
   }
 }
 

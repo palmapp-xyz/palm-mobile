@@ -149,9 +149,11 @@ const ExploreScreen = (): ReactElement => {
             { useNativeDriver: false }
           )}
         >
-          <RecommendChat useExploreSearchReturn={useExploreSearchReturn} />
-          <RecommendUsers />
-          <View style={{ height: 140 }} />
+          <View>
+            <RecommendChat useExploreSearchReturn={useExploreSearchReturn} />
+            <RecommendUsers />
+            <View style={{ height: 140 }} />
+          </View>
         </ScrollView>
       )}
       {inputSearch.length > 0 && searchFocused && (
