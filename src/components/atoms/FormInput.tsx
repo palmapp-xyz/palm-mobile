@@ -7,15 +7,24 @@ const FormInput = (
   props: {
     inputRef?: React.LegacyRef<TextInput>
     fontType?: FontType
+    disabled?: boolean
   } & TextInputProps
 ): ReactElement => {
-  const { style, fontType = 'R.16', ...rest } = props
+  const { style, fontType = 'R.14', ...rest } = props
   const fontStyle = STYLE.getFontStyle(fontType)
+  const disabled = props.disabled ?? false
 
   return (
     <TextInput
+      editable={!disabled}
+      selectTextOnFocus={!disabled}
       ref={props.inputRef}
-      style={[styles.container, style, fontStyle]}
+      style={[
+        { backgroundColor: disabled ? COLOR.black._50 : 'white' },
+        styles.container,
+        style,
+        fontStyle,
+      ]}
       {...rest}
     />
   )
@@ -31,7 +40,5 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     paddingHorizontal: 14,
     height: 36,
-    backgroundColor: 'white',
-    fontSize: 14,
   },
 })

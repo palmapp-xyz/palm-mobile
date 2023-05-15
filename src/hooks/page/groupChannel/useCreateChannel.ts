@@ -12,6 +12,7 @@ import { FbChannel, FbChannelGatingField, SupportedNetworkEnum } from 'types'
 import { FilePickerResponse } from '@sendbird/uikit-react-native'
 
 export type UseCreateChannelReturn = {
+  isLoading: boolean
   channelImage?: FilePickerResponse
   setChannelImage: React.Dispatch<
     React.SetStateAction<FilePickerResponse | undefined>
@@ -39,6 +40,7 @@ export type UseCreateChannelReturn = {
 
 const useCreateChannel = (): UseCreateChannelReturn => {
   const { navigation } = useAppNavigation()
+  const [isLoading, setIsLoading] = useState(false)
   const [coverImage, setCoverImage] = useState<FilePickerResponse>()
   const [inputTag, setInputTag] = useState('')
   const [channelName, setChannelName] = useState('')
@@ -87,6 +89,7 @@ const useCreateChannel = (): UseCreateChannelReturn => {
 
   const onClickConfirm = async (): Promise<void> => {
     if (user) {
+      setIsLoading(true)
       try {
         const channel = await createGroupChat({
           invitedUserIds: [user.auth!.profileId],
@@ -115,9 +118,11 @@ const useCreateChannel = (): UseCreateChannelReturn => {
         recordError(error, 'useEditChannel:onClickConfirm')
       }
     }
+    setIsLoading(false)
   }
 
   return {
+    isLoading,
     channelImage: coverImage,
     setChannelImage: setCoverImage,
     tags,

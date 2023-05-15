@@ -13,7 +13,13 @@ import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import TokenGating from './TokenGating'
@@ -22,6 +28,7 @@ const CreateChannelScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
   const useCreateChannelReturn = useCreateChannel()
   const {
+    isLoading,
     channelImage,
     tags,
     inputTag,
@@ -45,14 +52,18 @@ const CreateChannelScreen = (): ReactElement => {
       <Container style={styles.container} keyboardAvoiding={true}>
         <ScrollView>
           <Header
-            left="back"
-            onPressLeft={navigation.goBack}
+            left={isLoading ? undefined : 'back'}
+            onPressLeft={isLoading ? undefined : navigation.goBack}
             right={
-              <Icon
-                name="ios-checkmark-circle"
-                color={isValidForm ? COLOR.primary._400 : COLOR.black._400}
-                size={36}
-              />
+              isLoading ? (
+                <ActivityIndicator color={COLOR.primary._400} size={36} />
+              ) : (
+                <Icon
+                  name="ios-checkmark-circle"
+                  color={isValidForm ? COLOR.primary._400 : COLOR.black._400}
+                  size={36}
+                />
+              )
             }
             onPressRight={isValidForm ? onClickConfirm : undefined}
           />
@@ -75,13 +86,18 @@ const CreateChannelScreen = (): ReactElement => {
               <FormText fontType="R.12" color={COLOR.black._400}>
                 Chat Room Name
               </FormText>
-              <FormInput value={channelName} onChangeText={setChannelName} />
+              <FormInput
+                disabled={isLoading}
+                value={channelName}
+                onChangeText={setChannelName}
+              />
             </View>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>
                 Description
               </FormText>
               <FormInput
+                disabled={isLoading}
                 value={desc}
                 onChangeText={setDesc}
                 fontType="R.12"
@@ -95,6 +111,7 @@ const CreateChannelScreen = (): ReactElement => {
                 Tags
               </FormText>
               <FormInput
+                disabled={isLoading}
                 value={inputTag}
                 onChangeText={setInputTag}
                 placeholder="Add tags separated by a comma"
@@ -115,6 +132,7 @@ const CreateChannelScreen = (): ReactElement => {
               {selectedGatingToken.amount ? (
                 <View style={{ rowGap: 4 }}>
                   <TouchableOpacity
+                    disabled={isLoading}
                     style={styles.tokenGatingSelectBox}
                     onPress={(): void => {
                       setSelectedGatingToken(defaultGatingToken)
@@ -137,6 +155,7 @@ const CreateChannelScreen = (): ReactElement => {
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
+                    disabled={isLoading}
                     style={styles.editTokenGating}
                     onPress={(): void => {
                       setShowTokenGating(true)
@@ -154,6 +173,7 @@ const CreateChannelScreen = (): ReactElement => {
                 </View>
               ) : (
                 <TouchableOpacity
+                  disabled={isLoading}
                   style={styles.tokenGatingSelectBox}
                   onPress={(): void => {
                     setShowTokenGating(true)
