@@ -2,17 +2,20 @@ import {
   FilePickerResponse,
   useLocalization,
   usePlatformService,
+  useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { useAlert, useToast } from '@sendbird/uikit-react-native-foundation'
 import SBUError from '@sendbird/uikit-react-native/src/libs/SBUError'
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
+import { isImage, shouldCompressImage } from '@sendbird/uikit-utils'
 
 export type UseDeviceReturn = {
   getMediaFile: () => Promise<FilePickerResponse | undefined>
 }
 
 const useDevice = (): UseDeviceReturn => {
-  const { fileService } = usePlatformService()
+  const { fileService, mediaService } = usePlatformService()
+  const { imageCompressionConfig, features } = useSendbirdChat()
 
   const { alert } = useAlert()
   const toast = useToast()
@@ -42,7 +45,29 @@ const useDevice = (): UseDeviceReturn => {
         }
       },
     })
-    if (files) {
+    if (files && files[0]) {
+      const file = files[0]
+
+      // Image compression
+      if (
+        isImage(file.uri, file.type) &&
+        shouldCompressImage(file.type, features.imageCompressionEnabled)
+      ) {
+        await SBUUtils.safeRun(async () => {
+          const compressed = await mediaService.compressImage({
+            uri: file.uri,
+            maxWidth: imageCompressionConfig.width,
+            maxHeight: imageCompressionConfig.height,
+            compressionRate: imageCompressionConfig.compressionRate,
+          })
+
+          if (compressed) {
+            file.uri = compressed.uri
+            file.size = compressed.size
+          }
+        })
+      }
+
       return files[0]
     }
   }
