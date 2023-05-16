@@ -1,17 +1,17 @@
-apply plugin: "com.android.application"
-apply plugin: "com.facebook.react"
-apply plugin: "com.google.gms.google-services"
+apply plugin: 'com.android.application'
+apply plugin: 'com.facebook.react'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 project.ext.envConfigFiles = [
-   palmMainnetDebug: ".env.mainnet",
-   palmMainnetRelease: ".env.mainnet",
-   palmTestnetDebug: ".env.testnet",
-   palmTestnetRelease: ".env.testnet",
+   palmMainnetDebug: '.env.mainnet',
+   palmMainnetRelease: '.env.mainnet',
+   palmTestnetDebug: '.env.testnet',
+   palmTestnetRelease: '.env.testnet',
 ]
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + '/dotenv.gradle'
 
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply from: '../../node_modules/react-native-vector-icons/fonts.gradle'
 
 import com.android.build.OutputFile
 
@@ -21,36 +21,36 @@ import com.android.build.OutputFile
  */
 react {
     /* Folders */
-    //   The root of your project, i.e. where "package.json" lives. Default is '..'
-    // root = file("../")
+    //   The root of your project, i.e. where 'package.json' lives. Default is '..'
+    // root = file('../')
     //   The folder where the react-native NPM package is. Default is ../node_modules/react-native
-    // reactNativeDir = file("../node_modules/react-native")
+    // reactNativeDir = file('../node_modules/react-native')
     //   The folder where the react-native Codegen package is. Default is ../node_modules/react-native-codegen
-    // codegenDir = file("../node_modules/react-native-codegen")
+    // codegenDir = file('../node_modules/react-native-codegen')
     //   The cli.js file which is the React Native CLI entrypoint. Default is ../node_modules/react-native/cli.js
-    // cliFile = file("../node_modules/react-native/cli.js")
+    // cliFile = file('../node_modules/react-native/cli.js')
 
     /* Variants */
     //   The list of variants to that are debuggable. For those we're going to
     //   skip the bundling of the JS bundle and the assets. By default is just 'debug'.
     //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
-    // debuggableVariants = ["liteDebug", "prodDebug"]
+    // debuggableVariants = ['liteDebug', 'prodDebug']
 
     /* Bundling */
     //   A list containing the node command and its flags. Default is just 'node'.
-    // nodeExecutableAndArgs = ["node"]
+    // nodeExecutableAndArgs = ['node']
     //
     //   The command to run when bundling. By default is 'bundle'
-    // bundleCommand = "ram-bundle"
+    // bundleCommand = 'ram-bundle'
     //
     //   The path to the CLI configuration file. Default is empty.
     // bundleConfig = file(../rn-cli.config.js)
     //
     //   The name of the generated asset file containing your JS bundle
-    // bundleAssetName = "MyApplication.android.bundle"
+    // bundleAssetName = 'MyApplication.android.bundle'
     //
     //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
-    // entryFile = file("../js/MyApplication.android.js")
+    // entryFile = file('../js/MyApplication.android.js')
     //
     //   A list of extra flags to pass to the 'bundle' commands.
     //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
@@ -58,10 +58,10 @@ react {
 
     /* Hermes Commands */
     //   The hermes compiler command to run. By default it is 'hermesc'
-    // hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
+    // hermesCommand = '$rootDir/my-custom-hermesc/bin/hermesc'
     //
-    //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
-    // hermesFlags = ["-O", "-output-source-map"]
+    //   The list of flags to pass to the Hermes compiler. By default is '-O', '-output-source-map'
+    // hermesFlags = ['-O', '-output-source-map']
 }
 
 /**
@@ -96,8 +96,8 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * file and works together with the --active-arch-only flag of react-native run-android.
  */
 def reactNativeArchitectures() {
-    def value = project.getProperties().get("reactNativeArchitectures")
-    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+    def value = project.getProperties().get('reactNativeArchitectures')
+    return value ? value.split(',') : ['armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a']
 }
 
 android {
@@ -105,13 +105,13 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.palmapp.xyz"
+    namespace 'com.palmapp.xyz'
     defaultConfig {
-        applicationId "com.palmapp.xyz"
+        applicationId 'com.palmapp.xyz'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 5
-        versionName "0.0.2"
+        versionName '0.0.2'
     }
 
     splits {
@@ -148,26 +148,26 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             firebaseCrashlytics {
                 nativeSymbolUploadEnabled true
                 unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
             }
         }
     }
-    flavorDimensions "default"
+    flavorDimensions 'default'
     productFlavors {
         palmTestnet {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId 'com.palmapp.xyz.testnet'
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.palmapp.xyz"
+            resValue 'string', 'build_config_package', 'com.palmapp.xyz'
         }
         palmMainnet {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId 'com.palmapp.xyz'
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.palmapp.xyz"
+            resValue 'string', 'build_config_package', 'com.palmapp.xyz'
         }
     }
 
@@ -177,7 +177,7 @@ android {
             // For each separate APK per architecture, set a unique version code as described here:
             // https://developer.android.com/studio/build/configure-apk-splits.html
             // Example: versionCode 1 will generate 1001 for armeabi-v7a, 1002 for x86, etc.
-            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
+            def versionCodes = ['armeabi-v7a': 1, 'x86': 2, 'arm64-v8a': 3, 'x86_64': 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -190,27 +190,27 @@ android {
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
-    implementation("com.facebook.react:react-android")
+    implementation('com.facebook.react:react-android')
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
 
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+    implementation('androidx.swiperefreshlayout:swiperefreshlayout:1.0.0')
 
     // For animated GIF support
     implementation 'com.facebook.fresco:animated-gif:2.5.0'
 
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
 
-    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+    debugImplementation('com.facebook.flipper:flipper:${FLIPPER_VERSION}')
+    debugImplementation('com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}') {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
 
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
+    debugImplementation('com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}')
     if (hermesEnabled.toBoolean()) {
-        implementation("com.facebook.react:hermes-android")
+        implementation('com.facebook.react:hermes-android')
     } else {
         implementation jscFlavor
     }
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: file('../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle'); applyNativeModulesAppBuildGradle(project)
