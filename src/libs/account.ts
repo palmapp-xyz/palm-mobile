@@ -44,9 +44,11 @@ export const getMnemonic = async (): Promise<string> => {
 }
 
 export const removeKeys = async (): Promise<void> => {
-  await resetInternetCredentials(KeyChainEnum.PK)
-  await resetInternetCredentials(KeyChainEnum.PK_PWD)
-  await resetInternetCredentials(KeyChainEnum.MNEMONIC)
+  await Promise.all([
+    resetInternetCredentials(KeyChainEnum.PK),
+    resetInternetCredentials(KeyChainEnum.PK_PWD),
+    resetInternetCredentials(KeyChainEnum.MNEMONIC),
+  ])
 }
 
 export const getPkeyPwd = async (): Promise<string> => {

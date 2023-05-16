@@ -73,6 +73,12 @@ const useAuth = (): UseAuthReturn => {
         userCredential: { ...user.userCredential, user: firebaseUser },
       })
     }
+
+    if (!firebaseUser) {
+      console.log(
+        `User ${user.auth?.profileId} logged out. address ${user.address}`
+      )
+    }
   }
 
   const registerMnemonic = async (mnemonic: string): Promise<void> => {
@@ -217,12 +223,17 @@ const useAuth = (): UseAuthReturn => {
   }
 
   const logout = async (): Promise<void> => {
+    await Promise.all([
+      AsyncStorage.removeItem(LocalStorageKey.AUTH),
+      removeKeys(),
+      auth().signOut(),
+      disconnect(),
+      unregisterDeviceToken(),
+    ])
+
     setCurrentUser(undefined)
-    setUser(undefined)
-    await AsyncStorage.removeItem(LocalStorageKey.AUTH)
-    await removeKeys()
-    await Promise.all([auth().signOut(), disconnect(), unregisterDeviceToken()])
     setRestoreLoading(false)
+    setUser(undefined)
   }
 
   return {

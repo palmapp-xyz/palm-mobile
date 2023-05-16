@@ -90,8 +90,7 @@ const useApi = (): UseApiReturn => {
   })
   axios.interceptors.request.use(async req => {
     try {
-      const currentUser: FirebaseAuthTypes.User | null =
-        user?.userCredential?.user ?? auth().currentUser
+      const currentUser: FirebaseAuthTypes.User | null = auth().currentUser
       if (currentUser) {
         await currentUser.getIdTokenResult(true)
       }
