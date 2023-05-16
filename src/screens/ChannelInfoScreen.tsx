@@ -28,7 +28,11 @@ const ChannelInfoScreen = (): ReactElement => {
   const { channel, channelName, tags, desc, gatingToken, loading } =
     useChannelInfo({ channelUrl: params.channelUrl })
 
-  const displayUsers = channel?.members.slice(0, 3) || []
+  const channelMembers =
+    channel?.members.sort(a => (a.profileUrl ? -1 : 1)) || []
+  const displayUsers = [...channelMembers]
+    .sort(a => (a.profileUrl ? 1 : -1))
+    .slice(-3)
 
   if (loading) {
     return <LoadingPage />
@@ -76,7 +80,14 @@ const ChannelInfoScreen = (): ReactElement => {
                       },
                     ]}
                   >
-                    <FormImage source={{ uri: user.profileUrl }} size={100} />
+                    <FormImage
+                      source={
+                        user.profileUrl
+                          ? { uri: user.profileUrl }
+                          : images.blank_profile
+                      }
+                      size={100}
+                    />
                   </View>
                 )
               })}
@@ -166,7 +177,7 @@ const ChannelInfoScreen = (): ReactElement => {
             </Row>
             <View style={{ paddingTop: 16 }}>
               <FlatList
-                data={channel.members}
+                data={channelMembers}
                 scrollEnabled={false}
                 keyExtractor={(item, index): string => `attributes-${index}`}
                 contentContainerStyle={{ gap: 10 }}
