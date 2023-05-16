@@ -10,7 +10,14 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   FbChannelNativeGatingField,
   FbChannelNFTGatingField,
@@ -137,7 +144,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title={'Private channel'}
+        title="Private channel"
         left="back"
         onPressLeft={navigation.goBack}
       />
@@ -166,6 +173,18 @@ const TokenGatingInfoScreen = (): ReactElement => {
           }}
         />
       </View>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          onPress={(): void => {
+            channel.leave().then(() => {
+              navigation.navigate(Routes.GroupChannelList)
+              sdk.clearCachedMessages([channel.url]).catch()
+            })
+          }}
+        >
+          <Ionicons name="exit-outline" size={24} color={COLOR.error} />
+        </TouchableOpacity>
+      </View>
     </Container>
   )
 }
@@ -173,6 +192,13 @@ const TokenGatingInfoScreen = (): ReactElement => {
 export default TokenGatingInfoScreen
 
 const styles = StyleSheet.create({
-  container: {},
-  body: { padding: 10, gap: 10 },
+  container: { flex: 1 },
+  body: { flex: 1, padding: 10, gap: 10 },
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: COLOR.black._90010,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+  },
 })
