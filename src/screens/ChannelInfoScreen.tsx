@@ -56,15 +56,14 @@ const ChannelInfoScreen = (): ReactElement => {
         containerStyle={{ backgroundColor: COLOR.black._90005 }}
       />
       <View style={{ flex: 1 }}>
-        <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
+        <ScrollView style={{ flex: 1 }} bounces={false}>
           <View
             style={{
               paddingTop: 92,
               backgroundColor: COLOR.black._90005,
-              marginHorizontal: -20,
             }}
           />
-          <View>
+          <View style={{ paddingHorizontal: 20 }}>
             <Row style={styles.userBox}>
               {_.map(displayUsers, (user, j) => {
                 return (
@@ -149,11 +148,10 @@ const ChannelInfoScreen = (): ReactElement => {
             style={{
               borderTopColor: COLOR.black._100,
               borderTopWidth: 1,
-              marginHorizontal: -20,
               paddingBottom: 20,
             }}
           />
-          <View style={styles.section}>
+          <View style={[styles.section, { paddingHorizontal: 20 }]}>
             <Row
               style={{ alignItems: 'center', justifyContent: 'space-between' }}
             >
