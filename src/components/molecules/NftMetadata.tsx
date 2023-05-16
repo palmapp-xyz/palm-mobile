@@ -47,10 +47,7 @@ const NftMetadata = ({
             <Text style={styles.headText}>{_.capitalize(key)}</Text>
             {typeof item === 'object' ? (
               key === 'attributes' ? (
-                <NftAttributes
-                  attributes={item}
-                  style={{ flex: 1, width: '100%' }}
-                />
+                <NftAttributes attributes={item} />
               ) : (
                 <Text>{JSON.stringify(item, null, 2)}</Text>
               )

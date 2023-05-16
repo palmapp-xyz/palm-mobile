@@ -36,6 +36,8 @@ export default NftAttributes
 const styles = StyleSheet.create({
   traitsBox: {
     columnGap: 10,
+    flex: 1,
+    width: '100%',
   },
   traits: {
     rowGap: 4,
