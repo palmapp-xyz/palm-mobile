@@ -1,4 +1,7 @@
 import { Platform } from 'react-native'
+import PushNotification, {
+  ReceivedNotification,
+} from 'react-native-push-notification'
 
 import Notifee, {
   AndroidImportance,
@@ -6,7 +9,7 @@ import Notifee, {
   EventType,
 } from '@notifee/react-native'
 import PushNotificationIOS, {
-  PushNotification,
+  PushNotification as iOSPushNotification,
 } from '@react-native-community/push-notification-ios'
 import { FirebaseMessagingTypes } from '@react-native-firebase/messaging'
 import {
@@ -15,6 +18,7 @@ import {
   parseSendbirdNotification,
 } from '@sendbird/uikit-utils'
 
+import { recordError } from './logger'
 import { navigationRef, Routes, runAfterAppReady } from './navigation'
 
 export const onNotificationAndroid: (event: Event) => Promise<void> = async ({
@@ -42,7 +46,7 @@ export const onNotificationAndroid: (event: Event) => Promise<void> = async ({
   }
 }
 
-export const onNotificationIOS = (notification: PushNotification): void => {
+export const onNotificationIOS = (notification: iOSPushNotification): void => {
   const data = notification.getData()
   const isClicked = data.userInteraction === 1
   if (isClicked && isSendbirdNotification(data)) {
@@ -69,6 +73,7 @@ export const backgroundMessageHandler = async (
     return
   }
 
+  console.log('backgroundMessageHandler', channelId, message)
   if (isSendbirdNotification(message.data)) {
     const sendbird = parseSendbirdNotification(message.data)
     await Notifee.displayNotification({
@@ -115,4 +120,70 @@ export const onForegroundIOS = (): (() => void) => {
   checkAppOpenedWithNotification()
   PushNotificationIOS.addEventListener('localNotification', onNotificationIOS)
   return () => PushNotificationIOS.removeEventListener('localNotification')
+}
+
+export const configurePushNotification = (): void => {
+  // Must be outside of any component LifeCycle (such as `componentDidMount`).
+  PushNotification.configure({
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: ({ os, token }: { os: string; token: string }): void => {
+      console.log('PushNotification:onRegister', os, token)
+    },
+
+    // (required) Called when a remote is received or opened, or local notification is opened
+    onNotification: (
+      notification: Omit<ReceivedNotification, 'userInfo'>
+    ): void => {
+      console.log('PushNotification::onNotification', notification)
+
+      const data = notification.data
+      const isClicked = notification.userInteraction
+      if (isClicked && isSendbirdNotification(data)) {
+        const sendbird = parseSendbirdNotification(data)
+        runAfterAppReady(async (_, actions) => {
+          const channelUrl = sendbird.channel.channel_url
+          if (Routes.HomeTabs === navigationRef.getCurrentRoute()?.name) {
+            actions.push(Routes.GroupChannelList, { channelUrl })
+          } else {
+            actions.navigate(Routes.GroupChannel, { channelUrl })
+          }
+        })
+      }
+
+      // (required) Called when a remote is received or opened, or local notification is opened
+      notification.finish(PushNotificationIOS.FetchResult.NoData)
+    },
+
+    // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+    onAction: (notification: ReceivedNotification): void => {
+      console.log('PushNotification:onAction:', notification)
+      // process the action
+    },
+
+    // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+    onRegistrationError: (err: unknown): void => {
+      console.error('PushNotification:onRegistrationError', err)
+      recordError(err, 'PushNotification:onRegistrationError')
+    },
+
+    // IOS ONLY (optional): default: all - Permissions to register.
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+
+    // Should the initial notification be popped automatically
+    // default: true
+    popInitialNotification: true,
+
+    /**
+     * (optional) default: true
+     * - Specified if permissions (ios) and token (android and ios) will requested or not,
+     * - if not, you must call PushNotificationsHandler.requestPermissions() later
+     * - if you are not using remote notification or do not have Firebase installed, use this:
+     *     requestPermissions: Platform.OS === 'ios'
+     */
+    requestPermissions: true,
+  })
 }
