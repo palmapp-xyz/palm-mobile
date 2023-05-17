@@ -56,7 +56,7 @@ const useSendbird = (): UseSendbirdReturn => {
         coverImage: typeof coverImage === 'string' ? undefined : coverImage,
         coverUrl: typeof coverImage === 'string' ? coverImage : undefined,
         operatorUserIds,
-        isDistinct,
+        isDistinct: !!isDistinct,
         isPublic: !isDistinct,
       }
 
