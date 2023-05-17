@@ -1,18 +1,9 @@
 import images from 'assets/images'
 import { Container, FormImage, FormInput, Row } from 'components'
 import { COLOR } from 'consts'
-import useInterest from 'hooks/independent/useInterest'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
-import React, {
-  ReactElement,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { ReactElement, useRef, useState } from 'react'
 import {
   Animated,
   ScrollView,
@@ -31,17 +22,17 @@ import SelectedChannel from './SelectedChannel'
 
 const HEADER_HEIGHT = 72
 
-const CallInterest = (): ReactElement => {
-  const { navigation } = useAppNavigation()
+// const CallInterest = (): ReactElement => {
+//   const { navigation } = useAppNavigation()
 
-  const { isLoading: isLoadingInterest, interestList } = useInterest()
-  useEffect(() => {
-    if (isLoadingInterest === false && interestList.length < 1) {
-      navigation.navigate(Routes.InitExplore)
-    }
-  }, [isLoadingInterest])
-  return <View />
-}
+//   const { isLoading: isLoadingInterest, interestList } = useInterest()
+//   useEffect(() => {
+//     if (isLoadingInterest === false && interestList.length < 1) {
+//       navigation.navigate(Routes.InitExplore)
+//     }
+//   }, [isLoadingInterest])
+//   return <View />
+// }
 
 const ExploreScreen = (): ReactElement => {
   const [searchFocused, setSearchFocused] = useState(false)
@@ -58,9 +49,9 @@ const ExploreScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Suspense>
+      {/* <Suspense>
         <CallInterest />
-      </Suspense>
+      </Suspense> */}
       <Animated.View
         style={[
           styles.headAnimationBox,
