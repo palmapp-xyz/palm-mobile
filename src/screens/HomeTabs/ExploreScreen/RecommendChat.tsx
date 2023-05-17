@@ -20,9 +20,7 @@ const RecommendChat = ({
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.title}>
-          <FormText fontType="B.24">
-            {'How about to join\na chat room?'}
-          </FormText>
+          <FormText fontType="B.24">{'Explore channels\nto join'}</FormText>
         </View>
       </View>
       <View style={styles.body}>

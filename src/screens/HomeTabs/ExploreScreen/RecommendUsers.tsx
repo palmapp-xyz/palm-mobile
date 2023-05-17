@@ -13,9 +13,7 @@ const RecommendUsers = (): ReactElement => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.title}>
-          <FormText fontType="B.24">
-            {'What about users\nwith similar tastes?'}
-          </FormText>
+          <FormText fontType="B.24">{'or Chat with\nothers directly'}</FormText>
         </View>
       </View>
       <View style={styles.body}>
