@@ -5,6 +5,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const SettingScreen = (): ReactElement => {
@@ -80,7 +81,9 @@ const SettingScreen = (): ReactElement => {
           </TouchableOpacity> */}
           <View style={styles.item}>
             <Text>Version</Text>
-            <Text style={{ color: COLOR.primary._400 }}>0.0.5</Text>
+            <Text style={{ color: COLOR.primary._400 }}>
+              {DeviceInfo.getReadableVersion()}
+            </Text>
           </View>
           {/* <TouchableOpacity
             style={styles.item}
