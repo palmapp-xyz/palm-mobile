@@ -20,7 +20,7 @@ const RecommendChat = ({
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.title}>
-          <FormText fontType="B.24">{'Explore channels\nto join'}</FormText>
+          <FormText fontType="B.24">{'Explore\nchannels to join'}</FormText>
         </View>
       </View>
       <View style={styles.body}>
@@ -42,9 +42,9 @@ export default RecommendChat
 
 const styles = StyleSheet.create({
   container: { paddingTop: 20 },
-  header: { paddingHorizontal: 20, paddingBottom: 20 },
+  header: { paddingHorizontal: 20, paddingBottom: 10 },
   title: {
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   optionItem: {
     paddingHorizontal: 12,

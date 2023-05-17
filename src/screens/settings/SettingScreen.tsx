@@ -82,7 +82,7 @@ const SettingScreen = (): ReactElement => {
           <View style={styles.item}>
             <Text>Version</Text>
             <Text style={{ color: COLOR.primary._400 }}>
-              {DeviceInfo.getReadableVersion()}
+              {DeviceInfo.getVersion()}
             </Text>
           </View>
           {/* <TouchableOpacity

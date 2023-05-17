@@ -13,7 +13,7 @@ const RecommendUsers = (): ReactElement => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.title}>
-          <FormText fontType="B.24">{'or Chat with\nothers directly'}</FormText>
+          <FormText fontType="B.24">{'or chat with\nothers directly'}</FormText>
         </View>
       </View>
       <View style={styles.body}>
@@ -31,9 +31,9 @@ export default RecommendUsers
 
 const styles = StyleSheet.create({
   container: { paddingTop: 32 },
-  header: { paddingHorizontal: 20, paddingBottom: 20 },
+  header: { paddingHorizontal: 20, paddingBottom: 10 },
   title: {
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   optionItem: { borderRadius: 8, overflow: 'hidden' },
   body: {
