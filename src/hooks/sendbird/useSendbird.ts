@@ -40,7 +40,7 @@ const useSendbird = (): UseSendbirdReturn => {
     operatorUserIds,
     isDistinct,
   }: CreateGroupChatParam): Promise<GroupChannel> => {
-    let channel: GroupChannel
+    let channel: GroupChannel | undefined
 
     if (channelUrl) {
       try {
@@ -48,17 +48,22 @@ const useSendbird = (): UseSendbirdReturn => {
       } catch {}
     }
 
-    const params: GroupChannelCreateParams = {
-      invitedUserIds,
-      name: channelName,
-      coverImage: typeof coverImage === 'string' ? undefined : coverImage,
-      coverUrl: typeof coverImage === 'string' ? coverImage : undefined,
-      operatorUserIds,
-      isDistinct,
-      isPublic: !isDistinct,
-    }
+    if (!channel) {
+      const params: GroupChannelCreateParams = {
+        channelUrl,
+        invitedUserIds,
+        name: channelName,
+        coverImage: typeof coverImage === 'string' ? undefined : coverImage,
+        coverUrl: typeof coverImage === 'string' ? coverImage : undefined,
+        operatorUserIds,
+        isDistinct,
+        isPublic: !isDistinct,
+      }
 
-    channel = await sdk.groupChannel.createChannel(UTIL.noUndefinedObj(params))
+      channel = await sdk.groupChannel.createChannel(
+        UTIL.noUndefinedObj(params)
+      )
+    }
 
     const data: MetaData = filterUndefined<{
       [key: string]: string | undefined
