@@ -1,3 +1,4 @@
+import MediaRenderer from 'components/molecules/MediaRenderer'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
@@ -31,7 +32,16 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
             })
           }}
         >
-          <Avatar size={26} uri={message.sender?.profileUrl} />
+          {message.sender?.profileUrl ? (
+            <MediaRenderer
+              src={message.sender.profileUrl}
+              width={26}
+              height={26}
+              style={{ borderRadius: 50 }}
+            />
+          ) : (
+            <Avatar size={26} uri={message.sender?.profileUrl} />
+          )}
         </TouchableOpacity>
       )}
     </View>

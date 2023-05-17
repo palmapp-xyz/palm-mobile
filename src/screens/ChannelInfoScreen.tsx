@@ -1,8 +1,17 @@
 import images from 'assets/images'
-import { Container, FormImage, FormText, Header, Row, Tag } from 'components'
+import {
+  Container,
+  FormImage,
+  FormText,
+  Header,
+  MediaRenderer,
+  Row,
+  Tag,
+} from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import { format } from 'date-fns'
+import useAuth from 'hooks/auth/useAuth'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -17,11 +26,10 @@ import {
   View,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { SbUserMetadata } from 'types'
 
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import useAuth from 'hooks/auth/useAuth'
-import { SbUserMetadata } from 'types'
 
 const ChannelInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelInfo>()
@@ -194,7 +202,6 @@ const ChannelInfoScreen = (): ReactElement => {
                     .address
 
                   const isMe = user?.address === targetAddress
-
                   return (
                     <Pressable
                       onPress={(): void => {
@@ -209,15 +216,12 @@ const ChannelInfoScreen = (): ReactElement => {
                       }}
                     >
                       <Row style={{ alignItems: 'center', gap: 10 }}>
-                        <View
-                          style={{
-                            borderRadius: 999,
-                            overflow: 'hidden',
-                            alignSelf: 'flex-start',
-                          }}
-                        >
-                          <FormImage source={source} size={40} />
-                        </View>
+                        <MediaRenderer
+                          src={source.uri}
+                          width={40}
+                          height={40}
+                          style={{ borderRadius: 50 }}
+                        />
                         <FormText>
                           {item.nickname} {isMe && '(me)'}
                         </FormText>
