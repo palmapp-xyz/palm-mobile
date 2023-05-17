@@ -31,6 +31,7 @@ export const getFsChannel = async ({
         : [],
       desc: metadata.desc,
       name: channel.name,
+      updatedAt: new Date().getTime(),
     })
     await fsChannel.set(fbChannelField)
   }

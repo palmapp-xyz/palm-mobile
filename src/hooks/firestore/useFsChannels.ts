@@ -16,6 +16,7 @@ const useFsChannels = (): UseFsChannelsReturn => {
       const list: FbChannel[] = []
       await firestore()
         .collection('channels')
+        .orderBy('updatedAt', 'desc')
         .limit(limit)
         .get()
         .then(querySnapshot => {

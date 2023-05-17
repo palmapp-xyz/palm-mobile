@@ -10,7 +10,6 @@ export type UseFsProfilesReturn = {
 }
 
 const useFsProfiles = (): UseFsProfilesReturn => {
-  const limit = 5
   const [user] = useRecoilState(appStore.user)
   const { data: fsProfileList = [] } = useReactQuery(
     [FirestoreKeyEnum.Profiles],
@@ -22,7 +21,6 @@ const useFsProfiles = (): UseFsProfilesReturn => {
       const list: FbProfile[] = []
       await firestore()
         .collection('profiles')
-        .limit(limit)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {

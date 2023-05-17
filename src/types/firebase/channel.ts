@@ -38,4 +38,5 @@ export type FbChannel = {
   name: string
   desc: string
   gating?: FbChannelGatingField
+  updatedAt: number
 }
