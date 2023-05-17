@@ -10,6 +10,7 @@ import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import {
   FlatList,
+  Pressable,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -19,10 +20,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import useAuth from 'hooks/auth/useAuth'
+import { SbUserMetadata } from 'types'
 
 const ChannelInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelInfo>()
   const { alert } = useAlert()
+  const { user } = useAuth()
   const { STRINGS } = useLocalization()
   const { sdk } = useSendbirdChat()
   const { channel, channelName, tags, desc, gatingToken, loading } =
@@ -69,10 +73,10 @@ const ChannelInfoScreen = (): ReactElement => {
           />
           <View style={{ paddingHorizontal: 20 }}>
             <Row style={styles.userBox}>
-              {_.map(displayUsers, (user, j) => {
+              {_.map(displayUsers, (item, j) => {
                 return (
                   <View
-                    key={`users-${j}`}
+                    key={`displayUsers-${j}`}
                     style={[
                       styles.userImg,
                       {
@@ -82,8 +86,8 @@ const ChannelInfoScreen = (): ReactElement => {
                   >
                     <FormImage
                       source={
-                        user.profileUrl
-                          ? { uri: user.profileUrl }
+                        item.profileUrl
+                          ? { uri: item.profileUrl }
                           : images.blank_profile
                       }
                       size={100}
@@ -186,19 +190,39 @@ const ChannelInfoScreen = (): ReactElement => {
                     ? { uri: item.profileUrl }
                     : images.blank_profile
 
+                  const targetAddress = (item.metaData as SbUserMetadata)
+                    .address
+
+                  const isMe = user?.address === targetAddress
+
                   return (
-                    <Row style={{ alignItems: 'center', gap: 10 }}>
-                      <View
-                        style={{
-                          borderRadius: 999,
-                          overflow: 'hidden',
-                          alignSelf: 'flex-start',
-                        }}
-                      >
-                        <FormImage source={source} size={40} />
-                      </View>
-                      <FormText>{item.nickname}</FormText>
-                    </Row>
+                    <Pressable
+                      onPress={(): void => {
+                        if (isMe) {
+                          return
+                        }
+
+                        navigation.navigate(Routes.UserProfile, {
+                          address: targetAddress,
+                          profileId: item.userId,
+                        })
+                      }}
+                    >
+                      <Row style={{ alignItems: 'center', gap: 10 }}>
+                        <View
+                          style={{
+                            borderRadius: 999,
+                            overflow: 'hidden',
+                            alignSelf: 'flex-start',
+                          }}
+                        >
+                          <FormImage source={source} size={40} />
+                        </View>
+                        <FormText>
+                          {item.nickname} {isMe && '(me)'}
+                        </FormText>
+                      </Row>
+                    </Pressable>
                   )
                 }}
               />
