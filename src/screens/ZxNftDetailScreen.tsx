@@ -15,14 +15,14 @@ import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
 import React, { ReactElement, useEffect, useMemo, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import {
   ContractAddr,
   NftType,
-  pToken,
   QueryKeyEnum,
   SupportedNetworkEnum,
+  pToken,
 } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
@@ -31,7 +31,9 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
+import useMaticPrice from 'hooks/independent/useMaticPrice'
 import useNftImage from 'hooks/independent/useNftImage'
+import useUserBalance from 'hooks/independent/useUserBalance'
 import NftDetails from '../components/NftDetails'
 
 const InitNftUri = ({
@@ -70,12 +72,26 @@ const ZxNftDetailScreen = (): ReactElement => {
     params: { nonce, channelUrl, chain, item },
   } = useAppNavigation<Routes.ZxNftDetail>()
   const { order } = useZxOrder({ nonce, chain })
+  const { user } = useAuth()
   const { getEthPrice } = useEthPrice()
   const { getKlayPrice } = useKlayPrice()
+  const { getMaticPrice } = useMaticPrice()
+
+  const userAddress = user?.address
+  const { balance: ethBalance } = useUserBalance({
+    address: userAddress,
+    chain: SupportedNetworkEnum.ETHEREUM,
+  })
+  const { balance: klayBalance } = useUserBalance({
+    address: userAddress,
+    chain: SupportedNetworkEnum.KLAYTN,
+  })
+  const { balance: maticBalance } = useUserBalance({
+    address: userAddress,
+    chain: SupportedNetworkEnum.POLYGON,
+  })
 
   const queryClient = useQueryClient()
-
-  const { user } = useAuth()
 
   const isMine =
     order &&
@@ -93,13 +109,20 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   const erc20TokenAmount = order?.erc20TokenAmount
 
+  const myTargetBalance =
+    chain === SupportedNetworkEnum.ETHEREUM
+      ? ethBalance
+      : chain === SupportedNetworkEnum.KLAYTN
+      ? klayBalance
+      : maticBalance
+
   const usdPrice = useMemo(
     () =>
       chain === SupportedNetworkEnum.ETHEREUM
         ? getEthPrice(erc20TokenAmount as pToken)
         : chain === SupportedNetworkEnum.KLAYTN
         ? getKlayPrice(erc20TokenAmount as pToken)
-        : ('0' as pToken),
+        : getMaticPrice(erc20TokenAmount as pToken),
     [erc20TokenAmount]
   )
 
@@ -111,6 +134,18 @@ const ZxNftDetailScreen = (): ReactElement => {
     if (isMine) {
       await onClickCancel({ order: order.order })
     } else {
+      const hasEnoughBalance = UTIL.toBn(erc20TokenAmount || 0).lte(
+        myTargetBalance
+      )
+      if (hasEnoughBalance === false) {
+        Alert.alert(
+          'Insufficient balance',
+          `You have ${UTIL.formatAmountP(myTargetBalance)} ${
+            NETWORK.nativeToken[chain]
+          }`
+        )
+        return
+      }
       const buyRes = await onClickBuy({ order: order.order })
       if (channel && user && buyRes.success) {
         const imgInfo = await nftUriFetcher(nftUri)
@@ -162,7 +197,9 @@ const ZxNftDetailScreen = (): ReactElement => {
             </FormText>
           </View>
         </View>
-        <FormButton onPress={onSubmit}>{isMine ? 'Cancel' : 'Buy'}</FormButton>
+        <FormButton disabled={!order} onPress={onSubmit}>
+          {isMine ? 'Cancel' : 'Buy'}
+        </FormButton>
       </Row>
     </Container>
   )
