@@ -3,15 +3,13 @@ import { FbChannel } from 'types'
 
 export type UseExploreRecommendChatReturn = {
   fsChannelList: FbChannel[]
-  isLoading: boolean
 }
 
 const useExploreRecommendChat = (): UseExploreRecommendChatReturn => {
-  const { fsChannelList, isLoading } = useFsChannels()
+  const { channels } = useFsChannels()
 
   return {
-    fsChannelList: fsChannelList.filter(x => !!x.name),
-    isLoading,
+    fsChannelList: channels.filter(x => !!x.name),
   }
 }
 
