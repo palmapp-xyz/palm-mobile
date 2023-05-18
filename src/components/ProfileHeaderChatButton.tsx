@@ -11,6 +11,7 @@ import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
+import { ChannelType } from 'types'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
@@ -49,6 +50,7 @@ const ProfileHeaderChatButton = React.memo(
           isDistinct: true,
           invitedUserIds: [userProfileId!],
           operatorUserIds: [user!.auth!.profileId, userProfile.profileId!],
+          channelType: ChannelType.DIRECT,
         })
 
         setLoading(false)

@@ -1,7 +1,7 @@
-import { FbChannel, FirestoreKeyEnum } from 'types'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import { ChannelType, FbChannel, FirestoreKeyEnum } from 'types'
 
 import firestore from '@react-native-firebase/firestore'
-import useReactQuery from 'hooks/complex/useReactQuery'
 
 export type UseFsChannelsReturn = {
   fsChannelList: FbChannel[]
@@ -16,6 +16,7 @@ const useFsChannels = (): UseFsChannelsReturn => {
       const list: FbChannel[] = []
       await firestore()
         .collection('channels')
+        .where('channelType', '!=', ChannelType.DIRECT)
         .orderBy('updatedAt', 'desc')
         .limit(limit)
         .get()

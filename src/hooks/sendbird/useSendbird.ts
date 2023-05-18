@@ -1,7 +1,7 @@
 import { UTIL } from 'consts'
 import { getFsChannel } from 'libs/firebase'
 import { filterUndefined } from 'libs/utils'
-import { FbChannel } from 'types'
+import { ChannelType, FbChannel } from 'types'
 import { v5 as uuidv5 } from 'uuid'
 
 import { FileCompat, MetaData } from '@sendbird/chat'
@@ -20,6 +20,7 @@ export type CreateGroupChatParam = {
   invitedUserIds: string[]
   operatorUserIds: string[]
   isDistinct?: boolean
+  channelType: ChannelType
 }
 
 export type UseSendbirdReturn = {
@@ -39,6 +40,7 @@ const useSendbird = (): UseSendbirdReturn => {
     coverImage,
     operatorUserIds,
     isDistinct,
+    channelType,
   }: CreateGroupChatParam): Promise<GroupChannel> => {
     let channel: GroupChannel | undefined
 
@@ -58,6 +60,7 @@ const useSendbird = (): UseSendbirdReturn => {
         operatorUserIds,
         isDistinct: !!isDistinct,
         isPublic: !isDistinct,
+        customType: channelType,
       }
 
       channel = await sdk.groupChannel.createChannel(

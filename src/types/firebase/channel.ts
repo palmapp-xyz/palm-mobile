@@ -1,5 +1,3 @@
-import { ChannelType } from '@sendbird/chat'
-
 import { ContractAddr, NftType } from '../contracts'
 import { SupportedNetworkEnum } from '../network'
 
@@ -29,6 +27,12 @@ export type FbChannelGatingField =
   | FbChannelNativeGatingField
   | FbChannelFTGatingField
   | FbChannelNFTGatingField
+
+export enum ChannelType {
+  DIRECT = 'direct',
+  GROUP = 'group',
+  OPEN = 'open',
+}
 
 export type FbChannel = {
   url: string

@@ -1,5 +1,5 @@
 import { UTIL } from 'consts'
-import { FbChannel } from 'types'
+import { ChannelType, FbChannel } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,
@@ -25,7 +25,7 @@ export const getFsChannel = async ({
     const metadata: MetaData = await channel.getAllMetaData()
     const fbChannelField: FbChannel = filterUndefined<FbChannel>({
       url: channel.url,
-      channelType: channel.channelType,
+      channelType: channel.customType as ChannelType,
       tags: metadata.tags
         ? UTIL.jsonTryParse<string[]>(metadata.tags) ?? []
         : [],

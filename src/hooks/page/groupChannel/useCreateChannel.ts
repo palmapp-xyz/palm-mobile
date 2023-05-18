@@ -7,7 +7,12 @@ import { getFsChannel } from 'libs/firebase'
 import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import { useMemo, useState } from 'react'
-import { FbChannel, FbChannelGatingField, SupportedNetworkEnum } from 'types'
+import {
+  ChannelType,
+  FbChannel,
+  FbChannelGatingField,
+  SupportedNetworkEnum,
+} from 'types'
 
 import { FilePickerResponse } from '@sendbird/uikit-react-native'
 
@@ -98,6 +103,7 @@ const useCreateChannel = (): UseCreateChannelReturn => {
           channelName,
           tags,
           desc,
+          channelType: ChannelType.GROUP,
         })
 
         if (selectedGatingToken) {

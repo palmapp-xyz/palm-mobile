@@ -16,7 +16,7 @@ import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
-import { ContractAddr, FbProfile, SbUserMetadata } from 'types'
+import { ChannelType, ContractAddr, FbProfile, SbUserMetadata } from 'types'
 
 import {
   ExtendedProfile,
@@ -113,6 +113,7 @@ const LensFriendsScreen = (): ReactElement => {
         isDistinct: true,
         invitedUserIds: [userProfile!.profileId!],
         operatorUserIds: [user.auth!.profileId, userProfile!.profileId!],
+        channelType: ChannelType.DIRECT,
       })
       setLoading(false)
       setTimeout(() => {
