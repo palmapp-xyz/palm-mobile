@@ -17,7 +17,6 @@ const useFsChannels = (): UseFsChannelsReturn => {
       await firestore()
         .collection('channels')
         .where('channelType', '!=', ChannelType.DIRECT)
-        .orderBy('updatedAt', 'desc')
         .limit(limit)
         .get()
         .then(querySnapshot => {
