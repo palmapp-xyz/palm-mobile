@@ -34,7 +34,12 @@ const ProfileWalletAddress = React.memo(
               style={[styles.itemCard, { alignItems: 'center', columnGap: 12 }]}
             >
               <Icon name="wallet" color={COLOR.primary._400} size={20} />
-              <FormText fontType="R.14" numberOfLines={1} style={{ flex: 1 }}>
+              <FormText
+                fontType="R.14"
+                numberOfLines={1}
+                ellipsizeMode="middle"
+                style={{ flex: 1 }}
+              >
                 {userAddress}
               </FormText>
             </Row>
