@@ -26,7 +26,7 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
         <TouchableOpacity
           onPress={(): void => {
             const sender = message.sender
-            navigation.navigate(Routes.UserProfile, {
+            navigation.push(Routes.UserProfile, {
               address: (sender.metaData as SbUserMetadata).address,
               profileId: sender.userId,
             })

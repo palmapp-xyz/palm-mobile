@@ -13,6 +13,7 @@ import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import { ChannelType } from 'types'
 
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
 export type ProfileHeaderChatButtonProps = {
@@ -27,7 +28,7 @@ const ProfileHeaderChatButton = React.memo(
 
     const { profile: userProfile } = useProfile({ profileId: userProfileId })
 
-    const { createGroupChat, generateDmChannelUrl } = useSendbird()
+    const { createGroupChat, getDistinctChatWithUser } = useSendbird()
 
     const setLoading = useSetRecoilState(appStore.loading)
 
@@ -39,29 +40,36 @@ const ProfileHeaderChatButton = React.memo(
       setLoading(true)
 
       try {
-        const dmChannelUrl: string = generateDmChannelUrl(
-          userProfileId,
-          user!.auth!.profileId
-        )
-        const channel = await createGroupChat({
-          channelUrl: dmChannelUrl,
-          channelName: userProfile!.handle!,
-          coverImage: getProfileMediaImg(userProfile),
-          isDistinct: true,
-          invitedUserIds: [userProfileId!],
-          operatorUserIds: [user!.auth!.profileId, userProfile.profileId!],
-          channelType: ChannelType.DIRECT,
+        let channel: GroupChannel | undefined = await getDistinctChatWithUser({
+          userProfileId: userProfileId!,
         })
+
+        if (!channel) {
+          channel = await createGroupChat({
+            channelName: userProfile!.handle!,
+            coverImage: getProfileMediaImg(userProfile),
+            isDistinct: true,
+            invitedUserIds: [userProfileId!],
+            operatorUserIds: [user!.auth!.profileId, userProfile.profileId!],
+            channelType: ChannelType.DIRECT,
+          })
+        }
+
+        if (!channel) {
+          throw new Error(
+            `Failed to start 1:1 chat with user ${userProfile.handle}`
+          )
+        }
 
         setLoading(false)
         setTimeout(() => {
-          navigation.navigate(Routes.GroupChannel, {
-            channelUrl: channel.url,
+          navigation.push(Routes.GroupChannel, {
+            channelUrl: channel!.url,
           })
         }, 200)
       } catch (e) {
         setLoading(false)
-        recordError(e, '')
+        recordError(e, 'ProfileHeaderChatButton:onPress')
         alert({ message: e instanceof Error ? e.message : JSON.stringify(e) })
       }
     }

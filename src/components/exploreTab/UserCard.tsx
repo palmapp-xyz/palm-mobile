@@ -15,7 +15,7 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
       <Pressable
         style={styles.userBox}
         onPress={(): void => {
-          navigation.navigate(Routes.UserProfile, {
+          navigation.push(Routes.UserProfile, {
             profileId: user.profileId,
             address: user.address,
           })

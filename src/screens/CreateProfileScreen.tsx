@@ -123,7 +123,11 @@ const CreateProfileScreen = (): ReactElement => {
       </View>
 
       <View style={styles.footer}>
-        <FormButton size="lg" disabled={loading} onPress={onClickConfirm}>
+        <FormButton
+          size="lg"
+          disabled={loading || handle.length === 0}
+          onPress={onClickConfirm}
+        >
           Done
         </FormButton>
       </View>

@@ -11,7 +11,6 @@ import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import { filterUndefined } from 'libs/utils'
-import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
 import { useSetRecoilState } from 'recoil'
@@ -24,6 +23,7 @@ import {
   Search,
 } from '@lens-protocol/react-native-lens-ui-kit'
 import firestore from '@react-native-firebase/firestore'
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 import { Maybe } from '@toruslabs/openlogin'
@@ -33,7 +33,7 @@ const LensFriendsScreen = (): ReactElement => {
   const { connect } = useConnection()
   const { user } = useAuth()
   const { fetchUserProfileId } = useAuthChallenge()
-  const { createGroupChat, generateDmChannelUrl } = useSendbird()
+  const { createGroupChat, getDistinctChatWithUser } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { fetchProfile } = useFsProfile({})
   const { alert } = useAlert()
@@ -102,29 +102,41 @@ const LensFriendsScreen = (): ReactElement => {
     setLoading(true)
     try {
       const userProfile = await createProfileFromLensProfile(profile)
-      const dmChannelUrl: string = generateDmChannelUrl(
-        userProfile!.profileId,
-        user.auth!.profileId
-      )
-      const channel = await createGroupChat({
-        channelUrl: dmChannelUrl,
-        channelName: userProfile!.handle!,
-        coverImage: getProfileMediaImg(userProfile),
-        isDistinct: true,
-        invitedUserIds: [userProfile!.profileId!],
-        operatorUserIds: [user.auth!.profileId, userProfile!.profileId!],
-        channelType: ChannelType.DIRECT,
+      if (!userProfile) {
+        throw new Error(`Failed to start 1:1 chat with user ${profile.handle}`)
+      }
+
+      let channel: GroupChannel | undefined = await getDistinctChatWithUser({
+        userProfileId: userProfile.profileId!,
       })
+
+      if (!channel) {
+        channel = await createGroupChat({
+          channelName: userProfile.handle!,
+          coverImage: getProfileMediaImg(userProfile),
+          isDistinct: true,
+          invitedUserIds: [userProfile.profileId!],
+          operatorUserIds: [user!.auth!.profileId, userProfile.profileId!],
+          channelType: ChannelType.DIRECT,
+        })
+      }
+
+      if (!channel) {
+        throw new Error(
+          `Failed to start 1:1 chat with user ${userProfile.handle}`
+        )
+      }
+
       setLoading(false)
       setTimeout(() => {
-        navigation.navigate(Routes.GroupChannel, {
-          channelUrl: channel.url,
+        navigation.push(Routes.GroupChannel, {
+          channelUrl: channel!.url,
         })
       }, 200)
     } catch (e) {
       setLoading(false)
       recordError(e, 'LensFriendsScreen:goToProfileChat')
-      alert({ title: 'Unknown Error', message: _.toString(e) })
+      alert({ message: e instanceof Error ? e.message : JSON.stringify(e) })
     }
   }
 

@@ -105,14 +105,14 @@ const ProfileHeader = React.memo(
 
           {profile?.handle && (
             <View style={styles.section}>
-              <FormText fontType="B.20">{profile?.handle}</FormText>
+              <FormText fontType="B.20">{profile.handle.trim()}</FormText>
             </View>
           )}
 
           {profile?.bio && (
             <View style={styles.section}>
               <FormText fontType="R.12" color={COLOR.black._200}>
-                {profile.bio}
+                {profile.bio.trim()}
               </FormText>
             </View>
           )}

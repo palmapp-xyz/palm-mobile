@@ -6,6 +6,9 @@ import React, { ReactElement, useEffect } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { createGroupChannelListFragment } from '@sendbird/uikit-react-native'
+import { SendbirdGroupChannel } from '@sendbird/uikit-utils'
+
+import GroupChannelPreviewContainer from './GroupChannelPreviewContainer'
 
 const HEADER_HEIGHT = 72
 
@@ -44,6 +47,20 @@ const GroupChannelListScreen = (): ReactElement => {
         onPressChannel={(channel): void => {
           navigation.navigate(Routes.GroupChannel, { channelUrl: channel.url })
         }}
+        renderGroupChannelPreview={(
+          channel: SendbirdGroupChannel,
+          onLongPressChannel: () => void
+        ): ReactElement | null => (
+          <GroupChannelPreviewContainer
+            channel={channel}
+            onPress={(): void =>
+              navigation.navigate(Routes.GroupChannel, {
+                channelUrl: channel.url,
+              })
+            }
+            onLongPress={onLongPressChannel}
+          />
+        )}
       />
     </Container>
   )

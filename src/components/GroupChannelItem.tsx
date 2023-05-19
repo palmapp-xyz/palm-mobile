@@ -27,7 +27,7 @@ const GroupChannelItem = ({
         if (!channelUrl || !channel) {
           return
         }
-        navigation.navigate(Routes.GroupChannel, { channelUrl })
+        navigation.push(Routes.GroupChannel, { channelUrl })
       }}
     >
       <Text>{channel.url}</Text>

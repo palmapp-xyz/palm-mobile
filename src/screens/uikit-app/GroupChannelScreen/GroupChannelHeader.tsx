@@ -6,7 +6,7 @@ import { Routes } from 'libs/navigation'
 import React, { ReactElement, useContext } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { SbUserMetadata } from 'types'
+import { ChannelType, SbUserMetadata } from 'types'
 
 import { Member } from '@sendbird/chat/groupChannel'
 import {
@@ -26,17 +26,13 @@ const GroupChannelHeader = ({
 }: GroupChannelProps['Header']): ReactElement => {
   const { user } = useAuth()
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
-  const { headerTitle, channel } = useContext(GroupChannelContexts.Fragment)
+  const { channel, headerTitle } = useContext(GroupChannelContexts.Fragment)
   const { typingUsers } = useContext(GroupChannelContexts.TypingIndicator)
   const { STRINGS } = useLocalization()
   const { HeaderComponent } = useHeaderStyle()
   const subtitle = STRINGS.LABELS.TYPING_INDICATOR_TYPINGS(typingUsers)
 
-  const isMyDM =
-    channel.memberCount === 2 &&
-    channel.members.filter(
-      (member: Member) => member.userId === user?.auth?.profileId
-    ).length === 1
+  const isMyDM = channel.customType === ChannelType.DIRECT
   const otherDMUser: Member | undefined = isMyDM
     ? channel.members.filter(
         (member: Member) => member.userId !== user?.auth?.profileId
@@ -51,7 +47,7 @@ const GroupChannelHeader = ({
           {otherDMUser ? (
             <TouchableOpacity
               onPress={(): void => {
-                navigation.navigate(Routes.UserProfile, {
+                navigation.push(Routes.UserProfile, {
                   address: (otherDMUser.metaData as SbUserMetadata).address,
                   profileId: otherDMUser.userId,
                 })
@@ -73,7 +69,9 @@ const GroupChannelHeader = ({
             )
           )}
           <View style={{ flexShrink: 1 }}>
-            <Header.Title h2>{headerTitle}</Header.Title>
+            <Header.Title h2>
+              {otherDMUser ? otherDMUser.nickname : headerTitle}
+            </Header.Title>
             {Boolean(subtitle) && subtitle && (
               <Header.Subtitle style={styles.subtitle}>
                 {subtitle}

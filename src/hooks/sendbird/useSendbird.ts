@@ -1,6 +1,7 @@
 import { UTIL } from 'consts'
 import { getFsChannel } from 'libs/firebase'
 import { filterUndefined } from 'libs/utils'
+import _ from 'lodash'
 import { ChannelType, FbChannel } from 'types'
 import { v5 as uuidv5 } from 'uuid'
 
@@ -8,6 +9,9 @@ import { FileCompat, MetaData } from '@sendbird/chat'
 import {
   GroupChannel,
   GroupChannelCreateParams,
+  GroupChannelListQuery,
+  GroupChannelListQueryParams,
+  QueryType,
 } from '@sendbird/chat/groupChannel'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
@@ -24,12 +28,52 @@ export type CreateGroupChatParam = {
 }
 
 export type UseSendbirdReturn = {
+  getDistinctChatWithUser: ({
+    userProfileId,
+  }: {
+    userProfileId: string
+  }) => Promise<GroupChannel | undefined>
   createGroupChat: (param: CreateGroupChatParam) => Promise<GroupChannel>
   generateDmChannelUrl: (a: string | undefined, b: string | undefined) => string
 }
 
 const useSendbird = (): UseSendbirdReturn => {
   const { sdk } = useSendbirdChat()
+
+  const getDistinctChatWithUser = async ({
+    userProfileId,
+  }: {
+    userProfileId: string
+  }): Promise<GroupChannel | undefined> => {
+    const params: GroupChannelListQueryParams = {
+      customTypesFilter: [ChannelType.DIRECT],
+      userIdsFilter: {
+        userIds: [userProfileId],
+        includeMode: false,
+        queryType: QueryType.AND,
+      },
+    }
+    const query: GroupChannelListQuery =
+      sdk.groupChannel.createMyGroupChannelListQuery(params)
+
+    // Only channel A is returned in a result list through the groupChannels parameter of the callback function.
+    const channels: GroupChannel[] = await query.next()
+    if (channels.length > 0) {
+      let channel = _.head(channels)
+      if (!channel) {
+        return undefined
+      }
+
+      while (channel) {
+        if (channel.customType === ChannelType.DIRECT) {
+          return channel
+        }
+        channel = _.head(channels.slice(1))
+      }
+      return channel
+    }
+    return undefined
+  }
 
   const createGroupChat = async ({
     channelUrl,
@@ -100,7 +144,7 @@ const useSendbird = (): UseSendbirdReturn => {
     b: string | undefined
   ): string => uuidv5([String(a), String(b)].sort().join('-'), uuidv5.DNS)
 
-  return { createGroupChat, generateDmChannelUrl }
+  return { getDistinctChatWithUser, createGroupChat, generateDmChannelUrl }
 }
 
 export default useSendbird

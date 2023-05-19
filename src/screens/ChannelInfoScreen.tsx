@@ -209,7 +209,7 @@ const ChannelInfoScreen = (): ReactElement => {
                           return
                         }
 
-                        navigation.navigate(Routes.UserProfile, {
+                        navigation.push(Routes.UserProfile, {
                           address: targetAddress,
                           profileId: item.userId,
                         })
