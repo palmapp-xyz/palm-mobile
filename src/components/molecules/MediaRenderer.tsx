@@ -45,7 +45,7 @@ const MediaRenderer = ({
   height = '100%',
   loading,
 }: MediaRendererProps): ReactElement => {
-  const [hasError, setError] = useState(false)
+  const [hasError, setError] = useState(!src)
   const onError = useCallback(() => {
     setError(true)
   }, [])
@@ -65,7 +65,7 @@ const MediaRenderer = ({
     style,
   ]
 
-  const videoOrImageSrc = useResolvedMediaType(src ?? '')
+  const videoOrImageSrc = useResolvedMediaType(src ? src.trim() : '')
 
   if (videoOrImageSrc.isLoading || loading) {
     return (

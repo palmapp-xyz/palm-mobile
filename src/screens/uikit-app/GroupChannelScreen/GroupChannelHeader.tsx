@@ -1,6 +1,7 @@
 import images from 'assets/images'
 import { FormImage, Row } from 'components'
 import useAuth from 'hooks/auth/useAuth'
+import { SENDBIRD_STATIC_SAMPLE } from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useContext } from 'react'
@@ -60,7 +61,8 @@ const GroupChannelHeader = ({
               />
             </TouchableOpacity>
           ) : (
-            channel.coverUrl && (
+            channel.coverUrl &&
+            !channel.coverUrl.includes(SENDBIRD_STATIC_SAMPLE) && (
               <FormImage
                 source={{ uri: channel.coverUrl }}
                 size={36}

@@ -1,7 +1,6 @@
 import images from 'assets/images'
 import {
   Container,
-  FormImage,
   FormText,
   Header,
   MediaRenderer,
@@ -9,6 +8,7 @@ import {
   Tag,
 } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
+import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import { format } from 'date-fns'
 import useAuth from 'hooks/auth/useAuth'
@@ -26,7 +26,7 @@ import {
   View,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { SbUserMetadata } from 'types'
+import { ChannelType, SbUserMetadata } from 'types'
 
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
@@ -42,9 +42,6 @@ const ChannelInfoScreen = (): ReactElement => {
 
   const channelMembers =
     channel?.members.sort(a => (a.profileUrl ? -1 : 1)) || []
-  const displayUsers = [...channelMembers]
-    .sort(a => (a.profileUrl ? 1 : -1))
-    .slice(-3)
 
   if (loading) {
     return <LoadingPage />
@@ -80,36 +77,11 @@ const ChannelInfoScreen = (): ReactElement => {
             }}
           />
           <View style={{ paddingHorizontal: 20 }}>
-            <Row style={styles.userBox}>
-              {_.map(displayUsers, (item, j) => {
-                return (
-                  <View
-                    key={`displayUsers-${j}`}
-                    style={[
-                      styles.userImg,
-                      {
-                        marginLeft: displayUsers.length > j + 1 ? -42 : 0,
-                      },
-                    ]}
-                  >
-                    <FormImage
-                      source={
-                        item.profileUrl
-                          ? { uri: item.profileUrl }
-                          : images.blank_profile
-                      }
-                      size={100}
-                    />
-                  </View>
-                )
-              })}
-
-              {channel.memberCount > 3 && (
-                <View style={styles.userLengthBox}>
-                  <FormText fontType="R.12">{channel.memberCount}</FormText>
-                </View>
-              )}
-            </Row>
+            <ChannelMembersPreview
+              channelUrl={channel.url}
+              size={100}
+              containerStyle={{ marginTop: -88, marginBottom: 22 }}
+            />
             <View style={{ paddingBottom: 8 }}>
               <FormText fontType="B.16">{channelName}</FormText>
             </View>
@@ -179,13 +151,15 @@ const ChannelInfoScreen = (): ReactElement => {
               style={{ alignItems: 'center', justifyContent: 'space-between' }}
             >
               <FormText fontType="SB.14">Members</FormText>
-              <TouchableOpacity
-                onPress={(): void => {
-                  navigation.navigate(Routes.GroupChannelMembers, params)
-                }}
-              >
-                <FormText fontType="R.12">+ Invite member</FormText>
-              </TouchableOpacity>
+              {channel.customType !== ChannelType.DIRECT && (
+                <TouchableOpacity
+                  onPress={(): void => {
+                    navigation.navigate(Routes.GroupChannelMembers, params)
+                  }}
+                >
+                  <FormText fontType="R.12">+ Invite member</FormText>
+                </TouchableOpacity>
+              )}
             </Row>
             <View style={{ paddingTop: 16 }}>
               <FlatList
@@ -244,15 +218,16 @@ const ChannelInfoScreen = (): ReactElement => {
           >
             <Ionicons name="exit-outline" size={24} color={COLOR.error} />
           </TouchableOpacity>
-          {channel.myRole === 'operator' && (
-            <TouchableOpacity
-              onPress={(): void => {
-                navigation.navigate(Routes.ChannelSetting, params)
-              }}
-            >
-              <Ionicons name="settings-outline" size={24} />
-            </TouchableOpacity>
-          )}
+          {channel.customType !== ChannelType.DIRECT &&
+            channel.myRole === 'operator' && (
+              <TouchableOpacity
+                onPress={(): void => {
+                  navigation.navigate(Routes.ChannelSetting, params)
+                }}
+              >
+                <Ionicons name="settings-outline" size={24} />
+              </TouchableOpacity>
+            )}
         </Row>
       </View>
     </Container>
@@ -293,25 +268,5 @@ const styles = StyleSheet.create({
     borderColor: COLOR.black._90010,
     columnGap: 8,
     alignItems: 'center',
-  },
-  userBox: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'flex-end',
-    alignSelf: 'flex-start',
-    marginTop: -88,
-    paddingBottom: 22,
-  },
-  userImg: {
-    borderRadius: 999,
-    overflow: 'hidden',
-  },
-  userLengthBox: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    backgroundColor: COLOR.black._50,
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-    borderRadius: 999,
   },
 })

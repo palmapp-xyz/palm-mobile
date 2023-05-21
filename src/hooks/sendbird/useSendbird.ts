@@ -23,7 +23,6 @@ export type CreateGroupChatParam = {
   coverImage?: FileCompat | string
   invitedUserIds: string[]
   operatorUserIds: string[]
-  isDistinct?: boolean
   channelType: ChannelType
 }
 
@@ -83,7 +82,6 @@ const useSendbird = (): UseSendbirdReturn => {
     invitedUserIds,
     coverImage,
     operatorUserIds,
-    isDistinct,
     channelType,
   }: CreateGroupChatParam): Promise<GroupChannel> => {
     let channel: GroupChannel | undefined
@@ -102,8 +100,8 @@ const useSendbird = (): UseSendbirdReturn => {
         coverImage: typeof coverImage === 'string' ? undefined : coverImage,
         coverUrl: typeof coverImage === 'string' ? coverImage : undefined,
         operatorUserIds,
-        isDistinct: !!isDistinct,
-        isPublic: !isDistinct,
+        isDistinct: channelType === ChannelType.DIRECT,
+        isPublic: channelType !== ChannelType.DIRECT,
         customType: channelType,
       }
 

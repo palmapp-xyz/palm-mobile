@@ -1,3 +1,9 @@
+import { FormText, Row } from 'components'
+import ChatCard from 'components/exploreTab/ChatCard'
+import UserCard from 'components/exploreTab/UserCard'
+import { COLOR } from 'consts'
+import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
+import _ from 'lodash'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
 import {
   ActivityIndicator,
@@ -6,13 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-
-import { FormText, Row } from 'components'
-import ChatCard from 'components/exploreTab/ChatCard'
-import UserCard from 'components/exploreTab/UserCard'
-import { COLOR } from 'consts'
-import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
-import _ from 'lodash'
+import { ChannelType } from 'types'
 
 type TabType = 'chat' | 'user'
 
@@ -70,6 +70,9 @@ const SearchResult = ({
         >
           {selectedMenu === 'chat'
             ? _.map(searchChannelResult, (item, index) => {
+                if (item.channelType === ChannelType.DIRECT) {
+                  return null
+                }
                 return (
                   <Fragment key={`searchChannelResult-${index}`}>
                     <ChatCard chat={item} onClick={setSelectedChannel} />

@@ -1,11 +1,11 @@
-import images from 'assets/images'
-import { Card, FormImage, FormText, Row, Tag } from 'components'
+import { Card, FormText, Row, Tag } from 'components'
+import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { FbChannel } from 'types'
+import { ChannelType, FbChannel } from 'types'
 
 const ChatCard = ({
   chat,
@@ -13,20 +13,15 @@ const ChatCard = ({
 }: {
   chat: FbChannel
   onClick: (value: FbChannel) => void
-}): ReactElement => {
+}): ReactElement | null => {
+  if (chat.channelType === ChannelType.DIRECT) {
+    return null
+  }
+
   return (
     <Card borderRound={true}>
       <Pressable onPress={(): void => onClick(chat)}>
-        <Row style={styles.channelBox}>
-          <View style={styles.channelImg}>
-            <FormImage
-              source={
-                chat.coverImage ? { uri: chat.coverImage } : images.palm_logo
-              }
-              size={56}
-            />
-          </View>
-        </Row>
+        <ChannelMembersPreview channelUrl={chat.url} size={56} />
         <View style={styles.section}>
           <FormText fontType="SB.14">{chat.name}</FormText>
         </View>
@@ -77,20 +72,6 @@ const ChatCard = ({
 export default ChatCard
 
 const styles = StyleSheet.create({
-  channelBox: {},
-  channelImg: {
-    borderRadius: 999,
-    overflow: 'hidden',
-  },
-  userLengthBox: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    backgroundColor: COLOR.black._50,
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-    borderRadius: 999,
-  },
   section: {
     paddingTop: 16,
   },

@@ -1,20 +1,22 @@
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useEffect, useState } from 'react'
-import { FbChannelGatingField } from 'types'
+import { ChannelType, FbChannelGatingField } from 'types'
 
-import { GroupChannel } from '@sendbird/chat/groupChannel'
+import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 export type UseChannelInfoReturn = {
   channel?: GroupChannel
   channelName?: string
-  channelImage?: string
+  channelImages?: string[]
   tags: string[]
   desc?: string
   gatingToken?: FbChannelGatingField
   loading: boolean
 }
+
+export const SENDBIRD_STATIC_SAMPLE = 'https://static.sendbird.com/sample'
 
 const useChannelInfo = ({
   channelUrl,
@@ -28,20 +30,16 @@ const useChannelInfo = ({
 
   const [loading, setLoading] = useState<boolean>(true)
   const [channelName, setChannelName] = useState<string>()
-  const [channelImage, setChannelImage] = useState<string>()
+  const [channelImages, setChannelImages] = useState<string[]>()
   const [desc, setDesc] = useState<string>()
   const [tags, setTags] = useState<string[]>([])
   const [gatingToken, setGatingToken] = useState<FbChannelGatingField>()
 
   useEffect(() => {
     if (fsChannelField) {
-      setChannelName(fsChannelField.name ?? channelUrl)
       setTags(fsChannelField.tags ?? [])
       if (fsChannelField.desc) {
         setDesc(fsChannelField.desc)
-      }
-      if (fsChannelField.coverImage) {
-        setChannelImage(fsChannelField.coverImage)
       }
       if (fsChannelField.gating) {
         setGatingToken(fsChannelField.gating)
@@ -56,6 +54,27 @@ const useChannelInfo = ({
   }, [channel, fsChannelField])
 
   useEffect(() => {
+    if (channel) {
+      setChannelName(
+        channel.customType === ChannelType.DIRECT
+          ? channel.members.map((member: Member) => member.nickname).join(', ')
+          : channel.name
+      )
+
+      const channelMembers = channel.members.sort(a => (a.profileUrl ? -1 : 1))
+      const displayUsers = [...channelMembers]
+        .sort(a => (a.profileUrl ? 1 : -1))
+        .slice(-3)
+      setChannelImages(
+        channel.customType === ChannelType.DIRECT ||
+          channel.coverUrl.includes(SENDBIRD_STATIC_SAMPLE)
+          ? displayUsers.map((member: Member) => member.profileUrl)
+          : [channel.coverUrl]
+      )
+    }
+  }, [channel])
+
+  useEffect(() => {
     setTimeout(() => {
       setLoading(false)
     }, 1500)
@@ -63,7 +82,7 @@ const useChannelInfo = ({
 
   return {
     channel,
-    channelImage,
+    channelImages,
     tags,
     channelName,
     desc,

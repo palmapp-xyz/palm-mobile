@@ -114,7 +114,6 @@ const LensFriendsScreen = (): ReactElement => {
         channel = await createGroupChat({
           channelName: userProfile.handle!,
           coverImage: getProfileMediaImg(userProfile),
-          isDistinct: true,
           invitedUserIds: [userProfile.profileId!],
           operatorUserIds: [user!.auth!.profileId, userProfile.profileId!],
           channelType: ChannelType.DIRECT,
