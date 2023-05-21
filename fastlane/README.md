@@ -47,6 +47,14 @@ Fetch certificates. Build the iOS application.
 
 Fetch certificates, build and upload to App Center.
 
+### ios codepush
+
+```sh
+[bundle exec] fastlane ios codepush
+```
+
+Codepush: Fetch certificates, build and upload to App Center.
+
 ----
 
 
@@ -75,6 +83,14 @@ Build the Android application.
 ```
 
 Build and upload to App Center.
+
+### android codepush
+
+```sh
+[bundle exec] fastlane android codepush
+```
+
+Codepush: Build and upload to App Center.
 
 ----
 

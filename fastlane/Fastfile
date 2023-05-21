@@ -55,6 +55,23 @@ platform :ios do
     )
   end
 
+  desc 'Codepush: Fetch certificates, build and upload to App Center.'
+  lane :codepush do |options|
+    codepush_login(login_token: ENV["APPCENTER_API_TOKEN"])
+    if options[:bump]
+      bump_build_version
+    end
+    build
+    codepush_release_react(
+      app_name: "#{ENV["APPCENTER_OWNER_NAME"]}/#{ENV["APPCENTER_IOS_APP_NAME"]}",
+      plist_file: ENV["FASTLANE_IOS_PLIST"],
+      mandatory: true,
+      development: false,
+      deployment_name: "Production"
+    )
+    codepush_logout
+  end
+
 end
 
 # Generated .apk will be at android/app/build/outputs/apk/release/app-release.apk
@@ -121,6 +138,22 @@ platform :android do
       notify_testers: true,
       mandatory_update: true
     )
+  end
+
+  desc 'Codepush: Build and upload to App Center.'
+  lane :codepush do |options|
+    codepush_login(login_token: ENV["APPCENTER_API_TOKEN"])
+    if options[:bump]
+      bump_build_version
+    end
+    build
+    codepush_release_react(
+      app_name: "#{ENV["APPCENTER_OWNER_NAME"]}/#{ENV["APPCENTER_ANDROID_APP_NAME"]}",
+      mandatory: true,
+      development: false,
+      deployment_name: "Production"
+    )
+    codepush_logout
   end
 
 end
