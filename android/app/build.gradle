@@ -13,7 +13,6 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
-apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 import com.android.build.OutputFile
@@ -114,7 +113,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 9
-        versionName "0.0.2"
+        versionName "0.1"
     }
 
     splits {

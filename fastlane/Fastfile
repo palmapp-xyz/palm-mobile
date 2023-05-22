@@ -62,14 +62,23 @@ platform :ios do
       bump_build_version
     end
     build
+
+    version = get_version_number(
+      xcodeproj: "./ios/PalmApp.xcodeproj",
+      target: ENV["FASTLANE_APP_NAME"]
+    )
+    build_number = get_build_number(xcodeproj: "./ios/PalmApp.xcodeproj")
+    puts "Version string: #{version}.#{build_number}"
+
     codepush_release_react(
       app_name: "#{ENV["APPCENTER_OWNER_NAME"]}/#{ENV["APPCENTER_IOS_APP_NAME"]}",
       plist_file: ENV["FASTLANE_IOS_PLIST"],
       mandatory: true,
       development: false,
-      deployment_name: "Production"
+      deployment_name: "Production",
+      target_binary_version: "#{version}.#{build_number}"
     )
-    codepush_logout
+    # codepush_logout
   end
 
 end
@@ -153,7 +162,7 @@ platform :android do
       development: false,
       deployment_name: "Production"
     )
-    codepush_logout
+    # codepush_logout
   end
 
 end
