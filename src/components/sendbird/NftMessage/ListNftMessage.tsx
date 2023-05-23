@@ -1,8 +1,7 @@
-import { Row } from 'components'
+import { MoralisNftRenderer, Row } from 'components'
 import FormButton from 'components/atoms/FormButton'
 import FormImage from 'components/atoms/FormImage'
 import FormText from 'components/atoms/FormText'
-import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import { format } from 'date-fns'
@@ -19,7 +18,7 @@ import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
+import { SbListNftDataType, SupportedNetworkEnum, pToken } from 'types'
 
 const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { getKlayPrice } = useKlayPrice()
@@ -70,15 +69,6 @@ const ListNftMessage = ({
 
   const { order } = useZxOrder({ nonce: data.nonce, chain })
   const { fsListingField } = useFsListing({ nonce: data.nonce })
-  const nftRendererProps: NftRendererProp = {
-    nftContract: item.token_address,
-    tokenId: item.token_id,
-    type: item.contract_type,
-    metadata: item.metadata,
-    chain,
-    width: '100%',
-    height: 150,
-  }
 
   const { getLink } = useExplorer(chain)
 
@@ -90,7 +80,14 @@ const ListNftMessage = ({
         </Row>
         <View style={{ position: 'relative' }}>
           <VerifiedWrapper>
-            <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
+            <MoralisNftRenderer
+              item={item}
+              width={'100%'}
+              height={150}
+              style={{
+                maxWidth: 'auto',
+              }}
+            />
           </VerifiedWrapper>
           {order && fsListingField && (
             <>

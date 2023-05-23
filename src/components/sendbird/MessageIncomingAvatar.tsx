@@ -5,10 +5,9 @@ import React, { ReactElement } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { SbUserMetadata } from 'types'
 
-import {
-  Avatar,
-  createStyleSheet,
-} from '@sendbird/uikit-react-native-foundation'
+import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
+
+import Avatar from './Avatar'
 
 import type { SendbirdMessage } from '@sendbird/uikit-utils'
 type Props = {

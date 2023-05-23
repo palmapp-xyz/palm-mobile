@@ -3,6 +3,8 @@ import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
 import NftAttributes from 'components/molecules/NftAttributes'
+import { COLOR } from 'consts'
+import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import useNftImage from 'hooks/independent/useNftImage'
 import React, { ReactElement, useEffect, useState } from 'react'
@@ -16,9 +18,6 @@ import {
 } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-
-import { COLOR } from 'consts'
-import useReactQuery from 'hooks/complex/useReactQuery'
 
 const NftDetails = ({
   nftContract,
@@ -92,9 +91,9 @@ const NftDetails = ({
               color={COLOR.black._400}
             >{`Listed by ...${tokenOwner?.slice(-5)}`}</FormText>
           </View>
-          <VerifiedWrapper>
+          <VerifiedWrapper style={{ left: 32 }}>
             <View style={styles.imageBox}>
-              <MediaRenderer {...nftRenderProps} style={{ maxWidth: 'auto' }} />
+              <MediaRenderer {...nftRenderProps} />
             </View>
           </VerifiedWrapper>
           <View style={styles.info}>
@@ -114,7 +113,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 20,
   },
-  imageBox: { borderRadius: 18, overflow: 'hidden', marginBottom: 12 },
+  imageBox: {
+    borderRadius: 18,
+    overflow: 'hidden',
+    marginBottom: 12,
+    alignItems: 'center',
+  },
   item: {
     marginVertical: 3,
   },

@@ -1,4 +1,5 @@
 import MediaRenderer from 'components/molecules/MediaRenderer'
+import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
 import { View } from 'react-native'
 
@@ -69,7 +70,7 @@ const GroupChannelPreview = ({
             <MediaRenderer
               style={[
                 styles.channelCover,
-                { backgroundColor: color.default.none.coverBackground },
+                { backgroundColor: COLOR.white, borderColor: COLOR.black._100 },
               ]}
               src={coverUrl}
             />,

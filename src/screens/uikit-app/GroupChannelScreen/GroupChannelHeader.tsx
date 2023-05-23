@@ -1,5 +1,6 @@
 import images from 'assets/images'
 import { FormImage, Row } from 'components'
+import Avatar from 'components/sendbird/Avatar'
 import useAuth from 'hooks/auth/useAuth'
 import { SENDBIRD_STATIC_SAMPLE } from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -16,7 +17,6 @@ import {
   useLocalization,
 } from '@sendbird/uikit-react-native'
 import {
-  Avatar,
   Header,
   createStyleSheet,
   useHeaderStyle,
@@ -54,11 +54,9 @@ const GroupChannelHeader = ({
                 })
               }}
             >
-              <Avatar
-                size={36}
-                uri={otherDMUser.profileUrl}
-                containerStyle={styles.avatarGroup}
-              />
+              <View style={styles.avatarGroup}>
+                <Avatar size={36} uri={otherDMUser.profileUrl} />
+              </View>
             </TouchableOpacity>
           ) : (
             channel.coverUrl &&
@@ -113,7 +111,7 @@ const styles = createStyleSheet({
     alignItems: 'center',
   },
   avatarGroup: {
-    marginRight: 8,
+    marginRight: 12,
   },
   subtitle: {
     marginTop: 2,

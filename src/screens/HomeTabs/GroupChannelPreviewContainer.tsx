@@ -1,3 +1,4 @@
+import ChannelCover from 'components/sendbird/ChannelCover'
 import GroupChannelPreview from 'components/sendbird/GroupChannelPreview'
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
@@ -9,11 +10,7 @@ import {
   useChannelHandler,
   useMessageOutgoingStatus,
 } from '@sendbird/uikit-chat-hooks'
-import {
-  ChannelCover,
-  useLocalization,
-  useSendbirdChat,
-} from '@sendbird/uikit-react-native'
+import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import {
   Icon,
   LoadingSpinner,

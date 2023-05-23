@@ -1,5 +1,4 @@
-import images from 'assets/images'
-import { FormImage, FormText, MediaRenderer, Row } from 'components'
+import { FormText, Row } from 'components'
 import { COLOR } from 'consts'
 import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -15,6 +14,7 @@ import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
 import ProfileWalletAddress from './ProfileWalletAddress'
 import ProfileWalletBalances from './ProfileWalletBalances'
+import Avatar from './sendbird/Avatar'
 
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr
@@ -87,20 +87,7 @@ const ProfileHeader = React.memo(
 
         <View style={{ backgroundColor: 'white', paddingHorizontal: 20 }}>
           <View style={styles.profileImgBox}>
-            {profileImg ? (
-              <MediaRenderer
-                src={profileImg}
-                width={100}
-                height={100}
-                style={{ borderRadius: 50 }}
-              />
-            ) : (
-              <FormImage
-                source={images.profile_temp}
-                size={100}
-                style={{ borderRadius: 50 }}
-              />
-            )}
+            <Avatar uri={profileImg} size={100} />
           </View>
 
           {profile?.handle && (

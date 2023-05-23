@@ -1,7 +1,8 @@
-import images from 'assets/images'
-import { Card, FormImage, FormText } from 'components'
-import { UTIL } from 'consts'
+import { Card, FormText } from 'components'
+import Avatar from 'components/sendbird/Avatar'
+import { COLOR, UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { getProfileMediaImg } from 'libs/lens'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -21,23 +22,20 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
           })
         }}
       >
-        <View style={styles.userThumb}>
-          <FormImage
-            source={
-              user.coverPicture
-                ? { uri: user.coverPicture }
-                : images.blank_profile
-            }
-            size={72}
-          />
-        </View>
-        <View style={{ flex: 1, rowGap: 8 }}>
+        <Avatar size={56} uri={getProfileMediaImg(user.picture)} />
+        <View style={{ flex: 1, rowGap: 6 }}>
           <FormText fontType="B.16" numberOfLines={1}>
             {user.handle}
           </FormText>
           <View>
-            <FormText fontType="B.14">{UTIL.truncate(user.address)}</FormText>
-            <FormText fontType="R.12" numberOfLines={3}>
+            <FormText fontType="R.14" style={{ marginBottom: 4 }}>
+              {UTIL.truncate(user.address)}
+            </FormText>
+            <FormText
+              fontType="R.12"
+              numberOfLines={3}
+              color={COLOR.black._300}
+            >
               {user.bio}
             </FormText>
           </View>
@@ -50,10 +48,6 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
 export default UserCard
 
 const styles = StyleSheet.create({
-  userThumb: {
-    borderRadius: 999,
-    overflow: 'hidden',
-  },
   userBox: {
     flexDirection: 'row',
     columnGap: 20,

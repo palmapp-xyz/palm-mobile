@@ -1,6 +1,6 @@
 import FormText from 'components/atoms/FormText'
-import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
+import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -22,16 +22,6 @@ const ShareNftMessage = ({
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const nftRendererProps: NftRendererProp = {
-    nftContract: item.token_address,
-    tokenId: item.token_id,
-    type: item.contract_type,
-    metadata: item.metadata,
-    chain,
-    width: '100%',
-    height: 150,
-  }
-
   return (
     <TouchableWithoutFeedback
       onPress={(): void => {
@@ -52,8 +42,10 @@ const ShareNftMessage = ({
           >{`${item.name} #${item.token_id}`}</FormText>
         </View>
         <VerifiedWrapper>
-          <NftRenderer
-            {...nftRendererProps}
+          <MoralisNftRenderer
+            item={item}
+            width={'100%'}
+            height={150}
             style={{
               borderRadius: 18,
               borderTopLeftRadius: 0,

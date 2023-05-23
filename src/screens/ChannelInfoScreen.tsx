@@ -1,13 +1,7 @@
 import images from 'assets/images'
-import {
-  Container,
-  FormText,
-  Header,
-  MediaRenderer,
-  Row,
-  Tag,
-} from 'components'
+import { Container, FormText, Header, Row, Tag } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
+import Avatar from 'components/sendbird/Avatar'
 import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import { format } from 'date-fns'
@@ -190,12 +184,7 @@ const ChannelInfoScreen = (): ReactElement => {
                       }}
                     >
                       <Row style={{ alignItems: 'center', gap: 10 }}>
-                        <MediaRenderer
-                          src={source.uri}
-                          width={40}
-                          height={40}
-                          style={{ borderRadius: 50 }}
-                        />
+                        <Avatar uri={source.uri} size={40} />
                         <FormText>
                           {item.nickname} {isMe && '(me)'}
                         </FormText>

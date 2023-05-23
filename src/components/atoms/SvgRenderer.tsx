@@ -22,7 +22,7 @@ const SvgRenderer = ({
 
   useEffect(() => {
     let decoded: string | undefined
-    if (mediaType.mimeType === 'data:image/svg+xml;base64') {
+    if (false /*mediaType.mimeType === 'data:image/svg+xml;base64'*/) {
       decoded = base64.decode(
         mediaType.url?.replace('data:image/svg+xml;base64,', '') || ''
       )

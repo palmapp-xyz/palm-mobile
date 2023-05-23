@@ -1,11 +1,12 @@
-import images from 'assets/images'
-import { FormImage, FormText, MediaRenderer, Row } from 'components'
+import { FormText, Row } from 'components'
 import { COLOR } from 'consts'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
-import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { ChannelType } from 'types'
+
+import Avatar from './Avatar'
+import ChannelCover from './ChannelCover'
 
 const ChannelMembersPreview = React.memo(
   ({
@@ -22,8 +23,6 @@ const ChannelMembersPreview = React.memo(
     if (!channel) {
       return null
     }
-
-    // console.log('!!!!!', channelImages?.reverse())
 
     return (
       <Row
@@ -45,19 +44,12 @@ const ChannelMembersPreview = React.memo(
                 },
               ]}
             >
-              <MediaRenderer src={image} width={size} height={size} />
+              <Avatar size={size} uri={image} />
             </View>
           ))
         ) : (
           <View style={styles.userImg}>
-            <FormImage
-              source={
-                channelImages && _.head(channelImages)
-                  ? { uri: _.head(channelImages) }
-                  : images.palm_logo
-              }
-              size={size}
-            />
+            <ChannelCover channel={channel} size={size} />
           </View>
         )}
 

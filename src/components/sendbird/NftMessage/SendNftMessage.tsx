@@ -1,6 +1,6 @@
 import FormText from 'components/atoms/FormText'
-import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
+import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
 import { COLOR, UTIL } from 'consts'
 import useExplorer from 'hooks/complex/useExplorer'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -26,16 +26,6 @@ const SendNftMessage = ({
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const nftRendererProps: NftRendererProp = {
-    nftContract: item.token_address,
-    tokenId: item.token_id,
-    type: item.contract_type,
-    metadata: item.metadata,
-    chain,
-    width: '100%',
-    height: 232,
-  }
-
   const { getLink } = useExplorer(chain)
 
   return (
@@ -57,8 +47,10 @@ const SendNftMessage = ({
           <FormText fontType="R.10">to {UTIL.truncate(data.to)}</FormText>
         </Row>
         <VerifiedWrapper>
-          <NftRenderer
-            {...nftRendererProps}
+          <MoralisNftRenderer
+            item={item}
+            width={'100%'}
+            height={232}
             style={{
               borderRadius: 18,
               borderTopLeftRadius: 0,

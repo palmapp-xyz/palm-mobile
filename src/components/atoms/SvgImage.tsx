@@ -22,10 +22,14 @@ const getHTML = (svgContent: string, style?: ImageStyle): string => `
       html, body {
         margin: 0;
         padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
         height: 100${heightUnits};
         width: 100${heightUnits};
         overflow: hidden;
         background-color: transparent;
+        object-fit: contain;
       }
       svg {
         width: ${

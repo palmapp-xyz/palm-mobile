@@ -1,21 +1,23 @@
+import MediaRenderer from 'components/molecules/MediaRenderer'
 import NftRenderer from 'components/molecules/NftRenderer'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
-import { FlexStyle } from 'react-native'
+import { FlexStyle, StyleProp } from 'react-native'
+import { ImageStyle } from 'react-native-fast-image'
 import { Moralis, SupportedNetworkEnum } from 'types'
-
-import MediaRenderer from '../molecules/MediaRenderer'
 
 const MoralisNftRenderer = ({
   item,
   width,
   height,
+  style,
   resolution = 'medium',
   hideChain,
 }: {
   item: Moralis.NftItem
   width?: FlexStyle['width']
   height?: FlexStyle['height']
+  style?: StyleProp<ImageStyle>
   resolution?: 'low' | 'medium' | 'high'
   hideChain?: boolean
 }): ReactElement => {
@@ -23,7 +25,11 @@ const MoralisNftRenderer = ({
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const previewUri = item.media?.media_collection?.[resolution]?.url
+  const previewUri =
+    item.media?.media_collection?.[resolution]?.url ||
+    item?.media?.media_collection?.medium?.url ||
+    item?.media?.media_collection?.high?.url ||
+    item?.media?.original_media_url
 
   return previewUri ? (
     <MediaRenderer
@@ -31,6 +37,7 @@ const MoralisNftRenderer = ({
       alt={`${item.name}:${item.token_id}`}
       width={width}
       height={height}
+      style={style}
     />
   ) : (
     <NftRenderer
@@ -42,6 +49,7 @@ const MoralisNftRenderer = ({
       width={width}
       height={height}
       hideChain={hideChain}
+      style={style}
     />
   )
 }

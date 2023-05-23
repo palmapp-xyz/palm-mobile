@@ -35,6 +35,8 @@ export interface MediaRendererProps {
   loading?: boolean
 
   metadata?: string | null
+
+  onError?: () => void
 }
 
 const MediaRenderer = ({
@@ -44,11 +46,13 @@ const MediaRenderer = ({
   width = '100%',
   height = '100%',
   loading,
+  onError: onErrorCallback,
 }: MediaRendererProps): ReactElement => {
-  const [hasError, setError] = useState(!src)
+  const [hasError, setError] = useState(false)
   const onError = useCallback(() => {
     setError(true)
-  }, [])
+    onErrorCallback?.()
+  }, [src])
 
   const widthNum = typeof width === 'number' ? width : 0
   const heightNum = typeof height === 'number' ? height : 0
@@ -65,7 +69,9 @@ const MediaRenderer = ({
     style,
   ]
 
-  const videoOrImageSrc = useResolvedMediaType(src ? src.trim() : '')
+  const videoOrImageSrc = useResolvedMediaType(
+    src && typeof src === 'string' ? src.trim() : ''
+  )
 
   if (videoOrImageSrc.isLoading || loading) {
     return (
