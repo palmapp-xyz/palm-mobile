@@ -1,8 +1,10 @@
 import Card from 'components/atoms/Card'
-import Icons from 'components/atoms/Icons'
 import LinkRenderer from 'components/molecules/LinkRenderer'
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
+
+import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 const FallbackMediaRenderer = ({
   src,
@@ -19,7 +21,7 @@ const FallbackMediaRenderer = ({
 
   return (
     <Card center={true} style={[style, { padding: 0, width, height }]}>
-      <Icons.CarbonDocumentUnknown width={dim / 2} height={dim / 2} />
+      <Icon icon={'error'} size={dim / 2} color={COLOR.primary._400} />
       {!hideAlt && (
         <LinkRenderer
           src={src}
