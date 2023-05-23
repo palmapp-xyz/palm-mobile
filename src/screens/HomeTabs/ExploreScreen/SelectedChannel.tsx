@@ -1,12 +1,5 @@
-import images from 'assets/images'
-import {
-  FormBottomSheet,
-  FormButton,
-  FormImage,
-  FormText,
-  Row,
-  Tag,
-} from 'components'
+import { FormBottomSheet, FormButton, FormText, Row, Tag } from 'components'
+import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
 import { COLOR, NETWORK } from 'consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -15,10 +8,10 @@ import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { FbChannel } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { FbChannel } from 'types'
 
 const SelectedChannel = ({
   selectedChannel,
@@ -59,12 +52,8 @@ const SelectedChannel = ({
         <View style={styles.header} />
         <View style={styles.body}>
           <View style={styles.channelImg}>
-            <FormImage
-              source={
-                selectedChannel.coverImage
-                  ? { uri: selectedChannel.coverImage }
-                  : images.palm_logo
-              }
+            <ChannelMembersPreview
+              channelUrl={selectedChannel.url}
               size={100}
             />
           </View>
@@ -131,8 +120,6 @@ const styles = StyleSheet.create({
   },
   channelImg: {
     marginTop: -100,
-    borderRadius: 999,
-    overflow: 'hidden',
     alignSelf: 'flex-start',
   },
   body: { flex: 1, padding: 20, backgroundColor: 'white', gap: 20 },
