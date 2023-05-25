@@ -3,11 +3,9 @@ import ChannelGatingChecker from 'components/ChannelGatingChecker'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import React, { ReactElement, useCallback, useEffect, useMemo } from 'react'
-import { BackHandler, Platform } from 'react-native'
+import React, { ReactElement, useCallback, useMemo } from 'react'
 import { AvoidSoftInput } from 'react-native-avoid-softinput'
 
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 import { useFocusEffect } from '@react-navigation/native'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
@@ -19,7 +17,6 @@ import {
 import GroupChannelHeader from './GroupChannelHeader'
 import GroupChannelInput from './GroupChannelInput'
 
-import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
 const GroupChannelFragment = createGroupChannelFragment({
   Input: GroupChannelInput,
   Header: GroupChannelHeader,
@@ -42,59 +39,8 @@ const HasGatingToken = (): ReactElement => {
   )
 }
 
-const Contents = ({
-  channel,
-  sdk,
-  fsChannel,
-}: {
-  channel: GroupChannel
-  sdk: SendbirdChatSDK
-  fsChannel: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
-}): ReactElement => {
+const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
-
-  const channelLeave = async (): Promise<boolean> => {
-    // if there is no message in channel
-    if (
-      channel.myRole === 'operator' &&
-      !channel.lastMessage &&
-      channel.memberCount < 2
-    ) {
-      await channel.leave()
-      await sdk.clearCachedMessages([channel.url]).catch()
-      await fsChannel.delete()
-      return true
-    }
-    return false
-  }
-
-  const backAction = (): boolean => {
-    channelLeave().then(res => {
-      if (res === false) {
-        navigation.goBack()
-      }
-    })
-    return true
-  }
-
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        backAction
-      )
-
-      return () => {
-        backHandler.remove()
-      }
-    } else {
-      navigation.addListener('beforeRemove', channelLeave)
-
-      return () => {
-        navigation.removeListener('beforeRemove', channelLeave)
-      }
-    }
-  }, [])
 
   const onFocusEffect = useCallback(() => {
     AvoidSoftInput.setAdjustNothing()
@@ -123,7 +69,7 @@ const Contents = ({
         // Should leave channel, navigate to channel list
         navigation.navigate(Routes.GroupChannelList)
       }}
-      onPressHeaderLeft={backAction}
+      onPressHeaderLeft={(): void => navigation.goBack()}
       onPressHeaderRight={(): void => {
         // Navigate to group channel settings
         navigation.push(Routes.GroupChannelSettings, params)
@@ -153,7 +99,7 @@ const GroupChannelScreen = (): ReactElement => {
   return (
     <>
       {channel.myRole !== 'operator' && gating?.amount && <HasGatingToken />}
-      <Contents channel={channel} sdk={sdk} fsChannel={fsChannel} />
+      <Contents channel={channel} />
     </>
   )
 }

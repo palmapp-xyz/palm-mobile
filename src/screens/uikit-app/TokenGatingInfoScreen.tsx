@@ -19,8 +19,8 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
-  FbChannelNativeGatingField,
   FbChannelNFTGatingField,
+  FbChannelNativeGatingField,
   NftType,
   QueryKeyEnum,
 } from 'types'
@@ -176,7 +176,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
       <View style={styles.footer}>
         <TouchableOpacity
           onPress={(): void => {
-            channel.leave().then(() => {
+            channel.leave(channel.myRole === 'operator').then(() => {
               navigation.navigate(Routes.GroupChannelList)
               sdk.clearCachedMessages([channel.url]).catch()
             })

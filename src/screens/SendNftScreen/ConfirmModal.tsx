@@ -1,3 +1,4 @@
+import images from 'assets/images'
 import {
   FormBottomSheet,
   FormButton,
@@ -7,24 +8,23 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
+import { COLOR, NETWORK, UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
-import useFsProfile from 'hooks/firestore/useFsProfile'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'
+import { getFsProfile } from 'libs/firebase'
+import { getProfileMediaImg } from 'libs/lens'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifySendFileData } from 'libs/sendbird'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FbProfile, Moralis, SupportedNetworkEnum } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import images from 'assets/images'
-import { COLOR, NETWORK, UTIL } from 'consts'
-import { getProfileMediaImg } from 'libs/lens'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import _ from 'lodash'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const ConfirmModal = ({
   selectedNft,
@@ -71,9 +71,8 @@ const ConfirmModal = ({
     channel.sendFileMessage(imgInfo)
   }
 
-  const { fetchProfile } = useFsProfile({})
   useAsyncEffect(async () => {
-    const _receiver = await fetchProfile(receiverId)
+    const _receiver = await getFsProfile(receiverId)
     setReceiver(_receiver)
   }, [receiverId])
 

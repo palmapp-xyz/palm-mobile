@@ -1,5 +1,6 @@
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
+import useNotification from 'hooks/independent/useNotification'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 
@@ -42,6 +43,8 @@ const MainStack = createNativeStackNavigator()
 const MainNavigator = (): ReactElement => {
   const { user } = useAuth()
   const { profile } = useProfile({ profileId: user?.auth?.profileId })
+
+  useNotification()
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>

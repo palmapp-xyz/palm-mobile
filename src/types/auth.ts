@@ -4,7 +4,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 import { ContractAddr } from './contracts'
 
-export type DeviceToken = {
+export type DeviceTokenSet = {
   apns: string[]
   fcm: string[]
 }

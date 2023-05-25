@@ -4,9 +4,9 @@ import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useIpfs from 'hooks/complex/useIpfs'
-import useFsProfile from 'hooks/firestore/useFsProfile'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { getFsProfile } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
@@ -35,7 +35,6 @@ const LensFriendsScreen = (): ReactElement => {
   const { fetchUserProfileId } = useAuthChallenge()
   const { createGroupChat, getDistinctChatWithUser } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
-  const { fetchProfile } = useFsProfile({})
   const { alert } = useAlert()
 
   const setLoading = useSetRecoilState(appStore.loading)
@@ -57,7 +56,7 @@ const LensFriendsScreen = (): ReactElement => {
     }
 
     const userProfileId = await fetchUserProfileId(profile.ownedBy)
-    const userProfile = await fetchProfile(userProfileId!)
+    const userProfile = await getFsProfile(userProfileId!)
     const ret: FbProfile | undefined = filterUndefined<FbProfile>({
       ...userProfile!,
       bio: profile.bio || undefined,

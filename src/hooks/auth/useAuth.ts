@@ -1,7 +1,5 @@
 import { UTIL } from 'consts'
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import useNotification from 'hooks/independent/useNotification'
 import useLensAuth from 'hooks/lens/useLensAuth'
 import {
   generateEvmHdAccount,
@@ -9,6 +7,7 @@ import {
   saveMnemonic,
   savePkey,
 } from 'libs/account'
+import { getFsProfile } from 'libs/firebase'
 import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useState } from 'react'
@@ -45,17 +44,12 @@ const useAuth = (): UseAuthReturn => {
   const [user, setUser] = useRecoilState(appStore.user)
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
-  const { fetchProfile } = useFsProfile({ profileId: user?.auth?.profileId })
 
   const {
     authenticate: lensAuthenticate,
     refreshAuthIfExpired: lensRefreshAuthIfExpired,
   } = useLensAuth()
   const [restoreLoading, setRestoreLoading] = useState<boolean>(true)
-  const { unregisterDeviceToken } = useNotification({
-    profileId: user?.auth?.profileId,
-    channelId: 'default',
-  })
 
   const onAuthStateChanged = async (
     firebaseUser: FirebaseAuthTypes.User | null
@@ -133,7 +127,7 @@ const useAuth = (): UseAuthReturn => {
 
   const appSignIn = async (authResult: AuthChallengeResult): Promise<User> => {
     // if user profile is deleted from the db, logout for re-authentication
-    await fetchProfile(authResult.profileId).then(
+    await getFsProfile(authResult.profileId).then(
       (profile: FbProfile | undefined) => {
         if (!profile) {
           throw new Error(
@@ -228,7 +222,6 @@ const useAuth = (): UseAuthReturn => {
       removeKeys(),
       auth().signOut(),
       disconnect(),
-      unregisterDeviceToken(),
     ])
 
     setCurrentUser(undefined)

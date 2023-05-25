@@ -3,7 +3,7 @@ import { Container, FormImage, Row } from 'components'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useEffect } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { createGroupChannelListFragment } from '@sendbird/uikit-react-native'
 import { SendbirdGroupChannel } from '@sendbird/uikit-utils'
@@ -29,7 +29,12 @@ const GroupChannelListScreen = (): ReactElement => {
   }, [params?.channelUrl])
 
   return (
-    <Container style={styles.container}>
+    <Container
+      style={[
+        styles.container,
+        { marginBottom: Platform.OS === 'ios' ? -30 : 0 },
+      ]}
+    >
       <Row style={styles.header}>
         <FormImage source={images.palm_logo} size={44} />
         <TouchableOpacity
@@ -69,7 +74,7 @@ const GroupChannelListScreen = (): ReactElement => {
 export default GroupChannelListScreen
 
 const styles = StyleSheet.create({
-  container: { flex: 1, marginBottom: -30 },
+  container: { flex: 1 },
   header: {
     height: HEADER_HEIGHT,
     paddingHorizontal: 18,

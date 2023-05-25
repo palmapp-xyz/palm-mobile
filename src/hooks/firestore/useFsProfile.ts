@@ -10,7 +10,6 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 export type UseFsProfileReturn = {
   fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
   fsProfileField?: FbProfile
-  fetchProfile: (profileId: string) => Promise<FbProfile | undefined>
 }
 
 const useFsProfile = ({
@@ -52,23 +51,9 @@ const useFsProfile = ({
     }
   }, [fsProfileField])
 
-  const fetchProfile = async (
-    _profileId: string
-  ): Promise<FbProfile | undefined> => {
-    const _fsProfile = await firestore()
-      .collection('profiles')
-      .doc(_profileId)
-      .get()
-    if (!_fsProfile.exists) {
-      return undefined
-    }
-    return _fsProfile.data() as FbProfile
-  }
-
   return {
     fsProfile,
     fsProfileField,
-    fetchProfile,
   }
 }
 

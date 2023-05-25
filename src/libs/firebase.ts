@@ -1,5 +1,5 @@
 import { UTIL } from 'consts'
-import { ChannelType, FbChannel } from 'types'
+import { ChannelType, FbChannel, FbProfile } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,
@@ -37,4 +37,17 @@ export const getFsChannel = async ({
   }
 
   return fsChannel
+}
+
+export const getFsProfile = async (
+  profileId: string
+): Promise<FbProfile | undefined> => {
+  const fsProfile = await firestore()
+    .collection('profiles')
+    .doc(profileId)
+    .get()
+  if (!fsProfile.exists) {
+    return undefined
+  }
+  return fsProfile.data() as FbProfile
 }

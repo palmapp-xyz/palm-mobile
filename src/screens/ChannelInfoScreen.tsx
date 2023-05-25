@@ -199,7 +199,7 @@ const ChannelInfoScreen = (): ReactElement => {
         <Row style={styles.footer}>
           <TouchableOpacity
             onPress={(): void => {
-              channel.leave().then(() => {
+              channel.leave(channel.myRole === 'operator').then(() => {
                 navigation.navigate(Routes.GroupChannelList)
                 sdk.clearCachedMessages([channel.url]).catch()
               })

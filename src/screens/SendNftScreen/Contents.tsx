@@ -1,13 +1,13 @@
+import images from 'assets/images'
 import { FormButton, FormImage, FormText, MediaRenderer, Row } from 'components'
-import useFsProfile from 'hooks/firestore/useFsProfile'
+import NftCard from 'components/channel/NftCard'
+import { getFsProfile } from 'libs/firebase'
+import { getProfileMediaImg } from 'libs/lens'
 import React, { ReactElement, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { FbProfile, Moralis } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import images from 'assets/images'
-import NftCard from 'components/channel/NftCard'
-import { getProfileMediaImg } from 'libs/lens'
 
 const Contents = ({
   selectedNft,
@@ -22,9 +22,8 @@ const Contents = ({
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
 
-  const { fetchProfile } = useFsProfile({})
   useAsyncEffect(async () => {
-    const _receiver = await fetchProfile(receiverId)
+    const _receiver = await getFsProfile(receiverId)
     setReceiver(_receiver)
   }, [receiverId])
 

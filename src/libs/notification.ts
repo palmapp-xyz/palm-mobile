@@ -114,11 +114,18 @@ export const onForegroundIOS = (): (() => void) => {
 
   const checkAppOpenedWithNotification = async (): Promise<void> => {
     const notification = await PushNotificationIOS.getInitialNotification()
+    console.log(
+      'PushNotification::checkAppOpenedWithNotification',
+      notification
+    )
     notification && onNotificationIOS(notification)
   }
 
   checkAppOpenedWithNotification()
-  PushNotificationIOS.addEventListener('localNotification', onNotificationIOS)
+  PushNotificationIOS.addEventListener('localNotification', notification => {
+    console.log('PushNotification::localNotificationListener', notification)
+    onNotificationIOS(notification)
+  })
   return () => PushNotificationIOS.removeEventListener('localNotification')
 }
 
@@ -135,21 +142,6 @@ export const configurePushNotification = (): void => {
       notification: Omit<ReceivedNotification, 'userInfo'>
     ): void => {
       console.log('PushNotification::onNotification', notification)
-
-      const data = notification.data
-      const isClicked = notification.userInteraction
-      if (isClicked && isSendbirdNotification(data)) {
-        const sendbird = parseSendbirdNotification(data)
-        runAfterAppReady(async (_, actions) => {
-          const channelUrl = sendbird.channel.channel_url
-          if (Routes.HomeTabs === navigationRef.getCurrentRoute()?.name) {
-            actions.push(Routes.GroupChannelList, { channelUrl })
-          } else {
-            actions.navigate(Routes.GroupChannel, { channelUrl })
-          }
-        })
-      }
-
       // (required) Called when a remote is received or opened, or local notification is opened
       notification.finish(PushNotificationIOS.FetchResult.NoData)
     },

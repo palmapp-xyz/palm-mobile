@@ -1,5 +1,5 @@
 import { Attribute, ProfileMedia } from 'graphqls/__generated__/graphql'
-import { DeviceToken } from 'types/auth'
+import { DeviceTokenSet } from 'types/auth'
 import { ContractAddr } from 'types/contracts'
 
 export type FbProfile = {
@@ -12,5 +12,5 @@ export type FbProfile = {
   attributes?: Array<Attribute>
   handle?: string
   picture?: ProfileMedia
-  deviceTokens?: DeviceToken[]
+  deviceTokens?: DeviceTokenSet
 }
