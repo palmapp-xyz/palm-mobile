@@ -1,8 +1,7 @@
 import Loading from 'components/atoms/Loading'
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 import { LogBox } from 'react-native'
 import CodePush, { CodePushOptions } from 'react-native-code-push'
-import SplashScreen from 'react-native-splash-screen'
 
 import Navigation from '../Navigation'
 import AppProviderWrapper from './AppProvider'
@@ -17,12 +16,6 @@ const codePushOptions: CodePushOptions = {
 
 const App = (): ReactElement => {
   LogBox.ignoreAllLogs()
-
-  useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide()
-    }, 1000)
-  }, [])
 
   return (
     <AppProviderWrapper>

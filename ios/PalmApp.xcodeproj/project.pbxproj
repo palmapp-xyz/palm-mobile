@@ -24,10 +24,11 @@
 		57D86DB640134D39A9A5FAEE /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46E806B28F7346E18DF20E79 /* SpaceGrotesk-Bold.ttf */; };
 		5BE927350E97305549BA6040 /* Pods_PalmAppCommonPods_PalmAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4412B81ACF82335D8C6C1A3E /* Pods_PalmAppCommonPods_PalmAppTests.framework */; };
 		6D22850329CA754400414E02 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6D22850229CA754400414E02 /* fonts */; };
+		6D9DCF722A203985003DDE21 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D9DCF712A203985003DDE21 /* BootSplash.storyboard */; };
+		6D9DCF732A203985003DDE21 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D9DCF712A203985003DDE21 /* BootSplash.storyboard */; };
 		6DEC80E629F163D300F4B174 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		6DEC80E729F163D300F4B174 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		6DEC80EB29F163D300F4B174 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57629AB042700FD4051 /* Ionicons.ttf */; };
-		6DEC80EC29F163D300F4B174 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		6DEC80ED29F163D300F4B174 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 402FB57429AB042700FD4051 /* AntDesign.ttf */; };
 		6DEC80EE29F163D300F4B174 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		6DEC80EF29F163D300F4B174 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4022CA4829B46B9F00335C68 /* Assets.xcassets */; };
@@ -39,7 +40,6 @@
 		6DEC80F729F163D300F4B174 /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */; };
 		6DEC80F829F163D300F4B174 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BBCDD7D213488A82A9172E /* SpaceGrotesk-SemiBold.ttf */; };
 		6DEC810C29F211A300F4B174 /* PalmApp-Testnet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +77,7 @@
 		4BE6436C7FF0407BA3BA021D /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		67630F6D66A2458D96828E47 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Regular.ttf"; path = "../assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; };
 		6D22850229CA754400414E02 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../assets/fonts; sourceTree = "<group>"; };
+		6D9DCF712A203985003DDE21 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = PalmApp/BootSplash.storyboard; sourceTree = "<group>"; };
 		6DEC80E129EE193A00F4B174 /* PalmApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PalmApp.entitlements; path = PalmApp/PalmApp.entitlements; sourceTree = "<group>"; };
 		6DEC810029F163D400F4B174 /* PalmApp-Testnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PalmApp-Testnet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PalmApp-Testnet-Info.plist"; path = "PalmApp/PalmApp-Testnet-Info.plist"; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 		6DF021B229F6116B0045385F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6DF021B429F6116B0045385F /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		6F9691225B3C76124AD38739 /* Pods-PalmApp-PalmAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp-PalmAppTests.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp-PalmAppTests/Pods-PalmApp-PalmAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PalmApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98972C1DB7CC92B358A7E869 /* Pods-PalmApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.debug.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.debug.xcconfig"; sourceTree = "<group>"; };
 		A3546658EE28308A087DCAB5 /* Pods_PalmAppCommonPods_PalmApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PalmAppCommonPods_PalmApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD09E44168CA0276A38E6BE /* Pods-PalmApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmApp.release.xcconfig"; path = "Target Support Files/Pods-PalmApp/Pods-PalmApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +144,7 @@
 		13B07FAE1A68108700A75B9A /* PalmApp */ = {
 			isa = PBXGroup;
 			children = (
+				6D9DCF712A203985003DDE21 /* BootSplash.storyboard */,
 				6DF021B329F6116B0045385F /* AppCenter */,
 				6DF021B129F6116B0045385F /* GoogleServices */,
 				6DEC80E129EE193A00F4B174 /* PalmApp.entitlements */,
@@ -153,7 +154,6 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				6DEC810B29F211A300F4B174 /* PalmApp-Testnet-Info.plist */,
 				13B07FB61A68108700A75B9A /* PalmApp-Mainnet-Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = PalmApp;
@@ -410,7 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				402FB58629AB042700FD4051 /* Ionicons.ttf in Resources */,
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				6D9DCF722A203985003DDE21 /* BootSplash.storyboard in Resources */,
 				402FB58429AB042700FD4051 /* AntDesign.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				4022CA4929B46B9F00335C68 /* Assets.xcassets in Resources */,
@@ -429,7 +429,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DEC80EB29F163D300F4B174 /* Ionicons.ttf in Resources */,
-				6DEC80EC29F163D300F4B174 /* LaunchScreen.storyboard in Resources */,
 				6DEC80ED29F163D300F4B174 /* AntDesign.ttf in Resources */,
 				6DEC80EE29F163D300F4B174 /* Images.xcassets in Resources */,
 				6DEC810C29F211A300F4B174 /* PalmApp-Testnet-Info.plist in Resources */,
@@ -441,6 +440,7 @@
 				6DEC80F629F163D300F4B174 /* SpaceGrotesk-Medium.ttf in Resources */,
 				6DEC80F729F163D300F4B174 /* SpaceGrotesk-Regular.ttf in Resources */,
 				6DEC80F829F163D300F4B174 /* SpaceGrotesk-SemiBold.ttf in Resources */,
+				6D9DCF732A203985003DDE21 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

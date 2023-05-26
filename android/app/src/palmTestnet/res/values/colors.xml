@@ -253,4 +253,5 @@
     <!-- Darkest shade of the secondary neutral color used by the system. Black.
      This value can be overlaid at runtime by OverlayManager RROs. -->
     <color name="system_neutral2_1000">#000000</color>
+    <color name="bootsplash_background">#FFFFFF</color>
 </resources>

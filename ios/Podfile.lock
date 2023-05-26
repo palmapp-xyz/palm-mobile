@@ -1113,8 +1113,6 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-splash-screen (3.3.0):
-    - React-Core
   - react-native-video (5.2.1):
     - React-Core
     - react-native-video/Video (= 5.2.1)
@@ -1209,6 +1207,8 @@ PODS:
     - React-logger (= 0.71.3)
     - React-perflogger (= 0.71.3)
   - ReactNativeAvoidSoftinput (3.1.5):
+    - React-Core
+  - RNBootSplash (4.7.1):
     - React-Core
   - RNCAsyncStorage (1.17.11):
     - React-Core
@@ -1351,7 +1351,6 @@ DEPENDENCIES:
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/react-native-video`)
   - "react-native-web-browser (from `../node_modules/@toruslabs/react-native-web-browser`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -1369,6 +1368,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeAvoidSoftinput (from `../node_modules/react-native-avoid-softinput`)
+  - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
@@ -1516,8 +1516,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-splash-screen:
-    :path: "../node_modules/react-native-splash-screen"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-web-browser:
@@ -1552,6 +1550,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeAvoidSoftinput:
     :path: "../node_modules/react-native-avoid-softinput"
+  RNBootSplash:
+    :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
@@ -1666,7 +1666,6 @@ SPEC CHECKSUMS:
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
-  react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   react-native-web-browser: 087b454e1e94b58b40ba73f54251d77486144d19
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
@@ -1684,6 +1683,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7bf0dafc7b727d93c8cb94eb00a9d3753c446c3e
   ReactCommon: 5f9a24e64c1c3e2b719014f07cb2acf628983000
   ReactNativeAvoidSoftinput: 33a9d92d54716d7b3133f48b93545f27a084a14a
+  RNBootSplash: 3f3f7f82efe2addbfe7ddeda20877ff4d579cd81
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
   RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
