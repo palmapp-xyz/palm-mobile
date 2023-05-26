@@ -130,6 +130,7 @@ export const onForegroundIOS = (): (() => void) => {
     console.log('PushNotification::notificationListener', notification)
     onNotificationIOS(notification)
   })
+
   return () => [
     PushNotificationIOS.removeEventListener('localNotification'),
     PushNotificationIOS.removeEventListener('notification'),
