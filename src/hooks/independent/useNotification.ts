@@ -1,10 +1,8 @@
 import useAuth from 'hooks/auth/useAuth'
-import { useAppState } from 'hooks/useAppState'
 import { getFsProfile } from 'libs/firebase'
 import { recordError } from 'libs/logger'
 import {
   backgroundMessageHandler,
-  checkAppOpenedWithNotification,
   onForegroundAndroid,
   onForegroundIOS,
   onNotificationAndroid,
@@ -30,8 +28,6 @@ const useNotification = (): void => {
   const { user } = useAuth()
 
   const [notificationEnabled, setNotificationEnabled] = useState<boolean>(true)
-
-  const { appVisibility } = useAppState()
 
   useAsyncEffect(async () => {
     /*
@@ -172,13 +168,6 @@ const useNotification = (): void => {
       unsubscribes.forEach(fn => fn())
     }
   }, [])
-
-  useAsyncEffect(async () => {
-    if (appVisibility !== 'foreground') {
-      return
-    }
-    await checkAppOpenedWithNotification()
-  }, [appVisibility])
 }
 
 export default useNotification

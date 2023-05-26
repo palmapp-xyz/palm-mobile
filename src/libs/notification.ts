@@ -126,7 +126,14 @@ export const onForegroundIOS = (): (() => void) => {
     console.log('PushNotification::localNotificationListener', notification)
     onNotificationIOS(notification)
   })
-  return () => PushNotificationIOS.removeEventListener('localNotification')
+  PushNotificationIOS.addEventListener('notification', notification => {
+    console.log('PushNotification::notificationListener', notification)
+    onNotificationIOS(notification)
+  })
+  return () => [
+    PushNotificationIOS.removeEventListener('localNotification'),
+    PushNotificationIOS.removeEventListener('notification'),
+  ]
 }
 
 export const configurePushNotification = (): void => {
