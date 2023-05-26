@@ -70,6 +70,15 @@ platform :ios do
     build_number = get_build_number(xcodeproj: "./ios/PalmApp.xcodeproj")
     puts "Version string: #{version}.#{build_number}"
 
+    appcenter_upload(
+      api_token: ENV["APPCENTER_IOS_API_TOKEN"],
+      owner_name: ENV["APPCENTER_OWNER_NAME"],
+      app_name: ENV["APPCENTER_IOS_APP_NAME"],
+      ipa: ENV["APPCENTER_IOS_DISTRIBUTE_IPA"],
+      destinations: "*",
+      notify_testers: true
+    )
+
     codepush_release_react(
       app_name: "#{ENV["APPCENTER_OWNER_NAME"]}/#{ENV["APPCENTER_IOS_APP_NAME"]}",
       plist_file: ENV["FASTLANE_IOS_PLIST"],
@@ -156,6 +165,15 @@ platform :android do
       bump_build_version
     end
     build
+    appcenter_upload(
+      api_token: ENV["APPCENTER_ANDROID_API_TOKEN"],
+      owner_name: ENV["APPCENTER_OWNER_NAME"],
+      app_name: ENV["APPCENTER_ANDROID_APP_NAME"],
+      apk: ENV["APPCENTER_ANDROID_DISTRIBUTE_APK"],
+      destinations: "*",
+      notify_testers: true,
+      mandatory_update: true
+    )
     codepush_release_react(
       app_name: "#{ENV["APPCENTER_OWNER_NAME"]}/#{ENV["APPCENTER_ANDROID_APP_NAME"]}",
       mandatory: true,
