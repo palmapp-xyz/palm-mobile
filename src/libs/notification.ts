@@ -21,14 +21,11 @@ import {
 import { recordError } from './logger'
 import { navigationRef, Routes, runAfterAppReady } from './navigation'
 
-export const onNotificationAndroid: (event: Event) => Promise<void> = async ({
+export const onRemoteNotification: (event: Event) => Promise<void> = async ({
   type,
   detail,
 }) => {
-  if (Platform.OS !== 'android') {
-    return
-  }
-
+  console.log('onRemoteNotification', type, detail)
   if (
     type === EventType.PRESS &&
     detail.notification &&
@@ -105,7 +102,7 @@ export const backgroundMessageHandler = async (
 }
 
 export const onForegroundAndroid = (): (() => void) =>
-  Notifee.onForegroundEvent(onNotificationAndroid)
+  Notifee.onForegroundEvent(onRemoteNotification)
 
 export const onForegroundIOS = (): (() => void) => {
   if (Platform.OS !== 'ios') {

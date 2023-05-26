@@ -5,7 +5,7 @@ import {
   backgroundMessageHandler,
   onForegroundAndroid,
   onForegroundIOS,
-  onNotificationAndroid,
+  onRemoteNotification,
 } from 'libs/notification'
 import { useEffect, useState } from 'react'
 import { Platform } from 'react-native'
@@ -157,7 +157,7 @@ const useNotification = (): void => {
       name: 'Default Channel',
       importance: 4,
     })
-    Notifee.onBackgroundEvent(onNotificationAndroid)
+    Notifee.onBackgroundEvent(onRemoteNotification)
 
     messaging().setBackgroundMessageHandler(message =>
       backgroundMessageHandler(channelId, message)
