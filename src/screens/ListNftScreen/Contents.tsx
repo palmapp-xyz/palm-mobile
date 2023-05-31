@@ -1,5 +1,7 @@
 import { FormButton, FormImage, FormInput, FormText, Row } from 'components'
+import NftCard from 'components/channel/NftCard'
 import { COLOR, NETWORK } from 'consts'
+import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
 import React, { ReactElement } from 'react'
 import {
   Keyboard,
@@ -8,11 +10,8 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
-import { Moralis, SupportedNetworkEnum, Token } from 'types'
-
-import NftCard from 'components/channel/NftCard'
-import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Moralis, SupportedNetworkEnum, Token } from 'types'
 
 const Contents = ({
   selectedNft,
@@ -39,7 +38,12 @@ const Contents = ({
         <View style={{ paddingHorizontal: 20 }}>
           <View style={{ rowGap: 8, paddingBottom: 28 }}>
             <FormText fontType="B.14">I want to sell this NFT for</FormText>
-            <Row style={{ justifyContent: 'space-between' }}>
+            <Row
+              style={{
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
               <FormInput
                 fontType="B.24"
                 placeholder="Price"
@@ -48,9 +52,11 @@ const Contents = ({
                 onChangeText={(value): void => {
                   setPrice(value as Token)
                 }}
+                inputMode={'numeric'}
                 style={{
                   borderWidth: 0,
                   borderRadius: 0,
+                  padding: 0,
                   paddingLeft: 0,
                   flex: 1,
                 }}

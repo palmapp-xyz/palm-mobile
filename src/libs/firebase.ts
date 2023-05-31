@@ -1,5 +1,5 @@
 import { UTIL } from 'consts'
-import { ChannelType, FbChannel, FbProfile } from 'types'
+import { ChannelType, FbChannel, FbListing, FbProfile } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,
@@ -50,4 +50,14 @@ export const getFsProfile = async (
     return undefined
   }
   return fsProfile.data() as FbProfile
+}
+
+export const getFsListing = async (
+  nonce: string
+): Promise<FbListing | undefined> => {
+  const fsListing = await firestore().collection('listings').doc(nonce).get()
+  if (!fsListing.exists) {
+    return undefined
+  }
+  return fsListing.data() as FbListing
 }

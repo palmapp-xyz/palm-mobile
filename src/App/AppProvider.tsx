@@ -74,6 +74,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
                 enableChannelListTypingIndicator: true,
                 enableChannelListMessageReceiptStatus: true,
                 enableUserMention: true,
+                enableMessageSearch: true,
               }}
               platformServices={{
                 file: FileService,

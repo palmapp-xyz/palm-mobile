@@ -1,10 +1,15 @@
 import { MessageRenderer } from 'components'
 import ChannelGatingChecker from 'components/ChannelGatingChecker'
+import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { getFsListing } from 'libs/firebase'
 import { Routes } from 'libs/navigation'
+import { parseSendFileData } from 'libs/sendbird'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useCallback, useMemo } from 'react'
 import { AvoidSoftInput } from 'react-native-avoid-softinput'
+import { Moralis, SupportedNetworkEnum } from 'types'
 
 import { useFocusEffect } from '@react-navigation/native'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
@@ -53,18 +58,88 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
 
   useFocusEffect(onFocusEffect)
 
+  const onPressMediaMessage = async (
+    fileMessage,
+    deleteMessage
+  ): Promise<void> => {
+    const parsedData = parseSendFileData(fileMessage.data || '')
+    if (parsedData) {
+      const item = parsedData.selectedNft
+      const chain: SupportedNetworkEnum =
+        chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+        SupportedNetworkEnum.ETHEREUM
+
+      switch (parsedData.type) {
+        case 'list':
+          const listing = await getFsListing(parsedData.nonce)
+          if (listing?.status === 'active') {
+            navigation.navigate(Routes.ZxNftDetail, {
+              nonce: parsedData.nonce,
+              channelUrl: params.channelUrl,
+              chain:
+                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                SupportedNetworkEnum.ETHEREUM,
+              item: item as Moralis.NftItem,
+            })
+          } else {
+            navigation.navigate(Routes.NftDetail, {
+              nftContract: (item as Moralis.NftItem).token_address,
+              tokenId: (item as Moralis.NftItem).token_id,
+              nftContractType: (item as Moralis.NftItem).contract_type,
+              chain,
+              item: item as Moralis.NftItem,
+            })
+          }
+          return
+        case 'buy':
+          const fbListing = await getFsListing(
+            (item as PostOrderResponsePayload).order.nonce
+          )
+          if (fbListing?.status === 'active') {
+            navigation.navigate(Routes.ZxNftDetail, {
+              nonce: (item as PostOrderResponsePayload).order.nonce,
+              channelUrl: params.channelUrl,
+              chain:
+                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                SupportedNetworkEnum.ETHEREUM,
+            })
+          } else {
+            navigation.navigate(Routes.NftDetail, {
+              nftContract: (item as Moralis.NftItem).token_address,
+              tokenId: (item as Moralis.NftItem).token_id,
+              nftContractType: (item as Moralis.NftItem).contract_type,
+              chain,
+              item: item as Moralis.NftItem,
+            })
+          }
+          return
+        case 'share':
+        case 'send':
+          navigation.navigate(Routes.NftDetail, {
+            nftContract: (item as Moralis.NftItem).token_address,
+            tokenId: (item as Moralis.NftItem).token_id,
+            nftContractType: (item as Moralis.NftItem).contract_type,
+            chain,
+            item: item as Moralis.NftItem,
+          })
+          return
+      }
+    }
+
+    // Navigate to media viewer
+    navigation.navigate(Routes.FileViewer, {
+      serializedFileMessage: fileMessage.serialize(),
+      deleteMessage,
+    })
+    return
+  }
+
   return (
     <GroupChannelFragment
       keyboardAvoidOffset={-280}
       enableTypingIndicator={true}
       channel={channel}
-      onPressMediaMessage={(fileMessage, deleteMessage): void => {
-        // Navigate to media viewer
-        navigation.navigate(Routes.FileViewer, {
-          serializedFileMessage: fileMessage.serialize(),
-          deleteMessage,
-        })
-      }}
+      onPressMediaMessage={onPressMediaMessage}
       onChannelDeleted={(): void => {
         // Should leave channel, navigate to channel list
         navigation.navigate(Routes.GroupChannelList)
