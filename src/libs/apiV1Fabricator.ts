@@ -11,6 +11,19 @@ export default {
       '/auth/challenge/verify' as ApiParamFabricated,
   },
 
+  [ApiEnum.TOKENS]: {
+    get: ({
+      userAddress,
+      connectedNetworkId,
+    }: {
+      userAddress: ContractAddr
+      connectedNetworkId: number
+    }): ApiParamFabricated => {
+      return `/api/evm-api-proxy/${userAddress}/erc20?chain=${utils.hexValue(
+        connectedNetworkId
+      )}` as ApiParamFabricated
+    },
+  },
   [ApiEnum.ASSETS]: {
     get: ({
       userAddress,

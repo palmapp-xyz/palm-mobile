@@ -15,6 +15,7 @@ export enum ApiEnum {
   AUTH_CHALLENGE_VERIFY = 'AUTH_CHALLENGE_VERIFY',
 
   ACCOUNTS = 'ACCOUNTS',
+  TOKENS = 'TOKENS',
   ASSETS = 'ASSETS',
   COLLECTIONS = 'COLLECTIONS',
   COLLECTION_ASSETS = 'COLLECTION_ASSETS',
@@ -52,6 +53,7 @@ export type ApiParams = {
     }
   }>
 
+  [ApiEnum.TOKENS]: DefaultMethods
   [ApiEnum.ASSETS]: DefaultMethods
   [ApiEnum.COLLECTIONS]: DefaultMethods
   [ApiEnum.COLLECTION_ASSETS]: DefaultMethods
@@ -115,6 +117,11 @@ export type ApiResponse = {
   }>
 
   [ApiEnum.ACCOUNTS]: Override<{ GET: Accounts.Item }>
+  [ApiEnum.TOKENS]: Override<{
+    GET: {
+      result: Moralis.FtItem[]
+    }
+  }>
   [ApiEnum.ASSETS]: Override<{
     GET: {
       page: number
