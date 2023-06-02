@@ -7,7 +7,7 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
-import { useAppNavigation } from '../../hooks/useAppNavigation'
+import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
 const GroupChannelMembersFragment = createGroupChannelMembersFragment()
 

@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 import { Moralis, SupportedNetworkEnum } from 'types'
 
-import ProfileHeader from '../components/ProfileHeader'
+import ProfileHeader from '../../components/ProfileHeader'
 
 const UserProfileScreen = (): ReactElement => {
   const { params } = useAppNavigation<Routes.UserProfile>()

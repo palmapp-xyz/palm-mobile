@@ -6,7 +6,13 @@ import {
   Header,
   Row,
 } from 'components'
+import { COLOR, NETWORK, UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
+import useEthPrice from 'hooks/independent/useEthPrice'
+import useKlayPrice from 'hooks/independent/useKlayPrice'
+import useMaticPrice from 'hooks/independent/useMaticPrice'
+import useNftImage from 'hooks/independent/useNftImage'
+import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useZxBuyNft from 'hooks/zx/useZxBuyNft'
 import useZxCancelNft from 'hooks/zx/useZxCancelNft'
@@ -28,13 +34,7 @@ import {
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
-import { COLOR, NETWORK, UTIL } from 'consts'
-import useEthPrice from 'hooks/independent/useEthPrice'
-import useKlayPrice from 'hooks/independent/useKlayPrice'
-import useMaticPrice from 'hooks/independent/useMaticPrice'
-import useNftImage from 'hooks/independent/useNftImage'
-import useUserBalance from 'hooks/independent/useUserBalance'
-import NftDetails from '../components/NftDetails'
+import NftDetails from '../../components/NftDetails'
 
 const InitNftUri = ({
   nftContract,

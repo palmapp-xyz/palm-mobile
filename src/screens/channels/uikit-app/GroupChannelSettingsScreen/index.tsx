@@ -9,7 +9,7 @@ import {
 } from '@sendbird/uikit-react-native'
 import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
 
-import { useAppNavigation } from '../../../hooks/useAppNavigation'
+import { useAppNavigation } from '../../../../hooks/useAppNavigation'
 import GroupChannelSettingsInfo from './GroupChannelSettingsInfo'
 
 const GroupChannelSettingsFragment = createGroupChannelSettingsFragment({

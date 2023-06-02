@@ -3,17 +3,16 @@ import React, { ReactElement } from 'react'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import {
-  createGroupChannelRegisterOperatorFragment,
+  createGroupChannelOperatorsFragment,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
-import { useAppNavigation } from '../../hooks/useAppNavigation'
+import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
-const GroupChannelRegisterOperatorFragment =
-  createGroupChannelRegisterOperatorFragment()
-const GroupChannelRegisterOperatorScreen = (): ReactElement => {
+const GroupChannelOperatorsFragment = createGroupChannelOperatorsFragment()
+const GroupChannelOperatorsScreen = (): ReactElement => {
   const { navigation, params } =
-    useAppNavigation<Routes.GroupChannelRegisterOperator>()
+    useAppNavigation<Routes.GroupChannelOperators>()
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, params.channelUrl)
@@ -22,18 +21,18 @@ const GroupChannelRegisterOperatorScreen = (): ReactElement => {
   }
 
   return (
-    <GroupChannelRegisterOperatorFragment
+    <GroupChannelOperatorsFragment
       channel={channel}
       onPressHeaderLeft={(): void => {
         // Navigate back
         navigation.goBack()
       }}
       onPressHeaderRight={(): void => {
-        // Navigate to group channel operators
-        navigation.navigate(Routes.GroupChannelOperators, params)
+        // Navigate to group channel set as operators
+        navigation.navigate(Routes.GroupChannelRegisterOperator, params)
       }}
     />
   )
 }
 
-export default GroupChannelRegisterOperatorScreen
+export default GroupChannelOperatorsScreen

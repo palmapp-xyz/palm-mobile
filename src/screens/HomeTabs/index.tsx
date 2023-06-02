@@ -8,9 +8,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useTotalUnreadMessageCount } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
-import ExploreScreen from './ExploreScreen'
-import GroupChannelListScreen from './GroupChannelListScreen'
-import MyPageScreen from './MyPageScreen'
+import GroupChannelListScreen from '../channels/GroupChannelListScreen'
+import ExploreScreen from '../explore/ExploreScreen'
+import MyPageScreen from '../profiles/MyPageScreen'
 
 const Tab = createBottomTabNavigator()
 

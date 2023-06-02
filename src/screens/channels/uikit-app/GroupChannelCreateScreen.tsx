@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react'
 
 import { createGroupChannelCreateFragment } from '@sendbird/uikit-react-native'
 
-import { useAppNavigation } from '../../hooks/useAppNavigation'
+import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
 import type { SendbirdUser } from '@sendbird/uikit-utils'
 

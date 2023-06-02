@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react'
 
 import { FileViewer, useSendbirdChat } from '@sendbird/uikit-react-native'
 
-import { useAppNavigation } from '../../hooks/useAppNavigation'
+import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
 import type { SendbirdFileMessage } from '@sendbird/uikit-utils'
 

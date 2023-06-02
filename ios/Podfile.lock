@@ -1244,7 +1244,7 @@ PODS:
     - FirebaseCoreExtension (= 10.7.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.9.0):
+  - RNGestureHandler (2.10.2):
     - React-Core
   - RNKeychain (8.1.1):
     - React-Core
@@ -1255,7 +1255,7 @@ PODS:
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNReanimated (3.0.2):
+  - RNReanimated (3.2.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -1694,11 +1694,11 @@ SPEC CHECKSUMS:
   RNFBCrashlytics: 97cf8015886ad6449cbcf309fa66e4ec056205e7
   RNFBFirestore: 7ea903241b28f46edcb04b4cc35054e58ee2fa29
   RNFBMessaging: e8e1f7d81572b931dfa7b096614f036ea8fdfb84
-  RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
+  RNGestureHandler: f75d81410b40aaa99e71ae8f8bb7a88620c95042
   RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
   RNNotifee: da8dcf09f079ea22f46e239d7c406e10d4525a5f
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNReanimated: f0dd6b881808e635ef0673f89642937d6c141314
+  RNReanimated: c931b356bda56c0196110bdc462e48e4c2668dc3
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2

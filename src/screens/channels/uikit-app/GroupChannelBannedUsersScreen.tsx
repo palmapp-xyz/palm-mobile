@@ -2,19 +2,18 @@ import React, { ReactElement } from 'react'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import {
-  createGroupChannelMutedMembersFragment,
+  createGroupChannelBannedUsersFragment,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 
-import { useAppNavigation } from '../../hooks/useAppNavigation'
+import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
 import type { Routes } from 'libs/navigation'
 
-const GroupChannelMutedMembersFragment =
-  createGroupChannelMutedMembersFragment()
-const GroupChannelMutedMembersScreen = (): ReactElement => {
+const GroupChannelBannedUsersFragment = createGroupChannelBannedUsersFragment()
+const GroupChannelBannedUsersScreen = (): ReactElement => {
   const { navigation, params } =
-    useAppNavigation<Routes.GroupChannelMutedMembers>()
+    useAppNavigation<Routes.GroupChannelBannedUsers>()
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, params.channelUrl)
@@ -23,7 +22,7 @@ const GroupChannelMutedMembersScreen = (): ReactElement => {
   }
 
   return (
-    <GroupChannelMutedMembersFragment
+    <GroupChannelBannedUsersFragment
       channel={channel}
       onPressHeaderLeft={(): void => {
         // Navigate back
@@ -33,4 +32,4 @@ const GroupChannelMutedMembersScreen = (): ReactElement => {
   )
 }
 
-export default GroupChannelMutedMembersScreen
+export default GroupChannelBannedUsersScreen
