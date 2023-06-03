@@ -22,6 +22,7 @@ export type ProfileHeaderProps = {
   isMyPage: boolean
   selectedNetwork: SupportedNetworkEnum
   onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
+  onToggleShowUserTokensSheet?: () => void
 }
 
 const ProfileHeader = React.memo(
@@ -31,6 +32,7 @@ const ProfileHeader = React.memo(
     isMyPage,
     selectedNetwork,
     onNetworkSelected,
+    onToggleShowUserTokensSheet,
   }: ProfileHeaderProps): ReactElement => {
     const { navigation } = useAppNavigation()
 
@@ -114,7 +116,12 @@ const ProfileHeader = React.memo(
 
           <ProfileWalletAddress userAddress={userAddress} />
 
-          {isMyPage && <ProfileWalletBalances userAddress={userAddress} />}
+          {isMyPage && (
+            <ProfileWalletBalances
+              userAddress={userAddress}
+              onToggleShowUserTokensSheet={onToggleShowUserTokensSheet}
+            />
+          )}
 
           <View style={{ paddingTop: 32, rowGap: 12, paddingBottom: 12 }}>
             <FormText fontType="B.14">NFT List</FormText>

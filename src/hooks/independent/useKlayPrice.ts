@@ -22,7 +22,7 @@ const useKlayPrice = (): UseKlayPriceReturn => {
     },
     {
       keepPreviousData: true,
-      refetchInterval: 100000,
+      refetchInterval: 10000,
     }
   )
 

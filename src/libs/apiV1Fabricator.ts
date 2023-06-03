@@ -93,6 +93,20 @@ export default {
       '/api/evm-api-proxy/ipfs/uploadFolder' as ApiParamFabricated,
   },
 
+  [ApiEnum.TOKEN_PRICE]: {
+    get: ({
+      tokenAddress,
+      connectedNetworkId,
+    }: {
+      tokenAddress: ContractAddr
+      connectedNetworkId: number
+    }): ApiParamFabricated => {
+      return `/api/evm-api-proxy/erc20/${tokenAddress}/price?chain=${utils.hexValue(
+        connectedNetworkId
+      )}&include=percent_change` as ApiParamFabricated
+    },
+  },
+
   [ApiEnum.SEARCH]: {
     post: (): ApiParamFabricated => '/search/all' as ApiParamFabricated,
   },

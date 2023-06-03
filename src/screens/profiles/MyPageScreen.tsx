@@ -1,6 +1,7 @@
 import { Container } from 'components'
 import CollectionNftItemsCollapsible from 'components/molecules/CollectionNftItemsCollapsible'
 import ProfileFooter from 'components/ProfileFooter'
+import UserTokensSheet from 'components/UserTokensSheet'
 import { COLOR } from 'consts'
 import useProfile from 'hooks/auth/useProfile'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
@@ -29,6 +30,8 @@ const MyPageScreen = (): ReactElement => {
     selectedNetwork,
   })
 
+  const [showUserTokensSheet, setShowUserTokensSheet] = useState<boolean>(false)
+
   const { profile, updateProfileImage } = useProfile({
     profileId: user?.auth?.profileId,
   })
@@ -40,6 +43,9 @@ const MyPageScreen = (): ReactElement => {
       userAddress={user?.address}
       selectedNetwork={selectedNetwork}
       onNetworkSelected={setSelectedNetwork}
+      onToggleShowUserTokensSheet={(): void => {
+        setShowUserTokensSheet(!showUserTokensSheet)
+      }}
     />
   )
 
@@ -126,6 +132,10 @@ const MyPageScreen = (): ReactElement => {
           />
         )}
       />
+
+      {showUserTokensSheet && (
+        <UserTokensSheet onClose={(): void => setShowUserTokensSheet(false)} />
+      )}
     </Container>
   )
 }

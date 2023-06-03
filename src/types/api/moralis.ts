@@ -1,6 +1,25 @@
 import { ContractAddr, NftType } from '../contracts'
 
 export namespace Moralis {
+  export type TokenPrice = {
+    tokenName: string
+    tokenSymbol: string
+    tokenLogo: string
+    tokenDecimals: string
+    nativePrice: {
+      value: string
+      decimals: number
+      name: string
+      symbol: string
+    }
+    usdPrice: number
+    usdPriceFormatted?: string
+    '24hrPercentChange'?: string
+    exchangeAddress: ContractAddr
+    exchangeName: string
+    tokenAddress: ContractAddr
+  }
+
   export type FtItem = {
     token_address: ContractAddr
     name: string

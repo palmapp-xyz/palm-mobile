@@ -25,6 +25,8 @@ export enum ApiEnum {
 
   IPFS = 'IPFS',
 
+  TOKEN_PRICE = 'TOKEN_PRICE',
+
   SEARCH = 'SEARCH',
 }
 
@@ -81,12 +83,15 @@ export type ApiParams = {
       id: number
     }
   }>
+
   [ApiEnum.IPFS]: Override<{
     POST: {
       path: string
       content: string
     }[]
   }>
+
+  [ApiEnum.TOKEN_PRICE]: DefaultMethods
 
   [ApiEnum.SEARCH]: Override<{
     POST: {
@@ -152,6 +157,10 @@ export type ApiResponse = {
 
   [ApiEnum.IPFS]: Override<{
     POST: { path: string }[]
+  }>
+
+  [ApiEnum.TOKEN_PRICE]: Override<{
+    GET: Moralis.TokenPrice
   }>
 
   [ApiEnum.SEARCH]: Override<{

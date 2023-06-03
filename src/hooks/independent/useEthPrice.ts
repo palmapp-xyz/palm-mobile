@@ -22,7 +22,7 @@ const useEthPrice = (): UseEthPriceReturn => {
     },
     {
       keepPreviousData: true,
-      refetchInterval: 100000,
+      refetchInterval: 10000,
     }
   )
 
