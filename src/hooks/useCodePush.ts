@@ -30,6 +30,7 @@ const useCodePush = (): {
         switch (status) {
           case CodePush.SyncStatus.UP_TO_DATE:
             console.log('UP_TO_DATE')
+            setUpdateAvailable(false)
             break
           case CodePush.SyncStatus.UPDATE_INSTALLED:
             console.log('UPDATE_INSTALLED')
@@ -40,6 +41,7 @@ const useCodePush = (): {
       }
     )
   }
+
   const restartApp = (onlyIfUpdateIsPending?: boolean): void => {
     setTimeout(() => {
       CodePush.restartApp(onlyIfUpdateIsPending)

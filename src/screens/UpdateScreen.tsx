@@ -2,7 +2,6 @@ import { FormImage, FormText } from 'components'
 import { COLOR } from 'consts'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { View } from 'react-native'
-import useCodePush from '../hooks/useCodePush'
 
 import images from 'assets/images'
 import useInterval from 'hooks/useInterval'
@@ -13,9 +12,13 @@ const updateMessage =
 const completeMessage = 'Update completed.\nPalm app will be restarted.'
 const dots = ['', '.', '..']
 
-const UpdateScreen = (): ReactElement => {
-  const { syncUpdate, restartApp, updateAvailable, updateComplete } =
-    useCodePush()
+const UpdateScreen = (props: {
+  restartApp: (onlyIfUpdateIsPending?: boolean) => void
+  syncUpdate: () => Promise<void>
+  updateAvailable: boolean | undefined
+  updateComplete: boolean | undefined
+}): ReactElement => {
+  const { syncUpdate, restartApp, updateAvailable, updateComplete } = props
 
   const [dotsIndex, setDotsIndex] = useState(0)
 

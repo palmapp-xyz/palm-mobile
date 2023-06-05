@@ -10,14 +10,14 @@ import AppProviderWrapper from './AppProvider'
 const App = (): ReactElement => {
   LogBox.ignoreAllLogs()
 
-  const { updateAvailable } = useCodePush()
+  const codepush = useCodePush()
 
   return (
     <AppProviderWrapper>
-      {updateAvailable === undefined ? (
+      {codepush.updateAvailable === undefined ? (
         <></>
-      ) : updateAvailable === true ? (
-        <UpdateScreen />
+      ) : codepush.updateAvailable === true ? (
+        <UpdateScreen {...codepush} />
       ) : (
         <>
           <Loading />
