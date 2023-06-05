@@ -40,7 +40,13 @@ const UpdateScreen = (props: {
   }, [updateComplete])
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: COLOR.white,
+        justifyContent: 'center',
+      }}
+    >
       <FormImage
         source={images.palm_logo}
         size={74}
