@@ -6,6 +6,8 @@ import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Moralis, SupportedNetworkEnum, pToken } from 'types'
 
+import { Icon } from '@sendbird/uikit-react-native-foundation'
+
 const MoralisErc20Token = ({
   item,
   selectedNetwork,
@@ -22,10 +24,14 @@ const MoralisErc20Token = ({
   return (
     <View style={styles.itemCard}>
       <Row style={{ alignItems: 'center', columnGap: 12 }}>
-        <FormImage
-          source={item.logo ? { uri: item.logo } : images.palm_logo}
-          size={28}
-        />
+        {item.logo ? (
+          <FormImage
+            source={item.logo ? { uri: item.logo } : images.palm_logo}
+            size={28}
+          />
+        ) : (
+          <Icon icon={'error'} size={24} color={COLOR.primary._300} />
+        )}
         <View>
           <Row>
             <FormText fontType="B.16">
@@ -35,11 +41,11 @@ const MoralisErc20Token = ({
             </FormText>
             <FormText fontType="R.16">{item.symbol}</FormText>
           </Row>
-          {tokenPrice && (
-            <FormText fontType="R.10" color={COLOR.black._400}>
-              {`(≈$${UTIL.formatAmountP(tokenPrice, { toFix: 0 })})`}
-            </FormText>
-          )}
+          <FormText fontType="R.10" color={COLOR.black._400}>
+            {`(≈ $${
+              tokenPrice ? UTIL.formatAmountP(tokenPrice, { toFix: 0 }) : '?'
+            })`}
+          </FormText>
         </View>
       </Row>
     </View>
@@ -49,11 +55,11 @@ const MoralisErc20Token = ({
 export default MoralisErc20Token
 
 const styles = StyleSheet.create({
-  body: { flex: 1, padding: 20, backgroundColor: 'white', gap: 20 },
   itemCard: {
     paddingVertical: 12,
     paddingHorizontal: 16,
     backgroundColor: COLOR.black._90005,
     borderRadius: 16,
+    marginVertical: 2,
   },
 })

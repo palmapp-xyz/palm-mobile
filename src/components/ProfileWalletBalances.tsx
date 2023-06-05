@@ -13,7 +13,7 @@ import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
 
 export type ProfileWalletBalancesProps = {
   userAddress: ContractAddr | undefined
-  onToggleShowUserTokensSheet: () => void
+  onToggleShowUserTokensSheet?: () => void
 }
 
 const ProfileWalletBalances = React.memo(
@@ -68,7 +68,7 @@ const ProfileWalletBalances = React.memo(
                     <FormText fontType="R.16">ETH</FormText>
                   </Row>
                   <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈$${UTIL.formatAmountP(
+                    {`(≈ $${UTIL.formatAmountP(
                       getEthPrice(ethBalance || ('0' as pToken)),
                       {
                         toFix: 0,
@@ -92,7 +92,7 @@ const ProfileWalletBalances = React.memo(
                     <FormText fontType="R.16">KLAY</FormText>
                   </Row>
                   <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈$${UTIL.formatAmountP(
+                    {`(≈ $${UTIL.formatAmountP(
                       getKlayPrice(klayBalance || ('0' as pToken)),
                       {
                         toFix: 0,
@@ -116,7 +116,7 @@ const ProfileWalletBalances = React.memo(
                     <FormText fontType="R.16">MATIC</FormText>
                   </Row>
                   <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈$${UTIL.formatAmountP(
+                    {`(≈ ${UTIL.formatAmountP(
                       getMaticPrice(maticBalance || ('0' as pToken)),
                       {
                         toFix: 0,

@@ -3,7 +3,13 @@ import { COLOR } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
 import React, { ReactElement, useMemo, useState } from 'react'
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { SupportedNetworkEnum } from 'types'
 
 import MoralisErc20Token from './MoralisErc20Token'
@@ -26,12 +32,14 @@ const UserTokensSheet = ({
     selectedNetwork,
   })
 
-  const listEmptyComponent = isLoading ? (
+  const listEmptyComponent = (
     <View style={{ paddingTop: 16 }}>
-      <ActivityIndicator color={COLOR.primary._400} />
+      {isLoading ? (
+        <ActivityIndicator color={COLOR.primary._400} />
+      ) : (
+        <Text style={styles.text}>{'End of List'}</Text>
+      )}
     </View>
-  ) : (
-    <></>
   )
 
   const listHeaderComponent = (
@@ -59,13 +67,18 @@ const UserTokensSheet = ({
             ListHeaderComponent={listHeaderComponent}
             keyExtractor={(_, index): string => `user-ft-list-${index}`}
             initialNumToRender={10}
-            contentContainerStyle={{ rowGap: 6 }}
-            renderItem={({ item }): ReactElement => (
-              <MoralisErc20Token
-                item={item}
-                selectedNetwork={selectedNetwork}
-              />
-            )}
+            contentContainerStyle={{ rowGap: 0 }}
+            renderItem={({ item }): ReactElement | null => {
+              if (item.possible_spam) {
+                return null
+              }
+              return (
+                <MoralisErc20Token
+                  item={item}
+                  selectedNetwork={selectedNetwork}
+                />
+              )
+            }}
           />
         </View>
       </View>
@@ -82,5 +95,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: COLOR.black._90005,
     borderRadius: 16,
+  },
+  text: {
+    color: 'gray',
+    fontSize: 12,
+    textAlign: 'center',
   },
 })
