@@ -14,8 +14,8 @@ export type UseUserAssetsReturn<T> = {
   hasNextPage: boolean
   refetch: () => void
   remove: () => void
+  loading: boolean
   isRefetching: boolean
-  isLoading: boolean
 }
 
 const useUserNftList = ({
@@ -37,8 +37,9 @@ const useUserNftList = ({
     hasNextPage = false,
     refetch,
     remove,
-    isRefetching,
     isLoading,
+    isRefetching,
+    isFetchingNextPage,
   } = useInfiniteQuery(
     [ApiEnum.ASSETS, userAddress, connectedNetworkId],
     async ({ pageParam = '' }) => {
@@ -70,7 +71,18 @@ const useUserNftList = ({
     }
   )
 
-  const items = useMemo(() => _.flatten(data?.pages.map(x => x.result)), [data])
+  const items = useMemo(
+    () =>
+      _.flatten(data?.pages.map(x => x.result)).filter(
+        x => !!x && x.possible_spam !== true
+      ),
+    [data]
+  )
+
+  const loading = useMemo(
+    () => isLoading || isFetchingNextPage,
+    [isLoading, isFetchingNextPage]
+  )
 
   return {
     items,
@@ -78,8 +90,8 @@ const useUserNftList = ({
     hasNextPage,
     refetch,
     remove,
+    loading,
     isRefetching,
-    isLoading,
   }
 }
 

@@ -22,7 +22,7 @@ const useUserBalance = ({
     data: balance = '0',
     refetch,
     remove,
-    isLoading,
+    status,
     isRefetching,
   } = useReactQuery(
     [QueryKeyEnum.NATIVE_TOKEN_BALANCE, address, chain],
@@ -40,7 +40,7 @@ const useUserBalance = ({
     balance: balance as pToken,
     refetch,
     remove,
-    isLoading,
+    isLoading: status === 'loading',
     isRefetching,
   }
 }

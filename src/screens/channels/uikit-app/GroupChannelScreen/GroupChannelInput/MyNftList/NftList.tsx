@@ -3,7 +3,7 @@ import { COLOR } from 'consts'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr, Moralis } from 'types'
@@ -25,40 +25,46 @@ const NftList = ({
     stepAfterSelectNft,
   } = useGcInputReturn
 
-  const { items, fetchNextPage, hasNextPage, isLoading } = useCollectionNfts({
+  const { items, fetchNextPage, hasNextPage, loading } = useCollectionNfts({
     selectedNetwork,
     userAddress,
     contractAddress: selectedCollection.token_address,
   })
 
+  const listHeaderComponent = (
+    <TouchableOpacity
+      style={{
+        paddingBottom: 8,
+        flexDirection: 'row',
+        gap: 8,
+        paddingHorizontal: 12,
+      }}
+      onPress={(): void => {
+        setSelectedCollection(undefined)
+      }}
+    >
+      <Icon name="ios-chevron-back" color={COLOR.black._800} size={16} />
+      <FormText fontType="B.12">{selectedCollection.name}</FormText>
+    </TouchableOpacity>
+  )
+
+  const listFooterComponent = (
+    <View style={{ paddingTop: 16 }}>
+      {loading ? (
+        <ActivityIndicator color={COLOR.primary._400} />
+      ) : items.length === 0 ? (
+        <Text style={styles.text}>{'No tokens to show'}</Text>
+      ) : (
+        <Text style={styles.text}>{'End of List'}</Text>
+      )}
+    </View>
+  )
+
   return (
     <FlatList
       data={items}
-      ListEmptyComponent={(): ReactElement =>
-        isLoading ? (
-          <View style={{ paddingTop: 16 }}>
-            <ActivityIndicator color={COLOR.primary._400} />
-          </View>
-        ) : (
-          <></>
-        )
-      }
-      ListHeaderComponent={(): ReactElement => (
-        <TouchableOpacity
-          style={{
-            paddingBottom: 8,
-            flexDirection: 'row',
-            gap: 8,
-            paddingHorizontal: 12,
-          }}
-          onPress={(): void => {
-            setSelectedCollection(undefined)
-          }}
-        >
-          <Icon name="ios-chevron-back" color={COLOR.black._800} size={16} />
-          <FormText fontType="B.12">{selectedCollection.name}</FormText>
-        </TouchableOpacity>
-      )}
+      ListFooterComponent={listFooterComponent}
+      ListHeaderComponent={listHeaderComponent}
       keyExtractor={(_, index): string => `nftList-${index}`}
       style={{ paddingHorizontal: 8, paddingTop: 20 }}
       contentContainerStyle={{ gap: 8 }}
@@ -154,5 +160,10 @@ const styles = StyleSheet.create({
     height: 24,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text: {
+    color: 'gray',
+    fontSize: 12,
+    textAlign: 'center',
   },
 })

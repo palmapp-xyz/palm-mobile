@@ -13,8 +13,8 @@ import {
   View,
 } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
-import RecentlySearched from './RecentlySearched'
 
+import RecentlySearched from './RecentlySearched'
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
 import SearchResult from './SearchResult'

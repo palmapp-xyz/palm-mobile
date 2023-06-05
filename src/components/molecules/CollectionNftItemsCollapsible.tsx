@@ -49,6 +49,6 @@ const CollectionNftItemsCollapsible = ({
 export default CollectionNftItemsCollapsible
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, marginVertical: 4 },
   headerText: { fontSize: 16, fontWeight: '500' },
 })

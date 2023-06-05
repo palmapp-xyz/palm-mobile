@@ -1,7 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { UTIL } from 'consts'
 import { useQuery } from 'react-query'
 import { LocalStorageKey } from 'types'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type UseInterestReturn = {
   interestList: string[]
@@ -14,7 +15,7 @@ const useInterest = (): UseInterestReturn => {
   const {
     data: interestList = [],
     refetch: refetchInterest,
-    isLoading,
+    status,
   } = useQuery([LocalStorageKey.INTEREST], async () => {
     const item = await AsyncStorage.getItem(LocalStorageKey.INTEREST)
     return UTIL.jsonTryParse<string[]>(item || '[]')
@@ -37,7 +38,12 @@ const useInterest = (): UseInterestReturn => {
     refetchInterest()
   }
 
-  return { interestList, addInterestList, deleteInterest, isLoading }
+  return {
+    interestList,
+    addInterestList,
+    deleteInterest,
+    isLoading: status === 'loading',
+  }
 }
 
 export default useInterest

@@ -3,7 +3,7 @@ import { COLOR } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { ContractAddr } from 'types'
 
@@ -16,26 +16,28 @@ const NftCollectionList = ({
 }): ReactElement => {
   const { selectedNetwork, setSelectedCollection } = useGcInputReturn
 
-  const { items, fetchNextPage, hasNextPage, isLoading } =
+  const { items, fetchNextPage, hasNextPage, loading } =
     useUserNftCollectionList({
       userAddress,
       selectedNetwork,
     })
 
+  const listFooterComponent = (
+    <View style={{ paddingTop: 16 }}>
+      {loading ? (
+        <ActivityIndicator color={COLOR.primary._400} />
+      ) : items.length === 0 ? (
+        <Text style={styles.text}>{'No tokens to show'}</Text>
+      ) : (
+        <Text style={styles.text}>{'End of List'}</Text>
+      )}
+    </View>
+  )
+
   return (
     <FlatList
       data={items}
-      ListEmptyComponent={(): ReactElement =>
-        isLoading ? (
-          <View style={{ paddingTop: 16 }}>
-            <ActivityIndicator color={COLOR.primary._400} />
-          </View>
-        ) : (
-          <View style={styles.emptyBox}>
-            <FormText>{'The user has no NFTs yet.'}</FormText>
-          </View>
-        )
-      }
+      ListFooterComponent={listFooterComponent}
       keyExtractor={(_, index): string => `useUserNftCollectionList-${index}`}
       style={{ paddingHorizontal: 8, paddingTop: 20 }}
       contentContainerStyle={{ gap: 8 }}
@@ -48,24 +50,22 @@ const NftCollectionList = ({
       }}
       onEndReachedThreshold={0.5}
       initialNumToRender={10}
-      renderItem={({ item }): ReactElement => {
-        return (
-          <View style={{ flex: 1 / 2 }}>
-            <TouchableOpacity
-              onPress={(): void => {
-                setSelectedCollection(item)
-              }}
-            >
-              <View style={styles.nftTitle}>
-                <FormText
-                  numberOfLines={1}
-                  fontType="B.16"
-                >{`#${item.name}`}</FormText>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )
-      }}
+      renderItem={({ item }): ReactElement => (
+        <View style={{ flex: 1 / 2 }}>
+          <TouchableOpacity
+            onPress={(): void => {
+              setSelectedCollection(item)
+            }}
+          >
+            <View style={styles.nftTitle}>
+              <FormText
+                numberOfLines={1}
+                fontType="B.16"
+              >{`#${item.name}`}</FormText>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
     />
   )
 }
@@ -81,8 +81,9 @@ const styles = StyleSheet.create({
     borderColor: COLOR.black._200,
     alignItems: 'center',
   },
-  emptyBox: {
-    gap: 20,
-    padding: 10,
+  text: {
+    color: 'gray',
+    fontSize: 12,
+    textAlign: 'center',
   },
 })

@@ -27,7 +27,7 @@ const UserTokensSheet = ({
     SupportedNetworkEnum.ETHEREUM
   )
 
-  const { items, isLoading } = useUserFtList({
+  const { items, status } = useUserFtList({
     userAddress: user?.address,
     selectedNetwork,
   })
@@ -42,7 +42,7 @@ const UserTokensSheet = ({
 
   const listFooterComponent = (
     <View style={{ paddingTop: 16 }}>
-      {isLoading ? (
+      {status === 'loading' ? (
         <ActivityIndicator color={COLOR.primary._400} />
       ) : items.length === 0 ? (
         <Text style={styles.text}>{'No tokens to show'}</Text>

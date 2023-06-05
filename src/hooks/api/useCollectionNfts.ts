@@ -15,7 +15,7 @@ export type UseCollectionNftsReturn = {
   refetch: () => void
   remove: () => void
   isRefetching: boolean
-  isLoading: boolean
+  loading: boolean
 }
 
 const useCollectionNfts = ({
@@ -41,6 +41,7 @@ const useCollectionNfts = ({
     remove,
     isRefetching,
     isLoading,
+    isFetchingNextPage,
   } = useInfiniteQuery(
     [
       ApiEnum.COLLECTION_ASSETS,
@@ -83,6 +84,11 @@ const useCollectionNfts = ({
     [data]
   )
 
+  const loading = useMemo(
+    () => isLoading || isFetchingNextPage,
+    [isLoading, isFetchingNextPage]
+  )
+
   return {
     items,
     fetchNextPage,
@@ -90,7 +96,7 @@ const useCollectionNfts = ({
     refetch,
     remove,
     isRefetching,
-    isLoading,
+    loading,
   }
 }
 

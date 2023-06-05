@@ -35,14 +35,14 @@ const CollectionNftItems = ({
   const { navigation } = useAppNavigation()
   const size = useWindowDimensions()
 
-  const { items, fetchNextPage, hasNextPage, isLoading } = useCollectionNfts({
+  const { items, fetchNextPage, hasNextPage, loading } = useCollectionNfts({
     selectedNetwork,
     userAddress,
     contractAddress,
   })
 
   const dim = size.width / 2.0 - 32
-  if (!userAddress || isLoading) {
+  if (!userAddress || loading) {
     return <ActivityIndicator size="small" color={COLOR.primary._400} />
   }
 

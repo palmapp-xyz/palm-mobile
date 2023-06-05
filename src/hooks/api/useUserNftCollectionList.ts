@@ -28,8 +28,9 @@ const useUserNftCollectionList = ({
     hasNextPage = false,
     refetch,
     remove,
-    isRefetching,
     isLoading,
+    isFetchingNextPage,
+    isRefetching,
   } = useInfiniteQuery(
     [ApiEnum.COLLECTIONS, userAddress, connectedNetworkId],
     async ({ pageParam = '' }) => {
@@ -62,8 +63,16 @@ const useUserNftCollectionList = ({
   )
 
   const items = useMemo(
-    () => _.flatten(data?.pages.map(x => x.result)).filter(x => !!x),
+    () =>
+      _.flatten(data?.pages.map(x => x.result)).filter(
+        x => !!x && x.possible_spam !== true && !x.name?.includes('-Follower')
+      ),
     [data]
+  )
+
+  const loading = useMemo(
+    () => isLoading || isFetchingNextPage,
+    [isLoading, isFetchingNextPage]
   )
 
   return {
@@ -72,8 +81,8 @@ const useUserNftCollectionList = ({
     hasNextPage,
     refetch,
     remove,
+    loading,
     isRefetching,
-    isLoading,
   }
 }
 

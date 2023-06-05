@@ -55,7 +55,7 @@ const useNftImage = ({
 
   const {
     data,
-    isLoading,
+    status,
     refetch: fetchNftImageRefetch,
     remove: fetchNftImageRemove,
     isRefetching: fetchNftImageFetching,
@@ -74,7 +74,7 @@ const useNftImage = ({
   }
 
   return {
-    loading: isLoading,
+    loading: status === 'loading',
     uri: data?.image,
     metadata: data?.metadata,
     refetch,

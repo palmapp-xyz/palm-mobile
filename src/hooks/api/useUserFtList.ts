@@ -14,7 +14,7 @@ export type UseUserFtListReturn = {
   refetch: () => void
   remove: () => void
   isRefetching: boolean
-  isLoading: boolean
+  status: 'idle' | 'error' | 'loading' | 'success'
 }
 
 const useUserFtList = ({
@@ -33,7 +33,7 @@ const useUserFtList = ({
     refetch,
     remove,
     isRefetching,
-    isLoading,
+    status,
   } = useReactQuery(
     [ApiEnum.TOKENS, userAddress, connectedNetworkId],
     async () => {
@@ -87,7 +87,7 @@ const useUserFtList = ({
     refetch,
     remove,
     isRefetching,
-    isLoading,
+    status,
   }
 }
 

@@ -3,7 +3,7 @@ import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
 import NftAttributes from 'components/molecules/NftAttributes'
-import { COLOR } from 'consts'
+import { COLOR, UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import useNftImage from 'hooks/independent/useNftImage'
@@ -89,7 +89,9 @@ const NftDetails = ({
               style={{ alignSelf: 'flex-end' }}
               fontType="R.12"
               color={COLOR.black._400}
-            >{`Listed by ...${tokenOwner?.slice(-5)}`}</FormText>
+            >{`Owned by ${
+              tokenOwner ? UTIL.truncate(tokenOwner) : 'unknown'
+            }`}</FormText>
           </View>
           <VerifiedWrapper style={{ left: 32 }}>
             <View style={styles.imageBox}>

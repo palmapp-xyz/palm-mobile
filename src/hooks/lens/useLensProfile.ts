@@ -59,7 +59,9 @@ const useLensProfile = ({
     refetch,
     useProfilesReturn,
     useDefaultProfileReturn,
-    isLoading: useProfilesReturn.isLoading && useDefaultProfileReturn.isLoading,
+    isLoading:
+      useProfilesReturn.status === 'loading' &&
+      useDefaultProfileReturn.status === 'loading',
   }
 }
 
