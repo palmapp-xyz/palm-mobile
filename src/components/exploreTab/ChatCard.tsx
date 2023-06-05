@@ -19,7 +19,10 @@ const ChatCard = ({
   }
 
   return (
-    <Card borderRound={true}>
+    <Card
+      borderRound={true}
+      style={{ backgroundColor: `${COLOR.black._200}${COLOR.opacity._10}` }}
+    >
       <Pressable onPress={(): void => onClick(chat)}>
         <ChannelMembersPreview channelUrl={chat.url} size={56} />
         <View style={styles.section}>

@@ -3,7 +3,6 @@ import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import ProfileFooter from 'components/ProfileFooter'
 import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
 import UserTokensSheet from 'components/UserTokensSheet'
-import { COLOR } from 'consts'
 import useProfile from 'hooks/auth/useProfile'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import { recordError } from 'libs/logger'
@@ -88,10 +87,7 @@ const MyPageScreen = (): ReactElement => {
   )
 
   return (
-    <Container
-      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}
-      style={{ marginBottom: Platform.select({ ios: -30 }) }}
-    >
+    <Container style={{ marginBottom: Platform.select({ ios: -30 }) }}>
       <FlatList
         refreshControl={
           <RefreshControl

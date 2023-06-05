@@ -2,7 +2,6 @@ import { Container } from 'components'
 import CollectionNftItemsCollapsible from 'components/molecules/CollectionNftItemsCollapsible'
 import ProfileFooter from 'components/ProfileFooter'
 import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
-import { COLOR } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -52,10 +51,7 @@ const UserProfileScreen = (): ReactElement => {
   )
 
   return (
-    <Container
-      safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}
-      style={{ marginBottom: Platform.select({ ios: -30 }) }}
-    >
+    <Container style={{ marginBottom: Platform.select({ ios: -30 }) }}>
       <FlatList
         refreshControl={
           <RefreshControl
