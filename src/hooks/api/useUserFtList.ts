@@ -1,6 +1,9 @@
+import { UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
 import { recordError } from 'libs/logger'
+import _ from 'lodash'
+import { useMemo } from 'react'
 import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
 import useApi from '../complex/useApi'
@@ -56,8 +59,31 @@ const useUserFtList = ({
     }
   )
 
+  const items = useMemo(
+    () =>
+      _.flatten(
+        data.result.sort((a, b) => {
+          if (!a.price && !b.price) {
+            return a.balance >= b.balance ? -1 : 1
+          } else if (!a.price) {
+            return 1
+          } else if (!b.price) {
+            return -1
+          } else {
+            return (
+              -1 *
+              UTIL.toBn(a.balance)
+                .multipliedBy(a.price.usdPrice)
+                .comparedTo(UTIL.toBn(b.balance).multipliedBy(b.price.usdPrice))
+            )
+          }
+        })
+      ),
+    [data]
+  )
+
   return {
-    items: data.result,
+    items,
     refetch,
     remove,
     isRefetching,

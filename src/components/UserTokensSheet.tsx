@@ -32,22 +32,24 @@ const UserTokensSheet = ({
     selectedNetwork,
   })
 
-  const listEmptyComponent = (
-    <View style={{ paddingTop: 16 }}>
-      {isLoading ? (
-        <ActivityIndicator color={COLOR.primary._400} />
-      ) : (
-        <Text style={styles.text}>{'End of List'}</Text>
-      )}
-    </View>
-  )
-
   const listHeaderComponent = (
     <SupportedNetworkRow
       selectedNetwork={selectedNetwork}
       onNetworkSelected={setSelectedNetwork}
       style={{ marginBottom: 10 }}
     />
+  )
+
+  const listFooterComponent = (
+    <View style={{ paddingTop: 16 }}>
+      {isLoading ? (
+        <ActivityIndicator color={COLOR.primary._400} />
+      ) : items.length === 0 ? (
+        <Text style={styles.text}>{'No tokens to show'}</Text>
+      ) : (
+        <Text style={styles.text}>{'End of List'}</Text>
+      )}
+    </View>
   )
 
   return (
@@ -63,8 +65,8 @@ const UserTokensSheet = ({
         <View style={styles.body}>
           <FlatList
             data={items}
-            ListEmptyComponent={listEmptyComponent}
             ListHeaderComponent={listHeaderComponent}
+            ListFooterComponent={listFooterComponent}
             keyExtractor={(_, index): string => `user-ft-list-${index}`}
             initialNumToRender={10}
             contentContainerStyle={{ rowGap: 0 }}

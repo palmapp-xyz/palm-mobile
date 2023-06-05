@@ -30,6 +30,7 @@ export namespace Moralis {
     balance: string
     possible_spam?: boolean
     chainId?: number
+    price?: TokenPrice | null
   }
 
   export type NftItem = {
@@ -91,16 +92,8 @@ export namespace Moralis {
     contract_type: NftType
     name: string
     symbol: string | null
-  }
-
-  export type ERC20 = {
-    token_address: ContractAddr
-    name: string
-    symbol: string
-    logo: string | null
-    thumbnail: string | null
-    decimals: 18
-    balance: string
-    possible_spam?: boolean
+    chainId?: number
+    possible_spam?: boolean | null
+    item?: NftItem | null
   }
 }

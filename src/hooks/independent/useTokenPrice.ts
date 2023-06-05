@@ -1,20 +1,12 @@
-import { UTIL } from 'consts'
 import useApi from 'hooks/complex/useApi'
 import useNetwork from 'hooks/complex/useNetwork'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
 import { recordError } from 'libs/logger'
-import {
-  ApiEnum,
-  ContractAddr,
-  Moralis,
-  pToken,
-  SupportedNetworkEnum,
-} from 'types'
+import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
 export type UseTokenPriceReturn = {
   price: Moralis.TokenPrice | undefined
-  getTokenPrice: (amount: pToken) => pToken | undefined
 }
 
 const useTokenPrice = ({
@@ -59,14 +51,7 @@ const useTokenPrice = ({
     }
   )
 
-  const getTokenPrice = (amount: pToken): pToken | undefined => {
-    if (!price) {
-      return undefined
-    }
-    return UTIL.toBn(amount).multipliedBy(price.usdPrice).toString(10) as pToken
-  }
-
-  return { price, getTokenPrice }
+  return { price }
 }
 
 export default useTokenPrice

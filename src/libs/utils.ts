@@ -7,8 +7,10 @@ import {
   ChainNetworkEnum,
   ContractAddr,
   JwtToken,
+  Moralis,
   NetworkTypeEnum,
   SupportedNetworkEnum,
+  pToken,
 } from 'types'
 
 export const getContrastColor = (
@@ -164,4 +166,17 @@ export const filterUndefined = <T>(object: T): T => {
       return _.isUndefined(object[key])
     })
   ) as T
+}
+
+export const getTokenBalanceInUSD = (
+  amount: string,
+  price: Moralis.TokenPrice | null | undefined
+): pToken | undefined => {
+  if (!price) {
+    return undefined
+  }
+
+  return UTIL.toBn(amount as pToken)
+    .multipliedBy(price.usdPrice)
+    .toString(10) as pToken
 }
