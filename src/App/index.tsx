@@ -1,6 +1,6 @@
 import Loading from 'components/atoms/Loading'
 import React, { ReactElement } from 'react'
-import { LogBox } from 'react-native'
+import { Keyboard, LogBox, TouchableWithoutFeedback } from 'react-native'
 
 import useCodePush from 'hooks/useCodePush'
 import Navigation from '../Navigation'
@@ -14,16 +14,18 @@ const App = (): ReactElement => {
 
   return (
     <AppProviderWrapper>
-      {codepush.updateAvailable === undefined ? (
-        <></>
-      ) : codepush.updateAvailable === true ? (
-        <UpdateScreen {...codepush} />
-      ) : (
-        <>
-          <Loading />
-          <Navigation />
-        </>
-      )}
+      <TouchableWithoutFeedback onPress={(): void => Keyboard.dismiss()}>
+        {codepush.updateAvailable === undefined ? (
+          <></>
+        ) : codepush.updateAvailable === true ? (
+          <UpdateScreen {...codepush} />
+        ) : (
+          <>
+            <Loading />
+            <Navigation />
+          </>
+        )}
+      </TouchableWithoutFeedback>
     </AppProviderWrapper>
   )
 }
