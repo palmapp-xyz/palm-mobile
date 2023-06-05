@@ -1,6 +1,7 @@
 import { Container } from 'components'
-import CollectionNftItemsCollapsible from 'components/molecules/CollectionNftItemsCollapsible'
+import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import ProfileFooter from 'components/ProfileFooter'
+import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
 import UserTokensSheet from 'components/UserTokensSheet'
 import { COLOR } from 'consts'
 import useProfile from 'hooks/auth/useProfile'
@@ -24,34 +25,15 @@ const MyPageScreen = (): ReactElement => {
     SupportedNetworkEnum.ETHEREUM
   )
 
-  const { alert } = useAlert()
-
   const { user, useMyNftCollectionReturn, useMyBalanceReturn } = useMyPageMain({
     selectedNetwork,
   })
 
-  const [showUserTokensSheet, setShowUserTokensSheet] = useState<boolean>(false)
+  const { alert } = useAlert()
 
   const { profile, updateProfileImage } = useProfile({
     profileId: user?.auth?.profileId,
   })
-
-  const profileHeader = (
-    <ProfileHeader
-      isMyPage
-      userProfileId={user?.auth?.profileId}
-      userAddress={user?.address}
-      selectedNetwork={selectedNetwork}
-      onNetworkSelected={setSelectedNetwork}
-      onToggleShowUserTokensSheet={(): void => {
-        setShowUserTokensSheet(!showUserTokensSheet)
-      }}
-    />
-  )
-
-  const profileFooter = (
-    <ProfileFooter useUserAssetsReturn={useMyNftCollectionReturn} />
-  )
 
   const onNftMenuSelected = async (
     selectedItem: Moralis.NftItem,
@@ -84,6 +66,27 @@ const MyPageScreen = (): ReactElement => {
     }
   }
 
+  const [showUserTokensSheet, setShowUserTokensSheet] = useState<boolean>(false)
+  const [selectedCollectionNft, setSelectedCollectionNft] =
+    useState<Moralis.NftCollection | null>(null)
+
+  const profileHeader = (
+    <ProfileHeader
+      isMyPage
+      userProfileId={user?.auth?.profileId}
+      userAddress={user?.address}
+      selectedNetwork={selectedNetwork}
+      onNetworkSelected={setSelectedNetwork}
+      onToggleShowUserTokensSheet={(): void => {
+        setShowUserTokensSheet(!showUserTokensSheet)
+      }}
+    />
+  )
+
+  const profileFooter = (
+    <ProfileFooter useUserAssetsReturn={useMyNftCollectionReturn} />
+  )
+
   return (
     <Container
       safeAreaBackgroundColor={`${COLOR.black._900}${COLOR.opacity._05}`}
@@ -112,7 +115,6 @@ const MyPageScreen = (): ReactElement => {
         keyExtractor={(item: Moralis.NftCollection): string =>
           `${user?.address}:${item.token_address}`
         }
-        contentContainerStyle={{ paddingHorizontal: 4 }}
         onEndReached={(): void => {
           if (useMyNftCollectionReturn.hasNextPage) {
             useMyNftCollectionReturn.fetchNextPage()
@@ -120,22 +122,31 @@ const MyPageScreen = (): ReactElement => {
         }}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
+        numColumns={2}
+        contentContainerStyle={{ paddingHorizontal: 8, gap: 4 }}
+        columnWrapperStyle={{ gap: 8 }}
         renderItem={({
           item,
-        }: ListRenderItemInfo<Moralis.NftCollection>): ReactElement => (
-          <CollectionNftItemsCollapsible
-            userAddress={user?.address}
-            contractAddress={item.token_address}
-            selectedNetwork={selectedNetwork}
-            headerText={`${item.name}${item.symbol ? ` (${item.symbol})` : ''}`}
-            onNftMenuSelected={onNftMenuSelected}
-          />
-        )}
+        }: ListRenderItemInfo<Moralis.NftCollection>): ReactElement => {
+          return (
+            <ProfileCollectionNft
+              collection={item}
+              onSelect={(): void => setSelectedCollectionNft(item)}
+            />
+          )
+        }}
       />
 
-      {showUserTokensSheet && (
+      {showUserTokensSheet ? (
         <UserTokensSheet onClose={(): void => setShowUserTokensSheet(false)} />
-      )}
+      ) : selectedCollectionNft ? (
+        <SelectedCollectionNftsSheet
+          userAddress={user?.address!}
+          selectedCollectionNft={selectedCollectionNft}
+          onNftMenuSelected={onNftMenuSelected}
+          onClose={(): void => setSelectedCollectionNft(null)}
+        />
+      ) : null}
     </Container>
   )
 }

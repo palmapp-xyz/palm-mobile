@@ -123,7 +123,13 @@ const ProfileHeader = React.memo(
             />
           )}
 
-          <View style={{ rowGap: 12, marginBottom: 12 }}>
+          <View
+            style={{
+              rowGap: 12,
+              marginBottom: 12,
+              marginTop: !isMyPage ? 12 : 0,
+            }}
+          >
             <FormText fontType="B.14">NFT List</FormText>
             <SupportedNetworkRow
               selectedNetwork={selectedNetwork}

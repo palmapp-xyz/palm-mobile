@@ -10,7 +10,7 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  useWindowDimensions,
+  TouchableOpacity,
   View,
 } from 'react-native'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
@@ -23,6 +23,7 @@ const CollectionNftItems = ({
   contractAddress,
   selectedNetwork,
   onNftMenuSelected,
+  itemSize,
 }: {
   userAddress?: ContractAddr
   contractAddress: ContractAddr
@@ -31,9 +32,9 @@ const CollectionNftItems = ({
     selectedItem: Moralis.NftItem,
     selectedOption: string
   ) => Promise<void>
+  itemSize: number
 }): ReactElement => {
   const { navigation } = useAppNavigation()
-  const size = useWindowDimensions()
 
   const { items, fetchNextPage, hasNextPage, loading } = useCollectionNfts({
     selectedNetwork,
@@ -41,7 +42,6 @@ const CollectionNftItems = ({
     contractAddress,
   })
 
-  const dim = size.width / 2.0 - 32
   if (!userAddress || loading) {
     return <ActivityIndicator size="small" color={COLOR.primary._400} />
   }
@@ -59,9 +59,8 @@ const CollectionNftItems = ({
       onEndReachedThreshold={0.5}
       initialNumToRender={10}
       renderItem={({ item }): ReactElement => (
-        <View
-          style={{ flex: 1, alignItems: 'center' }}
-          onTouchEnd={(): void => {
+        <TouchableOpacity
+          onPress={(): void => {
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
@@ -73,29 +72,31 @@ const CollectionNftItems = ({
             })
           }}
         >
-          <ChainLogoWrapper
-            chain={selectedNetwork}
-            containerStyle={[
-              { width: dim, height: dim },
-              styles.item,
-              { maxWidth: dim },
-            ]}
-          >
-            <MoralisNftRenderer item={item} />
-            {onNftMenuSelected && (
-              <NftItemMenu
-                chainId={selectedNetwork}
-                item={item}
-                triggerComponent={
-                  <View style={styles.nftTitle}>
-                    <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
-                  </View>
-                }
-                onSelect={onNftMenuSelected}
-              />
-            )}
-          </ChainLogoWrapper>
-        </View>
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <ChainLogoWrapper
+              chain={selectedNetwork}
+              containerStyle={[
+                { width: itemSize, height: itemSize },
+                styles.item,
+                { maxWidth: itemSize },
+              ]}
+            >
+              <MoralisNftRenderer item={item} />
+              {onNftMenuSelected && (
+                <NftItemMenu
+                  chainId={selectedNetwork}
+                  item={item}
+                  triggerComponent={
+                    <View style={styles.nftTitle}>
+                      <Text numberOfLines={1}>{`#${item.token_id}`}</Text>
+                    </View>
+                  }
+                  onSelect={onNftMenuSelected}
+                />
+              )}
+            </ChainLogoWrapper>
+          </View>
+        </TouchableOpacity>
       )}
     />
   )

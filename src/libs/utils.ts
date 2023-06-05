@@ -118,7 +118,7 @@ export const isMainnet = (): boolean => {
 }
 
 export const chainIdToSupportedNetworkEnum = (
-  chain: string
+  chain: string | number
 ): SupportedNetworkEnum | undefined => {
   return Number(chain) === NETWORK.chainId[ChainNetworkEnum.ETHEREUM] ||
     Number(chain) === NETWORK.chainId[ChainNetworkEnum.GOERLI]

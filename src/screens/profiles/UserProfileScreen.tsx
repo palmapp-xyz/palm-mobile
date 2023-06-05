@@ -1,6 +1,7 @@
 import { Container } from 'components'
 import CollectionNftItemsCollapsible from 'components/molecules/CollectionNftItemsCollapsible'
 import ProfileFooter from 'components/ProfileFooter'
+import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
 import { COLOR } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useUserBalance from 'hooks/independent/useUserBalance'
@@ -24,6 +25,8 @@ const UserProfileScreen = (): ReactElement => {
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
   )
+  const [selectedCollectionNft, setSelectedCollectionNft] =
+    useState<Moralis.NftCollection | null>(null)
 
   const useUserNftCollectionReturn = useUserNftCollectionList({
     userAddress,
@@ -76,7 +79,9 @@ const UserProfileScreen = (): ReactElement => {
         keyExtractor={(item: Moralis.NftCollection): string =>
           `${userAddress}:${item.token_address}`
         }
-        contentContainerStyle={{ rowGap: 8, paddingHorizontal: 4 }}
+        numColumns={2}
+        contentContainerStyle={{ paddingHorizontal: 8, gap: 4 }}
+        columnWrapperStyle={{ gap: 8 }}
         onEndReached={(): void => {
           if (useUserNftCollectionReturn.hasNextPage) {
             useUserNftCollectionReturn.fetchNextPage()
@@ -92,9 +97,18 @@ const UserProfileScreen = (): ReactElement => {
             contractAddress={item.token_address}
             selectedNetwork={selectedNetwork}
             headerText={`${item.name}${item.symbol ? ` (${item.symbol})` : ''}`}
+            headerItem={null}
           />
         )}
       />
+
+      {selectedCollectionNft && (
+        <SelectedCollectionNftsSheet
+          userAddress={userAddress}
+          selectedCollectionNft={selectedCollectionNft}
+          onClose={(): void => setSelectedCollectionNft(null)}
+        />
+      )}
     </Container>
   )
 }
