@@ -8,6 +8,8 @@ export enum KeyChainEnum {
   MNEMONIC = 'MNEMONIC',
   PK = 'PK',
   PK_PWD = 'PK_PWD',
+
+  PIN = 'PIN',
 }
 
 export enum LocalStorageKey {
@@ -31,4 +33,8 @@ export type RecentlySearchItemStorageType = {
   id: string
   search: string
   date: string
+}
+
+export type PinStorageType = {
+  pin: string
 }
