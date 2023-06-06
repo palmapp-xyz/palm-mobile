@@ -1,4 +1,5 @@
 import { ContractAddr, NftType } from '../contracts'
+import { ItemsFetchResult } from './'
 
 export namespace Moralis {
   export type TokenPrice = {
@@ -49,7 +50,7 @@ export namespace Moralis {
     last_token_uri_sync: string
     last_metadata_sync: string
     minter_address: ContractAddr
-    chainId?: string
+    chainId?: number
     media?: {
       mimetype: string
       parent_hash: string
@@ -94,6 +95,25 @@ export namespace Moralis {
     symbol: string | null
     chainId?: number
     possible_spam?: boolean | null
-    item?: NftItem | null
+    preload?: NftItemsFetchResult | null
   }
+
+  export type NftItemsFetchResult = ItemsFetchResult<Moralis.NftItem> & {
+    total: number | null
+    page: number
+    page_size: number
+    cursor: string | null
+    status: 'SYNCED'
+  }
+
+  export type NftCollectionItemsFetchResult =
+    ItemsFetchResult<NftCollection> & {
+      total: number | null
+      page: number
+      page_size: number
+      cursor: string | null
+      status: 'SYNCED'
+    }
+
+  export type FtItemsFetchResult = ItemsFetchResult<FtItem>
 }

@@ -46,10 +46,11 @@ const SelectedCollectionNftsSheet = ({
     chainIdToSupportedNetworkEnum(selectedCollectionNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
-  const { items, loading } = useCollectionNfts({
+  const { items, loading, fetchNextPage, hasNextPage } = useCollectionNfts({
     selectedNetwork,
     userAddress,
     contractAddress: selectedCollectionNft.token_address,
+    preload: selectedCollectionNft.preload,
   })
 
   if (loading) {
@@ -93,6 +94,11 @@ const SelectedCollectionNftsSheet = ({
             initialNumToRender={10}
             contentContainerStyle={{ rowGap: 0 }}
             numColumns={3}
+            onEndReached={(): void => {
+              if (hasNextPage) {
+                fetchNextPage()
+              }
+            }}
             renderItem={({ item }): ReactElement => (
               <TouchableOpacity
                 onPress={(): void => {

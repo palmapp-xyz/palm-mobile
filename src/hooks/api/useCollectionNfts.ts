@@ -23,11 +23,13 @@ const useCollectionNfts = ({
   userAddress,
   contractAddress,
   limit,
+  preload,
 }: {
   selectedNetwork: SupportedNetworkEnum
   userAddress?: ContractAddr
   contractAddress: ContractAddr
   limit?: number
+  preload?: Moralis.NftItemsFetchResult | null | undefined
 }): UseCollectionNftsReturn => {
   const { connectedNetworkIds } = useNetwork()
   const connectedNetworkId = connectedNetworkIds[selectedNetwork]
@@ -51,6 +53,10 @@ const useCollectionNfts = ({
     ],
     async ({ pageParam = '' }) => {
       if (userAddress) {
+        if (preload && pageParam == '') {
+          return preload
+        }
+
         const path = apiV1Fabricator[ApiEnum.COLLECTION_ASSETS].get({
           userAddress,
           contractAddress,
@@ -71,7 +77,7 @@ const useCollectionNfts = ({
         page_size: 0,
         cursor: null,
         result: [] as Moralis.NftItem[],
-      }
+      } as Moralis.NftItemsFetchResult
     },
     {
       getNextPageParam: lastPage => lastPage.cursor,

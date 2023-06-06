@@ -2,6 +2,7 @@ import Card from 'components/atoms/Card'
 import FormText from 'components/atoms/FormText'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
 import { COLOR, UTIL } from 'consts'
+import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import {
   StyleSheet,
@@ -29,16 +30,17 @@ const ProfileCollectionNft = ({
     UTIL.truncate(collection.token_address)
   }`
 
+  const item: Moralis.NftItem | undefined | null = collection.preload
+    ? _.head(collection.preload.result)
+    : undefined
+
   return (
     <TouchableOpacity onPress={onSelect}>
       <View
         style={[styles.container, { width: dim, height: dim, maxWidth: dim }]}
       >
-        {collection.item ? (
-          <MoralisNftRenderer
-            item={collection.item}
-            style={{ borderRadius: 12 }}
-          />
+        {item ? (
+          <MoralisNftRenderer item={item} style={{ borderRadius: 12 }} />
         ) : (
           <Card
             borderRound={true}
