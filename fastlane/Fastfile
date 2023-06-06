@@ -85,6 +85,7 @@ platform :ios do
       mandatory: true,
       development: false,
       deployment_name: "Production",
+      target_binary_version: "#{version}"
     )
     # codepush_logout
   end
