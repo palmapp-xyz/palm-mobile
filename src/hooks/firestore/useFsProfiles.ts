@@ -30,7 +30,8 @@ const useFsProfiles = (): UseFsProfilesReturn => {
             const profile: FbProfile = documentSnapshot.data() as FbProfile
             if (
               profile.verified &&
-              profile.profileId !== user.auth?.profileId
+              profile.profileId !== user.auth?.profileId &&
+              !!profile.handle
             ) {
               list.push(profile)
             }

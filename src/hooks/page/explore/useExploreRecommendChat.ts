@@ -9,7 +9,9 @@ const useExploreRecommendChat = (): UseExploreRecommendChatReturn => {
   const { channels } = useFsChannels()
 
   return {
-    fsChannelList: channels.filter(x => !!x.name),
+    fsChannelList: channels.filter(
+      x => !!x.name && !x.url?.includes('pushtesttool')
+    ),
   }
 }
 
