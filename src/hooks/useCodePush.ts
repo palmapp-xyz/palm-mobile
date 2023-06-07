@@ -6,9 +6,12 @@ const useCodePush = (): {
   syncUpdate: () => Promise<void>
   upToDate: boolean | undefined
   updateComplete: boolean | undefined
+  progress: number
 } => {
   const [upToDate, setUpToDate] = useState<boolean>()
   const [updateComplete, setUpdateComplete] = useState<boolean>()
+
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     const check = async (): Promise<void> => {
@@ -49,6 +52,9 @@ const useCodePush = (): {
             setUpToDate(true)
             break
         }
+      },
+      ({ receivedBytes, totalBytes }) => {
+        setProgress(receivedBytes / totalBytes)
       }
     )
   }
@@ -64,6 +70,7 @@ const useCodePush = (): {
     syncUpdate,
     upToDate,
     updateComplete,
+    progress,
   }
 }
 

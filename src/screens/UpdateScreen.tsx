@@ -1,30 +1,22 @@
 import { FormImage, FormText } from 'components'
 import { COLOR } from 'consts'
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 
 import images from 'assets/images'
-import useInterval from 'hooks/useInterval'
 import RNBootSplash from 'react-native-bootsplash'
 
 const updateMessage =
-  'There are app updates.\nPlease wait until the update is complete.'
-const completeMessage = 'Update completed.\nPalm app will be restarted.'
-const dots = ['', '.', '..']
+  'There are app updates.\nPlease wait until the update is complete.\n\nUpdate completed.\nPalm app will be restarted.'
 
 const UpdateScreen = (props: {
   restartApp: (onlyIfUpdateIsPending?: boolean) => void
   syncUpdate: () => Promise<void>
   upToDate: boolean | undefined
   updateComplete: boolean | undefined
+  progress: number
 }): ReactElement => {
-  const { restartApp, upToDate, updateComplete } = props
-
-  const [dotsIndex, setDotsIndex] = useState(0)
-
-  useInterval(() => {
-    setDotsIndex((dotsIndex + 1) % dots.length)
-  }, 500)
+  const { restartApp, upToDate, updateComplete, progress } = props
 
   useEffect(() => {
     if (upToDate === false) {
@@ -63,10 +55,29 @@ const UpdateScreen = (props: {
             color={COLOR.black._400}
             style={{ textAlign: 'center' }}
           >
-            {updateComplete
-              ? completeMessage
-              : `${updateMessage}${dots[dotsIndex]}`}
+            {`${updateMessage}`}
           </FormText>
+          <View
+            style={{
+              flexDirection: 'column',
+              marginVertical: 32,
+              marginHorizontal: 64,
+              backgroundColor: COLOR.black._50,
+              height: 8,
+              borderRadius: 4,
+              overflow: 'hidden',
+            }}
+          >
+            <View
+              style={{
+                alignSelf: 'stretch',
+                width: `${progress * 100}%`,
+                height: '100%',
+                borderRadius: 4,
+                backgroundColor: COLOR.primary._400,
+              }}
+            />
+          </View>
         </>
       )}
     </View>
