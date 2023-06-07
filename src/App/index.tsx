@@ -15,9 +15,7 @@ const App = (): ReactElement => {
   return (
     <AppProviderWrapper>
       <TouchableWithoutFeedback onPress={(): void => Keyboard.dismiss()}>
-        {codepush.updateAvailable === undefined ? (
-          <></>
-        ) : codepush.updateAvailable === true ? (
+        {!codepush.upToDate ? (
           <UpdateScreen {...codepush} />
         ) : (
           <>

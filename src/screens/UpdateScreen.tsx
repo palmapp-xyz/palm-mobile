@@ -1,7 +1,7 @@
 import { FormImage, FormText } from 'components'
 import { COLOR } from 'consts'
 import React, { ReactElement, useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 
 import images from 'assets/images'
 import useInterval from 'hooks/useInterval'
@@ -15,10 +15,10 @@ const dots = ['', '.', '..']
 const UpdateScreen = (props: {
   restartApp: (onlyIfUpdateIsPending?: boolean) => void
   syncUpdate: () => Promise<void>
-  updateAvailable: boolean | undefined
+  upToDate: boolean | undefined
   updateComplete: boolean | undefined
 }): ReactElement => {
-  const { syncUpdate, restartApp, updateAvailable, updateComplete } = props
+  const { restartApp, upToDate, updateComplete } = props
 
   const [dotsIndex, setDotsIndex] = useState(0)
 
@@ -27,11 +27,13 @@ const UpdateScreen = (props: {
   }, 500)
 
   useEffect(() => {
-    if (updateAvailable) {
-      RNBootSplash.hide({ fade: true, duration: 500 })
-      syncUpdate()
+    if (upToDate === false) {
+      RNBootSplash.getVisibilityStatus().then(visibility => {
+        visibility === 'visible' &&
+          RNBootSplash.hide({ fade: true, duration: 500 })
+      })
     }
-  }, [updateAvailable])
+  }, [upToDate])
 
   useEffect(() => {
     if (updateComplete) {
@@ -47,20 +49,26 @@ const UpdateScreen = (props: {
         justifyContent: 'center',
       }}
     >
-      <FormImage
-        source={images.palm_logo}
-        size={74}
-        style={{ alignSelf: 'center', margin: 22 }}
-      />
-      <FormText
-        fontType="R.14"
-        color={COLOR.black._400}
-        style={{ textAlign: 'center' }}
-      >
-        {updateComplete
-          ? completeMessage
-          : `${updateMessage}${dots[dotsIndex]}`}
-      </FormText>
+      {upToDate === undefined ? (
+        <ActivityIndicator size="small" color={COLOR.primary._400} />
+      ) : (
+        <>
+          <FormImage
+            source={images.palm_logo}
+            size={74}
+            style={{ alignSelf: 'center', margin: 22 }}
+          />
+          <FormText
+            fontType="R.14"
+            color={COLOR.black._400}
+            style={{ textAlign: 'center' }}
+          >
+            {updateComplete
+              ? completeMessage
+              : `${updateMessage}${dots[dotsIndex]}`}
+          </FormText>
+        </>
+      )}
     </View>
   )
 }
