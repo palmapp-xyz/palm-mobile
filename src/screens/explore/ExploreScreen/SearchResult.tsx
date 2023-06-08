@@ -1,17 +1,12 @@
 import { FormText, Row } from 'components'
+import Indicator from 'components/atoms/Indicator'
 import ChatCard from 'components/exploreTab/ChatCard'
 import UserCard from 'components/exploreTab/UserCard'
 import { COLOR } from 'consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ChannelType } from 'types'
 
 type TabType = 'chat' | 'user'
@@ -54,7 +49,7 @@ const SearchResult = ({
   )
 
   if (isSearching) {
-    return <ActivityIndicator />
+    return <Indicator />
   }
 
   return (

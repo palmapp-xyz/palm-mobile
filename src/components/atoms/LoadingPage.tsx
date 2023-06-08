@@ -1,14 +1,14 @@
-import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import Container from './Container'
+import Indicator from './Indicator'
 
 const LoadingPage = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <View style={styles.body}>
-        <ActivityIndicator size="large" color={COLOR.primary._300} />
+        <Indicator />
       </View>
     </Container>
   )

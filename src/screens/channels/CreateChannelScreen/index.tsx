@@ -13,15 +13,10 @@ import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
+import Indicator from 'components/atoms/Indicator'
 import TokenGating from './TokenGating'
 
 const CreateChannelScreen = (): ReactElement => {
@@ -56,7 +51,7 @@ const CreateChannelScreen = (): ReactElement => {
             onPressLeft={isLoading ? undefined : navigation.goBack}
             right={
               isLoading ? (
-                <ActivityIndicator color={COLOR.primary._400} size={36} />
+                <Indicator size={36} />
               ) : (
                 <Icon
                   name="ios-checkmark-circle"

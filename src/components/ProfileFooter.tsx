@@ -1,8 +1,8 @@
-import { COLOR } from 'consts'
 import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
 import React, { ReactElement } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Moralis } from 'types'
+import Indicator from './atoms/Indicator'
 
 const ProfileFooter = ({
   useUserAssetsReturn,
@@ -14,7 +14,7 @@ const ProfileFooter = ({
   return (
     <View style={[styles.footer]}>
       {useUserAssetsReturn.loading ? (
-        <ActivityIndicator size="small" color={COLOR.primary._400} />
+        <Indicator />
       ) : useUserAssetsReturn.items.length === 0 ? (
         <Text style={styles.text}>{'The user has no NFTs yet.'}</Text>
       ) : !useUserAssetsReturn.hasNextPage ? (

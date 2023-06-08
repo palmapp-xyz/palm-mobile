@@ -12,7 +12,6 @@ import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
 import {
-  ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
@@ -21,6 +20,7 @@ import {
   useWindowDimensions,
 } from 'react-native'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
+import Indicator from './atoms/Indicator'
 
 const SelectedCollectionNftsSheet = ({
   userAddress,
@@ -54,7 +54,7 @@ const SelectedCollectionNftsSheet = ({
   })
 
   if (loading) {
-    return <ActivityIndicator size="small" color={COLOR.primary._400} />
+    return <Indicator />
   }
 
   const listHeaderComponent = (
@@ -66,7 +66,7 @@ const SelectedCollectionNftsSheet = ({
   const listFooterComponent = (
     <View style={{ paddingTop: 16 }}>
       {loading ? (
-        <ActivityIndicator color={COLOR.primary._400} />
+        <Indicator />
       ) : items.length === 0 ? (
         <Text style={styles.text}>{'No tokens to show'}</Text>
       ) : (
