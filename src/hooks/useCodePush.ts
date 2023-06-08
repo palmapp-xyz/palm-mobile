@@ -60,9 +60,7 @@ const useCodePush = (): {
   }
 
   const restartApp = (onlyIfUpdateIsPending?: boolean): void => {
-    setTimeout(() => {
-      CodePush.restartApp(onlyIfUpdateIsPending)
-    }, 1000)
+    CodePush.restartApp(onlyIfUpdateIsPending)
   }
 
   return {

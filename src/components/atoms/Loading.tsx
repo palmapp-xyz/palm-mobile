@@ -21,7 +21,6 @@ const Loading = (props: SpinnerPropTypes): ReactElement => {
     <Spinner
       {...props}
       visible={loading}
-      textContent={'Loading...'}
       textStyle={{ color: COLOR.black._300, fontSize: 16 }}
     />
   )
