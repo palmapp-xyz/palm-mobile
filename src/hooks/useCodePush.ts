@@ -4,17 +4,24 @@ import CodePush from 'react-native-code-push'
 const useCodePush = (): {
   restartApp: (onlyIfUpdateIsPending?: boolean) => void
   syncUpdate: () => Promise<void>
-  updateAvailable: boolean | undefined
+  upToDate: boolean | undefined
   updateComplete: boolean | undefined
+  progress: number
 } => {
-  const [updateAvailable, setUpdateAvailable] = useState<boolean>()
+  const [upToDate, setUpToDate] = useState<boolean>()
   const [updateComplete, setUpdateComplete] = useState<boolean>()
+
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     const check = async (): Promise<void> => {
       const available = await CodePush.checkForUpdate()
       console.log('updateAvailable', available)
-      setUpdateAvailable(available ? true : false)
+      if (available) {
+        syncUpdate()
+      } else {
+        setUpToDate(true)
+      }
     }
 
     check()
@@ -27,17 +34,27 @@ const useCodePush = (): {
         installMode: CodePush.InstallMode.IMMEDIATE,
       },
       status => {
+        console.log('update status', status)
         switch (status) {
+          case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
+          case CodePush.SyncStatus.SYNC_IN_PROGRESS:
+          case CodePush.SyncStatus.INSTALLING_UPDATE:
+            setUpToDate(false)
+            break
+          case CodePush.SyncStatus.UPDATE_IGNORED:
           case CodePush.SyncStatus.UP_TO_DATE:
-            console.log('UP_TO_DATE')
-            setUpdateAvailable(false)
+            setUpToDate(true)
             break
           case CodePush.SyncStatus.UPDATE_INSTALLED:
-            console.log('UPDATE_INSTALLED')
             setUpdateComplete(true)
-            // CodePush.allowRestart()
+            break
+          case CodePush.SyncStatus.UNKNOWN_ERROR:
+            setUpToDate(true)
             break
         }
+      },
+      ({ receivedBytes, totalBytes }) => {
+        setProgress(receivedBytes / totalBytes)
       }
     )
   }
@@ -51,8 +68,9 @@ const useCodePush = (): {
   return {
     restartApp,
     syncUpdate,
-    updateAvailable,
+    upToDate,
     updateComplete,
+    progress,
   }
 }
 

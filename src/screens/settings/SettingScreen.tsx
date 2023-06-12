@@ -2,15 +2,16 @@ import { Container, Header } from 'components'
 import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useVersions from 'hooks/useVersions'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import DeviceInfo from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()
   const { navigation } = useAppNavigation()
+  const version = useVersions()
 
   return (
     <Container style={styles.container}>
@@ -82,7 +83,9 @@ const SettingScreen = (): ReactElement => {
           <View style={styles.item}>
             <Text>Version</Text>
             <Text style={{ color: COLOR.primary._400 }}>
-              {DeviceInfo.getVersion()}
+              {version.codepush
+                ? `${version.app}-${version.codepush}`
+                : `${version.app}`}
             </Text>
           </View>
           {/* <TouchableOpacity

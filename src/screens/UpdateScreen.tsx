@@ -1,37 +1,31 @@
 import { FormImage, FormText } from 'components'
 import { COLOR } from 'consts'
-import React, { ReactElement, useEffect, useState } from 'react'
-import { View } from 'react-native'
+import React, { ReactElement, useEffect } from 'react'
+import { ActivityIndicator, View } from 'react-native'
 
 import images from 'assets/images'
-import useInterval from 'hooks/useInterval'
 import RNBootSplash from 'react-native-bootsplash'
 
 const updateMessage =
-  'There are app updates.\nPlease wait until the update is complete.'
-const completeMessage = 'Update completed.\nPalm app will be restarted.'
-const dots = ['', '.', '..']
+  'There are app updates.\nPlease wait until the update is complete.\n\nUpdate completed.\nPalm app will be restarted.'
 
 const UpdateScreen = (props: {
   restartApp: (onlyIfUpdateIsPending?: boolean) => void
   syncUpdate: () => Promise<void>
-  updateAvailable: boolean | undefined
+  upToDate: boolean | undefined
   updateComplete: boolean | undefined
+  progress: number
 }): ReactElement => {
-  const { syncUpdate, restartApp, updateAvailable, updateComplete } = props
-
-  const [dotsIndex, setDotsIndex] = useState(0)
-
-  useInterval(() => {
-    setDotsIndex((dotsIndex + 1) % dots.length)
-  }, 500)
+  const { restartApp, upToDate, updateComplete, progress } = props
 
   useEffect(() => {
-    if (updateAvailable) {
-      RNBootSplash.hide({ fade: true, duration: 500 })
-      syncUpdate()
+    if (upToDate === false) {
+      RNBootSplash.getVisibilityStatus().then(visibility => {
+        visibility === 'visible' &&
+          RNBootSplash.hide({ fade: true, duration: 500 })
+      })
     }
-  }, [updateAvailable])
+  }, [upToDate])
 
   useEffect(() => {
     if (updateComplete) {
@@ -47,20 +41,45 @@ const UpdateScreen = (props: {
         justifyContent: 'center',
       }}
     >
-      <FormImage
-        source={images.palm_logo}
-        size={74}
-        style={{ alignSelf: 'center', margin: 22 }}
-      />
-      <FormText
-        fontType="R.14"
-        color={COLOR.black._400}
-        style={{ textAlign: 'center' }}
-      >
-        {updateComplete
-          ? completeMessage
-          : `${updateMessage}${dots[dotsIndex]}`}
-      </FormText>
+      {upToDate === undefined ? (
+        <ActivityIndicator size="small" color={COLOR.primary._400} />
+      ) : (
+        <>
+          <FormImage
+            source={images.palm_logo}
+            size={74}
+            style={{ alignSelf: 'center', margin: 22 }}
+          />
+          <FormText
+            fontType="R.14"
+            color={COLOR.black._400}
+            style={{ textAlign: 'center' }}
+          >
+            {`${updateMessage}`}
+          </FormText>
+          <View
+            style={{
+              flexDirection: 'column',
+              marginVertical: 32,
+              marginHorizontal: 64,
+              backgroundColor: COLOR.black._50,
+              height: 8,
+              borderRadius: 4,
+              overflow: 'hidden',
+            }}
+          >
+            <View
+              style={{
+                alignSelf: 'stretch',
+                width: `${progress * 100}%`,
+                height: '100%',
+                borderRadius: 4,
+                backgroundColor: COLOR.primary._400,
+              }}
+            />
+          </View>
+        </>
+      )}
     </View>
   )
 }
