@@ -10,6 +10,7 @@ export enum KeyChainEnum {
   PK_PWD = 'PK_PWD',
 
   PIN = 'PIN',
+  NEW_PIN = 'NEW_PIN',
 }
 
 export enum LocalStorageKey {

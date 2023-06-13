@@ -8,6 +8,7 @@ import {
   CreateCompleteScreen,
   MainAccountScreen,
   NewAccountScreen,
+  PinScreen,
   RecoverAccountScreen,
   Sign4AuthScreen,
 } from '../screens'
@@ -34,6 +35,7 @@ const AuthNavigator = (): ReactElement => {
         name={Routes.RecoverAccount}
         component={RecoverAccountScreen}
       />
+      <AuthStack.Screen name={Routes.Pin} component={PinScreen} />
       <AuthStack.Screen name={Routes.Sign4Auth} component={Sign4AuthScreen} />
     </AuthStack.Navigator>
   )

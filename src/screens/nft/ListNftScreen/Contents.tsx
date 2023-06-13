@@ -1,7 +1,10 @@
 import { FormButton, FormImage, FormInput, FormText, Row } from 'components'
 import NftCard from 'components/channel/NftCard'
 import { COLOR, NETWORK } from 'consts'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
 import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
+import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import {
   Keyboard,
@@ -25,6 +28,9 @@ const Contents = ({
   useZxListNftReturn: UseZxListNftReturn
 }): ReactElement => {
   const { price, setPrice, isApproved, onClickApprove } = useZxListNftReturn
+
+  const { navigation } = useAppNavigation<Routes.ListNft>()
+  const toast = useToast()
 
   const { bottom } = useSafeAreaInsets()
 
@@ -102,7 +108,25 @@ const Contents = ({
                 <FormButton
                   onPress={(): void => {
                     Keyboard.dismiss()
-                    onClickApprove()
+                    navigation.push(Routes.Pin, {
+                      type: 'auth',
+                      result: async (result: boolean): Promise<void> => {
+                        console.log('result', result)
+                        if (result) {
+                          navigation.pop()
+                          onClickApprove()
+                        } else {
+                          toast.show('PIN mismatch', {
+                            color: 'red',
+                            icon: 'info',
+                          })
+                        }
+                      },
+                      cancel: async (): Promise<void> => {
+                        navigation.pop()
+                        return undefined
+                      },
+                    })
                   }}
                 >
                   Approve

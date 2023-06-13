@@ -39,12 +39,25 @@ const RecoverAccountScreen = (): ReactElement => {
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
   const onPressConfirm = async (): Promise<void> => {
-    setLoading(true)
-    setTimeout(async () => {
-      await onClickConfirm()
-      setLoading(false)
-      navigation.replace(Routes.Sign4Auth)
-    }, 100)
+    navigation.push(Routes.Pin, {
+      type: 'set',
+      result: async (result: boolean): Promise<void> => {
+        if (result === true) {
+          setLoading(true)
+          setTimeout(async () => {
+            await onClickConfirm()
+            setLoading(false)
+            navigation.replace(Routes.Sign4Auth)
+          }, 100)
+        }
+
+        return Promise.resolve()
+      },
+      cancel: async () => {
+        navigation.pop()
+        return Promise.resolve()
+      },
+    })
   }
 
   if (loading) {

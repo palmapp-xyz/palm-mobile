@@ -1,19 +1,23 @@
-import { useToast } from '@sendbird/uikit-react-native-foundation'
 import images from 'assets/images'
 import { FormText } from 'components'
 import { COLOR } from 'consts'
-import { getPin, savePin } from 'libs/pin'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
+import { Routes } from 'libs/navigation'
+import { getNewPin, getPin, resetNewPin, saveNewPin, savePin } from 'libs/pin'
 import React, { ReactElement, useEffect, useState } from 'react'
 import {
   Image,
-  SafeAreaView,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const CloseButton = (): ReactElement => {
+const CloseButton = (props: {
+  onPress?: () => Promise<void>
+}): ReactElement => {
   return (
     <View
       style={{
@@ -29,7 +33,9 @@ const CloseButton = (): ReactElement => {
           height: 38,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#ccc',
+        }}
+        onPress={(): void => {
+          props.onPress && props.onPress()
         }}
       >
         <Ionicons name="close" size={28} color={COLOR.black._900} />
@@ -49,9 +55,13 @@ const PinTitle = (props: { title: string }): ReactElement => {
 const PinSubTitle = (props: {
   icon?: string
   title?: string
+  onPress?: () => Promise<void>
 }): ReactElement => {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <TouchableOpacity
+      style={{ flexDirection: 'row', alignItems: 'center' }}
+      onPress={props.onPress}
+    >
       {props.icon && (
         <Ionicons
           name={props.icon}
@@ -63,7 +73,7 @@ const PinSubTitle = (props: {
       <FormText fontType="R.14" color={COLOR.black._500}>
         {props.title}
       </FormText>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -138,76 +148,156 @@ const PinButton = (
   )
 }
 
-const PinScreen = (props: {
-  type: 'set' | 'auth' | 'reset'
-  callback: (result: boolean) => Promise<void>
-}): ReactElement => {
+const PIN_COUNT = 4
+
+const PinScreen = (): ReactElement => {
+  const { navigation, params } = useAppNavigation<Routes.Pin>()
+  const { type, result: resultCallback, cancel } = params
+
+  const [pinType, setPinType] = useState<'set' | 'auth' | 'reset'>(type)
   const toast = useToast()
 
-  const [pin, setPin] = useState('')
+  const [inputPin, setInputPin] = useState('')
+  const [pinConfigurePhase, setPinConfigurePhase] = useState<
+    'input' | 'confirm' | 'done'
+  >('input')
 
   const handleInput = (value: string): void => {
-    if (pin.length >= 4) {
+    if (inputPin.length >= PIN_COUNT) {
       return
     }
-    const n = pin + value
-    setPin(n)
+    const n = inputPin + value
+    setInputPin(n)
   }
 
   const handleDelete = (): void => {
-    if (pin.length <= 0 && pin.length >= 4) {
+    if (inputPin.length <= 0 && inputPin.length >= PIN_COUNT) {
       return
     }
-    const n = pin.slice(0, -1)
-    setPin(n)
+    const n = inputPin.slice(0, -1)
+    setInputPin(n)
   }
 
-  const clearPin = (): void => {
-    setPin('')
+  const clearInputPin = (): void => {
+    setInputPin('')
   }
 
   useEffect(() => {
-    const handlePin = async (): Promise<void> => {
-      switch (props.type) {
-        case 'auth':
-          if (pin.length === 4) {
-            const v = await getPin()
-            // encrypt?
-            const match = pin === v
+    clearInputPin()
+    resetNewPin()
+  }, [])
 
-            clearPin()
-            props.callback(match)
+  useEffect(() => {
+    setPinType(type)
+  }, [type])
+
+  useEffect(() => {
+    const handlePin = async (): Promise<void> => {
+      switch (pinType) {
+        case 'auth':
+          if (inputPin.length === 4) {
+            const v = await getPin()
+            const match = inputPin === v
+
+            clearInputPin()
+            resultCallback && resultCallback(match)
           }
           break
         case 'reset':
         case 'set':
-          if (pin.length === 4) {
-            await savePin(pin)
-            toast.show('Your PIN code is successfully set up.')
+          if (inputPin.length === 4) {
+            const newPin = await getNewPin()
 
-            clearPin()
-            props.callback(true)
+            if (newPin === '') {
+              await saveNewPin(inputPin)
+              setPinConfigurePhase('confirm')
+            } else {
+              if (newPin === inputPin) {
+                // match
+                await savePin(inputPin)
+
+                toast.show('Your PIN code is successfully set up.', {
+                  color: 'green',
+                  icon: 'check',
+                })
+
+                if (pinType === 'reset') {
+                  setPinType('auth')
+                } else {
+                  setPinConfigurePhase('done')
+                  resultCallback && resultCallback(true)
+                }
+              } else {
+                // mismatch
+
+                toast.show('PIN mismatch', {
+                  color: 'red',
+                  icon: 'info',
+                })
+                setPinConfigurePhase('input')
+                // callback && callback(false)
+              }
+
+              resetNewPin()
+            }
+
+            clearInputPin()
           }
           break
       }
     }
     handlePin()
-  }, [pin])
+  }, [inputPin])
+
+  const onResetPin = (): void => {
+    // push seed or private key -> if pass -> reset phase.
+  }
+
+  const TITLE = {
+    setup: { title: 'Set up your PIN code' },
+    confirm: { title: 'Confirm your PIN code' },
+    enter: { title: 'Enter your PIN code' },
+    none: { title: '' },
+  }
+  const TITLE_SUB = {
+    setup: { title: 'This action requires a PIN code setting.' },
+    confirm: { title: '' },
+    enter: {
+      title: 'Forgot your PIN code?',
+      icon: 'alert-circle-outline',
+      onPress: onResetPin,
+    },
+    none: { title: '' },
+  }
+
+  const title =
+    pinType === 'auth'
+      ? TITLE.enter
+      : pinConfigurePhase === 'input' // set or reset
+      ? TITLE.setup
+      : pinConfigurePhase === 'confirm' // set or reset
+      ? TITLE.confirm
+      : TITLE.confirm
+
+  const subTitle =
+    pinType === 'auth'
+      ? TITLE_SUB.enter
+      : pinConfigurePhase === 'input' // set or reset
+      ? TITLE_SUB.setup
+      : pinConfigurePhase === 'confirm' // set or reset
+      ? TITLE_SUB.confirm
+      : TITLE_SUB.confirm
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.white }}>
-      <CloseButton />
+      <CloseButton onPress={cancel} />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <PinTitle title={'Set up your PIN code'} />
-        <PinSubTitle
-          icon={'alert-circle-outline'}
-          title={'Forgot your PIN code?'}
-        />
+        <PinTitle {...title} />
+        <PinSubTitle {...subTitle} />
         <View style={{ flexDirection: 'row', marginVertical: 40 }}>
-          <PinDot fill={pin.length > 0} />
-          <PinDot fill={pin.length > 1} />
-          <PinDot fill={pin.length > 2} />
-          <PinDot fill={pin.length > 3} />
+          {[...Array(PIN_COUNT).keys()].map((_, i) => (
+            <PinDot fill={inputPin.length > i} key={i} />
+          ))}
         </View>
 
         <View style={{ flexDirection: 'row' }}>

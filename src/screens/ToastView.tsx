@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export const defaultToastProviderOptions: Props = {
   placement: 'top',
-  duration: 5000,
+  duration: 3000,
   animationType: 'slide-in',
   animationDuration: 250,
   offset: 50,
