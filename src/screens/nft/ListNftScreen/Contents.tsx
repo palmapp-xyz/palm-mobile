@@ -111,7 +111,6 @@ const Contents = ({
                     navigation.push(Routes.Pin, {
                       type: 'auth',
                       result: async (result: boolean): Promise<void> => {
-                        console.log('result', result)
                         if (result) {
                           navigation.pop()
                           onClickApprove()

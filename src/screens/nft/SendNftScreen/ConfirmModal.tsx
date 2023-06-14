@@ -227,7 +227,6 @@ const ConfirmModal = ({
             navigation.push(Routes.Pin, {
               type: 'auth',
               result: async (result: boolean): Promise<void> => {
-                console.log('result', result)
                 if (result) {
                   navigation.pop()
                   const res = await onClickConfirm()

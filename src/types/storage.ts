@@ -8,7 +8,6 @@ export enum KeyChainEnum {
   MNEMONIC = 'MNEMONIC',
   PK = 'PK',
   PK_PWD = 'PK_PWD',
-
   PIN = 'PIN',
   NEW_PIN = 'NEW_PIN',
 }

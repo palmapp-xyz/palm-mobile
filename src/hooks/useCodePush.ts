@@ -16,7 +16,6 @@ const useCodePush = (): {
   useEffect(() => {
     const check = async (): Promise<void> => {
       const available = await CodePush.checkForUpdate()
-      console.log('updateAvailable', available)
       if (available) {
         syncUpdate()
       } else {
@@ -34,7 +33,6 @@ const useCodePush = (): {
         installMode: CodePush.InstallMode.IMMEDIATE,
       },
       status => {
-        console.log('update status', status)
         switch (status) {
           case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
           case CodePush.SyncStatus.SYNC_IN_PROGRESS:
