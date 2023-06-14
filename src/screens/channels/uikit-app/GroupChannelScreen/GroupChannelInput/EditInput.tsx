@@ -18,13 +18,13 @@ import {
   Button,
   TextInput,
   createStyleSheet,
-  useToast,
 } from '@sendbird/uikit-react-native-foundation'
 
 import type {
   SendbirdFileMessage,
   SendbirdUserMessage,
 } from '@sendbird/uikit-utils'
+import useToast from 'hooks/useToast'
 
 type EditInputProps = GroupChannelProps['Input'] & {
   text: string
@@ -74,7 +74,10 @@ const EditInput = forwardRef<RNTextInput, EditInputProps>(function EditInput(
       }
 
       onUpdateUserMessage?.(text, messageToEdit, mention).catch(() =>
-        toast.show(STRINGS.TOAST.UPDATE_MSG_ERROR, 'error')
+        toast.show(STRINGS.TOAST.UPDATE_MSG_ERROR, {
+          color: 'red',
+          icon: 'info',
+        })
       )
     }
     setMessageToEdit()

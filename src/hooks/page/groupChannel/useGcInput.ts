@@ -15,7 +15,7 @@ import {
   GroupChannelProps,
   useLocalization,
 } from '@sendbird/uikit-react-native'
-import { useToast } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'hooks/useToast'
 
 export type UseGcInputReturn = {
   receiverList: Member[]
@@ -98,8 +98,9 @@ const useGcInput = ({
   const toast = useToast()
   const { STRINGS } = useLocalization()
 
-  const onFailureToSend = (): void =>
-    toast.show(STRINGS.TOAST.SEND_MSG_ERROR, 'error')
+  const onFailureToSend = (): void => {
+    toast.show(STRINGS.TOAST.SEND_MSG_ERROR, { color: 'red', icon: 'info' })
+  }
 
   const { getMediaFile } = useDevice()
 

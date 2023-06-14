@@ -7,7 +7,7 @@ import React, { ReactElement, useMemo } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useToast } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'hooks/useToast'
 
 const NewAccountScreen = (): ReactElement => {
   const mnemonic = useMemo(() => generateMnemonic(128), [])
@@ -49,7 +49,10 @@ const NewAccountScreen = (): ReactElement => {
           <FormButton
             figure="outline"
             onPress={(): void => {
-              toast.show('Seed phrase copied', 'success')
+              toast.show('Seed phrase copied', {
+                color: 'green',
+                icon: 'check',
+              })
               Clipboard.setString(mnemonic!)
             }}
           >

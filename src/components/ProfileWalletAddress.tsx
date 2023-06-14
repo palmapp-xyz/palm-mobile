@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useToast } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'hooks/useToast'
 
 export type ProfileWalletAddressProps = {
   userAddress: ContractAddr | undefined
@@ -26,7 +26,7 @@ const ProfileWalletAddress = React.memo(
               if (!userAddress) {
                 return
               }
-              toast.show('Address copied', 'success')
+              toast.show('Address copied', { color: 'green', icon: 'check' })
               Clipboard.setString(userAddress)
             }}
           >
