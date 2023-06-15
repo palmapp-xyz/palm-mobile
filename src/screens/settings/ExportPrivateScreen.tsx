@@ -8,7 +8,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useToast } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'hooks/useToast'
 
 const ExportPrivateScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ExportPrivate>()
@@ -52,7 +52,7 @@ const ExportPrivateScreen = (): ReactElement => {
         <TouchableOpacity
           style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}
           onPress={(): void => {
-            toast.show('Private key copied', 'success')
+            toast.show('Private key copied', { color: 'green', icon: 'check' })
             Clipboard.setString(displayKey)
           }}
         >

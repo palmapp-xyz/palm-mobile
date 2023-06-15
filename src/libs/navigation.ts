@@ -22,8 +22,9 @@ export enum Routes {
   CreateComplete = 'CreateComplete',
   RecoverAccount = 'RecoverAccount',
   Web3Auth = 'Web3Auth',
-
   Sign4Auth = 'Sign4Auth',
+
+  Pin = 'Pin',
 
   HomeTabs = 'HomeTabs',
   Explore = 'Explore',
@@ -95,6 +96,14 @@ type AuthRouteParamsUnion =
   | {
       route: Routes.Sign4Auth
       params: undefined
+    }
+  | {
+      route: Routes.Pin
+      params: {
+        type: 'set' | 'auth' | 'reset'
+        result?: (result: boolean) => Promise<void>
+        cancel?: () => Promise<void>
+      }
     }
 
 type MainRouteParamsUnion =
@@ -251,6 +260,14 @@ type MainRouteParamsUnion =
   | {
       route: Routes.ChannelSetting
       params: { channelUrl: string }
+    }
+  | {
+      route: Routes.Pin
+      params: {
+        type: 'set' | 'auth' | 'reset'
+        result?: (result: boolean) => Promise<void>
+        cancel?: () => Promise<void>
+      }
     }
 
 export type RouteParamsUnion =

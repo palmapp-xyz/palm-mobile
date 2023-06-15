@@ -35,7 +35,9 @@ import {
   LightUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 
+import { ToastProvider } from 'react-native-toast-notifications'
 import { ErrorInfoScreen } from '../screens'
+import { defaultToastProviderOptions, renderToast } from '../screens/ToastView'
 
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()
@@ -119,7 +121,12 @@ const AppProviderWrapper = ({
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <AppProvider>{children}</AppProvider>
+        <ToastProvider
+          renderToast={renderToast}
+          {...defaultToastProviderOptions}
+        >
+          <AppProvider>{children}</AppProvider>
+        </ToastProvider>
       </RecoilRoot>
     </QueryClientProvider>
   )

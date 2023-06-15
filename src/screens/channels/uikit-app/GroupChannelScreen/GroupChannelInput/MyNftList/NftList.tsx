@@ -1,9 +1,10 @@
 import { FormText, MoralisNftRenderer } from 'components'
+import Indicator from 'components/atoms/Indicator'
 import { COLOR } from 'consts'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr, Moralis } from 'types'
@@ -51,7 +52,7 @@ const NftList = ({
   const listFooterComponent = (
     <View style={{ paddingTop: 16 }}>
       {loading ? (
-        <ActivityIndicator color={COLOR.primary._400} />
+        <Indicator />
       ) : items.length === 0 ? (
         <Text style={styles.text}>{'No tokens to show'}</Text>
       ) : (

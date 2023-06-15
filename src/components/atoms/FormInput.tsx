@@ -25,6 +25,7 @@ const FormInput = (
         style,
         fontStyle,
       ]}
+      placeholderTextColor={COLOR.black._200}
       {...rest}
     />
   )

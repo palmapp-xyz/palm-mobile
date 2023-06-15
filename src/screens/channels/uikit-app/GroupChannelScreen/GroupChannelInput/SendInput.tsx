@@ -21,10 +21,10 @@ import {
 import {
   TextInput,
   createStyleSheet,
-  useToast,
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import { conditionChaining } from '@sendbird/uikit-utils'
+import useToast from 'hooks/useToast'
 
 type SendInputProps = GroupChannelProps['Input'] & {
   text: string
@@ -69,7 +69,10 @@ const SendInput = forwardRef<RNTextInput, SendInputProps>(function SendInput(
     }
 
     onSendUserMessage?.(text, mention).catch(() =>
-      toast.show(STRINGS.TOAST.SEND_MSG_ERROR, 'error')
+      toast.show(STRINGS.TOAST.SEND_MSG_ERROR, {
+        color: 'red',
+        icon: 'info',
+      })
     )
     onChangeText('')
   }

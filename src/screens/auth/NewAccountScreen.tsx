@@ -3,16 +3,18 @@ import { Container, FormButton, FormText, Header, Row } from 'components'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import React, { ReactElement, useMemo } from 'react'
+import React, { ReactElement, useMemo, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useToast } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'hooks/useToast'
 
 const NewAccountScreen = (): ReactElement => {
   const mnemonic = useMemo(() => generateMnemonic(128), [])
   const { navigation } = useAppNavigation()
   const toast = useToast()
+
+  const [isSeedCopied, setIsSeedCopied] = useState(false)
 
   const seedPhrase = mnemonic?.split(' ')
 
@@ -49,8 +51,12 @@ const NewAccountScreen = (): ReactElement => {
           <FormButton
             figure="outline"
             onPress={(): void => {
-              toast.show('Seed phrase copied', 'success')
+              toast.show('Seed phrase copied', {
+                color: 'green',
+                icon: 'check',
+              })
               Clipboard.setString(mnemonic!)
+              setIsSeedCopied(true)
             }}
           >
             Copy the Set of Seed Phrase
@@ -89,7 +95,14 @@ const NewAccountScreen = (): ReactElement => {
         <FormButton
           size="lg"
           onPress={(): void => {
-            navigation.navigate(Routes.ConfirmSeed, { mnemonic })
+            if (isSeedCopied) {
+              navigation.navigate(Routes.ConfirmSeed, { mnemonic })
+            } else {
+              toast.show(
+                'You must copy the seed phrase to proceed to the next step.',
+                { color: 'red', icon: 'info' }
+              )
+            }
           }}
         >
           Next

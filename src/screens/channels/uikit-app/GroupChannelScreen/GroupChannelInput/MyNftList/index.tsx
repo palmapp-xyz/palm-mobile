@@ -2,10 +2,11 @@ import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo } from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import BottomSheet from '@gorhom/bottom-sheet'
 import { FormButton } from 'components'
+import Indicator from 'components/atoms/Indicator'
 import Header from './Header'
 import NftCollectionList from './NftCollectionList'
 import NftList from './NftList'
@@ -41,7 +42,7 @@ const MyNftList = ({
             <View style={styles.footer}>
               {runningNextStep ? (
                 <View style={styles.nextStepIcon}>
-                  <ActivityIndicator size="large" color={COLOR.primary._400} />
+                  <Indicator />
                 </View>
               ) : (
                 <FormButton

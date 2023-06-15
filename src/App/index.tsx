@@ -1,28 +1,31 @@
 import Loading from 'components/atoms/Loading'
 import React, { ReactElement } from 'react'
-import { LogBox } from 'react-native'
-import CodePush, { CodePushOptions } from 'react-native-code-push'
+import { Keyboard, LogBox, TouchableWithoutFeedback } from 'react-native'
 
+import useCodePush from 'hooks/useCodePush'
 import Navigation from '../Navigation'
+import UpdateScreen from '../screens/UpdateScreen'
 import AppProviderWrapper from './AppProvider'
-
-const codePushOptions: CodePushOptions = {
-  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-  mandatoryInstallMode: CodePush.InstallMode.IMMEDIATE,
-  updateDialog: {
-    appendReleaseDescription: true,
-  },
-}
 
 const App = (): ReactElement => {
   LogBox.ignoreAllLogs()
 
+  const codepush = useCodePush()
+
   return (
     <AppProviderWrapper>
-      <Loading />
-      <Navigation />
+      <TouchableWithoutFeedback onPress={(): void => Keyboard.dismiss()}>
+        {!codepush.upToDate ? (
+          <UpdateScreen {...codepush} />
+        ) : (
+          <>
+            <Loading />
+            <Navigation />
+          </>
+        )}
+      </TouchableWithoutFeedback>
     </AppProviderWrapper>
   )
 }
 
-export default CodePush(codePushOptions)(App)
+export default App

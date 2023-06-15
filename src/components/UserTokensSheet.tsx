@@ -3,16 +3,11 @@ import { COLOR } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
 import React, { ReactElement, useMemo, useState } from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { SupportedNetworkEnum } from 'types'
 
 import MoralisErc20Token from './MoralisErc20Token'
+import Indicator from './atoms/Indicator'
 
 const UserTokensSheet = ({
   onClose,
@@ -43,7 +38,7 @@ const UserTokensSheet = ({
   const listFooterComponent = (
     <View style={{ paddingTop: 16 }}>
       {status === 'loading' ? (
-        <ActivityIndicator color={COLOR.primary._400} />
+        <Indicator />
       ) : items.length === 0 ? (
         <Text style={styles.text}>{'No tokens to show'}</Text>
       ) : (

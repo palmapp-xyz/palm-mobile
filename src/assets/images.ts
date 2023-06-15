@@ -15,4 +15,5 @@ export default {
   create_channel: require('./create_channel.png'),
   import: require('./import.png'),
   plus: require('./plus.png'),
+  pin_delete: require('./pin_delete.png'),
 }

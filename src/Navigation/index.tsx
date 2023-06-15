@@ -4,7 +4,6 @@ import useCrashlytics from 'hooks/independent/useCrashlytics'
 import useAppearance from 'hooks/useAppearance'
 import { navigationRef, Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import RNBootSplash from 'react-native-bootsplash'
 import { SupportedNetworkEnum } from 'types'
 
 import {
@@ -35,9 +34,6 @@ const Navigation = (): ReactElement => {
     <NavigationContainer
       ref={navigationRef}
       theme={isLightTheme ? DefaultTheme : DarkTheme}
-      onReady={(): Promise<void> =>
-        RNBootSplash.hide({ fade: true, duration: 500 })
-      }
     >
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         {user?.auth ? (

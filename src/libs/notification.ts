@@ -18,6 +18,7 @@ import {
   parseSendbirdNotification,
 } from '@sendbird/uikit-utils'
 
+import { COLOR } from 'consts'
 import { recordError } from './logger'
 import { navigationRef, Routes, runAfterAppReady } from './navigation'
 
@@ -83,6 +84,8 @@ export const backgroundMessageHandler = async (
       android: {
         channelId,
         importance: AndroidImportance.HIGH,
+        smallIcon: 'ic_notification',
+        color: COLOR.primary._400,
         largeIcon: sendbird.sender?.profile_url || sendbird.channel.channel_url,
         circularLargeIcon: true,
         pressAction: { id: 'default' },

@@ -7,6 +7,7 @@ import {
   RadioIcon,
   SupportedNetworkRow,
 } from 'components'
+import Indicator from 'components/atoms/Indicator'
 import { COLOR, NETWORK } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useAuth from 'hooks/auth/useAuth'
@@ -14,7 +15,6 @@ import { UseEditChannelReturn } from 'hooks/page/groupChannel/useEditChannel'
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
 import {
-  ActivityIndicator,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -128,7 +128,7 @@ const TokenGating = ({
             </TouchableOpacity>
             {loading ? (
               <View style={styles.tokenItem}>
-                <ActivityIndicator />
+                <Indicator />
               </View>
             ) : (
               _.map(nftCollectionList, (item, index) => {

@@ -25,6 +25,9 @@ import { FbProfile, Moralis, SupportedNetworkEnum } from 'types'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
+import { Routes } from 'libs/navigation'
 
 const ConfirmModal = ({
   selectedNft,
@@ -44,6 +47,9 @@ const ConfirmModal = ({
   const chain: SupportedNetworkEnum =
     chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
+
+  const { navigation } = useAppNavigation<Routes.SendNft>()
+  const toast = useToast()
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
   const { isPosting, isValidForm, onClickConfirm, estimatedTxFee } = useSendNft(
@@ -218,10 +224,24 @@ const ConfirmModal = ({
           containerStyle={{ flex: 1 }}
           disabled={isPosting || !isValidForm}
           onPress={async (): Promise<void> => {
-            const res = await onClickConfirm()
-            if (res?.success) {
-              onSubmit(selectedNft.token_uri)
-            }
+            navigation.push(Routes.Pin, {
+              type: 'auth',
+              result: async (result: boolean): Promise<void> => {
+                if (result) {
+                  navigation.pop()
+                  const res = await onClickConfirm()
+                  if (res?.success) {
+                    onSubmit(selectedNft.token_uri)
+                  }
+                } else {
+                  toast.show('PIN mismatch', { color: 'red', icon: 'info' })
+                }
+              },
+              cancel: async (): Promise<void> => {
+                navigation.pop()
+                return undefined
+              },
+            })
           }}
         >
           Confirm

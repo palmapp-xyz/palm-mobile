@@ -1,5 +1,6 @@
 export { default as ErrorInfoScreen } from './ErrorInfoScreen'
 export { default as HomeTabs } from './HomeTabs'
+export { default as PinScreen } from './PinScreen'
 export * from './auth'
 export { default as Sign4AuthScreen } from './auth/Sign4AuthScreen'
 export { default as SignInWithLens } from './auth/SignInWithLens'

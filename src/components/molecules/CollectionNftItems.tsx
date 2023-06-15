@@ -1,12 +1,10 @@
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR } from 'consts'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import {
-  ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
@@ -15,6 +13,7 @@ import {
 } from 'react-native'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
+import Indicator from 'components/atoms/Indicator'
 import ChainLogoWrapper from './ChainLogoWrapper'
 import NftItemMenu from './NftItemMenu'
 
@@ -43,7 +42,7 @@ const CollectionNftItems = ({
   })
 
   if (!userAddress || loading) {
-    return <ActivityIndicator size="small" color={COLOR.primary._400} />
+    return <Indicator />
   }
 
   return (

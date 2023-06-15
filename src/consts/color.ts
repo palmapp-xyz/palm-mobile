@@ -2,6 +2,7 @@ const white = '#ffffff'
 
 const opacity = {
   _05: '0d',
+  _07: '12',
   _10: '1a',
   _30: '4d',
   _50: '80',
@@ -40,6 +41,9 @@ const black = {
 
 const text = white
 
+const blue = primary._400
+const red = '#FF002E'
+const green = '#1DAB4D'
 const yellow = '#F0AD00'
 
 export default {
@@ -55,6 +59,9 @@ export default {
 
   text,
 
+  blue,
+  red,
+  green,
   yellow,
 
   opacity,

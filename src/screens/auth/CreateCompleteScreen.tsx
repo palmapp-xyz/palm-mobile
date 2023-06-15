@@ -11,7 +11,7 @@ import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useToast } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'hooks/useToast'
 
 const CreateCompleteScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.CreateComplete>()
@@ -49,7 +49,7 @@ const CreateCompleteScreen = (): ReactElement => {
             <TouchableOpacity
               style={styles.copyBox}
               onPress={(): void => {
-                toast.show('Address copied', 'success')
+                toast.show('Address copied', { color: 'green', icon: 'check' })
                 Clipboard.setString(account?.address || '')
               }}
             >
