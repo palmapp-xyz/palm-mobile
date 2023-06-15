@@ -1,3 +1,4 @@
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import { Member } from '@sendbird/chat/groupChannel'
 import images from 'assets/images'
 import {
@@ -11,7 +12,7 @@ import {
 import { COLOR } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo, useState } from 'react'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 const SelectReceiverModal = ({
   useGcInputReturn,
@@ -44,7 +45,7 @@ const SelectReceiverModal = ({
               </FormText>
             )}
           </Row>
-          <FlatList
+          <BottomSheetFlatList
             data={useGcInputReturn.receiverList}
             keyExtractor={(_, index): string => `receiverList-${index}`}
             contentContainerStyle={{ rowGap: 16 }}

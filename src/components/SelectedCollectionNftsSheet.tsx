@@ -1,3 +1,4 @@
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import {
   ChainLogoWrapper,
   FormBottomSheet,
@@ -12,7 +13,6 @@ import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
 import {
-  FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -86,7 +86,7 @@ const SelectedCollectionNftsSheet = ({
     >
       <View style={{ flex: 1 }}>
         <View style={styles.body}>
-          <FlatList
+          <BottomSheetFlatList
             data={items}
             ListHeaderComponent={listHeaderComponent}
             ListFooterComponent={listFooterComponent}
