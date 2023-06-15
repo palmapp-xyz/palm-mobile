@@ -28,6 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import RNRestart from 'react-native-restart'
 
 export type UseAuthReturn = {
   user?: User
@@ -218,7 +219,7 @@ const useAuth = (): UseAuthReturn => {
 
   const logout = async (): Promise<void> => {
     await Promise.all([
-      AsyncStorage.removeItem(LocalStorageKey.AUTH),
+      AsyncStorage.clear(),
       removeKeys(),
       auth().signOut(),
       disconnect(),
@@ -227,6 +228,8 @@ const useAuth = (): UseAuthReturn => {
     setCurrentUser(undefined)
     setRestoreLoading(false)
     setUser(undefined)
+
+    RNRestart.restart()
   }
 
   return {
