@@ -20,6 +20,8 @@ import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
 import Clipboard from '@react-native-clipboard/clipboard'
+import useToast from 'hooks/useToast'
+import { getMnemonic, getPkey } from 'libs/account'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
@@ -34,30 +36,72 @@ const RecoverAccountScreen = (): ReactElement => {
     onClickConfirm,
   } = useRecoverAccount()
   const { navigation, params } = useAppNavigation<Routes.RecoverAccount>()
-  const isSignUp = params.isSignUp
+  const recoverType = params.type
+
+  const toast = useToast()
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
   const onPressConfirm = async (): Promise<void> => {
-    navigation.push(Routes.Pin, {
-      type: 'set',
-      result: async (result: boolean): Promise<void> => {
-        if (result === true) {
-          setLoading(true)
-          setTimeout(async () => {
-            await onClickConfirm()
-            setLoading(false)
-            navigation.replace(Routes.Sign4Auth)
-          }, 100)
-        }
+    if (recoverType === 'resetPin') {
+      const k = usePkey ? await getPkey() : (await getMnemonic()).split(' ')
 
-        return Promise.resolve()
-      },
-      cancel: async () => {
-        navigation.pop()
-        return Promise.resolve()
-      },
-    })
+      const match = usePkey
+        ? k === privateKey
+        : JSON.stringify(k) === JSON.stringify(seedPhrase)
+
+      if (match) {
+        toast.show('Verified your key or seed phrase.', {
+          color: 'blue',
+          icon: 'check',
+        })
+        navigation.replace(Routes.Pin, {
+          type: 'reset',
+          result: (result: boolean): Promise<void> => {
+            result && navigation.pop()
+            return Promise.resolve()
+          },
+          cancel: (): void => {
+            navigation.pop()
+          },
+        })
+      } else {
+        toast.show(
+          'Verification failed. please check you private key or seed phrase.',
+          { color: 'red', icon: 'info' }
+        )
+      }
+    } else {
+      navigation.push(Routes.Pin, {
+        type: 'set',
+        result: async (result: boolean): Promise<void> => {
+          if (result === true) {
+            setLoading(true)
+            setTimeout(async () => {
+              await onClickConfirm()
+              setLoading(false)
+              navigation.replace(Routes.Sign4Auth)
+            }, 100)
+          }
+
+          return Promise.resolve()
+        },
+        cancel: () => {
+          navigation.pop()
+        },
+      })
+    }
+  }
+
+  const getTitleText = (): string => {
+    switch (recoverType) {
+      case 'importWallet':
+        return 'How do you\nimport your wallet?'
+      case 'restoreWallet':
+        return 'Please verify\nthe wallet'
+      case 'resetPin':
+        return 'Reset PIN'
+    }
   }
 
   if (loading) {
@@ -70,11 +114,9 @@ const RecoverAccountScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ rowGap: 8 }}>
           <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
-            {isSignUp
-              ? 'How do you\nimport your wallet?'
-              : 'Please verify\nthe wallet'}
+            {getTitleText()}
           </FormText>
-          {isSignUp === false && (
+          {recoverType === 'restoreWallet' && (
             <FormText color={COLOR.black._400} fontType="R.14">
               {'The account can only be restored\nby verifying the wallet.'}
             </FormText>
@@ -158,7 +200,7 @@ const RecoverAccountScreen = (): ReactElement => {
           disabled={!isValidForm || loading}
           onPress={onPressConfirm}
         >
-          {isSignUp ? 'Import the Wallet' : 'Verify'}
+          {recoverType === 'importWallet' ? 'Import the Wallet' : 'Verify'}
         </FormButton>
       </View>
     </Container>

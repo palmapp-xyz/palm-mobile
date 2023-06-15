@@ -121,9 +121,8 @@ const Contents = ({
                           })
                         }
                       },
-                      cancel: async (): Promise<void> => {
+                      cancel: (): void => {
                         navigation.pop()
-                        return undefined
                       },
                     })
                   }}

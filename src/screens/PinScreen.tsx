@@ -15,9 +15,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const CloseButton = (props: {
-  onPress?: () => Promise<void>
-}): ReactElement => {
+const CloseButton = (props: { onPress?: () => void }): ReactElement => {
   return (
     <View
       style={{
@@ -221,21 +219,16 @@ const PinScreen = (): ReactElement => {
                   icon: 'check',
                 })
 
-                if (pinType === 'reset') {
-                  setPinType('auth')
-                } else {
+                if (pinType !== 'reset') {
                   setPinConfigurePhase('done')
-                  resultCallback && resultCallback(true)
                 }
+                resultCallback && resultCallback(true)
               } else {
-                // mismatch
-
                 toast.show('PIN mismatch', {
                   color: 'red',
                   icon: 'info',
                 })
                 setPinConfigurePhase('input')
-                // callback && callback(false)
               }
 
               resetNewPin()
@@ -250,7 +243,9 @@ const PinScreen = (): ReactElement => {
   }, [inputPin])
 
   const onResetPin = (): void => {
-    // push seed or private key -> if pass -> reset phase.
+    navigation.push(Routes.RecoverAccount, {
+      type: 'resetPin',
+    })
   }
 
   const TITLE = {

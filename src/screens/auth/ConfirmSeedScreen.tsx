@@ -39,9 +39,8 @@ const ConfirmSeedScreen = (): ReactElement => {
 
         return Promise.resolve()
       },
-      cancel: async () => {
+      cancel: () => {
         navigation.pop()
-        return Promise.resolve()
       },
     })
   }

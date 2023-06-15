@@ -237,9 +237,8 @@ const ConfirmModal = ({
                   toast.show('PIN mismatch', { color: 'red', icon: 'info' })
                 }
               },
-              cancel: async (): Promise<void> => {
+              cancel: (): void => {
                 navigation.pop()
-                return undefined
               },
             })
           }}

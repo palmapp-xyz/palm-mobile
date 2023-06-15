@@ -34,7 +34,9 @@ const MainAccountScreen = (): ReactElement => {
         <View style={styles.bottom}>
           <FormButton
             onPress={(): void => {
-              navigation.navigate(Routes.RecoverAccount, { isSignUp: false })
+              navigation.navigate(Routes.RecoverAccount, {
+                type: 'restoreWallet',
+              })
             }}
           >
             Restore My Account
@@ -72,7 +74,7 @@ const MainAccountScreen = (): ReactElement => {
             style={styles.bottomItem}
             onPress={(): void => {
               navigation.navigate(Routes.RecoverAccount, {
-                isSignUp: true,
+                type: 'importWallet',
               })
             }}
           >

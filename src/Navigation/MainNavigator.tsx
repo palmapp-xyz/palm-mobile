@@ -31,6 +31,7 @@ import {
   ListNftScreen,
   NftDetailScreen,
   PinScreen,
+  RecoverAccountScreen,
   SendNftScreen,
   SettingScreen,
   TokenGatingInfoScreen,
@@ -58,6 +59,10 @@ const MainNavigator = (): ReactElement => {
             options={{ gestureEnabled: false }}
           />
           <MainStack.Screen name={Routes.Pin} component={PinScreen} />
+          <MainStack.Screen
+            name={Routes.RecoverAccount}
+            component={RecoverAccountScreen}
+          />
           <MainStack.Screen
             name={Routes.ZxNftDetail}
             component={ZxNftDetailScreen}
