@@ -106,6 +106,7 @@ const CreateProfileScreen = (): ReactElement => {
             </Row>
             <FormInput
               value={bio}
+              textAlignVertical="top"
               onChangeText={(text: string): void => {
                 if (text.length <= maxBioLength) {
                   setBio(text)

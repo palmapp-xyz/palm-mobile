@@ -92,6 +92,7 @@ const CreateChannelScreen = (): ReactElement => {
                 Description
               </FormText>
               <FormInput
+                textAlignVertical="top"
                 disabled={isLoading}
                 value={desc}
                 onChangeText={setDesc}
