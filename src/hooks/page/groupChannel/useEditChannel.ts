@@ -18,6 +18,7 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 export type UseEditChannelReturn = {
   prevCoverImage: string
@@ -83,6 +84,7 @@ const useEditChannel = ({
     [inputTag]
   )
   const { user } = useAuth()
+  const { t } = useTranslation()
 
   const { getMediaFile } = useDevice()
 
@@ -148,7 +150,7 @@ const useEditChannel = ({
         await fsChannel.update(updateParam)
 
         alert({
-          message: 'Channel info updated',
+          message: t('Channels.ChannelInfoUpdatedAlertMessage'),
           buttons: [
             {
               text: STRINGS.DIALOG.ALERT_DEFAULT_OK,

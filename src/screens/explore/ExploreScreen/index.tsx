@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
+import { useTranslation } from 'react-i18next'
 import RecentlySearched from './RecentlySearched'
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
@@ -35,6 +36,7 @@ const HEADER_HEIGHT = 72
 // }
 
 const ExploreScreen = (): ReactElement => {
+  const { t } = useTranslation()
   const [searchFocused, setSearchFocused] = useState(false)
   const inputRef = useRef<TextInput>(null)
 
@@ -85,7 +87,7 @@ const ExploreScreen = (): ReactElement => {
           <View style={{ position: 'relative' }}>
             <FormInput
               inputRef={inputRef}
-              placeholder="Search by username, tag, chat room name..."
+              placeholder={t('Explore.ExploreSearchPlaceholder')}
               style={{ paddingRight: 40 }}
               maxLength={20}
               value={inputSearch}

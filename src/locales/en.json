@@ -1,0 +1,289 @@
+{
+  "Common": {
+    "Next": "Next",
+    "Done": "Done",
+    "None": "None",
+    "Close": "Close",
+    "WalletAddress": "Wallet Address",
+    "EnterPrivateKey": "Enter a private key",
+    "SeedPhrase": "Seed Phrase",
+    "PrivateKey": "Private key",
+    "CopyToClipboard": "Copy to Clipboard",
+    "PasteFromClipboard": "Paste from Clipboard",
+    "Verify": "Verify",
+    "Reject": "Reject",
+    "Confirm": "Confirm",
+    "Approve": "Approve",
+    "Join": "Join",
+    "Cancel": "Cancel",
+    "Success": "Success",
+    "Buy": "Buy",
+    "Details": "Details",
+    "UsdPrice": "(≈${{price}})"
+  },
+  "Navigation": {
+    "PostTx": {
+      "Posting": "Posting...",
+      "PendingTransaction": "Pending transaction",
+      "TxError": "Tx Error"
+    },
+    "TxStatusMini": {
+      "Posting": "Posting...",
+      "PendingTx": "Pending Tx...",
+      "TxFailed": "Tx failed"
+    }
+  },
+  "Update": {
+    "Message": "There are app updates.\nPlease wait until the update is complete.\n\nUpdate completed.\nPalm app will be restarted."
+  },
+  "Auth": {
+    "ConfirmSeed": "Confirm the seed phrase",
+    "ConfirmSeedMessage": "To make sure you’ve kept your\nseed phrase, please choose and fill them.",
+
+    "Complete": "Wallet creation\nis complete",
+    "CompleteMessage": "Wallet information is as follows.\nYou can check it later on My Page.",
+    "CompleteCopiedAddressToast": "Address copied",
+    "PalmToS": "· Click to sign in and accept the Palm Terms of Service.\n· This request will not trigger a blockchain\n  transaction or cost any gas fees.\n· Your authentication status will reset after 24\n  hours.\n",
+
+    "MainTitle": "Hi, there!\nWelcome to Palm",
+    "RestoreMyAccount": "Restore My Account",
+    "SignUpWithWallet": "Sign up with a Wallet",
+    "CreateNewWallet": "Create a\nnew wallet",
+    "ImportWallet": "Import\na wallet",
+
+    "CopySeedPhrase": "Copy your wallet’s\nseed phrase",
+    "CopySeedPhraseMessage": "Keep the seed phrase in a safe place.\nIt will allow you to recover your wallet.",
+    "CopySeedPhraseNotice": "Notice that your generated wallet's Privatekey is not stored on the\nserver and is stored on your mobile device.",
+    "CopySeed": "Copy the Set of Seed Phrase",
+    "CopySeedCopiedSeedToast": "Seed phrase copied",
+    "CopySeedErrorToast": "You must copy the seed phrase to proceed to the next step.",
+
+    "RecoverSeedVerifyPassToast": "Verified your key or seed phrase.",
+    "RecoverSeedVerifyFailToast": "Verification failed. please check you private key or seed phrase.",
+    "RecoverErrorAlertTitle": "Failure",
+
+    "RecoverImportWalletTitle": "How do you\nimport your wallet?",
+    "RecoverRestoreWalletTitle": "Please verify\nthe wallet",
+    "RecoverRestoreWalletMessage": "The account can only be restored\nby verifying the wallet.",
+    "RecoverResetPinTitle": "Reset Pin",
+
+    "ImportTheWallet": "Import the Wallet",
+
+    "Sign4AuthHeaderTitle": "Authenticate",
+    "Sign4AuthLoading": "Loading Challenge...",
+    "Sign4AuthLogin": "Sign to Login",
+    "Sign4AuthFailureAlertTitle": "Failure",
+
+    "SignLensLoading": "Signing in ...",
+    "SignLensFailureAlertTitle": "Failure",
+
+    "Web3Auth": "Web3Auth"
+  },
+  "Channels": {
+    "ListedBy": "Listed by ...{{maker}}",
+
+    "ChatRoomName": "Chat Room Name",
+    "ChatRoomDescription": "Description",
+    "ChatRoomDescriptionPlaceholder": "Please write something to describe about the channel.",
+    "ChatRoomTag": "Tags",
+    "ChatRoomTagPlaceholder": "Add tags separated by a comma",
+    "ChatRoomTokenGating": "Token Gating",
+    "ChatRoomTokenGatingMinimum": "(minimum: {{amount}})",
+    "ChatRoomEditTokenGating": "Edit Token Gating",
+    "ChatRoomTokenGatingSelect": "Select a Token or NFT",
+    "ChatRoomTokenGatingSelectStep1": "Please select a Token or NFT group",
+    "ChatRoomTokenGatingSelectStep2": "How many does someone need to enter?",
+
+    "ChannelInfoNotRetrieveAlertMessage": "Could not retrieve channel info data. Please try again later.",
+    "ChannelInfoMemberAndDate": "{{memberCount}} Members ∙ {{createAt}} Created",
+    "ChannelInfoGatingTokenAmount": "{{amount}}",
+    "ChannelInfoGatingTokenOf": " of ",
+    "ChannelInfoGatingTokenChainOrAddr": "{{chainOrAddress}}",
+    "ChannelInfoGatingTokenRequiredToJoin": " required to join",
+    "ChannelInfoMembers": "Members",
+    "ChannelInfoInvite": "+ Invite member",
+    "ChannelInfoNickname": "{{nickname}} {{me}}",
+    "ChannelInfoNicknameIsMe": "me",
+
+    "ChannelSettingTitle": "Channel Info",
+    "ChannelSettingEditChannel": "Edit Channel",
+    "ChannelSettingModeration": "Moderation",
+    "ChannelSettingOperators": "Operators",
+    "ChannelSettingMutedMembers": "Muted Members",
+    "ChannelSettingBannedUsers": "Banned Users",
+    "ChannelSettingFreezeChatRoom": "Freeze Chat room",
+
+    "ChannelInfoUpdatedAlertMessage": "Channel info updated",
+
+    "UiKitPrivateChannelHeaderTitle": "Private channel",
+
+    "UiKitTokenGatingInfoEntryRequirement": "Entry requirement",
+    "UiKitTokenGatingInfoEntryRequirementHint": "You need to meet the above requirement to have access to the space.",
+
+    "UiKitNftNoToken": "No tokens to show",
+    "UiKitNftEndOfList": "End of List",
+
+    "UiKitBottomMenuTitleListNft": "List NFT",
+    "UiKitBottomMenuTitleShowNft": "Show NFT",
+    "UiKitBottomMenuTitleSendNft": "Send NFT",
+    "UiKitBottomMenuTitleAlbum": "Album",
+    "UiKitBottomMenuSendNftNoOneToSendAlertTitle": "No one to send NFT",
+
+    "UiKitReceiverModalNftTo": "NFT to",
+    "UiKitReceiverModalWhom": "Whom?",
+
+    "UiKitTokenGatingRequired": "Required",
+    "UiKitTokenGatingMyBalance": "My balance"
+  },
+  "Explore": {
+    "InitExploreTitleStep1": "Hi, there!\nWelcome to Palm.",
+    "InitExploreTitleStep2": "Tell us what you\ninterested in.",
+    "InitExploreSkip": "Skip this step",
+    "InitExploreAllDone": "It's all done",
+
+    "ExploreSearchPlaceholder": "Search by username, tag, chat room name...",
+    "ExploreChannelsToJoin": "Explore\nchannels to Join",
+    "ExploreChatWithOthersDirectly": "or Chat with\nothers directly",
+    "ExploreSelectedChannelRequiredToJoin": " required to join",
+
+    "SearchResultItemChatRoom": "Chat Room",
+    "SearchResultItemUser": "User"
+  },
+  "Nft": {
+    "ZxNftDetailHeaderTitle": "Buy NFT",
+    "ZxNftDetailInsufficientBalanceAlertTitle": "Insufficient balance",
+    "ZxNftDetailInsufficientBalanceAlertMessage": "You have {{balance}} {{token}}",
+
+    "NftInfoHeaderTitle": "NFT Info",
+
+    "PinMismatchToast": "PIN mismatch",
+
+    "ListNftWantToSellThisNft": "I want to sell this NFT for",
+    "ListNftPricePlaceholder": "Price",
+    "ListNftList": "List",
+    "ListNftApproveToList": "Approve to list your NFT",
+
+    "ListNftConfirmModalNotice": "The sale will be accepted and concluded unless you cancel it. The sale listing is valid for 24 hours.",
+    "ListNftConfirmModalOn": "on",
+    "ListNftConfirmModalFrom": "From",
+    "ListNftConfirmModalMe": "Me",
+    "ListNftConfirmModalTo": "To",
+    "ListNftConfirmModalListContract": "List Contract",
+
+    "SendNftWantToSendThisNft": "I want to send this NFT to",
+    "SendNftSend": "Send",
+
+    "SendNftConfirmModalNotice": "This action is irreversible. Again, make sure the transaction detail is correct and reliable.",
+    "SendNftConfirmModalOn": "on",
+    "SendNftConfirmModalFrom": "From",
+    "SendNftConfirmModalMe": "Me",
+    "SendNftConfirmModalTo": "To",
+    "SendNftConfirmModalEstGasFee": "Est. Gas Fee",
+
+    "SendNftMessageSent": "Sent ",
+    "SendNftMessageTo": "to {{to}}",
+    "SendNftMessageViewTransactionDetail": "View Transaction Detail ",
+
+    "ListNftMessageSold": "Sold",
+    "ListNftMessageDetails": "Details",
+    "ListNftMessageTransactionDetail": "View Transaction Detail "
+  },
+  "Profiles": {
+    "CreateProfileTitle": "Fill out your profile",
+    "CreateProfileTitleSub": "Please write a nice phrase\nthat describes you well",
+    "CreateProfileUsername": "Username",
+    "CreateProfileUsernamePlaceholder": "Enter your nickname",
+    "CreateProfileUsernameHint": "Up to 20 characters are allowed, and only uppercase and lowercase letters and numbers can be entered.",
+    "CreateProfileDescription": "Description",
+    "CreateProfileDescriptionPlaceholder": "Please write something you would like to introduce about yourself.",
+
+    "UpdateProfilePendingAlertTitle": "Pending",
+    "UpdateProfilePendingAlertMessage": "Your profile will be reflected once update transaction gets indexed.",
+    "UpdateProfileFailureAlertTitle": "Failure",
+    "UpdateProfileSuccessAlertTitle": "Success",
+    "UpdateProfileSuccessAlertMessage": "Profile updated",
+    "UpdateProfileUsername": "Username",
+    "UpdateProfileUsernamePlaceholder": "Enter your nickname",
+    "UpdateProfileDescription": "Description",
+    "UpdateProfileDescriptionPlaceholder": "Please write something you would like to introduce about yourself.",
+
+    "MyProfileUpdateImageSuccessAlertMessage": "Profile image updated",
+    "MyProfileUpdateImageFailedAlertMessage": "Update profile image failed: {{errMsg}}"
+  },
+  "Settings": {
+    "HeaderTitle": "Setting",
+    "PushNotification": "Push Notifications",
+    "ChangePin": "Change PIN code",
+    "ExportWallet": "Export Wallet",
+    "ServiceAgreement": "Service Agreement",
+    "Privacy": "Privacy",
+    "Contact": "Contact",
+    "GiveUsFeedback": "Give us Feedback! 🙌",
+    "Version": "Version",
+    "VersionDev": "(dev)",
+    "VersionRelease": "(release)",
+    "SignOut": "Sign Out",
+
+    "ExportWalletHeaderTitle": "Export private",
+    "ExportWalletShowKey": "Show the key",
+    "ExportWalletCopiedPrivateKeyToast": "Private key copied"
+  },
+  "Pin": {
+    "PinSetupSuccessToast": "Your PIN code is successfully set up.",
+    "PinMismatchToast": "PIN mismatch",
+
+    "PinSetupTitle": "Set up your PIN code",
+    "PinSetupTitleSub": "This action requires a PIN code setting.",
+    "PinConfirmTitle": "Confirm your PIN code",
+    "PinEnterTitle": "Enter your PIN code",
+    "PinEnterTitleSub": "Forgot your PIN code?"
+  },
+  "Components": {
+    "ProfileWalletAddress": {
+      "WalletAddress": "Wallet Address",
+      "AddressCopied": "Address copied"
+    },
+    "ErrorBoundary": {
+      "SomethingHappened": "Something Happened!"
+    },
+    "BuyNftMessage": {
+      "BoughtNft": "Bought NFT",
+      "BoughtNftMessage": "{{buyer}} bought #{{tokenId}}"
+    },
+    "ProfileHeader": {
+      "NftList": "NFT List"
+    },
+    "NftDetails": {
+      "OwnedBy": "Owned by {{owner}}",
+      "Unknown": "unknown"
+    },
+    "ProfileHeaderChatButton": {
+      "OneOnOneChat": "1:1 Chat"
+    },
+    "LensProfileHeader": {
+      "Followers": "Followers",
+      "Following": "Following"
+    },
+    "ProfileWalletBalances": {
+      "WalletBalances": "Wallet Balances",
+      "OnlyVisibleToYou": "Only visible to you",
+      "SeeAll": "See All"
+    },
+    "ChatCard": {
+      "Of": "of",
+      "RequiredToJoin": " required to join"
+    },
+    "SelectedCollectionNftSheet": {
+      "NoTokensToShow": "No tokens to show",
+      "EndOfList": "End of List"
+    },
+    "UserTokensSheet": {
+      "NoTokensToShow": "No tokens to show",
+      "EndOfList": "End of List"
+    },
+    "ProfileFooter": {
+      "HasNoNft": "The user has not NFTs yet.",
+      "EndOfList": "End of List"
+    }
+  }
+}

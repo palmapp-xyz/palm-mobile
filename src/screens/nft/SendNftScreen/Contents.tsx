@@ -8,6 +8,7 @@ import { StyleSheet, View } from 'react-native'
 import { FbProfile, Moralis } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { useTranslation } from 'react-i18next'
 
 const Contents = ({
   selectedNft,
@@ -18,6 +19,7 @@ const Contents = ({
   receiverId: string
   setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>
 }): ReactElement => {
+  const { t } = useTranslation()
   const [receiver, setReceiver] = useState<FbProfile>()
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
@@ -31,7 +33,9 @@ const Contents = ({
     <View style={styles.body}>
       <View>
         <View style={{ rowGap: 8, paddingBottom: 28 }}>
-          <FormText fontType="SB.14">I want to send this NFT to</FormText>
+          <FormText fontType="SB.14">
+            {t('Nft.SendNftWantToSendThisNft')}
+          </FormText>
           <Row style={{ columnGap: 8 }}>
             {receiverProfileImg ? (
               <MediaRenderer
@@ -57,7 +61,7 @@ const Contents = ({
           setShowBottomSheet(true)
         }}
       >
-        Send
+        {t('Nft.SendNftSend')}
       </FormButton>
     </View>
   )

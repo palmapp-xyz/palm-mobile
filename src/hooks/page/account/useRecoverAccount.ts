@@ -7,6 +7,7 @@ import { useMemo, useState } from 'react'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 export type UseRecoverAccountReturn = {
   usePkey: boolean
@@ -22,9 +23,10 @@ export type UseRecoverAccountReturn = {
 
 const useRecoverAccount = (): UseRecoverAccountReturn => {
   const { registerMnemonic } = useAuth()
-  const [usePkey, setUsePkey] = useState(false)
   const { alert } = useAlert()
+  const { t } = useTranslation()
 
+  const [usePkey, setUsePkey] = useState(false)
   const [privateKey, setPrivateKey] = useState('')
   const [seedPhrase, setSeedPhrase] = useState<string[]>([])
   const mnemonic = seedPhrase.join(' ')
@@ -74,7 +76,7 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
       }
     } catch (e) {
       recordError(e, 'useRecoverAccount:error')
-      alert({ title: 'Failure', message: _.toString(e) })
+      alert({ title: t('Auth.RecoverErrorAlertTitle'), message: _.toString(e) })
     }
   }
 

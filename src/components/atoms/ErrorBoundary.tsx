@@ -1,3 +1,4 @@
+import i18n from 'i18next'
 import { recordError } from 'libs/logger'
 import React, { ErrorInfo, ReactElement, ReactNode } from 'react'
 import { ImageStyle, StyleProp, Text, View } from 'react-native'
@@ -48,7 +49,7 @@ class ErrorBoundary extends React.Component<
               this.props.style,
             ]}
           >
-            <Text>Something happened!</Text>
+            <Text>{i18n.t('Components.ErrorBoundary.SomethingHappened')}</Text>
             <Text>{this.state.error.toString()}</Text>
           </View>
         )

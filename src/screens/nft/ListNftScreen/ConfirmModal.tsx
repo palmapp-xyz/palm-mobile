@@ -20,6 +20,7 @@ import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import _ from 'lodash'
+import { useTranslation } from 'react-i18next'
 import { Keyboard } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -45,6 +46,7 @@ const ConfirmModal = ({
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const { t } = useTranslation()
 
   const onSubmit = async (
     token_uri: string,
@@ -82,8 +84,7 @@ const ConfirmModal = ({
             }}
           >
             <FormText fontType="R.12" color={COLOR.error}>
-              The sale will be accepted and concluded unless you cancel it. The
-              sale listing is valid for 24 hours.
+              {t('Nft.ListNftConfirmModalNotice')}
             </FormText>
           </View>
         </View>
@@ -131,7 +132,7 @@ const ConfirmModal = ({
                 paddingHorizontal: 20,
               }}
             >
-              <FormText>on</FormText>
+              <FormText>{t('Nft.ListNftConfirmModalOn')}</FormText>
               <FormImage source={NETWORK.getNetworkLogo(chain)} />
               <FormText>{_.capitalize(chain)}</FormText>
             </Row>
@@ -141,9 +142,13 @@ const ConfirmModal = ({
           >
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">From</FormText>
+                <FormText fontType="SB.12">
+                  {t('Nft.ListNftConfirmModalFrom')}
+                </FormText>
               </View>
-              <FormText fontType="B.16">Me</FormText>
+              <FormText fontType="B.16">
+                {t('Nft.ListNftConfirmModalMe')}
+              </FormText>
               <FormText fontType="R.12">
                 {`(${UTIL.truncate(user?.address || '')})`}
               </FormText>
@@ -157,10 +162,14 @@ const ConfirmModal = ({
             </View>
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">To</FormText>
+                <FormText fontType="SB.12">
+                  {t('Nft.ListNftConfirmModalTo')}
+                </FormText>
               </View>
               <Row>
-                <FormText fontType="B.16">List Contract</FormText>
+                <FormText fontType="B.16">
+                  {t('Nft.ListNftConfirmModalListContract')}
+                </FormText>
               </Row>
             </View>
           </Row>
@@ -173,7 +182,7 @@ const ConfirmModal = ({
             setShowBottomSheet(false)
           }}
         >
-          Reject
+          {t('Common.Reject')}
         </FormButton>
         <FormButton
           containerStyle={{ flex: 1 }}
@@ -183,7 +192,7 @@ const ConfirmModal = ({
             onSubmit(selectedNft.token_uri, order)
           }}
         >
-          Confirm
+          {t('Common.Confirm')}
         </FormButton>
       </Row>
     </FormBottomSheet>

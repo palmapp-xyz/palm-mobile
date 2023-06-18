@@ -17,6 +17,7 @@ import { Moralis, SupportedNetworkEnum } from 'types'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
+import { useTranslation } from 'react-i18next'
 import ProfileHeader from '../../components/ProfileHeader'
 
 const MyPageScreen = (): ReactElement => {
@@ -29,6 +30,7 @@ const MyPageScreen = (): ReactElement => {
   })
 
   const { alert } = useAlert()
+  const { t } = useTranslation()
 
   const { profile, updateProfileImage } = useProfile({
     profileId: user?.auth?.profileId,
@@ -58,10 +60,16 @@ const MyPageScreen = (): ReactElement => {
     if (res.success) {
       const txHash = res.value
       console.log(`updateProfileImage tx hash ${txHash}`)
-      alert({ message: 'Profile image updated' })
+      alert({
+        message: t('Profiles.MyProfileUpdateImageSuccessAlertMessage'),
+      })
     } else {
       recordError(`updateProfileImage error ${res.errMsg}`)
-      alert({ message: `Update profile image failed: ${res.errMsg}` })
+      alert({
+        message: t('Profiles.MyProfileUpdateImageSuccessAlertMessage', {
+          errMsg: res.errMsg,
+        }),
+      })
     }
   }
 

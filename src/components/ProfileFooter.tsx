@@ -1,5 +1,6 @@
 import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { Moralis } from 'types'
 import Indicator from './atoms/Indicator'
@@ -11,14 +12,19 @@ const ProfileFooter = ({
     Moralis.NftItem | Moralis.NftCollection
   >
 }): ReactElement => {
+  const { t } = useTranslation()
   return (
     <View style={[styles.footer]}>
       {useUserAssetsReturn.loading ? (
         <Indicator />
       ) : useUserAssetsReturn.items.length === 0 ? (
-        <Text style={styles.text}>{'The user has no NFTs yet.'}</Text>
+        <Text style={styles.text}>
+          {t('Components.ProfileFooter.HasNoNft')}
+        </Text>
       ) : !useUserAssetsReturn.hasNextPage ? (
-        <Text style={styles.text}>{'End of List'}</Text>
+        <Text style={styles.text}>
+          {t('Components.ProfileFooter.EndOfList')}
+        </Text>
       ) : null}
     </View>
   )

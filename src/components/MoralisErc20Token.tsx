@@ -40,7 +40,7 @@ const MoralisErc20Token = ({
             <FormText fontType="R.16">{item.symbol}</FormText>
           </Row>
           <FormText fontType="R.10" color={COLOR.black._400}>
-            {`(≈ $${
+            {`(≈$${
               tokenValue ? UTIL.formatAmountP(tokenValue, { toFix: 0 }) : '?'
             })`}
           </FormText>

@@ -5,6 +5,7 @@ import useExploreRecommendChat from 'hooks/page/explore/useExploreRecommendChat'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 const RecommendChat = ({
@@ -15,12 +16,15 @@ const RecommendChat = ({
   const { setSelectedChannel } = useExploreSearchReturn
 
   const { fsChannelList } = useExploreRecommendChat()
+  const { t } = useTranslation()
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.title}>
-          <FormText fontType="B.24">{'Explore\nchannels to Join'}</FormText>
+          <FormText fontType="B.24">
+            {t('Explore.ExploreChannelsToJoin')}
+          </FormText>
         </View>
       </View>
       <View style={styles.body}>

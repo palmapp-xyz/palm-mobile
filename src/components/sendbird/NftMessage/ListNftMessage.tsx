@@ -16,40 +16,50 @@ import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SbListNftDataType, SupportedNetworkEnum, pToken } from 'types'
 
 const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { getKlayPrice } = useKlayPrice()
+  const { t } = useTranslation()
 
   return (
     <FormText fontType="R.10" color={COLOR.black._400}>
-      {`(≈$${UTIL.formatAmountP(getKlayPrice(amount || ('0' as pToken)), {
-        toFix: 0,
-      })})`}
+      {t('Common.UsdPrice', {
+        price: UTIL.formatAmountP(getKlayPrice(amount || ('0' as pToken)), {
+          toFix: 0,
+        }),
+      })}
     </FormText>
   )
 }
 const MaticPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { getMaticPrice } = useMaticPrice()
+  const { t } = useTranslation()
 
   return (
     <FormText fontType="R.10" color={COLOR.black._400}>
-      {`(≈$${UTIL.formatAmountP(getMaticPrice(amount || ('0' as pToken)), {
-        toFix: 0,
-      })})`}
+      {t('Common.UsdPrice', {
+        price: UTIL.formatAmountP(getMaticPrice(amount || ('0' as pToken)), {
+          toFix: 0,
+        }),
+      })}
     </FormText>
   )
 }
 const EthPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { getEthPrice } = useEthPrice()
+  const { t } = useTranslation()
 
   return (
     <FormText fontType="R.10" color={COLOR.black._400}>
-      {`(≈$${UTIL.formatAmountP(getEthPrice(amount || ('0' as pToken)), {
-        toFix: 0,
-      })})`}
+      {t('Common.UsdPrice', {
+        price: UTIL.formatAmountP(getEthPrice(amount || ('0' as pToken)), {
+          toFix: 0,
+        }),
+      })}
     </FormText>
   )
 }
@@ -60,6 +70,7 @@ const ListNftMessage = ({
   data: SbListNftDataType
 }): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.GroupChannel>()
+  const { t } = useTranslation()
 
   const item = data.selectedNft
 
@@ -124,7 +135,7 @@ const ListNftMessage = ({
                   ]}
                 >
                   <FormText fontType="SB.12" color="white">
-                    Sold
+                    {t('Nft.ListNftMessageSold')}
                   </FormText>
                 </View>
               )}
@@ -174,7 +185,7 @@ const ListNftMessage = ({
                   })
             }}
           >
-            Details
+            {t('Nft.ListNftMessageDetails')}
           </FormButton>
         </View>
       </View>
@@ -197,7 +208,7 @@ const ListNftMessage = ({
         }}
       >
         <FormText color={COLOR.black._500} fontType="R.12">
-          View Transaction Detail{' '}
+          {t('Nft.ListNftMessageTransactionDetail')}
         </FormText>
         <Ionicons
           color={COLOR.black._500}

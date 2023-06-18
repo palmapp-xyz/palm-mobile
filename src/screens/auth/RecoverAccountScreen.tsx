@@ -22,6 +22,7 @@ import appStore from 'store/appStore'
 import Clipboard from '@react-native-clipboard/clipboard'
 import useToast from 'hooks/useToast'
 import { getMnemonic, getPkey } from 'libs/account'
+import { useTranslation } from 'react-i18next'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
@@ -39,6 +40,7 @@ const RecoverAccountScreen = (): ReactElement => {
   const recoverType = params.type
 
   const toast = useToast()
+  const { t } = useTranslation()
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
@@ -51,7 +53,7 @@ const RecoverAccountScreen = (): ReactElement => {
         : JSON.stringify(k) === JSON.stringify(seedPhrase)
 
       if (match) {
-        toast.show('Verified your key or seed phrase.', {
+        toast.show(t('Auth.RecoverSeedVerifyPassToast'), {
           color: 'blue',
           icon: 'check',
         })
@@ -66,10 +68,10 @@ const RecoverAccountScreen = (): ReactElement => {
           },
         })
       } else {
-        toast.show(
-          'Verification failed. please check you private key or seed phrase.',
-          { color: 'red', icon: 'info' }
-        )
+        toast.show(t('Auth.RecoverSeedVerifyFailToast'), {
+          color: 'red',
+          icon: 'info',
+        })
       }
     } else {
       navigation.push(Routes.Pin, {
@@ -96,11 +98,11 @@ const RecoverAccountScreen = (): ReactElement => {
   const getTitleText = (): string => {
     switch (recoverType) {
       case 'importWallet':
-        return 'How do you\nimport your wallet?'
+        return t('Auth.RecoverImportWalletTitle')
       case 'restoreWallet':
-        return 'Please verify\nthe wallet'
+        return t('Auth.RecoverRestoreWalletTitle')
       case 'resetPin':
-        return 'Reset PIN'
+        return t('Auth.RecoverResetPinTitle')
     }
   }
 
@@ -118,7 +120,7 @@ const RecoverAccountScreen = (): ReactElement => {
           </FormText>
           {recoverType === 'restoreWallet' && (
             <FormText color={COLOR.black._400} fontType="R.14">
-              {'The account can only be restored\nby verifying the wallet.'}
+              {t('Auth.RecoverRestoreWalletMessage')}
             </FormText>
           )}
         </View>
@@ -132,13 +134,13 @@ const RecoverAccountScreen = (): ReactElement => {
         >
           <MenuItem
             value={true}
-            title="Enter a private key"
+            title={t('Common.EnterPrivateKey')}
             selected={usePkey}
             setSelected={setUsePkey}
           />
           <MenuItem
             value={false}
-            title="Seed Phrase"
+            title={t('Common.SeedPhrase')}
             selected={!usePkey}
             setSelected={setUsePkey}
           />
@@ -146,7 +148,7 @@ const RecoverAccountScreen = (): ReactElement => {
         {usePkey ? (
           <View style={{ rowGap: 12 }}>
             <FormInput
-              placeholder="Private key"
+              placeholder={t('Common.PrivateKey')}
               value={privateKey}
               onChangeText={setPrivateKey}
             />
@@ -159,7 +161,9 @@ const RecoverAccountScreen = (): ReactElement => {
             >
               <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
                 <Icon name="copy-outline" size={14} />
-                <FormText fontType="R.12">Paste from Clipboard</FormText>
+                <FormText fontType="R.12">
+                  {t('Common.PasteFromClipboard')}
+                </FormText>
               </Row>
             </TouchableOpacity>
           </View>
@@ -200,7 +204,9 @@ const RecoverAccountScreen = (): ReactElement => {
           disabled={!isValidForm || loading}
           onPress={onPressConfirm}
         >
-          {recoverType === 'importWallet' ? 'Import the Wallet' : 'Verify'}
+          {recoverType === 'importWallet'
+            ? t('Auth.ImportTheWallet')
+            : t('Common.Verify')}
         </FormButton>
       </View>
     </Container>

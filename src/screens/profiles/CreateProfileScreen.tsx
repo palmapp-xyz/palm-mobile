@@ -19,11 +19,13 @@ import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 const CreateProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
 
   const { user } = useAuth()
+  const { t } = useTranslation()
   const [handle, setHandle] = useState('')
   const [bio, setBio] = useState('')
   const [loading, setLoading] = useRecoilState(appStore.loading)
@@ -74,32 +76,35 @@ const CreateProfileScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
           <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
-            {'Fill out your profile'}
+            {t('Profiles.CreateProfileTitle')}
           </FormText>
           <FormText color={COLOR.black._400} fontType="R.14">
-            {'Please write a nice phrase\nthat describes you well'}
+            {t('Profiles.CreateProfileTitleSub')}
           </FormText>
         </View>
         <View style={{ rowGap: 12 }}>
           <View style={styles.rowSection}>
-            <FormText fontType="R.12">Username</FormText>
+            <FormText fontType="R.12">
+              {t('Profiles.CreateProfileUsername')}
+            </FormText>
             <FormInput
               value={handle}
               onChangeText={setHandle}
               textContentType="username"
               fontType="R.12"
-              placeholder="Enter your nickname"
+              placeholder={t('Profiles.CreateProfileUsernamePlaceholder')}
               autoCapitalize="none"
               style={{ marginVertical: 2 }}
             />
             <FormText fontType="R.12" color={COLOR.yellow}>
-              Up to 20 characters are allowed, and only uppercase and lowercase
-              letters and numbers can be entered.
+              {t('Profiles.CreateProfileUsernameHint')}
             </FormText>
           </View>
           <View style={styles.rowSection}>
             <Row>
-              <FormText fontType="R.12">Description</FormText>
+              <FormText fontType="R.12">
+                {t('Profiles.CreateProfileDescription')}
+              </FormText>
               <FormText fontType="R.12">
                 ({bio.length}/{maxBioLength})
               </FormText>
@@ -115,7 +120,7 @@ const CreateProfileScreen = (): ReactElement => {
               fontType="R.12"
               multiline={true}
               maxLength={maxBioLength}
-              placeholder="Please write something you would like to introduce about yourself."
+              placeholder={t('Profiles.CreateProfileDescriptionPlaceholder')}
               secureTextEntry
               style={{ marginVertical: 2, minHeight: 200 }}
             />
@@ -129,7 +134,7 @@ const CreateProfileScreen = (): ReactElement => {
           disabled={loading || handle.length === 0}
           onPress={onClickConfirm}
         >
-          Done
+          {t('Common.Done')}
         </FormButton>
       </View>
     </Container>

@@ -4,6 +4,7 @@ import { COLOR } from 'consts'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -31,6 +32,7 @@ const NftList = ({
     userAddress,
     contractAddress: selectedCollection.token_address,
   })
+  const { t } = useTranslation()
 
   const listHeaderComponent = (
     <TouchableOpacity
@@ -54,9 +56,9 @@ const NftList = ({
       {loading ? (
         <Indicator />
       ) : items.length === 0 ? (
-        <Text style={styles.text}>{'No tokens to show'}</Text>
+        <Text style={styles.text}>{t('Channels.UiKitNftNoToken')}</Text>
       ) : (
-        <Text style={styles.text}>{'End of List'}</Text>
+        <Text style={styles.text}>{t('Channels.UiKitNftEndOfList')}</Text>
       )}
     </View>
   )

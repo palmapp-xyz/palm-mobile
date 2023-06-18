@@ -12,6 +12,7 @@ import {
 import { COLOR } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 const SelectReceiverModal = ({
@@ -19,6 +20,7 @@ const SelectReceiverModal = ({
 }: {
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
+  const { t } = useTranslation()
   const snapPoints = useMemo(() => ['70%'], [])
   const [selectUser, setSelectUser] = useState<Member>()
 
@@ -36,12 +38,14 @@ const SelectReceiverModal = ({
           <Row
             style={{ alignItems: 'center', columnGap: 8, paddingBottom: 18 }}
           >
-            <FormText fontType="B.24">NFT to</FormText>
+            <FormText fontType="B.24">
+              {t('Channels.UiKitReceiverModalNftTo')}
+            </FormText>
             {selectUser ? (
               <FormText fontType="B.24">{selectUser.nickname}</FormText>
             ) : (
               <FormText fontType="B.24" color={COLOR.black._200}>
-                whom?
+                {t('Channels.UiKitReceiverModalWhom')}
               </FormText>
             )}
           </Row>

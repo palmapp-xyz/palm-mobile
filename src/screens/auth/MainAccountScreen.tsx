@@ -14,9 +14,11 @@ import React, { ReactElement, useMemo, useRef, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import BottomSheet from '@gorhom/bottom-sheet'
+import { useTranslation } from 'react-i18next'
 
 const MainAccountScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
 
   const [showBottomSheet, setShowBottomSheet] = useState(false)
   const snapPoints = useMemo(() => ['25%'], [])
@@ -28,7 +30,7 @@ const MainAccountScreen = (): ReactElement => {
         <View style={styles.top}>
           <FormImage source={images.palm_logo} size={88} />
           <FormText fontType="B.24" style={{ textAlign: 'center' }}>
-            {'Hi, there!\nWelcome to Palm'}
+            {t('Auth.MainTitle')}
           </FormText>
         </View>
         <View style={styles.bottom}>
@@ -39,7 +41,7 @@ const MainAccountScreen = (): ReactElement => {
               })
             }}
           >
-            Restore My Account
+            {t('Auth.RestoreMyAccount')}
           </FormButton>
           <FormButton
             figure="outline"
@@ -48,7 +50,7 @@ const MainAccountScreen = (): ReactElement => {
               bottomSheetRef?.current?.snapToIndex(1)
             }}
           >
-            Sign up with a Wallet
+            {t('Auth.SignUpWithWallet')}
           </FormButton>
         </View>
       </Container>
@@ -67,7 +69,7 @@ const MainAccountScreen = (): ReactElement => {
           >
             <FormImage source={images.plus} size={32} />
             <FormText fontType="R.12" style={{ textAlign: 'center' }}>
-              {'Create a\nnew wallet'}
+              {t('Auth.CreateNewWallet')}
             </FormText>
           </TouchableOpacity>
           <TouchableOpacity
@@ -80,7 +82,7 @@ const MainAccountScreen = (): ReactElement => {
           >
             <FormImage source={images.import} size={32} />
             <FormText fontType="R.12" style={{ textAlign: 'center' }}>
-              {'Import\na wallet'}
+              {t('Auth.ImportWallet')}
             </FormText>
           </TouchableOpacity>
         </Row>

@@ -9,6 +9,7 @@ import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr, SupportedNetworkEnum } from 'types'
 
+import { useTranslation } from 'react-i18next'
 import LensProfileHeaderSection from './LensProfileHeaderSection'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
@@ -35,6 +36,7 @@ const ProfileHeader = React.memo(
     onToggleShowUserTokensSheet,
   }: ProfileHeaderProps): ReactElement => {
     const { navigation } = useAppNavigation()
+    const { t } = useTranslation()
 
     const { profile, lensProfile } = useProfile({ profileId: userProfileId })
     const profileImg = getProfileMediaImg(profile?.picture)
@@ -130,7 +132,9 @@ const ProfileHeader = React.memo(
               marginTop: !isMyPage ? 12 : 0,
             }}
           >
-            <FormText fontType="B.14">NFT List</FormText>
+            <FormText fontType="B.14">
+              {t('Components.ProfileHeader.NftList')}
+            </FormText>
             <SupportedNetworkRow
               selectedNetwork={selectedNetwork}
               onNetworkSelected={onNetworkSelected}

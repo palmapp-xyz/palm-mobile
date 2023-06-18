@@ -6,10 +6,16 @@ import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, SupportedNetworkEnum, pToken } from 'types'
+import {
+  ContractAddr,
+  SupportedNetworkEnum,
+  TokenSymbolEnum,
+  pToken,
+} from 'types'
 
 export type ProfileWalletBalancesProps = {
   userAddress: ContractAddr | undefined
@@ -21,6 +27,7 @@ const ProfileWalletBalances = React.memo(
     userAddress,
     onToggleShowUserTokensSheet,
   }: ProfileWalletBalancesProps): ReactElement => {
+    const { t } = useTranslation()
     const { getEthPrice } = useEthPrice()
     const { getKlayPrice } = useKlayPrice()
     const { getMaticPrice } = useMaticPrice()
@@ -48,9 +55,11 @@ const ProfileWalletBalances = React.memo(
               paddingBottom: 12,
             }}
           >
-            <FormText fontType="B.14">Wallet Balances</FormText>
+            <FormText fontType="B.14">
+              {t('Components.ProfileWalletBalances.WalletBalances')}
+            </FormText>
             <FormText fontType="R.10" color={COLOR.black._200}>
-              Only visible to you
+              {t('Components.ProfileWalletBalances.OnlyVisibleToYou')}
             </FormText>
           </Row>
 
@@ -65,15 +74,17 @@ const ProfileWalletBalances = React.memo(
                         toFix: 4,
                       })}{' '}
                     </FormText>
-                    <FormText fontType="R.16">ETH</FormText>
+                    <FormText fontType="R.16">{TokenSymbolEnum.ETH}</FormText>
                   </Row>
                   <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈ $${UTIL.formatAmountP(
-                      getEthPrice(ethBalance || ('0' as pToken)),
-                      {
-                        toFix: 0,
-                      }
-                    )})`}
+                    {t('Common.UsdPrice', {
+                      price: UTIL.formatAmountP(
+                        getEthPrice(ethBalance || ('0' as pToken)),
+                        {
+                          toFix: 0,
+                        }
+                      ),
+                    })}
                   </FormText>
                 </View>
               </Row>
@@ -89,15 +100,17 @@ const ProfileWalletBalances = React.memo(
                         toFix: 4,
                       })}{' '}
                     </FormText>
-                    <FormText fontType="R.16">KLAY</FormText>
+                    <FormText fontType="R.16">{TokenSymbolEnum.KLAY}</FormText>
                   </Row>
                   <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈ $${UTIL.formatAmountP(
-                      getKlayPrice(klayBalance || ('0' as pToken)),
-                      {
-                        toFix: 0,
-                      }
-                    )})`}
+                    {t('Common.UsdPrice', {
+                      price: UTIL.formatAmountP(
+                        getKlayPrice(ethBalance || ('0' as pToken)),
+                        {
+                          toFix: 0,
+                        }
+                      ),
+                    })}
                   </FormText>
                 </View>
               </Row>
@@ -113,15 +126,17 @@ const ProfileWalletBalances = React.memo(
                         toFix: 4,
                       })}{' '}
                     </FormText>
-                    <FormText fontType="R.16">MATIC</FormText>
+                    <FormText fontType="R.16">{TokenSymbolEnum.MATIC}</FormText>
                   </Row>
                   <FormText fontType="R.10" color={COLOR.black._400}>
-                    {`(≈ ${UTIL.formatAmountP(
-                      getMaticPrice(maticBalance || ('0' as pToken)),
-                      {
-                        toFix: 0,
-                      }
-                    )})`}
+                    {t('Common.UsdPrice', {
+                      price: UTIL.formatAmountP(
+                        getMaticPrice(ethBalance || ('0' as pToken)),
+                        {
+                          toFix: 0,
+                        }
+                      ),
+                    })}
                   </FormText>
                 </View>
               </Row>
@@ -131,7 +146,7 @@ const ProfileWalletBalances = React.memo(
           <TouchableOpacity onPress={onToggleShowUserTokensSheet}>
             <Row style={styles.seeAll}>
               <FormText fontType="R.14" color={COLOR.black._400}>
-                See All
+                {t('Components.ProfileWalletBalances.SeeAll')}
               </FormText>
               <Icon
                 name="ios-chevron-forward"

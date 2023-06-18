@@ -6,16 +6,21 @@ import React, { ReactElement, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 const SignInWithLens = (): ReactElement => {
   const { lensLogin, logout } = useAuth()
   const { alert } = useAlert()
+  const { t } = useTranslation()
 
   useEffect(() => {
     lensLogin().then(res => {
       if (!res.success) {
         recordError(new Error(res.errMsg), 'SignInWithLens:lensLogin')
-        alert({ title: 'Failure', message: res.errMsg })
+        alert({
+          title: t('Auth.SignLensFailureAlertTitle'),
+          message: res.errMsg,
+        })
         logout()
       } else {
         if (res.value) {
@@ -38,7 +43,7 @@ const SignInWithLens = (): ReactElement => {
         }}
       >
         <LensLogo />
-        <Text style={{ fontSize: 16 }}>{'Signing in ...'}</Text>
+        <Text style={{ fontSize: 16 }}>{t('Auth.SignLensLoading')}</Text>
       </View>
     </Container>
   )

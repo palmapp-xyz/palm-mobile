@@ -11,6 +11,7 @@ import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
 
+import { useTranslation } from 'react-i18next'
 import Row from '../../atoms/Row'
 
 const SendNftMessage = ({
@@ -19,6 +20,7 @@ const SendNftMessage = ({
   data: SbSendNftDataType
 }): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
 
   const item = data.selectedNft
 
@@ -43,8 +45,10 @@ const SendNftMessage = ({
         }}
       >
         <Row style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
-          <FormText fontType="B.10">Sent </FormText>
-          <FormText fontType="R.10">to {UTIL.truncate(data.to)}</FormText>
+          <FormText fontType="B.10">{t('Nft.SendNftMessageSent')}</FormText>
+          <FormText fontType="R.10">
+            {t('Nft.SendNftMessageTo', { to: UTIL.truncate(data.to) })}
+          </FormText>
         </Row>
         <VerifiedWrapper>
           <MoralisNftRenderer
@@ -78,7 +82,7 @@ const SendNftMessage = ({
         }}
       >
         <FormText color={COLOR.black._500} fontType="R.12">
-          View Transaction Detail{' '}
+          {t('Nft.SendNftMessageViewTransactionDetail')}
         </FormText>
         <Ionicons
           color={COLOR.black._500}

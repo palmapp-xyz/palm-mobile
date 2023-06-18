@@ -6,6 +6,7 @@ import useToast from 'hooks/useToast'
 import { Routes } from 'libs/navigation'
 import { getNewPin, getPin, resetNewPin, saveNewPin, savePin } from 'libs/pin'
 import React, { ReactElement, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Image,
   TouchableOpacity,
@@ -14,6 +15,8 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+
+const PIN_COUNT = 4
 
 const CloseButton = (props: { onPress?: () => void }): ReactElement => {
   return (
@@ -111,6 +114,7 @@ const PinButton = (
       props.handleDelete()
     }
   }
+
   const onPressOut = (): void => {
     setTimeout(() => setBackgroundColor(undefined), 50)
   }
@@ -146,14 +150,13 @@ const PinButton = (
   )
 }
 
-const PIN_COUNT = 4
-
 const PinScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.Pin>()
   const { type, result: resultCallback, cancel } = params
 
   const [pinType, setPinType] = useState<'set' | 'auth' | 'reset'>(type)
   const toast = useToast()
+  const { t } = useTranslation()
 
   const [inputPin, setInputPin] = useState('')
   const [pinConfigurePhase, setPinConfigurePhase] = useState<
@@ -214,7 +217,7 @@ const PinScreen = (): ReactElement => {
                 // match
                 await savePin(inputPin)
 
-                toast.show('Your PIN code is successfully set up.', {
+                toast.show(t('Pin.PinSetupSuccessToast'), {
                   color: 'green',
                   icon: 'check',
                 })
@@ -224,7 +227,7 @@ const PinScreen = (): ReactElement => {
                 }
                 resultCallback && resultCallback(true)
               } else {
-                toast.show('PIN mismatch', {
+                toast.show(t('Pin.PinMismatchToast'), {
                   color: 'red',
                   icon: 'info',
                 })
@@ -249,16 +252,16 @@ const PinScreen = (): ReactElement => {
   }
 
   const TITLE = {
-    setup: { title: 'Set up your PIN code' },
-    confirm: { title: 'Confirm your PIN code' },
-    enter: { title: 'Enter your PIN code' },
+    setup: { title: t('Pin.PinSetupTitle') },
+    confirm: { title: t('Pin.PinConfirmTitle') },
+    enter: { title: t('Pin.PinEnterTitle') },
     none: { title: '' },
   }
   const TITLE_SUB = {
-    setup: { title: 'This action requires a PIN code setting.' },
+    setup: { title: t('Pin.PinSetupTitle') },
     confirm: { title: '' },
     enter: {
-      title: 'Forgot your PIN code?',
+      title: t('Pin.PinEnterTitleSub'),
       icon: 'alert-circle-outline',
       onPress: onResetPin,
     },

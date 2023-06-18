@@ -34,6 +34,7 @@ import {
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
+import { useTranslation } from 'react-i18next'
 import NftDetails from '../../components/NftDetails'
 
 const InitNftUri = ({
@@ -99,6 +100,7 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const { t } = useTranslation()
 
   const { onClickConfirm: onClickCancel } = useZxCancelNft(
     channelUrl,
@@ -139,10 +141,11 @@ const ZxNftDetailScreen = (): ReactElement => {
       )
       if (hasEnoughBalance === false) {
         Alert.alert(
-          'Insufficient balance',
-          `You have ${UTIL.formatAmountP(myTargetBalance)} ${
-            NETWORK.nativeToken[chain]
-          }`
+          t('Nft.ZxNftDetailInsufficientBalanceAlertTitle'),
+          t('Nft.ZxNftDetailInsufficientBalanceAlertMessage', {
+            balance: UTIL.formatAmountP(myTargetBalance),
+            token: NETWORK.nativeToken[chain],
+          })
         )
         return
       }
@@ -164,7 +167,11 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Header title="Buy NFT" left="back" onPressLeft={navigation.goBack} />
+      <Header
+        title={t('Nft.ZxNftDetailHeaderTitle')}
+        left="back"
+        onPressLeft={navigation.goBack}
+      />
       {order && (
         <>
           <InitNftUri
@@ -193,12 +200,14 @@ const ZxNftDetailScreen = (): ReactElement => {
           </Row>
           <View>
             <FormText fontType="R.10" color={COLOR.black._400}>
-              {`(≈$${UTIL.formatAmountP(usdPrice, { toFix: 0 })})`}
+              {t('Common.UsdPrice', {
+                price: UTIL.formatAmountP(usdPrice, { toFix: 0 }),
+              })}
             </FormText>
           </View>
         </View>
         <FormButton disabled={!order} onPress={onSubmit}>
-          {isMine ? 'Cancel' : 'Buy'}
+          {isMine ? t('Common.Cancel') : t('Common.Buy')}
         </FormButton>
       </Row>
     </Container>

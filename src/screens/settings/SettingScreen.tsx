@@ -5,6 +5,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useVersions from 'hooks/useVersions'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Switch } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -69,17 +70,22 @@ const SettingTextItem = (props: {
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
   const version = useVersions()
 
   const [enablePush, setEnablePush] = useState<boolean>(false)
 
   return (
     <Container style={styles.container}>
-      <Header title="Setting" left="back" onPressLeft={navigation.goBack} />
+      <Header
+        title={t('Settings.HeaderTitle')}
+        left="back"
+        onPressLeft={navigation.goBack}
+      />
       <View style={styles.body}>
         <View style={styles.itemGroup}>
           <SettingSwitchItem
-            name="Push Notifications"
+            name={t('Settings.PushNotification')}
             enable={enablePush}
             toggle={(value): void => {
               setEnablePush(value)
@@ -88,21 +94,30 @@ const SettingScreen = (): ReactElement => {
           />
         </View>
         <View style={styles.itemGroup}>
-          <SettingItem name="Change PIN code" onPress={(): void => {}} />
           <SettingItem
-            name="Export Wallet"
+            name={t('Settings.ChangePin')}
+            onPress={(): void => {}}
+          />
+          <SettingItem
+            name={t('Settings.ExportWallet')}
             onPress={(): void => {
               navigation.navigate(Routes.ExportPrivate)
             }}
           />
         </View>
         <View style={styles.itemGroup}>
-          <SettingItem name="Service agreement" onPress={(): void => {}} />
-          <SettingItem name="Privacy" onPress={(): void => {}} />
-          <SettingItem name="Contact" onPress={(): void => {}} />
-          <SettingItem name="Give us Feedback! 🙌" onPress={(): void => {}} />
+          <SettingItem
+            name={t('Settings.ExportWallet')}
+            onPress={(): void => {}}
+          />
+          <SettingItem name={t('Settings.Privacy')} onPress={(): void => {}} />
+          <SettingItem name={t('Settings.Contact')} onPress={(): void => {}} />
+          <SettingItem
+            name={t('Settings.GiveUsFeedback')}
+            onPress={(): void => {}}
+          />
           <SettingTextItem
-            name="Version"
+            name={t('Settings.Version')}
             text={
               version.codepush
                 ? `${version.app}-${version.codepush} ${
@@ -131,7 +146,7 @@ const SettingScreen = (): ReactElement => {
             }}
           >
             <FormText fontType="SB.12" color={COLOR.red}>
-              Sign Out
+              {t('Settings.SignOut')}
             </FormText>
           </TouchableOpacity>
         </View>

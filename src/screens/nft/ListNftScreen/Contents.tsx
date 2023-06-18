@@ -6,6 +6,7 @@ import useToast from 'hooks/useToast'
 import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -33,6 +34,7 @@ const Contents = ({
   const toast = useToast()
 
   const { bottom } = useSafeAreaInsets()
+  const { t } = useTranslation()
 
   return (
     <KeyboardAvoidingView
@@ -43,7 +45,9 @@ const Contents = ({
       <View style={styles.body}>
         <View style={{ paddingHorizontal: 20 }}>
           <View style={{ rowGap: 8, paddingBottom: 28 }}>
-            <FormText fontType="B.14">I want to sell this NFT for</FormText>
+            <FormText fontType="B.14">
+              {t('Nft.ListNftWantToSellThisNft')}
+            </FormText>
             <Row
               style={{
                 justifyContent: 'space-between',
@@ -52,7 +56,7 @@ const Contents = ({
             >
               <FormInput
                 fontType="B.24"
-                placeholder="Price"
+                placeholder={t('Nft.ListNftPricePlaceholder')}
                 maxLength={10}
                 value={price}
                 onChangeText={(value): void => {
@@ -94,14 +98,14 @@ const Contents = ({
                   setShowBottomSheet(true)
                 }}
               >
-                List
+                {t('Nft.ListNftList')}
               </FormButton>
             </View>
           ) : (
             <View>
               <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                 <FormText style={{ fontWeight: 'bold' }}>
-                  Approve to list your NFT
+                  {t('Nft.ListNftApproveToList')}
                 </FormText>
               </View>
               <View style={styles.footer}>
@@ -115,7 +119,7 @@ const Contents = ({
                           navigation.pop()
                           onClickApprove()
                         } else {
-                          toast.show('PIN mismatch', {
+                          toast.show(t('Nft.PinMismatchToast'), {
                             color: 'red',
                             icon: 'info',
                           })
@@ -127,7 +131,7 @@ const Contents = ({
                     })
                   }}
                 >
-                  Approve
+                  {t('Common.Approve')}
                 </FormButton>
               </View>
             </View>

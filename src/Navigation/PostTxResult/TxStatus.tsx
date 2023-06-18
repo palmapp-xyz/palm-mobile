@@ -15,6 +15,7 @@ import styled from 'styled-components'
 import { PostTxStatus, SupportedNetworkEnum } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 const StyledContainer = styled(View)`
   position: absolute;
@@ -54,7 +55,9 @@ const TxStatus = ({
   setMinimized: React.Dispatch<React.SetStateAction<boolean>>
   network: SupportedNetworkEnum
 }): ReactElement => {
+  const { t } = useTranslation()
   const postTxResult = useRecoilValue(postTxStore.postTxResult)
+
   return (
     <StyledContainer>
       <StyledCard>
@@ -73,7 +76,7 @@ const TxStatus = ({
                 <FormImage source={images.loading} size={60} />
               </View>
               <StyledTextBox>
-                <StatusText>Posting...</StatusText>
+                <StatusText>{t('Navigation.PostTx.Posting')}</StatusText>
               </StyledTextBox>
             </>
           )}
@@ -84,7 +87,9 @@ const TxStatus = ({
                 <FormImage source={images.loading} size={60} />
               </View>
               <StyledTextBox>
-                <StatusText>Pending transaction</StatusText>
+                <StatusText>
+                  {t('Navigation.PostTx.PendingTransaction')}
+                </StatusText>
                 <LinkExplorer
                   type="tx"
                   address={postTxResult.transactionHash}
@@ -107,7 +112,9 @@ const TxStatus = ({
                   />
                 </StyledTextBox>
               )}
-              <FormButton onPress={onPressClose}>Success</FormButton>
+              <FormButton onPress={onPressClose}>
+                {t('Common.Success')}
+              </FormButton>
             </>
           )}
 
@@ -117,7 +124,7 @@ const TxStatus = ({
                 <Icon icon="error" size={60} color="red" />
               </View>
               <StyledTextBox>
-                <StatusText>Tx Error</StatusText>
+                <StatusText>{t('Navigation.PostTx.TxError')}</StatusText>
               </StyledTextBox>
               <ScrollView
                 style={{
@@ -129,7 +136,9 @@ const TxStatus = ({
               >
                 <Text>{_.toString(postTxResult.error)}</Text>
               </ScrollView>
-              <FormButton onPress={onPressClose}>Close</FormButton>
+              <FormButton onPress={onPressClose}>
+                {t('Common.Close')}
+              </FormButton>
             </>
           )}
         </View>

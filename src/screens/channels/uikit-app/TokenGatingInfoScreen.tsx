@@ -27,6 +27,7 @@ import {
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useTranslation } from 'react-i18next'
 
 const NativeGating = ({
   gating,
@@ -34,6 +35,7 @@ const NativeGating = ({
   gating: FbChannelNativeGatingField
 }): ReactElement => {
   const { user } = useAuth()
+  const { t } = useTranslation()
 
   const { balance } = useUserBalance({
     address: user?.address,
@@ -45,11 +47,15 @@ const NativeGating = ({
   return (
     <View style={{ rowGap: 20 }}>
       <View style={{ rowGap: 4 }}>
-        <FormText fontType="R.14">Required</FormText>
+        <FormText fontType="R.14">
+          {t('Channels.UiKitTokenGatingRequired')}
+        </FormText>
         <FormText>{`${UTIL.setComma(gating.amount)} ${nativeToken}`}</FormText>
       </View>
       <View style={{ rowGap: 4 }}>
-        <FormText fontType="R.14">My balance</FormText>
+        <FormText fontType="R.14">
+          {t('Channels.UiKitTokenGatingMyBalance')}
+        </FormText>
         <FormText>{`${UTIL.formatAmountP(balance)} ${nativeToken}`}</FormText>
       </View>
     </View>
@@ -65,6 +71,7 @@ const NftGating = ({
   const chain = gating.chain
 
   const { name } = useNft({ nftContract, chain })
+  const { t } = useTranslation()
 
   const { data: tokenName = '' } = useReactQuery(
     [QueryKeyEnum.NFT_TOKEN_NAME, nftContract, chain],
@@ -106,14 +113,14 @@ const NftGating = ({
         }}
       >{`${tokenName} holders`}</Text>
 
-      <Text style={{ fontSize: 16 }}>Entry requirement</Text>
+      <Text style={{ fontSize: 16 }}>
+        {t('Channels.UiKitTokenGatingInfoEntryRequirement')}
+      </Text>
       <Row style={{ alignItems: 'center', columnGap: 10 }}>
         <Text>{nftContract}</Text>
       </Row>
       <View style={{ backgroundColor: COLOR.black._300, padding: 10 }}>
-        <Text>
-          You need to meet the above requirement to have access to the space.
-        </Text>
+        <Text>{t('Channels.UiKitTokenGatingInfoEntryRequirementHint')}</Text>
       </View>
     </View>
   )
@@ -124,6 +131,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
   const { sdk } = useSendbirdChat()
   const { channelUrl } = params
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const { t } = useTranslation()
 
   const { fsChannelField } = useFsChannel({
     channelUrl: params.channelUrl,
@@ -144,7 +152,7 @@ const TokenGatingInfoScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title="Private channel"
+        title={t('Channels.UiKitPrivateChannelHeaderTitle')}
         left="back"
         onPressLeft={navigation.goBack}
       />

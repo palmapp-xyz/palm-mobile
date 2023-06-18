@@ -8,11 +8,13 @@ import { FlatList, StyleSheet, View } from 'react-native'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import useToast from 'hooks/useToast'
+import { useTranslation } from 'react-i18next'
 
 const NewAccountScreen = (): ReactElement => {
   const mnemonic = useMemo(() => generateMnemonic(128), [])
   const { navigation } = useAppNavigation()
   const toast = useToast()
+  const { t } = useTranslation()
 
   const [isSeedCopied, setIsSeedCopied] = useState(false)
 
@@ -25,12 +27,10 @@ const NewAccountScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
           <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
-            {'Copy your wallet’s\nseed phrase'}
+            {t('Auth.CopySeedPhrase')}
           </FormText>
           <FormText color={COLOR.black._400} fontType="R.14">
-            {
-              'Keep the seed phrase in a safe place.\nIt will allow you to recover your wallet.'
-            }
+            {t('Auth.CopySeedPhraseMessage')}
           </FormText>
         </View>
         <View
@@ -43,15 +43,14 @@ const NewAccountScreen = (): ReactElement => {
           }}
         >
           <FormText fontType="R.12" color={COLOR.yellow}>
-            Notice that your generated wallet's Privatekey is not stored on the
-            server and is stored on your mobile device.
+            {t('Auth.CopySeedPhraseNotice')}
           </FormText>
         </View>
         <View style={{ paddingBottom: 12 }}>
           <FormButton
             figure="outline"
             onPress={(): void => {
-              toast.show('Seed phrase copied', {
+              toast.show(t('Auth.CopySeedCopiedSeedToast'), {
                 color: 'green',
                 icon: 'check',
               })
@@ -59,7 +58,7 @@ const NewAccountScreen = (): ReactElement => {
               setIsSeedCopied(true)
             }}
           >
-            Copy the Set of Seed Phrase
+            {t('Auth.CopySeed')}
           </FormButton>
         </View>
         <FlatList
@@ -98,14 +97,14 @@ const NewAccountScreen = (): ReactElement => {
             if (isSeedCopied) {
               navigation.navigate(Routes.ConfirmSeed, { mnemonic })
             } else {
-              toast.show(
-                'You must copy the seed phrase to proceed to the next step.',
-                { color: 'red', icon: 'info' }
-              )
+              toast.show(t('Auth.CopySeedErrorToast'), {
+                color: 'red',
+                icon: 'info',
+              })
             }
           }}
         >
-          Next
+          {t('Common.Next')}
         </FormButton>
       </View>
     </Container>

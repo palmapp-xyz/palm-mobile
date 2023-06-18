@@ -9,9 +9,10 @@ import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import { getOrderTokenAddress, getOrderTokenId } from 'libs/zx'
 import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { FbListing, NftType, pToken, SupportedNetworkEnum } from 'types'
+import { FbListing, NftType, SupportedNetworkEnum, pToken } from 'types'
 
 const FbListingItem = ({
   item,
@@ -23,6 +24,7 @@ const FbListingItem = ({
   const { navigation } = useAppNavigation()
   const { getEthPrice } = useEthPrice()
   const { getKlayPrice } = useKlayPrice()
+  const { t } = useTranslation()
 
   const order = item.order
   const chain: SupportedNetworkEnum =
@@ -89,14 +91,15 @@ const FbListingItem = ({
         </Row>
         <View>
           <FormText fontType="R.10" color={COLOR.black._400}>
-            {`(≈$${UTIL.formatAmountP(usdPrice, { toFix: 0 })})`}
+            {t('Common.UsdPrice', {
+              price: UTIL.formatAmountP(usdPrice, { toFix: 0 }),
+            })}
           </FormText>
         </View>
         <View>
-          <FormText
-            fontType="R.10"
-            color={COLOR.black._400}
-          >{`Listed by ...${order.order.maker.slice(-5)}`}</FormText>
+          <FormText fontType="R.10" color={COLOR.black._400}>
+            {t('channels.ListedBy', { maker: order.order.maker.slice(-5) })}
+          </FormText>
         </View>
       </View>
     </TouchableOpacity>

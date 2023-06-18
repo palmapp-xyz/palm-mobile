@@ -5,6 +5,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import {
   ContractAddr,
@@ -15,6 +16,7 @@ import {
 
 const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
 
   const item = data.selectedNft
   const chain: SupportedNetworkEnum =
@@ -34,13 +36,20 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
     <View style={styles.container}>
       <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
       <View style={styles.body}>
-        <Text style={{ color: COLOR.primary._400 }}>Bought NFT</Text>
+        <Text style={{ color: COLOR.primary._400 }}>
+          {t('Component.BuyNftMessage.BoughtNft')}
+        </Text>
         <Text
           numberOfLines={2}
           style={{
             color: 'black',
           }}
-        >{`${UTIL.truncate(data.buyer)} bought #${item.nftTokenId}`}</Text>
+        >
+          {t('Component.BuyNftMessage.BoughtNftMessage', {
+            buyer: UTIL.truncate(data.buyer),
+            tokenId: item.nftTokenId,
+          })}
+        </Text>
 
         <FormButton
           size="sm"
@@ -53,7 +62,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
             })
           }}
         >
-          Details
+          {t('Common.Details')}
         </FormButton>
       </View>
     </View>

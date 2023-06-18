@@ -7,6 +7,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { SupportedNetworkEnum } from 'types'
 
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import { useTranslation } from 'react-i18next'
 import MoralisErc20Token from './MoralisErc20Token'
 import Indicator from './atoms/Indicator'
 
@@ -18,6 +19,7 @@ const UserTokensSheet = ({
   const snapPoints = useMemo(() => ['80%'], [])
 
   const { user } = useAuth()
+  const { t } = useTranslation()
 
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
@@ -41,9 +43,13 @@ const UserTokensSheet = ({
       {status === 'loading' ? (
         <Indicator />
       ) : items.length === 0 ? (
-        <Text style={styles.text}>{'No tokens to show'}</Text>
+        <Text style={styles.text}>
+          {t('Components.UserTokensSheet.NoTokensToShow')}
+        </Text>
       ) : (
-        <Text style={styles.text}>{'End of List'}</Text>
+        <Text style={styles.text}>
+          {t('Components.UserTokensSheet.EndOfList')}
+        </Text>
       )}
     </View>
   )

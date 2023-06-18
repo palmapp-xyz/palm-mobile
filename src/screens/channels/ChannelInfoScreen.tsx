@@ -4,7 +4,6 @@ import LoadingPage from 'components/atoms/LoadingPage'
 import Avatar from 'components/sendbird/Avatar'
 import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
 import { COLOR, NETWORK, UTIL } from 'consts'
-import { format } from 'date-fns'
 import useAuth from 'hooks/auth/useAuth'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -24,10 +23,13 @@ import { ChannelType, SbUserMetadata } from 'types'
 
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { format } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 
 const ChannelInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelInfo>()
   const { alert } = useAlert()
+  const { t } = useTranslation()
   const { user } = useAuth()
   const { STRINGS } = useLocalization()
   const { sdk } = useSendbirdChat()
@@ -41,7 +43,7 @@ const ChannelInfoScreen = (): ReactElement => {
     return <LoadingPage />
   } else if (!channel) {
     alert({
-      message: 'Could not retrieve channel info data. Please try again later.',
+      message: t('Channels.ChannelInfoNotRetrieveAlertMessage'),
       buttons: [
         {
           text: STRINGS.DIALOG.ALERT_DEFAULT_OK,
@@ -81,8 +83,10 @@ const ChannelInfoScreen = (): ReactElement => {
             </View>
             <View style={styles.section}>
               <FormText fontType="R.12">
-                {channel.memberCount} Members ∙{' '}
-                {format(new Date(channel.createdAt), 'yy.MM.dd')} Created
+                {t('Channels.ChannelInfoMemberAndDate', {
+                  memberCount: channel.memberCount,
+                  createdAt: format(new Date(channel.createdAt), 'yy.MM.dd'),
+                })}
               </FormText>
             </View>
             <View style={styles.section}>
@@ -101,25 +105,26 @@ const ChannelInfoScreen = (): ReactElement => {
                   <View>
                     <Row>
                       <FormText color={COLOR.black._500} fontType="B.12">
-                        {gatingToken?.amount}
+                        {t('Channels.ChannelInfoGatingTokenAmount', {
+                          amount: gatingToken?.amount,
+                        })}
                       </FormText>
                       <FormText color={COLOR.black._500} fontType="R.12">
-                        {' of '}
+                        {t('Channels.ChannelInfoGatingTokenOf')}
                       </FormText>
-                      {gatingToken?.gatingType === 'Native' ? (
-                        <View>
-                          <FormText fontType="B.12">
-                            {NETWORK.nativeToken[gatingToken.chain]}
-                          </FormText>
-                        </View>
-                      ) : (
-                        <View>
-                          <FormText fontType="B.12">
-                            {UTIL.truncate(gatingToken.tokenAddress)}
-                          </FormText>
-                        </View>
-                      )}
-                      <FormText fontType="R.12"> required to join</FormText>
+                      <View>
+                        <FormText fontType="B.12">
+                          {t('Channels.ChannelInfoGatingTokenChainOrAddr', {
+                            chainOrAddress:
+                              gatingToken?.gatingType === 'Native'
+                                ? NETWORK.nativeToken[gatingToken.chain]
+                                : UTIL.truncate(gatingToken.tokenAddress),
+                          })}
+                        </FormText>
+                      </View>
+                      <FormText fontType="R.12">
+                        {t('Channels.ChannelInfoGatingTokenRequiredToJoin')}
+                      </FormText>
                     </Row>
                   </View>
                 </Row>
@@ -144,14 +149,18 @@ const ChannelInfoScreen = (): ReactElement => {
             <Row
               style={{ alignItems: 'center', justifyContent: 'space-between' }}
             >
-              <FormText fontType="SB.14">Members</FormText>
+              <FormText fontType="SB.14">
+                {t('Channel.ChannelInfoMembers')}
+              </FormText>
               {channel.customType !== ChannelType.DIRECT && (
                 <TouchableOpacity
                   onPress={(): void => {
                     navigation.navigate(Routes.GroupChannelMembers, params)
                   }}
                 >
-                  <FormText fontType="R.12">+ Invite member</FormText>
+                  <FormText fontType="R.12">
+                    {t('Channel.ChannelInfoInvite')}
+                  </FormText>
                 </TouchableOpacity>
               )}
             </Row>
@@ -186,7 +195,10 @@ const ChannelInfoScreen = (): ReactElement => {
                       <Row style={{ alignItems: 'center', gap: 10 }}>
                         <Avatar uri={source.uri} size={40} />
                         <FormText>
-                          {item.nickname} {isMe && '(me)'}
+                          {t('Channel.ChannelInfoNickname', {
+                            nickname: item.nickname,
+                            me: isMe ? t('ChannelInfoNicknameIsMe') : '',
+                          })}
                         </FormText>
                       </Row>
                     </Pressable>

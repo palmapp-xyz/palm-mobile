@@ -12,6 +12,7 @@ import { FbChannel } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useTranslation } from 'react-i18next'
 
 const SelectedChannel = ({
   selectedChannel,
@@ -27,6 +28,7 @@ const SelectedChannel = ({
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, selectedChannel.url)
+  const { t } = useTranslation()
 
   const joinChannel = async (): Promise<void> => {
     if (channel) {
@@ -90,7 +92,9 @@ const SelectedChannel = ({
                         </FormText>
                       </View>
                     )}
-                    <FormText fontType="R.12"> required to join</FormText>
+                    <FormText fontType="R.12">
+                      {t('Explore.ExploreSelectedChannelRequiredToJoin')}
+                    </FormText>
                   </Row>
                 </View>
               </Row>
@@ -106,7 +110,7 @@ const SelectedChannel = ({
         </View>
       </View>
       <View style={styles.footer}>
-        <FormButton onPress={joinChannel}>Join</FormButton>
+        <FormButton onPress={joinChannel}>{t('Common.Join')}</FormButton>
       </View>
     </FormBottomSheet>
   )
