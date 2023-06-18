@@ -199,7 +199,7 @@ const ZxNftDetailScreen = (): ReactElement => {
             </FormText>
           </Row>
           <View>
-            <FormText fontType="R.10" color={COLOR.black._400}>
+            <FormText fontType="R.12" color={COLOR.black._400}>
               {t('Common.UsdPrice', {
                 price: UTIL.formatAmountP(usdPrice, { toFix: 0 }),
               })}

@@ -58,7 +58,7 @@ const ProfileWalletBalances = React.memo(
             <FormText fontType="B.14">
               {t('Components.ProfileWalletBalances.WalletBalances')}
             </FormText>
-            <FormText fontType="R.10" color={COLOR.black._200}>
+            <FormText fontType="R.12" color={COLOR.black._200}>
               {t('Components.ProfileWalletBalances.OnlyVisibleToYou')}
             </FormText>
           </Row>
@@ -76,7 +76,7 @@ const ProfileWalletBalances = React.memo(
                     </FormText>
                     <FormText fontType="R.16">{TokenSymbolEnum.ETH}</FormText>
                   </Row>
-                  <FormText fontType="R.10" color={COLOR.black._400}>
+                  <FormText fontType="R.12" color={COLOR.black._400}>
                     {t('Common.UsdPrice', {
                       price: UTIL.formatAmountP(
                         getEthPrice(ethBalance || ('0' as pToken)),
@@ -102,7 +102,7 @@ const ProfileWalletBalances = React.memo(
                     </FormText>
                     <FormText fontType="R.16">{TokenSymbolEnum.KLAY}</FormText>
                   </Row>
-                  <FormText fontType="R.10" color={COLOR.black._400}>
+                  <FormText fontType="R.12" color={COLOR.black._400}>
                     {t('Common.UsdPrice', {
                       price: UTIL.formatAmountP(
                         getKlayPrice(ethBalance || ('0' as pToken)),
@@ -128,7 +128,7 @@ const ProfileWalletBalances = React.memo(
                     </FormText>
                     <FormText fontType="R.16">{TokenSymbolEnum.MATIC}</FormText>
                   </Row>
-                  <FormText fontType="R.10" color={COLOR.black._400}>
+                  <FormText fontType="R.12" color={COLOR.black._400}>
                     {t('Common.UsdPrice', {
                       price: UTIL.formatAmountP(
                         getMaticPrice(ethBalance || ('0' as pToken)),

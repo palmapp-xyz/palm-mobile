@@ -83,8 +83,9 @@
     "ListedBy": "Listed by ...{{maker}}",
 
     "ChatRoomName": "Chat Room Name",
+    "ChatRoomNamePlaceholder": "{{name}}'s chat room",
     "ChatRoomDescription": "Description",
-    "ChatRoomDescriptionPlaceholder": "Please write something to describe about the channel.",
+    "ChatRoomDescriptionPlaceholder": "Hi there! Let’s have a talk ;)",
     "ChatRoomTag": "Tags",
     "ChatRoomTagPlaceholder": "Add tags separated by a comma",
     "ChatRoomTokenGating": "Token Gating",
@@ -186,7 +187,7 @@
 
     "ListNftMessageSold": "Sold",
     "ListNftMessageDetails": "Details",
-    "ListNftMessageTransactionDetail": "View Transaction Detail "
+    "ListNftMessageViewTransactionDetail": "View Transaction Detail "
   },
   "Profiles": {
     "CreateProfileTitle": "Fill out your profile",
@@ -254,7 +255,7 @@
       "NftList": "NFT List"
     },
     "NftDetails": {
-      "OwnedBy": "Owned by {{owner}}",
+      "ListedBy": "Listed by {{owner}}",
       "Unknown": "unknown"
     },
     "ProfileHeaderChatButton": {

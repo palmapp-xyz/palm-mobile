@@ -11,10 +11,10 @@ import { ContractAddr, SupportedNetworkEnum } from 'types'
 
 import { useTranslation } from 'react-i18next'
 import LensProfileHeaderSection from './LensProfileHeaderSection'
-import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
 import ProfileWalletAddress from './ProfileWalletAddress'
 import ProfileWalletBalances from './ProfileWalletBalances'
+import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import Avatar from './sendbird/Avatar'
 
 export type ProfileHeaderProps = {
@@ -102,7 +102,7 @@ const ProfileHeader = React.memo(
 
           {profile?.bio && (
             <View style={styles.section}>
-              <FormText fontType="R.12" color={COLOR.black._200}>
+              <FormText fontType="R.14" color={COLOR.black._200}>
                 {profile.bio.trim()}
               </FormText>
             </View>

@@ -119,7 +119,6 @@ const UpdateProfileScreen = (): ReactElement => {
             <FormInput
               value={profile.handle}
               textContentType="username"
-              fontType="R.12"
               placeholder={t('Profiles.UpdateProfileUsernamePlaceholder')}
               autoCapitalize="none"
               style={{
@@ -147,7 +146,6 @@ const UpdateProfileScreen = (): ReactElement => {
                   setBio(text)
                 }
               }}
-              fontType="R.12"
               multiline={true}
               maxLength={maxBioLength}
               placeholder={t('Profiles.UpdateProfileDescriptionPlaceholder')}

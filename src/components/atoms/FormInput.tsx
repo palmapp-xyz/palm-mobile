@@ -10,7 +10,7 @@ const FormInput = (
     disabled?: boolean
   } & TextInputProps
 ): ReactElement => {
-  const { style, fontType = 'R.14', ...rest } = props
+  const { style, fontType = 'R.16', ...rest } = props
   const fontStyle = STYLE.getFontStyle(fontType)
   const disabled = props.disabled ?? false
 

@@ -17,11 +17,15 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import Indicator from 'components/atoms/Indicator'
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
 import { useTranslation } from 'react-i18next'
 import TokenGating from './TokenGating'
 
 const CreateChannelScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { user } = useAuth()
+  const { profile } = useProfile({ profileId: user?.auth?.profileId })
   const { t } = useTranslation()
   const useCreateChannelReturn = useCreateChannel()
   const {
@@ -86,19 +90,21 @@ const CreateChannelScreen = (): ReactElement => {
               <FormInput
                 disabled={isLoading}
                 value={channelName}
+                placeholder={t('Channels.ChatRoomNamePlaceholder', {
+                  name: profile?.handle,
+                })}
                 onChangeText={setChannelName}
               />
             </View>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>
-                {t('Channels.ChatRoomName')}
+                {t('Channels.ChatRoomDescription')}
               </FormText>
               <FormInput
                 textAlignVertical="top"
                 disabled={isLoading}
                 value={desc}
                 onChangeText={setDesc}
-                fontType="R.12"
                 multiline={true}
                 placeholder={t('Channels.ChatRoomDescriptionPlaceholder')}
                 style={{ height: 100 }}

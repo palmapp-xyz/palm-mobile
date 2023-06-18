@@ -91,7 +91,6 @@ const CreateProfileScreen = (): ReactElement => {
               value={handle}
               onChangeText={setHandle}
               textContentType="username"
-              fontType="R.12"
               placeholder={t('Profiles.CreateProfileUsernamePlaceholder')}
               autoCapitalize="none"
               style={{ marginVertical: 2 }}
@@ -117,7 +116,6 @@ const CreateProfileScreen = (): ReactElement => {
                   setBio(text)
                 }
               }}
-              fontType="R.12"
               multiline={true}
               maxLength={maxBioLength}
               placeholder={t('Profiles.CreateProfileDescriptionPlaceholder')}

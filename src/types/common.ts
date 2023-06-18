@@ -29,6 +29,7 @@ export type FontType =
   | 'B.14'
   | 'B.12'
   | 'B.10'
+  | 'SB.16'
   | 'SB.14'
   | 'SB.12'
   | 'R.32'

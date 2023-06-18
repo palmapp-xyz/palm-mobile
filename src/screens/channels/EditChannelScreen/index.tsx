@@ -17,12 +17,16 @@ import React, { ReactElement } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
 import { useTranslation } from 'react-i18next'
 import TokenGating from './TokenGating'
 
 const EditChannelScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.EditChannel>()
   const useEditChannelReturn = useEditChannel({ channelUrl: params.channelUrl })
+  const { user } = useAuth()
+  const { profile } = useProfile({ profileId: user?.auth?.profileId })
   const { t } = useTranslation()
 
   const {
@@ -83,7 +87,13 @@ const EditChannelScreen = (): ReactElement => {
               <FormText fontType="R.12" color={COLOR.black._400}>
                 {t('Channels.ChatRoomName')}
               </FormText>
-              <FormInput value={channelName} onChangeText={setChannelName} />
+              <FormInput
+                value={channelName}
+                placeholder={t('Channels.ChatRoomNamePlaceholder', {
+                  name: profile?.handle,
+                })}
+                onChangeText={setChannelName}
+              />
             </View>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>
@@ -92,7 +102,6 @@ const EditChannelScreen = (): ReactElement => {
               <FormInput
                 value={desc}
                 onChangeText={setDesc}
-                fontType="R.12"
                 multiline={true}
                 placeholder={t('Channels.ChatRoomDescriptionPlaceholder')}
                 style={{ height: 100 }}

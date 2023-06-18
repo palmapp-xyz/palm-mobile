@@ -26,7 +26,7 @@ const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { t } = useTranslation()
 
   return (
-    <FormText fontType="R.10" color={COLOR.black._400}>
+    <FormText fontType="R.12" color={COLOR.black._400}>
       {t('Common.UsdPrice', {
         price: UTIL.formatAmountP(getKlayPrice(amount || ('0' as pToken)), {
           toFix: 0,
@@ -40,7 +40,7 @@ const MaticPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { t } = useTranslation()
 
   return (
-    <FormText fontType="R.10" color={COLOR.black._400}>
+    <FormText fontType="R.12" color={COLOR.black._400}>
       {t('Common.UsdPrice', {
         price: UTIL.formatAmountP(getMaticPrice(amount || ('0' as pToken)), {
           toFix: 0,
@@ -54,7 +54,7 @@ const EthPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { t } = useTranslation()
 
   return (
-    <FormText fontType="R.10" color={COLOR.black._400}>
+    <FormText fontType="R.12" color={COLOR.black._400}>
       {t('Common.UsdPrice', {
         price: UTIL.formatAmountP(getEthPrice(amount || ('0' as pToken)), {
           toFix: 0,
@@ -207,8 +207,8 @@ const ListNftMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.12">
-          {t('Nft.ListNftMessageTransactionDetail')}
+        <FormText color={COLOR.black._500} fontType="R.14">
+          {t('Nft.ListNftMessageViewTransactionDetail')}
         </FormText>
         <Ionicons
           color={COLOR.black._500}

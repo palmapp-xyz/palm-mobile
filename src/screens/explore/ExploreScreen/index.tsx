@@ -89,6 +89,7 @@ const ExploreScreen = (): ReactElement => {
               inputRef={inputRef}
               placeholder={t('Explore.ExploreSearchPlaceholder')}
               style={{ paddingRight: 40 }}
+              fontType="R.14"
               maxLength={20}
               value={inputSearch}
               onChangeText={setInputSearch}

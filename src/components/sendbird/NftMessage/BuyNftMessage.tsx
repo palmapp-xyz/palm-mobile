@@ -37,7 +37,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
       <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
       <View style={styles.body}>
         <Text style={{ color: COLOR.primary._400 }}>
-          {t('Component.BuyNftMessage.BoughtNft')}
+          {t('Components.BuyNftMessage.BoughtNft')}
         </Text>
         <Text
           numberOfLines={2}
@@ -45,7 +45,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
             color: 'black',
           }}
         >
-          {t('Component.BuyNftMessage.BoughtNftMessage', {
+          {t('Components.BuyNftMessage.BoughtNftMessage', {
             buyer: UTIL.truncate(data.buyer),
             tokenId: item.nftTokenId,
           })}

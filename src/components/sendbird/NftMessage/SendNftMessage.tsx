@@ -45,8 +45,8 @@ const SendNftMessage = ({
         }}
       >
         <Row style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
-          <FormText fontType="B.10">{t('Nft.SendNftMessageSent')}</FormText>
-          <FormText fontType="R.10">
+          <FormText fontType="B.14">{t('Nft.SendNftMessageSent')}</FormText>
+          <FormText fontType="R.14">
             {t('Nft.SendNftMessageTo', { to: UTIL.truncate(data.to) })}
           </FormText>
         </Row>
@@ -81,7 +81,7 @@ const SendNftMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.12">
+        <FormText color={COLOR.black._500} fontType="R.14">
           {t('Nft.SendNftMessageViewTransactionDetail')}
         </FormText>
         <Ionicons

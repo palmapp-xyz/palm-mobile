@@ -89,10 +89,10 @@ const NftDetails = ({
             <FormText fontType="B.18">{`${tokenName} #${tokenId}`}</FormText>
             <FormText
               style={{ alignSelf: 'flex-end' }}
-              fontType="R.12"
+              fontType="R.14"
               color={COLOR.black._400}
             >
-              {t('Components.NftDetails.OwnedBy', {
+              {t('Components.NftDetails.ListedBy', {
                 owner: tokenOwner
                   ? UTIL.truncate(tokenOwner)
                   : t('Components.NftDetails.Unknown'),

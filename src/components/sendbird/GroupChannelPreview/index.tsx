@@ -11,6 +11,7 @@ import {
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import { conditionChaining } from '@sendbird/uikit-utils'
+import FormText from 'components/atoms/FormText'
 
 type Props = {
   customCover?: React.ReactElement
@@ -88,14 +89,15 @@ const GroupChannelPreview = ({
                 containerStyle={styles.channelInfoBroadcast}
               />
             )}
-            <Text
+            <FormText
+              //subtitle1
               numberOfLines={1}
-              subtitle1
+              fontType="SB.14"
               style={styles.channelInfoTitle}
-              color={color.default.none.textTitle}
+              color={COLOR.black._900}
             >
               {title}
-            </Text>
+            </FormText>
             {Boolean(memberCount) && (
               <Text
                 caption1
@@ -151,15 +153,16 @@ const GroupChannelPreview = ({
                   ]}
                 />
               )}
-              <Text
-                body3
-                numberOfLines={1}
+              <FormText
+                //body3
+                numberOfLines={2}
                 ellipsizeMode={bodyIcon ? 'middle' : 'tail'}
+                fontType="R.12"
                 style={styles.bodyText}
-                color={color.default.none.textBody}
+                color={COLOR.black._400}
               >
                 {body}
-              </Text>
+              </FormText>
             </View>
           </View>
           <View style={styles.unreadContainer}>
