@@ -10,7 +10,7 @@ const FormInput = (
     disabled?: boolean
   } & TextInputProps
 ): ReactElement => {
-  const { style, fontType = 'R.16', ...rest } = props
+  const { style, fontType = 'R.14', ...rest } = props
   const fontStyle = STYLE.getFontStyle(fontType)
   const disabled = props.disabled ?? false
 
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderStyle: 'solid',
     borderWidth: 1.5,
+    paddingVertical: 10,
     paddingHorizontal: 14,
-    height: 36,
+    height: 40,
   },
 })
