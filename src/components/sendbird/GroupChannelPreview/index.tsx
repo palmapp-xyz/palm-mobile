@@ -167,16 +167,19 @@ const GroupChannelPreview = ({
           </View>
           <View style={styles.unreadContainer}>
             {mentioned && (
-              <Text
-                h2
-                color={colors.ui.badge.default.none.background}
-                style={styles.unreadMention}
-              >
+              <Text h2 color={COLOR.primary._400} style={styles.unreadMention}>
                 {mentionTrigger}
               </Text>
             )}
             {badgeCount > 0 && (
-              <Badge count={badgeCount} maxCount={maxBadgeCount} />
+              <Badge
+                count={badgeCount}
+                maxCount={maxBadgeCount}
+                style={{
+                  backgroundColor: COLOR.primary._400,
+                  borderRadius: 8,
+                }}
+              />
             )}
           </View>
         </View>
