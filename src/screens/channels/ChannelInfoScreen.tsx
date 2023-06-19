@@ -85,7 +85,7 @@ const ChannelInfoScreen = (): ReactElement => {
               <FormText fontType="R.12">
                 {t('Channels.ChannelInfoMemberAndDate', {
                   memberCount: channel.memberCount,
-                  createdAt: format(new Date(channel.createdAt), 'yy.MM.dd'),
+                  createAt: format(new Date(channel.createdAt), 'yy.MM.dd'),
                 })}
               </FormText>
             </View>
@@ -150,7 +150,7 @@ const ChannelInfoScreen = (): ReactElement => {
               style={{ alignItems: 'center', justifyContent: 'space-between' }}
             >
               <FormText fontType="SB.14">
-                {t('Channel.ChannelInfoMembers')}
+                {t('Channels.ChannelInfoMembers')}
               </FormText>
               {channel.customType !== ChannelType.DIRECT && (
                 <TouchableOpacity
@@ -159,7 +159,7 @@ const ChannelInfoScreen = (): ReactElement => {
                   }}
                 >
                   <FormText fontType="R.12">
-                    {t('Channel.ChannelInfoInvite')}
+                    {t('Channels.ChannelInfoInvite')}
                   </FormText>
                 </TouchableOpacity>
               )}
@@ -195,9 +195,11 @@ const ChannelInfoScreen = (): ReactElement => {
                       <Row style={{ alignItems: 'center', gap: 10 }}>
                         <Avatar uri={source.uri} size={40} />
                         <FormText>
-                          {t('Channel.ChannelInfoNickname', {
+                          {t('Channels.ChannelInfoNickname', {
                             nickname: item.nickname,
-                            me: isMe ? t('ChannelInfoNicknameIsMe') : '',
+                            me: isMe
+                              ? t('Channels.ChannelInfoNicknameIsMe')
+                              : '',
                           })}
                         </FormText>
                       </Row>

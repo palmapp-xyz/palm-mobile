@@ -104,7 +104,7 @@
     "ChannelInfoMembers": "Members",
     "ChannelInfoInvite": "+ Invite member",
     "ChannelInfoNickname": "{{nickname}} {{me}}",
-    "ChannelInfoNicknameIsMe": "me",
+    "ChannelInfoNicknameIsMe": "(me)",
 
     "ChannelSettingTitle": "Channel Info",
     "ChannelSettingEditChannel": "Edit Channel",
