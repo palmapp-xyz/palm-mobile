@@ -2,7 +2,7 @@ import images from 'assets/images'
 import { FormImage, FormText, Row } from 'components'
 import { COLOR } from 'consts'
 import {
-  StepAfterSelectNftType,
+  StepAfterSelectItemType,
   UseGcInputReturn,
 } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo } from 'react'
@@ -15,7 +15,7 @@ const BottomMenu = ({
 }): ReactElement => {
   const { receiverList, setOpenSelectReceiver } = useGcInputReturn
   const menuList: {
-    key: StepAfterSelectNftType
+    key: StepAfterSelectItemType
     icon: JSX.Element
     onPress: () => void
     title: string
@@ -34,18 +34,38 @@ const BottomMenu = ({
         title: 'Show NFT',
       },
       {
-        key: 'send',
+        key: 'send-nft',
         icon: <FormImage source={images.arrow_right} />,
         onPress: (): void => {
           if (receiverList.length > 1) {
-            setOpenSelectReceiver(true)
+            setOpenSelectReceiver('send-nft')
           } else if (receiverList.length === 1) {
-            useGcInputReturn.onPressSend({ receiverId: receiverList[0].userId })
+            useGcInputReturn.onPressSend({
+              stepAfterSelectItem: 'send-nft',
+              receiverId: receiverList[0].userId,
+            })
           } else {
             Alert.alert('No one to send NFT')
           }
         },
         title: 'Send NFT',
+      },
+      {
+        key: 'send-token',
+        icon: <FormImage source={images.arrow_right} />,
+        onPress: (): void => {
+          if (receiverList.length > 1) {
+            setOpenSelectReceiver('send-token')
+          } else if (receiverList.length === 1) {
+            useGcInputReturn.onPressSend({
+              stepAfterSelectItem: 'send-token',
+              receiverId: receiverList[0].userId,
+            })
+          } else {
+            Alert.alert('No one to send token')
+          }
+        },
+        title: 'Send Token',
       },
       {
         key: 'album',
@@ -66,7 +86,7 @@ const BottomMenu = ({
         horizontal
         contentContainerStyle={{ gap: 10 }}
         renderItem={({ item }): ReactElement => {
-          const selected = item.key === useGcInputReturn.stepAfterSelectNft
+          const selected = item.key === useGcInputReturn.stepAfterSelectItem
           return (
             <Pressable onPress={item.onPress}>
               <Row

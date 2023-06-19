@@ -1,5 +1,5 @@
 import { MediaRenderer } from 'components'
-import { parseSendFileData } from 'libs/sendbird'
+import { parseMsgData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
 import { Text, View } from 'react-native'
 
@@ -19,7 +19,7 @@ import ShareNftMessage from './ShareNftMessage'
 const NftMessage = (props: FileMessageProps): ReactElement => {
   const { colors } = useUIKitTheme()
   const { message, children, variant } = props
-  const parsedData = parseSendFileData(message.data || '')
+  const parsedData = parseMsgData(message.data || '')
 
   if (parsedData) {
     switch (parsedData.type) {
@@ -27,7 +27,7 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
         return <ListNftMessage data={parsedData} />
       case 'share':
         return <ShareNftMessage data={parsedData} />
-      case 'send':
+      case 'send-nft':
         return <SendNftMessage data={parsedData} />
       case 'buy':
         return <BuyNftMessage data={parsedData} />
@@ -37,6 +37,7 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
   if (!message.customType) {
     return <FileMessage {...props} />
   }
+
   return (
     <View
       style={[

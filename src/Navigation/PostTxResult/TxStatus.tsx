@@ -12,7 +12,7 @@ import {
 import { useRecoilValue } from 'recoil'
 import postTxStore from 'store/postTxStore'
 import styled from 'styled-components'
-import { PostTxStatus, SupportedNetworkEnum } from 'types'
+import { PostTxStatus } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 
@@ -48,11 +48,9 @@ const StatusText = ({ children }: { children: string }): ReactElement => {
 const TxStatus = ({
   onPressClose,
   setMinimized,
-  network,
 }: {
   onPressClose: () => void
   setMinimized: React.Dispatch<React.SetStateAction<boolean>>
-  network: SupportedNetworkEnum
 }): ReactElement => {
   const postTxResult = useRecoilValue(postTxStore.postTxResult)
   return (
@@ -88,7 +86,7 @@ const TxStatus = ({
                 <LinkExplorer
                   type="tx"
                   address={postTxResult.transactionHash}
-                  network={network}
+                  network={postTxResult.chain}
                 />
               </StyledTextBox>
             </>
@@ -103,7 +101,7 @@ const TxStatus = ({
                   <LinkExplorer
                     type="tx"
                     address={postTxResult.value.transactionHash}
-                    network={network}
+                    network={postTxResult.chain}
                   />
                 </StyledTextBox>
               )}

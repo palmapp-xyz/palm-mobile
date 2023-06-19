@@ -1,4 +1,3 @@
-import { Member } from '@sendbird/chat/groupChannel'
 import images from 'assets/images'
 import {
   FormBottomSheet,
@@ -13,6 +12,8 @@ import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 
+import { Member } from '@sendbird/chat/groupChannel'
+
 const SelectReceiverModal = ({
   useGcInputReturn,
 }: {
@@ -23,11 +24,11 @@ const SelectReceiverModal = ({
 
   return (
     <FormBottomSheet
-      showBottomSheet={useGcInputReturn.openSelectReceiver}
+      showBottomSheet={useGcInputReturn.openSelectReceiver !== undefined}
       snapPoints={snapPoints}
       onClose={(): void => {
         setSelectUser(undefined)
-        useGcInputReturn.setOpenSelectReceiver(false)
+        useGcInputReturn.setOpenSelectReceiver(undefined)
       }}
     >
       <View style={styles.container}>
@@ -35,7 +36,9 @@ const SelectReceiverModal = ({
           <Row
             style={{ alignItems: 'center', columnGap: 8, paddingBottom: 18 }}
           >
-            <FormText fontType="B.24">NFT to</FormText>
+            <FormText fontType="B.24">{`${
+              useGcInputReturn.stepAfterSelectItem === 'send-nft' ? 'NFT' : ''
+            } to`}</FormText>
             {selectUser ? (
               <FormText fontType="B.24">{selectUser.nickname}</FormText>
             ) : (
@@ -85,7 +88,9 @@ const SelectReceiverModal = ({
             disabled={!selectUser?.userId}
             onPress={(): void => {
               selectUser?.userId &&
-                useGcInputReturn.onPressSend({ receiverId: selectUser.userId })
+                useGcInputReturn.onPressSend({
+                  receiverId: selectUser.userId,
+                })
               setSelectUser(undefined)
             }}
           >

@@ -89,7 +89,7 @@ const FbListingItem = ({
         </Row>
         <View>
           <FormText fontType="R.10" color={COLOR.black._400}>
-            {`(≈$${UTIL.formatAmountP(usdPrice, { toFix: 0 })})`}
+            {`(≈$${UTIL.formatAmountP(usdPrice, { toFix: 2 })})`}
           </FormText>
         </View>
         <View>

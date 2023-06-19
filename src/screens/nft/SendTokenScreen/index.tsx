@@ -5,28 +5,34 @@ import React, { ReactElement, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { useRecoilValue } from 'recoil'
 import selectAssetStore from 'store/selectAssetStore'
+import { Token } from 'types'
 
 import ConfirmModal from './ConfirmModal'
 import Contents from './Contents'
 
-const SendNftScreen = (): ReactElement => {
+const SendTokenScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.SendNft>()
   const [showBottomSheet, setShowBottomSheet] = useState(false)
 
-  const selectedNftList = useRecoilValue(selectAssetStore.selectedNftList)
+  const selectedToken = useRecoilValue(selectAssetStore.selectedToken)
+
+  const [value, setValue] = useState<Token>('' as Token)
 
   return (
-    <Container style={styles.container}>
+    <Container style={styles.container} keyboardAvoiding={true}>
       <Header right="close" onPressRight={navigation.goBack} />
-      {selectedNftList.length > 0 && (
+      {selectedToken && (
         <>
           <Contents
-            selectedNft={selectedNftList[0]}
+            selectedToken={selectedToken}
+            value={value}
+            onSetValue={setValue}
             receiverId={params.receiverId}
             setShowBottomSheet={setShowBottomSheet}
           />
           <ConfirmModal
-            selectedNft={selectedNftList[0]}
+            selectedToken={selectedToken}
+            value={value}
             receiverId={params.receiverId}
             channelUrl={params.channelUrl}
             showBottomSheet={showBottomSheet}
@@ -38,7 +44,7 @@ const SendNftScreen = (): ReactElement => {
   )
 }
 
-export default SendNftScreen
+export default SendTokenScreen
 
 const styles = StyleSheet.create({
   container: {

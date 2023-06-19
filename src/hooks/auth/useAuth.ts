@@ -160,6 +160,7 @@ const useAuth = (): UseAuthReturn => {
     if (!(sbUser.metaData as SbUserMetadata).address) {
       const data: SbUserMetadata = {
         address: authResult.address as ContractAddr,
+        profileId: authResult.profileId,
       }
       await sbUser.createMetaData(data)
     }

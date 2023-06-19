@@ -6,22 +6,22 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
+import { COLOR, NETWORK, UTIL } from 'consts'
+import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
+import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
 import { nftUriFetcher } from 'libs/nft'
-import { stringifySendFileData } from 'libs/sendbird'
+import { stringifyMsgData } from 'libs/sendbird'
+import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import _ from 'lodash'
 import React, { ReactElement } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Moralis, SupportedNetworkEnum } from 'types'
+import { Keyboard, StyleSheet, View } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Moralis, SbUserMetadata, SupportedNetworkEnum } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { COLOR, NETWORK, UTIL } from 'consts'
-import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
-import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import _ from 'lodash'
-import { Keyboard } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const ConfirmModal = ({
   selectedNft,
@@ -45,20 +45,28 @@ const ConfirmModal = ({
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const { profile } = useProfile({ profileId: user?.auth?.profileId })
 
   const onSubmit = async (
     token_uri: string,
     order: SignedNftOrderV4Serialized | undefined
   ): Promise<void> => {
-    if (!channel || !order) {
+    if (!channel || !order || !profile) {
       return
     }
+
     const imgInfo = await nftUriFetcher(token_uri)
-    imgInfo.data = stringifySendFileData({
+
+    imgInfo.data = stringifyMsgData({
       type: 'list',
       selectedNft,
       nonce: order.nonce,
       amount: UTIL.microfyP(price),
+      owner: {
+        profileId: profile.profileId,
+        handle: profile.handle,
+        address: profile.address,
+      } as SbUserMetadata,
     })
     channel.sendFileMessage(imgInfo)
   }
@@ -177,6 +185,7 @@ const ConfirmModal = ({
         </FormButton>
         <FormButton
           containerStyle={{ flex: 1 }}
+          disabled={!profile}
           onPress={async (): Promise<void> => {
             Keyboard.dismiss()
             const order = await onClickConfirm()

@@ -6,7 +6,7 @@ import { AbiItem } from 'web3-utils'
 import useWeb3 from './useWeb3'
 
 type UseContractReturn = {
-  contract?: Contract
+  contract: Contract | undefined
   getEncodedTxData: (
     methodName: string,
     params?: any
@@ -25,10 +25,17 @@ const useContract = ({
 }): UseContractReturn => {
   const { web3 } = useWeb3(chain)
 
-  const contract = web3 && new web3.eth.Contract(abi, contractAddress)
+  const contract =
+    web3 && contractAddress !== '0x0'
+      ? new web3.eth.Contract(abi, contractAddress)
+      : undefined
 
   const getEncodedTxData = useCallback(
     (methodName: string, params?: any) => {
+      if (!contract) {
+        return undefined
+      }
+
       const jsonInterface = contract?.options.jsonInterface.find(
         x => x.name === methodName
       )

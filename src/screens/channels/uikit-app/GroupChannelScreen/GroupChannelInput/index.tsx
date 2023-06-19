@@ -16,7 +16,9 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
-import { SuggestedMentionListProps } from '@sendbird/uikit-react-native/src/components/ChannelInput'
+import {
+  SuggestedMentionListProps,
+} from '@sendbird/uikit-react-native/src/components/ChannelInput'
 import useMentionTextInput from '@sendbird/uikit-react-native/src/hooks/useMentionTextInput'
 import {
   getGroupChannelChatAvailableState,
@@ -29,7 +31,7 @@ import {
 
 import BottomMenu from './BottomMenu'
 import EditInput from './EditInput'
-import MyNftList from './MyNftList'
+import SelectAssetList from './SelectAssetList'
 import SelectReceiverModal from './SelectReceiverModal'
 import SendInput from './SendInput'
 
@@ -177,7 +179,7 @@ const GroupChannelInput = (props: GroupChannelProps['Input']): ReactElement => {
           <SafeAreaBottom height={bottom} />
         </View>
       </KeyboardAvoidingView>
-      <MyNftList useGcInputReturn={useGcInputReturn} />
+      <SelectAssetList useGcInputReturn={useGcInputReturn} />
       {mentionAvailable && (
         <SuggestedMentionList
           text={text}

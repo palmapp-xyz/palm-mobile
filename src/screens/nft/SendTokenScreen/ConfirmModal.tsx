@@ -5,19 +5,18 @@ import {
   FormImage,
   FormText,
   MediaRenderer,
-  MoralisNftRenderer,
   Row,
 } from 'components'
+import MoralisErc20Token from 'components/MoralisErc20Token'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
-import useSendNft from 'hooks/page/groupChannel/useSendNft'
+import useSendToken from 'hooks/page/groupChannel/useSendToken'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import { getFsProfile } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
 import { Routes } from 'libs/navigation'
-import { nftUriFetcher } from 'libs/nft'
 import { stringifyMsgData } from 'libs/sendbird'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import _ from 'lodash'
@@ -30,95 +29,73 @@ import {
   PostTxReturn,
   SbUserMetadata,
   SupportedNetworkEnum,
+  Token,
 } from 'types'
 
-import { FileMessageCreateParams, MentionType } from '@sendbird/chat/message'
+import { MentionType, UserMessageCreateParams } from '@sendbird/chat/message'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 const ConfirmModal = ({
-  selectedNft,
+  selectedToken,
   receiverId,
+  value,
   channelUrl,
   showBottomSheet,
   setShowBottomSheet,
 }: {
-  selectedNft: Moralis.NftItem
+  selectedToken: Moralis.FtItem
   receiverId: string
+  value: Token
   channelUrl?: string
   showBottomSheet: boolean
   setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>
 }): ReactElement => {
   const { user } = useAuth()
   const { profile } = useProfile({ profileId: user?.auth?.profileId })
+
   const [receiver, setReceiver] = useState<FbProfile>()
   const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+    chainIdToSupportedNetworkEnum(selectedToken.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const { navigation } = useAppNavigation<Routes.SendNft>()
   const toast = useToast()
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
-  const { isPosting, isValidForm, onClickConfirm, estimatedTxFee } = useSendNft(
-    {
-      selectedNft,
+  const { isPosting, isValidForm, onClickConfirm, estimatedTxFee } =
+    useSendToken({
+      selectedToken,
       receiver: receiver?.address,
-    }
-  )
+      value: UTIL.microfyP(value),
+    })
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl ?? receiverId)
 
-  const onSubmit = async (
-    res: PostTxReturn | undefined,
-    token_uri: string
-  ): Promise<void> => {
+  const onSubmit = async (res: PostTxReturn | undefined): Promise<void> => {
     if (!res || !channel || !profile || !receiver) {
       return
     }
 
     if (!res.success) {
       toast.hideAll()
-      toast.show('Failed to send NFT. Please try again.', {
+      toast.show('Failed to send token. Please try again.', {
         color: 'red',
         icon: 'info',
       })
       return
     }
 
-    // const userMsg: UserMessageCreateParams = {
-    //   message: `@${profile!.handle} sent an NFT (${selectedNft.name} #${
-    //     selectedNft.token_id
-    //   }) to @${receiver!.handle}`,
-    //   data: stringifyMsgData({
-    //     type: 'send-nft',
-    //     selectedNft,
-    //     txHash: res.receipt.transactionHash,
-    //     from: {
-    //       profileId: profile.profileId,
-    //       handle: profile.handle,
-    //       address: profile.address,
-    //     } as SbUserMetadata,
-    //     to: {
-    //       profileId: receiver.profileId,
-    //       handle: receiver.handle,
-    //       address: receiver.address,
-    //     } as SbUserMetadata,
-    //   }),
-    //   customType: 'send-nft',
-    //   mentionType: MentionType.USERS,
-    //   mentionedUserIds: [profile!.profileId, receiverId],
-    // }
-    // channel.sendUserMessage(userMsg)
-
-    const imgInfo = await nftUriFetcher(token_uri)
-    const fileMsg: FileMessageCreateParams = {
-      ...imgInfo,
+    const msg: UserMessageCreateParams = {
+      message: `@${profile!.handle} sent ${value} ${selectedToken.logo} to @${
+        receiver!.handle
+      }`,
       data: stringifyMsgData({
-        type: 'send-nft',
-        selectedNft,
+        type: 'send-token',
+        selectedToken,
+        value: UTIL.microfyP(value),
         txHash: res.receipt.transactionHash,
         from: {
           profileId: profile.profileId,
@@ -131,11 +108,11 @@ const ConfirmModal = ({
           address: receiver.address,
         } as SbUserMetadata,
       }),
-      customType: 'send-nft',
+      customType: 'send-token',
       mentionType: MentionType.USERS,
-      mentionedUserIds: [profile!.profileId, receiverId],
+      mentionedUserIds: [user!.auth!.profileId, receiverId],
     }
-    channel.sendFileMessage(fileMsg)
+    channel.sendUserMessage(msg)
   }
 
   useAsyncEffect(async () => {
@@ -169,22 +146,10 @@ const ConfirmModal = ({
         </View>
         <View style={styles.itemInfo}>
           <Row style={{ columnGap: 12, marginBottom: 24 }}>
-            <View
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 14,
-                overflow: 'hidden',
-              }}
-            >
-              <MoralisNftRenderer item={selectedNft} hideChain />
-            </View>
-            <View style={{ rowGap: 4, flex: 1 }}>
-              <FormText fontType="R.14">{selectedNft.name}</FormText>
-              <FormText fontType="B.18">
-                {selectedNft.name}#{selectedNft.token_id}
-              </FormText>
-            </View>
+            <MoralisErc20Token
+              item={selectedToken}
+              value={UTIL.microfyP(value)}
+            />
           </Row>
           <Row
             style={{
@@ -239,7 +204,7 @@ const ConfirmModal = ({
               <View style={styles.fromTo}>
                 <FormText fontType="SB.12">To</FormText>
               </View>
-              <Row>
+              <Row style={{ columnGap: 6 }}>
                 {receiverProfileImg ? (
                   <MediaRenderer
                     src={receiverProfileImg}
@@ -254,7 +219,6 @@ const ConfirmModal = ({
                     style={{ borderRadius: 50 }}
                   />
                 )}
-
                 <FormText fontType="B.16">{receiver?.handle}</FormText>
               </Row>
               <FormText fontType="R.12">
@@ -291,9 +255,8 @@ const ConfirmModal = ({
                 if (result) {
                   navigation.pop()
                   const res = await onClickConfirm()
-                  onSubmit(res, selectedNft.token_uri)
+                  onSubmit(res)
                 } else {
-                  toast.hideAll()
                   toast.show('PIN mismatch', { color: 'red', icon: 'info' })
                 }
               },

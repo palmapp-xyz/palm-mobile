@@ -4,18 +4,19 @@ import { COLOR, UTIL } from 'consts'
 import { getTokenBalanceInUSD } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Moralis, SupportedNetworkEnum, pToken } from 'types'
+import { Moralis, pToken } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 const MoralisErc20Token = ({
   item,
+  value,
 }: {
   item: Moralis.FtItem
-  selectedNetwork: SupportedNetworkEnum
+  value: pToken
 }): ReactElement => {
   const tokenValue = useMemo(
-    () => getTokenBalanceInUSD(item.balance, item.price),
+    () => getTokenBalanceInUSD(value, item.price),
     [item]
   )
 
@@ -33,7 +34,7 @@ const MoralisErc20Token = ({
         <View>
           <Row>
             <FormText fontType="B.16">
-              {UTIL.formatAmountP(item.balance as pToken, {
+              {UTIL.formatAmountP(value, {
                 toFix: 4,
               })}{' '}
             </FormText>
@@ -41,7 +42,7 @@ const MoralisErc20Token = ({
           </Row>
           <FormText fontType="R.10" color={COLOR.black._400}>
             {`(≈ $${
-              tokenValue ? UTIL.formatAmountP(tokenValue, { toFix: 0 }) : '?'
+              tokenValue ? UTIL.formatAmountP(tokenValue, { toFix: 2 }) : '?'
             })`}
           </FormText>
         </View>

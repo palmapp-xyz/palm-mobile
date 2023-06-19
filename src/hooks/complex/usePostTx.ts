@@ -18,11 +18,13 @@ import useWeb3 from './useWeb3'
 type UsePostTxReturn = {
   getTxFee: (props: {
     data?: EncodedTxData
-    nativeToken?: pToken
+    to?: ContractAddr
+    value?: pToken
   }) => Promise<pToken>
   postTx: (props: {
     data?: EncodedTxData
-    nativeToken?: pToken
+    to?: ContractAddr
+    value?: pToken
   }) => Promise<PostTxReturn>
 }
 
@@ -41,18 +43,20 @@ export const usePostTx = ({
 
   const getTxFee = async ({
     data,
-    nativeToken,
+    to,
+    value,
   }: {
     data?: EncodedTxData
-    nativeToken?: pToken
+    to?: ContractAddr
+    value?: pToken
   }): Promise<pToken> => {
     if (user) {
       const estimated = await web3.eth.estimateGas({
         from: user.address,
-        to: contractAddress,
+        to: to ?? contractAddress,
         gas,
-        data,
-        value: nativeToken,
+        data: to ? undefined : data,
+        value,
       })
       const price = await web3.eth.getGasPrice()
       return UTIL.toBn(estimated).multipliedBy(price).toString(10) as pToken
@@ -62,12 +66,14 @@ export const usePostTx = ({
 
   const postTx = async ({
     data,
-    nativeToken,
+    to,
+    value,
   }: {
     data?: EncodedTxData
-    nativeToken?: pToken
+    to?: ContractAddr
+    value?: pToken
   }): Promise<PostTxReturn> => {
-    if (_.isEmpty(data)) {
+    if (!to && _.isEmpty(data)) {
       const message = 'Post data is empty'
       return {
         success: false,
@@ -86,10 +92,10 @@ export const usePostTx = ({
         const receipt = await web3.eth
           .sendTransaction({
             from: userAddress,
-            to: contractAddress,
+            to: to ?? contractAddress,
             gas,
-            data,
-            value: nativeToken,
+            data: to ? undefined : data,
+            value,
           })
           .on('transactionHash', function (transactionHash) {
             setPostTxResult({

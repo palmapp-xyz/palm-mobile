@@ -7,11 +7,7 @@ import { PostTxStatus, SupportedNetworkEnum } from 'types'
 import TxStatus from './TxStatus'
 import TxStatusMini from './TxStatusMini'
 
-const PostTxResult = ({
-  network,
-}: {
-  network: SupportedNetworkEnum
-}): ReactElement => {
+const PostTxResult = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
@@ -19,7 +15,10 @@ const PostTxResult = ({
   const onClickClose = (): void => {
     setIsOpen(false)
     setMinimized(false)
-    setPostTxResult({ status: PostTxStatus.READY, chain: network })
+    setPostTxResult({
+      status: PostTxStatus.READY,
+      chain: SupportedNetworkEnum.ETHEREUM,
+    })
   }
 
   const effectList = useMemo(
@@ -45,14 +44,9 @@ const PostTxResult = ({
           <TxStatusMini
             onPressClose={onClickClose}
             setMinimized={setMinimized}
-            network={network}
           />
         ) : (
-          <TxStatus
-            onPressClose={onClickClose}
-            setMinimized={setMinimized}
-            network={network}
-          />
+          <TxStatus onPressClose={onClickClose} setMinimized={setMinimized} />
         ))}
     </>
   )

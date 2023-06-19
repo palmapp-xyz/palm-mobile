@@ -4,7 +4,6 @@ import useCrashlytics from 'hooks/independent/useCrashlytics'
 import useAppearance from 'hooks/useAppearance'
 import { navigationRef, Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { SupportedNetworkEnum } from 'types'
 
 import {
   DarkTheme,
@@ -55,7 +54,7 @@ const Navigation = (): ReactElement => {
           />
         )}
       </RootStack.Navigator>
-      <PostTxResult network={SupportedNetworkEnum.ETHEREUM} />
+      <PostTxResult />
     </NavigationContainer>
   )
 }

@@ -39,3 +39,5 @@ export type FontType =
   | 'R.14'
   | 'R.12'
   | 'R.10'
+
+export type FontSize = 40 | 32 | 24 | 20 | 18 | 16 | 14 | 12 | 10

@@ -1,10 +1,13 @@
+import { parseMsgData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
 
 import OpenGraphUserMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UserMessage/OpenGraphUserMessage'
-import type { SendbirdUserMessage } from '@sendbird/uikit-utils'
 
 import { MessageRendererInterface } from '../MessageRenderer'
 import BaseUserMessage from './BaseUserMessage'
+import SendTokenMessage from './SendTokenMessage'
+
+import type { SendbirdUserMessage } from '@sendbird/uikit-utils'
 
 export type UserMessageProps = MessageRendererInterface<
   SendbirdUserMessage,
@@ -20,6 +23,20 @@ const UserMessage = (props: UserMessageProps): ReactElement => {
       <OpenGraphUserMessage {...props} ogMetaData={props.message.ogMetaData} />
     )
   }
+
+  const parsedData = parseMsgData(props.message.data || '')
+
+  if (!props.message.customType) {
+    return <BaseUserMessage {...props} />
+  }
+
+  if (parsedData) {
+    switch (parsedData.type) {
+      case 'send-token':
+        return <SendTokenMessage data={parsedData} />
+    }
+  }
+
   return <BaseUserMessage {...props} />
 }
 

@@ -5,7 +5,7 @@ import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import selectNftStore from 'store/selectNftStore'
+import selectNftStore from 'store/selectAssetStore'
 import { Moralis, SupportedNetworkEnum } from 'types'
 
 import ConfirmModal from './ConfirmModal'

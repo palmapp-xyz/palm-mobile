@@ -11,7 +11,8 @@ export default {
     isFetchingPutApi: 'fetchApi_isFetchingPutApi',
     isFetchingDelApi: 'fetchApi_isFetchingDelApi',
   },
-  selectNft: {
-    selectedNftList: 'selectNft_selectedNftList',
+  selectAsset: {
+    selectedNftList: 'selectAsset_selectedNftList',
+    selectedToken: 'selectAsset_selectedToken',
   },
 }

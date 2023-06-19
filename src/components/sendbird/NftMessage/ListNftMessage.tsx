@@ -18,7 +18,7 @@ import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { SbListNftDataType, SupportedNetworkEnum, pToken } from 'types'
+import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
 
 const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { getKlayPrice } = useKlayPrice()
@@ -76,7 +76,7 @@ const ListNftMessage = ({
     <View style={styles.container}>
       <View style={styles.body}>
         <Row style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
-          <FormText fontType="B.10">{`${item.name} #${item.token_id}`}</FormText>
+          <FormText fontType="B.12">{`${item.name} #${item.token_id}`}</FormText>
         </Row>
         <View style={{ position: 'relative' }}>
           <VerifiedWrapper>

@@ -1,3 +1,5 @@
+import { FormButton } from 'components'
+import Indicator from 'components/atoms/Indicator'
 import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
@@ -5,74 +7,96 @@ import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import BottomSheet from '@gorhom/bottom-sheet'
-import { FormButton } from 'components'
-import Indicator from 'components/atoms/Indicator'
+
+import FtList from './FtList'
 import Header from './Header'
 import NftCollectionList from './NftCollectionList'
 import NftList from './NftList'
 
-const MyNftList = ({
+const SelectAssetList = ({
   useGcInputReturn,
 }: {
   useGcInputReturn: UseGcInputReturn
-}): ReactElement => {
+}): ReactElement | null => {
   const { user } = useAuth()
 
   const {
     runningNextStep,
     selectedCollection,
-    stepAfterSelectNft,
+    stepAfterSelectItem,
     selectedNftList,
+    selectedToken,
   } = useGcInputReturn
 
   const userAddress = user?.address
   const snapPoints = useMemo(() => ['100%'], [])
 
-  return stepAfterSelectNft ? (
+  const selectFtList = (
+    <View style={{ flex: 1 }}>
+      <FtList userAddress={userAddress} useGcInputReturn={useGcInputReturn} />
+      <View style={styles.footer}>
+        {runningNextStep ? (
+          <View style={styles.nextStepIcon}>
+            <Indicator />
+          </View>
+        ) : (
+          <FormButton
+            disabled={selectedToken === undefined}
+            onPress={useGcInputReturn.onClickNextStep}
+          >
+            Select
+          </FormButton>
+        )}
+      </View>
+    </View>
+  )
+
+  const selectNftList = selectedCollection ? (
+    <View style={{ flex: 1 }}>
+      <NftList
+        userAddress={userAddress}
+        useGcInputReturn={useGcInputReturn}
+        selectedCollection={selectedCollection}
+      />
+      <View style={styles.footer}>
+        {runningNextStep ? (
+          <View style={styles.nextStepIcon}>
+            <Indicator />
+          </View>
+        ) : (
+          <FormButton
+            disabled={selectedNftList.length < 1}
+            onPress={useGcInputReturn.onClickNextStep}
+          >
+            Select
+          </FormButton>
+        )}
+      </View>
+    </View>
+  ) : (
+    <NftCollectionList
+      userAddress={userAddress}
+      useGcInputReturn={useGcInputReturn}
+    />
+  )
+
+  return stepAfterSelectItem ? (
     <BottomSheet snapPoints={snapPoints} enableOverDrag={false}>
       <View style={styles.container}>
         <Header useGcInputReturn={useGcInputReturn} />
-        {selectedCollection ? (
-          <View style={{ flex: 1 }}>
-            <NftList
-              userAddress={userAddress}
-              useGcInputReturn={useGcInputReturn}
-              selectedCollection={selectedCollection}
-            />
-            <View style={styles.footer}>
-              {runningNextStep ? (
-                <View style={styles.nextStepIcon}>
-                  <Indicator />
-                </View>
-              ) : (
-                <FormButton
-                  disabled={selectedNftList.length < 1}
-                  onPress={useGcInputReturn.onClickNextStep}
-                >
-                  Select
-                </FormButton>
-              )}
-            </View>
-          </View>
-        ) : (
-          <NftCollectionList
-            userAddress={userAddress}
-            useGcInputReturn={useGcInputReturn}
-          />
-        )}
+        {stepAfterSelectItem === 'send-token' ? selectFtList : selectNftList}
       </View>
     </BottomSheet>
-  ) : (
-    <></>
-  )
+  ) : null
 }
 
-export default MyNftList
+export default SelectAssetList
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  ftList: { flex: 1, padding: 20, backgroundColor: 'white', gap: 20 },
   inputHeader: {
     paddingVertical: 10,
     paddingHorizontal: 12,

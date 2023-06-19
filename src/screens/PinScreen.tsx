@@ -151,7 +151,7 @@ const PinButton = (
 const PIN_COUNT = 4
 
 const PinScreen = (): ReactElement => {
-  const { navigation, params } = useAppNavigation<Routes.Pin>()
+  const { params } = useAppNavigation<Routes.Pin>()
   const { type, result: resultCallback, cancel } = params
 
   const [pinType, setPinType] = useState<'set' | 'auth' | 'reset'>(type)
@@ -197,7 +197,7 @@ const PinScreen = (): ReactElement => {
         case 'auth':
           if (inputPin.length === 4) {
             const v = await getPin()
-            const match = inputPin === v
+            const match = !v || inputPin === v
 
             clearInputPin()
             resultCallback && resultCallback(match)

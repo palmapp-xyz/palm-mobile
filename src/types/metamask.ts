@@ -7,6 +7,7 @@ export interface AddEthereumChainParameter {
     name: string
     symbol: string // 2-6 characters long
     decimals: 18
+    logo: any
   }
   rpcUrls: string[]
   blockExplorerUrls: string[]
