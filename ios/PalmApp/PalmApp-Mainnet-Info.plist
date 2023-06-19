@@ -50,16 +50,8 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Access the media library from the image picker.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Access camera from Palm for taking photos.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Access user contacts info from Palm for adding friends.</string>
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>Access Downloads folder from Palm.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Access Microphone for camera usage.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Access the photo library for saving photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
