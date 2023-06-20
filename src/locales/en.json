@@ -19,6 +19,7 @@
     "Success": "Success",
     "Buy": "Buy",
     "Details": "Details",
+    "Select": "Select",
     "UsdPrice": "(≈${{price}})"
   },
   "Navigation": {
@@ -130,8 +131,8 @@
     "UiKitBottomMenuTitleAlbum": "Album",
     "UiKitBottomMenuSendNftNoOneToSendAlertTitle": "No one to send NFT",
 
-    "UiKitReceiverModalNftTo": "NFT to",
-    "UiKitReceiverModalWhom": "Whom?",
+    "UiKitReceiverModalNftTo": "{{item}} to",
+    "UiKitReceiverModalWhom": "whom?",
 
     "UiKitTokenGatingRequired": "Required",
     "UiKitTokenGatingMyBalance": "My balance"
@@ -181,8 +182,8 @@
     "SendNftConfirmModalTo": "To",
     "SendNftConfirmModalEstGasFee": "Est. Gas Fee",
 
-    "SendNftMessageSent": "Sent ",
-    "SendNftMessageTo": "to {{to}}",
+    "SendNftMessageSent": " sent \"{{itemName}}\" #{{tokenId}}",
+    "SendNftMessageTo": " to ",
     "SendNftMessageViewTransactionDetail": "View Transaction Detail ",
 
     "ListNftMessageSold": "Sold",
@@ -249,7 +250,8 @@
     },
     "BuyNftMessage": {
       "BoughtNft": "Bought NFT",
-      "BoughtNftMessage": "{{buyer}} bought #{{tokenId}}"
+      "BoughtNftBoughtFrom": " bought {{nftName}} #{{nftTokenId}} from ",
+      "ViewTransactionDetail": "View Transaction Detail "
     },
     "ProfileHeader": {
       "NftList": "NFT List"

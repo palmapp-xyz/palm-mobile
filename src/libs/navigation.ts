@@ -40,6 +40,7 @@ export enum Routes {
   InitExplore = 'InitExplore',
   ListNft = 'ListNft',
   SendNft = 'SendNft',
+  SendToken = 'SendToken',
   ChannelListings = 'ChannelListings',
 
   GroupChannel = 'GroupChannel',
@@ -171,6 +172,13 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.SendNft
+      params: {
+        receiverId: string
+        channelUrl?: string
+      }
+    }
+  | {
+      route: Routes.SendToken
       params: {
         receiverId: string
         channelUrl?: string

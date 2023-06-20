@@ -3,7 +3,7 @@ import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
 import { FontType } from 'types'
 
-type FormTextProps = {
+export type FormTextProps = {
   fontType?: FontType
   children: ReactNode
   color?: string

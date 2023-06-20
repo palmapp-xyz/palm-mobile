@@ -1,5 +1,6 @@
 import { UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
+import useNativeToken from 'hooks/independent/useNativeToken'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
 import { recordError } from 'libs/logger'
 import _ from 'lodash'
@@ -27,6 +28,11 @@ const useUserFtList = ({
   const { connectedNetworkIds } = useNetwork()
   const connectedNetworkId = connectedNetworkIds[selectedNetwork]
   const { getApi } = useApi()
+
+  const { nativeToken } = useNativeToken({
+    userAddress,
+    network: selectedNetwork,
+  })
 
   const {
     data = { result: [] },
@@ -59,9 +65,10 @@ const useUserFtList = ({
     }
   )
 
-  const items = useMemo(
-    () =>
-      _.flatten(
+  const items = useMemo(() => {
+    const ret = nativeToken ? [nativeToken] : []
+    return _.flatten(
+      ret.concat(
         data.result.sort((a, b) => {
           if (!a.price && !b.price) {
             return a.balance >= b.balance ? -1 : 1
@@ -78,9 +85,9 @@ const useUserFtList = ({
             )
           }
         })
-      ),
-    [data]
-  )
+      )
+    )
+  }, [selectedNetwork, nativeToken, data])
 
   return {
     items,

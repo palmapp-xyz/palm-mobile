@@ -4,16 +4,18 @@ import { Moralis } from './api'
 import { ContractAddr } from './contracts'
 import { pToken } from './currencies'
 
-export type SbNftDataType =
+export type SbMsgDataType =
   | SbBuyNftDataType
   | SbListNftDataType
   | SbSendNftDataType
+  | SbSendTokenDataType
   | SbShareNftDataType
 
 export type SbBuyNftDataType = {
   type: 'buy'
   selectedNft: PostOrderResponsePayload
-  buyer: string
+  buyer: SbUserMetadata
+  from: SbUserMetadata
 }
 
 export type SbListNftDataType = {
@@ -21,20 +23,34 @@ export type SbListNftDataType = {
   selectedNft: Moralis.NftItem
   nonce: string
   amount: pToken
+  owner: SbUserMetadata
 }
 
 export type SbSendNftDataType = {
-  type: 'send'
+  type: 'send-nft'
   selectedNft: Moralis.NftItem
-  from: string
-  to: string
+  txHash: string
+  from: SbUserMetadata
+  to: SbUserMetadata
+}
+
+export type SbSendTokenDataType = {
+  type: 'send-token'
+  selectedToken: Moralis.FtItem
+  value: pToken
+  txHash: string
+  from: SbUserMetadata
+  to: SbUserMetadata
 }
 
 export type SbShareNftDataType = {
   type: 'share'
   selectedNft: Moralis.NftItem
+  owner: SbUserMetadata
 }
 
 export type SbUserMetadata = {
+  profileId: string
+  handle?: string
   address: ContractAddr
 }

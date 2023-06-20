@@ -26,11 +26,11 @@ const SelectReceiverModal = ({
 
   return (
     <FormBottomSheet
-      showBottomSheet={useGcInputReturn.openSelectReceiver}
+      showBottomSheet={useGcInputReturn.openSelectReceiver !== undefined}
       snapPoints={snapPoints}
       onClose={(): void => {
         setSelectUser(undefined)
-        useGcInputReturn.setOpenSelectReceiver(false)
+        useGcInputReturn.setOpenSelectReceiver(undefined)
       }}
     >
       <View style={styles.container}>
@@ -39,8 +39,14 @@ const SelectReceiverModal = ({
             style={{ alignItems: 'center', columnGap: 8, paddingBottom: 18 }}
           >
             <FormText fontType="B.24">
-              {t('Channels.UiKitReceiverModalNftTo')}
+              {t('Channels.UiKitReceiverModalNftTo', {
+                item:
+                  useGcInputReturn.stepAfterSelectItem === 'send-nft'
+                    ? 'NFT'
+                    : '',
+              })}
             </FormText>
+
             {selectUser ? (
               <FormText fontType="B.24">{selectUser.nickname}</FormText>
             ) : (
@@ -90,11 +96,13 @@ const SelectReceiverModal = ({
             disabled={!selectUser?.userId}
             onPress={(): void => {
               selectUser?.userId &&
-                useGcInputReturn.onPressSend({ receiverId: selectUser.userId })
+                useGcInputReturn.onPressSend({
+                  receiverId: selectUser.userId,
+                })
               setSelectUser(undefined)
             }}
           >
-            Select
+            {t('Common.Select')}
           </FormButton>
         </View>
       </View>

@@ -1,6 +1,6 @@
 import { getProfileMediaImg } from 'libs/lens'
 import { useEffect, useState } from 'react'
-import { FbProfile } from 'types'
+import { ContractAddr, FbProfile, SbUserMetadata } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,
@@ -40,12 +40,25 @@ const useFsProfile = ({
     if (!currentUser || !fsProfileField) {
       return
     }
+
+    const sbUserMetadata = currentUser.metaData as SbUserMetadata
     const profileImg = getProfileMediaImg(fsProfileField.picture)
     if (
       currentUser.nickname !== fsProfileField.handle ||
-      currentUser.plainProfileUrl !== profileImg
+      currentUser.plainProfileUrl !== profileImg ||
+      sbUserMetadata.handle !== fsProfileField.handle ||
+      sbUserMetadata.address !== fsProfileField.address ||
+      sbUserMetadata.profileId !== fsProfileField.profileId
     ) {
-      updateCurrentUserInfo(fsProfileField.handle, profileImg).then(user => {
+      const data: SbUserMetadata = {
+        address: fsProfileField.address as ContractAddr,
+        profileId: fsProfileField.profileId,
+        handle: fsProfileField.handle,
+      }
+      Promise.all([
+        currentUser.updateMetaData(data),
+        updateCurrentUserInfo(fsProfileField.handle, profileImg),
+      ]).then(([_, user]) => {
         setCurrentUser(user)
       })
     }

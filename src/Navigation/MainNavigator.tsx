@@ -33,6 +33,7 @@ import {
   PinScreen,
   RecoverAccountScreen,
   SendNftScreen,
+  SendTokenScreen,
   SettingScreen,
   TokenGatingInfoScreen,
   UpdateProfileScreen,
@@ -84,6 +85,10 @@ const MainNavigator = (): ReactElement => {
             component={UpdateProfileScreen}
           />
           <MainStack.Screen name={Routes.SendNft} component={SendNftScreen} />
+          <MainStack.Screen
+            name={Routes.SendToken}
+            component={SendTokenScreen}
+          />
           <MainStack.Screen name={Routes.ListNft} component={ListNftScreen} />
           <MainStack.Screen name={Routes.Setting} component={SettingScreen} />
           <MainStack.Screen

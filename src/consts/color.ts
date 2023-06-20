@@ -41,6 +41,8 @@ const black = {
 
 const text = white
 
+const user_mention = primary._400
+
 const blue = primary._400
 const red = '#FF002E'
 const green = '#1DAB4D'
@@ -65,4 +67,5 @@ export default {
   yellow,
 
   opacity,
+  user_mention,
 }

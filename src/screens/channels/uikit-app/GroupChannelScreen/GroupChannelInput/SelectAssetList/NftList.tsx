@@ -24,7 +24,7 @@ const NftList = ({
     selectedNetwork,
     selectedNftList,
     setSelectedNftList,
-    stepAfterSelectNft,
+    stepAfterSelectItem,
   } = useGcInputReturn
 
   const { items, fetchNextPage, hasNextPage, loading } = useCollectionNfts({
@@ -84,14 +84,14 @@ const NftList = ({
         const selectedIndex = selectedNftList.findIndex(
           x =>
             x.token_address === item.token_address &&
-            x.token_id === item.token_id
+            (x as Moralis.NftItem).token_id === item.token_id
         )
 
         return (
           <View style={{ flex: 1 / 3, alignItems: 'center' }}>
             <TouchableOpacity
               onPress={(): void => {
-                if (stepAfterSelectNft === 'share') {
+                if (stepAfterSelectItem === 'share') {
                   setSelectedNftList(valOrUpdater => {
                     if (selectedIndex > -1) {
                       return valOrUpdater.filter(x => x !== item)

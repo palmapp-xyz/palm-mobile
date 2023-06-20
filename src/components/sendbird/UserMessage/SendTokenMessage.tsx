@@ -1,27 +1,21 @@
 import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
-import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR } from 'consts'
+import MoralisErc20Token from 'components/MoralisErc20Token'
+import { COLOR, UTIL } from 'consts'
 import useExplorer from 'hooks/complex/useExplorer'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
+import { pToken, SbSendTokenDataType, SupportedNetworkEnum } from 'types'
 
-const SendNftMessage = ({
+const SendTokenMessage = ({
   data,
 }: {
-  data: SbSendNftDataType
+  data: SbSendTokenDataType
 }): ReactElement => {
-  const { navigation } = useAppNavigation()
-  const { t } = useTranslation()
-
-  const item = data.selectedNft
+  const item = data.selectedToken
 
   const chain =
     chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
@@ -34,46 +28,34 @@ const SendNftMessage = ({
       <TouchableOpacity
         style={styles.body}
         onPress={(): void => {
-          navigation.navigate(Routes.NftDetail, {
-            nftContract: item.token_address,
-            tokenId: item.token_id,
-            nftContractType: item.contract_type,
-            chain,
-            item,
-          })
+          Linking.openURL(
+            getLink({
+              address: data.txHash,
+              type: 'tx',
+            })
+          )
         }}
       >
         <FormText
-          fontType="R.14"
+          fontType="R.12"
           numberOfLines={2}
           style={{
-            color: COLOR.black._900,
+            color: 'black',
             paddingVertical: 9,
             paddingHorizontal: 12,
           }}
         >
           <UserMention userMetadata={data.from} />
-          <FormText fontType="B.14">
-            {t('Nft.SendNftMessageSent', {
-              itemName: item.name || 'unknown',
-              tokenId: item.token_id,
-            })}
-          </FormText>
+          <FormText fontType="B.12">{` sent ${UTIL.formatAmountP(
+            data.value as pToken,
+            { toFix: 2 }
+          )} ${data.selectedToken.symbol}`}</FormText>
           {' to '}
           <UserMention userMetadata={data.to} />
         </FormText>
+
         <VerifiedWrapper>
-          <MoralisNftRenderer
-            item={item}
-            width={'100%'}
-            height={232}
-            style={{
-              borderRadius: 18,
-              borderTopLeftRadius: 0,
-              borderTopRightRadius: 0,
-              maxWidth: 'auto',
-            }}
-          />
+          <MoralisErc20Token item={item} value={data.value} />
         </VerifiedWrapper>
       </TouchableOpacity>
       <TouchableOpacity
@@ -92,8 +74,8 @@ const SendNftMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.14">
-          {t('Nft.SendNftMessageViewTransactionDetail')}
+        <FormText color={COLOR.black._500} fontType="R.12">
+          View Transaction Detail{' '}
         </FormText>
         <Ionicons
           color={COLOR.black._500}
@@ -105,7 +87,7 @@ const SendNftMessage = ({
   )
 }
 
-export default SendNftMessage
+export default SendTokenMessage
 
 const styles = StyleSheet.create({
   container: { backgroundColor: 'white', width: 240 },

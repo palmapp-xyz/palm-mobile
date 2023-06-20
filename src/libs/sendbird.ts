@@ -7,7 +7,7 @@ import * as FileAccess from 'react-native-file-access'
 import * as ImagePicker from 'react-native-image-picker'
 import * as Permissions from 'react-native-permissions'
 import Video from 'react-native-video'
-import { SbNftDataType } from 'types/sendbird'
+import { SbMsgDataType } from 'types/sendbird'
 
 import * as ImageResizer from '@bam.tech/react-native-image-resizer'
 import { CameraRoll } from '@react-native-camera-roll/camera-roll'
@@ -111,10 +111,10 @@ if (__DEV__) {
   require('promise/setimmediate/rejection-tracking').enable(opts)
 }
 
-export const stringifySendFileData = (data: SbNftDataType): string => {
+export const stringifyMsgData = (data: SbMsgDataType): string => {
   return JSON.stringify(data)
 }
 
-export const parseSendFileData = (data: string): SbNftDataType | undefined => {
-  return UTIL.jsonTryParse<SbNftDataType>(data)
+export const parseMsgData = (data: string): SbMsgDataType | undefined => {
+  return UTIL.jsonTryParse<SbMsgDataType>(data)
 }

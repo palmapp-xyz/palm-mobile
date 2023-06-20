@@ -92,7 +92,7 @@ const FbListingItem = ({
         <View>
           <FormText fontType="R.12" color={COLOR.black._400}>
             {t('Common.UsdPrice', {
-              price: UTIL.formatAmountP(usdPrice, { toFix: 0 }),
+              price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
             })}
           </FormText>
         </View>

@@ -1,6 +1,6 @@
 import { NETWORK } from 'consts'
 import { isMainnet } from 'libs/utils'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { NetworkTypeEnum, SupportedNetworkEnum } from 'types'
 
 export type UseExplorerReturn = {
@@ -14,10 +14,14 @@ export type UseExplorerReturn = {
 const useExplorer = (network: SupportedNetworkEnum): UseExplorerReturn => {
   const mainnet = isMainnet()
 
-  const endpoint =
-    NETWORK.chainParams[
-      mainnet ? NetworkTypeEnum.MAINNET : NetworkTypeEnum.TESTNET
-    ]?.[network]?.blockExplorerUrls[0]
+  const endpoint = useMemo(
+    () =>
+      NETWORK.chainParams[
+        mainnet ? NetworkTypeEnum.MAINNET : NetworkTypeEnum.TESTNET
+      ]?.[network]?.blockExplorerUrls[0],
+    [network]
+  )
+
   const getLink = useCallback(
     ({
       address,
@@ -49,7 +53,7 @@ const useExplorer = (network: SupportedNetworkEnum): UseExplorerReturn => {
         ? `${endpoint}/${type}/${address}/${tokenId}`
         : `${endpoint}/${type}/${address}`
     },
-    []
+    [endpoint]
   )
 
   return { getLink }

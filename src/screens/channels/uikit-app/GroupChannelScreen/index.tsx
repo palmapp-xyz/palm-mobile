@@ -5,7 +5,7 @@ import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getFsListing } from 'libs/firebase'
 import { Routes } from 'libs/navigation'
-import { parseSendFileData } from 'libs/sendbird'
+import { parseMsgData } from 'libs/sendbird'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useCallback, useMemo } from 'react'
 import { AvoidSoftInput } from 'react-native-avoid-softinput'
@@ -62,7 +62,10 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
     fileMessage,
     deleteMessage
   ): Promise<void> => {
-    const parsedData = parseSendFileData(fileMessage.data || '')
+    const parsedData = parseMsgData(fileMessage.data || '')
+    if (!parsedData || parsedData.type === 'send-token') {
+      return
+    }
     if (parsedData) {
       const item = parsedData.selectedNft
       const chain: SupportedNetworkEnum =
@@ -114,7 +117,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
           }
           return
         case 'share':
-        case 'send':
+        case 'send-nft':
           navigation.navigate(Routes.NftDetail, {
             nftContract: (item as Moralis.NftItem).token_address,
             tokenId: (item as Moralis.NftItem).token_id,

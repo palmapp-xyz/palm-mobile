@@ -62,6 +62,7 @@ const LensFriendsScreen = (): ReactElement => {
       bio: profile.bio || undefined,
       name: profile.name || undefined,
       handle: profile.handle,
+      address: profile.ownedBy as ContractAddr,
       picture: profile.picture || undefined,
       coverPicture: getProfileMediaImg(profile.coverPicture),
       attributes: profile.attributes || undefined,
@@ -78,13 +79,15 @@ const LensFriendsScreen = (): ReactElement => {
     const newUser = await connect(userProfileId!)
     if (!(newUser.metaData as SbUserMetadata).address) {
       const data: SbUserMetadata = {
-        address: profile.ownedBy as ContractAddr,
+        address: ret.address,
+        handle: ret.handle,
+        profileId: ret.profileId,
       }
       await newUser.createMetaData(data)
     }
     setCurrentUser(newUser)
     const profileImg = getProfileMediaImg(profile.picture)
-    await updateCurrentUserInfo(profile.handle, profileImg)
+    await updateCurrentUserInfo(ret.handle, profileImg)
 
     // reconnect back to self
     const me = await connect(user.auth!.profileId)

@@ -43,7 +43,12 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
         ? `https://eth-mainnet.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY_ETHEREUM}`
         : 'https://ethereum.publicnode.com',
     ],
-    nativeCurrency: { name: 'ETH', decimals: 18, symbol: 'ETH' },
+    nativeCurrency: {
+      name: 'ETH',
+      decimals: 18,
+      symbol: 'ETH',
+      logo: 'https://i.postimg.cc/5tFKf7g9/eth-logo.png',
+    },
     blockExplorerUrls: ['https://etherscan.io'],
   },
   [ChainNetworkEnum.GOERLI]: {
@@ -56,8 +61,9 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
     ],
     nativeCurrency: {
       name: 'Goerli ETH',
-      symbol: 'gorETH',
+      symbol: 'ETH',
       decimals: 18,
+      logo: 'https://i.postimg.cc/5tFKf7g9/eth-logo.png',
     },
     blockExplorerUrls: ['https://goerli.etherscan.io'],
   },
@@ -65,14 +71,24 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
     chainId: toHex(chainId[ChainNetworkEnum.CYPRESS]),
     chainName: 'Klaytn Cypress',
     rpcUrls: ['https://public-node-api.klaytnapi.com/v1/cypress'],
-    nativeCurrency: { name: 'Klay', decimals: 18, symbol: 'KLAY' },
+    nativeCurrency: {
+      name: 'Klay',
+      decimals: 18,
+      symbol: 'KLAY',
+      logo: 'https://i.postimg.cc/nzbRr4S4/klay-logo.png',
+    },
     blockExplorerUrls: ['https://scope.klaytn.com'],
   },
   [ChainNetworkEnum.BAOBAB]: {
     chainId: toHex(chainId[ChainNetworkEnum.BAOBAB]),
     chainName: 'Klaytn Baobab',
     rpcUrls: ['https://api.baobab.klaytn.net:8651'],
-    nativeCurrency: { name: 'Klay', decimals: 18, symbol: 'KLAY' },
+    nativeCurrency: {
+      name: 'Klay',
+      decimals: 18,
+      symbol: 'KLAY',
+      logo: 'https://i.postimg.cc/nzbRr4S4/klay-logo.png',
+    },
     blockExplorerUrls: ['https://baobab.scope.klaytn.com'],
   },
   [ChainNetworkEnum.POLYGON]: {
@@ -83,7 +99,12 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
         ? `https://polygon-mainnet.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY_POLYGON}`
         : 'https://polygon.blockpi.network/v1/rpc/public',
     ],
-    nativeCurrency: { name: 'Matic', decimals: 18, symbol: 'MATIC' },
+    nativeCurrency: {
+      name: 'Matic',
+      decimals: 18,
+      symbol: 'MATIC',
+      logo: 'https://i.postimg.cc/50BPCXDZ/matic-logo.png',
+    },
     blockExplorerUrls: ['https://polygonscan.com'],
   },
   [ChainNetworkEnum.MUMBAI]: {
@@ -94,7 +115,12 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
         ? `https://polygon-mumbai.g.alchemy.com/v2/${Config.ALCHEMY_API_KEY_MUMBAI}`
         : 'https://polygon-mumbai.blockpi.network/v1/rpc/public',
     ],
-    nativeCurrency: { name: 'Matic', decimals: 18, symbol: 'MATIC' },
+    nativeCurrency: {
+      name: 'Matic',
+      decimals: 18,
+      symbol: 'MATIC',
+      logo: 'https://i.postimg.cc/50BPCXDZ/matic-logo.png',
+    },
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
   },
 }

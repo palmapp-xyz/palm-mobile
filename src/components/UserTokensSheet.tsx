@@ -4,11 +4,12 @@ import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { SupportedNetworkEnum } from 'types'
+import { SupportedNetworkEnum, pToken } from 'types'
 
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import { useTranslation } from 'react-i18next'
 import MoralisErc20Token from './MoralisErc20Token'
+
 import Indicator from './atoms/Indicator'
 
 const UserTokensSheet = ({
@@ -77,10 +78,7 @@ const UserTokensSheet = ({
                 return null
               }
               return (
-                <MoralisErc20Token
-                  item={item}
-                  selectedNetwork={selectedNetwork}
-                />
+                <MoralisErc20Token item={item} value={item.balance as pToken} />
               )
             }}
           />

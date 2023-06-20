@@ -8,6 +8,7 @@ import {
 } from 'components'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
@@ -17,22 +18,27 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useZxBuyNft from 'hooks/zx/useZxBuyNft'
 import useZxCancelNft from 'hooks/zx/useZxCancelNft'
 import useZxOrder from 'hooks/zx/useZxOrder'
+import { getFsProfile } from 'libs/firebase'
 import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
-import { stringifySendFileData } from 'libs/sendbird'
+import { stringifyMsgData } from 'libs/sendbird'
 import React, { ReactElement, useEffect, useMemo, useState } from 'react'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import {
   ContractAddr,
+  FbProfile,
   NftType,
   QueryKeyEnum,
+  SbBuyNftDataType,
+  SbUserMetadata,
   SupportedNetworkEnum,
   pToken,
 } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 import { useTranslation } from 'react-i18next'
 import NftDetails from '../../components/NftDetails'
@@ -74,6 +80,9 @@ const ZxNftDetailScreen = (): ReactElement => {
   } = useAppNavigation<Routes.ZxNftDetail>()
   const { order } = useZxOrder({ nonce, chain })
   const { user } = useAuth()
+  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const [listingOwner, setListingOwner] = useState<FbProfile>()
+
   const { getEthPrice } = useEthPrice()
   const { getKlayPrice } = useKlayPrice()
   const { getMaticPrice } = useMaticPrice()
@@ -129,7 +138,7 @@ const ZxNftDetailScreen = (): ReactElement => {
   )
 
   const onSubmit = async (): Promise<void> => {
-    if (!order) {
+    if (!order || !profile || !listingOwner) {
       return
     }
 
@@ -152,11 +161,20 @@ const ZxNftDetailScreen = (): ReactElement => {
       const buyRes = await onClickBuy({ order: order.order })
       if (channel && user && buyRes.success) {
         const imgInfo = await nftUriFetcher(nftUri)
-        imgInfo.data = stringifySendFileData({
+        imgInfo.data = stringifyMsgData({
           type: 'buy',
           selectedNft: order,
-          buyer: user.auth!.profileId,
-        })
+          buyer: {
+            profileId: profile.profileId,
+            handle: profile.handle,
+            address: profile.address,
+          } as SbUserMetadata,
+          from: {
+            profileId: listingOwner.profileId,
+            handle: listingOwner.handle,
+            address: listingOwner.address,
+          } as SbUserMetadata,
+        } as SbBuyNftDataType)
         channel.sendFileMessage(imgInfo)
       }
     }
@@ -164,6 +182,15 @@ const ZxNftDetailScreen = (): ReactElement => {
 
     navigation.navigate(Routes.GroupChannel, { channelUrl })
   }
+
+  useAsyncEffect(async () => {
+    if (!order) {
+      return
+    }
+
+    const _listingOwner = await getFsProfile(order.order.maker)
+    setListingOwner(_listingOwner)
+  }, [order])
 
   return (
     <Container style={styles.container}>
@@ -201,12 +228,15 @@ const ZxNftDetailScreen = (): ReactElement => {
           <View>
             <FormText fontType="R.12" color={COLOR.black._400}>
               {t('Common.UsdPrice', {
-                price: UTIL.formatAmountP(usdPrice, { toFix: 0 }),
+                price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
               })}
             </FormText>
           </View>
         </View>
-        <FormButton disabled={!order} onPress={onSubmit}>
+        <FormButton
+          disabled={!order || !listingOwner || !profile}
+          onPress={onSubmit}
+        >
           {isMine ? t('Common.Cancel') : t('Common.Buy')}
         </FormButton>
       </Row>
