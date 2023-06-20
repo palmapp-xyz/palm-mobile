@@ -161,6 +161,10 @@ const noUndefinedObj = <T extends object & { length?: never }>(obj: T): T => {
   return JSON.parse(JSON.stringify(obj)) as T
 }
 
+const isValidPrice = (price: Token): boolean => {
+  return !!price && isNumberString(price) && Number(price) !== 0
+}
+
 export default {
   truncate,
   jsonTryParse,
@@ -184,4 +188,5 @@ export default {
   fromBase64,
   formatPercentage,
   noUndefinedObj,
+  isValidPrice,
 }
