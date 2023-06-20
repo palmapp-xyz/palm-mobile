@@ -13,9 +13,17 @@ const useCodePush = (): {
 
   const [progress, setProgress] = useState(0)
 
+  const timeout = async (ms: number): Promise<void> => {
+    return await new Promise(resolve => setTimeout(resolve, ms))
+  }
+
   useEffect(() => {
     const check = async (): Promise<void> => {
-      const available = await CodePush.checkForUpdate()
+      const available = await Promise.race([
+        CodePush.checkForUpdate(),
+        timeout(10_000),
+      ])
+
       if (available) {
         syncUpdate()
       } else {
