@@ -188,7 +188,19 @@
 
     "ListNftMessageSold": "Sold",
     "ListNftMessageDetails": "Details",
-    "ListNftMessageViewTransactionDetail": "View Transaction Detail "
+    "ListNftMessageViewTransactionDetail": "View Transaction Detail ",
+
+    "SendTokenTitle": "I want to send",
+    "SendTokenTo": "to ",
+    "SendTokenSend": "Send",
+
+    "SendTokenConfirmModalFailedToast": "Failed to send token. Please try again.",
+    "SendTokenConfirmModalNotice": "This action is irreversible. Again, make sure the transaction detail is correct and reliable.",
+    "SendTokenConfirmModalOn": "on",
+    "SendTokenConfirmModalFrom": "From",
+    "SendTokenConfirmModalMe": "Me",
+    "SendTokenConfirmModalTo": "To",
+    "SendTokenConfirmModalEstGasFee": "Est. Gas Fee"
   },
   "Profiles": {
     "CreateProfileTitle": "Fill out your profile",
@@ -287,6 +299,11 @@
     "ProfileFooter": {
       "HasNoNft": "The user has not NFTs yet.",
       "EndOfList": "End of List"
+    },
+    "SendTokenMessage": {
+      "Sent": " sent {{amount}} {{symbol}}",
+      "To": " to ",
+      "ViewTransactionDetail": "View Transaction Detail "
     }
   }
 }

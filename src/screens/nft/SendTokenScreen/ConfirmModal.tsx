@@ -36,6 +36,7 @@ import { MentionType, UserMessageCreateParams } from '@sendbird/chat/message'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { useTranslation } from 'react-i18next'
 
 const ConfirmModal = ({
   selectedToken,
@@ -62,6 +63,7 @@ const ConfirmModal = ({
 
   const { navigation } = useAppNavigation<Routes.SendNft>()
   const toast = useToast()
+  const { t } = useTranslation()
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
   const { isPosting, isValidForm, onClickConfirm, estimatedTxFee } =
@@ -81,7 +83,7 @@ const ConfirmModal = ({
 
     if (!res.success) {
       toast.hideAll()
-      toast.show('Failed to send token. Please try again.', {
+      toast.show(t('Nft.SendTokenConfirmModalFailedToast'), {
         color: 'red',
         icon: 'info',
       })
@@ -139,8 +141,7 @@ const ConfirmModal = ({
             }}
           >
             <FormText fontType="R.12" color={COLOR.error}>
-              This action is irreversible. Again, make sure the transaction
-              detail is correct and reliable.
+              {t('Nft.SendTokenConfirmModalNotice')}
             </FormText>
           </View>
         </View>
@@ -176,7 +177,7 @@ const ConfirmModal = ({
                 paddingHorizontal: 20,
               }}
             >
-              <FormText>on</FormText>
+              <FormText>{t('Nft.SendTokenConfirmModalOn')}</FormText>
               <FormImage source={NETWORK.getNetworkLogo(chain)} />
               <FormText>{_.capitalize(chain)}</FormText>
             </Row>
@@ -186,9 +187,13 @@ const ConfirmModal = ({
           >
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">From</FormText>
+                <FormText fontType="SB.12">
+                  {t('Nft.SendTokenConfirmModalFrom')}
+                </FormText>
               </View>
-              <FormText fontType="B.16">Me</FormText>
+              <FormText fontType="B.16">
+                {t('Nft.SendTokenConfirmModalMe')}
+              </FormText>
               <FormText fontType="R.12">
                 {`(${UTIL.truncate(user?.address || '')})`}
               </FormText>
@@ -202,7 +207,9 @@ const ConfirmModal = ({
             </View>
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">To</FormText>
+                <FormText fontType="SB.12">
+                  {t('Nft.SendTokenConfirmModalTo')}
+                </FormText>
               </View>
               <Row style={{ columnGap: 6 }}>
                 {receiverProfileImg ? (
@@ -229,7 +236,9 @@ const ConfirmModal = ({
         </View>
         <View style={styles.txInfo}>
           <Row style={{ justifyContent: 'space-between' }}>
-            <FormText fontType="B.14">Est. Gas Fee</FormText>
+            <FormText fontType="B.14">
+              {t('Nft.SendTokenConfirmModalEstGasFee')}
+            </FormText>
             <FormText fontType="R.14">{`${UTIL.demicrofyP(estimatedTxFee)} ${
               NETWORK.nativeToken[chain]
             }`}</FormText>
@@ -243,7 +252,7 @@ const ConfirmModal = ({
             setShowBottomSheet(false)
           }}
         >
-          Reject
+          {t('Common.Reject')}
         </FormButton>
         <FormButton
           containerStyle={{ flex: 1 }}
@@ -267,7 +276,7 @@ const ConfirmModal = ({
             })
           }}
         >
-          Confirm
+          {t('Common.Confirm')}
         </FormButton>
       </Row>
     </FormBottomSheet>

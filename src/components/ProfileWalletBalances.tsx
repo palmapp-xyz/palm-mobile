@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr, Moralis, SupportedNetworkEnum, pToken } from 'types'
 
+import { useTranslation } from 'react-i18next'
 import MoralisErc20Token from './MoralisErc20Token'
 
 export type ProfileWalletBalancesProps = {
@@ -19,6 +20,8 @@ const ProfileWalletBalances = React.memo(
     userAddress,
     onToggleShowUserTokensSheet,
   }: ProfileWalletBalancesProps): ReactElement => {
+    const { t } = useTranslation()
+
     const { nativeToken: eth } = useNativeToken({
       userAddress,
       network: SupportedNetworkEnum.ETHEREUM,

@@ -24,6 +24,7 @@ import { FbProfile, Moralis, SupportedNetworkEnum, Token } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
+import { useTranslation } from 'react-i18next'
 import TokenAmountInput from './TokenAmountInput'
 
 const Contents = ({
@@ -39,6 +40,7 @@ const Contents = ({
   setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>
   onSetValue?: Dispatch<SetStateAction<Token>>
 }): ReactElement => {
+  const { t } = useTranslation()
   const [receiver, setReceiver] = useState<FbProfile>()
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
@@ -68,7 +70,7 @@ const Contents = ({
       <View style={styles.body}>
         <View style={{ height: '100%', rowGap: 8 }}>
           <FormText fontType="SB.14" style={{ marginBottom: 8 }}>
-            I want to send
+            {t('Nft.SendTokenTitle')}
           </FormText>
           <TokenAmountInput
             item={selectedToken}
@@ -78,7 +80,7 @@ const Contents = ({
           />
           <Row style={{ padding: 8, columnGap: 8, marginTop: 8 }}>
             <FormText fontType="SB.14" style={{ marginTop: 6 }}>
-              {'to '}
+              {t('Nft.SendTokenTo')}
             </FormText>
             {receiverProfileImg ? (
               <MediaRenderer
@@ -105,7 +107,7 @@ const Contents = ({
             setShowBottomSheet(true)
           }}
         >
-          Send
+          {t('Nft.SendTokenSend')}
         </FormButton>
       </View>
     </Container>
