@@ -2,12 +2,12 @@ import { FormText, Row } from 'components'
 import { COLOR } from 'consts'
 import useNativeToken from 'hooks/independent/useNativeToken'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, Moralis, SupportedNetworkEnum, pToken } from 'types'
+import { ContractAddr, Moralis, pToken, SupportedNetworkEnum } from 'types'
 
-import { useTranslation } from 'react-i18next'
 import MoralisErc20Token from './MoralisErc20Token'
 
 export type ProfileWalletBalancesProps = {
