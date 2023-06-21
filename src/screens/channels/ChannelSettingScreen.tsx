@@ -9,11 +9,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { Switch } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 const ChannelSettingScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelSetting>()
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, params.channelUrl)
+  const { t } = useTranslation()
   const [isFrozen, setIsFrozen] = useState(() => channel?.isFrozen || false)
 
   if (!channel) {
@@ -43,7 +45,7 @@ const ChannelSettingScreen = (): ReactElement => {
 
       <View style={styles.sectionTitle}>
         <FormText fontType="B.12" color={COLOR.black._400}>
-          Channel Info
+          {t('Channels.ChannelSettingTitle')}
         </FormText>
       </View>
       <View style={{ paddingBottom: 12 }}>
@@ -53,14 +55,14 @@ const ChannelSettingScreen = (): ReactElement => {
             navigation.navigate(Routes.EditChannel, params)
           }}
         >
-          <FormText>Edit Channel</FormText>
+          <FormText>{t('Channels.ChannelSettingEditChannel')}</FormText>
           <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.sectionTitle}>
         <FormText fontType="B.12" color={COLOR.black._400}>
-          Moderation
+          {t('Channels.ChannelSettingModeration')}
         </FormText>
       </View>
       <View style={{ rowGap: 2 }}>
@@ -70,7 +72,7 @@ const ChannelSettingScreen = (): ReactElement => {
             navigation.push(Routes.GroupChannelOperators, params)
           }}
         >
-          <FormText>Operators</FormText>
+          <FormText>{t('Channels.ChannelSettingOperators')}</FormText>
           <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -79,7 +81,7 @@ const ChannelSettingScreen = (): ReactElement => {
             navigation.push(Routes.GroupChannelMutedMembers, params)
           }}
         >
-          <FormText>Muted Members</FormText>
+          <FormText>{t('Channels.ChannelSettingMutedMembers')}</FormText>
           <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -88,11 +90,11 @@ const ChannelSettingScreen = (): ReactElement => {
             navigation.push(Routes.GroupChannelBannedUsers, params)
           }}
         >
-          <FormText>Banned Users</FormText>
+          <FormText>{t('Channels.ChannelSettingBannedUsers')}</FormText>
           <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
         </TouchableOpacity>
         <View style={styles.menuItemRow}>
-          <FormText>Freeze Chat room</FormText>
+          <FormText>{t('Channels.ChannelSettingFreezeChatRoom')}</FormText>
           <Switch value={isFrozen} onChangeValue={toggleFreeze} />
         </View>
       </View>

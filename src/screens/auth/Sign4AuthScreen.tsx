@@ -4,7 +4,8 @@ import useSign4Auth from 'hooks/page/sign/useSign4Auth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import RenderHtml from 'react-native-render-html'
 import { useRecoilValue } from 'recoil'
 import fetchApiStore from 'store/fetchApiStore'
@@ -14,6 +15,7 @@ const Sign4AuthScreen = (): ReactElement => {
   const { challenge, signChallenge } = useSign4Auth()
   const isFetching = useRecoilValue(fetchApiStore.isFetchingPostApiStore)
   const { width } = useWindowDimensions()
+  const { t } = useTranslation()
 
   const source = {
     html: `<p>${JSON.stringify(challenge?.message)
@@ -26,7 +28,7 @@ const Sign4AuthScreen = (): ReactElement => {
       <Header
         left="back"
         onPressLeft={navigation.goBack}
-        title="Authenticate"
+        title={t('Auth.Sign4AuthHeaderTitle')}
       />
 
       <View style={{ flex: 1, padding: 20 }}>
@@ -34,14 +36,14 @@ const Sign4AuthScreen = (): ReactElement => {
           {challenge ? (
             <RenderHtml source={source} contentWidth={width} />
           ) : (
-            <Text>Loading Challenge...</Text>
+            <Text>{t('Auth.Sign4AuthLoading')}</Text>
           )}
         </View>
       </View>
 
       <View style={styles.footer}>
         <FormButton disabled={!challenge || isFetching} onPress={signChallenge}>
-          Sign to Login
+          {t('Auth.Sign4AuthLogin')}
         </FormButton>
       </View>
     </Container>

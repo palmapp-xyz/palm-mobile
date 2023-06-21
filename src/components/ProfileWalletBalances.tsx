@@ -5,8 +5,9 @@ import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, Moralis, pToken, SupportedNetworkEnum } from 'types'
+import { ContractAddr, Moralis, SupportedNetworkEnum, pToken } from 'types'
 
+import { useTranslation } from 'react-i18next'
 import MoralisErc20Token from './MoralisErc20Token'
 
 export type ProfileWalletBalancesProps = {
@@ -19,6 +20,8 @@ const ProfileWalletBalances = React.memo(
     userAddress,
     onToggleShowUserTokensSheet,
   }: ProfileWalletBalancesProps): ReactElement => {
+    const { t } = useTranslation()
+
     const { nativeToken: eth } = useNativeToken({
       userAddress,
       network: SupportedNetworkEnum.ETHEREUM,
@@ -46,9 +49,11 @@ const ProfileWalletBalances = React.memo(
               paddingBottom: 12,
             }}
           >
-            <FormText fontType="B.14">Wallet Balances</FormText>
-            <FormText fontType="R.10" color={COLOR.black._200}>
-              Only visible to you
+            <FormText fontType="B.14">
+              {t('Components.ProfileWalletBalances.WalletBalances')}
+            </FormText>
+            <FormText fontType="R.12" color={COLOR.black._200}>
+              {t('Components.ProfileWalletBalances.OnlyVisibleToYou')}
             </FormText>
           </Row>
 
@@ -66,7 +71,7 @@ const ProfileWalletBalances = React.memo(
           <TouchableOpacity onPress={onToggleShowUserTokensSheet}>
             <Row style={styles.seeAll}>
               <FormText fontType="R.14" color={COLOR.black._400}>
-                See All
+                {t('Components.ProfileWalletBalances.SeeAll')}
               </FormText>
               <Icon
                 name="ios-chevron-forward"

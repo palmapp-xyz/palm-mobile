@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native'
 const Tag = ({ title }: { title: string }): ReactElement => {
   return (
     <View style={styles.item}>
-      <FormText fontType="SB.14" color={COLOR.black._500}>
+      <FormText fontType="SB.12" color={COLOR.black._500}>
         #{title}
       </FormText>
     </View>

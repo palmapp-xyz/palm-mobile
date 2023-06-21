@@ -1,3 +1,5 @@
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import { Member } from '@sendbird/chat/groupChannel'
 import images from 'assets/images'
 import {
   FormBottomSheet,
@@ -10,15 +12,15 @@ import {
 import { COLOR } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo, useState } from 'react'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
-
-import { Member } from '@sendbird/chat/groupChannel'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 const SelectReceiverModal = ({
   useGcInputReturn,
 }: {
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
+  const { t } = useTranslation()
   const snapPoints = useMemo(() => ['70%'], [])
   const [selectUser, setSelectUser] = useState<Member>()
 
@@ -36,18 +38,24 @@ const SelectReceiverModal = ({
           <Row
             style={{ alignItems: 'center', columnGap: 8, paddingBottom: 18 }}
           >
-            <FormText fontType="B.24">{`${
-              useGcInputReturn.stepAfterSelectItem === 'send-nft' ? 'NFT' : ''
-            } to`}</FormText>
+            <FormText fontType="B.24">
+              {t('Channels.UiKitReceiverModalNftTo', {
+                item:
+                  useGcInputReturn.stepAfterSelectItem === 'send-nft'
+                    ? 'NFT'
+                    : '',
+              })}
+            </FormText>
+
             {selectUser ? (
               <FormText fontType="B.24">{selectUser.nickname}</FormText>
             ) : (
               <FormText fontType="B.24" color={COLOR.black._200}>
-                whom?
+                {t('Channels.UiKitReceiverModalWhom')}
               </FormText>
             )}
           </Row>
-          <FlatList
+          <BottomSheetFlatList
             data={useGcInputReturn.receiverList}
             keyExtractor={(_, index): string => `receiverList-${index}`}
             contentContainerStyle={{ rowGap: 16 }}
@@ -94,7 +102,7 @@ const SelectReceiverModal = ({
               setSelectUser(undefined)
             }}
           >
-            Select
+            {t('Common.Select')}
           </FormButton>
         </View>
       </View>

@@ -9,11 +9,12 @@ import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr, SupportedNetworkEnum } from 'types'
 
+import { useTranslation } from 'react-i18next'
 import LensProfileHeaderSection from './LensProfileHeaderSection'
-import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
 import ProfileWalletAddress from './ProfileWalletAddress'
 import ProfileWalletBalances from './ProfileWalletBalances'
+import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import Avatar from './sendbird/Avatar'
 
 export type ProfileHeaderProps = {
@@ -35,6 +36,7 @@ const ProfileHeader = React.memo(
     onToggleShowUserTokensSheet,
   }: ProfileHeaderProps): ReactElement => {
     const { navigation } = useAppNavigation()
+    const { t } = useTranslation()
 
     const { profile, lensProfile } = useProfile({ profileId: userProfileId })
     const profileImg = getProfileMediaImg(profile?.picture)
@@ -100,7 +102,7 @@ const ProfileHeader = React.memo(
 
           {profile?.bio && (
             <View style={styles.section}>
-              <FormText fontType="R.12" color={COLOR.black._200}>
+              <FormText fontType="R.14" color={COLOR.black._200}>
                 {profile.bio.trim()}
               </FormText>
             </View>
@@ -130,7 +132,9 @@ const ProfileHeader = React.memo(
               marginTop: !isMyPage ? 12 : 0,
             }}
           >
-            <FormText fontType="B.14">NFT List</FormText>
+            <FormText fontType="B.14">
+              {t('Components.ProfileHeader.NftList')}
+            </FormText>
             <SupportedNetworkRow
               selectedNetwork={selectedNetwork}
               onNetworkSelected={onNetworkSelected}

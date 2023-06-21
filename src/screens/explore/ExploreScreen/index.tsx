@@ -3,7 +3,7 @@ import { Container, FormImage, FormInput, Row } from 'components'
 import { COLOR } from 'consts'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
-import React, { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import {
   Animated,
   ScrollView,
@@ -14,6 +14,10 @@ import {
 } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
+import { getPin } from 'libs/pin'
+import { useTranslation } from 'react-i18next'
 import RecentlySearched from './RecentlySearched'
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
@@ -35,6 +39,8 @@ const HEADER_HEIGHT = 72
 // }
 
 const ExploreScreen = (): ReactElement => {
+  const { navigation } = useAppNavigation<Routes.Explore>()
+  const { t } = useTranslation()
   const [searchFocused, setSearchFocused] = useState(false)
   const inputRef = useRef<TextInput>(null)
 
@@ -46,6 +52,23 @@ const ExploreScreen = (): ReactElement => {
     isSearching,
     onClickConfirm,
   } = useExploreSearchReturn
+
+  useEffect(() => {
+    const checkPin = async (): Promise<void> => {
+      const isNotConfigurePin = (await getPin()) === ''
+
+      if (isNotConfigurePin) {
+        navigation.push(Routes.Pin, {
+          type: 'set',
+          result: async (result: boolean): Promise<void> => {
+            result && navigation.pop()
+            return Promise.resolve()
+          },
+        })
+      }
+    }
+    checkPin()
+  }, [])
 
   return (
     <Container style={styles.container}>
@@ -85,8 +108,9 @@ const ExploreScreen = (): ReactElement => {
           <View style={{ position: 'relative' }}>
             <FormInput
               inputRef={inputRef}
-              placeholder="Search by username, tag, chat room name..."
+              placeholder={t('Explore.ExploreSearchPlaceholder')}
               style={{ paddingRight: 40 }}
+              fontType="R.14"
               maxLength={20}
               value={inputSearch}
               onChangeText={setInputSearch}

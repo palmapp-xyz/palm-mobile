@@ -1,113 +1,153 @@
-import { Container, Header } from 'components'
+import { Container, FormText, Header } from 'components'
 import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useVersions from 'hooks/useVersions'
 import { Routes } from 'libs/navigation'
-import React, { ReactElement } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Switch } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
+
+const SettingItem = (props: {
+  name: string
+  onPress?: () => void
+}): ReactElement => {
+  const { name, onPress } = props
+
+  return (
+    <TouchableOpacity style={styles.item} onPress={onPress}>
+      <FormText fontType="R.14" color={COLOR.black._900}>
+        {name}
+      </FormText>
+      <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
+    </TouchableOpacity>
+  )
+}
+
+const SettingSwitchItem = (props: {
+  name: string
+  enable: boolean
+  toggle?: (value: boolean) => void
+}): ReactElement => {
+  const { name, enable, toggle } = props
+  return (
+    <View style={styles.item}>
+      <FormText fontType="R.14" color={COLOR.black._900}>
+        {name}
+      </FormText>
+      <Switch
+        style={Platform.select({
+          ios: {
+            transform: [{ scaleX: 0.6 }, { scaleY: 0.6 }],
+          },
+        })}
+        value={enable}
+        onValueChange={toggle}
+      />
+    </View>
+  )
+}
+
+const SettingTextItem = (props: {
+  name: string
+  text?: string
+}): ReactElement => {
+  const { name, text } = props
+  return (
+    <View style={styles.item}>
+      <FormText fontType="R.14" color={COLOR.black._900}>
+        {name}
+      </FormText>
+      <FormText fontType="B.14" color={COLOR.primary._400}>
+        {text}
+      </FormText>
+    </View>
+  )
+}
 
 const SettingScreen = (): ReactElement => {
   const { logout } = useAuth()
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
   const version = useVersions()
+
+  const [enablePush, setEnablePush] = useState<boolean>(false)
 
   return (
     <Container style={styles.container}>
-      <Header title="Setting" left="back" onPressLeft={navigation.goBack} />
+      <Header
+        title={t('Settings.HeaderTitle')}
+        left="back"
+        onPressLeft={navigation.goBack}
+      />
       <View style={styles.body}>
         <View style={styles.itemGroup}>
-          <TouchableOpacity
-            style={styles.item}
+          <SettingSwitchItem
+            name={t('Settings.PushNotification')}
+            enable={enablePush}
+            toggle={(value): void => {
+              setEnablePush(value)
+              // todo: save state
+            }}
+          />
+        </View>
+        <View style={styles.itemGroup}>
+          <SettingItem
+            name={t('Settings.ChangePin')}
+            onPress={(): void => {}}
+          />
+          <SettingItem
+            name={t('Settings.ExportWallet')}
             onPress={(): void => {
               navigation.navigate(Routes.ExportPrivate)
             }}
-          >
-            <Text>Export key</Text>
-            <Icon
-              name="ios-chevron-forward"
-              color={COLOR.black._800}
-              size={20}
-            />
-          </TouchableOpacity>
-          {/* <TouchableOpacity
-            style={styles.item}
-            onPress={(): void => {
-              console.log('bio auth')
-            }}
-          >
-            <Text>Face ID / Touch ID</Text>
-            <Row>
-              <Switch />
-            </Row>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={(): void => {
-              console.log('Push Notifications')
-            }}
-          >
-            <Text>Push Notifications</Text>
-            <Row>
-              <Switch />
-            </Row>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.item}
-            onPress={(): void => {
-              console.log('Service Agreement')
-            }}
-          >
-            <Text>Service Agreement</Text>
-            <Icon
-              name="ios-chevron-forward"
-              color={COLOR.black._800}
-              size={20}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={(): void => {
-              console.log('Privacy')
-            }}
-          >
-            <Text>Privacy</Text>
-            <Icon
-              name="ios-chevron-forward"
-              color={COLOR.black._800}
-              size={20}
-            />
-          </TouchableOpacity> */}
-          <View style={styles.item}>
-            <Text>Version</Text>
-            <Text style={{ color: COLOR.primary._400 }}>
-              {version.codepush
-                ? `${version.app}-${version.codepush}`
-                : `${version.app}`}
-            </Text>
-          </View>
-          {/* <TouchableOpacity
-            style={styles.item}
-            onPress={(): void => {
-              console.log('Version')
-            }}
-          >
-            <Text>Contact</Text>
-            <Icon
-              name="ios-chevron-forward"
-              color={COLOR.black._800}
-              size={20}
-            />
-          </TouchableOpacity> */}
+          />
         </View>
         <View style={styles.itemGroup}>
+          <SettingItem
+            name={t('Settings.ExportWallet')}
+            onPress={(): void => {}}
+          />
+          <SettingItem name={t('Settings.Privacy')} onPress={(): void => {}} />
+          <SettingItem name={t('Settings.Contact')} onPress={(): void => {}} />
+          <SettingItem
+            name={t('Settings.GiveUsFeedback')}
+            onPress={(): void => {}}
+          />
+          <SettingTextItem
+            name={t('Settings.Version')}
+            text={
+              version.codepush
+                ? `${version.app}-${version.codepush} ${
+                    __DEV__ ? '(dev)' : '(release)'
+                  }`
+                : `${version.app} ${__DEV__ ? '(dev)' : '(release)'}`
+            }
+          />
+        </View>
+        <View style={(styles.itemGroup, { alignSelf: 'center' })}>
           <TouchableOpacity
-            style={[styles.item, { justifyContent: 'center' }]}
-            onPress={logout}
+            style={[
+              styles.item,
+              {
+                borderColor: COLOR.black._100,
+                borderWidth: 1,
+                borderRadius: 9,
+                paddingHorizontal: 12,
+                paddingVertical: 6,
+                alignSelf: 'flex-start',
+              },
+            ]}
+            onPress={(): void => {
+              // warning?
+              logout()
+            }}
           >
-            <Text style={{ color: COLOR.error }}>Sign Out</Text>
+            <FormText fontType="SB.12" color={COLOR.red}>
+              {t('Settings.SignOut')}
+            </FormText>
           </TouchableOpacity>
         </View>
       </View>
@@ -126,5 +166,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 })

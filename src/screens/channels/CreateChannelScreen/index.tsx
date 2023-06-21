@@ -17,10 +17,16 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import Indicator from 'components/atoms/Indicator'
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
+import { useTranslation } from 'react-i18next'
 import TokenGating from './TokenGating'
 
 const CreateChannelScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { user } = useAuth()
+  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { t } = useTranslation()
   const useCreateChannelReturn = useCreateChannel()
   const {
     isLoading,
@@ -79,37 +85,40 @@ const CreateChannelScreen = (): ReactElement => {
           <View style={styles.infoSection}>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>
-                Chat Room Name
+                {t('Channels.ChatRoomName')}
               </FormText>
               <FormInput
                 disabled={isLoading}
                 value={channelName}
+                placeholder={t('Channels.ChatRoomNamePlaceholder', {
+                  name: profile?.handle,
+                })}
                 onChangeText={setChannelName}
               />
             </View>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>
-                Description
+                {t('Channels.ChatRoomDescription')}
               </FormText>
               <FormInput
+                textAlignVertical="top"
                 disabled={isLoading}
                 value={desc}
                 onChangeText={setDesc}
-                fontType="R.12"
                 multiline={true}
-                placeholder="Please write something to describe about the channel."
+                placeholder={t('Channels.ChatRoomDescriptionPlaceholder')}
                 style={{ height: 100 }}
               />
             </View>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>
-                Tags
+                {t('Channels.ChatRoomTag')}
               </FormText>
               <FormInput
                 disabled={isLoading}
                 value={inputTag}
                 onChangeText={setInputTag}
-                placeholder="Add tags separated by a comma"
+                placeholder={t('Channels.ChatRoomTagPlaceholder')}
               />
               <ScrollView style={{ maxHeight: 80 }}>
                 <Row style={{ flexWrap: 'wrap', gap: 8 }}>
@@ -121,7 +130,7 @@ const CreateChannelScreen = (): ReactElement => {
             </View>
             <View style={styles.infoRow}>
               <FormText fontType="R.12" color={COLOR.black._400}>
-                Token Gating
+                {t('Channels.ChatRoomTokenGating')}
               </FormText>
 
               {selectedGatingToken.amount ? (
@@ -138,9 +147,9 @@ const CreateChannelScreen = (): ReactElement => {
                         {selectedGatingToken.name}
                       </FormText>
                       <FormText fontType="R.14" color={COLOR.black._200}>
-                        {`(minimum: ${UTIL.setComma(
-                          selectedGatingToken.amount
-                        )})`}
+                        {t('Channels.ChatRoomTokenGatingMinimum', {
+                          amount: UTIL.setComma(selectedGatingToken.amount),
+                        })}
                       </FormText>
                     </View>
                     <Icon
@@ -157,7 +166,7 @@ const CreateChannelScreen = (): ReactElement => {
                     }}
                   >
                     <FormText fontType="R.14" color={COLOR.black._200}>
-                      Edit Token Gating
+                      {t('Channels.ChatRoomEditTokenGating')}
                     </FormText>
                     <Icon
                       name="chevron-forward"
@@ -190,7 +199,7 @@ const CreateChannelScreen = (): ReactElement => {
                     <Icon name="add" size={38} color={COLOR.black._100} />
                   </View>
                   <FormText fontType="R.14" color={COLOR.black._200}>
-                    Select a Token or NFT
+                    {t('Channels.ChatRoomTokenGatingSelect')}
                   </FormText>
                 </TouchableOpacity>
               )}

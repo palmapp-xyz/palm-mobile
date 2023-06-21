@@ -6,6 +6,7 @@ import { ContractAddr, FbListing } from 'types'
 
 import firestore from '@react-native-firebase/firestore'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { useTranslation } from 'react-i18next'
 
 const NftListingChannels = ({
   nftContract,
@@ -16,6 +17,7 @@ const NftListingChannels = ({
   tokenId: string
   containerStyle?: StyleProp<ViewStyle>
 }): ReactElement => {
+  const { t } = useTranslation()
   const [activeListedChannels, setActiveListedChannels] = useState<FbListing[]>(
     []
   )
@@ -59,7 +61,7 @@ const NftListingChannels = ({
     />
   ) : (
     <View style={containerStyle}>
-      <Text>None</Text>
+      <Text>{t('Common.Done')}</Text>
     </View>
   )
 }

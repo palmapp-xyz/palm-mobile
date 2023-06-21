@@ -12,6 +12,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Animated,
   BackHandler,
@@ -27,6 +28,7 @@ const InitExploreScreen = (): ReactElement => {
   const { addInterestList } = useInterest()
   const { interestList, selectedInterestList, updateSelectedInterestList } =
     useInitExplore()
+  const { t } = useTranslation()
   const [showStep, setShowStep] = useState<0 | 1 | 2 | 3>(0)
 
   const scaleText1 = useRef(new Animated.Value(0)).current
@@ -218,7 +220,7 @@ const InitExploreScreen = (): ReactElement => {
               fontType="B.24"
               color={showStep === 1 ? COLOR.black._900 : COLOR.black._400}
             >
-              {'Hi, there!\nWelcome to Palm.'}
+              {t('Explore.InitExploreTitleStep1')}
             </FormText>
           </Animated.View>
           <Animated.View
@@ -238,7 +240,7 @@ const InitExploreScreen = (): ReactElement => {
             ]}
           >
             <FormText fontType="B.24">
-              {'Tell us what you\ninterested in.'}
+              {t('Explore.InitExploreTitleStep2')}
             </FormText>
           </Animated.View>
           <Animated.View
@@ -275,7 +277,7 @@ const InitExploreScreen = (): ReactElement => {
                     color={COLOR.black._500}
                   />
                   <FormText fontType="R.12" color={COLOR.black._500}>
-                    Skip this step
+                    {t('Explore.InitExploreSkip')}
                   </FormText>
                 </TouchableOpacity>
               </>
@@ -291,7 +293,7 @@ const InitExploreScreen = (): ReactElement => {
             navigation.goBack()
           }}
         >
-          It's all done
+          {t('Explore.InitExploreAllDone')}
         </FormButton>
       </View>
     </Container>

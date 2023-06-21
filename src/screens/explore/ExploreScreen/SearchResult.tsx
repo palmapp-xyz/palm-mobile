@@ -6,6 +6,7 @@ import { COLOR } from 'consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ChannelType } from 'types'
 
@@ -22,6 +23,7 @@ const SearchResult = ({
     searchProfileResult,
     setSelectedChannel,
   } = useExploreSearchReturn
+  const { t } = useTranslation()
 
   const [selectedMenu, setSelectedMenu] = useState<TabType>('chat')
 
@@ -56,8 +58,11 @@ const SearchResult = ({
     <>
       <View style={styles.container}>
         <Row>
-          <TabItem title="Chat Room" target={'chat'} />
-          <TabItem title="User" target={'user'} />
+          <TabItem
+            title={t('Explore.SearchResultItemChatRoom')}
+            target={'chat'}
+          />
+          <TabItem title={t('Explore.SearchResultItemUser')} target={'user'} />
         </Row>
         <ScrollView
           style={styles.body}

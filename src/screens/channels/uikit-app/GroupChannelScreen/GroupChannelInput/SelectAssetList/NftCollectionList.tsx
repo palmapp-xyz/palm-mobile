@@ -4,6 +4,7 @@ import { COLOR } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { ContractAddr } from 'types'
@@ -15,6 +16,7 @@ const NftCollectionList = ({
   useGcInputReturn: UseGcInputReturn
   userAddress?: ContractAddr
 }): ReactElement => {
+  const { t } = useTranslation()
   const { selectedNetwork, setSelectedCollection } = useGcInputReturn
 
   const { items, fetchNextPage, hasNextPage, loading } =
@@ -28,9 +30,9 @@ const NftCollectionList = ({
       {loading ? (
         <Indicator />
       ) : items.length === 0 ? (
-        <Text style={styles.text}>{'No tokens to show'}</Text>
+        <Text style={styles.text}>{t('Channels.UiKitNftNoToken')}</Text>
       ) : (
-        <Text style={styles.text}>{'End of List'}</Text>
+        <Text style={styles.text}>{t('Channels.UiKitNftEndOfList')}</Text>
       )}
     </View>
   )

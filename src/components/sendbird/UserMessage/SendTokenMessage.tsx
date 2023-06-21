@@ -6,6 +6,7 @@ import { COLOR, UTIL } from 'consts'
 import useExplorer from 'hooks/complex/useExplorer'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { pToken, SbSendTokenDataType, SupportedNetworkEnum } from 'types'
@@ -15,6 +16,7 @@ const SendTokenMessage = ({
 }: {
   data: SbSendTokenDataType
 }): ReactElement => {
+  const { t } = useTranslation()
   const item = data.selectedToken
 
   const chain =
@@ -46,11 +48,13 @@ const SendTokenMessage = ({
           }}
         >
           <UserMention userMetadata={data.from} />
-          <FormText fontType="B.12">{` sent ${UTIL.formatAmountP(
-            data.value as pToken,
-            { toFix: 2 }
-          )} ${data.selectedToken.symbol}`}</FormText>
-          {' to '}
+          <FormText fontType="B.12">
+            {t('Components.SendTokenMessage.Sent', {
+              amount: UTIL.formatAmountP(data.value as pToken, { toFix: 2 }),
+              symbol: data.selectedToken.symbol,
+            })}
+          </FormText>
+          {t('Components.SendTokenMessage.To')}
           <UserMention userMetadata={data.to} />
         </FormText>
 
@@ -75,7 +79,7 @@ const SendTokenMessage = ({
         }}
       >
         <FormText color={COLOR.black._500} fontType="R.12">
-          View Transaction Detail{' '}
+          {t('Components.SendTokenMessage.ViewTransactionDetail')}
         </FormText>
         <Ionicons
           color={COLOR.black._500}

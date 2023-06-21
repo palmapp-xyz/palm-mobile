@@ -14,6 +14,7 @@ import useAuth from 'hooks/auth/useAuth'
 import { UseCreateChannelReturn } from 'hooks/page/groupChannel/useCreateChannel'
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ScrollView,
   StyleSheet,
@@ -40,6 +41,7 @@ const TokenGating = ({
   const [step, setStep] = useState<1 | 2>(1)
 
   const { user } = useAuth()
+  const { t } = useTranslation()
 
   const gatingTokenNetwork =
     selectedGatingToken?.chain || SupportedNetworkEnum.ETHEREUM
@@ -79,8 +81,8 @@ const TokenGating = ({
       <View style={styles.title}>
         <FormText fontType="B.16">
           {step === 1
-            ? 'Please select a Token or NFT group'
-            : 'How many does someone need to enter?'}
+            ? t('Channels.ChatRoomTokenGatingSelectStep1')
+            : t('Channels.ChatRoomTokenGatingSelectStep2')}
         </FormText>
       </View>
       {step === 1 ? (
@@ -184,7 +186,7 @@ const TokenGating = ({
               setStep(2)
             }}
           >
-            Next
+            {t('Common.Next')}
           </FormButton>
         ) : (
           <FormButton
@@ -193,7 +195,7 @@ const TokenGating = ({
               setShowTokenGating(false)
             }}
           >
-            Done
+            {t('Common.Done')}
           </FormButton>
         )}
       </View>

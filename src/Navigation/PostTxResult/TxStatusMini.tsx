@@ -15,6 +15,7 @@ import styled from 'styled-components/native'
 import { PostTxStatus } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 const StyledTextBox = styled(View)`
   align-items: center;
@@ -32,7 +33,9 @@ const TxStatusMini = ({
   onPressClose: () => void
   setMinimized: React.Dispatch<React.SetStateAction<boolean>>
 }): ReactElement => {
+  const { t } = useTranslation()
   const postTxResult = useRecoilValue(postTxStore.postTxResult)
+
   return (
     <Pressable
       style={styles.container}
@@ -60,7 +63,7 @@ const TxStatusMini = ({
               <FormImage source={images.loading} size={30} />
             </View>
             <StyledTextBox>
-              <StatusText>Posting...</StatusText>
+              <StatusText>{t('Navigation.TxStatusMini.Posting')}</StatusText>
             </StyledTextBox>
           </>
         )}
@@ -71,7 +74,7 @@ const TxStatusMini = ({
               <FormImage source={images.loading} size={30} />
             </View>
             <StyledTextBox>
-              <StatusText>Pending TX...</StatusText>
+              <StatusText>{t('Navigation.TxStatusMini.PendingTx')}</StatusText>
               <LinkExplorer
                 type="tx"
                 address={postTxResult.transactionHash}
@@ -103,7 +106,7 @@ const TxStatusMini = ({
                 </LinkExplorer>
               </StyledTextBox>
             ) : (
-              <Text>Done</Text>
+              <Text>{t('Common.Done')}</Text>
             )}
           </>
         )}
@@ -114,7 +117,7 @@ const TxStatusMini = ({
               <Icon icon="error" size={30} color="red" />
             </View>
             <StyledTextBox>
-              <StatusText>Tx failed</StatusText>
+              <StatusText>{t('Navigation.TxStatusMini.TxFailed')}</StatusText>
             </StyledTextBox>
           </>
         )}

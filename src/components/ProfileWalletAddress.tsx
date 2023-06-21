@@ -7,6 +7,7 @@ import { ContractAddr } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import useToast from 'hooks/useToast'
+import { useTranslation } from 'react-i18next'
 
 export type ProfileWalletAddressProps = {
   userAddress: ContractAddr | undefined
@@ -15,10 +16,13 @@ export type ProfileWalletAddressProps = {
 const ProfileWalletAddress = React.memo(
   ({ userAddress }: ProfileWalletAddressProps): ReactElement => {
     const toast = useToast()
+    const { t } = useTranslation()
 
     return (
       <View style={styles.walletAddressBox}>
-        <FormText fontType="B.14">Wallet Address</FormText>
+        <FormText fontType="B.14">
+          {t('Components.ProfileWalletAddress.WalletAddress')}
+        </FormText>
 
         <View style={{ rowGap: 8, marginTop: 12 }}>
           <TouchableOpacity
@@ -26,7 +30,10 @@ const ProfileWalletAddress = React.memo(
               if (!userAddress) {
                 return
               }
-              toast.show('Address copied', { color: 'green', icon: 'check' })
+              toast.show(t('Components.ProfileWalletAddress.AddressCopied'), {
+                color: 'green',
+                icon: 'check',
+              })
               Clipboard.setString(userAddress)
             }}
           >

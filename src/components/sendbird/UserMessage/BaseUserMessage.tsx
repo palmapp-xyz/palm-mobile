@@ -110,7 +110,11 @@ const BaseUserMessage = ({
                 replacer: replacerB,
               },
             ]}
-            style={{ fontSize: 12 }}
+            style={{
+              fontSize: 14,
+              lineHeight: 18,
+              fontWeight: '400',
+            }}
           >
             {mentionManager.shouldUseMentionedMessageTemplate(message)
               ? message.mentionedMessageTemplate

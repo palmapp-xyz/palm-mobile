@@ -29,17 +29,18 @@ import {
   ContractAddr,
   FbProfile,
   NftType,
-  pToken,
   QueryKeyEnum,
   SbBuyNftDataType,
   SbUserMetadata,
   SupportedNetworkEnum,
+  pToken,
 } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
+import { useTranslation } from 'react-i18next'
 import NftDetails from '../../components/NftDetails'
 
 const InitNftUri = ({
@@ -108,6 +109,7 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const { t } = useTranslation()
 
   const { onClickConfirm: onClickCancel } = useZxCancelNft(
     channelUrl,
@@ -148,10 +150,11 @@ const ZxNftDetailScreen = (): ReactElement => {
       )
       if (hasEnoughBalance === false) {
         Alert.alert(
-          'Insufficient balance',
-          `You have ${UTIL.formatAmountP(myTargetBalance)} ${
-            NETWORK.nativeToken[chain]
-          }`
+          t('Nft.ZxNftDetailInsufficientBalanceAlertTitle'),
+          t('Nft.ZxNftDetailInsufficientBalanceAlertMessage', {
+            balance: UTIL.formatAmountP(myTargetBalance),
+            token: NETWORK.nativeToken[chain],
+          })
         )
         return
       }
@@ -191,7 +194,11 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   return (
     <Container style={styles.container}>
-      <Header title="Buy NFT" left="back" onPressLeft={navigation.goBack} />
+      <Header
+        title={t('Nft.ZxNftDetailHeaderTitle')}
+        left="back"
+        onPressLeft={navigation.goBack}
+      />
       {order && (
         <>
           <InitNftUri
@@ -219,8 +226,10 @@ const ZxNftDetailScreen = (): ReactElement => {
             </FormText>
           </Row>
           <View>
-            <FormText fontType="R.10" color={COLOR.black._400}>
-              {`(≈$${UTIL.formatAmountP(usdPrice, { toFix: 2 })})`}
+            <FormText fontType="R.12" color={COLOR.black._400}>
+              {t('Common.UsdPrice', {
+                price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
+              })}
             </FormText>
           </View>
         </View>
@@ -228,7 +237,7 @@ const ZxNftDetailScreen = (): ReactElement => {
           disabled={!order || !listingOwner || !profile}
           onPress={onSubmit}
         >
-          {isMine ? 'Cancel' : 'Buy'}
+          {isMine ? t('Common.Cancel') : t('Common.Buy')}
         </FormButton>
       </Row>
     </Container>

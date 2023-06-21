@@ -22,6 +22,10 @@ import { Moralis, SbUserMetadata, SupportedNetworkEnum } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
+import { Routes } from 'libs/navigation'
+import { useTranslation } from 'react-i18next'
 
 const ConfirmModal = ({
   selectedNft,
@@ -37,6 +41,7 @@ const ConfirmModal = ({
   useZxListNftReturn: UseZxListNftReturn
 }): ReactElement => {
   const { user } = useAuth()
+  const { navigation } = useAppNavigation<Routes.SendNft>()
   const chain: SupportedNetworkEnum =
     chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
@@ -45,6 +50,8 @@ const ConfirmModal = ({
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const toast = useToast()
+  const { t } = useTranslation()
   const { profile } = useProfile({ profileId: user?.auth?.profileId })
 
   const onSubmit = async (
@@ -90,8 +97,7 @@ const ConfirmModal = ({
             }}
           >
             <FormText fontType="R.12" color={COLOR.error}>
-              The sale will be accepted and concluded unless you cancel it. The
-              sale listing is valid for 24 hours.
+              {t('Nft.ListNftConfirmModalNotice')}
             </FormText>
           </View>
         </View>
@@ -139,7 +145,7 @@ const ConfirmModal = ({
                 paddingHorizontal: 20,
               }}
             >
-              <FormText>on</FormText>
+              <FormText>{t('Nft.ListNftConfirmModalOn')}</FormText>
               <FormImage source={NETWORK.getNetworkLogo(chain)} />
               <FormText>{_.capitalize(chain)}</FormText>
             </Row>
@@ -149,9 +155,13 @@ const ConfirmModal = ({
           >
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">From</FormText>
+                <FormText fontType="SB.12">
+                  {t('Nft.ListNftConfirmModalFrom')}
+                </FormText>
               </View>
-              <FormText fontType="B.16">Me</FormText>
+              <FormText fontType="B.16">
+                {t('Nft.ListNftConfirmModalMe')}
+              </FormText>
               <FormText fontType="R.12">
                 {`(${UTIL.truncate(user?.address || '')})`}
               </FormText>
@@ -165,10 +175,14 @@ const ConfirmModal = ({
             </View>
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">To</FormText>
+                <FormText fontType="SB.12">
+                  {t('Nft.ListNftConfirmModalTo')}
+                </FormText>
               </View>
               <Row>
-                <FormText fontType="B.16">List Contract</FormText>
+                <FormText fontType="B.16">
+                  {t('Nft.ListNftConfirmModalListContract')}
+                </FormText>
               </Row>
             </View>
           </Row>
@@ -181,18 +195,34 @@ const ConfirmModal = ({
             setShowBottomSheet(false)
           }}
         >
-          Reject
+          {t('Common.Reject')}
         </FormButton>
         <FormButton
           containerStyle={{ flex: 1 }}
           disabled={!profile}
           onPress={async (): Promise<void> => {
             Keyboard.dismiss()
-            const order = await onClickConfirm()
-            onSubmit(selectedNft.token_uri, order)
+            navigation.push(Routes.Pin, {
+              type: 'auth',
+              result: async (result: boolean): Promise<void> => {
+                if (result) {
+                  navigation.pop()
+                  const order = await onClickConfirm()
+                  onSubmit(selectedNft.token_uri, order)
+                } else {
+                  toast.show(t('Nft.PinMismatchToast'), {
+                    color: 'red',
+                    icon: 'info',
+                  })
+                }
+              },
+              cancel: (): void => {
+                navigation.pop()
+              },
+            })
           }}
         >
-          Confirm
+          {t('Common.Confirm')}
         </FormButton>
       </Row>
     </FormBottomSheet>

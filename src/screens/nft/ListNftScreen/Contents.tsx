@@ -1,11 +1,13 @@
 import { FormButton, FormImage, FormInput, FormText, Row } from 'components'
+import UsdPrice from 'components/atoms/UsdPrice'
 import NftCard from 'components/channel/NftCard'
-import { COLOR, NETWORK } from 'consts'
+import { COLOR, NETWORK, UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -33,6 +35,7 @@ const Contents = ({
   const toast = useToast()
 
   const { bottom } = useSafeAreaInsets()
+  const { t } = useTranslation()
 
   return (
     <KeyboardAvoidingView
@@ -43,45 +46,55 @@ const Contents = ({
       <View style={styles.body}>
         <View style={{ paddingHorizontal: 20 }}>
           <View style={{ rowGap: 8, paddingBottom: 28 }}>
-            <FormText fontType="B.14">I want to sell this NFT for</FormText>
-            <Row
-              style={{
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <FormInput
-                fontType="B.24"
-                placeholder="Price"
-                maxLength={10}
-                value={price}
-                onChangeText={(value): void => {
-                  setPrice(value as Token)
-                }}
-                inputMode={'numeric'}
-                style={{
-                  borderWidth: 0,
-                  borderRadius: 0,
-                  padding: 0,
-                  paddingLeft: 0,
-                  flex: 1,
-                }}
-              />
-              <Row
-                style={{
-                  alignItems: 'center',
-                  gap: 6,
-                  backgroundColor: COLOR.black._90005,
-                  padding: 8,
-                  borderRadius: 12,
-                }}
-              >
-                <FormImage source={NETWORK.getNetworkLogo(chain)} size={20} />
-                <FormText fontType="B.20">
-                  {NETWORK.nativeToken[chain]}
-                </FormText>
-              </Row>
-            </Row>
+            <FormText fontType="B.14">
+              {t('Nft.ListNftWantToSellThisNft')}
+            </FormText>
+            {isApproved && (
+              <>
+                <Row
+                  style={{
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <FormInput
+                    fontType="B.24"
+                    placeholder={t('Nft.ListNftPricePlaceholder')}
+                    maxLength={10}
+                    value={price}
+                    onChangeText={(value): void => {
+                      setPrice(value as Token)
+                    }}
+                    inputMode={'numeric'}
+                    style={{
+                      borderWidth: 0,
+                      borderRadius: 0,
+                      padding: 0,
+                      paddingLeft: 0,
+                      flex: 1,
+                    }}
+                  />
+                  <Row
+                    style={{
+                      alignItems: 'center',
+                      gap: 6,
+                      backgroundColor: COLOR.black._90005,
+                      padding: 8,
+                      borderRadius: 12,
+                    }}
+                  >
+                    <FormImage
+                      source={NETWORK.getNetworkLogo(chain)}
+                      size={20}
+                    />
+                    <FormText fontType="B.20">
+                      {NETWORK.nativeToken[chain]}
+                    </FormText>
+                  </Row>
+                </Row>
+                <UsdPrice amount={UTIL.microfyP(price)} chain={chain} />
+              </>
+            )}
           </View>
           <NftCard selectedNft={selectedNft} />
         </View>
@@ -89,19 +102,20 @@ const Contents = ({
           {isApproved ? (
             <View style={styles.footer}>
               <FormButton
-                disabled={!price}
+                disabled={!UTIL.isValidPrice(price)}
                 onPress={async (): Promise<void> => {
+                  Keyboard.dismiss()
                   setShowBottomSheet(true)
                 }}
               >
-                List
+                {t('Nft.ListNftList')}
               </FormButton>
             </View>
           ) : (
             <View>
               <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                 <FormText style={{ fontWeight: 'bold' }}>
-                  Approve to list your NFT
+                  {t('Nft.ListNftApproveToList')}
                 </FormText>
               </View>
               <View style={styles.footer}>
@@ -115,20 +129,19 @@ const Contents = ({
                           navigation.pop()
                           onClickApprove()
                         } else {
-                          toast.show('PIN mismatch', {
+                          toast.show(t('Nft.PinMismatchToast'), {
                             color: 'red',
                             icon: 'info',
                           })
                         }
                       },
-                      cancel: async (): Promise<void> => {
+                      cancel: (): void => {
                         navigation.pop()
-                        return undefined
                       },
                     })
                   }}
                 >
-                  Approve
+                  {t('Common.Approve')}
                 </FormButton>
               </View>
             </View>

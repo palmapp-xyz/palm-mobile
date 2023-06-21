@@ -4,12 +4,14 @@ import { StyleSheet, View } from 'react-native'
 
 import { Button, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
 
+import { useTranslation } from 'react-i18next'
 import Versions from '../../components/Versions'
 
 // import { Routes } from 'libs/navigation'
 
 const Web3AuthScreen = (): ReactElement => {
   // const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
 
   const { loading, login } = useWeb3Auth(async () => {
     // navigation.navigate(Routes.Sign4Auth)
@@ -31,7 +33,7 @@ const Web3AuthScreen = (): ReactElement => {
           })
         }}
       >
-        {'Wen3Auth'}
+        {t('Auth.Web3Auth')}
       </Button>
 
       <Versions style={styles.version} />

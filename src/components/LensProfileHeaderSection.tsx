@@ -3,6 +3,7 @@ import { Profile, ProfileStats } from 'graphqls/__generated__/graphql'
 import React, { ReactElement } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
+import { useTranslation } from 'react-i18next'
 import LensProfileAttribute from './LensProfileAttribute'
 
 export type LensProfileHeaderSectionProps = {
@@ -12,6 +13,7 @@ export type LensProfileHeaderSectionProps = {
 const LensProfileHeaderSection = ({
   lensProfile,
 }: LensProfileHeaderSectionProps): ReactElement => {
+  const { t } = useTranslation()
   const stats: ProfileStats = lensProfile.stats
 
   return (
@@ -19,14 +21,14 @@ const LensProfileHeaderSection = ({
       <Row style={{ alignItems: 'center', columnGap: 8 }}>
         <Row>
           <FormText fontType="R.12" style={styles.statsKey}>
-            Followers
+            {t('Components.LensProfileHeader.Followers')}
           </FormText>
           <FormText fontType="B.12">{stats.totalFollowers}</FormText>
         </Row>
         <FormText fontType="R.12">∙</FormText>
         <Row>
           <FormText fontType="R.12" style={styles.statsKey}>
-            Following
+            {t('Components.LensProfileHeader.Following')}
           </FormText>
           <FormText fontType="B.12">{stats.totalFollowing}</FormText>
         </Row>

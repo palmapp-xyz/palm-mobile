@@ -18,10 +18,12 @@ import {
 } from '@lens-protocol/react-native-lens-ui-kit'
 import { useLocalization } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 const UpdateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
   const { alert } = useAlert()
+  const { t } = useTranslation()
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
   const { navigation } = useAppNavigation()
@@ -46,20 +48,19 @@ const UpdateProfileScreen = (): ReactElement => {
       if (!result.success) {
         if (result.errMsg === PublicationMetadataStatusType.Pending) {
           alert({
-            title: 'Pending',
-            message:
-              'Your profile will be reflected once update transaction gets indexed.',
+            title: t('Profiles.UpdateProfilePendingAlertTitle'),
+            message: t('Profiles.UpdateProfilePendingAlertMessage'),
           })
         } else {
           alert({
-            title: 'Failure',
+            title: t('Profiles.UpdateProfileFailureAlertTitle'),
             message: result.errMsg,
           })
         }
       } else {
         alert({
-          title: 'Success',
-          message: 'Profile updated',
+          title: t('Profiles.UpdateProfileSuccessAlertTitle'),
+          message: t('Profiles.UpdateProfileSuccessAlertMessage'),
           buttons: [
             {
               text: STRINGS.DIALOG.ALERT_DEFAULT_OK,
@@ -112,12 +113,13 @@ const UpdateProfileScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ rowGap: 12 }}>
           <View style={styles.rowSection}>
-            <FormText fontType="R.12">Username</FormText>
+            <FormText fontType="R.12">
+              {t('Profiles.UpdateProfileUsername')}
+            </FormText>
             <FormInput
               value={profile.handle}
               textContentType="username"
-              fontType="R.12"
-              placeholder="Enter your nickname"
+              placeholder={t('Profiles.UpdateProfileUsernamePlaceholder')}
               autoCapitalize="none"
               style={{
                 marginVertical: 2,
@@ -129,22 +131,24 @@ const UpdateProfileScreen = (): ReactElement => {
           </View>
           <View style={styles.rowSection}>
             <Row>
-              <FormText fontType="R.12">Description</FormText>
+              <FormText fontType="R.12">
+                {t('Profiles.UpdateProfileDescription')}
+              </FormText>
               <FormText fontType="R.12">
                 ({bio?.length ?? 0}/{maxBioLength})
               </FormText>
             </Row>
             <FormInput
               value={bio}
+              textAlignVertical="top"
               onChangeText={(text: string): void => {
                 if (text.length <= maxBioLength) {
                   setBio(text)
                 }
               }}
-              fontType="R.12"
               multiline={true}
               maxLength={maxBioLength}
-              placeholder="Please write something you would like to introduce about yourself."
+              placeholder={t('Profiles.UpdateProfileDescriptionPlaceholder')}
               style={{ marginVertical: 2, minHeight: 200 }}
             />
           </View>
@@ -157,7 +161,7 @@ const UpdateProfileScreen = (): ReactElement => {
           disabled={loading || bio === profile?.bio}
           onPress={onClickConfirm}
         >
-          Done
+          {t('Common.Done')}
         </FormButton>
       </View>
     </Container>

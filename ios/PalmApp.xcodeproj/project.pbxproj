@@ -829,12 +829,12 @@
 				DEVELOPMENT_TEAM = 6ALF5777EL;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = PalmApp;
+				INFOPLIST_KEY_CFBundleDisplayName = Palm;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -861,12 +861,12 @@
 				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 6ALF5777EL;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = PalmApp;
+				INFOPLIST_KEY_CFBundleDisplayName = Palm;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -893,12 +893,12 @@
 				DEVELOPMENT_TEAM = 6ALF5777EL;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "PalmApp (Testnet)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Palm (Testnet)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -927,12 +927,12 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6ALF5777EL;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "PalmApp (Testnet)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Palm (Testnet)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

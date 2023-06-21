@@ -2,12 +2,10 @@ import { FormText } from 'components'
 import { COLOR } from 'consts'
 import Lottie from 'lottie-react-native'
 import React, { ReactElement, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import RNBootSplash from 'react-native-bootsplash'
 import SplashScreen from './SplashScreen'
-
-const updateMessage =
-  'There are app updates.\nPlease wait until the update is complete.\n\nUpdate completed.\nPalm app will be restarted.'
 
 const UpdateScreen = (props: {
   restartApp: (onlyIfUpdateIsPending?: boolean) => void
@@ -16,6 +14,7 @@ const UpdateScreen = (props: {
   updateComplete: boolean | undefined
   progress: number
 }): ReactElement => {
+  const { t } = useTranslation()
   const { restartApp, upToDate, updateComplete, progress } = props
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const UpdateScreen = (props: {
             color={COLOR.black._400}
             style={{ textAlign: 'center', marginTop: 22 }}
           >
-            {`${updateMessage}`}
+            {t('Update.Message')}
           </FormText>
           <View
             style={{

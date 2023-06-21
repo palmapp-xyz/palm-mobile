@@ -8,6 +8,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
@@ -18,6 +19,7 @@ const SendNftMessage = ({
   data: SbSendNftDataType
 }): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
 
   const item = data.selectedNft
 
@@ -42,18 +44,21 @@ const SendNftMessage = ({
         }}
       >
         <FormText
-          fontType="R.12"
+          fontType="R.14"
           numberOfLines={2}
           style={{
-            color: 'black',
+            color: COLOR.black._900,
             paddingVertical: 9,
             paddingHorizontal: 12,
           }}
         >
           <UserMention userMetadata={data.from} />
-          <FormText fontType="B.12">{` sent "${item.name || 'unknown'}" #${
-            item.token_id
-          }`}</FormText>
+          <FormText fontType="B.14">
+            {t('Nft.SendNftMessageSent', {
+              itemName: item.name || 'unknown',
+              tokenId: item.token_id,
+            })}
+          </FormText>
           {' to '}
           <UserMention userMetadata={data.to} />
         </FormText>
@@ -87,8 +92,8 @@ const SendNftMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.12">
-          View Transaction Detail{' '}
+        <FormText color={COLOR.black._500} fontType="R.14">
+          {t('Nft.SendNftMessageViewTransactionDetail')}
         </FormText>
         <Ionicons
           color={COLOR.black._500}

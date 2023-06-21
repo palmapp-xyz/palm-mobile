@@ -4,14 +4,20 @@ import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
 
+import { useTranslation } from 'react-i18next'
 import NftDetails from '../../components/NftDetails'
 
 const NftDetailScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.NftDetail>()
+  const { t } = useTranslation()
 
   return (
     <Container style={styles.container}>
-      <Header title="NFT Info" left="back" onPressLeft={navigation.goBack} />
+      <Header
+        title={t('Nft.NftInfoHeaderTitle')}
+        left="back"
+        onPressLeft={navigation.goBack}
+      />
       <NftDetails
         nftContract={params.nftContract}
         tokenId={params.tokenId}

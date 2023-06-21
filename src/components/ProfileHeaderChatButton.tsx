@@ -15,6 +15,7 @@ import { ChannelType } from 'types'
 
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 export type ProfileHeaderChatButtonProps = {
   userProfileId: string | undefined
@@ -25,6 +26,7 @@ const ProfileHeaderChatButton = React.memo(
     const { navigation } = useAppNavigation()
     const { user } = useAuth()
     const { alert } = useAlert()
+    const { t } = useTranslation()
 
     const { profile: userProfile } = useProfile({ profileId: userProfileId })
 
@@ -85,7 +87,7 @@ const ProfileHeaderChatButton = React.memo(
             color={COLOR.black._300}
             style={{ textAlign: 'center' }}
           >
-            1:1 Chat
+            {t('Components.ProfileHeaderChatButton.OneOnOneChat')}
           </FormText>
         </TouchableOpacity>
       </View>

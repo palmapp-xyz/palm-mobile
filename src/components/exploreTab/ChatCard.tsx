@@ -3,6 +3,7 @@ import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
 import { COLOR, NETWORK, UTIL } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ChannelType, FbChannel } from 'types'
@@ -14,6 +15,7 @@ const ChatCard = ({
   chat: FbChannel
   onClick: (value: FbChannel) => void
 }): ReactElement | null => {
+  const { t } = useTranslation()
   if (chat.channelType === ChannelType.DIRECT) {
     return null
   }
@@ -43,16 +45,15 @@ const ChatCard = ({
 
               <Row>
                 <FormText color={COLOR.black._500} fontType="B.12">
-                  {chat.gating.amount}
+                  {`${chat.gating.amount} `}
                 </FormText>
                 <FormText color={COLOR.black._500} fontType="R.12">
-                  {' of'}
+                  {t('Components.ChatCard.Of')}
                 </FormText>
                 {chat.gating.gatingType === 'Native' ? (
                   <View>
                     <FormText fontType="B.12">
-                      {' '}
-                      {NETWORK.nativeToken[chat.gating.chain]}
+                      {` ${NETWORK.nativeToken[chat.gating.chain]}`}
                     </FormText>
                   </View>
                 ) : (
@@ -62,7 +63,9 @@ const ChatCard = ({
                     </FormText>
                   </View>
                 )}
-                <FormText fontType="R.12"> required to join</FormText>
+                <FormText fontType="R.12">
+                  {t('Components.ChatCard.RequiredToJoin')}
+                </FormText>
               </Row>
             </Row>
           </View>

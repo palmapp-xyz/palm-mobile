@@ -5,6 +5,7 @@ import { getTokenBalanceInUSD } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Moralis, pToken } from 'types'
+import { useTranslation } from 'react-i18next'
 
 const MoralisErc20Token = ({
   item,
@@ -17,6 +18,7 @@ const MoralisErc20Token = ({
     () => getTokenBalanceInUSD(value, item.price),
     [item]
   )
+  const { t } = useTranslation()
 
   return (
     <View style={styles.itemCard} key={item.token_address}>
@@ -34,10 +36,12 @@ const MoralisErc20Token = ({
             </FormText>
             <FormText fontType="R.16">{item.symbol}</FormText>
           </Row>
-          <FormText fontType="R.10" color={COLOR.black._400}>
-            {`(≈ $${
-              tokenValue ? UTIL.formatAmountP(tokenValue, { toFix: 2 }) : '?'
-            })`}
+          <FormText fontType="R.12" color={COLOR.black._400}>
+            {t('Common.UsdPrice', {
+              price: tokenValue
+                ? UTIL.formatAmountP(tokenValue, { toFix: 2 })
+                : '?',
+            })}
           </FormText>
         </View>
       </Row>

@@ -12,11 +12,13 @@ import appStore from 'store/appStore'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import useToast from 'hooks/useToast'
+import { useTranslation } from 'react-i18next'
 
 const CreateCompleteScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.CreateComplete>()
   const { account } = useCreateComplete()
   const toast = useToast()
+  const { t } = useTranslation()
 
   const [loading] = useRecoilState(appStore.loading)
 
@@ -35,21 +37,22 @@ const CreateCompleteScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
           <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
-            {'Wallet creation\nis complete'}
+            {t('Auth.Complete')}
           </FormText>
           <FormText color={COLOR.black._400} fontType="R.14">
-            {
-              'Wallet information is as follows.\nYou can check it later on My Page.'
-            }
+            {t('Auth.CompleteMessage')}
           </FormText>
         </View>
         <View style={{ rowGap: 12 }}>
           <View style={styles.rowSection}>
-            <FormText fontType="R.12">Wallet Address</FormText>
+            <FormText fontType="R.12">{t('Common.WalletAddress')}</FormText>
             <TouchableOpacity
               style={styles.copyBox}
               onPress={(): void => {
-                toast.show('Address copied', { color: 'green', icon: 'check' })
+                toast.show(t('Auth.CompleteCopiedAddressToast'), {
+                  color: 'green',
+                  icon: 'check',
+                })
                 Clipboard.setString(account?.address || '')
               }}
             >
@@ -61,13 +64,7 @@ const CreateCompleteScreen = (): ReactElement => {
           </View>
           <View style={styles.rowSection}>
             <View style={styles.infoBox}>
-              <FormText fontType="R.12">
-                {`· Click to sign in and accept the Palm Terms of Service. 
-· This request will not trigger a blockchain 
-  transaction or cost any gas fees. 
-· Your authentication status will reset after 24 
-  hours.`}
-              </FormText>
+              <FormText fontType="R.12">{t('Auth.PalmToS')}</FormText>
             </View>
           </View>
         </View>
@@ -75,7 +72,7 @@ const CreateCompleteScreen = (): ReactElement => {
 
       <View style={styles.footer}>
         <FormButton size="lg" disabled={loading} onPress={onPressConfirm}>
-          Next
+          {t('Common.Next')}
         </FormButton>
       </View>
     </Container>

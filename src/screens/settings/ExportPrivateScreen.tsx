@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import useToast from 'hooks/useToast'
+import { useTranslation } from 'react-i18next'
 
 const ExportPrivateScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ExportPrivate>()
@@ -16,6 +17,7 @@ const ExportPrivateScreen = (): ReactElement => {
   const [mnemonic, setMnemonic] = useState('')
   const [hideKey, setHideKey] = useState(true)
   const toast = useToast()
+  const { t } = useTranslation()
 
   const displayKey = mnemonic || privateKey
 
@@ -27,7 +29,7 @@ const ExportPrivateScreen = (): ReactElement => {
   return (
     <Container style={styles.container}>
       <Header
-        title="Export private"
+        title={t('Settings.ExportWalletHeaderTitle')}
         left="back"
         onPressLeft={navigation.goBack}
       />
@@ -44,7 +46,9 @@ const ExportPrivateScreen = (): ReactElement => {
               }}
             >
               <Icon name="eye-off-outline" size={24} />
-              <FormText fontType="R.14"> Show the key</FormText>
+              <FormText fontType="R.14">
+                {t('Settings.ExportWalletShowKey')}
+              </FormText>
             </TouchableOpacity>
           )}
         </View>
@@ -52,12 +56,15 @@ const ExportPrivateScreen = (): ReactElement => {
         <TouchableOpacity
           style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}
           onPress={(): void => {
-            toast.show('Private key copied', { color: 'green', icon: 'check' })
+            toast.show(t('Settings.ExportWalletCopiedPrivateKeyToast'), {
+              color: 'green',
+              icon: 'check',
+            })
             Clipboard.setString(displayKey)
           }}
         >
           <Icon name="copy-outline" size={14} />
-          <FormText fontType="R.14"> Copy to Clipboard</FormText>
+          <FormText fontType="R.14">{t('Common.CopyToClipboard')}</FormText>
         </TouchableOpacity>
       </View>
     </Container>

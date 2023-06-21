@@ -7,6 +7,9 @@ import 'react-native-get-random-values'
 // for ethers
 import '@ethersproject/shims'
 
+// i18n
+import './i18n.config'
+
 import { configurePushNotification } from 'libs/notification'
 import { AppRegistry } from 'react-native'
 import { name as appName } from './app.json'

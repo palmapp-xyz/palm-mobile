@@ -1,3 +1,4 @@
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import {
   ChainLogoWrapper,
   FormBottomSheet,
@@ -11,8 +12,8 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
-  FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -39,6 +40,7 @@ const SelectedCollectionNftsSheet = ({
   const snapPoints = useMemo(() => ['80%'], [])
 
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
   const size = useWindowDimensions()
   const dim = size.width / 3.0 - 18
 
@@ -68,9 +70,13 @@ const SelectedCollectionNftsSheet = ({
       {loading ? (
         <Indicator />
       ) : items.length === 0 ? (
-        <Text style={styles.text}>{'No tokens to show'}</Text>
+        <Text style={styles.text}>
+          {t('Components.SelectedCollectionNftSheet.NoTokensToShow')}
+        </Text>
       ) : (
-        <Text style={styles.text}>{'End of List'}</Text>
+        <Text style={styles.text}>
+          {t('Components.SelectedCollectionNftSheet.EndOfList')}
+        </Text>
       )}
     </View>
   )
@@ -86,7 +92,7 @@ const SelectedCollectionNftsSheet = ({
     >
       <View style={{ flex: 1 }}>
         <View style={styles.body}>
-          <FlatList
+          <BottomSheetFlatList
             data={items}
             ListHeaderComponent={listHeaderComponent}
             ListFooterComponent={listFooterComponent}

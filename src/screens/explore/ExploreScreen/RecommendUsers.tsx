@@ -3,16 +3,20 @@ import UserCard from 'components/exploreTab/UserCard'
 import useExploreRecommendUsers from 'hooks/page/explore/useExploreRecommendUsers'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 const RecommendUsers = (): ReactElement => {
   const { fsProfileList } = useExploreRecommendUsers()
+  const { t } = useTranslation()
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.title}>
-          <FormText fontType="B.24">{'or Chat with\nothers directly'}</FormText>
+          <FormText fontType="B.24">
+            {t('Explore.ExploreChatWithOthersDirectly')}
+          </FormText>
         </View>
       </View>
       <View style={styles.body}>

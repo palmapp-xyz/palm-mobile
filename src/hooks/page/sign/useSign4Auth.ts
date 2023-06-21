@@ -10,6 +10,7 @@ import { AuthChallengeInfo, ContractAddr, SupportedNetworkEnum } from 'types'
 import { Account } from 'web3-core'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 export type UseSign4AuthReturn = {
   challenge?: AuthChallengeInfo
@@ -26,6 +27,7 @@ const useSign4Auth = (): UseSign4AuthReturn => {
     SupportedNetworkEnum.ETHEREUM
   )
   const { alert } = useAlert()
+  const { t } = useTranslation()
 
   const signChallenge = async (): Promise<void> => {
     setLoading(true)
@@ -37,7 +39,10 @@ const useSign4Auth = (): UseSign4AuthReturn => {
         await appSignIn(result)
       } catch (e) {
         recordError(e, 'signChallenge')
-        alert({ title: 'Failure', message: _.toString(e) })
+        alert({
+          title: t('Auth.Sign4AuthFailureAlertTitle'),
+          message: _.toString(e),
+        })
       } finally {
         setLoading(false)
       }

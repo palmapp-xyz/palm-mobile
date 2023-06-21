@@ -9,6 +9,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
@@ -22,6 +23,7 @@ import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { t } = useTranslation()
 
   const item = data.selectedNft
   const chain: SupportedNetworkEnum =
@@ -55,7 +57,9 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
     <View style={styles.container}>
       <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
       <View style={styles.body}>
-        <FormText style={{ color: COLOR.primary._400 }}>Bought NFT</FormText>
+        <FormText style={{ color: COLOR.primary._400 }}>
+          {t('Components.BuyNftMessage.BoughtNft')}
+        </FormText>
 
         <FormText
           fontType="R.12"
@@ -65,9 +69,12 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
           }}
         >
           <UserMention userMetadata={data.buyer} />
-          <FormText fontType="B.12">{` bought ${
-            nftName ?? UTIL.truncate(item.nftToken)
-          } #${item.nftTokenId} from `}</FormText>
+          <FormText fontType="R.12">
+            {t('Components.BuyNftMessage.BoughtNftBoughtFrom', {
+              nftName: nftName ?? UTIL.truncate(item.nftToken),
+              nftTokenId: item.nftTokenId,
+            })}
+          </FormText>
           <UserMention userMetadata={data.from} />
         </FormText>
 
@@ -82,7 +89,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
             })
           }}
         >
-          Details
+          {t('Common.Details')}
         </FormButton>
       </View>
 
@@ -104,7 +111,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
         }}
       >
         <FormText color={COLOR.black._500} fontType="R.12">
-          View Transaction Detail{' '}
+          {t('Components.BuyNftMessage.ViewTransactionDetail')}
         </FormText>
         <Ionicons
           color={COLOR.black._500}

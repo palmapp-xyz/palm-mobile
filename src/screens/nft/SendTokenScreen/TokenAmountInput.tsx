@@ -48,7 +48,7 @@ const TokenAmountInput = ({
           onChangeText={(_value): void => {
             onSetValue?.(_value as Token)
           }}
-          inputMode={'numeric'}
+          inputMode={'decimal'}
           style={{
             borderWidth: 0,
             borderRadius: 0,
@@ -56,7 +56,7 @@ const TokenAmountInput = ({
             paddingLeft: 0,
           }}
         />
-        <FormText fontType="R.10" color={COLOR.black._400}>
+        <FormText fontType="R.12" color={COLOR.black._400}>
           {`(≈ $${
             tokenValue ? UTIL.formatAmountP(tokenValue, { toFix: 2 }) : '?'
           })`}

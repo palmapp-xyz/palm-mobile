@@ -5,6 +5,7 @@ import useConfirmSeed from 'hooks/page/account/useConfirmSeed'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
@@ -21,6 +22,7 @@ const ConfirmSeedScreen = (): ReactElement => {
     selectedWordList,
     setSelectedWordList,
   } = useConfirmSeed({ mnemonic })
+  const { t } = useTranslation()
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
@@ -39,9 +41,8 @@ const ConfirmSeedScreen = (): ReactElement => {
 
         return Promise.resolve()
       },
-      cancel: async () => {
+      cancel: () => {
         navigation.pop()
-        return Promise.resolve()
       },
     })
   }
@@ -57,12 +58,10 @@ const ConfirmSeedScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
           <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
-            {'Confirm the seed phrase'}
+            {t('Auth.ConfirmSeed')}
           </FormText>
           <FormText color={COLOR.black._400} fontType="R.14">
-            {
-              'To make sure you’ve kept your\nseed phrase, please choose and fill them.'
-            }
+            {t('Auth.ConfirmSeedMessage')}
           </FormText>
         </View>
         <View style={{ rowGap: 20 }}>

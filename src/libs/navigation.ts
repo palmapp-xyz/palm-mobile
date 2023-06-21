@@ -91,7 +91,7 @@ type AuthRouteParamsUnion =
   | {
       route: Routes.RecoverAccount
       params: {
-        isSignUp: boolean
+        type: 'importWallet' | 'restoreWallet' | 'resetPin'
       }
     }
   | {
@@ -103,7 +103,7 @@ type AuthRouteParamsUnion =
       params: {
         type: 'set' | 'auth' | 'reset'
         result?: (result: boolean) => Promise<void>
-        cancel?: () => Promise<void>
+        cancel?: () => void
       }
     }
 
@@ -274,7 +274,13 @@ type MainRouteParamsUnion =
       params: {
         type: 'set' | 'auth' | 'reset'
         result?: (result: boolean) => Promise<void>
-        cancel?: () => Promise<void>
+        cancel?: () => void
+      }
+    }
+  | {
+      route: Routes.RecoverAccount
+      params: {
+        type: 'importWallet' | 'restoreWallet' | 'resetPin'
       }
     }
 

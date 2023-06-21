@@ -3,11 +3,14 @@ import { COLOR } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
 import React, { ReactElement, useMemo, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { pToken, SupportedNetworkEnum } from 'types'
+import { StyleSheet, Text, View } from 'react-native'
+import { SupportedNetworkEnum, pToken } from 'types'
+
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import { useTranslation } from 'react-i18next'
+import MoralisErc20Token from './MoralisErc20Token'
 
 import Indicator from './atoms/Indicator'
-import MoralisErc20Token from './MoralisErc20Token'
 
 const UserTokensSheet = ({
   onClose,
@@ -17,6 +20,7 @@ const UserTokensSheet = ({
   const snapPoints = useMemo(() => ['80%'], [])
 
   const { user } = useAuth()
+  const { t } = useTranslation()
 
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
@@ -40,9 +44,13 @@ const UserTokensSheet = ({
       {status === 'loading' ? (
         <Indicator />
       ) : items.length === 0 ? (
-        <Text style={styles.text}>{'No tokens to show'}</Text>
+        <Text style={styles.text}>
+          {t('Components.UserTokensSheet.NoTokensToShow')}
+        </Text>
       ) : (
-        <Text style={styles.text}>{'End of List'}</Text>
+        <Text style={styles.text}>
+          {t('Components.UserTokensSheet.EndOfList')}
+        </Text>
       )}
     </View>
   )
@@ -58,7 +66,7 @@ const UserTokensSheet = ({
     >
       <View style={{ flex: 1 }}>
         <View style={styles.body}>
-          <FlatList
+          <BottomSheetFlatList
             data={items}
             ListHeaderComponent={listHeaderComponent}
             ListFooterComponent={listFooterComponent}

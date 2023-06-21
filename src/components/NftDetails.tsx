@@ -18,6 +18,7 @@ import {
 } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { useTranslation } from 'react-i18next'
 
 const NftDetails = ({
   nftContract,
@@ -32,6 +33,7 @@ const NftDetails = ({
   chain: SupportedNetworkEnum
   item?: Moralis.NftItem
 }): ReactElement => {
+  const { t } = useTranslation()
   const { ownerOf } = useNft({ nftContract, chain })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
   const [attributes, setAttributes] = useState<
@@ -87,11 +89,15 @@ const NftDetails = ({
             <FormText fontType="B.18">{`${tokenName} #${tokenId}`}</FormText>
             <FormText
               style={{ alignSelf: 'flex-end' }}
-              fontType="R.12"
+              fontType="R.14"
               color={COLOR.black._400}
-            >{`Owned by ${
-              tokenOwner ? UTIL.truncate(tokenOwner) : 'unknown'
-            }`}</FormText>
+            >
+              {t('Components.NftDetails.ListedBy', {
+                owner: tokenOwner
+                  ? UTIL.truncate(tokenOwner)
+                  : t('Components.NftDetails.Unknown'),
+              })}
+            </FormText>
           </View>
           <VerifiedWrapper style={{ left: 32 }}>
             <View style={styles.imageBox}>

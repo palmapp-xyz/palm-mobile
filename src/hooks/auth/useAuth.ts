@@ -11,7 +11,7 @@ import { getFsProfile } from 'libs/firebase'
 import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import {
   AuthChallengeResult,
@@ -28,6 +28,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { resetNewPin, resetPin } from 'libs/pin'
+import RNRestart from 'react-native-restart'
 
 export type UseAuthReturn = {
   user?: User
@@ -44,6 +46,7 @@ const useAuth = (): UseAuthReturn => {
   const [user, setUser] = useRecoilState(appStore.user)
   const { connect, disconnect } = useConnection()
   const { setCurrentUser } = useSendbirdChat()
+  const setLoading = useSetRecoilState(appStore.loading)
 
   const {
     authenticate: lensAuthenticate,
@@ -219,15 +222,20 @@ const useAuth = (): UseAuthReturn => {
 
   const logout = async (): Promise<void> => {
     await Promise.all([
-      AsyncStorage.removeItem(LocalStorageKey.AUTH),
+      AsyncStorage.clear(),
       removeKeys(),
       auth().signOut(),
       disconnect(),
+      resetPin(),
+      resetNewPin(),
     ])
 
     setCurrentUser(undefined)
     setRestoreLoading(false)
     setUser(undefined)
+
+    setLoading(true)
+    RNRestart.restart()
   }
 
   return {

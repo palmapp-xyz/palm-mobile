@@ -26,8 +26,6 @@ export const renderToast = (toast: ToastProps): JSX.Element => {
   return <ToastView {...toast} />
 }
 
-//'ios-more' | 'ios-checkmark-circle' | 'ios-information-circle'
-
 const ToastView = (toast: ToastProps): JSX.Element => {
   const { data } = toast
 

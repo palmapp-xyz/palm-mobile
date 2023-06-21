@@ -6,6 +6,7 @@ import {
   UseGcInputReturn,
 } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native'
 
 const BottomMenu = ({
@@ -14,6 +15,8 @@ const BottomMenu = ({
   useGcInputReturn: UseGcInputReturn
 }): ReactElement => {
   const { receiverList, setOpenSelectReceiver } = useGcInputReturn
+  const { t } = useTranslation()
+
   const menuList: {
     key: StepAfterSelectItemType
     icon: JSX.Element
@@ -25,13 +28,13 @@ const BottomMenu = ({
         key: 'list',
         icon: <FormImage source={images.list} />,
         onPress: useGcInputReturn.onPressList,
-        title: 'List NFT',
+        title: t('Channels.UiKitBottomMenuTitleListNft'),
       },
       {
         key: 'share',
         icon: <FormImage source={images.NFT} />,
         onPress: useGcInputReturn.onPressShow,
-        title: 'Show NFT',
+        title: t('Channels.UiKitBottomMenuTitleShowNft'),
       },
       {
         key: 'send-nft',
@@ -45,10 +48,12 @@ const BottomMenu = ({
               receiverId: receiverList[0].userId,
             })
           } else {
-            Alert.alert('No one to send NFT')
+            Alert.alert(
+              t('Channels.UiKitBottomMenuSendNftNoOneToSendAlertTitle')
+            )
           }
         },
-        title: 'Send NFT',
+        title: t('Channels.UiKitBottomMenuTitleSendNft'),
       },
       {
         key: 'send-token',
@@ -73,7 +78,7 @@ const BottomMenu = ({
         onPress: (): void => {
           useGcInputReturn.onPressAttachment()
         },
-        title: 'Album',
+        title: t('Channels.UiKitBottomMenuTitleAlbum'),
       },
     ],
     [receiverList]
@@ -98,7 +103,7 @@ const BottomMenu = ({
                 ]}
               >
                 <View>{item.icon}</View>
-                <FormText fontType="B.12" color={COLOR.primary._400}>
+                <FormText fontType="SB.16" color={COLOR.primary._400}>
                   {item.title}
                 </FormText>
               </Row>
