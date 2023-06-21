@@ -22,6 +22,9 @@ import { Moralis, SbUserMetadata, SupportedNetworkEnum } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
+import { Routes } from 'libs/navigation'
 import { useTranslation } from 'react-i18next'
 
 const ConfirmModal = ({
@@ -38,6 +41,7 @@ const ConfirmModal = ({
   useZxListNftReturn: UseZxListNftReturn
 }): ReactElement => {
   const { user } = useAuth()
+  const { navigation } = useAppNavigation<Routes.SendNft>()
   const chain: SupportedNetworkEnum =
     chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
@@ -46,6 +50,7 @@ const ConfirmModal = ({
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
+  const toast = useToast()
   const { t } = useTranslation()
   const { profile } = useProfile({ profileId: user?.auth?.profileId })
 
@@ -197,8 +202,24 @@ const ConfirmModal = ({
           disabled={!profile}
           onPress={async (): Promise<void> => {
             Keyboard.dismiss()
-            const order = await onClickConfirm()
-            onSubmit(selectedNft.token_uri, order)
+            navigation.push(Routes.Pin, {
+              type: 'auth',
+              result: async (result: boolean): Promise<void> => {
+                if (result) {
+                  navigation.pop()
+                  const order = await onClickConfirm()
+                  onSubmit(selectedNft.token_uri, order)
+                } else {
+                  toast.show(t('Nft.PinMismatchToast'), {
+                    color: 'red',
+                    icon: 'info',
+                  })
+                }
+              },
+              cancel: (): void => {
+                navigation.pop()
+              },
+            })
           }}
         >
           {t('Common.Confirm')}
