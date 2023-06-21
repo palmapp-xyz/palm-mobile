@@ -2,15 +2,16 @@ import { FormBottomSheet, SupportedNetworkRow } from 'components'
 import { COLOR } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
+import { isMainnet } from 'libs/utils'
 import React, { ReactElement, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import { SupportedNetworkEnum, pToken } from 'types'
+import { pToken, SupportedNetworkEnum } from 'types'
 
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
-import { useTranslation } from 'react-i18next'
-import MoralisErc20Token from './MoralisErc20Token'
 
 import Indicator from './atoms/Indicator'
+import MoralisErc20Token from './MoralisErc20Token'
 
 const UserTokensSheet = ({
   onClose,
@@ -74,7 +75,7 @@ const UserTokensSheet = ({
             initialNumToRender={10}
             contentContainerStyle={{ rowGap: 0 }}
             renderItem={({ item }): ReactElement | null => {
-              if (item.possible_spam) {
+              if (item.possible_spam && isMainnet()) {
                 return null
               }
               return (
