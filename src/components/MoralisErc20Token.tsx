@@ -6,8 +6,6 @@ import React, { ReactElement, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Moralis, pToken } from 'types'
 
-import { Icon } from '@sendbird/uikit-react-native-foundation'
-
 const MoralisErc20Token = ({
   item,
   value,
@@ -21,16 +19,12 @@ const MoralisErc20Token = ({
   )
 
   return (
-    <View style={styles.itemCard}>
+    <View style={styles.itemCard} key={item.token_address}>
       <Row style={{ alignItems: 'center', columnGap: 12 }}>
-        {item.logo ? (
-          <FormImage
-            source={item.logo ? { uri: item.logo } : images.palm_logo}
-            size={28}
-          />
-        ) : (
-          <Icon icon={'error'} size={24} color={COLOR.primary._300} />
-        )}
+        <FormImage
+          source={item.logo ? { uri: item.logo } : images.palm_logo}
+          size={28}
+        />
         <View>
           <Row>
             <FormText fontType="B.16">

@@ -61,7 +61,7 @@ const chainParam: Record<ChainNetworkEnum, AddEthereumChainParameter> = {
     ],
     nativeCurrency: {
       name: 'Goerli ETH',
-      symbol: 'gorETH',
+      symbol: 'ETH',
       decimals: 18,
       logo: 'https://i.postimg.cc/5tFKf7g9/eth-logo.png',
     },

@@ -65,7 +65,6 @@ const useNativeToken = ({
     },
     {
       enabled: !!userAddress,
-      refetchOnWindowFocus: true,
     }
   )
 
@@ -97,7 +96,7 @@ const useNativeToken = ({
 
   const nativeToken = useMemo(
     () => (balance ? getNativeToken(balance as pToken) : undefined),
-    [userAddress, network, price]
+    [userAddress, network, balance, price]
   )
 
   return { nativeToken, getNativeToken }
