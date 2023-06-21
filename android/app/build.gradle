@@ -112,7 +112,7 @@ android {
         applicationId "com.palmapp.xyz"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 16
+        versionCode 17
         versionName "0.0.1"
     }
 
