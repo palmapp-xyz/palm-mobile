@@ -1,6 +1,5 @@
 import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
-import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import MoralisErc20Token from 'components/MoralisErc20Token'
 import { COLOR, UTIL } from 'consts'
 import useExplorer from 'hooks/complex/useExplorer'
@@ -58,9 +57,11 @@ const SendTokenMessage = ({
           <UserMention userMetadata={data.to} />
         </FormText>
 
-        <VerifiedWrapper>
-          <MoralisErc20Token item={item} value={data.value} />
-        </VerifiedWrapper>
+        <MoralisErc20Token
+          item={item}
+          value={data.value}
+          style={{ marginBottom: 0 }}
+        />
       </TouchableOpacity>
       <TouchableOpacity
         style={{

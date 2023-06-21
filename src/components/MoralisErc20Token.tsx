@@ -3,16 +3,18 @@ import { FormImage, FormText, Row } from 'components'
 import { COLOR, UTIL } from 'consts'
 import { getTokenBalanceInUSD } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Moralis, pToken } from 'types'
 import { useTranslation } from 'react-i18next'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Moralis, pToken } from 'types'
 
 const MoralisErc20Token = ({
   item,
   value,
+  style,
 }: {
   item: Moralis.FtItem
   value: pToken
+  style?: StyleProp<ViewStyle>
 }): ReactElement => {
   const tokenValue = useMemo(
     () => getTokenBalanceInUSD(value, item.price),
@@ -21,7 +23,7 @@ const MoralisErc20Token = ({
   const { t } = useTranslation()
 
   return (
-    <View style={styles.itemCard} key={item.token_address}>
+    <View style={[styles.itemCard, style]} key={item.token_address}>
       <Row style={{ alignItems: 'center', columnGap: 12 }}>
         <FormImage
           source={item.logo ? { uri: item.logo } : images.palm_logo}

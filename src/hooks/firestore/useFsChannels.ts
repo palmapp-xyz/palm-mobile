@@ -16,7 +16,7 @@ const useFsChannels = (): UseFsChannelsReturn => {
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('channels')
-      .where('channelType', '!=', ChannelType.DIRECT)
+      .where('channelType', '==', ChannelType.GROUP)
       .limit(limit)
       .onSnapshot({
         error: e => {
@@ -24,7 +24,11 @@ const useFsChannels = (): UseFsChannelsReturn => {
         },
         next: querySnapshot => {
           querySnapshot.forEach(documentSnapshot => {
-            if (!documentSnapshot.exists) {
+            if (
+              !documentSnapshot.exists ||
+              (documentSnapshot.data() as FbChannel).channelType !==
+                ChannelType.GROUP
+            ) {
               return
             }
             channels.filter((item: FbChannel) => {
