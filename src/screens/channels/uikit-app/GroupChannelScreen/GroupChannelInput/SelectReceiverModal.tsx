@@ -1,5 +1,3 @@
-import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
-import { Member } from '@sendbird/chat/groupChannel'
 import images from 'assets/images'
 import {
   FormBottomSheet,
@@ -14,6 +12,9 @@ import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
+
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import { Member } from '@sendbird/chat/groupChannel'
 
 const SelectReceiverModal = ({
   useGcInputReturn,
@@ -38,7 +39,7 @@ const SelectReceiverModal = ({
           <Row
             style={{ alignItems: 'center', columnGap: 8, paddingBottom: 18 }}
           >
-            <FormText fontType="B.24">
+            <FormText font={'B'} size={24}>
               {t('Channels.UiKitReceiverModalNftTo', {
                 item:
                   useGcInputReturn.stepAfterSelectItem === 'send-nft'
@@ -48,9 +49,11 @@ const SelectReceiverModal = ({
             </FormText>
 
             {selectUser ? (
-              <FormText fontType="B.24">{selectUser.nickname}</FormText>
+              <FormText font={'B'} size={24}>
+                {selectUser.nickname}
+              </FormText>
             ) : (
-              <FormText fontType="B.24" color={COLOR.black._200}>
+              <FormText font={'B'} size={24} color={COLOR.black._200}>
                 {t('Channels.UiKitReceiverModalWhom')}
               </FormText>
             )}
@@ -81,9 +84,7 @@ const SelectReceiverModal = ({
                     <View style={{ borderRadius: 999, overflow: 'hidden' }}>
                       <FormImage source={source} size={40} />
                     </View>
-                    <FormText fontType="R.14" numberOfLines={1}>
-                      {item.nickname}
-                    </FormText>
+                    <FormText numberOfLines={1}>{item.nickname}</FormText>
                   </Row>
                   <RadioIcon selected={item.userId === selectUser?.userId} />
                 </TouchableOpacity>

@@ -12,17 +12,17 @@ import Loading from 'components/atoms/Loading'
 import { COLOR } from 'consts'
 import useRecoverAccount from 'hooks/page/account/useRecoverAccount'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
+import { getMnemonic, getPkey } from 'libs/account'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import useToast from 'hooks/useToast'
-import { getMnemonic, getPkey } from 'libs/account'
-import { useTranslation } from 'react-i18next'
 
 const RecoverAccountScreen = (): ReactElement => {
   const {
@@ -115,11 +115,11 @@ const RecoverAccountScreen = (): ReactElement => {
       <Header left="back" onPressLeft={navigation.goBack} />
       <View style={styles.body}>
         <View style={{ rowGap: 8 }}>
-          <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
+          <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
             {getTitleText()}
           </FormText>
           {recoverType === 'restoreWallet' && (
-            <FormText color={COLOR.black._400} fontType="R.14">
+            <FormText color={COLOR.black._400}>
               {t('Auth.RecoverRestoreWalletMessage')}
             </FormText>
           )}
@@ -161,9 +161,7 @@ const RecoverAccountScreen = (): ReactElement => {
             >
               <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
                 <Icon name="copy-outline" size={14} />
-                <FormText fontType="R.12">
-                  {t('Common.PasteFromClipboard')}
-                </FormText>
+                <FormText>{t('Common.PasteFromClipboard')}</FormText>
               </Row>
             </TouchableOpacity>
           </View>

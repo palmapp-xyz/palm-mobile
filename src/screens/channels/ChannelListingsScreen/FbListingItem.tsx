@@ -12,7 +12,7 @@ import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { FbListing, NftType, SupportedNetworkEnum, pToken } from 'types'
+import { FbListing, NftType, pToken, SupportedNetworkEnum } from 'types'
 
 const FbListingItem = ({
   item,
@@ -78,26 +78,24 @@ const FbListingItem = ({
           color={COLOR.primary._400}
           size={14}
         />
-        <FormText fontType="R.12" color={COLOR.primary._400}>
-          {expire}
-        </FormText>
+        <FormText color={COLOR.primary._400}>{expire}</FormText>
       </Row>
       <View style={styles.info}>
         <Row style={{ alignItems: 'center', columnGap: 4 }}>
           <FormImage source={NETWORK.getNetworkLogo(chain)} size={14} />
-          <FormText fontType="B.14">
+          <FormText font={'B'}>
             {UTIL.formatAmountP(order.erc20TokenAmount as pToken)}
           </FormText>
         </Row>
         <View>
-          <FormText fontType="R.12" color={COLOR.black._400}>
+          <FormText color={COLOR.black._400}>
             {t('Common.UsdPrice', {
               price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
             })}
           </FormText>
         </View>
         <View>
-          <FormText fontType="R.12" color={COLOR.black._400}>
+          <FormText color={COLOR.black._400}>
             {t('Channels.ListedBy', { maker: order.order.maker.slice(-5) })}
           </FormText>
         </View>

@@ -1,7 +1,7 @@
-import { MediaRenderer } from 'components'
+import { FormText, MediaRenderer } from 'components'
 import { parseMsgData } from 'libs/sendbird'
 import React, { ReactElement } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import {
   createStyleSheet,
@@ -55,11 +55,12 @@ const NftMessage = (props: FileMessageProps): ReactElement => {
           },
         ]}
       >
-        <Text
-          style={{ color: colors.secondary, fontSize: 16, marginBottom: 12 }}
+        <FormText
+          size={16}
+          style={{ color: colors.secondary, marginBottom: 12 }}
         >
           {message.customType}
-        </Text>
+        </FormText>
         <MediaRenderer
           key={message.messageId}
           src={message.data}

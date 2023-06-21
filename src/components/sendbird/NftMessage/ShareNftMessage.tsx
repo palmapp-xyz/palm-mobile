@@ -38,7 +38,7 @@ const ShareNftMessage = ({
         <View style={styles.header}>
           <FormText
             numberOfLines={1}
-            fontType="B.12"
+            font={'B'}
           >{`${item.name} #${item.token_id}`}</FormText>
         </View>
         <VerifiedWrapper>

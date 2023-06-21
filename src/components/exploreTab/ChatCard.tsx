@@ -28,7 +28,7 @@ const ChatCard = ({
       <Pressable onPress={(): void => onClick(chat)}>
         <ChannelMembersPreview channelUrl={chat.url} size={56} />
         <View style={styles.section}>
-          <FormText fontType="SB.14">{chat.name}</FormText>
+          <FormText font={'SB'}>{chat.name}</FormText>
         </View>
         <View style={styles.section}>
           <Row style={{ flexWrap: 'wrap', gap: 4 }}>
@@ -44,28 +44,26 @@ const ChatCard = ({
               {/* <FormImage source={chat.gating.img} size={40} /> */}
 
               <Row>
-                <FormText color={COLOR.black._500} fontType="B.12">
+                <FormText color={COLOR.black._500} font={'B'}>
                   {`${chat.gating.amount} `}
                 </FormText>
-                <FormText color={COLOR.black._500} fontType="R.12">
+                <FormText color={COLOR.black._500}>
                   {t('Components.ChatCard.Of')}
                 </FormText>
                 {chat.gating.gatingType === 'Native' ? (
                   <View>
-                    <FormText fontType="B.12">
+                    <FormText font={'B'}>
                       {` ${NETWORK.nativeToken[chat.gating.chain]}`}
                     </FormText>
                   </View>
                 ) : (
                   <View>
-                    <FormText fontType="B.12">
+                    <FormText font={'B'}>
                       {UTIL.truncate(chat.gating.tokenAddress)}
                     </FormText>
                   </View>
                 )}
-                <FormText fontType="R.12">
-                  {t('Components.ChatCard.RequiredToJoin')}
-                </FormText>
+                <FormText>{t('Components.ChatCard.RequiredToJoin')}</FormText>
               </Row>
             </Row>
           </View>

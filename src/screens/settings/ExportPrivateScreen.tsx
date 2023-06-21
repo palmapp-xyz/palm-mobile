@@ -1,15 +1,15 @@
 import { Container, FormText, Header } from 'components'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
 import { getMnemonic, getPkey } from 'libs/account'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import useToast from 'hooks/useToast'
-import { useTranslation } from 'react-i18next'
 
 const ExportPrivateScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ExportPrivate>()
@@ -46,9 +46,7 @@ const ExportPrivateScreen = (): ReactElement => {
               }}
             >
               <Icon name="eye-off-outline" size={24} />
-              <FormText fontType="R.14">
-                {t('Settings.ExportWalletShowKey')}
-              </FormText>
+              <FormText>{t('Settings.ExportWalletShowKey')}</FormText>
             </TouchableOpacity>
           )}
         </View>
@@ -64,7 +62,7 @@ const ExportPrivateScreen = (): ReactElement => {
           }}
         >
           <Icon name="copy-outline" size={14} />
-          <FormText fontType="R.14">{t('Common.CopyToClipboard')}</FormText>
+          <FormText>{t('Common.CopyToClipboard')}</FormText>
         </TouchableOpacity>
       </View>
     </Container>

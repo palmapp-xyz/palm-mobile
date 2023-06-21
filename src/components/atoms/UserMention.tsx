@@ -2,7 +2,7 @@ import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { FontSize, FontType, SbUserMetadata } from 'types'
+import { FontSize, SbUserMetadata } from 'types'
 
 import FormText, { FormTextProps } from './FormText'
 
@@ -12,7 +12,7 @@ type UserMentionProps = {
 } & Omit<FormTextProps, 'children'>
 
 const UserMention = ({
-  size = 12,
+  size = 14,
   userMetadata,
   ...rest
 }: UserMentionProps): ReactElement => {
@@ -20,7 +20,8 @@ const UserMention = ({
 
   return (
     <FormText
-      fontType={`B.${size}` as FontType}
+      size={size}
+      font={'B'}
       onPress={(): void => {
         navigation.push(Routes.UserProfile, {
           address: userMetadata.address,

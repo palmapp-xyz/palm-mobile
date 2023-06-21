@@ -57,10 +57,10 @@ const ConfirmSeedScreen = (): ReactElement => {
 
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
-          <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
+          <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
             {t('Auth.ConfirmSeed')}
           </FormText>
-          <FormText color={COLOR.black._400} fontType="R.14">
+          <FormText color={COLOR.black._400}>
             {t('Auth.ConfirmSeedMessage')}
           </FormText>
         </View>
@@ -97,7 +97,7 @@ const ConfirmSeedScreen = (): ReactElement => {
                       })
                     }}
                   >
-                    <FormText fontType="R.14">{targetWord || ' '}</FormText>
+                    <FormText>{targetWord || ' '}</FormText>
                   </TouchableOpacity>
                 </Row>
               )

@@ -1,3 +1,4 @@
+import FormText from 'components/atoms/FormText'
 import MediaRenderer from 'components/molecules/MediaRenderer'
 import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
@@ -11,7 +12,6 @@ import {
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import { conditionChaining } from '@sendbird/uikit-utils'
-import FormText from 'components/atoms/FormText'
 
 type Props = {
   customCover?: React.ReactElement
@@ -90,9 +90,9 @@ const GroupChannelPreview = ({
               />
             )}
             <FormText
-              //subtitle1
+              size={16}
               numberOfLines={1}
-              fontType="SB.14"
+              font={'SB'}
               style={styles.channelInfoTitle}
               color={COLOR.black._900}
             >
@@ -157,7 +157,6 @@ const GroupChannelPreview = ({
                 //body3
                 numberOfLines={2}
                 ellipsizeMode={bodyIcon ? 'middle' : 'tail'}
-                fontType="R.12"
                 style={styles.bodyText}
                 color={COLOR.black._400}
               >
@@ -232,6 +231,7 @@ const styles = createStyleSheet({
   channelInfoTitle: {
     flexShrink: 1,
     marginRight: 4,
+    marginTop: 4,
   },
   channelInfoMemberCount: {
     paddingTop: 2,

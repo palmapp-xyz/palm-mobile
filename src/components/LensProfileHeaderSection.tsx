@@ -1,9 +1,9 @@
 import { FormText, Row } from 'components'
 import { Profile, ProfileStats } from 'graphqls/__generated__/graphql'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'
 
-import { useTranslation } from 'react-i18next'
 import LensProfileAttribute from './LensProfileAttribute'
 
 export type LensProfileHeaderSectionProps = {
@@ -20,17 +20,17 @@ const LensProfileHeaderSection = ({
     <View>
       <Row style={{ alignItems: 'center', columnGap: 8 }}>
         <Row>
-          <FormText fontType="R.12" style={styles.statsKey}>
+          <FormText style={styles.statsKey}>
             {t('Components.LensProfileHeader.Followers')}
           </FormText>
-          <FormText fontType="B.12">{stats.totalFollowers}</FormText>
+          <FormText font={'B'}>{stats.totalFollowers}</FormText>
         </Row>
-        <FormText fontType="R.12">∙</FormText>
+        <FormText>∙</FormText>
         <Row>
-          <FormText fontType="R.12" style={styles.statsKey}>
+          <FormText style={styles.statsKey}>
             {t('Components.LensProfileHeader.Following')}
           </FormText>
-          <FormText fontType="B.12">{stats.totalFollowing}</FormText>
+          <FormText font={'B'}>{stats.totalFollowing}</FormText>
         </Row>
       </Row>
       {!!lensProfile?.attributes?.length && (

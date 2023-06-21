@@ -11,10 +11,10 @@ import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import BottomSheet from '@gorhom/bottom-sheet'
-import { useTranslation } from 'react-i18next'
 
 const MainAccountScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -29,7 +29,7 @@ const MainAccountScreen = (): ReactElement => {
       <Container style={styles.container}>
         <View style={styles.top}>
           <FormImage source={images.palm_logo} size={88} />
-          <FormText fontType="B.24" style={{ textAlign: 'center' }}>
+          <FormText font={'B'} size={24} style={{ textAlign: 'center' }}>
             {t('Auth.MainTitle')}
           </FormText>
         </View>
@@ -68,7 +68,7 @@ const MainAccountScreen = (): ReactElement => {
             }}
           >
             <FormImage source={images.plus} size={32} />
-            <FormText fontType="R.12" style={{ textAlign: 'center' }}>
+            <FormText style={{ textAlign: 'center' }}>
               {t('Auth.CreateNewWallet')}
             </FormText>
           </TouchableOpacity>
@@ -81,7 +81,7 @@ const MainAccountScreen = (): ReactElement => {
             }}
           >
             <FormImage source={images.import} size={32} />
-            <FormText fontType="R.12" style={{ textAlign: 'center' }}>
+            <FormText style={{ textAlign: 'center' }}>
               {t('Auth.ImportWallet')}
             </FormText>
           </TouchableOpacity>

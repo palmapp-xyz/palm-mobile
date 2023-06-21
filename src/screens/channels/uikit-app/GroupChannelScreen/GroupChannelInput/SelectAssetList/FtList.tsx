@@ -4,6 +4,7 @@ import MoralisErc20Token from 'components/MoralisErc20Token'
 import { COLOR } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import { isMainnet } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
@@ -43,7 +44,7 @@ const FtList = ({
       initialNumToRender={10}
       contentContainerStyle={{ rowGap: 0 }}
       renderItem={({ item }): ReactElement | null => {
-        if (item.possible_spam) {
+        if (item.possible_spam && isMainnet()) {
           return null
         }
         const selected = selectedToken?.token_address === item.token_address
@@ -63,7 +64,7 @@ const FtList = ({
               ]}
             >
               {selected && (
-                <FormText fontType="B.12" color="white">
+                <FormText font={'B'} color="white">
                   -
                 </FormText>
               )}

@@ -44,7 +44,6 @@ const SendNftMessage = ({
         }}
       >
         <FormText
-          fontType="R.14"
           numberOfLines={2}
           style={{
             color: COLOR.black._900,
@@ -53,7 +52,7 @@ const SendNftMessage = ({
           }}
         >
           <UserMention userMetadata={data.from} />
-          <FormText fontType="B.14">
+          <FormText font={'B'}>
             {t('Nft.SendNftMessageSent', {
               itemName: item.name || 'unknown',
               tokenId: item.token_id,
@@ -92,7 +91,7 @@ const SendNftMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.14">
+        <FormText color={COLOR.black._500}>
           {t('Nft.SendNftMessageViewTransactionDetail')}
         </FormText>
         <Ionicons

@@ -4,7 +4,8 @@ import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SupportedNetworkEnum, pToken } from 'types'
+import { pToken, SupportedNetworkEnum } from 'types'
+
 import FormText from './FormText'
 
 const UsdPrice = ({
@@ -31,7 +32,7 @@ const UsdPrice = ({
   }
 
   return (
-    <FormText fontType="R.12" color={COLOR.black._400}>
+    <FormText color={COLOR.black._400}>
       {t('Common.UsdPrice', {
         price: UTIL.formatAmountP(
           UTIL.isValidPrice(UTIL.demicrofyP(amount))

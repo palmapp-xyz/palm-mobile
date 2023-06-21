@@ -2,8 +2,12 @@ import images from 'assets/images'
 import { Container, FormImage, FormInput, Row } from 'components'
 import { COLOR } from 'consts'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'libs/navigation'
+import { getPin } from 'libs/pin'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Animated,
   ScrollView,
@@ -14,10 +18,6 @@ import {
 } from 'react-native'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { getPin } from 'libs/pin'
-import { useTranslation } from 'react-i18next'
 import RecentlySearched from './RecentlySearched'
 import RecommendChat from './RecommendChat'
 import RecommendUsers from './RecommendUsers'
@@ -110,7 +110,6 @@ const ExploreScreen = (): ReactElement => {
               inputRef={inputRef}
               placeholder={t('Explore.ExploreSearchPlaceholder')}
               style={{ paddingRight: 40 }}
-              fontType="R.14"
               maxLength={20}
               value={inputSearch}
               onChangeText={setInputSearch}

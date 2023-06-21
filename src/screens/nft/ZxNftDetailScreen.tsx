@@ -23,24 +23,24 @@ import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifyMsgData } from 'libs/sendbird'
 import React, { ReactElement, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import {
   ContractAddr,
   FbProfile,
   NftType,
+  pToken,
   QueryKeyEnum,
   SbBuyNftDataType,
   SbUserMetadata,
   SupportedNetworkEnum,
-  pToken,
 } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { useTranslation } from 'react-i18next'
 import NftDetails from '../../components/NftDetails'
 
 const InitNftUri = ({
@@ -221,12 +221,12 @@ const ZxNftDetailScreen = (): ReactElement => {
         <View style={{ flex: 1 }}>
           <Row style={{ alignItems: 'center', columnGap: 4 }}>
             <FormImage source={NETWORK.getNetworkLogo(chain)} size={14} />
-            <FormText fontType="B.18">
+            <FormText font={'B'} size={18}>
               {UTIL.formatAmountP(erc20TokenAmount as pToken)}
             </FormText>
           </Row>
           <View>
-            <FormText fontType="R.12" color={COLOR.black._400}>
+            <FormText color={COLOR.black._400}>
               {t('Common.UsdPrice', {
                 price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
               })}

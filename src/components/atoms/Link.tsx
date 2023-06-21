@@ -14,9 +14,7 @@ const Link = ({ text, url }: { text: string; url: string }): ReactElement => {
         }
       }}
     >
-      <FormText fontType="R.12" style={{ color: COLOR.primary._400 }}>
-        {text}
-      </FormText>
+      <FormText style={{ color: COLOR.primary._400 }}>{text}</FormText>
     </TouchableOpacity>
   )
 }

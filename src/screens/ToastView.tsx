@@ -2,8 +2,12 @@ import { FormText } from 'components'
 import { COLOR } from 'consts'
 import React from 'react'
 import { View } from 'react-native'
-import { ToastProps } from 'react-native-toast-notifications/lib/typescript/toast'
-import { Props } from 'react-native-toast-notifications/lib/typescript/toast-container'
+import {
+  ToastProps,
+} from 'react-native-toast-notifications/lib/typescript/toast'
+import {
+  Props,
+} from 'react-native-toast-notifications/lib/typescript/toast-container'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export const defaultToastProviderOptions: Props = {
@@ -94,7 +98,7 @@ const ToastView = (toast: ToastProps): JSX.Element => {
             <MaterialIcons name={iconName} color={messageColor} size={20} />
           </View>
           <FormText
-            fontType="SB.14"
+            font={'SB'}
             color={messageColor}
             style={{ flex: 1, alignSelf: 'center' }}
           >

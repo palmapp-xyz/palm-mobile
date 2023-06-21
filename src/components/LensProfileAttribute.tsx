@@ -19,7 +19,7 @@ const LensProfileAttribute = ({
 
   return (
     <View style={styles.attribute}>
-      <FormText fontType="B.12" style={styles.attributeKey}>
+      <FormText font={'B'} style={styles.attributeKey}>
         {key}
       </FormText>
       {key === 'twitter' ? (
@@ -27,7 +27,7 @@ const LensProfileAttribute = ({
       ) : isValidHttpUrl(value) ? (
         <Link text={value} url={value} />
       ) : (
-        <FormText fontType="R.12">{value}</FormText>
+        <FormText>{value}</FormText>
       )}
     </View>
   )

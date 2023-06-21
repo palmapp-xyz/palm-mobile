@@ -62,14 +62,13 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
         </FormText>
 
         <FormText
-          fontType="R.12"
           numberOfLines={2}
           style={{
             color: 'black',
           }}
         >
           <UserMention userMetadata={data.buyer} />
-          <FormText fontType="R.12">
+          <FormText>
             {t('Components.BuyNftMessage.BoughtNftBoughtFrom', {
               nftName: nftName ?? UTIL.truncate(item.nftToken),
               nftTokenId: item.nftTokenId,
@@ -110,7 +109,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.12">
+        <FormText color={COLOR.black._500}>
           {t('Components.BuyNftMessage.ViewTransactionDetail')}
         </FormText>
         <Ionicons

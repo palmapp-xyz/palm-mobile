@@ -47,7 +47,7 @@ const NftList = ({
       }}
     >
       <Icon name="ios-chevron-back" color={COLOR.black._800} size={16} />
-      <FormText fontType="B.12">{selectedCollection.name}</FormText>
+      <FormText font={'B'}>{selectedCollection.name}</FormText>
     </TouchableOpacity>
   )
 
@@ -120,7 +120,7 @@ const NftList = ({
                 ]}
               >
                 {selectedIndex > -1 && (
-                  <FormText fontType="B.12" color="white">
+                  <FormText font={'B'} color="white">
                     {selectedIndex + 1}
                   </FormText>
                 )}

@@ -38,7 +38,6 @@ const SendTokenMessage = ({
         }}
       >
         <FormText
-          fontType="R.12"
           numberOfLines={2}
           style={{
             color: 'black',
@@ -47,7 +46,7 @@ const SendTokenMessage = ({
           }}
         >
           <UserMention userMetadata={data.from} />
-          <FormText fontType="B.12">
+          <FormText font={'B'}>
             {t('Components.SendTokenMessage.Sent', {
               amount: UTIL.formatAmountP(data.value as pToken, { toFix: 2 }),
               symbol: data.selectedToken.symbol,
@@ -79,7 +78,7 @@ const SendTokenMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.12">
+        <FormText color={COLOR.black._500}>
           {t('Components.SendTokenMessage.ViewTransactionDetail')}
         </FormText>
         <Ionicons

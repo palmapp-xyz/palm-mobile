@@ -7,8 +7,8 @@ import React, { ReactElement } from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native'
 import { Moralis } from 'types'
 
@@ -53,7 +53,7 @@ const ProfileCollectionNft = ({
           </Card>
         )}
         <View style={styles.headerTextBox}>
-          <FormText fontType="B.14" style={styles.headerText}>
+          <FormText font={'B'} style={styles.headerText}>
             {headerText}
           </FormText>
         </View>

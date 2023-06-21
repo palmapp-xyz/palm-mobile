@@ -4,11 +4,11 @@ import NftCard from 'components/channel/NftCard'
 import { getFsProfile } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { FbProfile, Moralis } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { useTranslation } from 'react-i18next'
 
 const Contents = ({
   selectedNft,
@@ -33,9 +33,7 @@ const Contents = ({
     <View style={styles.body}>
       <View>
         <View style={{ rowGap: 8, paddingBottom: 28 }}>
-          <FormText fontType="SB.14">
-            {t('Nft.SendNftWantToSendThisNft')}
-          </FormText>
+          <FormText font={'SB'}>{t('Nft.SendNftWantToSendThisNft')}</FormText>
           <Row style={{ columnGap: 8 }}>
             {receiverProfileImg ? (
               <MediaRenderer
@@ -51,7 +49,9 @@ const Contents = ({
                 style={{ borderRadius: 50 }}
               />
             )}
-            <FormText fontType="B.24">{receiver?.handle}</FormText>
+            <FormText font={'B'} size={24}>
+              {receiver?.handle}
+            </FormText>
           </Row>
         </View>
         <NftCard selectedNft={selectedNft} />

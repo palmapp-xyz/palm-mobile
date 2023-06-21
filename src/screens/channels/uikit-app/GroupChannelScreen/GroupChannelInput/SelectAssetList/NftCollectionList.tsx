@@ -63,7 +63,8 @@ const NftCollectionList = ({
             <View style={styles.nftTitle}>
               <FormText
                 numberOfLines={1}
-                fontType="B.16"
+                font={'B'}
+                size={16}
               >{`#${item.name}`}</FormText>
             </View>
           </TouchableOpacity>

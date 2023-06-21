@@ -35,7 +35,6 @@ const FormButton = ({
   }
 
   const paddingVertical = size === 'md' ? 8 : 'lg' ? 11 : 5
-  const fontType = size === 'sm' ? 'R.14' : 'R.16'
   const fontColor = figure === 'outline' ? mainColor : 'white'
   const backgroundColor = disabled
     ? COLOR.black._200
@@ -58,7 +57,10 @@ const FormButton = ({
       disabled={disabled}
       onPress={onPress}
     >
-      <FormText fontType={fontType} style={[{ color: fontColor }, textStyle]}>
+      <FormText
+        size={size === 'sm' ? 14 : 16}
+        style={[{ color: fontColor }, textStyle]}
+      >
         {children}
       </FormText>
     </TouchableOpacity>

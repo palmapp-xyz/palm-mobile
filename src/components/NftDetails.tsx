@@ -8,6 +8,7 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import useNftImage from 'hooks/independent/useNftImage'
 import React, { ReactElement, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 import {
   ContractAddr,
@@ -18,7 +19,6 @@ import {
 } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { useTranslation } from 'react-i18next'
 
 const NftDetails = ({
   nftContract,
@@ -86,10 +86,12 @@ const NftDetails = ({
       >
         <View style={styles.body}>
           <View style={{ paddingBottom: 20, rowGap: 12 }}>
-            <FormText fontType="B.18">{`${tokenName} #${tokenId}`}</FormText>
+            <FormText
+              size={18}
+              font={'B'}
+            >{`${tokenName} #${tokenId}`}</FormText>
             <FormText
               style={{ alignSelf: 'flex-end' }}
-              fontType="R.14"
               color={COLOR.black._400}
             >
               {t('Components.NftDetails.ListedBy', {

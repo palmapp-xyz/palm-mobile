@@ -10,22 +10,22 @@ import { COLOR, NETWORK, UTIL } from 'consts'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
 import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
+import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifyMsgData } from 'libs/sendbird'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Moralis, SbUserMetadata, SupportedNetworkEnum } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useToast from 'hooks/useToast'
-import { Routes } from 'libs/navigation'
-import { useTranslation } from 'react-i18next'
 
 const ConfirmModal = ({
   selectedNft,
@@ -96,7 +96,7 @@ const ConfirmModal = ({
               borderRadius: 14,
             }}
           >
-            <FormText fontType="R.12" color={COLOR.error}>
+            <FormText color={COLOR.error}>
               {t('Nft.ListNftConfirmModalNotice')}
             </FormText>
           </View>
@@ -114,8 +114,8 @@ const ConfirmModal = ({
               <MoralisNftRenderer item={selectedNft} hideChain />
             </View>
             <View style={{ rowGap: 4, flex: 1 }}>
-              <FormText fontType="R.14">{selectedNft.name}</FormText>
-              <FormText fontType="B.18">
+              <FormText>{selectedNft.name}</FormText>
+              <FormText font={'B'} size={18}>
                 {selectedNft.name}#{selectedNft.token_id}
               </FormText>
             </View>
@@ -155,16 +155,14 @@ const ConfirmModal = ({
           >
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">
+                <FormText font={'SB'}>
                   {t('Nft.ListNftConfirmModalFrom')}
                 </FormText>
               </View>
-              <FormText fontType="B.16">
+              <FormText font={'B'} size={16}>
                 {t('Nft.ListNftConfirmModalMe')}
               </FormText>
-              <FormText fontType="R.12">
-                {`(${UTIL.truncate(user?.address || '')})`}
-              </FormText>
+              <FormText>{`(${UTIL.truncate(user?.address || '')})`}</FormText>
             </View>
             <View>
               <Ionicons
@@ -175,12 +173,12 @@ const ConfirmModal = ({
             </View>
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">
+                <FormText font={'SB'}>
                   {t('Nft.ListNftConfirmModalTo')}
                 </FormText>
               </View>
               <Row>
-                <FormText fontType="B.16">
+                <FormText font={'B'} size={16}>
                   {t('Nft.ListNftConfirmModalListContract')}
                 </FormText>
               </Row>

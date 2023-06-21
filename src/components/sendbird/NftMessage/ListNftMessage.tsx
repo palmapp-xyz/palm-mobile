@@ -26,10 +26,10 @@ const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { t } = useTranslation()
 
   return (
-    <FormText fontType="R.12" color={COLOR.black._400}>
+    <FormText color={COLOR.black._400}>
       {t('Common.UsdPrice', {
         price: UTIL.formatAmountP(getKlayPrice(amount || ('0' as pToken)), {
-          toFix: 0,
+          toFix: 2,
         }),
       })}
     </FormText>
@@ -40,10 +40,10 @@ const MaticPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { t } = useTranslation()
 
   return (
-    <FormText fontType="R.12" color={COLOR.black._400}>
+    <FormText color={COLOR.black._400}>
       {t('Common.UsdPrice', {
         price: UTIL.formatAmountP(getMaticPrice(amount || ('0' as pToken)), {
-          toFix: 0,
+          toFix: 2,
         }),
       })}
     </FormText>
@@ -54,10 +54,10 @@ const EthPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { t } = useTranslation()
 
   return (
-    <FormText fontType="R.12" color={COLOR.black._400}>
+    <FormText color={COLOR.black._400}>
       {t('Common.UsdPrice', {
         price: UTIL.formatAmountP(getEthPrice(amount || ('0' as pToken)), {
-          toFix: 0,
+          toFix: 2,
         }),
       })}
     </FormText>
@@ -87,7 +87,7 @@ const ListNftMessage = ({
     <View style={styles.container}>
       <View style={styles.body}>
         <Row style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
-          <FormText fontType="B.12">{`${item.name} #${item.token_id}`}</FormText>
+          <FormText font={'B'}>{`${item.name} #${item.token_id}`}</FormText>
         </Row>
         <View style={{ position: 'relative' }}>
           <VerifiedWrapper>
@@ -118,7 +118,7 @@ const ListNftMessage = ({
                     color={COLOR.primary._400}
                     size={14}
                   />
-                  <FormText fontType="SB.12" color={COLOR.primary._400}>
+                  <FormText font={'SB'} color={COLOR.primary._400}>
                     {format(
                       new Date(_.toNumber(order.order.expiry) * 1000),
                       'yyyy-MM-dd'
@@ -134,7 +134,7 @@ const ListNftMessage = ({
                     },
                   ]}
                 >
-                  <FormText fontType="SB.12" color="white">
+                  <FormText font={'SB'} color="white">
                     {t('Nft.ListNftMessageSold')}
                   </FormText>
                 </View>
@@ -146,7 +146,7 @@ const ListNftMessage = ({
           <View style={styles.priceBox}>
             <Row style={styles.priceRow}>
               <FormImage source={NETWORK.getNetworkLogo(chain)} size={18} />
-              <FormText fontType="B.18">
+              <FormText font={'B'} size={18}>
                 {UTIL.formatAmountP((data.amount || '0') as pToken)}
               </FormText>
             </Row>
@@ -207,7 +207,7 @@ const ListNftMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.14">
+        <FormText color={COLOR.black._500}>
           {t('Nft.ListNftMessageViewTransactionDetail')}
         </FormText>
         <Ionicons

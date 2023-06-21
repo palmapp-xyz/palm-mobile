@@ -46,9 +46,7 @@ const Contents = ({
       <View style={styles.body}>
         <View style={{ paddingHorizontal: 20 }}>
           <View style={{ rowGap: 8, paddingBottom: 28 }}>
-            <FormText fontType="B.14">
-              {t('Nft.ListNftWantToSellThisNft')}
-            </FormText>
+            <FormText font={'B'}>{t('Nft.ListNftWantToSellThisNft')}</FormText>
             {isApproved && (
               <>
                 <Row
@@ -58,7 +56,8 @@ const Contents = ({
                   }}
                 >
                   <FormInput
-                    fontType="B.24"
+                    font={'B'}
+                    size={24}
                     placeholder={t('Nft.ListNftPricePlaceholder')}
                     maxLength={10}
                     value={price}
@@ -87,7 +86,7 @@ const Contents = ({
                       source={NETWORK.getNetworkLogo(chain)}
                       size={20}
                     />
-                    <FormText fontType="B.20">
+                    <FormText font={'B'} size={20}>
                       {NETWORK.nativeToken[chain]}
                     </FormText>
                   </Row>

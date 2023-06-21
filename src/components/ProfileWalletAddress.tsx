@@ -1,13 +1,13 @@
 import { FormText, Row } from 'components'
 import { COLOR } from 'consts'
+import useToast from 'hooks/useToast'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import useToast from 'hooks/useToast'
-import { useTranslation } from 'react-i18next'
 
 export type ProfileWalletAddressProps = {
   userAddress: ContractAddr | undefined
@@ -20,7 +20,7 @@ const ProfileWalletAddress = React.memo(
 
     return (
       <View style={styles.walletAddressBox}>
-        <FormText fontType="B.14">
+        <FormText font={'B'}>
           {t('Components.ProfileWalletAddress.WalletAddress')}
         </FormText>
 
@@ -42,7 +42,6 @@ const ProfileWalletAddress = React.memo(
             >
               <Icon name="wallet" color={COLOR.primary._400} size={20} />
               <FormText
-                fontType="R.14"
                 numberOfLines={1}
                 ellipsizeMode="middle"
                 style={{ flex: 1 }}

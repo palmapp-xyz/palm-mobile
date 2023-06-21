@@ -103,7 +103,7 @@ const BottomMenu = ({
                 ]}
               >
                 <View>{item.icon}</View>
-                <FormText fontType="SB.16" color={COLOR.primary._400}>
+                <FormText font={'B'} color={COLOR.primary._400}>
                   {item.title}
                 </FormText>
               </Row>

@@ -154,7 +154,7 @@ const InitExploreScreen = (): ReactElement => {
               />
             )}
             <FormText
-              fontType="SB.14"
+              font={'SB'}
               color={selected ? COLOR.primary._400 : COLOR.black._400}
             >
               {item.title}
@@ -217,7 +217,8 @@ const InitExploreScreen = (): ReactElement => {
             ]}
           >
             <FormText
-              fontType="B.24"
+              font={'B'}
+              size={24}
               color={showStep === 1 ? COLOR.black._900 : COLOR.black._400}
             >
               {t('Explore.InitExploreTitleStep1')}
@@ -239,7 +240,7 @@ const InitExploreScreen = (): ReactElement => {
               },
             ]}
           >
-            <FormText fontType="B.24">
+            <FormText font={'B'} size={24}>
               {t('Explore.InitExploreTitleStep2')}
             </FormText>
           </Animated.View>
@@ -276,7 +277,7 @@ const InitExploreScreen = (): ReactElement => {
                     size={14}
                     color={COLOR.black._500}
                   />
-                  <FormText fontType="R.12" color={COLOR.black._500}>
+                  <FormText color={COLOR.black._500}>
                     {t('Explore.InitExploreSkip')}
                   </FormText>
                 </TouchableOpacity>
