@@ -1,7 +1,12 @@
 import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
-import { Modal, ModalProps, StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import {
+  Modal,
+  ModalProps,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import FormText from './FormText'
 
 const FormModal = (
