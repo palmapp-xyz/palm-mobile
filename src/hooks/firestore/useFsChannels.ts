@@ -27,7 +27,11 @@ const useFsChannels = (): UseFsChannelsReturn => {
             if (
               !documentSnapshot.exists ||
               (documentSnapshot.data() as FbChannel).channelType !==
-                ChannelType.GROUP
+                ChannelType.GROUP ||
+              !(documentSnapshot.data() as FbChannel).name ||
+              (documentSnapshot.data() as FbChannel).url?.includes(
+                'pushtesttool'
+              )
             ) {
               return
             }

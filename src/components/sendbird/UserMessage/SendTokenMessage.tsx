@@ -26,19 +26,8 @@ const SendTokenMessage = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.body}
-        onPress={(): void => {
-          Linking.openURL(
-            getLink({
-              address: data.txHash,
-              type: 'tx',
-            })
-          )
-        }}
-      >
+      <View style={styles.body}>
         <FormText
-          numberOfLines={2}
           style={{
             color: 'black',
             paddingVertical: 9,
@@ -46,10 +35,16 @@ const SendTokenMessage = ({
           }}
         >
           <UserMention userMetadata={data.from} />
-          <FormText font={'B'}>
-            {t('Components.SendTokenMessage.Sent', {
+          <FormText>{t('Components.SendTokenMessage.Sent')}</FormText>
+          <FormText font={'B'} style={{ color: COLOR.primary._400 }}>
+            {t('Components.SendTokenMessage.Token', {
               amount: UTIL.formatAmountP(data.value as pToken, { toFix: 2 }),
               symbol: data.selectedToken.symbol,
+            })}
+          </FormText>
+          <FormText>
+            {t('Components.SendTokenMessage.Type', {
+              type: item.token_address === '0x0' ? 'Native' : 'ERC20',
             })}
           </FormText>
           {t('Components.SendTokenMessage.To')}
@@ -61,7 +56,7 @@ const SendTokenMessage = ({
           value={data.value}
           style={{ marginBottom: 0 }}
         />
-      </TouchableOpacity>
+      </View>
       <TouchableOpacity
         style={{
           alignSelf: 'flex-end',

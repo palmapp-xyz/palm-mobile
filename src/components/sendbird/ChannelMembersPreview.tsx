@@ -19,7 +19,6 @@ const ChannelMembersPreview = React.memo(
     containerStyle?: StyleProp<ViewStyle>
   }): ReactElement | null => {
     const { channel, channelImages } = useChannelInfo({ channelUrl })
-
     if (!channel) {
       return null
     }

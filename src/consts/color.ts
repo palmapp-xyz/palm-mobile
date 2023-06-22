@@ -41,7 +41,7 @@ const black = {
 
 const text = white
 
-const user_mention = primary._400
+const user_mention = black._700
 
 const blue = primary._400
 const red = '#FF002E'

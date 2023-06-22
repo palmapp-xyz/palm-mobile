@@ -89,7 +89,7 @@ const BottomMenu = ({
         data={menuList}
         keyExtractor={(_, index): string => `menuList-${index}`}
         horizontal
-        contentContainerStyle={{ gap: 10 }}
+        contentContainerStyle={{ gap: 8 }}
         renderItem={({ item }): ReactElement => {
           const selected = item.key === useGcInputReturn.stepAfterSelectItem
           return (
@@ -103,7 +103,7 @@ const BottomMenu = ({
                 ]}
               >
                 <View>{item.icon}</View>
-                <FormText font={'B'} color={COLOR.primary._400}>
+                <FormText font={'SB'} color={COLOR.primary._400}>
                   {item.title}
                 </FormText>
               </Row>

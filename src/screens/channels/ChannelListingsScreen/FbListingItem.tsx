@@ -6,7 +6,6 @@ import useKlayPrice from 'hooks/independent/useKlayPrice'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import { getOrderTokenAddress, getOrderTokenId } from 'libs/zx'
 import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -59,11 +58,11 @@ const FbListingItem = ({
     >
       <View style={{ alignItems: 'center' }}>
         <NftRenderer
-          tokenId={getOrderTokenId(order.order)}
-          nftContract={getOrderTokenAddress(order.order)}
+          tokenId={item.tokenId}
+          nftContract={item.nftContract}
           type={order.nftType as NftType}
           width={'100%'}
-          height={156}
+          height={172}
           chain={chain}
           hideChain
           style={{ maxWidth: 'auto' }}

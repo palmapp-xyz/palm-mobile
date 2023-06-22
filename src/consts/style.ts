@@ -11,7 +11,7 @@ const getFontStyle = (fontType: FontType): StyleProp<TextStyle> => {
   }
 
   if (weightType === 'SB') {
-    style.fontWeight = '600'
+    style.fontWeight = '500'
   } else if (weightType === 'B') {
     style.fontWeight = '700'
   }

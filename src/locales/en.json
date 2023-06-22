@@ -182,8 +182,10 @@
     "SendNftConfirmModalTo": "To",
     "SendNftConfirmModalEstGasFee": "Est. Gas Fee",
 
-    "SendNftMessageSent": " sent \"{{itemName}}\" #{{tokenId}}",
-    "SendNftMessageTo": " to ",
+    "SendNftMessageSent": " sent ",
+    "SendNftMessageNft": "{{itemName}} #{{tokenId}} ",
+    "SendNftMessageType": "({{type}}) ",
+    "SendNftMessageTo": "to ",
     "SendNftMessageViewTransactionDetail": "View Transaction Detail ",
 
     "ListNftMessageSold": "Sold",
@@ -262,7 +264,11 @@
     },
     "BuyNftMessage": {
       "BoughtNft": "Bought NFT",
-      "BoughtNftBoughtFrom": " bought {{nftName}} #{{nftTokenId}} from ",
+      "BoughtNftBought": " bought ",
+      "BoughtNftBoughtNft": "{{nftName}} #{{nftTokenId}} ({{type}})",
+      "BoughtNftBoughtFor": " for ",
+      "BoughtNftBoughtPrice": "{{amount}} {{tokenName}}",
+      "BoughtNftBoughtFrom": " from ",
       "ViewTransactionDetail": "View Transaction Detail "
     },
     "ProfileHeader": {
@@ -301,8 +307,10 @@
       "EndOfList": "End of List"
     },
     "SendTokenMessage": {
-      "Sent": " sent {{amount}} {{symbol}}",
-      "To": " to ",
+      "Sent": " sent ",
+      "Token": "{{amount}} {{symbol}} ",
+      "Type": "({{type}}) ",
+      "To": "to ",
       "ViewTransactionDetail": "View Transaction Detail "
     }
   }

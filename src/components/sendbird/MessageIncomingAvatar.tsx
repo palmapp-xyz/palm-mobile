@@ -34,12 +34,12 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
           {message.sender?.profileUrl ? (
             <MediaRenderer
               src={message.sender.profileUrl}
-              width={26}
-              height={26}
+              width={36}
+              height={36}
               style={{ borderRadius: 50 }}
             />
           ) : (
-            <Avatar size={26} uri={message.sender?.profileUrl} />
+            <Avatar size={36} uri={message.sender?.profileUrl} />
           )}
         </TouchableOpacity>
       )}
@@ -49,7 +49,7 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
 
 const styles = createStyleSheet({
   avatar: {
-    width: 26,
+    width: 36,
     marginRight: 12,
   },
 })

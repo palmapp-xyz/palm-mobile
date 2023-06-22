@@ -65,7 +65,7 @@ const GroupChannelSettingsScreen = (): ReactElement => {
           name: 'Listings',
           actionItem: <Icon name={'chevron-forward-outline'} size={28} />,
           onPress: () => {
-            navigation.navigate(Routes.ChannelListings, params)
+            navigation.push(Routes.ChannelListings, params)
           },
         })
         return items

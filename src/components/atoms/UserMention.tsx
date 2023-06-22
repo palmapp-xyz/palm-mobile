@@ -4,6 +4,8 @@ import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { FontSize, SbUserMetadata } from 'types'
 
+import { useLocalization } from '@sendbird/uikit-react-native'
+
 import FormText, { FormTextProps } from './FormText'
 
 type UserMentionProps = {
@@ -17,6 +19,7 @@ const UserMention = ({
   ...rest
 }: UserMentionProps): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { STRINGS } = useLocalization()
 
   return (
     <FormText
@@ -31,7 +34,7 @@ const UserMention = ({
       color={COLOR.user_mention}
       {...rest}
     >
-      @{userMetadata.handle}
+      @{userMetadata?.handle ?? STRINGS.LABELS.USER_NO_NAME}
     </FormText>
   )
 }

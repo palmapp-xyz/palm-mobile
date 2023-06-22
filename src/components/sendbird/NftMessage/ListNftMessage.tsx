@@ -21,6 +21,8 @@ import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
 
+import NftSoldTag from './NftSoldTag'
+
 const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
   const { getKlayPrice } = useKlayPrice()
   const { t } = useTranslation()
@@ -87,7 +89,11 @@ const ListNftMessage = ({
     <View style={styles.container}>
       <View style={styles.body}>
         <Row style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
-          <FormText font={'B'}>{`${item.name} #${item.token_id}`}</FormText>
+          <FormText>For sale: </FormText>
+          <FormText
+            font={'B'}
+            style={{ color: COLOR.primary._400 }}
+          >{`${item.name} #${item.token_id}`}</FormText>
         </Row>
         <View style={{ position: 'relative' }}>
           <VerifiedWrapper>
@@ -126,18 +132,7 @@ const ListNftMessage = ({
                   </FormText>
                 </Row>
               ) : (
-                <View
-                  style={[
-                    styles.floatRightLabel,
-                    {
-                      backgroundColor: COLOR.error,
-                    },
-                  ]}
-                >
-                  <FormText font={'SB'} color="white">
-                    {t('Nft.ListNftMessageSold')}
-                  </FormText>
-                </View>
+                <NftSoldTag />
               )}
             </>
           )}

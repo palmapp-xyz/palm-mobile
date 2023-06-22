@@ -2,11 +2,8 @@ import images from 'assets/images'
 import { Container, FormImage, FormInput, Row } from 'components'
 import { COLOR } from 'consts'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { getPin } from 'libs/pin'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Animated,
@@ -39,7 +36,6 @@ const HEADER_HEIGHT = 72
 // }
 
 const ExploreScreen = (): ReactElement => {
-  const { navigation } = useAppNavigation<Routes.Explore>()
   const { t } = useTranslation()
   const [searchFocused, setSearchFocused] = useState(false)
   const inputRef = useRef<TextInput>(null)
@@ -52,23 +48,6 @@ const ExploreScreen = (): ReactElement => {
     isSearching,
     onClickConfirm,
   } = useExploreSearchReturn
-
-  useEffect(() => {
-    const checkPin = async (): Promise<void> => {
-      const isNotConfigurePin = (await getPin()) === ''
-
-      if (isNotConfigurePin) {
-        navigation.push(Routes.Pin, {
-          type: 'set',
-          result: async (result: boolean): Promise<void> => {
-            result && navigation.pop()
-            return Promise.resolve()
-          },
-        })
-      }
-    }
-    checkPin()
-  }, [])
 
   return (
     <Container style={styles.container}>

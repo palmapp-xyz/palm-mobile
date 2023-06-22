@@ -109,7 +109,7 @@ const NftList = ({
                 }
               }}
             >
-              <MoralisNftRenderer item={item} width={104} height={104} />
+              <MoralisNftRenderer item={item} width={120} height={120} />
               <View
                 style={[
                   styles.selectItemIcon,

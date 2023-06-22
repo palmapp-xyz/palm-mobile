@@ -1,4 +1,5 @@
-import { Container, Header } from 'components'
+import { Container, FormText, Header } from 'components'
+import { COLOR } from 'consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { recordError } from 'libs/logger'
@@ -8,7 +9,6 @@ import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
 import { FbListing } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { COLOR } from 'consts'
 
 import FbListingItem from './FbListingItem'
 
@@ -44,6 +44,16 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
     }
   }, [fsChannel, isFetching])
 
+  if (!fsChannel || (!isFetching && channelListings.length === 0)) {
+    return (
+      <View style={styles.empty}>
+        <FormText font={'SB'} color={COLOR.black._300}>
+          No listings found
+        </FormText>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.body}>
       <FlatList
@@ -59,7 +69,7 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
         }
         refreshing={isFetching}
         keyExtractor={(_, index): string => `listing-${index}`}
-        numColumns={3}
+        numColumns={2}
         scrollEnabled
         style={{
           paddingHorizontal: 20,
@@ -100,4 +110,5 @@ export default ChannelListingsScreen
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'transparent' },
   body: { flex: 1 },
+  empty: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 })
