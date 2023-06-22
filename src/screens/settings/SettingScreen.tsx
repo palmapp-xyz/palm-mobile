@@ -54,7 +54,7 @@ const SettingTextItem = (props: {
   return (
     <View style={styles.item}>
       <FormText color={COLOR.black._900}>{name}</FormText>
-      <FormText font={'B'} color={COLOR.primary._400}>
+      <FormText font={'SB'} color={COLOR.black._700}>
         {text}
       </FormText>
     </View>
@@ -100,10 +100,6 @@ const SettingScreen = (): ReactElement => {
           />
         </View>
         <View style={styles.itemGroup}>
-          <SettingItem
-            name={t('Settings.ExportWallet')}
-            onPress={(): void => {}}
-          />
           <SettingItem name={t('Settings.Privacy')} onPress={(): void => {}} />
           <SettingItem name={t('Settings.Contact')} onPress={(): void => {}} />
           <SettingItem
@@ -114,10 +110,8 @@ const SettingScreen = (): ReactElement => {
             name={t('Settings.Version')}
             text={
               version.codepush
-                ? `${version.app}-${version.codepush} ${
-                    __DEV__ ? '(dev)' : '(release)'
-                  }`
-                : `${version.app} ${__DEV__ ? '(dev)' : '(release)'}`
+                ? `${version.app}-${version.codepush}`
+                : `${version.app}`
             }
           />
         </View>

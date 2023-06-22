@@ -1,12 +1,12 @@
 import LensLogo from 'assets/LensLogo'
-import { Container } from 'components'
+import { Container, FormText } from 'components'
 import useAuth from 'hooks/auth/useAuth'
 import { recordError } from 'libs/logger'
 import React, { ReactElement, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { useTranslation } from 'react-i18next'
 
 const SignInWithLens = (): ReactElement => {
   const { lensLogin, logout } = useAuth()
@@ -43,7 +43,9 @@ const SignInWithLens = (): ReactElement => {
         }}
       >
         <LensLogo />
-        <Text style={{ fontSize: 16 }}>{t('Auth.SignLensLoading')}</Text>
+        <FormText font="SB" size={16}>
+          {t('Auth.SignLensLoading')}
+        </FormText>
       </View>
     </Container>
   )
