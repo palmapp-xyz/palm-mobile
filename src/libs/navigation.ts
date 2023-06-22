@@ -12,6 +12,8 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
+import { RecoverAccountType } from 'screens/auth/RecoverAccountScreen'
+import { PinType } from 'screens/PinScreen'
 export enum Routes {
   MainNavigator = 'MainNavigator',
   AuthNavigator = 'AuthNavigator',
@@ -58,7 +60,7 @@ export enum Routes {
   GroupChannelCreate = 'GroupChannelCreate',
   GroupChannelInvite = 'GroupChannelInvite',
   Setting = 'Setting',
-  ExportPrivate = 'ExportPrivate',
+  ExportWallet = 'ExportWallet',
   FileViewer = 'FileViewer',
 
   CreateChannel = 'CreateChannel',
@@ -91,7 +93,7 @@ type AuthRouteParamsUnion =
   | {
       route: Routes.RecoverAccount
       params: {
-        type: 'importWallet' | 'restoreWallet' | 'resetPin'
+        type: RecoverAccountType
       }
     }
   | {
@@ -101,7 +103,7 @@ type AuthRouteParamsUnion =
   | {
       route: Routes.Pin
       params: {
-        type: 'set' | 'auth' | 'reset'
+        type: PinType
         result?: (result: boolean) => Promise<void>
         cancel?: () => void
       }
@@ -193,7 +195,7 @@ type MainRouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.ExportPrivate
+      route: Routes.ExportWallet
       params: undefined
     }
   | {
@@ -272,7 +274,7 @@ type MainRouteParamsUnion =
   | {
       route: Routes.Pin
       params: {
-        type: 'set' | 'auth' | 'reset'
+        type: PinType
         result?: (result: boolean) => Promise<void>
         cancel?: () => void
       }
@@ -280,7 +282,7 @@ type MainRouteParamsUnion =
   | {
       route: Routes.RecoverAccount
       params: {
-        type: 'importWallet' | 'restoreWallet' | 'resetPin'
+        type: RecoverAccountType
       }
     }
 

@@ -18,6 +18,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const PIN_COUNT = 4
 
+export type PinType = 'set' | 'auth' | 'reset'
+
 const CloseButton = (props: { onPress?: () => void }): ReactElement => {
   return (
     <View
@@ -151,10 +153,10 @@ const PinButton = (
 }
 
 const PinScreen = (): ReactElement => {
-  const { params } = useAppNavigation<Routes.Pin>()
+  const { params, navigation } = useAppNavigation<Routes.Pin>()
   const { type, result: resultCallback, cancel } = params
 
-  const [pinType, setPinType] = useState<'set' | 'auth' | 'reset'>(type)
+  const [pinType, setPinType] = useState<PinType>(type)
   const toast = useToast()
   const { t } = useTranslation()
 

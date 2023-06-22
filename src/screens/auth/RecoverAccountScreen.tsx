@@ -24,6 +24,8 @@ import useToast from 'hooks/useToast'
 import { getMnemonic, getPkey } from 'libs/account'
 import { useTranslation } from 'react-i18next'
 
+export type RecoverAccountType = 'importWallet' | 'restoreWallet' | 'resetPin'
+
 const RecoverAccountScreen = (): ReactElement => {
   const {
     usePkey,

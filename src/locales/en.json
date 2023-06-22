@@ -238,9 +238,11 @@
     "VersionRelease": "(release)",
     "SignOut": "Sign Out",
 
-    "ExportWalletHeaderTitle": "Export private",
-    "ExportWalletShowKey": "Show the key",
-    "ExportWalletCopiedPrivateKeyToast": "Private key copied"
+    "ExportWalletHeaderTitle": "Export Wallet",
+    "ExportWalletPrivateKey": "Private key",
+    "ExportWalletWalletAddress": "Wallet Address",
+    "ExportWalletCopiedPrivateKeyToast": "Private key copied",
+    "ExportWalletNeverDisclose": "Never disclose this key. Anyone with your private keys can steal any assets held in your account."
   },
   "Pin": {
     "PinSetupSuccessToast": "Your PIN code is successfully set up.",
