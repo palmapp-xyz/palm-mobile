@@ -2,6 +2,7 @@ import FormButton from 'components/atoms/FormButton'
 import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
+import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import { COLOR, UTIL } from 'consts'
 import useExplorer from 'hooks/complex/useExplorer'
 import useNft from 'hooks/contract/useNft'
@@ -20,6 +21,8 @@ import {
 } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+
+import NftSoldTag from './NftSoldTag'
 
 const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -55,31 +58,48 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
 
   return (
     <View style={styles.container}>
-      <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
       <View style={styles.body}>
-        <FormText style={{ color: COLOR.primary._400 }}>
-          {t('Components.BuyNftMessage.BoughtNft')}
-        </FormText>
-
+        <NftSoldTag position="left" style={{ margin: 10 }} />
+        <VerifiedWrapper>
+          <NftRenderer {...nftRendererProps} style={{ maxWidth: 'auto' }} />
+        </VerifiedWrapper>
         <FormText
-          fontType="R.12"
-          numberOfLines={2}
           style={{
             color: 'black',
+            padding: 10,
           }}
         >
           <UserMention userMetadata={data.buyer} />
-          <FormText fontType="R.12">
-            {t('Components.BuyNftMessage.BoughtNftBoughtFrom', {
+          <FormText>{t('Components.BuyNftMessage.BoughtNftBought')}</FormText>
+          <FormText font={'B'} style={{ color: COLOR.primary._400 }}>
+            {t('Components.BuyNftMessage.BoughtNftBoughtNft', {
               nftName: nftName ?? UTIL.truncate(item.nftToken),
               nftTokenId: item.nftTokenId,
+              type: item.nftType,
             })}
+          </FormText>
+          {data.price && (
+            <>
+              <FormText>
+                {t('Components.BuyNftMessage.BoughtNftBoughtFor')}
+              </FormText>
+              <FormText font={'B'}>
+                {t('Components.BuyNftMessage.BoughtNftBoughtPrice', {
+                  tokenName: data.price.tokenName,
+                  amount: data.price.amount,
+                })}
+              </FormText>
+            </>
+          )}
+          <FormText>
+            {t('Components.BuyNftMessage.BoughtNftBoughtFrom')}
           </FormText>
           <UserMention userMetadata={data.from} />
         </FormText>
 
         <FormButton
           size="sm"
+          containerStyle={{ margin: 16, marginTop: 0 }}
           onPress={(): void => {
             navigation.navigate(Routes.NftDetail, {
               nftContract: item.nftToken as ContractAddr,
@@ -110,7 +130,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.12">
+        <FormText color={COLOR.black._500}>
           {t('Components.BuyNftMessage.ViewTransactionDetail')}
         </FormText>
         <Ionicons
@@ -127,7 +147,13 @@ export default BuyNftMessage
 
 const styles = StyleSheet.create({
   container: { backgroundColor: 'white', width: 240 },
-  body: { padding: 10, gap: 10 },
+  body: {
+    paddingTop: 48,
+    gap: 10,
+    borderWidth: 1,
+    borderColor: COLOR.black._90010,
+    borderRadius: 18,
+  },
   priceBox: {
     backgroundColor: COLOR.primary._50,
     padding: 10,

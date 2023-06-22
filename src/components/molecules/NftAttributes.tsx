@@ -19,8 +19,8 @@ const NftAttributes = ({
         renderItem={({ item }): ReactElement => {
           return (
             <View style={styles.traits}>
-              <FormText fontType="R.14">{item.trait_type}</FormText>
-              <FormText fontType="B.16" color={COLOR.black._900}>
+              <FormText>{item.trait_type}</FormText>
+              <FormText font={'B'} size={16} color={COLOR.black._900}>
                 {item.value}
               </FormText>
             </View>

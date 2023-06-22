@@ -1,22 +1,24 @@
 import { COLOR, STYLE } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
-import { FontType } from 'types'
+import { FontSize, FontType } from 'types'
 
 export type FormTextProps = {
-  fontType?: FontType
+  size?: FontSize
+  font?: 'R' | 'B' | 'SB'
   children: ReactNode
   color?: string
 } & TextProps
 
 const FormText = ({
-  fontType = 'R.16',
+  size = 14,
+  font = 'R',
   children,
   color = COLOR.black._900,
   style,
   ...rest
 }: FormTextProps): ReactElement => {
-  const fontStyle = STYLE.getFontStyle(fontType)
+  const fontStyle = STYLE.getFontStyle(`${font}.${size}` as FontType)
 
   return (
     <Text style={[{ color }, fontStyle, style]} children={children} {...rest} />

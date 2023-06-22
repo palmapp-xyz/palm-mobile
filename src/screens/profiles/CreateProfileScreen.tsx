@@ -14,12 +14,12 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { recordError } from 'libs/logger'
 import { isMainnet } from 'libs/utils'
 import React, { ReactElement, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { useTranslation } from 'react-i18next'
 
 const CreateProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -75,18 +75,16 @@ const CreateProfileScreen = (): ReactElement => {
 
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
-          <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
+          <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
             {t('Profiles.CreateProfileTitle')}
           </FormText>
-          <FormText color={COLOR.black._400} fontType="R.14">
+          <FormText color={COLOR.black._400}>
             {t('Profiles.CreateProfileTitleSub')}
           </FormText>
         </View>
         <View style={{ rowGap: 12 }}>
           <View style={styles.rowSection}>
-            <FormText fontType="R.12">
-              {t('Profiles.CreateProfileUsername')}
-            </FormText>
+            <FormText>{t('Profiles.CreateProfileUsername')}</FormText>
             <FormInput
               value={handle}
               onChangeText={setHandle}
@@ -95,16 +93,14 @@ const CreateProfileScreen = (): ReactElement => {
               autoCapitalize="none"
               style={{ marginVertical: 2 }}
             />
-            <FormText fontType="R.12" color={COLOR.yellow}>
+            <FormText color={COLOR.yellow}>
               {t('Profiles.CreateProfileUsernameHint')}
             </FormText>
           </View>
           <View style={styles.rowSection}>
             <Row>
-              <FormText fontType="R.12">
-                {t('Profiles.CreateProfileDescription')}
-              </FormText>
-              <FormText fontType="R.12">
+              <FormText>{t('Profiles.CreateProfileDescription')}</FormText>
+              <FormText>
                 ({bio.length}/{maxBioLength})
               </FormText>
             </Row>

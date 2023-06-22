@@ -21,6 +21,7 @@ import { stringifyMsgData } from 'libs/sendbird'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import _ from 'lodash'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
@@ -36,7 +37,6 @@ import { MentionType, UserMessageCreateParams } from '@sendbird/chat/message'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { useTranslation } from 'react-i18next'
 
 const ConfirmModal = ({
   selectedToken,
@@ -140,7 +140,7 @@ const ConfirmModal = ({
               borderRadius: 14,
             }}
           >
-            <FormText fontType="R.12" color={COLOR.error}>
+            <FormText color={COLOR.error}>
               {t('Nft.SendTokenConfirmModalNotice')}
             </FormText>
           </View>
@@ -187,16 +187,14 @@ const ConfirmModal = ({
           >
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">
+                <FormText font={'SB'}>
                   {t('Nft.SendTokenConfirmModalFrom')}
                 </FormText>
               </View>
-              <FormText fontType="B.16">
+              <FormText font={'B'} size={16}>
                 {t('Nft.SendTokenConfirmModalMe')}
               </FormText>
-              <FormText fontType="R.12">
-                {`(${UTIL.truncate(user?.address || '')})`}
-              </FormText>
+              <FormText>{`(${UTIL.truncate(user?.address || '')})`}</FormText>
             </View>
             <View>
               <Ionicons
@@ -207,7 +205,7 @@ const ConfirmModal = ({
             </View>
             <View>
               <View style={styles.fromTo}>
-                <FormText fontType="SB.12">
+                <FormText font={'SB'}>
                   {t('Nft.SendTokenConfirmModalTo')}
                 </FormText>
               </View>
@@ -226,9 +224,11 @@ const ConfirmModal = ({
                     style={{ borderRadius: 50 }}
                   />
                 )}
-                <FormText fontType="B.16">{receiver?.handle}</FormText>
+                <FormText font={'B'} size={16}>
+                  {receiver?.handle}
+                </FormText>
               </Row>
-              <FormText fontType="R.12">
+              <FormText>
                 {`(${UTIL.truncate(receiver?.address || '')})`}
               </FormText>
             </View>
@@ -236,10 +236,10 @@ const ConfirmModal = ({
         </View>
         <View style={styles.txInfo}>
           <Row style={{ justifyContent: 'space-between' }}>
-            <FormText fontType="B.14">
+            <FormText font={'B'}>
               {t('Nft.SendTokenConfirmModalEstGasFee')}
             </FormText>
-            <FormText fontType="R.14">{`${UTIL.demicrofyP(estimatedTxFee)} ${
+            <FormText>{`${UTIL.demicrofyP(estimatedTxFee)} ${
               NETWORK.nativeToken[chain]
             }`}</FormText>
           </Row>

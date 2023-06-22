@@ -3,16 +3,16 @@ import Loading from 'components/atoms/Loading'
 import { COLOR } from 'consts'
 import useCreateComplete from 'hooks/page/account/useCreateComplete'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import useToast from 'hooks/useToast'
-import { useTranslation } from 'react-i18next'
 
 const CreateCompleteScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.CreateComplete>()
@@ -36,16 +36,16 @@ const CreateCompleteScreen = (): ReactElement => {
 
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
-          <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
+          <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
             {t('Auth.Complete')}
           </FormText>
-          <FormText color={COLOR.black._400} fontType="R.14">
+          <FormText color={COLOR.black._400}>
             {t('Auth.CompleteMessage')}
           </FormText>
         </View>
         <View style={{ rowGap: 12 }}>
           <View style={styles.rowSection}>
-            <FormText fontType="R.12">{t('Common.WalletAddress')}</FormText>
+            <FormText>{t('Common.WalletAddress')}</FormText>
             <TouchableOpacity
               style={styles.copyBox}
               onPress={(): void => {
@@ -57,14 +57,14 @@ const CreateCompleteScreen = (): ReactElement => {
               }}
             >
               <View style={{ flex: 1 }}>
-                <FormText fontType="R.14">{account?.address}</FormText>
+                <FormText>{account?.address}</FormText>
               </View>
               <Icon name="copy-outline" size={20} />
             </TouchableOpacity>
           </View>
           <View style={styles.rowSection}>
             <View style={styles.infoBox}>
-              <FormText fontType="R.12">{t('Auth.PalmToS')}</FormText>
+              <FormText>{t('Auth.PalmToS')}</FormText>
             </View>
           </View>
         </View>

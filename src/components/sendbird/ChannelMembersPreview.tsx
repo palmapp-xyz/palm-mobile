@@ -19,7 +19,6 @@ const ChannelMembersPreview = React.memo(
     containerStyle?: StyleProp<ViewStyle>
   }): ReactElement | null => {
     const { channel, channelImages } = useChannelInfo({ channelUrl })
-
     if (!channel) {
       return null
     }
@@ -55,7 +54,7 @@ const ChannelMembersPreview = React.memo(
 
         {channel.customType !== ChannelType.DIRECT && (
           <View style={styles.userLengthBox}>
-            <FormText fontType="R.12">{channel.memberCount}</FormText>
+            <FormText>{channel.memberCount}</FormText>
           </View>
         )}
       </Row>

@@ -7,6 +7,7 @@ import {
   Row,
 } from 'components'
 import { COLOR, NETWORK, UTIL } from 'consts'
+import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useEthPrice from 'hooks/independent/useEthPrice'
@@ -23,24 +24,26 @@ import { Routes } from 'libs/navigation'
 import { nftUriFetcher } from 'libs/nft'
 import { stringifyMsgData } from 'libs/sendbird'
 import React, { ReactElement, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
+import { useSetRecoilState } from 'recoil'
+import appStore from 'store/appStore'
 import {
   ContractAddr,
   FbProfile,
   NftType,
+  pToken,
   QueryKeyEnum,
   SbBuyNftDataType,
   SbUserMetadata,
   SupportedNetworkEnum,
-  pToken,
 } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { useTranslation } from 'react-i18next'
 import NftDetails from '../../components/NftDetails'
 
 const InitNftUri = ({
@@ -82,6 +85,8 @@ const ZxNftDetailScreen = (): ReactElement => {
   const { user } = useAuth()
   const { profile } = useProfile({ profileId: user?.auth?.profileId })
   const [listingOwner, setListingOwner] = useState<FbProfile>()
+  const { fetchUserProfileId } = useAuthChallenge()
+  const setLoading = useSetRecoilState(appStore.loading)
 
   const { getEthPrice } = useEthPrice()
   const { getKlayPrice } = useKlayPrice()
@@ -174,6 +179,12 @@ const ZxNftDetailScreen = (): ReactElement => {
             handle: listingOwner.handle,
             address: listingOwner.address,
           } as SbUserMetadata,
+          price: {
+            tokenName: NETWORK.nativeToken[chain],
+            amount: UTIL.formatAmountP(erc20TokenAmount as pToken, {
+              toFix: 2,
+            }),
+          },
         } as SbBuyNftDataType)
         channel.sendFileMessage(imgInfo)
       }
@@ -188,8 +199,17 @@ const ZxNftDetailScreen = (): ReactElement => {
       return
     }
 
-    const _listingOwner = await getFsProfile(order.order.maker)
-    setListingOwner(_listingOwner)
+    setLoading(true)
+    const userProfileId = await fetchUserProfileId(
+      order.order.maker as ContractAddr
+    )
+    if (userProfileId) {
+      const _listingOwner = await getFsProfile(userProfileId)
+      setLoading(false)
+      setTimeout(() => {
+        setListingOwner(_listingOwner)
+      }, 200)
+    }
   }, [order])
 
   return (
@@ -221,12 +241,12 @@ const ZxNftDetailScreen = (): ReactElement => {
         <View style={{ flex: 1 }}>
           <Row style={{ alignItems: 'center', columnGap: 4 }}>
             <FormImage source={NETWORK.getNetworkLogo(chain)} size={14} />
-            <FormText fontType="B.18">
+            <FormText font={'B'} size={18}>
               {UTIL.formatAmountP(erc20TokenAmount as pToken)}
             </FormText>
           </Row>
           <View>
-            <FormText fontType="R.12" color={COLOR.black._400}>
+            <FormText color={COLOR.black._400}>
               {t('Common.UsdPrice', {
                 price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
               })}

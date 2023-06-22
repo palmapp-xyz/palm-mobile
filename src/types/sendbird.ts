@@ -16,6 +16,7 @@ export type SbBuyNftDataType = {
   selectedNft: PostOrderResponsePayload
   buyer: SbUserMetadata
   from: SbUserMetadata
+  price: { tokenName: string; amount: string }
 }
 
 export type SbListNftDataType = {

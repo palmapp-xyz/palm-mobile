@@ -1,17 +1,19 @@
 import { COLOR, STYLE } from 'consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TextInput, TextInputProps } from 'react-native'
-import { FontType } from 'types'
+import { FontSize, FontType } from 'types'
 
 const FormInput = (
   props: {
     inputRef?: React.LegacyRef<TextInput>
     fontType?: FontType
+    font?: 'R' | 'B' | 'SB'
+    size?: FontSize
     disabled?: boolean
   } & TextInputProps
 ): ReactElement => {
-  const { style, fontType = 'R.14', ...rest } = props
-  const fontStyle = STYLE.getFontStyle(fontType)
+  const { style, font = 'R', size = 14, ...rest } = props
+  const fontStyle = STYLE.getFontStyle(`${font}.${size}` as FontType)
   const disabled = props.disabled ?? false
 
   return (

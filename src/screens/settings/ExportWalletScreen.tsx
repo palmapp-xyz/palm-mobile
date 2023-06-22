@@ -32,22 +32,23 @@ const ExportWalletScreen = (): ReactElement => {
       <Header left="back" onPressLeft={navigation.goBack} />
       <View style={styles.body}>
         <FormText
-          fontType="B.24"
+          font="B"
+          size={24}
           color={COLOR.black._900}
           style={{ marginBottom: 40 }}
         >
           {t('Settings.ExportWalletHeaderTitle')}
         </FormText>
-        <FormText fontType="R.12" color={COLOR.black._400}>
+        <FormText size={12} color={COLOR.black._400}>
           {t('Settings.ExportWalletWalletAddress')}
         </FormText>
         <View style={styles.addressBox}>
-          <FormText fontType="R.14" color={COLOR.black._900} numberOfLines={1}>
+          <FormText color={COLOR.black._900} numberOfLines={1}>
             {user?.address}
           </FormText>
         </View>
 
-        <FormText fontType="R.12" color={COLOR.black._400}>
+        <FormText size={12} color={COLOR.black._400}>
           {t('Settings.ExportWalletPrivateKey')}
         </FormText>
         <TouchableOpacity
@@ -61,7 +62,6 @@ const ExportWalletScreen = (): ReactElement => {
         >
           <View style={styles.keyBox}>
             <FormText
-              fontType="R.14"
               color={COLOR.black._900}
               style={{ flex: 1, paddingRight: 16 }}
             >
@@ -76,14 +76,10 @@ const ExportWalletScreen = (): ReactElement => {
         </TouchableOpacity>
 
         <View style={styles.infoBox}>
-          <FormText
-            fontType="R.12"
-            color={COLOR.red}
-            style={{ marginRight: 8 }}
-          >
+          <FormText size={12} color={COLOR.red} style={{ marginRight: 8 }}>
             {'•'}
           </FormText>
-          <FormText fontType="R.12" color={COLOR.red}>
+          <FormText size={12} color={COLOR.red}>
             {t('Settings.ExportWalletNeverDisclose')}
           </FormText>
         </View>

@@ -2,10 +2,12 @@ import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+
+import FormText from './atoms/FormText'
 
 const GroupChannelItem = ({
   channelUrl,
@@ -30,7 +32,7 @@ const GroupChannelItem = ({
         navigation.push(Routes.GroupChannel, { channelUrl })
       }}
     >
-      <Text>{channel.url}</Text>
+      <FormText>{channel.url}</FormText>
     </TouchableOpacity>
   )
 }

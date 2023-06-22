@@ -4,12 +4,14 @@ import LoadingPage from 'components/atoms/LoadingPage'
 import Avatar from 'components/sendbird/Avatar'
 import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
 import { COLOR, NETWORK, UTIL } from 'consts'
+import { format } from 'date-fns'
 import useAuth from 'hooks/auth/useAuth'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FlatList,
   Pressable,
@@ -23,8 +25,6 @@ import { ChannelType, SbUserMetadata } from 'types'
 
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { format } from 'date-fns'
-import { useTranslation } from 'react-i18next'
 
 const ChannelInfoScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelInfo>()
@@ -79,10 +79,12 @@ const ChannelInfoScreen = (): ReactElement => {
               containerStyle={{ marginTop: -88, marginBottom: 22 }}
             />
             <View style={{ paddingBottom: 8 }}>
-              <FormText fontType="B.16">{channelName}</FormText>
+              <FormText font={'B'} size={16}>
+                {channelName}
+              </FormText>
             </View>
             <View style={styles.section}>
-              <FormText fontType="R.12">
+              <FormText>
                 {t('Channels.ChannelInfoMemberAndDate', {
                   memberCount: channel.memberCount,
                   createAt: format(new Date(channel.createdAt), 'yy.MM.dd'),
@@ -90,7 +92,7 @@ const ChannelInfoScreen = (): ReactElement => {
               </FormText>
             </View>
             <View style={styles.section}>
-              <FormText fontType="R.12">{desc}</FormText>
+              <FormText>{desc}</FormText>
             </View>
 
             {gatingToken && Number(gatingToken.amount) > 0 && (
@@ -104,16 +106,16 @@ const ChannelInfoScreen = (): ReactElement => {
                   {/* <FormImage source={fsChannelField.gating.img} size={40} /> */}
                   <View>
                     <Row>
-                      <FormText color={COLOR.black._500} fontType="B.12">
+                      <FormText color={COLOR.black._500} font={'B'}>
                         {t('Channels.ChannelInfoGatingTokenAmount', {
                           amount: gatingToken?.amount,
                         })}
                       </FormText>
-                      <FormText color={COLOR.black._500} fontType="R.12">
+                      <FormText color={COLOR.black._500}>
                         {t('Channels.ChannelInfoGatingTokenOf')}
                       </FormText>
                       <View>
-                        <FormText fontType="B.12">
+                        <FormText font={'B'}>
                           {t('Channels.ChannelInfoGatingTokenChainOrAddr', {
                             chainOrAddress:
                               gatingToken?.gatingType === 'Native'
@@ -122,7 +124,7 @@ const ChannelInfoScreen = (): ReactElement => {
                           })}
                         </FormText>
                       </View>
-                      <FormText fontType="R.12">
+                      <FormText>
                         {t('Channels.ChannelInfoGatingTokenRequiredToJoin')}
                       </FormText>
                     </Row>
@@ -149,7 +151,7 @@ const ChannelInfoScreen = (): ReactElement => {
             <Row
               style={{ alignItems: 'center', justifyContent: 'space-between' }}
             >
-              <FormText fontType="SB.14">
+              <FormText font={'SB'}>
                 {t('Channels.ChannelInfoMembers')}
               </FormText>
               {channel.customType !== ChannelType.DIRECT && (
@@ -158,9 +160,7 @@ const ChannelInfoScreen = (): ReactElement => {
                     navigation.navigate(Routes.GroupChannelMembers, params)
                   }}
                 >
-                  <FormText fontType="R.12">
-                    {t('Channels.ChannelInfoInvite')}
-                  </FormText>
+                  <FormText>{t('Channels.ChannelInfoInvite')}</FormText>
                 </TouchableOpacity>
               )}
             </Row>

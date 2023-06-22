@@ -1,4 +1,3 @@
-import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import {
   ChainLogoWrapper,
   FormBottomSheet,
@@ -17,10 +16,13 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
+
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+
 import Indicator from './atoms/Indicator'
 
 const SelectedCollectionNftsSheet = ({
@@ -60,7 +62,7 @@ const SelectedCollectionNftsSheet = ({
   }
 
   const listHeaderComponent = (
-    <FormText fontType={'B.14'} style={{ marginBottom: 12, marginStart: 6 }}>
+    <FormText font={'B'} style={{ marginBottom: 12, marginStart: 6 }}>
       {selectedCollectionNft.name}
     </FormText>
   )

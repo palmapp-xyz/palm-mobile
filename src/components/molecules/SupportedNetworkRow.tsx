@@ -35,7 +35,7 @@ const SupportedNetworkRow = ({
             >
               <FormImage source={NETWORK.getNetworkLogo(network)} size={16} />
               <FormText
-                fontType="SB.14"
+                font={'SB'}
                 color={selected ? COLOR.primary._400 : COLOR.black._400}
               >
                 {_.capitalize(network)}

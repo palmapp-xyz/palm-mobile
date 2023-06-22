@@ -1,8 +1,10 @@
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useNotification from 'hooks/independent/useNotification'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
-import React, { ReactElement } from 'react'
+import { getPin } from 'libs/pin'
+import React, { ReactElement, useEffect } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -46,8 +48,26 @@ const MainStack = createNativeStackNavigator()
 const MainNavigator = (): ReactElement => {
   const { user } = useAuth()
   const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { navigation } = useAppNavigation()
 
   useNotification()
+
+  useEffect(() => {
+    const checkPin = async (): Promise<void> => {
+      const isNotConfigurePin = (await getPin()) === ''
+
+      if (isNotConfigurePin) {
+        navigation.push(Routes.Pin, {
+          type: 'set',
+          result: async (result: boolean): Promise<void> => {
+            result && navigation.pop()
+            return Promise.resolve()
+          },
+        })
+      }
+    }
+    checkPin()
+  }, [])
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>

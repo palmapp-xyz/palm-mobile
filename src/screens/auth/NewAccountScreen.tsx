@@ -2,13 +2,13 @@ import { generateMnemonic } from 'bip39'
 import { Container, FormButton, FormText, Header, Row } from 'components'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import useToast from 'hooks/useToast'
-import { useTranslation } from 'react-i18next'
 
 const NewAccountScreen = (): ReactElement => {
   const mnemonic = useMemo(() => generateMnemonic(128), [])
@@ -26,10 +26,10 @@ const NewAccountScreen = (): ReactElement => {
 
       <View style={styles.body}>
         <View style={{ rowGap: 8, paddingBottom: 40 }}>
-          <FormText fontType="B.24" style={{ fontWeight: 'bold' }}>
+          <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
             {t('Auth.CopySeedPhrase')}
           </FormText>
-          <FormText color={COLOR.black._400} fontType="R.14">
+          <FormText color={COLOR.black._400}>
             {t('Auth.CopySeedPhraseMessage')}
           </FormText>
         </View>
@@ -42,7 +42,7 @@ const NewAccountScreen = (): ReactElement => {
             borderRadius: 14,
           }}
         >
-          <FormText fontType="R.12" color={COLOR.yellow}>
+          <FormText color={COLOR.yellow}>
             {t('Auth.CopySeedPhraseNotice')}
           </FormText>
         </View>
@@ -82,7 +82,7 @@ const NewAccountScreen = (): ReactElement => {
                     paddingHorizontal: 12,
                   }}
                 >
-                  <FormText fontType="R.14">{item}</FormText>
+                  <FormText>{item}</FormText>
                 </View>
               </Row>
             )

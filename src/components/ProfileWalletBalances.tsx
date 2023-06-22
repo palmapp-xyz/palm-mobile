@@ -49,10 +49,10 @@ const ProfileWalletBalances = React.memo(
               paddingBottom: 12,
             }}
           >
-            <FormText fontType="B.14">
+            <FormText font={'B'}>
               {t('Components.ProfileWalletBalances.WalletBalances')}
             </FormText>
-            <FormText fontType="R.12" color={COLOR.black._200}>
+            <FormText size={12} color={COLOR.black._200}>
               {t('Components.ProfileWalletBalances.OnlyVisibleToYou')}
             </FormText>
           </Row>
@@ -70,7 +70,7 @@ const ProfileWalletBalances = React.memo(
 
           <TouchableOpacity onPress={onToggleShowUserTokensSheet}>
             <Row style={styles.seeAll}>
-              <FormText fontType="R.14" color={COLOR.black._400}>
+              <FormText color={COLOR.black._400}>
                 {t('Components.ProfileWalletBalances.SeeAll')}
               </FormText>
               <Icon

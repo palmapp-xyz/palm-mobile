@@ -2,7 +2,9 @@ import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
-import { FontSize, FontType, SbUserMetadata } from 'types'
+import { FontSize, SbUserMetadata } from 'types'
+
+import { useLocalization } from '@sendbird/uikit-react-native'
 
 import FormText, { FormTextProps } from './FormText'
 
@@ -12,15 +14,17 @@ type UserMentionProps = {
 } & Omit<FormTextProps, 'children'>
 
 const UserMention = ({
-  size = 12,
+  size = 14,
   userMetadata,
   ...rest
 }: UserMentionProps): ReactElement => {
   const { navigation } = useAppNavigation()
+  const { STRINGS } = useLocalization()
 
   return (
     <FormText
-      fontType={`B.${size}` as FontType}
+      size={size}
+      font={'B'}
       onPress={(): void => {
         navigation.push(Routes.UserProfile, {
           address: userMetadata.address,
@@ -30,7 +34,7 @@ const UserMention = ({
       color={COLOR.user_mention}
       {...rest}
     >
-      @{userMetadata.handle}
+      @{userMetadata?.handle ?? STRINGS.LABELS.USER_NO_NAME}
     </FormText>
   )
 }

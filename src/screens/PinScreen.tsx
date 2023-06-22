@@ -53,7 +53,12 @@ const CloseButton = (props: { onPress?: () => void }): ReactElement => {
 
 const PinTitle = (props: { title: string }): ReactElement => {
   return (
-    <FormText fontType="B.20" color={COLOR.black._900} style={{ margin: 12 }}>
+    <FormText
+      font={'B'}
+      size={20}
+      color={COLOR.black._900}
+      style={{ margin: 12 }}
+    >
       {props.title}
     </FormText>
   )
@@ -66,7 +71,6 @@ const PinSubTitle = (props: {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <FormText
-        fontType="R.14"
         color={props.warn ? COLOR.red : COLOR.black._500}
         style={{ textAlign: 'center' }}
       >
@@ -88,9 +92,7 @@ const PinForgot = (props: { onPress: () => void }): ReactElement => {
         color={COLOR.black._500}
         style={{ marginRight: 4 }}
       />
-      <FormText fontType="R.14" color={COLOR.black._500}>
-        {t('Pin.PinForgot')}
-      </FormText>
+      <FormText color={COLOR.black._500}>{t('Pin.PinForgot')}</FormText>
     </TouchableOpacity>
   )
 }
@@ -158,7 +160,7 @@ const PinButton = (
           <Image source={images.pin_delete} style={{ width: 32, height: 32 }} />
         )}
         {'value' in props && (
-          <FormText fontType="B.32" color={COLOR.black._900}>
+          <FormText font={'B'} size={32} color={COLOR.black._900}>
             {props.value}
           </FormText>
         )}
@@ -168,7 +170,7 @@ const PinButton = (
 }
 
 const PinScreen = (): ReactElement => {
-  const { params, navigation } = useAppNavigation<Routes.Pin>()
+  const { navigation, params } = useAppNavigation<Routes.Pin>()
   const { type, result: resultCallback, cancel } = params
 
   const [pinType, setPinType] = useState<PinType>(type)

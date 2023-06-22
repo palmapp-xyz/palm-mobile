@@ -8,6 +8,7 @@ import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getAttributesData } from 'libs/lens'
 import React, { ReactElement, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 import appStore from 'store/appStore'
@@ -18,7 +19,6 @@ import {
 } from '@lens-protocol/react-native-lens-ui-kit'
 import { useLocalization } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { useTranslation } from 'react-i18next'
 
 const UpdateProfileScreen = (): ReactElement => {
   const { user } = useAuth()
@@ -113,9 +113,7 @@ const UpdateProfileScreen = (): ReactElement => {
       <View style={styles.body}>
         <View style={{ rowGap: 12 }}>
           <View style={styles.rowSection}>
-            <FormText fontType="R.12">
-              {t('Profiles.UpdateProfileUsername')}
-            </FormText>
+            <FormText>{t('Profiles.UpdateProfileUsername')}</FormText>
             <FormInput
               value={profile.handle}
               textContentType="username"
@@ -131,10 +129,8 @@ const UpdateProfileScreen = (): ReactElement => {
           </View>
           <View style={styles.rowSection}>
             <Row>
-              <FormText fontType="R.12">
-                {t('Profiles.UpdateProfileDescription')}
-              </FormText>
-              <FormText fontType="R.12">
+              <FormText>{t('Profiles.UpdateProfileDescription')}</FormText>
+              <FormText>
                 ({bio?.length ?? 0}/{maxBioLength})
               </FormText>
             </Row>

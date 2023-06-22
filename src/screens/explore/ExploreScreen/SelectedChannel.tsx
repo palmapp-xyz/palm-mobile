@@ -6,13 +6,13 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { FbChannel } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useTranslation } from 'react-i18next'
 
 const SelectedChannel = ({
   selectedChannel,
@@ -60,12 +60,12 @@ const SelectedChannel = ({
             />
           </View>
           <View style={styles.section}>
-            <FormText fontType="B.16">{selectedChannel.name}</FormText>
+            <FormText font={'B'} size={16}>
+              {selectedChannel.name}
+            </FormText>
           </View>
           <View style={styles.section}>
-            <FormText fontType="R.12" color={COLOR.black._200}>
-              {selectedChannel.desc}
-            </FormText>
+            <FormText color={COLOR.black._200}>{selectedChannel.desc}</FormText>
           </View>
           {!!selectedChannel.gating?.amount && (
             <View style={styles.section}>
@@ -73,26 +73,24 @@ const SelectedChannel = ({
                 <Icon color={COLOR.black._100} size={16} name="alert-circle" />
                 <View>
                   <Row>
-                    <FormText color={COLOR.black._500} fontType="B.12">
+                    <FormText color={COLOR.black._500} font={'B'}>
                       {selectedChannel.gating.amount}
                     </FormText>
-                    <FormText color={COLOR.black._500} fontType="R.12">
-                      {' of '}
-                    </FormText>
+                    <FormText color={COLOR.black._500}>{' of '}</FormText>
                     {selectedChannel.gating.gatingType === 'Native' ? (
                       <View>
-                        <FormText fontType="B.12">
+                        <FormText font={'B'}>
                           {NETWORK.nativeToken[selectedChannel.gating.chain]}
                         </FormText>
                       </View>
                     ) : (
                       <View>
-                        <FormText fontType="B.12">
+                        <FormText font={'B'}>
                           {selectedChannel.gating.name}
                         </FormText>
                       </View>
                     )}
-                    <FormText fontType="R.12">
+                    <FormText>
                       {t('Explore.ExploreSelectedChannelRequiredToJoin')}
                     </FormText>
                   </Row>

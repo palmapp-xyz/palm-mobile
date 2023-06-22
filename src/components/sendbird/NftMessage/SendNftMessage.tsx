@@ -44,22 +44,33 @@ const SendNftMessage = ({
         }}
       >
         <FormText
-          fontType="R.14"
-          numberOfLines={2}
+          // numberOfLines={2}
           style={{
             color: COLOR.black._900,
             paddingVertical: 9,
             paddingHorizontal: 12,
+            lineHeight: 18,
           }}
         >
           <UserMention userMetadata={data.from} />
-          <FormText fontType="B.14">
-            {t('Nft.SendNftMessageSent', {
+          <FormText>{t('Nft.SendNftMessageSent')}</FormText>
+          <FormText
+            font={'B'}
+            style={{
+              color: COLOR.primary._400,
+            }}
+          >
+            {t('Nft.SendNftMessageNft', {
               itemName: item.name || 'unknown',
               tokenId: item.token_id,
             })}
           </FormText>
-          {' to '}
+          <FormText>
+            {t('Nft.SendNftMessageType', {
+              type: item.contract_type,
+            })}
+          </FormText>
+          {t('Nft.SendNftMessageTo')}
           <UserMention userMetadata={data.to} />
         </FormText>
         <VerifiedWrapper>
@@ -92,7 +103,7 @@ const SendNftMessage = ({
           )
         }}
       >
-        <FormText color={COLOR.black._500} fontType="R.14">
+        <FormText color={COLOR.black._500}>
           {t('Nft.SendNftMessageViewTransactionDetail')}
         </FormText>
         <Ionicons
@@ -108,6 +119,9 @@ const SendNftMessage = ({
 export default SendNftMessage
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: 'white', width: 240 },
+  container: {
+    backgroundColor: 'white',
+    width: 240,
+  },
   body: { borderWidth: 1, borderColor: COLOR.black._90010, borderRadius: 18 },
 })

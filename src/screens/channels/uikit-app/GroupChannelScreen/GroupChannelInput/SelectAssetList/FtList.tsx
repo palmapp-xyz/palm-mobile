@@ -1,9 +1,10 @@
 import { FormText } from 'components'
 import Indicator from 'components/atoms/Indicator'
 import MoralisErc20Token from 'components/MoralisErc20Token'
-import { COLOR } from 'consts'
+import { COLOR, UTIL } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import { isMainnet } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
@@ -41,9 +42,18 @@ const FtList = ({
       ListFooterComponent={listFooterComponent}
       keyExtractor={(_, index): string => `user-ft-list-${index}`}
       initialNumToRender={10}
-      contentContainerStyle={{ rowGap: 0 }}
+      contentContainerStyle={{ rowGap: 0, padding: 16 }}
       renderItem={({ item }): ReactElement | null => {
-        if (item.possible_spam) {
+        if (
+          (item.possible_spam && isMainnet()) ||
+          !(
+            Number(
+              UTIL.formatAmountP(item.balance as pToken, {
+                toFix: 4,
+              })
+            ) > 0
+          )
+        ) {
           return null
         }
         const selected = selectedToken?.token_address === item.token_address
@@ -63,8 +73,8 @@ const FtList = ({
               ]}
             >
               {selected && (
-                <FormText fontType="B.12" color="white">
-                  -
+                <FormText font={'B'} color="white">
+                  ✓
                 </FormText>
               )}
             </View>
@@ -90,8 +100,8 @@ const styles = StyleSheet.create({
   },
   selectItemIcon: {
     position: 'absolute',
-    top: 8,
-    left: 8,
+    top: 22,
+    right: 16,
     borderRadius: 999,
     borderWidth: 1,
     borderColor: COLOR.primary._400,

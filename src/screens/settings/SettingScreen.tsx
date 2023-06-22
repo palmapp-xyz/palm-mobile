@@ -35,9 +35,7 @@ const SettingItem = (props: {
 
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
-      <FormText fontType="R.14" color={COLOR.black._900}>
-        {name}
-      </FormText>
+      <FormText color={COLOR.black._900}>{name}</FormText>
       <Icon name="ios-chevron-forward" color={COLOR.black._300} size={20} />
     </TouchableOpacity>
   )
@@ -51,9 +49,7 @@ const SettingSwitchItem = (props: {
   const { name, value, toggle } = props
   return (
     <View style={styles.item}>
-      <FormText fontType="R.14" color={COLOR.black._900}>
-        {name}
-      </FormText>
+      <FormText color={COLOR.black._900}>{name}</FormText>
       <Switch
         style={Platform.select({
           ios: {
@@ -74,10 +70,8 @@ const SettingTextItem = (props: {
   const { name, text } = props
   return (
     <View style={styles.item}>
-      <FormText fontType="R.14" color={COLOR.black._900}>
-        {name}
-      </FormText>
-      <FormText fontType="B.14" color={COLOR.primary._400}>
+      <FormText color={COLOR.black._900}>{name}</FormText>
+      <FormText font={'B'} color={COLOR.primary._400}>
         {text}
       </FormText>
     </View>
@@ -283,7 +277,7 @@ const SettingScreen = (): ReactElement => {
               setVisibleSignOutModal(true)
             }}
           >
-            <FormText fontType="SB.12" color={COLOR.black._300}>
+            <FormText font={'SB'} color={COLOR.red}>
               {t('Settings.SignOut')}
             </FormText>
           </TouchableOpacity>

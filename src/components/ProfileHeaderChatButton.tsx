@@ -8,6 +8,7 @@ import { getProfileMediaImg } from 'libs/lens'
 import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
@@ -15,7 +16,6 @@ import { ChannelType } from 'types'
 
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { useTranslation } from 'react-i18next'
 
 export type ProfileHeaderChatButtonProps = {
   userProfileId: string | undefined
@@ -83,7 +83,7 @@ const ProfileHeaderChatButton = React.memo(
           onPress={onPress}
         >
           <FormText
-            fontType="SB.14"
+            font={'SB'}
             color={COLOR.black._300}
             style={{ textAlign: 'center' }}
           >

@@ -5,16 +5,16 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getProfileMediaImg } from 'libs/lens'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ContractAddr, SupportedNetworkEnum } from 'types'
 
-import { useTranslation } from 'react-i18next'
 import LensProfileHeaderSection from './LensProfileHeaderSection'
+import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
 import ProfileWalletAddress from './ProfileWalletAddress'
 import ProfileWalletBalances from './ProfileWalletBalances'
-import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import Avatar from './sendbird/Avatar'
 
 export type ProfileHeaderProps = {
@@ -96,15 +96,15 @@ const ProfileHeader = React.memo(
 
           {profile?.handle && (
             <View style={styles.section}>
-              <FormText fontType="B.20">{profile.handle.trim()}</FormText>
+              <FormText size={20} font={'B'}>
+                {profile.handle.trim()}
+              </FormText>
             </View>
           )}
 
           {profile?.bio && (
             <View style={styles.section}>
-              <FormText fontType="R.14" color={COLOR.black._200}>
-                {profile.bio.trim()}
-              </FormText>
+              <FormText color={COLOR.black._200}>{profile.bio.trim()}</FormText>
             </View>
           )}
 
@@ -132,7 +132,7 @@ const ProfileHeader = React.memo(
               marginTop: !isMyPage ? 12 : 0,
             }}
           >
-            <FormText fontType="B.14">
+            <FormText font={'B'}>
               {t('Components.ProfileHeader.NftList')}
             </FormText>
             <SupportedNetworkRow

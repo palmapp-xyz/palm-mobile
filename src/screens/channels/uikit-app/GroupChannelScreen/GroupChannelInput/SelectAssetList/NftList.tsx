@@ -47,7 +47,7 @@ const NftList = ({
       }}
     >
       <Icon name="ios-chevron-back" color={COLOR.black._800} size={16} />
-      <FormText fontType="B.12">{selectedCollection.name}</FormText>
+      <FormText font={'B'}>{selectedCollection.name}</FormText>
     </TouchableOpacity>
   )
 
@@ -109,7 +109,7 @@ const NftList = ({
                 }
               }}
             >
-              <MoralisNftRenderer item={item} width={104} height={104} />
+              <MoralisNftRenderer item={item} width={120} height={120} />
               <View
                 style={[
                   styles.selectItemIcon,
@@ -120,7 +120,7 @@ const NftList = ({
                 ]}
               >
                 {selectedIndex > -1 && (
-                  <FormText fontType="B.12" color="white">
+                  <FormText font={'B'} color="white">
                     {selectedIndex + 1}
                   </FormText>
                 )}

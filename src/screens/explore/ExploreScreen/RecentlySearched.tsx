@@ -1,10 +1,9 @@
-import React, { ReactElement } from 'react'
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-
 import { FormText, Row } from 'components'
 import { COLOR } from 'consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
+import React, { ReactElement } from 'react'
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const RecentlySearched = ({
@@ -40,16 +39,13 @@ const RecentlySearched = ({
               }}
             >
               <FormText
-                fontType="R.14"
                 color={COLOR.black._400}
                 numberOfLines={1}
                 style={{ flex: 1 }}
               >
                 {item.search}
               </FormText>
-              <FormText fontType="R.14" color={COLOR.black._200}>
-                {item.date}
-              </FormText>
+              <FormText color={COLOR.black._200}>{item.date}</FormText>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={(): void => {

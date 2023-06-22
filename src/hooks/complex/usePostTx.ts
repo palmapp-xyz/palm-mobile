@@ -28,7 +28,7 @@ type UsePostTxReturn = {
   }) => Promise<PostTxReturn>
 }
 
-const gas = '3000000'
+const gas = '300000'
 
 export const usePostTx = ({
   contractAddress,

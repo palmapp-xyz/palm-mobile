@@ -5,6 +5,7 @@ import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import RNBootSplash from 'react-native-bootsplash'
+
 import SplashScreen from './SplashScreen'
 
 const UpdateScreen = (props: {
@@ -50,7 +51,6 @@ const UpdateScreen = (props: {
             loop
           />
           <FormText
-            fontType="R.14"
             color={COLOR.black._400}
             style={{ textAlign: 'center', marginTop: 22 }}
           >

@@ -3,13 +3,13 @@ import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { Switch } from '@sendbird/uikit-react-native-foundation'
-import { useTranslation } from 'react-i18next'
 
 const ChannelSettingScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.ChannelSetting>()
@@ -44,7 +44,7 @@ const ChannelSettingScreen = (): ReactElement => {
       />
 
       <View style={styles.sectionTitle}>
-        <FormText fontType="B.12" color={COLOR.black._400}>
+        <FormText font={'B'} color={COLOR.black._400}>
           {t('Channels.ChannelSettingTitle')}
         </FormText>
       </View>
@@ -61,7 +61,7 @@ const ChannelSettingScreen = (): ReactElement => {
       </View>
 
       <View style={styles.sectionTitle}>
-        <FormText fontType="B.12" color={COLOR.black._400}>
+        <FormText font={'B'} color={COLOR.black._400}>
           {t('Channels.ChannelSettingModeration')}
         </FormText>
       </View>

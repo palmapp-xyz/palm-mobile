@@ -79,7 +79,7 @@ const TokenGating = ({
         />
       </View>
       <View style={styles.title}>
-        <FormText fontType="B.16">
+        <FormText font={'B'} size={16}>
           {step === 1
             ? t('Channels.ChatRoomTokenGatingSelectStep1')
             : t('Channels.ChatRoomTokenGatingSelectStep2')}
@@ -120,10 +120,8 @@ const TokenGating = ({
                 size={40}
               />
               <View>
-                <FormText fontType="R.14">
-                  {_.capitalize(gatingTokenNetwork)}
-                </FormText>
-                <FormText fontType="B.14">
+                <FormText>{_.capitalize(gatingTokenNetwork)}</FormText>
+                <FormText font={'B'}>
                   {NETWORK.nativeToken[gatingTokenNetwork]}
                 </FormText>
               </View>
@@ -166,7 +164,9 @@ const TokenGating = ({
         <View style={{ padding: 20, flex: 1 }}>
           <View style={styles.selectedItem}>
             {!!selectedGatingToken && (
-              <FormText fontType="B.20">{selectedGatingToken.name}</FormText>
+              <FormText font={'B'} size={20}>
+                {selectedGatingToken.name}
+              </FormText>
             )}
           </View>
           <TextInput

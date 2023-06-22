@@ -7,14 +7,10 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
-import AdminMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/AdminMessage'
-import MessageContainer from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageContainer'
-import MessageDateSeparator from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageDateSeparator'
-import MessageIncomingSenderName from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageIncomingSenderName'
-import MessageOutgoingStatus from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageOutgoingStatus'
-import MessageTime from '@sendbird/uikit-react-native/src/components/MessageRenderer/MessageTime'
-import UnknownMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UnknownMessage'
-import { DEFAULT_LONG_PRESS_DELAY } from '@sendbird/uikit-react-native/src/constants'
+// eslint-disable-next-line prettier/prettier
+import {
+  DEFAULT_LONG_PRESS_DELAY,
+} from '@sendbird/uikit-react-native/src/constants'
 import {
   calcMessageGrouping,
   conditionChaining,
@@ -23,11 +19,18 @@ import {
   useIIFE,
 } from '@sendbird/uikit-utils'
 
+import AdminMessage from './AdminMessage'
+import MessageContainer from './MessageContainer'
+import MessageDateSeparator from './MessageDateSeparator'
 import MessageIncomingAvatar from './MessageIncomingAvatar'
+import MessageIncomingSenderName from './MessageIncomingSenderName'
+import MessageOutgoingStatus from './MessageOutgoingStatus'
+import MessageTime from './MessageTime'
 import NftMessage from './NftMessage'
+import UnknownMessage from './UnknownMessage'
+import UserMessage from './UserMessage'
 
 import type { SendbirdMessage } from '@sendbird/uikit-utils'
-import UserMessage from './UserMessage'
 type MessageStyleVariant = 'outgoing' | 'incoming'
 export type MessageRendererInterface<
   T = SendbirdMessage,

@@ -19,12 +19,12 @@ import React, {
   useMemo,
   useState,
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { FbProfile, Moralis, SupportedNetworkEnum, Token } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { useTranslation } from 'react-i18next'
 import TokenAmountInput from './TokenAmountInput'
 
 const Contents = ({
@@ -69,7 +69,7 @@ const Contents = ({
     <Container style={styles.container}>
       <View style={styles.body}>
         <View style={{ height: '100%', rowGap: 8 }}>
-          <FormText fontType="SB.14" style={{ marginBottom: 8 }}>
+          <FormText font={'SB'} style={{ marginBottom: 8 }}>
             {t('Nft.SendTokenTitle')}
           </FormText>
           <TokenAmountInput
@@ -79,7 +79,7 @@ const Contents = ({
             selectedNetwork={chain}
           />
           <Row style={{ padding: 8, columnGap: 8, marginTop: 8 }}>
-            <FormText fontType="SB.14" style={{ marginTop: 6 }}>
+            <FormText font={'SB'} style={{ marginTop: 6 }}>
               {t('Nft.SendTokenTo')}
             </FormText>
             {receiverProfileImg ? (
@@ -96,7 +96,7 @@ const Contents = ({
                 style={{ borderRadius: 50 }}
               />
             )}
-            <FormText fontType="B.16" style={{ marginTop: 4 }}>
+            <FormText font={'B'} size={16} style={{ marginTop: 4 }}>
               {receiver?.handle}
             </FormText>
           </Row>

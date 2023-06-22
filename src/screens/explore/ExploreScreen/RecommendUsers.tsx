@@ -14,7 +14,7 @@ const RecommendUsers = (): ReactElement => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.title}>
-          <FormText fontType="B.24">
+          <FormText font={'B'} size={24}>
             {t('Explore.ExploreChatWithOthersDirectly')}
           </FormText>
         </View>

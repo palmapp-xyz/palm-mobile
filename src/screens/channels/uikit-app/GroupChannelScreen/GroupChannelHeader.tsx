@@ -17,8 +17,8 @@ import {
   useLocalization,
 } from '@sendbird/uikit-react-native'
 import {
-  Header,
   createStyleSheet,
+  Header,
   useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
 
@@ -86,7 +86,7 @@ const GroupChannelHeader = ({
         <Row style={{ columnGap: 16 }}>
           <TouchableOpacity
             onPress={(): void => {
-              navigation.navigate(Routes.ChannelListings, params)
+              navigation.push(Routes.ChannelListings, params)
             }}
           >
             <FormImage source={images.NFT_black} size={28} />

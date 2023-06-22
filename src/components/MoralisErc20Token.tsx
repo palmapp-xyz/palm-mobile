@@ -1,4 +1,3 @@
-import images from 'assets/images'
 import { FormImage, FormText, Row } from 'components'
 import { COLOR, UTIL } from 'consts'
 import { getTokenBalanceInUSD } from 'libs/utils'
@@ -6,6 +5,8 @@ import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { Moralis, pToken } from 'types'
+
+import { Icon } from '@sendbird/uikit-react-native-foundation'
 
 const MoralisErc20Token = ({
   item,
@@ -25,20 +26,21 @@ const MoralisErc20Token = ({
   return (
     <View style={[styles.itemCard, style]} key={item.token_address}>
       <Row style={{ alignItems: 'center', columnGap: 12 }}>
-        <FormImage
-          source={item.logo ? { uri: item.logo } : images.palm_logo}
-          size={28}
-        />
+        {item.logo ? (
+          <FormImage source={{ uri: item.logo }} size={28} />
+        ) : (
+          <Icon icon={'error'} size={24} color={COLOR.primary._300} />
+        )}
         <View>
           <Row>
-            <FormText fontType="B.16">
+            <FormText size={16} font={'B'}>
               {UTIL.formatAmountP(value, {
                 toFix: 4,
               })}{' '}
             </FormText>
-            <FormText fontType="R.16">{item.symbol}</FormText>
+            <FormText style={{ marginTop: 3 }}>{item.symbol}</FormText>
           </Row>
-          <FormText fontType="R.12" color={COLOR.black._400}>
+          <FormText size={12} color={COLOR.black._400}>
             {t('Common.UsdPrice', {
               price: tokenValue
                 ? UTIL.formatAmountP(tokenValue, { toFix: 2 })

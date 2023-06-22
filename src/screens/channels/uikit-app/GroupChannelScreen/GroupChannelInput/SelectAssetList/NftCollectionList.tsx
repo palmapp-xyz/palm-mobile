@@ -1,12 +1,11 @@
-import { FormText } from 'components'
 import Indicator from 'components/atoms/Indicator'
-import { COLOR } from 'consts'
+import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList } from 'react-native-gesture-handler'
 import { ContractAddr } from 'types'
 
 const NftCollectionList = ({
@@ -43,7 +42,7 @@ const NftCollectionList = ({
       ListFooterComponent={listFooterComponent}
       keyExtractor={(_, index): string => `useUserNftCollectionList-${index}`}
       style={{ paddingHorizontal: 8, paddingTop: 20 }}
-      contentContainerStyle={{ gap: 8 }}
+      contentContainerStyle={{ gap: 4 }}
       columnWrapperStyle={{ gap: 8 }}
       numColumns={2}
       onEndReached={(): void => {
@@ -54,20 +53,10 @@ const NftCollectionList = ({
       onEndReachedThreshold={0.5}
       initialNumToRender={10}
       renderItem={({ item }): ReactElement => (
-        <View style={{ flex: 1 / 2 }}>
-          <TouchableOpacity
-            onPress={(): void => {
-              setSelectedCollection(item)
-            }}
-          >
-            <View style={styles.nftTitle}>
-              <FormText
-                numberOfLines={1}
-                fontType="B.16"
-              >{`#${item.name}`}</FormText>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <ProfileCollectionNft
+          collection={item}
+          onSelect={(): void => setSelectedCollection(item)}
+        />
       )}
     />
   )
@@ -76,14 +65,6 @@ const NftCollectionList = ({
 export default NftCollectionList
 
 const styles = StyleSheet.create({
-  nftTitle: {
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    borderWidth: 1,
-    borderRadius: 14,
-    borderColor: COLOR.black._200,
-    alignItems: 'center',
-  },
   text: {
     color: 'gray',
     fontSize: 12,

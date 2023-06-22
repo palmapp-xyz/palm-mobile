@@ -47,7 +47,7 @@ const useWeb3 = (chain: SupportedNetworkEnum): UseWeb3Return => {
             : ChainNetworkEnum.GOERLI
         ].rpcUrls[0]
       ),
-    [chain]
+    [mainnet, chain]
   )
 
   const getSigner = async (): Promise<Account | undefined> => {

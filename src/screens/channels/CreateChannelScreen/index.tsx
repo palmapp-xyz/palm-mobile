@@ -8,18 +8,18 @@ import {
   Row,
   Tag,
 } from 'components'
+import Indicator from 'components/atoms/Indicator'
 import { COLOR, UTIL } from 'consts'
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
 import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import Indicator from 'components/atoms/Indicator'
-import useAuth from 'hooks/auth/useAuth'
-import useProfile from 'hooks/auth/useProfile'
-import { useTranslation } from 'react-i18next'
 import TokenGating from './TokenGating'
 
 const CreateChannelScreen = (): ReactElement => {
@@ -84,7 +84,7 @@ const CreateChannelScreen = (): ReactElement => {
           </View>
           <View style={styles.infoSection}>
             <View style={styles.infoRow}>
-              <FormText fontType="R.12" color={COLOR.black._400}>
+              <FormText color={COLOR.black._400}>
                 {t('Channels.ChatRoomName')}
               </FormText>
               <FormInput
@@ -97,7 +97,7 @@ const CreateChannelScreen = (): ReactElement => {
               />
             </View>
             <View style={styles.infoRow}>
-              <FormText fontType="R.12" color={COLOR.black._400}>
+              <FormText color={COLOR.black._400}>
                 {t('Channels.ChatRoomDescription')}
               </FormText>
               <FormInput
@@ -111,7 +111,7 @@ const CreateChannelScreen = (): ReactElement => {
               />
             </View>
             <View style={styles.infoRow}>
-              <FormText fontType="R.12" color={COLOR.black._400}>
+              <FormText color={COLOR.black._400}>
                 {t('Channels.ChatRoomTag')}
               </FormText>
               <FormInput
@@ -129,7 +129,7 @@ const CreateChannelScreen = (): ReactElement => {
               </ScrollView>
             </View>
             <View style={styles.infoRow}>
-              <FormText fontType="R.12" color={COLOR.black._400}>
+              <FormText color={COLOR.black._400}>
                 {t('Channels.ChatRoomTokenGating')}
               </FormText>
 
@@ -143,10 +143,8 @@ const CreateChannelScreen = (): ReactElement => {
                     }}
                   >
                     <View style={{ rowGap: 4, flex: 1 }}>
-                      <FormText fontType="R.14">
-                        {selectedGatingToken.name}
-                      </FormText>
-                      <FormText fontType="R.14" color={COLOR.black._200}>
+                      <FormText>{selectedGatingToken.name}</FormText>
+                      <FormText color={COLOR.black._200}>
                         {t('Channels.ChatRoomTokenGatingMinimum', {
                           amount: UTIL.setComma(selectedGatingToken.amount),
                         })}
@@ -165,7 +163,7 @@ const CreateChannelScreen = (): ReactElement => {
                       setShowTokenGating(true)
                     }}
                   >
-                    <FormText fontType="R.14" color={COLOR.black._200}>
+                    <FormText color={COLOR.black._200}>
                       {t('Channels.ChatRoomEditTokenGating')}
                     </FormText>
                     <Icon
@@ -198,7 +196,7 @@ const CreateChannelScreen = (): ReactElement => {
                   >
                     <Icon name="add" size={38} color={COLOR.black._100} />
                   </View>
-                  <FormText fontType="R.14" color={COLOR.black._200}>
+                  <FormText color={COLOR.black._200}>
                     {t('Channels.ChatRoomTokenGatingSelect')}
                   </FormText>
                 </TouchableOpacity>

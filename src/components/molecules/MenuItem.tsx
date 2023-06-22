@@ -23,7 +23,7 @@ const MenuItem = <T,>({
       onPress={(): void => setSelected(value)}
     >
       <FormText
-        fontType="SB.14"
+        font={'SB'}
         color={selected ? COLOR.primary._400 : COLOR.black._400}
       >
         {title}

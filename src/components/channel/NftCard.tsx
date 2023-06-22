@@ -1,9 +1,8 @@
-import React, { ReactElement, useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-
 import { Card, FormText, MoralisNftRenderer, Row } from 'components'
 import NftAttributes from 'components/molecules/NftAttributes'
 import { COLOR } from 'consts'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { Moralis } from 'types'
 
 const NftCard = ({
@@ -36,8 +35,8 @@ const NftCard = ({
           <MoralisNftRenderer item={selectedNft} />
         </View>
         <View style={{ rowGap: 10, paddingRight: 20, flex: 1 }}>
-          <FormText fontType="R.14">{selectedNft.name}</FormText>
-          <FormText fontType="B.18">
+          <FormText>{selectedNft.name}</FormText>
+          <FormText font={'B'} size={18}>
             {selectedNft.name}#{selectedNft.token_id}
           </FormText>
         </View>

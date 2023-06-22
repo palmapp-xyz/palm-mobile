@@ -1,8 +1,10 @@
 import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Moralis } from 'types'
+
+import FormText from './atoms/FormText'
 import Indicator from './atoms/Indicator'
 
 const ProfileFooter = ({
@@ -18,13 +20,13 @@ const ProfileFooter = ({
       {useUserAssetsReturn.loading ? (
         <Indicator />
       ) : useUserAssetsReturn.items.length === 0 ? (
-        <Text style={styles.text}>
+        <FormText style={styles.text}>
           {t('Components.ProfileFooter.HasNoNft')}
-        </Text>
+        </FormText>
       ) : !useUserAssetsReturn.hasNextPage ? (
-        <Text style={styles.text}>
+        <FormText style={styles.text}>
           {t('Components.ProfileFooter.EndOfList')}
-        </Text>
+        </FormText>
       ) : null}
     </View>
   )
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'gray',
-    fontSize: 12,
     textAlign: 'center',
   },
 })

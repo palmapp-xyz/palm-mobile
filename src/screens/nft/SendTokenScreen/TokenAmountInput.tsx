@@ -37,11 +37,14 @@ const TokenAmountInput = ({
         ) : (
           <Icon icon={'error'} size={24} color={COLOR.primary._300} />
         )}
-        <FormText fontType="B.16">{item.symbol}</FormText>
+        <FormText font={'B'} size={16}>
+          {item.symbol}
+        </FormText>
       </Row>
       <View style={styles.amount}>
         <FormInput
-          fontType="B.24"
+          font={'B'}
+          size={24}
           placeholder="0"
           maxLength={10}
           value={value}
@@ -54,9 +57,10 @@ const TokenAmountInput = ({
             borderRadius: 0,
             padding: 0,
             paddingLeft: 0,
+            minHeight: 48,
           }}
         />
-        <FormText fontType="R.12" color={COLOR.black._400}>
+        <FormText color={COLOR.black._400}>
           {`(≈ $${
             tokenValue ? UTIL.formatAmountP(tokenValue, { toFix: 2 }) : '?'
           })`}

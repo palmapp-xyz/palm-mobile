@@ -27,18 +27,14 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
       >
         <Avatar size={56} uri={getProfileMediaImg(user.picture)} />
         <View style={{ flex: 1, rowGap: 6 }}>
-          <FormText fontType="B.16" numberOfLines={1}>
+          <FormText font={'B'} size={16} numberOfLines={1}>
             {user.handle}
           </FormText>
           <View>
-            <FormText fontType="R.14" style={{ marginBottom: 4 }}>
+            <FormText style={{ marginBottom: 4 }}>
               {UTIL.truncate(user.address)}
             </FormText>
-            <FormText
-              fontType="R.12"
-              numberOfLines={3}
-              color={COLOR.black._300}
-            >
+            <FormText numberOfLines={3} color={COLOR.black._300}>
               {user.bio}
             </FormText>
           </View>

@@ -10,6 +10,7 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FlatList,
   StyleSheet,
@@ -19,15 +20,14 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
-  FbChannelNFTGatingField,
   FbChannelNativeGatingField,
+  FbChannelNFTGatingField,
   NftType,
   QueryKeyEnum,
 } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useTranslation } from 'react-i18next'
 
 const NativeGating = ({
   gating,
@@ -47,15 +47,11 @@ const NativeGating = ({
   return (
     <View style={{ rowGap: 20 }}>
       <View style={{ rowGap: 4 }}>
-        <FormText fontType="R.14">
-          {t('Channels.UiKitTokenGatingRequired')}
-        </FormText>
+        <FormText>{t('Channels.UiKitTokenGatingRequired')}</FormText>
         <FormText>{`${UTIL.setComma(gating.amount)} ${nativeToken}`}</FormText>
       </View>
       <View style={{ rowGap: 4 }}>
-        <FormText fontType="R.14">
-          {t('Channels.UiKitTokenGatingMyBalance')}
-        </FormText>
+        <FormText>{t('Channels.UiKitTokenGatingMyBalance')}</FormText>
         <FormText>{`${UTIL.formatAmountP(balance)} ${nativeToken}`}</FormText>
       </View>
     </View>
