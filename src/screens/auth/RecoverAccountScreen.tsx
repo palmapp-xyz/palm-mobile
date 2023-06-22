@@ -126,7 +126,7 @@ const RecoverAccountScreen = (): ReactElement => {
             </FormText>
           )}
           {recoverType === 'resetPin' && (
-            <FormText color={COLOR.black._400} fontType="R.14">
+            <FormText color={COLOR.black._400}>
               {t('Auth.RecoverResetPinMessage')}
             </FormText>
           )}

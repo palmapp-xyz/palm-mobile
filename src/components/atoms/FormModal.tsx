@@ -34,17 +34,14 @@ const FormModal = (
       <View style={styles.container}>
         <View style={styles.body}>
           <FormText
-            fontType="B.20"
+            font="B"
+            size={20}
             color={COLOR.black._900}
             style={{ marginVertical: 16 }}
           >
             {title}
           </FormText>
-          <FormText
-            fontType="R.14"
-            color={COLOR.black._400}
-            style={{ marginBottom: 44 }}
-          >
+          <FormText color={COLOR.black._400} style={{ marginBottom: 44 }}>
             {message}
           </FormText>
           <View style={styles.buttonContainer}>
@@ -54,7 +51,7 @@ const FormModal = (
                   style={styles.negativeButton}
                   onPress={negativeCallback}
                 >
-                  <FormText fontType="SB.16" color={COLOR.primary._400}>
+                  <FormText font="SB" size={16} color={COLOR.primary._400}>
                     {negative}
                   </FormText>
                 </TouchableOpacity>
@@ -66,7 +63,7 @@ const FormModal = (
                   style={styles.positiveButton}
                   onPress={positiveCallback}
                 >
-                  <FormText fontType="SB.16" color={COLOR.white}>
+                  <FormText font="SB" size={16} color={COLOR.white}>
                     {positive}
                   </FormText>
                 </TouchableOpacity>
