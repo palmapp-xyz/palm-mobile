@@ -253,7 +253,15 @@
     "PinSetupTitleSub": "This action requires a PIN code setting.",
     "PinConfirmTitle": "Confirm your PIN code",
     "PinEnterTitle": "Enter your PIN code",
-    "PinForgot": "Forgot your PIN code?"
+    "PinForgot": "Forgot your PIN code?",
+
+    "PinWrongMessage": "Wrong PIN code ({{count}}/{{max}})",
+    "PinWrongMessageWarning": "You have to reset your PIN code\nif you enter the wrong PIN code again.",
+
+    "PinResetModalTitle": "Reset your PIN code",
+    "PinResetModalMessage": "You need to reset the PIN code\nif you enter the wrong PIN code {{max}} times.",
+    "PinResetModalPositive": "Reset",
+    "PinResetModalNegative": "Later"
   },
   "Components": {
     "ProfileWalletAddress": {

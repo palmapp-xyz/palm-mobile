@@ -13,7 +13,7 @@ const FormModal = (
   props: ModalProps & {
     title: string
     message: string
-    positive: string
+    positive?: string
     positiveCallback?: () => void
     negative?: string
     negativeCallback?: () => void
@@ -48,7 +48,7 @@ const FormModal = (
             {message}
           </FormText>
           <View style={styles.buttonContainer}>
-            {negative && negativeCallback && (
+            {(negative || negativeCallback) && (
               <View style={{ flex: 2 }}>
                 <TouchableOpacity
                   style={styles.negativeButton}
@@ -60,7 +60,7 @@ const FormModal = (
                 </TouchableOpacity>
               </View>
             )}
-            {positive && positiveCallback && (
+            {(positive || positiveCallback) && (
               <View style={{ flex: 3 }}>
                 <TouchableOpacity
                   style={styles.positiveButton}
