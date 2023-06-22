@@ -55,26 +55,30 @@ const PinTitle = (props: { title: string }): ReactElement => {
   )
 }
 
-const PinSubTitle = (props: {
-  icon?: string
-  title?: string
-  onPress?: () => Promise<void>
-}): ReactElement => {
+const PinSubTitle = (props: { title?: string }): ReactElement => {
   return (
-    <TouchableOpacity
-      style={{ flexDirection: 'row', alignItems: 'center' }}
-      onPress={props.onPress}
-    >
-      {props.icon && (
-        <Ionicons
-          name={props.icon}
-          size={16}
-          color={COLOR.black._500}
-          style={{ marginRight: 4 }}
-        />
-      )}
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <FormText fontType="R.14" color={COLOR.black._500}>
         {props.title}
+      </FormText>
+    </View>
+  )
+}
+const PinForgot = (props: { onPress: () => void }): ReactElement => {
+  const { t } = useTranslation()
+  return (
+    <TouchableOpacity
+      style={{ flexDirection: 'row', alignItems: 'center', marginTop: 24 }}
+      onPress={props.onPress}
+    >
+      <Ionicons
+        name={'alert-circle-outline'}
+        size={16}
+        color={COLOR.black._500}
+        style={{ marginRight: 4 }}
+      />
+      <FormText fontType="R.14" color={COLOR.black._500}>
+        {t('Pin.PinForgot')}
       </FormText>
     </TouchableOpacity>
   )
@@ -262,11 +266,7 @@ const PinScreen = (): ReactElement => {
   const TITLE_SUB = {
     setup: { title: t('Pin.PinSetupTitle') },
     confirm: { title: '' },
-    enter: {
-      title: t('Pin.PinEnterTitleSub'),
-      icon: 'alert-circle-outline',
-      onPress: onResetPin,
-    },
+    enter: { title: '' },
     none: { title: '' },
   }
 
@@ -320,6 +320,7 @@ const PinScreen = (): ReactElement => {
           <PinButton value={'0'} handleInput={handleInput} />
           <PinButton delete handleDelete={handleDelete} />
         </View>
+        {pinType === 'auth' && <PinForgot onPress={onResetPin} />}
       </View>
     </SafeAreaView>
   )

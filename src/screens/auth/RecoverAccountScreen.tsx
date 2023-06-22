@@ -125,6 +125,11 @@ const RecoverAccountScreen = (): ReactElement => {
               {t('Auth.RecoverRestoreWalletMessage')}
             </FormText>
           )}
+          {recoverType === 'resetPin' && (
+            <FormText color={COLOR.black._400} fontType="R.14">
+              {t('Auth.RecoverResetPinMessage')}
+            </FormText>
+          )}
         </View>
         <Row
           style={{

@@ -66,7 +66,8 @@
     "RecoverImportWalletTitle": "How do you\nimport your wallet?",
     "RecoverRestoreWalletTitle": "Please verify\nthe wallet",
     "RecoverRestoreWalletMessage": "The account can only be restored\nby verifying the wallet.",
-    "RecoverResetPinTitle": "Reset Pin",
+    "RecoverResetPinTitle": "Please verify\nthe wallet",
+    "RecoverResetPinMessage": "The PINcode can only be reset\nby verifyng the wallet.",
 
     "ImportTheWallet": "Import the Wallet",
 
@@ -252,7 +253,7 @@
     "PinSetupTitleSub": "This action requires a PIN code setting.",
     "PinConfirmTitle": "Confirm your PIN code",
     "PinEnterTitle": "Enter your PIN code",
-    "PinEnterTitleSub": "Forgot your PIN code?"
+    "PinForgot": "Forgot your PIN code?"
   },
   "Components": {
     "ProfileWalletAddress": {
