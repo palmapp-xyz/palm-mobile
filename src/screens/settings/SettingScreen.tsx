@@ -1,7 +1,7 @@
 import { AuthorizationStatus } from '@notifee/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import messaging from '@react-native-firebase/messaging'
-import { Container, FormText, Header } from 'components'
+import { Container, FormModal, FormText, Header } from 'components'
 import { COLOR, UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useNotificationRegister from 'hooks/independent/useNotificationRegister'
@@ -93,6 +93,7 @@ const SettingScreen = (): ReactElement => {
 
   const [enablePush, setEnablePush] = useState<boolean>(false)
   const [disablePushSwitch, setDisablePushSwitch] = useState<boolean>(false)
+  const [visibleSignOutModal, setVisibleSignOutModal] = useState<boolean>(false)
 
   const notificationRegister = useNotificationRegister(enablePush)
 
@@ -279,8 +280,7 @@ const SettingScreen = (): ReactElement => {
           <TouchableOpacity
             style={styles.button}
             onPress={(): void => {
-              // warning?
-              logout()
+              setVisibleSignOutModal(true)
             }}
           >
             <FormText fontType="SB.12" color={COLOR.black._300}>
@@ -289,6 +289,19 @@ const SettingScreen = (): ReactElement => {
           </TouchableOpacity>
         </View>
       </View>
+      <FormModal
+        visible={visibleSignOutModal}
+        title={t('Components.Modal.SignOut.Title')}
+        message={t('Components.Modal.SignOut.Message')}
+        positive={t('Components.Modal.SignOut.Positive')}
+        positiveCallback={(): void => {
+          setVisibleSignOutModal(false)
+        }}
+        negative={t('Components.Modal.SignOut.Negative')}
+        negativeCallback={(): void => {
+          logout()
+        }}
+      />
     </Container>
   )
 }

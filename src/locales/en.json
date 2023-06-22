@@ -306,6 +306,14 @@
       "Sent": " sent {{amount}} {{symbol}}",
       "To": " to ",
       "ViewTransactionDetail": "View Transaction Detail "
+    },
+    "Modal": {
+      "SignOut": {
+        "Title": "Are you sure to sign out?",
+        "Message": "You need to restore the current wallet or create a new wallet to use Palm again.",
+        "Positive": "Cancel",
+        "Negative": "Sign out"
+      }
     }
   }
 }
