@@ -15,10 +15,10 @@ import {
   Linking,
   Platform,
   StyleSheet,
+  Switch,
   TouchableOpacity,
   View,
 } from 'react-native'
-import { Switch } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { LocalStorageKey } from 'types'
 
@@ -53,7 +53,7 @@ const SettingSwitchItem = (props: {
       <Switch
         style={Platform.select({
           ios: {
-            transform: [{ scaleX: 0.6 }, { scaleY: 0.6 }],
+            transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
           },
         })}
         value={value}
@@ -183,7 +183,10 @@ const SettingScreen = (): ReactElement => {
   }
 
   return (
-    <Container style={[styles.container]}>
+    <Container
+      style={[styles.container]}
+      safeAreaBackgroundColor={COLOR.black._90005}
+    >
       <View style={styles.body}>
         <Header
           left="close"
@@ -275,7 +278,7 @@ const SettingScreen = (): ReactElement => {
               setVisibleSignOutModal(true)
             }}
           >
-            <FormText font={'SB'} color={COLOR.red}>
+            <FormText font={'SB'} color={COLOR.black._300}>
               {t('Settings.SignOut')}
             </FormText>
           </TouchableOpacity>
@@ -306,7 +309,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     rowGap: 20,
-    backgroundColor: COLOR.black._90005,
   },
   itemGroup: { backgroundColor: 'white', borderRadius: 15 },
   item: {
