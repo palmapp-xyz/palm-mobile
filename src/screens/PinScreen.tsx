@@ -344,8 +344,8 @@ const PinScreen = (): ReactElement => {
       <CloseButton onPress={cancel} />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <PinTitle {...title} />
-        <PinSubTitle {...subTitle} />
-        {pinType === 'auth' && pinTryCount > 0 && (
+        {pinType !== 'auth' && <PinSubTitle {...subTitle} />}
+        {pinType === 'auth' && pinTryCount > 0 ? (
           <PinSubTitle
             warn
             title={t('Pin.PinWrongMessage', {
@@ -353,9 +353,13 @@ const PinScreen = (): ReactElement => {
               max: PIN_TRY_MAX,
             })}
           />
+        ) : (
+          <PinSubTitle title={' '} />
         )}
-        {pinType === 'auth' && pinTryCount >= PIN_TRY_MAX - 1 && (
+        {pinType === 'auth' && pinTryCount >= PIN_TRY_MAX - 1 ? (
           <PinSubTitle warn title={t('Pin.PinWrongMessageWarning')} />
+        ) : (
+          <PinSubTitle title={'\n'} />
         )}
         <View style={{ flexDirection: 'row', marginVertical: 40 }}>
           {[...Array(PIN_COUNT).keys()].map((_, i) => (
