@@ -203,7 +203,10 @@
     "SendTokenConfirmModalFrom": "From",
     "SendTokenConfirmModalMe": "Me",
     "SendTokenConfirmModalTo": "To",
-    "SendTokenConfirmModalEstGasFee": "Est. Gas Fee"
+    "SendTokenConfirmModalEstGasFee": "Est. Gas Fee",
+
+    "ChannelListingNoListedNft": "Oops!\nThere is no listed NFT.\nHow about listing NFTs\nfor the first time?",
+    "ChannelListingListNFT": "List a NFT"
   },
   "Profiles": {
     "CreateProfileTitle": "Fill out your profile",
