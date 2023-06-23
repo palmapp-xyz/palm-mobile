@@ -253,7 +253,7 @@ const PinScreen = (): ReactElement => {
             const v = await getPin()
             const match = !v || inputPin === v
 
-            !match && increasePinTryCount()
+            match ? resetPinTryCount() : increasePinTryCount()
 
             clearInputPin()
             resultCallback && resultCallback(match)
