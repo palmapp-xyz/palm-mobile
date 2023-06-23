@@ -108,12 +108,17 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     namespace "com.palmapp.xyz"
+
+    def buildNumber = 21
+    project.ext.set("versionCode", buildNumber)
+
     defaultConfig {
         applicationId "com.palmapp.xyz"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 21
+        versionCode project.versionCode
         versionName "0.1"
+        versionNameSuffix ".${project.versionCode}"
     }
 
     splits {

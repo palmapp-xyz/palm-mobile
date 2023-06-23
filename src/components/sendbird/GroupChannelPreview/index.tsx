@@ -265,6 +265,7 @@ const styles = createStyleSheet({
   },
   bodyText: {
     flex: 1,
+    paddingBottom: 4,
   },
   bodyIcon: {
     borderRadius: 8,

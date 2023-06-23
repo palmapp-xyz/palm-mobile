@@ -14,7 +14,7 @@ const FormText = ({
   size = 14,
   font = 'R',
   children,
-  color = COLOR.black._900,
+  color = COLOR.black._800,
   style,
   ...rest
 }: FormTextProps): ReactElement => {

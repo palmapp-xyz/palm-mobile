@@ -6,28 +6,28 @@ const getFontStyle = (fontType: FontType): StyleProp<TextStyle> => {
 
   const style: StyleProp<TextStyle> = {
     fontSize: Number(fontType.split('.')[1]),
-    fontWeight: '400',
-    lineHeight: 20,
+    fontWeight: '500',
+    lineHeight: 22,
   }
 
   if (weightType === 'SB') {
-    style.fontWeight = '500'
+    style.fontWeight = '600'
   } else if (weightType === 'B') {
     style.fontWeight = '700'
   }
 
   switch (style.fontSize) {
     case 12:
-      style.lineHeight = 16
+      style.lineHeight = 18
       break
     case 14:
-      style.lineHeight = 18
+      style.lineHeight = 20
       break
     case 16:
       style.lineHeight = 24
       break
     case 18:
-      style.lineHeight = 24
+      style.lineHeight = 26
       break
     case 20:
       style.lineHeight = 28

@@ -77,7 +77,7 @@ const SettingScreen = (): ReactElement => {
         onPressLeft={navigation.goBack}
       />
       <View style={styles.body}>
-        <View style={styles.itemGroup}>
+        {/* <View style={styles.itemGroup}>
           <SettingSwitchItem
             name={t('Settings.PushNotification')}
             enable={enablePush}
@@ -86,7 +86,7 @@ const SettingScreen = (): ReactElement => {
               // todo: save state
             }}
           />
-        </View>
+        </View> */}
         <View style={styles.itemGroup}>
           <SettingItem
             name={t('Settings.ChangePin')}
@@ -99,18 +99,18 @@ const SettingScreen = (): ReactElement => {
             }}
           />
         </View>
-        <View style={styles.itemGroup}>
-          <SettingItem name={t('Settings.Privacy')} onPress={(): void => {}} />
+        <View style={[styles.itemGroup, { borderBottomWidth: 0 }]}>
+          {/* <SettingItem name={t('Settings.Privacy')} onPress={(): void => {}} />
           <SettingItem name={t('Settings.Contact')} onPress={(): void => {}} />
           <SettingItem
             name={t('Settings.GiveUsFeedback')}
             onPress={(): void => {}}
-          />
+          /> */}
           <SettingTextItem
             name={t('Settings.Version')}
             text={
               version.codepush
-                ? `${version.app}-${version.codepush}`
+                ? `${version.app} (${version.codepush})`
                 : `${version.app}`
             }
           />
@@ -148,7 +148,12 @@ export default SettingScreen
 const styles = StyleSheet.create({
   container: {},
   body: { padding: 10, rowGap: 20 },
-  itemGroup: { backgroundColor: 'white', borderRadius: 15 },
+  itemGroup: {
+    backgroundColor: 'white',
+    borderRadius: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: COLOR.black._10,
+  },
   item: {
     paddingVertical: 16,
     paddingHorizontal: 20,

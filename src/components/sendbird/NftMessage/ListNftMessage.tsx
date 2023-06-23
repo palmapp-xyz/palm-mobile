@@ -19,7 +19,7 @@ import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { pToken, SbListNftDataType, SupportedNetworkEnum } from 'types'
+import { SbListNftDataType, SupportedNetworkEnum, pToken } from 'types'
 
 import NftSoldTag from './NftSoldTag'
 
@@ -88,13 +88,12 @@ const ListNftMessage = ({
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-        <Row style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
-          <FormText>For sale: </FormText>
-          <FormText
-            font={'B'}
-            style={{ color: COLOR.primary._400 }}
-          >{`${item.name} #${item.token_id}`}</FormText>
-        </Row>
+        <FormText style={{ paddingVertical: 9, paddingHorizontal: 12 }}>
+          {'For sale: '}
+          <FormText font={'B'} style={{ color: COLOR.primary._400 }}>{`${
+            item.name
+          } #${UTIL.truncate(item.token_id)}`}</FormText>
+        </FormText>
         <View style={{ position: 'relative' }}>
           <VerifiedWrapper>
             <MoralisNftRenderer
@@ -162,7 +161,7 @@ const ListNftMessage = ({
             size="sm"
             onPress={(): void => {
               fsListingField?.status === 'active'
-                ? navigation.navigate(Routes.ZxNftDetail, {
+                ? navigation.push(Routes.ZxNftDetail, {
                     nonce: data.nonce,
                     channelUrl: params.channelUrl,
                     chain:
@@ -171,7 +170,7 @@ const ListNftMessage = ({
                       ) || SupportedNetworkEnum.ETHEREUM,
                     item,
                   })
-                : navigation.navigate(Routes.NftDetail, {
+                : navigation.push(Routes.NftDetail, {
                     nftContract: item.token_address,
                     tokenId: item.token_id,
                     nftContractType: item.contract_type,

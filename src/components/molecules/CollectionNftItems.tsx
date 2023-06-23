@@ -1,3 +1,4 @@
+import Indicator from 'components/atoms/Indicator'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -13,7 +14,6 @@ import {
 } from 'react-native'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
-import Indicator from 'components/atoms/Indicator'
 import ChainLogoWrapper from './ChainLogoWrapper'
 import NftItemMenu from './NftItemMenu'
 
@@ -60,7 +60,7 @@ const CollectionNftItems = ({
       renderItem={({ item }): ReactElement => (
         <TouchableOpacity
           onPress={(): void => {
-            navigation.navigate(Routes.NftDetail, {
+            navigation.push(Routes.NftDetail, {
               nftContract: item.token_address,
               tokenId: item.token_id,
               nftContractType: item.contract_type,

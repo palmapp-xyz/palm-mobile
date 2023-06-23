@@ -11,7 +11,7 @@ import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { FbListing, NftType, pToken, SupportedNetworkEnum } from 'types'
+import { FbListing, NftType, SupportedNetworkEnum, pToken } from 'types'
 
 const FbListingItem = ({
   item,
@@ -49,7 +49,7 @@ const FbListingItem = ({
     <TouchableOpacity
       style={styles.container}
       onPress={async (): Promise<void> => {
-        navigation.navigate(Routes.ZxNftDetail, {
+        navigation.push(Routes.ZxNftDetail, {
           nonce: order.order.nonce,
           chain,
           channelUrl,

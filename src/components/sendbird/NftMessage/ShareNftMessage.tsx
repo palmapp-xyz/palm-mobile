@@ -1,7 +1,7 @@
 import FormText from 'components/atoms/FormText'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR } from 'consts'
+import { COLOR, UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
@@ -25,7 +25,7 @@ const ShareNftMessage = ({
   return (
     <TouchableWithoutFeedback
       onPress={(): void => {
-        navigation.navigate(Routes.NftDetail, {
+        navigation.push(Routes.NftDetail, {
           nftContract: item.token_address,
           tokenId: item.token_id,
           nftContractType: item.contract_type,
@@ -36,10 +36,9 @@ const ShareNftMessage = ({
     >
       <View style={styles.container}>
         <View style={styles.header}>
-          <FormText
-            font={'B'}
-            style={{ color: COLOR.primary._400 }}
-          >{`${item.name} #${item.token_id}`}</FormText>
+          <FormText font={'B'} style={{ color: COLOR.primary._400 }}>{`${
+            item.name
+          } #${UTIL.truncate(item.token_id)}`}</FormText>
         </View>
         <VerifiedWrapper>
           <MoralisNftRenderer
