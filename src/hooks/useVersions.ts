@@ -1,8 +1,9 @@
-import SendbirdChat from '@sendbird/chat'
-import { SendbirdUIKit } from '@sendbird/uikit-react-native'
 import { useEffect, useState } from 'react'
 import CodePush from 'react-native-code-push'
 import DeviceInfo from 'react-native-device-info'
+
+import SendbirdChat from '@sendbird/chat'
+import { SendbirdUIKit } from '@sendbird/uikit-react-native'
 
 const useVersions = (): {
   chat: string
@@ -23,7 +24,7 @@ const useVersions = (): {
   return {
     chat: SendbirdChat.version,
     uikit: SendbirdUIKit.VERSION,
-    app: DeviceInfo.getVersion(),
+    app: `${DeviceInfo.getVersion()}.${DeviceInfo.getBuildNumber()}`,
     codepush: codepushVersion,
   }
 }

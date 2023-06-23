@@ -112,8 +112,8 @@ android {
         applicationId "com.palmapp.xyz"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 18
-        versionName "0.0.1"
+        versionCode 21
+        versionName "0.1"
     }
 
     splits {

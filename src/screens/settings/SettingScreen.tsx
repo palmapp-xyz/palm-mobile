@@ -263,10 +263,8 @@ const SettingScreen = (): ReactElement => {
             name={t('Settings.Version')}
             text={
               version.codepush
-                ? `${version.app}-${version.codepush} ${
-                    __DEV__ ? '(dev)' : '(release)'
-                  }`
-                : `${version.app} ${__DEV__ ? '(dev)' : '(release)'}`
+                ? `${version.app}-${version.codepush}`
+                : `${version.app}`
             }
           />
         </View>
