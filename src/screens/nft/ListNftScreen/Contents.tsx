@@ -64,12 +64,13 @@ const Contents = ({
                     onChangeText={(value): void => {
                       setPrice(value as Token)
                     }}
-                    inputMode={'numeric'}
+                    inputMode={'decimal'}
                     style={{
                       borderWidth: 0,
                       borderRadius: 0,
                       padding: 0,
                       paddingLeft: 0,
+                      height: 48,
                       flex: 1,
                     }}
                   />

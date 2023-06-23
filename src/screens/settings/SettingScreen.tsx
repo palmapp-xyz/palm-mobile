@@ -12,7 +12,6 @@ import { Routes } from 'libs/navigation'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Linking,
   Platform,
   StyleSheet,
   Switch,
@@ -238,7 +237,7 @@ const SettingScreen = (): ReactElement => {
           />
         </View>
         <View style={styles.itemGroup}>
-          <SettingItem
+          {/* <SettingItem
             name={t('Settings.ServiceAgreement')}
             onPress={(): void => {
               Linking.openURL(URL_SERVICE_AGREEMENT)
@@ -261,12 +260,12 @@ const SettingScreen = (): ReactElement => {
             onPress={(): void => {
               Linking.openURL(URL_GIVE_US_FEEDBACK)
             }}
-          />
+          /> */}
           <SettingTextItem
             name={t('Settings.Version')}
             text={
               version.codepush
-                ? `${version.app}-${version.codepush}`
+                ? `${version.app} (${version.codepush})`
                 : `${version.app}`
             }
           />

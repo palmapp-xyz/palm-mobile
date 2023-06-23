@@ -16,8 +16,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
@@ -110,7 +110,7 @@ const SelectedCollectionNftsSheet = ({
             renderItem={({ item }): ReactElement => (
               <TouchableOpacity
                 onPress={(): void => {
-                  navigation.navigate(Routes.NftDetail, {
+                  navigation.push(Routes.NftDetail, {
                     nftContract: item.token_address,
                     tokenId: item.token_id,
                     nftContractType: item.contract_type,

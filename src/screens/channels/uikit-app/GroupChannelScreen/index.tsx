@@ -76,7 +76,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
         case 'list':
           const listing = await getFsListing(parsedData.nonce)
           if (listing?.status === 'active') {
-            navigation.navigate(Routes.ZxNftDetail, {
+            navigation.push(Routes.ZxNftDetail, {
               nonce: parsedData.nonce,
               channelUrl: params.channelUrl,
               chain:
@@ -85,7 +85,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
               item: item as Moralis.NftItem,
             })
           } else {
-            navigation.navigate(Routes.NftDetail, {
+            navigation.push(Routes.NftDetail, {
               nftContract: (item as Moralis.NftItem).token_address,
               tokenId: (item as Moralis.NftItem).token_id,
               nftContractType: (item as Moralis.NftItem).contract_type,
@@ -99,7 +99,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
             (item as PostOrderResponsePayload).order.nonce
           )
           if (fbListing?.status === 'active') {
-            navigation.navigate(Routes.ZxNftDetail, {
+            navigation.push(Routes.ZxNftDetail, {
               nonce: (item as PostOrderResponsePayload).order.nonce,
               channelUrl: params.channelUrl,
               chain:
@@ -107,7 +107,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
                 SupportedNetworkEnum.ETHEREUM,
             })
           } else {
-            navigation.navigate(Routes.NftDetail, {
+            navigation.push(Routes.NftDetail, {
               nftContract: (item as Moralis.NftItem).token_address,
               tokenId: (item as Moralis.NftItem).token_id,
               nftContractType: (item as Moralis.NftItem).contract_type,
@@ -118,7 +118,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
           return
         case 'share':
         case 'send-nft':
-          navigation.navigate(Routes.NftDetail, {
+          navigation.push(Routes.NftDetail, {
             nftContract: (item as Moralis.NftItem).token_address,
             tokenId: (item as Moralis.NftItem).token_id,
             nftContractType: (item as Moralis.NftItem).contract_type,

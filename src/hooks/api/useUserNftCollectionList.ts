@@ -65,7 +65,11 @@ const useUserNftCollectionList = ({
   const items = useMemo(
     () =>
       _.flatten(data?.pages.map(x => x.result)).filter(
-        x => !!x && x.possible_spam !== true && !x.name?.includes('-Follower')
+        x =>
+          !!x &&
+          x.possible_spam !== true &&
+          !x.name?.includes('-Follower') &&
+          !x.name?.includes('Dispatch-Messaging')
       ),
     [data]
   )

@@ -2,7 +2,7 @@ import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR } from 'consts'
+import { COLOR, UTIL } from 'consts'
 import useExplorer from 'hooks/complex/useExplorer'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -34,7 +34,7 @@ const SendNftMessage = ({
       <TouchableOpacity
         style={styles.body}
         onPress={(): void => {
-          navigation.navigate(Routes.NftDetail, {
+          navigation.push(Routes.NftDetail, {
             nftContract: item.token_address,
             tokenId: item.token_id,
             nftContractType: item.contract_type,
@@ -62,7 +62,7 @@ const SendNftMessage = ({
           >
             {t('Nft.SendNftMessageNft', {
               itemName: item.name || 'unknown',
-              tokenId: item.token_id,
+              tokenId: UTIL.truncate(item.token_id),
             })}
           </FormText>
           <FormText>

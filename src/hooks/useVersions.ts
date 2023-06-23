@@ -24,7 +24,7 @@ const useVersions = (): {
   return {
     chat: SendbirdChat.version,
     uikit: SendbirdUIKit.VERSION,
-    app: `${DeviceInfo.getVersion()}.${DeviceInfo.getBuildNumber()}`,
+    app: DeviceInfo.getVersion(),
     codepush: codepushVersion,
   }
 }

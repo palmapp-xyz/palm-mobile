@@ -101,10 +101,10 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
           size="sm"
           containerStyle={{ margin: 16, marginTop: 0 }}
           onPress={(): void => {
-            navigation.navigate(Routes.NftDetail, {
+            navigation.push(Routes.NftDetail, {
               nftContract: item.nftToken as ContractAddr,
               nftContractType: item.nftType as NftType,
-              tokenId: item.nftTokenId,
+              tokenId: UTIL.truncate(item.nftTokenId),
               chain,
             })
           }}

@@ -48,7 +48,7 @@ const MoralisNftRenderer = ({
       chain={chain}
       width={width}
       height={height}
-      hideChain={hideChain}
+      hideChain={hideChain || !item.chainId}
       style={style}
     />
   )
