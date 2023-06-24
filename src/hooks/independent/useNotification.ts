@@ -8,8 +8,11 @@ import {
 import { useEffect, useState } from 'react'
 
 import Notifee, { AuthorizationStatus } from '@notifee/react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import messaging from '@react-native-firebase/messaging'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import { UTIL } from 'consts'
+import { LocalStorageKey } from 'types'
 import useNotificationRegister from './useNotificationRegister'
 
 const channelId: string = 'default'
@@ -41,10 +44,14 @@ const useNotification = (): void => {
   }, [])
 
   useAsyncEffect(async () => {
-    if (!user) {
-      await unregisterDeviceToken()
-    } else if (user?.auth?.profileId) {
-      await registerDeviceToken()
+    const pushEnable =
+      (await AsyncStorage.getItem(LocalStorageKey.PUSH_NOTIFICATION)) ||
+      true.toString()
+
+    if (user?.auth?.profileId && UTIL.toBoolean(pushEnable)) {
+      await registerDeviceToken(false)
+    } else if (!user) {
+      await unregisterDeviceToken(false)
     }
   }, [user?.auth?.profileId, notificationEnabled])
 

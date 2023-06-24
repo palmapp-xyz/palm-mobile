@@ -21,11 +21,6 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import { LocalStorageKey } from 'types'
 
-const URL_SERVICE_AGREEMENT = 'https://'
-const URL_PRIVACY = 'https://'
-const URL_CONTACT = 'mailto:contact@palmapp.xyz'
-const URL_GIVE_US_FEEDBACK = 'https://'
-
 const SettingItem = (props: {
   name: string
   onPress?: () => void
