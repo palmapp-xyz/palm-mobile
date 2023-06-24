@@ -34,10 +34,12 @@ const LensFriendsScreen = (): ReactElement => {
   const { user } = useAuth()
   const { fetchUserProfileId } = useAuthChallenge()
   const { createGroupChat, getDistinctChatWithUser } = useSendbird()
-  const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
+  const { setCurrentUser, updateCurrentUserInfo, features } = useSendbirdChat()
   const { alert } = useAlert()
 
   const setLoading = useSetRecoilState(appStore.loading)
+
+  features.autoPushTokenRegistrationEnabled = false
 
   const { lensProfile } = useProfile({ profileId: user?.auth?.profileId })
   const { data: profileMetadata, loading } = useIpfs<ProfileMetadata>({

@@ -45,8 +45,10 @@ export type UseAuthReturn = {
 const useAuth = (): UseAuthReturn => {
   const [user, setUser] = useRecoilState(appStore.user)
   const { connect, disconnect } = useConnection()
-  const { setCurrentUser } = useSendbirdChat()
+  const { setCurrentUser, features } = useSendbirdChat()
   const setLoading = useSetRecoilState(appStore.loading)
+
+  features.autoPushTokenRegistrationEnabled = false
 
   const {
     authenticate: lensAuthenticate,
