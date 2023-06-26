@@ -6,22 +6,22 @@ import { Platform } from 'react-native'
 import firestore from '@react-native-firebase/firestore'
 import messaging from '@react-native-firebase/messaging'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import useNotificationConf from './useNotificationConf'
 
-const useNotificationRegister = (
-  notificationEnabled: boolean
-): {
-  registerDeviceToken: (force: boolean) => Promise<void>
-  unregisterDeviceToken: (force: boolean) => Promise<void>
+const useNotificationRegister = (): {
+  registerDeviceToken: () => Promise<void>
+  unregisterDeviceToken: () => Promise<void>
 } => {
   const { sdk } = useSendbirdChat()
   const { user } = useAuth()
+  const { checkNotificationPermission } = useNotificationConf()
 
-  const registerDeviceToken = async (force: boolean = false): Promise<void> => {
-    if (!user?.auth?.profileId) {
+  const registerDeviceToken = async (): Promise<void> => {
+    if ((await checkNotificationPermission(true)) === false) {
       return
     }
 
-    if (!force && !notificationEnabled) {
+    if (!user?.auth?.profileId) {
       return
     }
 
@@ -71,14 +71,8 @@ const useNotificationRegister = (
     }
   }
 
-  const unregisterDeviceToken = async (
-    force: boolean = false
-  ): Promise<void> => {
+  const unregisterDeviceToken = async (): Promise<void> => {
     if (!user?.auth?.profileId) {
-      return
-    }
-
-    if (!force && !notificationEnabled) {
       return
     }
 
@@ -126,7 +120,10 @@ const useNotificationRegister = (
     }
   }
 
-  return { registerDeviceToken, unregisterDeviceToken }
+  return {
+    registerDeviceToken,
+    unregisterDeviceToken,
+  }
 }
 
 export default useNotificationRegister
