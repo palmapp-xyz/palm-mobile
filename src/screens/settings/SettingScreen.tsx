@@ -1,9 +1,7 @@
-import { AuthorizationStatus } from '@notifee/react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import messaging from '@react-native-firebase/messaging'
 import { Container, FormModal, FormText, Header } from 'components'
-import { COLOR, UTIL } from 'consts'
+import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
+import useNotificationConf from 'hooks/independent/useNotificationConf'
 import useNotificationRegister from 'hooks/independent/useNotificationRegister'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
@@ -19,7 +17,6 @@ import {
   View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { LocalStorageKey } from 'types'
 
 const SettingItem = (props: {
   name: string
@@ -83,7 +80,13 @@ const SettingScreen = (): ReactElement => {
   const [disablePushSwitch, setDisablePushSwitch] = useState<boolean>(false)
   const [visibleSignOutModal, setVisibleSignOutModal] = useState<boolean>(false)
 
-  const notificationRegister = useNotificationRegister(enablePush)
+  const { registerDeviceToken, unregisterDeviceToken } =
+    useNotificationRegister()
+  const {
+    isEnableNotification,
+    setEnableNotification,
+    checkNotificationPermission,
+  } = useNotificationConf()
 
   useEffect(() => {
     const init = async (): Promise<void> => {
@@ -93,40 +96,15 @@ const SettingScreen = (): ReactElement => {
         return
       }
 
-      let pushNotification = await AsyncStorage.getItem(
-        LocalStorageKey.PUSH_NOTIFICATION
-      )
-      if (pushNotification === null) {
-        pushNotification = true.toString()
-        await AsyncStorage.setItem(
-          LocalStorageKey.PUSH_NOTIFICATION,
-          pushNotification
-        )
-      }
-      setEnablePush(UTIL.toBoolean(pushNotification))
+      const enable = await isEnableNotification()
+      setEnablePush(enable)
     }
     init()
   }, [])
 
-  const checkNotificationPermission = async (
-    providesAppNotificationSettings: boolean = true
-  ): Promise<boolean> => {
-    const authorizationStatus = await messaging().requestPermission({
-      providesAppNotificationSettings,
-    })
-    if (
-      authorizationStatus !== AuthorizationStatus.AUTHORIZED &&
-      authorizationStatus !== AuthorizationStatus.PROVISIONAL
-    ) {
-      return false
-    }
-
-    return true
-  }
-
   const handlePushNotification = async (enable: boolean): Promise<void> => {
     // check permission
-    const isPermissionAuthorized = await checkNotificationPermission()
+    const isPermissionAuthorized = await checkNotificationPermission(true)
     if (!isPermissionAuthorized) {
       return
     }
@@ -136,14 +114,9 @@ const SettingScreen = (): ReactElement => {
       setDisablePushSwitch(true)
       setEnablePush(enable)
 
-      enable
-        ? await notificationRegister.registerDeviceToken(true)
-        : await notificationRegister.unregisterDeviceToken(true)
+      enable ? await registerDeviceToken() : await unregisterDeviceToken()
 
-      await AsyncStorage.setItem(
-        LocalStorageKey.PUSH_NOTIFICATION,
-        enable.toString()
-      )
+      setEnableNotification(enable)
     } catch (e) {
       const message = JSON.stringify(e)
       toast.show(message, { color: 'red', icon: 'info' })
