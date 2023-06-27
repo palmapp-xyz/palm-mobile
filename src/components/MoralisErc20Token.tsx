@@ -24,7 +24,7 @@ const MoralisErc20Token = ({
   const { t } = useTranslation()
 
   return (
-    <View style={[styles.itemCard, style]} key={item.token_address}>
+    <View style={[styles.itemCard, style]}>
       <Row style={{ alignItems: 'center', columnGap: 12 }}>
         {item.logo ? (
           <FormImage source={{ uri: item.logo }} size={28} />

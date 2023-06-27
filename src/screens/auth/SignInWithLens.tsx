@@ -43,9 +43,7 @@ const SignInWithLens = (): ReactElement => {
         }}
       >
         <LensLogo />
-        <FormText font="SB" size={16}>
-          {t('Auth.SignLensLoading')}
-        </FormText>
+        <FormText size={16}>{t('Auth.SignLensLoading')}</FormText>
       </View>
     </Container>
   )

@@ -6,7 +6,8 @@ const getFontStyle = (fontType: FontType): StyleProp<TextStyle> => {
 
   const style: StyleProp<TextStyle> = {
     fontSize: Number(fontType.split('.')[1]),
-    fontWeight: '500',
+    fontWeight: '400',
+    letterSpacing: 0.5,
     lineHeight: 22,
   }
 

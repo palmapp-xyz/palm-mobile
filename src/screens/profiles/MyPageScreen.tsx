@@ -7,6 +7,7 @@ import useProfile from 'hooks/auth/useProfile'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
 import { recordError } from 'libs/logger'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FlatList,
   ListRenderItemInfo,
@@ -17,7 +18,6 @@ import { Moralis, SupportedNetworkEnum } from 'types'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
-import { useTranslation } from 'react-i18next'
 import ProfileHeader from '../../components/ProfileHeader'
 
 const MyPageScreen = (): ReactElement => {

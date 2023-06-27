@@ -155,7 +155,7 @@ const GroupChannelPreview = ({
               )}
               <FormText
                 //body3
-                numberOfLines={2}
+                numberOfLines={1}
                 ellipsizeMode={bodyIcon ? 'middle' : 'tail'}
                 style={styles.bodyText}
                 color={COLOR.black._400}

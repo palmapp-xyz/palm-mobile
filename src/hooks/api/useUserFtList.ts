@@ -3,6 +3,7 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 import useNativeToken from 'hooks/independent/useNativeToken'
 import apiV1Fabricator from 'libs/apiV1Fabricator'
 import { recordError } from 'libs/logger'
+import { isMainnet } from 'libs/utils'
 import _ from 'lodash'
 import { useMemo } from 'react'
 import { ApiEnum, ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
@@ -69,22 +70,26 @@ const useUserFtList = ({
     const ret = nativeToken ? [nativeToken] : []
     return _.flatten(
       ret.concat(
-        data.result.sort((a, b) => {
-          if (!a.price && !b.price) {
-            return a.balance >= b.balance ? -1 : 1
-          } else if (!a.price) {
-            return 1
-          } else if (!b.price) {
-            return -1
-          } else {
-            return (
-              -1 *
-              UTIL.toBn(a.balance)
-                .multipliedBy(a.price.usdPrice)
-                .comparedTo(UTIL.toBn(b.balance).multipliedBy(b.price.usdPrice))
-            )
-          }
-        })
+        data.result
+          .filter(x => !(x.possible_spam && isMainnet()))
+          .sort((a, b) => {
+            if (!a.price && !b.price) {
+              return a.balance >= b.balance ? -1 : 1
+            } else if (!a.price) {
+              return 1
+            } else if (!b.price) {
+              return -1
+            } else {
+              return (
+                -1 *
+                UTIL.toBn(a.balance)
+                  .multipliedBy(a.price.usdPrice)
+                  .comparedTo(
+                    UTIL.toBn(b.balance).multipliedBy(b.price.usdPrice)
+                  )
+              )
+            }
+          })
       )
     )
   }, [selectedNetwork, nativeToken, data])
