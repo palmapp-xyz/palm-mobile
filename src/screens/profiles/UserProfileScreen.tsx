@@ -1,9 +1,8 @@
 import { Container } from 'components'
-import CollectionNftItemsCollapsible from 'components/molecules/CollectionNftItemsCollapsible'
+import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import ProfileFooter from 'components/ProfileFooter'
 import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
-import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useState } from 'react'
@@ -31,10 +30,6 @@ const UserProfileScreen = (): ReactElement => {
     userAddress,
     selectedNetwork,
   })
-  const useUserBalanceReturn = useUserBalance({
-    address: userAddress,
-    chain: SupportedNetworkEnum.ETHEREUM,
-  })
 
   const profileHeader = (
     <ProfileHeader
@@ -55,17 +50,10 @@ const UserProfileScreen = (): ReactElement => {
       <FlatList
         refreshControl={
           <RefreshControl
-            refreshing={
-              useUserNftCollectionReturn.isRefetching ||
-              useUserBalanceReturn.isRefetching
-            }
+            refreshing={useUserNftCollectionReturn.isRefetching}
             onRefresh={(): void => {
-              useUserBalanceReturn.remove()
               useUserNftCollectionReturn.remove()
-              Promise.all([
-                useUserNftCollectionReturn.refetch(),
-                useUserBalanceReturn.refetch(),
-              ])
+              useUserNftCollectionReturn.refetch()
             }}
           />
         }
@@ -75,9 +63,6 @@ const UserProfileScreen = (): ReactElement => {
         keyExtractor={(item: Moralis.NftCollection): string =>
           `${userAddress}:${item.token_address}`
         }
-        numColumns={2}
-        contentContainerStyle={{ paddingHorizontal: 8, gap: 4 }}
-        columnWrapperStyle={{ gap: 8 }}
         onEndReached={(): void => {
           if (useUserNftCollectionReturn.hasNextPage) {
             useUserNftCollectionReturn.fetchNextPage()
@@ -85,22 +70,24 @@ const UserProfileScreen = (): ReactElement => {
         }}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
+        numColumns={2}
+        contentContainerStyle={{ paddingHorizontal: 8, gap: 4 }}
+        columnWrapperStyle={{ gap: 8 }}
         renderItem={({
           item,
-        }: ListRenderItemInfo<Moralis.NftCollection>): ReactElement => (
-          <CollectionNftItemsCollapsible
-            userAddress={userAddress}
-            contractAddress={item.token_address}
-            selectedNetwork={selectedNetwork}
-            headerText={`${item.name}${item.symbol ? ` (${item.symbol})` : ''}`}
-            headerItem={null}
-          />
-        )}
+        }: ListRenderItemInfo<Moralis.NftCollection>): ReactElement => {
+          return (
+            <ProfileCollectionNft
+              collection={item}
+              onSelect={(): void => setSelectedCollectionNft(item)}
+            />
+          )
+        }}
       />
 
       {selectedCollectionNft && (
         <SelectedCollectionNftsSheet
-          userAddress={userAddress}
+          userAddress={userAddress!}
           selectedCollectionNft={selectedCollectionNft}
           onClose={(): void => setSelectedCollectionNft(null)}
         />

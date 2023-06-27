@@ -2,7 +2,6 @@ import { FormBottomSheet, SupportedNetworkRow } from 'components'
 import { COLOR } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
-import { isMainnet } from 'libs/utils'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
@@ -74,14 +73,13 @@ const UserTokensSheet = ({
             keyExtractor={(_, index): string => `user-ft-list-${index}`}
             initialNumToRender={10}
             contentContainerStyle={{ rowGap: 0 }}
-            renderItem={({ item }): ReactElement | null => {
-              if (item.possible_spam && isMainnet()) {
-                return null
-              }
-              return (
-                <MoralisErc20Token item={item} value={item.balance as pToken} />
-              )
-            }}
+            renderItem={({ item }): ReactElement | null => (
+              <MoralisErc20Token
+                key={`${item.token_address}:${item.chainId}}`}
+                item={item}
+                value={item.balance as pToken}
+              />
+            )}
           />
         </View>
       </View>

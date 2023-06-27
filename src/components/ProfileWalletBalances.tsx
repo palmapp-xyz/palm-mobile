@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, Moralis, pToken, SupportedNetworkEnum } from 'types'
+import { ContractAddr, Moralis, SupportedNetworkEnum, pToken } from 'types'
 
 import MoralisErc20Token from './MoralisErc20Token'
 
@@ -63,7 +63,11 @@ const ProfileWalletBalances = React.memo(
                 return null
               }
               return (
-                <MoralisErc20Token item={item} value={item.balance as pToken} />
+                <MoralisErc20Token
+                  key={`${item.token_address}:${item.chainId}}`}
+                  item={item}
+                  value={item.balance as pToken}
+                />
               )
             })}
           </View>

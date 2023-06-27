@@ -1,5 +1,6 @@
 import apiV1Fabricator from 'libs/apiV1Fabricator'
 import { recordError } from 'libs/logger'
+import { isMainnet } from 'libs/utils'
 import _ from 'lodash'
 import { useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
@@ -74,7 +75,7 @@ const useUserNftList = ({
   const items = useMemo(
     () =>
       _.flatten(data?.pages.map(x => x.result)).filter(
-        x => !!x && x.possible_spam !== true
+        x => !!x && !(isMainnet() && x.possible_spam === true)
       ),
     [data]
   )
