@@ -52,11 +52,14 @@ const ChannelMembersPreview = React.memo(
           </View>
         )}
 
-        {channel.customType !== ChannelType.DIRECT && (
-          <View style={styles.userLengthBox}>
-            <FormText>{channel.memberCount}</FormText>
-          </View>
-        )}
+        {channel.customType !== ChannelType.DIRECT &&
+          channel.memberCount > 3 && (
+            <View style={styles.userLengthBox}>
+              <FormText>
+                {channel.memberCount > 99 ? '99+' : channel.memberCount}
+              </FormText>
+            </View>
+          )}
       </Row>
     )
   }
