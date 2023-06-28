@@ -12,7 +12,7 @@ import {
   SetSendbirdSDK,
 } from 'libs/sendbird'
 import { isMainnet } from 'libs/utils'
-import React, { ReactElement, ReactNode } from 'react'
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react'
 import Config from 'react-native-config'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
@@ -35,6 +35,7 @@ import {
   LightUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 
+import useNotificationConf from 'hooks/notification/useNotificationConf'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { ErrorInfoScreen } from '../screens'
 import { defaultToastProviderOptions, renderToast } from '../screens/ToastView'
@@ -43,6 +44,18 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()
   const { scheme } = useAppearance()
   const { bindings } = useWeb3Bindings(SupportedNetworkEnum.POLYGON)
+
+  const { isNotificationEnabled } = useNotificationConf()
+  const [autoPushTokenRegistration, setAutoPushTokenRegistration] =
+    useState<boolean>(true)
+
+  useEffect(() => {
+    const checkAutoPushTokenRegistration = async (): Promise<void> => {
+      const pushEnable = await isNotificationEnabled()
+      setAutoPushTokenRegistration(pushEnable)
+    }
+    checkAutoPushTokenRegistration()
+  }, [])
 
   const isLightTheme = scheme === 'light'
 
@@ -72,7 +85,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
               chatOptions={{
                 localCacheStorage: AsyncStorage,
                 onInitialized: SetSendbirdSDK,
-                enableAutoPushTokenRegistration: true,
+                enableAutoPushTokenRegistration: autoPushTokenRegistration,
                 enableChannelListTypingIndicator: true,
                 enableChannelListMessageReceiptStatus: true,
                 enableUserMention: true,

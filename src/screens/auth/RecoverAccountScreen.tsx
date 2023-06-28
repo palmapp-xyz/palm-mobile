@@ -24,6 +24,8 @@ import appStore from 'store/appStore'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 
+export type RecoverAccountType = 'importWallet' | 'restoreWallet' | 'resetPin'
+
 const RecoverAccountScreen = (): ReactElement => {
   const {
     usePkey,
@@ -121,6 +123,11 @@ const RecoverAccountScreen = (): ReactElement => {
           {recoverType === 'restoreWallet' && (
             <FormText color={COLOR.black._400}>
               {t('Auth.RecoverRestoreWalletMessage')}
+            </FormText>
+          )}
+          {recoverType === 'resetPin' && (
+            <FormText color={COLOR.black._400}>
+              {t('Auth.RecoverResetPinMessage')}
             </FormText>
           )}
         </View>

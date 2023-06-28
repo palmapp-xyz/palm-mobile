@@ -1,6 +1,7 @@
 import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
 import {
+  ColorValue,
   StyleProp,
   StyleSheet,
   TextStyle,
@@ -8,6 +9,7 @@ import {
   ViewStyle,
 } from 'react-native'
 
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import FormText from './FormText'
 
 export type FormButtonProps = {
@@ -18,6 +20,9 @@ export type FormButtonProps = {
   size?: 'sm' | 'md' | 'lg'
   containerStyle?: StyleProp<ViewStyle>
   textStyle?: StyleProp<TextStyle>
+  rightIcon?: string
+  rightIconSize?: number
+  rightIconColor?: ColorValue
 }
 
 const FormButton = ({
@@ -28,6 +33,9 @@ const FormButton = ({
   size = 'md',
   containerStyle,
   textStyle,
+  rightIcon,
+  rightIconSize,
+  rightIconColor,
 }: FormButtonProps): ReactElement => {
   let mainColor = COLOR.primary._400
   if (figure === 'error') {
@@ -63,6 +71,13 @@ const FormButton = ({
       >
         {children}
       </FormText>
+      {rightIcon && (
+        <Ionicons
+          name={rightIcon}
+          size={rightIconSize || 14}
+          color={rightIconColor || COLOR.black._300}
+        />
+      )}
     </TouchableOpacity>
   )
 }

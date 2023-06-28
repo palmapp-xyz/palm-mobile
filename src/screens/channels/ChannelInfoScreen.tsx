@@ -10,7 +10,7 @@ import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import _ from 'lodash'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FlatList,
@@ -23,6 +23,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ChannelType, SbUserMetadata } from 'types'
 
+import { PushTriggerOption } from '@sendbird/chat'
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
@@ -38,6 +39,21 @@ const ChannelInfoScreen = (): ReactElement => {
 
   const channelMembers =
     channel?.members.sort(a => (a.profileUrl ? -1 : 1)) || []
+
+  const [isMute, setMute] = useState<boolean>()
+
+  const toggleMute = async (): Promise<void> => {
+    isMute
+      ? await channel?.setMyPushTriggerOption(PushTriggerOption.DEFAULT)
+      : await channel?.setMyPushTriggerOption(PushTriggerOption.OFF)
+    setMute(!isMute)
+  }
+
+  useEffect(() => {
+    if (channel?.myPushTriggerOption) {
+      setMute(channel?.myPushTriggerOption === PushTriggerOption.OFF)
+    }
+  }, [channel?.myPushTriggerOption])
 
   if (loading) {
     return <LoadingPage />
@@ -157,7 +173,7 @@ const ChannelInfoScreen = (): ReactElement => {
               {channel.customType !== ChannelType.DIRECT && (
                 <TouchableOpacity
                   onPress={(): void => {
-                    navigation.navigate(Routes.GroupChannelMembers, params)
+                    navigation.navigate(Routes.GroupChannelInvite, params)
                   }}
                 >
                   <FormText>{t('Channels.ChannelInfoInvite')}</FormText>
@@ -221,16 +237,26 @@ const ChannelInfoScreen = (): ReactElement => {
           >
             <Ionicons name="exit-outline" size={24} color={COLOR.error} />
           </TouchableOpacity>
-          {channel.customType !== ChannelType.DIRECT &&
-            channel.myRole === 'operator' && (
-              <TouchableOpacity
-                onPress={(): void => {
-                  navigation.navigate(Routes.ChannelSetting, params)
-                }}
-              >
-                <Ionicons name="settings-outline" size={24} />
-              </TouchableOpacity>
-            )}
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity onPress={toggleMute}>
+              {isMute ? (
+                <Ionicons name={'notifications-off-outline'} size={24} />
+              ) : (
+                <Ionicons name={'notifications-outline'} size={24} />
+              )}
+            </TouchableOpacity>
+            {channel.customType !== ChannelType.DIRECT &&
+              channel.myRole === 'operator' && (
+                <TouchableOpacity
+                  onPress={(): void => {
+                    navigation.navigate(Routes.ChannelSetting, params)
+                  }}
+                  style={{ marginStart: 20 }}
+                >
+                  <Ionicons name="settings-outline" size={24} />
+                </TouchableOpacity>
+              )}
+          </View>
         </Row>
       </View>
     </Container>

@@ -54,7 +54,7 @@ const BaseUserMessage = ({
           onLongPress={onLongPressMentionedUser}
           style={[
             parentProps?.style,
-            { fontWeight: 'bold', fontSize: 12 },
+            { fontWeight: 'bold', fontSize: 14 },
             user.userId === currentUser?.userId && {
               backgroundColor: palette.highlight,
             },
@@ -76,7 +76,7 @@ const BaseUserMessage = ({
         onLongPress={onLongPressURL}
         style={[
           parentProps?.style,
-          { textDecorationLine: 'underline', fontSize: 12 },
+          { textDecorationLine: 'underline', fontSize: 14 },
         ]}
       >
         {match}

@@ -24,39 +24,42 @@ const ChannelMembersPreview = React.memo(
     }
 
     return (
-      <Row
-        style={[
-          styles.container,
-          containerStyle,
-          { paddingStart: (-1 * size) / 2 },
-        ]}
-      >
+      <Row style={[styles.container, containerStyle]}>
         {channelImages && channelImages.length > 1 ? (
-          channelImages.map((image: string, i: number) => (
-            <View
-              key={`displayUsers-${i}`}
-              style={[
-                styles.userImg,
-                {
-                  marginStart:
-                    i === channelImages.length - 1 ? 0 : (-1 * size) / 2,
-                },
-              ]}
-            >
-              <Avatar size={size} uri={image} />
-            </View>
-          ))
+          channelImages.map((image: string, i: number) =>
+            i < 3 ? (
+              <View
+                key={`displayUsers-${i}`}
+                style={[
+                  styles.userImg,
+                  {
+                    marginStart:
+                      i === channelImages.length - 1
+                        ? 0
+                        : channelImages.length === 2
+                        ? (-1 * size) / 1.75
+                        : (-1 * size) / 1.25,
+                  },
+                ]}
+              >
+                <Avatar size={size} uri={image} />
+              </View>
+            ) : null
+          )
         ) : (
           <View style={styles.userImg}>
             <ChannelCover channel={channel} size={size} />
           </View>
         )}
 
-        {channel.customType !== ChannelType.DIRECT && (
-          <View style={styles.userLengthBox}>
-            <FormText>{channel.memberCount}</FormText>
-          </View>
-        )}
+        {channel.customType !== ChannelType.DIRECT &&
+          channel.memberCount > 3 && (
+            <View style={styles.userLengthBox}>
+              <FormText>
+                {channel.memberCount > 99 ? '99+' : channel.memberCount}
+              </FormText>
+            </View>
+          )}
       </Row>
     )
   }

@@ -66,7 +66,8 @@
     "RecoverImportWalletTitle": "How do you\nimport your wallet?",
     "RecoverRestoreWalletTitle": "Please verify\nthe wallet",
     "RecoverRestoreWalletMessage": "The account can only be restored\nby verifying the wallet.",
-    "RecoverResetPinTitle": "Reset Pin",
+    "RecoverResetPinTitle": "Please verify\nthe wallet",
+    "RecoverResetPinMessage": "The PINcode can only be reset\nby verifyng the wallet.",
 
     "ImportTheWallet": "Import the Wallet",
 
@@ -202,7 +203,10 @@
     "SendTokenConfirmModalFrom": "From",
     "SendTokenConfirmModalMe": "Me",
     "SendTokenConfirmModalTo": "To",
-    "SendTokenConfirmModalEstGasFee": "Est. Gas Fee"
+    "SendTokenConfirmModalEstGasFee": "Est. Gas Fee",
+
+    "ChannelListingNoListedNft": "Oops!\nThere is no listed NFT.\nHow about listing NFTs\nfor the first time?",
+    "ChannelListingListNFT": "List a NFT"
   },
   "Profiles": {
     "CreateProfileTitle": "Fill out your profile",
@@ -238,9 +242,11 @@
     "Version": "Version",
     "SignOut": "Sign Out",
 
-    "ExportWalletHeaderTitle": "Export private",
-    "ExportWalletShowKey": "Show the key",
-    "ExportWalletCopiedPrivateKeyToast": "Private key copied"
+    "ExportWalletHeaderTitle": "Export Wallet",
+    "ExportWalletPrivateKey": "Private key",
+    "ExportWalletWalletAddress": "Wallet Address",
+    "ExportWalletCopiedPrivateKeyToast": "Private key copied",
+    "ExportWalletNeverDisclose": "Never disclose this key. Anyone with your private keys can steal any assets held in your account."
   },
   "Pin": {
     "PinSetupSuccessToast": "Your PIN code is successfully set up.",
@@ -250,7 +256,15 @@
     "PinSetupTitleSub": "This action requires a PIN code setting.",
     "PinConfirmTitle": "Confirm your PIN code",
     "PinEnterTitle": "Enter your PIN code",
-    "PinEnterTitleSub": "Forgot your PIN code?"
+    "PinForgot": "Forgot your PIN code?",
+
+    "PinWrongMessage": "Wrong PIN code ({{count}}/{{max}})",
+    "PinWrongMessageWarning": "You have to reset your PIN code\nif you enter the wrong PIN code again.",
+
+    "PinResetModalTitle": "Reset your PIN code",
+    "PinResetModalMessage": "You need to reset the PIN code\nif you enter the wrong PIN code {{max}} times.",
+    "PinResetModalPositive": "Reset",
+    "PinResetModalNegative": "Later"
   },
   "Components": {
     "ProfileWalletAddress": {
@@ -310,6 +324,14 @@
       "Type": "({{type}}) ",
       "To": "to ",
       "ViewTransactionDetail": "View Transaction Detail "
+    },
+    "Modal": {
+      "SignOut": {
+        "Title": "Are you sure to sign out?",
+        "Message": "You need to restore the current wallet or create a new wallet to use Palm again.",
+        "Positive": "Cancel",
+        "Negative": "Sign out"
+      }
     }
   }
 }

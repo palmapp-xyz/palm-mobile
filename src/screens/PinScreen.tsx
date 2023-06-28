@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useFocusEffect } from '@react-navigation/native'
 import images from 'assets/images'
-import { FormText } from 'components'
+import { FormModal, FormText } from 'components'
 import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
@@ -15,8 +17,12 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { LocalStorageKey } from 'types'
 
 const PIN_COUNT = 4
+const PIN_TRY_MAX = 10
+
+export type PinType = 'set' | 'auth' | 'reset'
 
 const CloseButton = (props: { onPress?: () => void }): ReactElement => {
   return (
@@ -59,24 +65,34 @@ const PinTitle = (props: { title: string }): ReactElement => {
 }
 
 const PinSubTitle = (props: {
-  icon?: string
   title?: string
-  onPress?: () => Promise<void>
+  warn?: boolean
 }): ReactElement => {
   return (
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <FormText
+        color={props.warn ? COLOR.red : COLOR.black._500}
+        style={{ textAlign: 'center' }}
+      >
+        {props.title}
+      </FormText>
+    </View>
+  )
+}
+const PinForgot = (props: { onPress: () => void }): ReactElement => {
+  const { t } = useTranslation()
+  return (
     <TouchableOpacity
-      style={{ flexDirection: 'row', alignItems: 'center' }}
+      style={{ flexDirection: 'row', alignItems: 'center', marginTop: 24 }}
       onPress={props.onPress}
     >
-      {props.icon && (
-        <Ionicons
-          name={props.icon}
-          size={16}
-          color={COLOR.black._500}
-          style={{ marginRight: 4 }}
-        />
-      )}
-      <FormText color={COLOR.black._500}>{props.title}</FormText>
+      <Ionicons
+        name={'alert-circle-outline'}
+        size={16}
+        color={COLOR.black._500}
+        style={{ marginRight: 4 }}
+      />
+      <FormText color={COLOR.black._500}>{t('Pin.PinForgot')}</FormText>
     </TouchableOpacity>
   )
 }
@@ -157,7 +173,7 @@ const PinScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.Pin>()
   const { type, result: resultCallback, cancel } = params
 
-  const [pinType, setPinType] = useState<'set' | 'auth' | 'reset'>(type)
+  const [pinType, setPinType] = useState<PinType>(type)
   const toast = useToast()
   const { t } = useTranslation()
 
@@ -165,6 +181,9 @@ const PinScreen = (): ReactElement => {
   const [pinConfigurePhase, setPinConfigurePhase] = useState<
     'input' | 'confirm' | 'done'
   >('input')
+
+  const [pinTryCount, setPinTryCount] = useState(0)
+  const [visibleResetModal, setVisibleResetModal] = useState(false)
 
   const handleInput = (value: string): void => {
     if (inputPin.length >= PIN_COUNT) {
@@ -186,10 +205,40 @@ const PinScreen = (): ReactElement => {
     setInputPin('')
   }
 
+  const initPinTryCount = async (): Promise<void> => {
+    const count =
+      (await AsyncStorage.getItem(LocalStorageKey.PIN_TRY_COUNT)) || '0'
+    setPinTryCount(Number(count))
+  }
+  const increasePinTryCount = async (): Promise<void> => {
+    const count = pinTryCount + 1
+    setPinTryCount(count)
+    await AsyncStorage.setItem(LocalStorageKey.PIN_TRY_COUNT, String(count))
+  }
+  const resetPinTryCount = async (): Promise<void> => {
+    setVisibleResetModal(false)
+    setPinTryCount(0)
+    await AsyncStorage.setItem(LocalStorageKey.PIN_TRY_COUNT, String(0))
+  }
+
+  useFocusEffect(() => {
+    initPinTryCount()
+    type === 'auth' && pinTryCount >= PIN_TRY_MAX && setVisibleResetModal(true)
+
+    return () => {
+      setVisibleResetModal(false)
+    }
+  })
+
   useEffect(() => {
     clearInputPin()
     resetNewPin()
+    initPinTryCount()
   }, [])
+
+  useEffect(() => {
+    type === 'auth' && pinTryCount >= PIN_TRY_MAX && setVisibleResetModal(true)
+  }, [pinTryCount])
 
   useEffect(() => {
     setPinType(type)
@@ -202,6 +251,8 @@ const PinScreen = (): ReactElement => {
           if (inputPin.length === 4) {
             const v = await getPin()
             const match = !v || inputPin === v
+
+            match ? resetPinTryCount() : increasePinTryCount()
 
             clearInputPin()
             resultCallback && resultCallback(match)
@@ -228,6 +279,8 @@ const PinScreen = (): ReactElement => {
                 if (pinType !== 'reset') {
                   setPinConfigurePhase('done')
                 }
+
+                resetPinTryCount()
                 resultCallback && resultCallback(true)
               } else {
                 toast.show(t('Pin.PinMismatchToast'), {
@@ -263,11 +316,7 @@ const PinScreen = (): ReactElement => {
   const TITLE_SUB = {
     setup: { title: t('Pin.PinSetupTitle') },
     confirm: { title: '' },
-    enter: {
-      title: t('Pin.PinEnterTitleSub'),
-      icon: 'alert-circle-outline',
-      onPress: onResetPin,
-    },
+    enter: { title: '' },
     none: { title: '' },
   }
 
@@ -294,7 +343,23 @@ const PinScreen = (): ReactElement => {
       <CloseButton onPress={cancel} />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <PinTitle {...title} />
-        <PinSubTitle {...subTitle} />
+        {pinType !== 'auth' && <PinSubTitle {...subTitle} />}
+        {pinType === 'auth' && pinTryCount > 0 ? (
+          <PinSubTitle
+            warn
+            title={t('Pin.PinWrongMessage', {
+              count: pinTryCount,
+              max: PIN_TRY_MAX,
+            })}
+          />
+        ) : (
+          <PinSubTitle title={' '} />
+        )}
+        {pinType === 'auth' && pinTryCount >= PIN_TRY_MAX - 1 ? (
+          <PinSubTitle warn title={t('Pin.PinWrongMessageWarning')} />
+        ) : (
+          <PinSubTitle title={'\n'} />
+        )}
         <View style={{ flexDirection: 'row', marginVertical: 40 }}>
           {[...Array(PIN_COUNT).keys()].map((_, i) => (
             <PinDot fill={inputPin.length > i} key={i} />
@@ -321,7 +386,23 @@ const PinScreen = (): ReactElement => {
           <PinButton value={'0'} handleInput={handleInput} />
           <PinButton delete handleDelete={handleDelete} />
         </View>
+        {pinType === 'auth' && <PinForgot onPress={onResetPin} />}
       </View>
+      <FormModal
+        visible={visibleResetModal}
+        title={t('Pin.PinResetModalTitle')}
+        message={t('Pin.PinResetModalMessage', { max: PIN_TRY_MAX })}
+        positive={{
+          text: t('Pin.PinResetModalPositive'),
+          callback: onResetPin,
+        }}
+        negative={{
+          text: t('Pin.PinResetModalNegative'),
+          callback: (): void => {
+            navigation.pop()
+          },
+        }}
+      />
     </SafeAreaView>
   )
 }

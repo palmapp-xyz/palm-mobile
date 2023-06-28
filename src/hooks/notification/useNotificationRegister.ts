@@ -1,50 +1,27 @@
 import useAuth from 'hooks/auth/useAuth'
 import { getFsProfile } from 'libs/firebase'
 import { recordError } from 'libs/logger'
-import {
-  backgroundMessageHandler,
-  onForegroundAndroid,
-  onForegroundIOS,
-  onRemoteNotification,
-} from 'libs/notification'
-import { useEffect, useState } from 'react'
 import { Platform } from 'react-native'
 
-import Notifee, { AuthorizationStatus } from '@notifee/react-native'
 import firestore from '@react-native-firebase/firestore'
 import messaging from '@react-native-firebase/messaging'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
-import { useAsyncEffect } from '@sendbird/uikit-utils'
+import useNotificationConf from './useNotificationConf'
 
-const channelId: string = 'default'
-
-/*
-Note: A user can have up to 20 FCM registration tokens and 20 APNs device tokens each.
-The oldest token will be deleted before a new token is added for a user who already has 20 device tokens registered.
-Only the 20 newest tokens will be maintained for users who already have more than 20 of each token type.
-*/
-const useNotification = (): void => {
+const useNotificationRegister = (): {
+  registerDeviceToken: () => Promise<void>
+  unregisterDeviceToken: () => Promise<void>
+} => {
   const { sdk } = useSendbirdChat()
   const { user } = useAuth()
-
-  const [notificationEnabled, setNotificationEnabled] = useState<boolean>(true)
-
-  useAsyncEffect(async () => {
-    /*
-      If the user declines permission, they must manually allow notifications
-      via the Settings UI for the application.
-    */
-    const authorizationStatus = await messaging().requestPermission({
-      providesAppNotificationSettings: true,
-    })
-    setNotificationEnabled(
-      authorizationStatus === AuthorizationStatus.AUTHORIZED ||
-        authorizationStatus === AuthorizationStatus.PROVISIONAL
-    )
-  }, [])
+  const { checkNotificationPermission } = useNotificationConf()
 
   const registerDeviceToken = async (): Promise<void> => {
-    if (!user?.auth?.profileId || !notificationEnabled) {
+    if ((await checkNotificationPermission(true)) === false) {
+      return
+    }
+
+    if (!user?.auth?.profileId) {
       return
     }
 
@@ -95,7 +72,7 @@ const useNotification = (): void => {
   }
 
   const unregisterDeviceToken = async (): Promise<void> => {
-    if (!user?.auth?.profileId || !notificationEnabled) {
+    if (!user?.auth?.profileId) {
       return
     }
 
@@ -143,31 +120,10 @@ const useNotification = (): void => {
     }
   }
 
-  useAsyncEffect(async () => {
-    if (!user) {
-      await unregisterDeviceToken()
-    } else if (user?.auth?.profileId) {
-      await registerDeviceToken()
-    }
-  }, [user?.auth?.profileId, notificationEnabled])
-
-  useEffect(() => {
-    Notifee.createChannel({
-      id: channelId,
-      name: 'Default Channel',
-      importance: 4,
-    })
-    Notifee.onBackgroundEvent(onRemoteNotification)
-
-    messaging().setBackgroundMessageHandler(message =>
-      backgroundMessageHandler(channelId, message)
-    )
-
-    const unsubscribes = [onForegroundAndroid(), onForegroundIOS()]
-    return () => {
-      unsubscribes.forEach(fn => fn())
-    }
-  }, [])
+  return {
+    registerDeviceToken,
+    unregisterDeviceToken,
+  }
 }
 
-export default useNotification
+export default useNotificationRegister

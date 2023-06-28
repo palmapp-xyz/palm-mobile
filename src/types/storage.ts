@@ -17,6 +17,8 @@ export enum LocalStorageKey {
   SETTING = 'SETTING',
   AUTH = 'AUTH',
   RECENTLY_SEARCHED = 'RECENTLY_SEARCHED',
+  PUSH_NOTIFICATION = 'PUSH_NOTIFICATION',
+  PIN_TRY_COUNT = 'PIN_TRY_COUNT',
 }
 
 export type AuthStorageType = {

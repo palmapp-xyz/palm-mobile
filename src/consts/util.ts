@@ -165,6 +165,10 @@ const isValidPrice = (price: Token): boolean => {
   return !!price && isNumberString(price) && Number(price) !== 0
 }
 
+const toBoolean = (str: string): boolean => {
+  return str.trim().toLowerCase() === 'true'
+}
+
 export default {
   truncate,
   jsonTryParse,
@@ -189,4 +193,5 @@ export default {
   formatPercentage,
   noUndefinedObj,
   isValidPrice,
+  toBoolean,
 }
