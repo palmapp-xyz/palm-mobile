@@ -233,7 +233,6 @@ const PinScreen = (): ReactElement => {
   useEffect(() => {
     clearInputPin()
     resetNewPin()
-
     initPinTryCount()
   }, [])
 
@@ -393,11 +392,15 @@ const PinScreen = (): ReactElement => {
         visible={visibleResetModal}
         title={t('Pin.PinResetModalTitle')}
         message={t('Pin.PinResetModalMessage', { max: PIN_TRY_MAX })}
-        positive={t('Pin.PinResetModalPositive')}
-        positiveCallback={onResetPin}
-        negative={t('Pin.PinResetModalNegative')}
-        negativeCallback={(): void => {
-          navigation.pop()
+        positive={{
+          text: t('Pin.PinResetModalPositive'),
+          callback: onResetPin,
+        }}
+        negative={{
+          text: t('Pin.PinResetModalNegative'),
+          callback: (): void => {
+            navigation.pop()
+          },
         }}
       />
     </SafeAreaView>

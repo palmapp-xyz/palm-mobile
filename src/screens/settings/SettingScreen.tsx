@@ -255,13 +255,17 @@ const SettingScreen = (): ReactElement => {
         visible={visibleSignOutModal}
         title={t('Components.Modal.SignOut.Title')}
         message={t('Components.Modal.SignOut.Message')}
-        positive={t('Components.Modal.SignOut.Positive')}
-        positiveCallback={(): void => {
-          setVisibleSignOutModal(false)
+        positive={{
+          text: t('Components.Modal.SignOut.Positive'),
+          callback: (): void => {
+            setVisibleSignOutModal(false)
+          },
         }}
-        negative={t('Components.Modal.SignOut.Negative')}
-        negativeCallback={(): void => {
-          logout()
+        negative={{
+          text: t('Components.Modal.SignOut.Negative'),
+          callback: (): void => {
+            logout()
+          },
         }}
       />
     </Container>

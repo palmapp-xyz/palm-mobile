@@ -9,25 +9,20 @@ import {
 } from 'react-native'
 import FormText from './FormText'
 
+type ModalButtonProps = {
+  text: string
+  callback: () => void
+}
+
 const FormModal = (
   props: ModalProps & {
     title: string
     message: string
-    positive?: string
-    positiveCallback?: () => void
-    negative?: string
-    negativeCallback?: () => void
+    positive?: ModalButtonProps
+    negative?: ModalButtonProps
   }
 ): ReactElement => {
-  const {
-    title,
-    message,
-    positive,
-    negative,
-    positiveCallback,
-    negativeCallback,
-    ...rest
-  } = props
+  const { title, message, positive, negative, ...rest } = props
 
   return (
     <Modal {...rest} transparent>
@@ -45,26 +40,26 @@ const FormModal = (
             {message}
           </FormText>
           <View style={styles.buttonContainer}>
-            {(negative || negativeCallback) && (
+            {negative && (
               <View style={{ flex: 2 }}>
                 <TouchableOpacity
                   style={styles.negativeButton}
-                  onPress={negativeCallback}
+                  onPress={negative.callback}
                 >
                   <FormText font="SB" size={16} color={COLOR.primary._400}>
-                    {negative}
+                    {negative?.text}
                   </FormText>
                 </TouchableOpacity>
               </View>
             )}
-            {(positive || positiveCallback) && (
+            {positive && (
               <View style={{ flex: 3 }}>
                 <TouchableOpacity
                   style={styles.positiveButton}
-                  onPress={positiveCallback}
+                  onPress={positive.callback}
                 >
                   <FormText font="SB" size={16} color={COLOR.white}>
-                    {positive}
+                    {positive?.text}
                   </FormText>
                 </TouchableOpacity>
               </View>
