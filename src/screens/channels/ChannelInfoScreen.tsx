@@ -51,7 +51,6 @@ const ChannelInfoScreen = (): ReactElement => {
 
   useEffect(() => {
     if (channel?.myPushTriggerOption) {
-      console.log('myPushTriggerOption', channel?.myPushTriggerOption)
       setMute(channel?.myPushTriggerOption === PushTriggerOption.OFF)
     }
   }, [channel?.myPushTriggerOption])
