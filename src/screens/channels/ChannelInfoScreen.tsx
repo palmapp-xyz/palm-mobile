@@ -174,7 +174,7 @@ const ChannelInfoScreen = (): ReactElement => {
               {channel.customType !== ChannelType.DIRECT && (
                 <TouchableOpacity
                   onPress={(): void => {
-                    navigation.navigate(Routes.GroupChannelMembers, params)
+                    navigation.navigate(Routes.GroupChannelInvite, params)
                   }}
                 >
                   <FormText>{t('Channels.ChannelInfoInvite')}</FormText>
