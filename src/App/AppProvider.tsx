@@ -35,7 +35,7 @@ import {
   LightUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 
-import useNotificationConf from 'hooks/independent/useNotificationConf'
+import useNotificationConf from 'hooks/notification/useNotificationConf'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { ErrorInfoScreen } from '../screens'
 import { defaultToastProviderOptions, renderToast } from '../screens/ToastView'
@@ -45,13 +45,13 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { scheme } = useAppearance()
   const { bindings } = useWeb3Bindings(SupportedNetworkEnum.POLYGON)
 
-  const { isEnableNotification } = useNotificationConf()
+  const { isNotificationEnabled } = useNotificationConf()
   const [autoPushTokenRegistration, setAutoPushTokenRegistration] =
     useState<boolean>(true)
 
   useEffect(() => {
     const checkAutoPushTokenRegistration = async (): Promise<void> => {
-      const pushEnable = await isEnableNotification()
+      const pushEnable = await isNotificationEnabled()
       setAutoPushTokenRegistration(pushEnable)
     }
     checkAutoPushTokenRegistration()

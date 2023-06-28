@@ -27,7 +27,7 @@ const useNotification = (): void => {
   const { registerDeviceToken, unregisterDeviceToken } =
     useNotificationRegister()
 
-  const { isEnableNotification } = useNotificationConf()
+  const { isNotificationEnabled } = useNotificationConf()
 
   useAsyncEffect(async () => {
     /*
@@ -44,7 +44,7 @@ const useNotification = (): void => {
   }, [])
 
   useAsyncEffect(async () => {
-    const pushEnable = await isEnableNotification()
+    const pushEnable = await isNotificationEnabled()
 
     if (user?.auth?.profileId && pushEnable) {
       await registerDeviceToken()

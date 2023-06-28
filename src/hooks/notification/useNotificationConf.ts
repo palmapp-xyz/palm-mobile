@@ -5,13 +5,13 @@ import { UTIL } from 'consts'
 import { LocalStorageKey } from 'types'
 
 const useNotificationConf = (): {
-  isEnableNotification: () => Promise<boolean>
+  isNotificationEnabled: () => Promise<boolean>
   setEnableNotification: (enable: boolean) => Promise<void>
   checkNotificationPermission: (
     providesAppNotificationSettings: boolean
   ) => Promise<boolean>
 } => {
-  const isEnableNotification = async (): Promise<boolean> => {
+  const isNotificationEnabled = async (): Promise<boolean> => {
     const pushEnable = await AsyncStorage.getItem(
       LocalStorageKey.PUSH_NOTIFICATION
     )
@@ -45,7 +45,7 @@ const useNotificationConf = (): {
   }
 
   return {
-    isEnableNotification,
+    isNotificationEnabled,
     setEnableNotification,
     checkNotificationPermission,
   }

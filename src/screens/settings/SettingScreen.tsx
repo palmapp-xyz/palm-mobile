@@ -1,8 +1,8 @@
 import { Container, FormModal, FormText, Header } from 'components'
 import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
-import useNotificationConf from 'hooks/independent/useNotificationConf'
-import useNotificationRegister from 'hooks/independent/useNotificationRegister'
+import useNotificationConf from 'hooks/notification/useNotificationConf'
+import useNotificationRegister from 'hooks/notification/useNotificationRegister'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import useVersions from 'hooks/useVersions'
@@ -83,7 +83,7 @@ const SettingScreen = (): ReactElement => {
   const { registerDeviceToken, unregisterDeviceToken } =
     useNotificationRegister()
   const {
-    isEnableNotification,
+    isNotificationEnabled,
     setEnableNotification,
     checkNotificationPermission,
   } = useNotificationConf()
@@ -96,7 +96,7 @@ const SettingScreen = (): ReactElement => {
         return
       }
 
-      const enable = await isEnableNotification()
+      const enable = await isNotificationEnabled()
       setEnablePush(enable)
     }
     init()
