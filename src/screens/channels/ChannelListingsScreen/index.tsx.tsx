@@ -1,4 +1,4 @@
-import { Container, FormButton, FormText, Header } from 'components'
+import { Container, FormText, Header } from 'components'
 import { COLOR } from 'consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -71,17 +71,6 @@ const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
         >
           {t('Nft.ChannelListingNoListedNft')}
         </FormText>
-        <FormButton
-          figure="outline"
-          containerStyle={styles.buttonListNft}
-          textStyle={{ color: COLOR.black._300 }}
-          rightIcon="ios-chevron-forward"
-          onPress={(): void => {
-            // navigation.navigate(Routes.ListNft, { channelUrl })
-          }}
-        >
-          {t('Nft.ChannelListingListNFT')}
-        </FormButton>
       </SafeAreaView>
     )
   }
