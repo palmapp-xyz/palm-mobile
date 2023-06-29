@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import useExplorer from 'hooks/complex/useExplorer'
 import React, { ReactElement, ReactNode } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'

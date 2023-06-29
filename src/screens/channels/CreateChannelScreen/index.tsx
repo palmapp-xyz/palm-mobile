@@ -9,7 +9,7 @@ import {
   Tag,
 } from 'components'
 import Indicator from 'components/atoms/Indicator'
-import { COLOR, UTIL } from 'consts'
+import { COLOR, UTIL } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useCreateChannel from 'hooks/page/groupChannel/useCreateChannel'

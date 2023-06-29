@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import { ContractAddr } from 'types'
 
 import { Maybe } from '@toruslabs/openlogin'

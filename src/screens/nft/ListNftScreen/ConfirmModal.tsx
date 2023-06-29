@@ -6,7 +6,7 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
-import { COLOR, NETWORK, UTIL } from 'consts'
+import { COLOR, NETWORK, UTIL } from 'core/consts'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'

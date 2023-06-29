@@ -1,5 +1,5 @@
 import MediaRenderer from 'components/molecules/MediaRenderer'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import React, { ReactElement, useState } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 

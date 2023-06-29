@@ -1,8 +1,8 @@
+import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { Routes } from '../libs/navigation'
 import {
   ConfirmSeedScreen,
   CreateCompleteScreen,

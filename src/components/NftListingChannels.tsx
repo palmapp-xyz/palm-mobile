@@ -1,12 +1,12 @@
 import GroupChannelItem from 'components/GroupChannelItem'
 import { recordError } from 'libs/logger'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleProp, Text, View, ViewStyle } from 'react-native'
 import { ContractAddr, FbListing } from 'types'
 
 import firestore from '@react-native-firebase/firestore'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { useTranslation } from 'react-i18next'
 
 const NftListingChannels = ({
   nftContract,

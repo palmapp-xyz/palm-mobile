@@ -1,8 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import { format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { LocalStorageKey, RecentlySearchItemStorageType } from 'types'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type UseRecentlySearchedReturn = {
   searchedList: RecentlySearchItemStorageType[]

@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNativeToken from 'hooks/independent/useNativeToken'
 import apiV1Fabricator from 'libs/apiV1Fabricator'

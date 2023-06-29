@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import useLensAuth from 'hooks/lens/useLensAuth'
 import {
@@ -9,8 +9,10 @@ import {
 } from 'libs/account'
 import { getFsProfile } from 'libs/firebase'
 import { recordError } from 'libs/logger'
+import { resetNewPin, resetPin } from 'libs/pin'
 import _ from 'lodash'
 import { useState } from 'react'
+import RNRestart from 'react-native-restart'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import appStore from 'store/appStore'
 import {
@@ -28,8 +30,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-import { resetNewPin, resetPin } from 'libs/pin'
-import RNRestart from 'react-native-restart'
 
 export type UseAuthReturn = {
   user?: User

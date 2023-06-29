@@ -1,8 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useFocusEffect } from '@react-navigation/native'
 import images from 'assets/images'
 import { FormModal, FormText } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import { Routes } from 'libs/navigation'
@@ -18,6 +16,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { LocalStorageKey } from 'types'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useFocusEffect } from '@react-navigation/native'
 
 const PIN_COUNT = 4
 const PIN_TRY_MAX = 10

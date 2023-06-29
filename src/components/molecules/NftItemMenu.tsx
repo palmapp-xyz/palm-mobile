@@ -1,4 +1,4 @@
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import { isMainnet } from 'libs/utils'
 import React, { ReactElement, useState } from 'react'
 import {

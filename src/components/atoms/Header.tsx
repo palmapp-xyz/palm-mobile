@@ -1,4 +1,4 @@
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import React, { ReactElement, ReactNode } from 'react'
 import {
   StyleProp,

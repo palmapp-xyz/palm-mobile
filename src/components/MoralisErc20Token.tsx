@@ -1,5 +1,5 @@
 import { FormImage, FormText, Row } from 'components'
-import { COLOR, UTIL } from 'consts'
+import { COLOR, UTIL } from 'core/consts'
 import { getTokenBalanceInUSD } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

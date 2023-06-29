@@ -6,8 +6,8 @@ import { SupportedNetworkEnum } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import lensHubAbi from '../../abi/lens-hub-contract-abi.json'
-import lensPeripheryAbi from '../../abi/lens-periphery-data-provider.json'
+import lensHubAbi from '../../core/abi/lens-hub-contract-abi.json'
+import lensPeripheryAbi from '../../core/abi/lens-periphery-data-provider.json'
 
 export type UseLensHubReturn = {
   lensHub: ethers.Contract | undefined

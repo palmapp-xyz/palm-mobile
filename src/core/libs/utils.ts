@@ -1,5 +1,5 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
-import { NETWORK, UTIL } from 'consts'
+import { NETWORK, UTIL } from 'core/consts'
 import _ from 'lodash'
 import Config from 'react-native-config'
 import { URL } from 'react-native-url-polyfill'
@@ -9,8 +9,8 @@ import {
   JwtToken,
   Moralis,
   NetworkTypeEnum,
-  SupportedNetworkEnum,
   pToken,
+  SupportedNetworkEnum,
 } from 'types'
 
 export const getContrastColor = (

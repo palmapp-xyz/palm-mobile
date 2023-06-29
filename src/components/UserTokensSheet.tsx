@@ -1,5 +1,5 @@
 import { FormBottomSheet, SupportedNetworkRow } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
 import React, { ReactElement, useMemo, useState } from 'react'

@@ -2,6 +2,7 @@ import images from 'assets/images'
 import { Card, FormButton, FormImage, LinkExplorer } from 'components'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ScrollView,
   StyleSheet,
@@ -15,7 +16,6 @@ import styled from 'styled-components'
 import { PostTxStatus } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
-import { useTranslation } from 'react-i18next'
 
 const StyledContainer = styled(View)`
   position: absolute;

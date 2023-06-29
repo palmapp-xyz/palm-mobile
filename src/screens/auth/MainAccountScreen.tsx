@@ -7,7 +7,7 @@ import {
   FormText,
   Row,
 } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo, useRef, useState } from 'react'

@@ -1,5 +1,5 @@
 import { FormImage, FormText, Row } from 'components'
-import { COLOR, NETWORK } from 'consts'
+import { COLOR, NETWORK } from 'core/consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import {

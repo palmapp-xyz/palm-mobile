@@ -11,7 +11,11 @@ type Props = {
   grouping: boolean
   style?: StyleProp<ViewStyle>
 }
-const MessageTime = ({ message, grouping, style }: Props): ReactElement => {
+const MessageTime = ({
+  message,
+  grouping,
+  style,
+}: Props): ReactElement | null => {
   const { STRINGS } = useLocalization()
   const { colors } = useUIKitTheme()
   if (grouping) {

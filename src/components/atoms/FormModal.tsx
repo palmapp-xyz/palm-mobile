@@ -1,4 +1,4 @@
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import React, { ReactElement } from 'react'
 import {
   Modal,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+
 import FormText from './FormText'
 
 type ModalButtonProps = {

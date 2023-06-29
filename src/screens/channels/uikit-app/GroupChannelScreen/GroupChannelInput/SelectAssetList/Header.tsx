@@ -1,5 +1,5 @@
 import { Row, SupportedNetworkRow } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'

@@ -1,16 +1,16 @@
 import { Container, FormText, Header } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
+import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
 import { getMnemonic, getPkey } from 'libs/account'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import Clipboard from '@react-native-clipboard/clipboard'
-import useAuth from 'hooks/auth/useAuth'
-import useToast from 'hooks/useToast'
-import { useTranslation } from 'react-i18next'
 
 const ExportWalletScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.ExportWallet>()

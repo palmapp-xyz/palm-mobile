@@ -1,4 +1,4 @@
-import { SupportedNetworkEnum } from 'types/network'
+import { SupportedNetworkEnum } from 'types'
 
 import { NominalType } from '../common'
 

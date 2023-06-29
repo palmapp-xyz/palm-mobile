@@ -1,5 +1,6 @@
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import useToast from 'hooks/useToast'
 import React, { forwardRef } from 'react'
 import {
   NativeSyntheticEvent,
@@ -19,12 +20,11 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import {
-  TextInput,
   createStyleSheet,
+  TextInput,
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import { conditionChaining } from '@sendbird/uikit-utils'
-import useToast from 'hooks/useToast'
 
 type SendInputProps = GroupChannelProps['Input'] & {
   text: string

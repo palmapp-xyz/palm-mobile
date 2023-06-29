@@ -8,7 +8,7 @@ import {
   Row,
 } from 'components'
 import MoralisErc20Token from 'components/MoralisErc20Token'
-import { COLOR, NETWORK, UTIL } from 'consts'
+import { COLOR, NETWORK, UTIL } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useSendToken from 'hooks/page/groupChannel/useSendToken'

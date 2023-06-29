@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
 import {

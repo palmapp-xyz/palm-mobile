@@ -1,6 +1,6 @@
 // @flow
 
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import React, { ReactElement, useEffect, useState } from 'react'
 import {
   ImageURISource,

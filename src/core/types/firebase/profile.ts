@@ -1,6 +1,5 @@
 import { Attribute, ProfileMedia } from 'graphqls/__generated__/graphql'
-import { DeviceTokenSet } from 'types/auth'
-import { ContractAddr } from 'types/contracts'
+import { ContractAddr, DeviceTokenSet } from 'types'
 
 export type FbProfile = {
   address: ContractAddr

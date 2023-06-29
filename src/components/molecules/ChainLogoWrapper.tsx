@@ -1,5 +1,5 @@
 import FormImage from 'components/atoms/FormImage'
-import { NETWORK } from 'consts'
+import { NETWORK } from 'core/consts'
 import React, { ReactElement, ReactNode } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { SupportedNetworkEnum } from 'types'

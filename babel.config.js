@@ -7,14 +7,14 @@ module.exports = function (api) {
     {
       root: './',
       alias: {
-        libs: './src/libs',
+        libs: './src/core/libs',
         hooks: './src/hooks',
         store: './src/store',
         assets: './src/assets',
-        types: './src/types',
-        consts: './src/consts',
+        types: './src/core/types',
+        consts: './src/core/consts',
         components: './src/components',
-        graphqls: './src/graphqls',
+        graphqls: './src/core/graphqls',
       },
     },
   ]

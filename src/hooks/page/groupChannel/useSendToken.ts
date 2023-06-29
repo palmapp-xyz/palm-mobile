@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import usePostTx from 'hooks/complex/usePostTx'
 import useToken from 'hooks/contract/useToken'

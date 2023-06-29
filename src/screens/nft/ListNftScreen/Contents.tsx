@@ -1,7 +1,7 @@
 import { FormButton, FormImage, FormInput, FormText, Row } from 'components'
 import UsdPrice from 'components/atoms/UsdPrice'
 import NftCard from 'components/channel/NftCard'
-import { COLOR, NETWORK, UTIL } from 'consts'
+import { COLOR, NETWORK, UTIL } from 'core/consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'

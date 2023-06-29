@@ -1,7 +1,7 @@
 import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import MoralisErc20Token from 'components/MoralisErc20Token'
-import { COLOR, UTIL } from 'consts'
+import { COLOR, UTIL } from 'core/consts'
 import useExplorer from 'hooks/complex/useExplorer'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'

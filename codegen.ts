@@ -2,9 +2,9 @@ import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   schema: 'https://api-mumbai.lens.dev',
-  documents: ['src/graphqls/**/*'],
+  documents: ['src/core/graphqls/**/*'],
   generates: {
-    './src/graphqls/__generated__/': {
+    './src/core/graphqls/__generated__/': {
       preset: 'client',
       presetConfig: {
         gqlTagName: 'graphql',

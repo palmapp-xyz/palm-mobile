@@ -1,6 +1,6 @@
 import images from 'assets/images'
 import { FormImage, FormText, Row } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import {
   StepAfterSelectItemType,
   UseGcInputReturn,

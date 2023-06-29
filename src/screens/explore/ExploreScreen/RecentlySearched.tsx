@@ -1,5 +1,5 @@
 import { FormText, Row } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'

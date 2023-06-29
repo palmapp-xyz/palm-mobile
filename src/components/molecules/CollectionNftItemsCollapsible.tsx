@@ -5,8 +5,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'

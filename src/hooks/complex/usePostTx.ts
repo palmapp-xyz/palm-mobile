@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import { getPkey } from 'libs/account'
 import _ from 'lodash'

@@ -1,6 +1,6 @@
 import images from 'assets/images'
 import { FormImage, MediaRenderer } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getProfileMediaImg } from 'libs/lens'

@@ -1,3 +1,5 @@
+import { RecoverAccountType } from 'screens/auth/RecoverAccountScreen'
+import { PinType } from 'screens/PinScreen'
 import { ContractAddr, Moralis, NftType, SupportedNetworkEnum } from 'types'
 
 import {
@@ -12,8 +14,6 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
-import { RecoverAccountType } from 'screens/auth/RecoverAccountScreen'
-import { PinType } from 'screens/PinScreen'
 export enum Routes {
   MainNavigator = 'MainNavigator',
   AuthNavigator = 'AuthNavigator',

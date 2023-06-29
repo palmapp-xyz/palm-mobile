@@ -8,7 +8,7 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
-import { COLOR, NETWORK, UTIL } from 'consts'
+import { COLOR, NETWORK, UTIL } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'

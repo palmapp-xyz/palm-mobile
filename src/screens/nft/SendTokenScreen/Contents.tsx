@@ -7,7 +7,7 @@ import {
   MediaRenderer,
   Row,
 } from 'components'
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import useSendToken from 'hooks/page/groupChannel/useSendToken'
 import { getFsProfile } from 'libs/firebase'
 import { getProfileMediaImg } from 'libs/lens'

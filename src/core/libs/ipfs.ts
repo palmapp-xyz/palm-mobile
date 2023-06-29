@@ -1,4 +1,4 @@
-import { IPFS } from 'consts'
+import { IPFS } from 'core/consts'
 import * as mime from 'mime'
 
 import { unescape } from './utils'

@@ -1,5 +1,5 @@
 import { FormText } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import React from 'react'
 import { View } from 'react-native'
 import {

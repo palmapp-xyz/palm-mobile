@@ -1,3 +1,4 @@
+// import { UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import usePostTx from 'hooks/complex/usePostTx'
 import useNft from 'hooks/contract/useNft'
@@ -10,7 +11,6 @@ import { navigationRef, Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
-// import { UTIL } from 'consts'
 import {
   ApiEnum,
   ContractAddr,

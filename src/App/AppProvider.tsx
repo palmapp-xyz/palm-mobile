@@ -1,5 +1,6 @@
 import useWeb3Bindings from 'hooks/complex/useWeb3Bindings'
 import useSetting from 'hooks/independent/useSetting'
+import useNotificationConf from 'hooks/notification/useNotificationConf'
 import useAppearance from 'hooks/useAppearance'
 import { asyncStorageProvider } from 'libs/asyncStorageProvider'
 import { navigationActions, Routes } from 'libs/navigation'
@@ -17,6 +18,7 @@ import Config from 'react-native-config'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { MenuProvider } from 'react-native-popup-menu'
+import { ToastProvider } from 'react-native-toast-notifications'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil'
 import { SupportedNetworkEnum } from 'types'
@@ -35,8 +37,6 @@ import {
   LightUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 
-import useNotificationConf from 'hooks/notification/useNotificationConf'
-import { ToastProvider } from 'react-native-toast-notifications'
 import { ErrorInfoScreen } from '../screens'
 import { defaultToastProviderOptions, renderToast } from '../screens/ToastView'
 

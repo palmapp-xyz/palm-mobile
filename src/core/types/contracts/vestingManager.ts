@@ -1,5 +1,5 @@
-import { ContractAddr } from '../contracts'
 import { pToken } from '../currencies'
+import { ContractAddr } from './'
 
 export namespace VestingManager {
   export type Vesting = {

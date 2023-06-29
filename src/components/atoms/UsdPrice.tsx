@@ -1,4 +1,4 @@
-import { COLOR, UTIL } from 'consts'
+import { COLOR, UTIL } from 'core/consts'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'

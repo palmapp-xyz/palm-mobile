@@ -2,7 +2,7 @@ import useContract from 'hooks/complex/useContract'
 import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
 import { AbiItem } from 'web3-utils'
 
-import erc20 from '../../abi/erc20.json'
+import erc20 from '../../core/abi/erc20.json'
 
 export type UseTokenReturn = {
   name: () => Promise<string | undefined>

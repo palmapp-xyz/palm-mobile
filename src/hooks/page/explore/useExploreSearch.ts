@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import { format } from 'date-fns'
 import useApi from 'hooks/complex/useApi'
 import apiV1Fabricator from 'libs/apiV1Fabricator'

@@ -10,7 +10,7 @@ import {
 } from 'types'
 import { AbiItem } from 'web3-utils'
 
-import escrow from '../../abi/Escrow.json'
+import escrow from '../../core/abi/Escrow.json'
 
 export type UseNftReturn = {
   escrowContract: ContractAddr

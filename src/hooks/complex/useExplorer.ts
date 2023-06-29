@@ -1,4 +1,4 @@
-import { NETWORK } from 'consts'
+import { NETWORK } from 'core/consts'
 import { isMainnet } from 'libs/utils'
 import { useCallback, useMemo } from 'react'
 import { NetworkTypeEnum, SupportedNetworkEnum } from 'types'

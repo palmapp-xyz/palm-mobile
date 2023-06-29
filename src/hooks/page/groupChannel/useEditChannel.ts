@@ -1,4 +1,4 @@
-import { NETWORK } from 'consts'
+import { NETWORK } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
 import useFsChannel from 'hooks/firestore/useFsChannel'
@@ -7,6 +7,7 @@ import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import { filterUndefined } from 'libs/utils'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FbChannel, FbChannelGatingField, SupportedNetworkEnum } from 'types'
 
 import { MetaData } from '@sendbird/chat'
@@ -18,7 +19,6 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-import { useTranslation } from 'react-i18next'
 
 export type UseEditChannelReturn = {
   prevCoverImage: string

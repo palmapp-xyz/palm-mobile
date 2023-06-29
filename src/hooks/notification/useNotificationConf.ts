@@ -1,8 +1,9 @@
+import { UTIL } from 'core/consts'
+import { LocalStorageKey } from 'types'
+
 import { AuthorizationStatus } from '@notifee/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import messaging from '@react-native-firebase/messaging'
-import { UTIL } from 'consts'
-import { LocalStorageKey } from 'types'
 
 const useNotificationConf = (): {
   isNotificationEnabled: () => Promise<boolean>

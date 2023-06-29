@@ -1,5 +1,5 @@
 import { FormImage, FormText, NftRenderer, Row } from 'components'
-import { COLOR, NETWORK, UTIL } from 'consts'
+import { COLOR, NETWORK, UTIL } from 'core/consts'
 import { format } from 'date-fns'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
@@ -11,7 +11,7 @@ import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { FbListing, NftType, SupportedNetworkEnum, pToken } from 'types'
+import { FbListing, NftType, pToken, SupportedNetworkEnum } from 'types'
 
 const FbListingItem = ({
   item,

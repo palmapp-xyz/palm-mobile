@@ -1,7 +1,6 @@
+import { COLOR } from 'core/consts'
 import React, { ReactElement } from 'react'
 import { View } from 'react-native'
-
-import { COLOR } from 'consts'
 
 const RadioIcon = ({ selected }: { selected: boolean }): ReactElement => (
   <View

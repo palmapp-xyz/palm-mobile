@@ -1,10 +1,11 @@
 import { Container, FormText, Header } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { recordError } from 'libs/logger'
 import { Routes } from 'libs/navigation'
 import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FlatList,
   RefreshControl,
@@ -12,12 +13,11 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FbListing } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
-import { useTranslation } from 'react-i18next'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import FbListingItem from './FbListingItem'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {

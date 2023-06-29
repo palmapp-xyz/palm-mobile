@@ -1,4 +1,4 @@
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import React, { ReactElement } from 'react'
 import {
   ColorValue,
@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native'
-
 import Ionicons from 'react-native-vector-icons/Ionicons'
+
 import FormText from './FormText'
 
 export type FormButtonProps = {

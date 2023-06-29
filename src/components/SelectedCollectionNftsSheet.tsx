@@ -5,7 +5,7 @@ import {
   MoralisNftRenderer,
   NftItemMenu,
 } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
@@ -16,8 +16,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 

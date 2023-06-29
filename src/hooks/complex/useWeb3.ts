@@ -1,4 +1,4 @@
-import { NETWORK } from 'consts'
+import { NETWORK } from 'core/consts'
 import { getPkey } from 'libs/account'
 import { isMainnet } from 'libs/utils'
 import { useMemo } from 'react'

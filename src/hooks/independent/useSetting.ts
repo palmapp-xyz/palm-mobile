@@ -1,4 +1,4 @@
-import { UTIL } from 'consts'
+import { UTIL } from 'core/consts'
 import { useEffect, useState } from 'react'
 import RNRestart from 'react-native-restart'
 import { useQuery } from 'react-query'

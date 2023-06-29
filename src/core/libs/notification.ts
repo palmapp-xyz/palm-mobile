@@ -1,3 +1,4 @@
+import { COLOR } from 'core/consts'
 import { Platform } from 'react-native'
 import PushNotification, {
   ReceivedNotification,
@@ -18,7 +19,6 @@ import {
   parseSendbirdNotification,
 } from '@sendbird/uikit-utils'
 
-import { COLOR } from 'consts'
 import { recordError } from './logger'
 import { navigationRef, Routes, runAfterAppReady } from './navigation'
 

@@ -1,6 +1,6 @@
 import { Container, FormButton, FormText, Header, Row } from 'components'
 import Loading from 'components/atoms/Loading'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import useConfirmSeed from 'hooks/page/account/useConfirmSeed'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'

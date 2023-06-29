@@ -1,6 +1,6 @@
 import { FormButton } from 'components'
 import Indicator from 'components/atoms/Indicator'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement, useMemo } from 'react'

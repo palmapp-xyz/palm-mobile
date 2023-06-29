@@ -1,5 +1,5 @@
 import { Container, FormModal, FormText, Header } from 'components'
-import { COLOR } from 'consts'
+import { COLOR } from 'core/consts'
 import useAuth from 'hooks/auth/useAuth'
 import useNotificationConf from 'hooks/notification/useNotificationConf'
 import useNotificationRegister from 'hooks/notification/useNotificationRegister'
