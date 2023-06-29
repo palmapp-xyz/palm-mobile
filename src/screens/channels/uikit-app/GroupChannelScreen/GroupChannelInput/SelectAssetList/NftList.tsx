@@ -1,6 +1,6 @@
 import { FormText, MoralisNftRenderer } from 'components'
 import Indicator from 'components/atoms/Indicator'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'

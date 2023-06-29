@@ -1,6 +1,6 @@
 import { generateMnemonic } from 'bip39'
 import { Container, FormButton, FormText, Header, Row } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import { Routes } from 'libs/navigation'

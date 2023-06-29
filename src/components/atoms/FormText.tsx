@@ -1,4 +1,4 @@
-import { COLOR, STYLE } from 'core/consts'
+import { COLOR, STYLE } from 'consts'
 import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
 import { FontSize, FontType } from 'types'

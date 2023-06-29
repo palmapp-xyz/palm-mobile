@@ -7,7 +7,7 @@ import {
   Row,
 } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'

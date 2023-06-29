@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import { LocalStorageKey } from 'types'
 
 import { AuthorizationStatus } from '@notifee/react-native'

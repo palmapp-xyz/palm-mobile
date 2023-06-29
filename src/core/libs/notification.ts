@@ -1,4 +1,4 @@
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import { Platform } from 'react-native'
 import PushNotification, {
   ReceivedNotification,

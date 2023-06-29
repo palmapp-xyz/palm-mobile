@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import { getFsChannel } from 'libs/firebase'
 import { filterUndefined } from 'libs/utils'
 import _ from 'lodash'

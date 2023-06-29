@@ -1,13 +1,9 @@
 import { FormText } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import React from 'react'
 import { View } from 'react-native'
-import {
-  ToastProps,
-} from 'react-native-toast-notifications/lib/typescript/toast'
-import {
-  Props,
-} from 'react-native-toast-notifications/lib/typescript/toast-container'
+import { ToastProps } from 'react-native-toast-notifications/lib/typescript/toast'
+import { Props } from 'react-native-toast-notifications/lib/typescript/toast-container'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export const defaultToastProviderOptions: Props = {

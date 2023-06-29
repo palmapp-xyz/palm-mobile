@@ -1,4 +1,4 @@
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import React, { ReactElement, useEffect } from 'react'
 import Spinner, { SpinnerPropTypes } from 'react-native-loading-spinner-overlay'
 import { useRecoilState } from 'recoil'

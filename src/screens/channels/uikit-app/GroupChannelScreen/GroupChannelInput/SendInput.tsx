@@ -1,4 +1,4 @@
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import useToast from 'hooks/useToast'
 import React, { forwardRef } from 'react'
@@ -20,8 +20,8 @@ import {
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
 import {
-  createStyleSheet,
   TextInput,
+  createStyleSheet,
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import { conditionChaining } from '@sendbird/uikit-utils'

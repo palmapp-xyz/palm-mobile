@@ -6,7 +6,7 @@ import {
   Header,
   Row,
 } from 'components'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, NETWORK, UTIL } from 'consts'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
@@ -33,11 +33,11 @@ import {
   ContractAddr,
   FbProfile,
   NftType,
-  pToken,
   QueryKeyEnum,
   SbBuyNftDataType,
   SbUserMetadata,
   SupportedNetworkEnum,
+  pToken,
 } from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'

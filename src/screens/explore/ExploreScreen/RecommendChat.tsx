@@ -1,6 +1,6 @@
 import { FormText } from 'components'
 import ChatCard from 'components/exploreTab/ChatCard'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useExploreRecommendChat from 'hooks/page/explore/useExploreRecommendChat'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'

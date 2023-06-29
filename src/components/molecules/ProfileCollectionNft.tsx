@@ -1,14 +1,14 @@
 import Card from 'components/atoms/Card'
 import FormText from 'components/atoms/FormText'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native'
 import { Moralis } from 'types'
 

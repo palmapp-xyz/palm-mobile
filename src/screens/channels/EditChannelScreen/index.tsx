@@ -8,7 +8,7 @@ import {
   Row,
   Tag,
 } from 'components'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useEditChannel from 'hooks/page/groupChannel/useEditChannel'

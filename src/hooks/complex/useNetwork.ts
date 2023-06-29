@@ -1,4 +1,4 @@
-import { ADDRESS_MAP, NETWORK } from 'core/consts'
+import { ADDRESS_MAP, NETWORK } from 'consts'
 import { isMainnet } from 'libs/utils'
 import { useMemo } from 'react'
 import { Config } from 'react-native-config'

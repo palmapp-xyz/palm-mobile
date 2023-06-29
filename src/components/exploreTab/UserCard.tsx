@@ -1,6 +1,6 @@
 import { Card, FormText } from 'components'
 import Avatar from 'components/sendbird/Avatar'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { getProfileMediaImg } from 'libs/lens'
 import { Routes } from 'libs/navigation'

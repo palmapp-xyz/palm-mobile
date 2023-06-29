@@ -1,4 +1,4 @@
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useSetting from 'hooks/independent/useSetting'
 import React, { ReactElement, useEffect, useState } from 'react'
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'

@@ -1,6 +1,6 @@
 import images from 'assets/images'
 import { FormModal, FormText } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import { Routes } from 'libs/navigation'

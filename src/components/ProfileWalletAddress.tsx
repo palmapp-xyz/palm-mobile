@@ -1,5 +1,5 @@
 import { FormText, Row } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useToast from 'hooks/useToast'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'

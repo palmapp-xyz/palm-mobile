@@ -1,7 +1,7 @@
 import { FormText } from 'components'
 import Indicator from 'components/atoms/Indicator'
 import MoralisErc20Token from 'components/MoralisErc20Token'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import useUserFtList from 'hooks/api/useUserFtList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'

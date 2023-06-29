@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import useNetwork from 'hooks/complex/useNetwork'
 import useWeb3 from 'hooks/complex/useWeb3'
 import { useMemo } from 'react'

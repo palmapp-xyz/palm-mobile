@@ -1,6 +1,6 @@
 import { Card, FormText, Row, Tag } from 'components'
 import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, NETWORK, UTIL } from 'consts'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'

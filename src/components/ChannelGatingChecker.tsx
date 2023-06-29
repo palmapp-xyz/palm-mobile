@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
@@ -7,8 +7,8 @@ import useUserBalance from 'hooks/independent/useUserBalance'
 import React, { ReactElement, useEffect, useMemo } from 'react'
 import {
   FbChannelGatingField,
-  FbChannelNativeGatingField,
   FbChannelNFTGatingField,
+  FbChannelNativeGatingField,
   QueryKeyEnum,
 } from 'types'
 

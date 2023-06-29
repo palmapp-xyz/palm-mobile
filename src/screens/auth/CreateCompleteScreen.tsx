@@ -1,6 +1,6 @@
 import { Container, FormButton, FormText, Header } from 'components'
 import Loading from 'components/atoms/Loading'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useCreateComplete from 'hooks/page/account/useCreateComplete'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'

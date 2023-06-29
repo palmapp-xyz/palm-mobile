@@ -1,5 +1,5 @@
 import { FormText } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useSendbird from 'hooks/sendbird/useSendbird'

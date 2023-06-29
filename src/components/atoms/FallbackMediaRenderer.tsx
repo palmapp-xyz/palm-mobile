@@ -1,7 +1,7 @@
 import Card from 'components/atoms/Card'
 import LinkRenderer from 'components/molecules/LinkRenderer'
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'

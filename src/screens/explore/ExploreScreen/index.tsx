@@ -1,6 +1,6 @@
 import images from 'assets/images'
 import { Container, FormImage, FormInput, Row } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement, useRef, useState } from 'react'

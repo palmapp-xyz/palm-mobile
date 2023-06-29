@@ -1,4 +1,4 @@
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import { fixTokenUri } from 'libs/ipfs'
 import { isValidHttpUrl } from 'libs/utils'
 import React, { ReactElement } from 'react'

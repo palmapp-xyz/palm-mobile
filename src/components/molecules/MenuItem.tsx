@@ -1,5 +1,5 @@
 import { FormText } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 

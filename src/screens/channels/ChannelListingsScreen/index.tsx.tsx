@@ -1,5 +1,5 @@
 import { Container, FormText, Header } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { recordError } from 'libs/logger'

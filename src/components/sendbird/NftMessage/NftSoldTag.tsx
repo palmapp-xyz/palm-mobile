@@ -1,5 +1,5 @@
 import FormText from 'components/atoms/FormText'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import { t } from 'i18next'
 import React, { ReactElement } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'

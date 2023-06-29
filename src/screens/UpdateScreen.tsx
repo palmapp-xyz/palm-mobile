@@ -1,5 +1,5 @@
 import { FormText } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import Lottie from 'lottie-react-native'
 import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,5 +1,5 @@
 import { Container, FormText, Header } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'

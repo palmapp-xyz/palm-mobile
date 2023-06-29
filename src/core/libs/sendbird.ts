@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import { Platform, StatusBar } from 'react-native'
 import Config from 'react-native-config'
 import * as DocumentPicker from 'react-native-document-picker'

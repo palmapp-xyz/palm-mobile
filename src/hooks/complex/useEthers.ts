@@ -1,4 +1,4 @@
-import { NETWORK } from 'core/consts'
+import { NETWORK } from 'consts'
 import { ethers, TypedDataDomain, Wallet } from 'ethers'
 import { getPkey } from 'libs/account'
 import { isMainnet } from 'libs/utils'

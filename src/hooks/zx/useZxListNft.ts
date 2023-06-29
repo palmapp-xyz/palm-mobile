@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import {
   SignedNftOrderV4,
   SignedNftOrderV4Serialized,

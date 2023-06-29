@@ -1,7 +1,7 @@
 import FormText from 'components/atoms/FormText'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'
 import { chainIdToSupportedNetworkEnum } from 'libs/utils'

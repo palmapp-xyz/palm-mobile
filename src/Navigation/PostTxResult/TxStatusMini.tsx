@@ -1,6 +1,6 @@
 import images from 'assets/images'
 import { Card, FormImage, LinkExplorer } from 'components'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

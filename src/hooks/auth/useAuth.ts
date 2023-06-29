@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import { AuthenticationResult } from 'graphqls/__generated__/graphql'
 import useLensAuth from 'hooks/lens/useLensAuth'
 import {

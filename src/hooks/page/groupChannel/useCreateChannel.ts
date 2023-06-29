@@ -1,4 +1,4 @@
-import { NETWORK } from 'core/consts'
+import { NETWORK } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
 import useSendbird from 'hooks/sendbird/useSendbird'

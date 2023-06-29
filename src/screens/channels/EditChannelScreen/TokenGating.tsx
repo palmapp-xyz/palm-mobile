@@ -8,7 +8,7 @@ import {
   SupportedNetworkRow,
 } from 'components'
 import Indicator from 'components/atoms/Indicator'
-import { COLOR, NETWORK } from 'core/consts'
+import { COLOR, NETWORK } from 'consts'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useAuth from 'hooks/auth/useAuth'
 import { UseEditChannelReturn } from 'hooks/page/groupChannel/useEditChannel'

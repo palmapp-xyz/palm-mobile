@@ -1,7 +1,7 @@
 import images from 'assets/images'
 import { Container, FormImage, FormText, Header, Row } from 'components'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, NETWORK, UTIL } from 'consts'
 import useAuth from 'hooks/auth/useAuth'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
@@ -20,8 +20,8 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
-  FbChannelNativeGatingField,
   FbChannelNFTGatingField,
+  FbChannelNativeGatingField,
   NftType,
   QueryKeyEnum,
 } from 'types'

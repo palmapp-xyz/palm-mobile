@@ -1,6 +1,6 @@
 import images from 'assets/images'
 import { FormImage, FormInput, FormText, Row } from 'components'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import { getTokenBalanceInUSD } from 'libs/utils'
 import React, { Dispatch, ReactElement, SetStateAction, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'

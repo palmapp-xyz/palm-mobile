@@ -3,7 +3,7 @@ import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
 import NftAttributes from 'components/molecules/NftAttributes'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'consts'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import useNftImage from 'hooks/independent/useNftImage'

@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import { format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { LocalStorageKey, RecentlySearchItemStorageType } from 'types'

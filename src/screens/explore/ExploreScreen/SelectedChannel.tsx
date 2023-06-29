@@ -1,6 +1,6 @@
 import { FormBottomSheet, FormButton, FormText, Row, Tag } from 'components'
 import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
-import { COLOR, NETWORK } from 'core/consts'
+import { COLOR, NETWORK } from 'consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { Routes } from 'libs/navigation'

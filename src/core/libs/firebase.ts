@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'consts'
 import { ChannelType, FbChannel, FbListing, FbProfile } from 'types'
 
 import firestore, {

@@ -1,5 +1,5 @@
 import { FormText, Row } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'consts'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
 import React, { ReactElement } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
