@@ -4,6 +4,7 @@ import { ContractAddr } from 'types'
 
 import { Maybe } from '@toruslabs/openlogin'
 
+import images from 'assets/images'
 import { isENS } from './ens'
 import { fixTokenUri } from './ipfs'
 import { recordError } from './logger'
@@ -99,5 +100,5 @@ export const fetchNftImage = async ({
     }
   }
 
-  return { image: require('../assets/no_img.png'), metadata: null }
+  return { image: images.no_img, metadata: null }
 }
