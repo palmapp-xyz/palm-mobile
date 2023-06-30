@@ -10,12 +10,12 @@ import {
 } from 'components'
 import Loading from 'components/atoms/Loading'
 import { COLOR } from 'core/consts'
-import { getMnemonic, getPkey } from 'core/libs/account'
 import { Routes } from 'core/libs/navigation'
 import appStore from 'core/store/appStore'
 import useRecoverAccount from 'hooks/page/account/useRecoverAccount'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
+import PkeyManager from 'libs/PkeyManager'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -48,7 +48,9 @@ const RecoverAccountScreen = (): ReactElement => {
 
   const onPressConfirm = async (): Promise<void> => {
     if (recoverType === 'resetPin') {
-      const k = usePkey ? await getPkey() : (await getMnemonic()).split(' ')
+      const k = usePkey
+        ? await PkeyManager.getPkey()
+        : (await PkeyManager.getMnemonic()).split(' ')
 
       const match = usePkey
         ? k === privateKey

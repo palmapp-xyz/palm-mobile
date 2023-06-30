@@ -1,6 +1,7 @@
 import { UTIL } from 'core/libs'
 import apiV1Fabricator from 'core/libs/apiV1Fabricator'
 import {
+  ActionStartEndCallback,
   ApiEnum,
   FbChannel,
   FbProfile,
@@ -9,14 +10,12 @@ import {
 } from 'core/types'
 import { format } from 'date-fns'
 import useApi from 'hooks/complex/useApi'
-import { useRef, useState } from 'react'
-import { Animated } from 'react-native'
+import { useState } from 'react'
 import { useQuery } from 'react-query'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type UseExploreSearchReturn = {
-  scrollOffsetY: Animated.Value
   inputSearch: string
   setInputSearch: (value: string) => void
   isSearching: boolean
@@ -32,8 +31,11 @@ export type UseExploreSearchReturn = {
   >
 }
 
-const useExploreSearch = (): UseExploreSearchReturn => {
-  const scrollOffsetY = useRef(new Animated.Value(0)).current
+const useExploreSearch = ({
+  onClickConfirmCallback,
+}: {
+  onClickConfirmCallback?: ActionStartEndCallback
+}): UseExploreSearchReturn => {
   const [inputSearch, setInputSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [searchChannelResult, setSearchChannelResult] = useState<FbChannel[]>(
@@ -85,7 +87,7 @@ const useExploreSearch = (): UseExploreSearchReturn => {
     }
 
     setIsSearching(true)
-    scrollOffsetY.setValue(0)
+    onClickConfirmCallback?.start?.()
     await addRecentlySearch(query)
     refetchRecentlySearch()
     setSearchChannelResult([])
@@ -115,11 +117,11 @@ const useExploreSearch = (): UseExploreSearchReturn => {
       }
     } finally {
       setIsSearching(false)
+      onClickConfirmCallback?.end?.()
     }
   }
 
   return {
-    scrollOffsetY,
     inputSearch,
     setInputSearch,
     isSearching,

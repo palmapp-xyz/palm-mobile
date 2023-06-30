@@ -1,3 +1,4 @@
+import Config from 'config'
 import { ADDRESS_MAP, NETWORK } from 'core/consts'
 import { UTIL } from 'core/libs'
 import {
@@ -7,7 +8,6 @@ import {
   SupportedNetworkEnum,
 } from 'core/types'
 import { useMemo } from 'react'
-import { Config } from 'react-native-config'
 
 const useNetwork = (): {
   apiPath: string

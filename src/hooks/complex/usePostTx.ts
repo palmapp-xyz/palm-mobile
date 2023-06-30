@@ -1,5 +1,4 @@
 import { UTIL } from 'core/libs'
-import { getPkey } from 'core/libs/account'
 import postTxStore from 'core/store/postTxStore'
 import {
   ContractAddr,
@@ -10,6 +9,7 @@ import {
   SupportedNetworkEnum,
 } from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
+import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
 import { useSetRecoilState } from 'recoil'
 
@@ -85,7 +85,7 @@ export const usePostTx = ({
     if (user) {
       try {
         const userAddress = user.address
-        const pkey = await getPkey()
+        const pkey = await PkeyManager.getPkey()
         const account = web3.eth.accounts.privateKeyToAccount(pkey)
         web3.eth.accounts.wallet.add(account)
 

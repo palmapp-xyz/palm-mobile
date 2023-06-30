@@ -39,15 +39,13 @@ const ExploreScreen = (): ReactElement => {
   const { t } = useTranslation()
   const [searchFocused, setSearchFocused] = useState(false)
   const inputRef = useRef<TextInput>(null)
+  const scrollOffsetY = useRef(new Animated.Value(0)).current
 
-  const useExploreSearchReturn = useExploreSearch()
-  const {
-    scrollOffsetY,
-    inputSearch,
-    setInputSearch,
-    isSearching,
-    onClickConfirm,
-  } = useExploreSearchReturn
+  const useExploreSearchReturn = useExploreSearch({
+    onClickConfirmCallback: { start: () => scrollOffsetY.setValue(0) },
+  })
+  const { inputSearch, setInputSearch, isSearching, onClickConfirm } =
+    useExploreSearchReturn
 
   return (
     <Container style={styles.container}>

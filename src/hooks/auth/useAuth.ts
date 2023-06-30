@@ -1,11 +1,5 @@
 import { AuthenticationResult } from 'core/graphqls/__generated__/graphql'
 import { UTIL } from 'core/libs'
-import {
-  generateEvmHdAccount,
-  removeKeys,
-  saveMnemonic,
-  savePkey,
-} from 'core/libs/account'
 import { getFsProfile } from 'core/libs/firebase'
 import { recordError } from 'core/libs/logger'
 import { resetNewPin, resetPin } from 'core/libs/pin'
@@ -21,6 +15,7 @@ import {
   User,
 } from 'core/types'
 import useLensAuth from 'hooks/lens/useLensAuth'
+import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
 import { useState } from 'react'
 import RNRestart from 'react-native-restart'
@@ -79,9 +74,9 @@ const useAuth = (): UseAuthReturn => {
   }
 
   const registerMnemonic = async (mnemonic: string): Promise<void> => {
-    const wallet = await generateEvmHdAccount(mnemonic)
-    await savePkey(wallet.privateKey)
-    await saveMnemonic(mnemonic)
+    const wallet = await PkeyManager.generateEvmHdAccount(mnemonic)
+    await PkeyManager.savePkey(wallet.privateKey)
+    await PkeyManager.saveMnemonic(mnemonic)
   }
 
   const restoreAuth = async (restore: AuthStorageType): Promise<void> => {
@@ -223,7 +218,7 @@ const useAuth = (): UseAuthReturn => {
   const logout = async (): Promise<void> => {
     await Promise.all([
       AsyncStorage.clear(),
-      removeKeys(),
+      PkeyManager.removeKeys(),
       auth().signOut(),
       disconnect(),
       resetPin(),

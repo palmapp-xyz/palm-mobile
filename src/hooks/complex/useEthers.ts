@@ -1,8 +1,8 @@
 import { NETWORK } from 'core/consts'
 import { UTIL } from 'core/libs'
-import { getPkey } from 'core/libs/account'
 import { ChainNetworkEnum, SupportedNetworkEnum } from 'core/types'
 import { TypedDataDomain, Wallet, ethers } from 'ethers'
+import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 
@@ -45,7 +45,7 @@ const useEthers = (): UseEthersReturn => {
 
   const getSigner = useCallback(
     async (chain: SupportedNetworkEnum) => {
-      const pKey = await getPkey()
+      const pKey = await PkeyManager.getPkey()
       if (!pKey) {
         return undefined
       }
@@ -61,7 +61,7 @@ const useEthers = (): UseEthersReturn => {
       types: Record<string, any>,
       value: Record<string, any>
     ): Promise<string | undefined> => {
-      const pKey = await getPkey()
+      const pKey = await PkeyManager.getPkey()
       const signer = new Wallet(pKey, providers[chain])
       if (!signer) {
         return undefined

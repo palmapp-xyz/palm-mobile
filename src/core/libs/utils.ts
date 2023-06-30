@@ -1,6 +1,7 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
 import images from 'assets/images'
 import BigNumber from 'bignumber.js'
+import Config from 'config'
 import { NETWORK } from 'core/consts'
 import {
   ChainNetworkEnum,
@@ -14,7 +15,6 @@ import {
   uToken,
 } from 'core/types'
 import _ from 'lodash'
-import Config from 'react-native-config'
 import { URL } from 'react-native-url-polyfill'
 
 const getContrastColor = (

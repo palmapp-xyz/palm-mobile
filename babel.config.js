@@ -13,6 +13,7 @@ module.exports = function (api) {
         'core/consts': './src/core/consts',
         'core/graphqls': './src/core/graphqls',
         assets: './src/assets',
+        config: './src/config',
         components: './src/components',
         hooks: './src/hooks',
       },

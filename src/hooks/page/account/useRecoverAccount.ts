@@ -1,7 +1,7 @@
 import { validateMnemonic } from 'bip39'
-import { savePkey } from 'core/libs/account'
 import { recordError } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
+import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -70,7 +70,7 @@ const useRecoverAccount = (): UseRecoverAccountReturn => {
   const onClickConfirm = async (): Promise<void> => {
     try {
       if (usePkey) {
-        await savePkey(privateKey)
+        await PkeyManager.savePkey(privateKey)
       } else {
         await registerMnemonic(mnemonic)
       }

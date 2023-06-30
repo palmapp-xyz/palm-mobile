@@ -11,6 +11,7 @@
       "core/graphqls/*": ["./core/graphqls/*"],
       "hooks/*": ["./hooks/*"],
       "assets/*": ["./assets/*"],
+      "config": ["./config"],
       "components": ["./components"]
     },
     "types": ["react-native", "jest", "styled-components-react-native"],

@@ -1,71 +1,19 @@
-import { KeyChainEnum } from 'core/types'
-import { utils, Wallet } from 'ethers'
-import { mnemonicToSeed } from 'ethers/lib/utils'
-import {
-  getInternetCredentials,
-  resetInternetCredentials,
-  setInternetCredentials,
-} from 'react-native-keychain'
+import { Wallet } from 'ethers'
 
-export const saveMnemonic = async (mnemonic: string): Promise<void> => {
-  await setInternetCredentials(
-    KeyChainEnum.MNEMONIC,
-    KeyChainEnum.MNEMONIC,
-    mnemonic
-  )
-}
+export interface PKeyManagerInterface {
+  saveMnemonic: (mnemonic: string) => Promise<void>
 
-export const savePkey = async (privateKey: string): Promise<void> => {
-  await setInternetCredentials(KeyChainEnum.PK, KeyChainEnum.PK, privateKey)
-}
+  savePkey: (privateKey: string) => Promise<void>
 
-export const savePkeyPwd = async (pKeyPwd: string): Promise<void> => {
-  await setInternetCredentials(
-    KeyChainEnum.PK_PWD,
-    KeyChainEnum.PK_PWD,
-    pKeyPwd
-  )
-}
+  savePkeyPwd: (pKeyPwd: string) => Promise<void>
 
-export const getPkey = async (): Promise<string> => {
-  const res = await getInternetCredentials(KeyChainEnum.PK)
-  if (res) {
-    return res.password
-  }
-  return ''
-}
+  getPkey: () => Promise<string>
 
-export const getMnemonic = async (): Promise<string> => {
-  const res = await getInternetCredentials(KeyChainEnum.MNEMONIC)
-  if (res) {
-    return res.password
-  }
-  return ''
-}
+  getMnemonic: () => Promise<string>
 
-export const removeKeys = async (): Promise<void> => {
-  await Promise.all([
-    resetInternetCredentials(KeyChainEnum.PK),
-    resetInternetCredentials(KeyChainEnum.PK_PWD),
-    resetInternetCredentials(KeyChainEnum.MNEMONIC),
-  ])
-}
+  removeKeys: () => Promise<void>
 
-export const getPkeyPwd = async (): Promise<string> => {
-  const res = await getInternetCredentials(KeyChainEnum.PK_PWD)
-  if (res) {
-    return res.password
-  }
-  return ''
-}
+  getPkeyPwd: () => Promise<string>
 
-export const generateEvmHdAccount = async (
-  mnemonic: string
-): Promise<Wallet> => {
-  const derivationPath = "m/44'/60'/0'/0/0"
-  const seed = mnemonicToSeed(mnemonic)
-  const hdNode = utils.HDNode.fromSeed(seed)
-  const derivedHdNode = hdNode.derivePath(derivationPath)
-
-  return new Wallet(derivedHdNode)
+  generateEvmHdAccount: (mnemonic: string) => Wallet
 }

@@ -1,8 +1,8 @@
-import { getPkey } from 'core/libs/account'
 import { QueryKeyEnum, SupportedNetworkEnum } from 'core/types'
 import { ethers } from 'ethers'
 import { NftSwapV4 } from 'evm-nft-swap'
 import useNetwork from 'hooks/complex/useNetwork'
+import PkeyManager from 'libs/PkeyManager'
 import { useQuery } from 'react-query'
 
 export type UseZxReturn = { nftSwapSdk?: NftSwapV4 }
@@ -16,7 +16,7 @@ const useZx = (chain: SupportedNetworkEnum): UseZxReturn => {
     [QueryKeyEnum.ZX_SWAP_SDK_V4, connectedNetworkParam, connectedNetworkId],
     async () => {
       try {
-        const pKey = await getPkey()
+        const pKey = await PkeyManager.getPkey()
 
         const provider = new ethers.providers.JsonRpcProvider(
           connectedNetworkParam.rpcUrls[0]

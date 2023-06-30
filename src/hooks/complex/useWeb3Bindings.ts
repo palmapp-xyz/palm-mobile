@@ -1,6 +1,6 @@
-import { getPkey } from 'core/libs/account'
 import { QueryKeyEnum, SupportedNetworkEnum } from 'core/types'
-import { ethers, VoidSigner } from 'ethers'
+import { VoidSigner, ethers } from 'ethers'
+import PkeyManager from 'libs/PkeyManager'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 
@@ -33,7 +33,7 @@ const useWeb3Bindings = (
     },
   } = useQuery([QueryKeyEnum.WEB3_BINDINGS, provider], async () => {
     try {
-      const pKey = await getPkey()
+      const pKey = await PkeyManager.getPkey()
       if (pKey) {
         const signer = new ethers.Wallet(pKey, provider)
         return {

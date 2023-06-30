@@ -1,4 +1,4 @@
-import Config from 'react-native-config'
+import Config from 'config'
 import EncryptedStorage from 'react-native-encrypted-storage'
 
 import * as WebBrowser from '@toruslabs/react-native-web-browser'

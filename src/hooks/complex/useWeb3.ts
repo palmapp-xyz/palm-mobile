@@ -1,6 +1,5 @@
 import { NETWORK } from 'core/consts'
 import { UTIL } from 'core/libs'
-import { getPkey } from 'core/libs/account'
 import postTxStore from 'core/store/postTxStore'
 import {
   ChainNetworkEnum,
@@ -9,6 +8,7 @@ import {
   pToken,
   SupportedNetworkEnum,
 } from 'core/types'
+import PkeyManager from 'libs/PkeyManager'
 import { useMemo } from 'react'
 import { useSetRecoilState } from 'recoil'
 import Web3 from 'web3'
@@ -51,7 +51,7 @@ const useWeb3 = (chain: SupportedNetworkEnum): UseWeb3Return => {
   )
 
   const getSigner = async (): Promise<Account | undefined> => {
-    const pKey = await getPkey()
+    const pKey = await PkeyManager.getPkey()
     if (pKey) {
       return web3.eth.accounts.privateKeyToAccount(pKey)
     }
@@ -66,7 +66,7 @@ const useWeb3 = (chain: SupportedNetworkEnum): UseWeb3Return => {
     to: ContractAddr,
     value: pToken
   ): Promise<TransactionReceipt | undefined> => {
-    const pKey = await getPkey()
+    const pKey = await PkeyManager.getPkey()
     if (!pKey) {
       return undefined
     }
