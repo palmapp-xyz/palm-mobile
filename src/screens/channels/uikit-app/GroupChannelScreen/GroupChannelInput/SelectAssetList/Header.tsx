@@ -1,11 +1,11 @@
 import { Row, SupportedNetworkRow } from 'components'
 import { COLOR } from 'core/consts'
+import { SupportedNetworkEnum } from 'core/types'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { SupportedNetworkEnum } from 'types'
 
 const Header = ({
   useGcInputReturn,

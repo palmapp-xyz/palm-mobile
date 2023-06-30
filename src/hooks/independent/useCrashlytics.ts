@@ -1,5 +1,5 @@
+import { log } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
-import { log } from 'libs/logger'
 import { useEffect } from 'react'
 
 import crashlytics from '@react-native-firebase/crashlytics'

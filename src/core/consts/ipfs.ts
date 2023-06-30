@@ -1,4 +1,4 @@
-import { IPFSResolverOptions } from 'types'
+import { IPFSResolverOptions } from 'core/types'
 
 const defaultIpfsGateway = 'https://gateway.ipfscdn.io/ipfs/'
 

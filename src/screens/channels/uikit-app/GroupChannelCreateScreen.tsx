@@ -1,4 +1,4 @@
-import { Routes } from 'libs/navigation'
+import { Routes } from 'core/libs/navigation'
 import React, { ReactElement } from 'react'
 
 import { createGroupChannelCreateFragment } from '@sendbird/uikit-react-native'

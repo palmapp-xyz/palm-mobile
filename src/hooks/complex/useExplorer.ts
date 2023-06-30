@@ -1,7 +1,7 @@
 import { NETWORK } from 'core/consts'
-import { isMainnet } from 'libs/utils'
+import { isMainnet } from 'core/libs/utils'
+import { NetworkTypeEnum, SupportedNetworkEnum } from 'core/types'
 import { useCallback, useMemo } from 'react'
-import { NetworkTypeEnum, SupportedNetworkEnum } from 'types'
 
 export type UseExplorerReturn = {
   getLink: (props: {

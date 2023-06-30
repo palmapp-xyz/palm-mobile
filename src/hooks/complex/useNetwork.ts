@@ -1,13 +1,13 @@
 import { ADDRESS_MAP, NETWORK } from 'core/consts'
-import { isMainnet } from 'libs/utils'
-import { useMemo } from 'react'
-import { Config } from 'react-native-config'
+import { isMainnet } from 'core/libs/utils'
 import {
   AddEthereumChainParameter,
   ContractMap,
   NetworkTypeEnum,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import { useMemo } from 'react'
+import { Config } from 'react-native-config'
 
 const useNetwork = (): {
   apiPath: string

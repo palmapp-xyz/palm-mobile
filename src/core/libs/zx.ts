@@ -1,10 +1,10 @@
+import { ContractAddr } from 'core/types'
 import {
   SignedERC1155OrderStructSerialized,
   SignedERC721OrderStructSerialized,
   SignedNftOrderV4,
   SignedNftOrderV4Serialized,
 } from 'evm-nft-swap'
-import { ContractAddr } from 'types'
 
 import { recordError } from './logger'
 

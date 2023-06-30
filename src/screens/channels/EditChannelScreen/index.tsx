@@ -9,11 +9,11 @@ import {
   Tag,
 } from 'components'
 import { COLOR, UTIL } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useEditChannel from 'hooks/page/groupChannel/useEditChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'

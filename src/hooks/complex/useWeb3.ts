@@ -1,16 +1,16 @@
 import { NETWORK } from 'core/consts'
-import { getPkey } from 'libs/account'
-import { isMainnet } from 'libs/utils'
-import { useMemo } from 'react'
-import { useSetRecoilState } from 'recoil'
-import postTxStore from 'store/postTxStore'
+import { getPkey } from 'core/libs/account'
+import { isMainnet } from 'core/libs/utils'
+import postTxStore from 'core/store/postTxStore'
 import {
   ChainNetworkEnum,
   ContractAddr,
   PostTxStatus,
   pToken,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import { useMemo } from 'react'
+import { useSetRecoilState } from 'recoil'
 import Web3 from 'web3'
 import { Account, TransactionConfig, TransactionReceipt } from 'web3-core'
 

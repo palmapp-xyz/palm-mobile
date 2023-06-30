@@ -1,5 +1,5 @@
+import { Moralis } from 'core/types'
 import { atom } from 'recoil'
-import { Moralis } from 'types'
 
 import storeKeys from './storeKeys'
 

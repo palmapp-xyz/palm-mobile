@@ -1,14 +1,14 @@
 import { Container, FormButton, Header } from 'components'
 import { COLOR } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
+import fetchApiStore from 'core/store/fetchApiStore'
 import useSign4Auth from 'hooks/page/sign/useSign4Auth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import RenderHtml from 'react-native-render-html'
 import { useRecoilValue } from 'recoil'
-import fetchApiStore from 'store/fetchApiStore'
 
 const Sign4AuthScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.Sign4Auth>()

@@ -1,7 +1,7 @@
+import appStore from 'core/store/appStore'
+import { FbProfile, FirestoreKeyEnum } from 'core/types'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { useRecoilState } from 'recoil'
-import appStore from 'store/appStore'
-import { FbProfile, FirestoreKeyEnum } from 'types'
 
 import firestore from '@react-native-firebase/firestore'
 

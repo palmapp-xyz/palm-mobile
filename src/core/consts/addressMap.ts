@@ -3,7 +3,7 @@ import {
   ContractMap,
   NetworkTypeEnum,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
 
 const contractMap: Record<NetworkTypeEnum, ContractMap> = {
   [NetworkTypeEnum.MAINNET]: {

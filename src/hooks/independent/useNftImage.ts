@@ -1,13 +1,13 @@
-import useReactQuery from 'hooks/complex/useReactQuery'
-import useNft from 'hooks/contract/useNft'
-import { isENS } from 'libs/ens'
-import { fetchNftImage } from 'libs/fetchTokenUri'
+import { isENS } from 'core/libs/ens'
+import { fetchNftImage } from 'core/libs/fetchTokenUri'
 import {
   ContractAddr,
   NftType,
   QueryKeyEnum,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useNft from 'hooks/contract/useNft'
 
 import { Maybe } from '@toruslabs/openlogin'
 

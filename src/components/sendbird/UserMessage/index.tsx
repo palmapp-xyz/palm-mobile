@@ -1,4 +1,4 @@
-import { parseMsgData } from 'libs/sendbird'
+import { parseMsgData } from 'core/libs/sendbird'
 import React, { ReactElement } from 'react'
 
 import OpenGraphUserMessage from '@sendbird/uikit-react-native/src/components/MessageRenderer/UserMessage/OpenGraphUserMessage'

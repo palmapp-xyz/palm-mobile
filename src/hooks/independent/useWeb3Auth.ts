@@ -1,4 +1,4 @@
-import { web3auth } from 'libs/web3auth'
+import { web3auth } from 'core/libs/web3auth'
 import { useState } from 'react'
 
 import { useAsyncLayoutEffect } from '@sendbird/uikit-utils'

@@ -1,6 +1,11 @@
+import {
+  ContractAddr,
+  pToken,
+  QueryKeyEnum,
+  SupportedNetworkEnum,
+} from 'core/types'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useWeb3 from 'hooks/complex/useWeb3'
-import { ContractAddr, pToken, QueryKeyEnum, SupportedNetworkEnum } from 'types'
 
 export type UseUserBalanceReturn = {
   balance: pToken

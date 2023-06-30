@@ -1,9 +1,9 @@
 import { FormText, Row } from 'components'
 import { COLOR } from 'core/consts'
+import { ChannelType } from 'core/types'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
 import React, { ReactElement } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { ChannelType } from 'types'
 
 import Avatar from './Avatar'
 import ChannelCover from './ChannelCover'

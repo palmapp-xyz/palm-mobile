@@ -4,19 +4,19 @@ import MediaRenderer, {
 } from 'components/molecules/MediaRenderer'
 import NftAttributes from 'components/molecules/NftAttributes'
 import { COLOR, UTIL } from 'core/consts'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import useNft from 'hooks/contract/useNft'
-import useNftImage from 'hooks/independent/useNftImage'
-import React, { ReactElement, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 import {
   ContractAddr,
   Moralis,
   NftType,
   QueryKeyEnum,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useNft from 'hooks/contract/useNft'
+import useNftImage from 'hooks/independent/useNftImage'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 

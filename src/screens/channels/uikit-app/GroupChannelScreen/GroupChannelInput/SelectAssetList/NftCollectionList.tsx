@@ -1,12 +1,12 @@
 import Indicator from 'components/atoms/Indicator'
 import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
+import { ContractAddr } from 'core/types'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { ContractAddr } from 'types'
 
 const NftCollectionList = ({
   useGcInputReturn,

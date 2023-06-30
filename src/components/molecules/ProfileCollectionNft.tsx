@@ -2,15 +2,15 @@ import Card from 'components/atoms/Card'
 import FormText from 'components/atoms/FormText'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
 import { COLOR, UTIL } from 'core/consts'
+import { Moralis } from 'core/types'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import {
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native'
-import { Moralis } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 

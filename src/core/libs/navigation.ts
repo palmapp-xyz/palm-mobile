@@ -1,6 +1,11 @@
+import {
+  ContractAddr,
+  Moralis,
+  NftType,
+  SupportedNetworkEnum,
+} from 'core/types'
 import { RecoverAccountType } from 'screens/auth/RecoverAccountScreen'
 import { PinType } from 'screens/PinScreen'
-import { ContractAddr, Moralis, NftType, SupportedNetworkEnum } from 'types'
 
 import {
   createNavigationContainerRef,

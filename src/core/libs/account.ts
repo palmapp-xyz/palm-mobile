@@ -1,3 +1,4 @@
+import { KeyChainEnum } from 'core/types'
 import { utils, Wallet } from 'ethers'
 import { mnemonicToSeed } from 'ethers/lib/utils'
 import {
@@ -5,7 +6,6 @@ import {
   resetInternetCredentials,
   setInternetCredentials,
 } from 'react-native-keychain'
-import { KeyChainEnum } from 'types'
 
 export const saveMnemonic = async (mnemonic: string): Promise<void> => {
   await setInternetCredentials(

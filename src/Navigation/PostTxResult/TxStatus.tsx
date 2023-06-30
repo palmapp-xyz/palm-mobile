@@ -1,5 +1,7 @@
 import images from 'assets/images'
 import { Card, FormButton, FormImage, LinkExplorer } from 'components'
+import postTxStore from 'core/store/postTxStore'
+import { PostTxStatus } from 'core/types'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,9 +13,7 @@ import {
   View,
 } from 'react-native'
 import { useRecoilValue } from 'recoil'
-import postTxStore from 'store/postTxStore'
 import styled from 'styled-components'
-import { PostTxStatus } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 

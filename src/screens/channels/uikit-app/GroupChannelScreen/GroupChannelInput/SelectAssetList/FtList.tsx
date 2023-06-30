@@ -2,12 +2,12 @@ import { FormText } from 'components'
 import Indicator from 'components/atoms/Indicator'
 import MoralisErc20Token from 'components/MoralisErc20Token'
 import { COLOR, UTIL } from 'core/consts'
+import { ContractAddr, pToken } from 'core/types'
 import useUserFtList from 'hooks/api/useUserFtList'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { ContractAddr, pToken } from 'types'
 
 const FtList = ({
   useGcInputReturn,

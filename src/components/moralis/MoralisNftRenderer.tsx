@@ -1,10 +1,10 @@
 import MediaRenderer from 'components/molecules/MediaRenderer'
 import NftRenderer from 'components/molecules/NftRenderer'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { Moralis, SupportedNetworkEnum } from 'core/types'
 import React, { ReactElement } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
 import { ImageStyle } from 'react-native-fast-image'
-import { Moralis, SupportedNetworkEnum } from 'types'
 
 const MoralisNftRenderer = ({
   item,

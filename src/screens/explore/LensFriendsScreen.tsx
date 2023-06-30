@@ -1,21 +1,26 @@
 import { Container } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
+import { getFsProfile } from 'core/libs/firebase'
+import { getProfileMediaImg } from 'core/libs/lens'
+import { recordError } from 'core/libs/logger'
+import { Routes } from 'core/libs/navigation'
+import { filterUndefined } from 'core/libs/utils'
+import appStore from 'core/store/appStore'
+import {
+  ChannelType,
+  ContractAddr,
+  FbProfile,
+  SbUserMetadata,
+} from 'core/types'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useIpfs from 'hooks/complex/useIpfs'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { getFsProfile } from 'libs/firebase'
-import { getProfileMediaImg } from 'libs/lens'
-import { recordError } from 'libs/logger'
-import { Routes } from 'libs/navigation'
-import { filterUndefined } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
 import { useSetRecoilState } from 'recoil'
-import appStore from 'store/appStore'
-import { ChannelType, ContractAddr, FbProfile, SbUserMetadata } from 'types'
 
 import {
   ExtendedProfile,

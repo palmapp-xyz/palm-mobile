@@ -1,9 +1,9 @@
 import { Card, FormText, MoralisNftRenderer, Row } from 'components'
 import NftAttributes from 'components/molecules/NftAttributes'
 import { COLOR } from 'core/consts'
+import { Moralis } from 'core/types'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Moralis } from 'types'
 
 const NftCard = ({
   selectedNft,

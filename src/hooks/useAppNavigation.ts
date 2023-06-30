@@ -8,7 +8,7 @@ import type {
   Routes,
   ScreenPropsNavigation,
   ScreenPropsRoute,
-} from 'libs/navigation'
+} from 'core/libs/navigation'
 
 export const useRouteParams = <T extends Routes>(): NonNullable<
   Readonly<RouteParams<T>> | undefined

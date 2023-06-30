@@ -1,4 +1,4 @@
-import { ContractAddr } from 'types'
+import { ContractAddr } from 'core/types'
 
 import { compareContractAddr } from './utils'
 

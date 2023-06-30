@@ -4,11 +4,11 @@ import {
   ChallengeDocument,
   RefreshDocument,
   VerifyDocument,
-} from 'graphqls/__generated__/graphql'
+} from 'core/graphqls/__generated__/graphql'
+import { recordError } from 'core/libs/logger'
+import { parseJwt } from 'core/libs/utils'
+import { SupportedNetworkEnum, TrueOrErrReturn } from 'core/types'
 import useWeb3 from 'hooks/complex/useWeb3'
-import { recordError } from 'libs/logger'
-import { parseJwt } from 'libs/utils'
-import { SupportedNetworkEnum, TrueOrErrReturn } from 'types'
 
 import {
   ApolloQueryResult,

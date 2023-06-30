@@ -1,6 +1,6 @@
-import { getProfileMediaImg } from 'libs/lens'
+import { getProfileMediaImg } from 'core/libs/lens'
+import { ContractAddr, FbProfile, SbUserMetadata } from 'core/types'
 import { useEffect, useState } from 'react'
-import { ContractAddr, FbProfile, SbUserMetadata } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,

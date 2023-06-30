@@ -1,4 +1,4 @@
-import { resolveIpfsUri, resolveMimeType } from 'libs/ipfs'
+import { resolveIpfsUri, resolveMimeType } from 'core/libs/ipfs'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 

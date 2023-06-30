@@ -1,4 +1,4 @@
-import { Routes } from 'libs/navigation'
+import { Routes } from 'core/libs/navigation'
 import React, { ReactElement } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'

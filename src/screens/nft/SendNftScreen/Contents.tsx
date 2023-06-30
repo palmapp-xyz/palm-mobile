@@ -1,12 +1,12 @@
 import images from 'assets/images'
 import { FormButton, FormImage, FormText, MediaRenderer, Row } from 'components'
 import NftCard from 'components/channel/NftCard'
-import { getFsProfile } from 'libs/firebase'
-import { getProfileMediaImg } from 'libs/lens'
+import { getFsProfile } from 'core/libs/firebase'
+import { getProfileMediaImg } from 'core/libs/lens'
+import { FbProfile, Moralis } from 'core/types'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { FbProfile, Moralis } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 

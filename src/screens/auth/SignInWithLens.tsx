@@ -1,7 +1,7 @@
 import LensLogo from 'assets/LensLogo'
 import { Container, FormText } from 'components'
+import { recordError } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
-import { recordError } from 'libs/logger'
 import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

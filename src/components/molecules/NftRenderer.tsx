@@ -1,9 +1,9 @@
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'core/types'
 import useNftImage from 'hooks/independent/useNftImage'
 import React, { ReactElement } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
 import { ImageStyle as RNFastImageStyle } from 'react-native-fast-image'
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'types'
 
 import { Maybe } from '@toruslabs/openlogin'
 

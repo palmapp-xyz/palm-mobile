@@ -1,6 +1,6 @@
 import { UTIL } from 'core/consts'
+import { LocalStorageKey } from 'core/types'
 import { useQuery } from 'react-query'
-import { LocalStorageKey } from 'types'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 

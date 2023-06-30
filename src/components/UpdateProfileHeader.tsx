@@ -1,9 +1,10 @@
 import images from 'assets/images'
 import { FormImage, MediaRenderer } from 'components'
 import { COLOR } from 'core/consts'
+import { getProfileMediaImg } from 'core/libs/lens'
+import { ContractAddr } from 'core/types'
 import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { getProfileMediaImg } from 'libs/lens'
 import React, { ReactElement } from 'react'
 import {
   ImageBackground,
@@ -13,7 +14,6 @@ import {
   View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr } from 'types'
 
 export type UpdateProfileHeaderProps = {
   userAddress?: ContractAddr

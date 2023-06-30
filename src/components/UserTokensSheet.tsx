@@ -1,11 +1,11 @@
 import { FormBottomSheet, SupportedNetworkRow } from 'components'
 import { COLOR } from 'core/consts'
+import { pToken, SupportedNetworkEnum } from 'core/types'
 import useUserFtList from 'hooks/api/useUserFtList'
 import useAuth from 'hooks/auth/useAuth'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import { pToken, SupportedNetworkEnum } from 'types'
 
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 

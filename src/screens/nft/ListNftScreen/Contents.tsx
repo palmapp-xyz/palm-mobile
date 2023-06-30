@@ -2,10 +2,11 @@ import { FormButton, FormImage, FormInput, FormText, Row } from 'components'
 import UsdPrice from 'components/atoms/UsdPrice'
 import NftCard from 'components/channel/NftCard'
 import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
+import { Moralis, SupportedNetworkEnum, Token } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import { UseZxListNftReturn } from 'hooks/zx/useZxListNft'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -16,7 +17,6 @@ import {
   View,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Moralis, SupportedNetworkEnum, Token } from 'types'
 
 const Contents = ({
   selectedNft,

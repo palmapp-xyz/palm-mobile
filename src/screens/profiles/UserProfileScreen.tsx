@@ -2,9 +2,10 @@ import { Container } from 'components'
 import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import ProfileFooter from 'components/ProfileFooter'
 import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
+import { Routes } from 'core/libs/navigation'
+import { Moralis, SupportedNetworkEnum } from 'core/types'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement, useState } from 'react'
 import {
   FlatList,
@@ -12,7 +13,6 @@ import {
   Platform,
   RefreshControl,
 } from 'react-native'
-import { Moralis, SupportedNetworkEnum } from 'types'
 
 import ProfileHeader from '../../components/ProfileHeader'
 

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
+import { pToken, Token, uToken } from 'core/types'
 import _ from 'lodash'
-import { pToken, Token, uToken } from 'types'
 
 const P_DECIMAL = 1e18
 const U_DECIMAL = 1e6

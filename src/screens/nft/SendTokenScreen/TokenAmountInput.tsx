@@ -1,10 +1,10 @@
 import images from 'assets/images'
 import { FormImage, FormInput, FormText, Row } from 'components'
 import { COLOR, UTIL } from 'core/consts'
-import { getTokenBalanceInUSD } from 'libs/utils'
+import { getTokenBalanceInUSD } from 'core/libs/utils'
+import { Moralis, SupportedNetworkEnum, Token } from 'core/types'
 import React, { Dispatch, ReactElement, SetStateAction, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Moralis, SupportedNetworkEnum, Token } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 

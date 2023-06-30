@@ -1,22 +1,22 @@
-import useAuth from 'hooks/auth/useAuth'
-import useProfile from 'hooks/auth/useProfile'
-import useDevice from 'hooks/complex/useDevice'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useToast from 'hooks/useToast'
-import { Routes } from 'libs/navigation'
-import { nftUriFetcher } from 'libs/nft'
-import { stringifyMsgData } from 'libs/sendbird'
-import _ from 'lodash'
-import { useMemo, useState } from 'react'
-import { SetterOrUpdater, useRecoilState } from 'recoil'
-import selectAssetStore from 'store/selectAssetStore'
+import { Routes } from 'core/libs/navigation'
+import { nftUriFetcher } from 'core/libs/nft'
+import { stringifyMsgData } from 'core/libs/sendbird'
+import selectAssetStore from 'core/store/selectAssetStore'
 import {
   ContractAddr,
   Moralis,
   SbShareNftDataType,
   SbUserMetadata,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
+import useDevice from 'hooks/complex/useDevice'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
+import _ from 'lodash'
+import { useMemo, useState } from 'react'
+import { SetterOrUpdater, useRecoilState } from 'recoil'
 
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
 import {

@@ -1,7 +1,7 @@
 import { COLOR, STYLE } from 'core/consts'
+import { FontSize, FontType } from 'core/types'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TextInput, TextInputProps } from 'react-native'
-import { FontSize, FontType } from 'types'
 
 const FormInput = (
   props: {

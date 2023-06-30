@@ -1,5 +1,6 @@
 import { COLOR } from 'core/consts'
-import { isMainnet } from 'libs/utils'
+import { isMainnet } from 'core/libs/utils'
+import { Moralis, SupportedNetworkEnum } from 'core/types'
 import React, { ReactElement, useState } from 'react'
 import {
   Menu,
@@ -8,7 +9,6 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Moralis, SupportedNetworkEnum } from 'types'
 
 const NftItemMenu = ({
   chainId,

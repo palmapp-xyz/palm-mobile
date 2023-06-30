@@ -1,11 +1,9 @@
-import { PaginatedProfileResult } from 'graphqls/__generated__/graphql'
+import { PaginatedProfileResult } from 'core/graphqls/__generated__/graphql'
+import { ContractAddr, QueryKeyEnum } from 'core/types'
 import { useMemo } from 'react'
-import { useQuery, UseQueryResult } from 'react-query'
-import { ContractAddr, QueryKeyEnum } from 'types'
+import { UseQueryResult, useQuery } from 'react-query'
 
-import {
-  Profile,
-} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
+import { Profile } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 
 import useLens from './useLens'
 

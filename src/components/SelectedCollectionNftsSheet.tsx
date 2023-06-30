@@ -6,20 +6,20 @@ import {
   NftItemMenu,
 } from 'components'
 import { COLOR } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 

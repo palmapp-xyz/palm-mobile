@@ -1,12 +1,12 @@
 import { Card, FormText } from 'components'
 import Avatar from 'components/sendbird/Avatar'
 import { COLOR, UTIL } from 'core/consts'
+import { getProfileMediaImg } from 'core/libs/lens'
+import { Routes } from 'core/libs/navigation'
+import { FbProfile } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { getProfileMediaImg } from 'libs/lens'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { FbProfile } from 'types'
 
 const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
   const { navigation } = useAppNavigation()

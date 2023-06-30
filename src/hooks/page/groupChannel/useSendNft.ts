@@ -1,16 +1,6 @@
-// import { UTIL } from 'consts'
-import useAuth from 'hooks/auth/useAuth'
-import usePostTx from 'hooks/complex/usePostTx'
-import useNft from 'hooks/contract/useNft'
 // import useExplorer from 'hooks/complex/useExplorer'
-import usePostTxStatusEffect, {
-  EffectListType,
-} from 'hooks/independent/usePostTxStatusEffect'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { navigationRef, Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import { useEffect, useMemo, useState } from 'react'
-import { useQueryClient } from 'react-query'
+import { navigationRef, Routes } from 'core/libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import {
   ApiEnum,
   ContractAddr,
@@ -19,7 +9,17 @@ import {
   PostTxStatus,
   pToken,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+// import { UTIL } from 'core/consts'
+import useAuth from 'hooks/auth/useAuth'
+import usePostTx from 'hooks/complex/usePostTx'
+import useNft from 'hooks/contract/useNft'
+import usePostTxStatusEffect, {
+  EffectListType,
+} from 'hooks/independent/usePostTxStatusEffect'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { useEffect, useMemo, useState } from 'react'
+import { useQueryClient } from 'react-query'
 
 export type UseSendNftReturn = {
   isPosting: boolean

@@ -1,7 +1,7 @@
+import { SupportedNetworkEnum } from 'core/types'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useWeb3 from 'hooks/complex/useWeb3'
 import { useEffect, useState } from 'react'
-import { SupportedNetworkEnum } from 'types'
 import { Account } from 'web3-core'
 
 export type UseCreateCompleteReturn = {

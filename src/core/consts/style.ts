@@ -1,5 +1,5 @@
+import { FontType } from 'core/types'
 import { StyleProp, TextStyle } from 'react-native'
-import { FontType } from 'types'
 
 const getFontStyle = (fontType: FontType): StyleProp<TextStyle> => {
   const weightType = fontType.split('.')[0]

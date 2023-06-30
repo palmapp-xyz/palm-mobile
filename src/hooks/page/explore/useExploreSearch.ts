@@ -1,17 +1,17 @@
 import { UTIL } from 'core/consts'
-import { format } from 'date-fns'
-import useApi from 'hooks/complex/useApi'
-import apiV1Fabricator from 'libs/apiV1Fabricator'
-import { useRef, useState } from 'react'
-import { Animated } from 'react-native'
-import { useQuery } from 'react-query'
+import apiV1Fabricator from 'core/libs/apiV1Fabricator'
 import {
   ApiEnum,
   FbChannel,
   FbProfile,
   LocalStorageKey,
   RecentlySearchItemStorageType,
-} from 'types'
+} from 'core/types'
+import { format } from 'date-fns'
+import useApi from 'hooks/complex/useApi'
+import { useRef, useState } from 'react'
+import { Animated } from 'react-native'
+import { useQuery } from 'react-query'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 

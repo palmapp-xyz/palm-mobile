@@ -1,5 +1,5 @@
+import { User } from 'core/types'
 import { atom } from 'recoil'
-import { User } from 'types'
 
 import storeKeys from './storeKeys'
 

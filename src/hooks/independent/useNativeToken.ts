@@ -1,9 +1,5 @@
 import axios from 'axios'
 import { UTIL } from 'core/consts'
-import useNetwork from 'hooks/complex/useNetwork'
-import useWeb3 from 'hooks/complex/useWeb3'
-import { useMemo } from 'react'
-import { useQuery } from 'react-query'
 import {
   ContractAddr,
   Moralis,
@@ -11,7 +7,11 @@ import {
   QueryKeyEnum,
   SupportedNetworkEnum,
   Token,
-} from 'types'
+} from 'core/types'
+import useNetwork from 'hooks/complex/useNetwork'
+import useWeb3 from 'hooks/complex/useWeb3'
+import { useMemo } from 'react'
+import { useQuery } from 'react-query'
 
 export type UseNativeTokenReturn = {
   nativeToken: Moralis.FtItem | undefined

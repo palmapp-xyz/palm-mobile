@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 // import useApi from 'hooks/complex/useApi'
-import useNetwork from 'hooks/complex/useNetwork'
-import apiV1Fabricator from 'libs/apiV1Fabricator'
+import apiV1Fabricator from 'core/libs/apiV1Fabricator'
 import {
   ApiEnum,
   ApiResponse,
@@ -9,7 +8,8 @@ import {
   AuthChallengeResult,
   ContractAddr,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import useNetwork from 'hooks/complex/useNetwork'
 
 export type UseAuthChallengeReturn = {
   challengeRequest: (address: ContractAddr) => Promise<AuthChallengeInfo>

@@ -1,15 +1,15 @@
 import Card from 'components/atoms/Card'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
+import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
 import React, { ReactElement, useState } from 'react'
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native'
 import Collapsible from 'react-native-collapsible'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
 import ChainLogoWrapper from './ChainLogoWrapper'
 import CollectionNftItems from './CollectionNftItems'

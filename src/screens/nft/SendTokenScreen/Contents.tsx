@@ -8,10 +8,11 @@ import {
   Row,
 } from 'components'
 import { UTIL } from 'core/consts'
+import { getFsProfile } from 'core/libs/firebase'
+import { getProfileMediaImg } from 'core/libs/lens'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { FbProfile, Moralis, SupportedNetworkEnum, Token } from 'core/types'
 import useSendToken from 'hooks/page/groupChannel/useSendToken'
-import { getFsProfile } from 'libs/firebase'
-import { getProfileMediaImg } from 'libs/lens'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, {
   Dispatch,
   ReactElement,
@@ -21,7 +22,6 @@ import React, {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { FbProfile, Moralis, SupportedNetworkEnum, Token } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 

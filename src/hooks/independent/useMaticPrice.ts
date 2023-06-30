@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { UTIL } from 'core/consts'
+import { pToken, QueryKeyEnum } from 'core/types'
 import { useQuery } from 'react-query'
-import { pToken, QueryKeyEnum } from 'types'
 
 export type UseMaticPriceReturn = {
   getMaticPrice: (amount: pToken) => pToken

@@ -2,12 +2,12 @@ import FormText from 'components/atoms/FormText'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
 import { COLOR, UTIL } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { SbShareNftDataType, SupportedNetworkEnum } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
-import { SbShareNftDataType, SupportedNetworkEnum } from 'types'
 
 const ShareNftMessage = ({
   data,

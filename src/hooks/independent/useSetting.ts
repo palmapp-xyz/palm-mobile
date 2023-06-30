@@ -1,8 +1,8 @@
 import { UTIL } from 'core/consts'
+import { LocalStorageKey, SettingStorageType } from 'core/types'
 import { useEffect, useState } from 'react'
 import RNRestart from 'react-native-restart'
 import { useQuery } from 'react-query'
-import { LocalStorageKey, SettingStorageType } from 'types'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 

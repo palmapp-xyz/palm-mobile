@@ -1,10 +1,10 @@
+import { Moralis, SupportedNetworkEnum, User } from 'core/types'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
 import useAuth from 'hooks/auth/useAuth'
 import useUserBalance, {
   UseUserBalanceReturn,
 } from 'hooks/independent/useUserBalance'
-import { Moralis, SupportedNetworkEnum, User } from 'types'
 
 export type UseMyPageMainReturn = {
   user?: User

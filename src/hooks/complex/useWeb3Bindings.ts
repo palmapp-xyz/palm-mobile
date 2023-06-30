@@ -1,8 +1,8 @@
-import { ethers, VoidSigner } from 'ethers'
-import { getPkey } from 'libs/account'
+import { getPkey } from 'core/libs/account'
+import { QueryKeyEnum, SupportedNetworkEnum } from 'core/types'
+import { VoidSigner, ethers } from 'ethers'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { QueryKeyEnum, SupportedNetworkEnum } from 'types'
 
 import { IBindings } from '@lens-protocol/react'
 

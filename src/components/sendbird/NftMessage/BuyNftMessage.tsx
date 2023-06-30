@@ -4,21 +4,21 @@ import UserMention from 'components/atoms/UserMention'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import { COLOR, UTIL } from 'core/consts'
-import useExplorer from 'hooks/complex/useExplorer'
-import useNft from 'hooks/contract/useNft'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
-import React, { ReactElement, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Routes } from 'core/libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import {
   ContractAddr,
   NftType,
   SbBuyNftDataType,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import useExplorer from 'hooks/complex/useExplorer'
+import useNft from 'hooks/contract/useNft'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import React, { ReactElement, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 

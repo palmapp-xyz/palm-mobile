@@ -1,5 +1,5 @@
-import { Profile } from 'graphqls/__generated__/graphql'
-import { ContractAddr, FbProfile } from 'types'
+import { Profile } from 'core/graphqls/__generated__/graphql'
+import { ContractAddr, FbProfile } from 'core/types'
 
 import { getProfileMediaImg } from './lens'
 

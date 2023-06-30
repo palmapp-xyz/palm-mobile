@@ -8,8 +8,8 @@ import {
   Row,
 } from 'components'
 import { COLOR } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

@@ -1,5 +1,9 @@
+import {
+  PostTxStatus,
+  StreamResultType,
+  SupportedNetworkEnum,
+} from 'core/types'
 import { atom } from 'recoil'
-import { PostTxStatus, StreamResultType, SupportedNetworkEnum } from 'types'
 
 import storeKeys from './storeKeys'
 

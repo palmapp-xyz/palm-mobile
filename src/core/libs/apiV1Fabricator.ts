@@ -1,5 +1,5 @@
+import { ApiEnum, ApiParamFabricated, ContractAddr } from 'core/types'
 import { utils } from 'ethers'
-import { ApiEnum, ApiParamFabricated, ContractAddr } from 'types'
 
 export default {
   [ApiEnum.AUTH_CHALLENGE_REQUEST]: {

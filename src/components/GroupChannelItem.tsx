@@ -1,6 +1,6 @@
 import { COLOR } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 

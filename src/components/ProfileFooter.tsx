@@ -1,8 +1,8 @@
+import { Moralis } from 'core/types'
 import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { Moralis } from 'types'
 
 import FormText from './atoms/FormText'
 import Indicator from './atoms/Indicator'

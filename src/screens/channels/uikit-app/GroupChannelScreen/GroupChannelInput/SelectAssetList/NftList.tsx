@@ -1,6 +1,7 @@
 import { FormText, MoralisNftRenderer } from 'components'
 import Indicator from 'components/atoms/Indicator'
 import { COLOR } from 'core/consts'
+import { ContractAddr, Moralis } from 'core/types'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
 import React, { ReactElement } from 'react'
@@ -8,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr, Moralis } from 'types'
 
 const NftList = ({
   useGcInputReturn,

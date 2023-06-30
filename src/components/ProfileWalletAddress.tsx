@@ -1,11 +1,11 @@
 import { FormText, Row } from 'components'
 import { COLOR } from 'core/consts'
+import { ContractAddr } from 'core/types'
 import useToast from 'hooks/useToast'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ContractAddr } from 'types'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 

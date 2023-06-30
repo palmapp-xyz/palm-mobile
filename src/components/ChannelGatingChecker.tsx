@@ -1,16 +1,16 @@
 import { UTIL } from 'core/consts'
+import {
+  FbChannelGatingField,
+  FbChannelNativeGatingField,
+  FbChannelNFTGatingField,
+  QueryKeyEnum,
+} from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import React, { ReactElement, useEffect, useMemo } from 'react'
-import {
-  FbChannelGatingField,
-  FbChannelNativeGatingField,
-  FbChannelNFTGatingField,
-  QueryKeyEnum,
-} from 'types'
 
 const NftChecker = ({
   gating,

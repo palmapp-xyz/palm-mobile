@@ -1,9 +1,10 @@
 import Indicator from 'components/atoms/Indicator'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
+import { Routes } from 'core/libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import {
   FlatList,
@@ -12,7 +13,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'types'
 
 import ChainLogoWrapper from './ChainLogoWrapper'
 import NftItemMenu from './NftItemMenu'

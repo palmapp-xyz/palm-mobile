@@ -1,4 +1,4 @@
-import { ThemeType } from 'types'
+import { ThemeType } from 'core/types'
 
 export const light: ThemeType = {
   main: {

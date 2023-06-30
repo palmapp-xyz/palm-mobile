@@ -1,10 +1,10 @@
 import { Container, Header } from 'components'
+import { Routes } from 'core/libs/navigation'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 
-import { useTranslation } from 'react-i18next'
 import NftDetails from '../../components/NftDetails'
 
 const NftDetailScreen = (): ReactElement => {

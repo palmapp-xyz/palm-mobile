@@ -1,4 +1,3 @@
-import { utils } from 'ethers'
 import {
   AuthenticationResult,
   BroadcastDocument,
@@ -28,21 +27,22 @@ import {
   PublicationMetadataStatusType,
   TransactionReceipt,
   UpdateProfileImageRequest,
-} from 'graphqls/__generated__/graphql'
-import useEthers from 'hooks/complex/useEthers'
-import useIpfs from 'hooks/complex/useIpfs'
-import useNetwork from 'hooks/complex/useNetwork'
-import { recordError } from 'libs/logger'
-import { isMainnet } from 'libs/utils'
-import _ from 'lodash'
-import { useSetRecoilState } from 'recoil'
-import postTxStore from 'store/postTxStore'
+} from 'core/graphqls/__generated__/graphql'
+import { recordError } from 'core/libs/logger'
+import { isMainnet } from 'core/libs/utils'
+import postTxStore from 'core/store/postTxStore'
 import {
   ContractAddr,
   PostTxStatus,
   SupportedNetworkEnum,
   TrueOrErrReturn,
-} from 'types'
+} from 'core/types'
+import { utils } from 'ethers'
+import useEthers from 'hooks/complex/useEthers'
+import useIpfs from 'hooks/complex/useIpfs'
+import useNetwork from 'hooks/complex/useNetwork'
+import _ from 'lodash'
+import { useSetRecoilState } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 
 import {

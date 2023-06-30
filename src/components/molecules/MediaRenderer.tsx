@@ -1,7 +1,7 @@
 import Card from 'components/atoms/Card'
+import { shouldRenderAudioTag, shouldRenderVideoTag } from 'core/libs/media'
+import { isValidHttpUrl } from 'core/libs/utils'
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
-import { shouldRenderAudioTag, shouldRenderVideoTag } from 'libs/media'
-import { isValidHttpUrl } from 'libs/utils'
 import React, { ReactElement, useCallback, useState } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
 import FastImage, {

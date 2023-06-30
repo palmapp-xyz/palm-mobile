@@ -1,5 +1,5 @@
 import { UTIL } from 'core/consts'
-import { LocalStorageKey } from 'types'
+import { LocalStorageKey } from 'core/types'
 
 import { AuthorizationStatus } from '@notifee/react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'

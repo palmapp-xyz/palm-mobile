@@ -3,7 +3,7 @@ import {
   AuthChallengeResult,
   FbChannel,
   FbProfile,
-} from 'types'
+} from 'core/types'
 
 import { NominalType } from '../common'
 import { ContractAddr } from '../contracts'

@@ -1,12 +1,10 @@
+import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'core/types'
 import useContract from 'hooks/complex/useContract'
 import useNetwork from 'hooks/complex/useNetwork'
 import { useMemo } from 'react'
-import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
 import { AbiItem } from 'web3-utils'
 
-import {
-  Scalars,
-} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
+import { Scalars } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { Maybe } from '@toruslabs/openlogin'
 
 import lensHub from '../../core/abi/lens-hub-contract-abi.json'

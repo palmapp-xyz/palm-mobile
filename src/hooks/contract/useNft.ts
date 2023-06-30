@@ -1,5 +1,5 @@
+import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'core/types'
 import useContract from 'hooks/complex/useContract'
-import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'types'
 import { AbiItem } from 'web3-utils'
 
 import nft from '../../core/abi/Nft.json'

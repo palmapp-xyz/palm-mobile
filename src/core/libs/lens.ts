@@ -1,4 +1,4 @@
-import { Attribute, ProfileMedia } from 'graphqls/__generated__/graphql'
+import { Attribute, ProfileMedia } from 'core/graphqls/__generated__/graphql'
 
 import { AttributeData } from '@lens-protocol/react-native-lens-ui-kit'
 import { Maybe } from '@toruslabs/openlogin'

@@ -1,14 +1,14 @@
 import images from 'assets/images'
 import { FormImage, Row } from 'components'
 import Avatar from 'components/sendbird/Avatar'
+import { Routes } from 'core/libs/navigation'
+import { ChannelType, SbUserMetadata } from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import { SENDBIRD_STATIC_SAMPLE } from 'hooks/page/groupChannel/useChannelInfo'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement, useContext } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ChannelType, SbUserMetadata } from 'types'
 
 import { Member } from '@sendbird/chat/groupChannel'
 import {
@@ -17,8 +17,8 @@ import {
   useLocalization,
 } from '@sendbird/uikit-react-native'
 import {
-  createStyleSheet,
   Header,
+  createStyleSheet,
   useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
 

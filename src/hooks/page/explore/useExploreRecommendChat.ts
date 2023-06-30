@@ -1,5 +1,5 @@
+import { FbChannel } from 'core/types'
 import useFsChannels from 'hooks/firestore/useFsChannels'
-import { FbChannel } from 'types'
 
 export type UseExploreRecommendChatReturn = {
   fsChannelList: FbChannel[]

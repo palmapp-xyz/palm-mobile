@@ -1,6 +1,6 @@
-import { recordError } from 'libs/logger'
+import { recordError } from 'core/libs/logger'
+import { ChannelType, FbChannel } from 'core/types'
 import { useEffect, useState } from 'react'
-import { ChannelType, FbChannel } from 'types'
 
 import firestore from '@react-native-firebase/firestore'
 

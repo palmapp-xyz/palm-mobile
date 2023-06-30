@@ -1,6 +1,6 @@
 import { COLOR } from 'core/consts'
-import { fixTokenUri } from 'libs/ipfs'
-import { isValidHttpUrl } from 'libs/utils'
+import { fixTokenUri } from 'core/libs/ipfs'
+import { isValidHttpUrl } from 'core/libs/utils'
 import React, { ReactElement } from 'react'
 import {
   ImageStyle,

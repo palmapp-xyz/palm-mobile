@@ -3,15 +3,15 @@ import UserMention from 'components/atoms/UserMention'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
 import { COLOR, UTIL } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { SbSendNftDataType, SupportedNetworkEnum } from 'core/types'
 import useExplorer from 'hooks/complex/useExplorer'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { SbSendNftDataType, SupportedNetworkEnum } from 'types'
 
 const SendNftMessage = ({
   data,

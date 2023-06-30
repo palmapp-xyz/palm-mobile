@@ -1,20 +1,15 @@
 import { UTIL } from 'core/consts'
-import { AuthenticationResult } from 'graphqls/__generated__/graphql'
-import useLensAuth from 'hooks/lens/useLensAuth'
+import { AuthenticationResult } from 'core/graphqls/__generated__/graphql'
 import {
   generateEvmHdAccount,
   removeKeys,
   saveMnemonic,
   savePkey,
-} from 'libs/account'
-import { getFsProfile } from 'libs/firebase'
-import { recordError } from 'libs/logger'
-import { resetNewPin, resetPin } from 'libs/pin'
-import _ from 'lodash'
-import { useState } from 'react'
-import RNRestart from 'react-native-restart'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import appStore from 'store/appStore'
+} from 'core/libs/account'
+import { getFsProfile } from 'core/libs/firebase'
+import { recordError } from 'core/libs/logger'
+import { resetNewPin, resetPin } from 'core/libs/pin'
+import appStore from 'core/store/appStore'
 import {
   AuthChallengeResult,
   AuthStorageType,
@@ -24,7 +19,12 @@ import {
   SbUserMetadata,
   TrueOrErrReturn,
   User,
-} from 'types'
+} from 'core/types'
+import useLensAuth from 'hooks/lens/useLensAuth'
+import _ from 'lodash'
+import { useState } from 'react'
+import RNRestart from 'react-native-restart'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'

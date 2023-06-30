@@ -1,6 +1,6 @@
+import { ChannelType, FbChannelGatingField } from 'core/types'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useEffect, useState } from 'react'
-import { ChannelType, FbChannelGatingField } from 'types'
 
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'

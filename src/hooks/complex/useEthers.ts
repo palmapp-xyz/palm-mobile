@@ -1,10 +1,10 @@
 import { NETWORK } from 'core/consts'
-import { ethers, TypedDataDomain, Wallet } from 'ethers'
-import { getPkey } from 'libs/account'
-import { isMainnet } from 'libs/utils'
+import { getPkey } from 'core/libs/account'
+import { isMainnet } from 'core/libs/utils'
+import { ChainNetworkEnum, SupportedNetworkEnum } from 'core/types'
+import { TypedDataDomain, Wallet, ethers } from 'ethers'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
-import { ChainNetworkEnum, SupportedNetworkEnum } from 'types'
 
 type UseEthersReturn = {
   providers: Record<SupportedNetworkEnum, ethers.providers.JsonRpcProvider>

@@ -1,6 +1,7 @@
+import images from 'assets/images'
 import axios from 'axios'
 import { UTIL } from 'core/consts'
-import { ContractAddr } from 'types'
+import { ContractAddr } from 'core/types'
 
 import { Maybe } from '@toruslabs/openlogin'
 
@@ -99,5 +100,5 @@ export const fetchNftImage = async ({
     }
   }
 
-  return { image: require('../assets/no_img.png'), metadata: null }
+  return { image: images.no_img, metadata: null }
 }

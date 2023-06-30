@@ -1,11 +1,12 @@
+import { getFsProfile } from 'core/libs/firebase'
+import { recordError } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
-import { getFsProfile } from 'libs/firebase'
-import { recordError } from 'libs/logger'
 import { Platform } from 'react-native'
 
 import firestore from '@react-native-firebase/firestore'
 import messaging from '@react-native-firebase/messaging'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+
 import useNotificationConf from './useNotificationConf'
 
 const useNotificationRegister = (): {

@@ -1,10 +1,10 @@
+import { ChannelType } from 'core/types'
 import React, { ReactElement } from 'react'
 import { View } from 'react-native'
-import { ChannelType } from 'types'
 
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { Icon, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
-import { isDefaultCoverImage, SendbirdBaseChannel } from '@sendbird/uikit-utils'
+import { SendbirdBaseChannel, isDefaultCoverImage } from '@sendbird/uikit-utils'
 
 import Avatar from './Avatar'
 import ChannelMembersPreview from './ChannelMembersPreview'

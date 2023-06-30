@@ -1,8 +1,8 @@
 import { UTIL } from 'core/consts'
-import { getFsChannel } from 'libs/firebase'
-import { filterUndefined } from 'libs/utils'
+import { getFsChannel } from 'core/libs/firebase'
+import { filterUndefined } from 'core/libs/utils'
+import { ChannelType, FbChannel } from 'core/types'
 import _ from 'lodash'
-import { ChannelType, FbChannel } from 'types'
 import { v5 as uuidv5 } from 'uuid'
 
 import { FileCompat, MetaData } from '@sendbird/chat'

@@ -1,10 +1,10 @@
 import axios from 'axios'
-import apiV1Fabricator from 'libs/apiV1Fabricator'
-import { resolveIpfsUri } from 'libs/ipfs'
-import { recordError } from 'libs/logger'
+import apiV1Fabricator from 'core/libs/apiV1Fabricator'
+import { resolveIpfsUri } from 'core/libs/ipfs'
+import { recordError } from 'core/libs/logger'
+import { ApiEnum, TrueOrErrReturn } from 'core/types'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { ApiEnum, TrueOrErrReturn } from 'types'
 
 import useApi from './useApi'
 

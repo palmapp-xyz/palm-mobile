@@ -16,4 +16,5 @@ export default {
   import: require('./import.png'),
   plus: require('./plus.png'),
   pin_delete: require('./pin_delete.png'),
+  no_img: require('./no_img.png'),
 }

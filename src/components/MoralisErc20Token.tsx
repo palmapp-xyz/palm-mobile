@@ -1,10 +1,10 @@
 import { FormImage, FormText, Row } from 'components'
 import { COLOR, UTIL } from 'core/consts'
-import { getTokenBalanceInUSD } from 'libs/utils'
+import { getTokenBalanceInUSD } from 'core/libs/utils'
+import { Moralis, pToken } from 'core/types'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { Moralis, pToken } from 'types'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
 

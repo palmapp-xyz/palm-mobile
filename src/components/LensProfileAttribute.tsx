@@ -1,6 +1,6 @@
 import { FormText } from 'components'
-import { Attribute } from 'graphqls/__generated__/graphql'
-import { isValidHttpUrl } from 'libs/utils'
+import { Attribute } from 'core/graphqls/__generated__/graphql'
+import { isValidHttpUrl } from 'core/libs/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
 

@@ -1,9 +1,9 @@
+import { KeyChainEnum } from 'core/types'
 import {
   getInternetCredentials,
   resetInternetCredentials,
   setInternetCredentials,
 } from 'react-native-keychain'
-import { KeyChainEnum } from 'types'
 
 export const savePin = async (pin: string): Promise<void> => {
   await setInternetCredentials(KeyChainEnum.PIN, KeyChainEnum.PIN, pin)

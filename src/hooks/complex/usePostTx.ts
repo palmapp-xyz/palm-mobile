@@ -1,9 +1,6 @@
 import { UTIL } from 'core/consts'
-import useAuth from 'hooks/auth/useAuth'
-import { getPkey } from 'libs/account'
-import _ from 'lodash'
-import { useSetRecoilState } from 'recoil'
-import postTxStore from 'store/postTxStore'
+import { getPkey } from 'core/libs/account'
+import postTxStore from 'core/store/postTxStore'
 import {
   ContractAddr,
   EncodedTxData,
@@ -11,7 +8,10 @@ import {
   PostTxStatus,
   pToken,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import useAuth from 'hooks/auth/useAuth'
+import _ from 'lodash'
+import { useSetRecoilState } from 'recoil'
 
 import useWeb3 from './useWeb3'
 

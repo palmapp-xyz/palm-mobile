@@ -1,9 +1,9 @@
 import MediaRenderer from 'components/molecules/MediaRenderer'
+import { Routes } from 'core/libs/navigation'
+import { SbUserMetadata } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import { SbUserMetadata } from 'types'
 
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 

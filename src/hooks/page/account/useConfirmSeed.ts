@@ -1,5 +1,5 @@
+import { recordError } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
-import { recordError } from 'libs/logger'
 import _ from 'lodash'
 import { useEffect, useMemo, useState } from 'react'
 

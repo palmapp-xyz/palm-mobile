@@ -1,5 +1,5 @@
 import { COLOR } from 'core/consts'
-import { isValidHttpUrl } from 'libs/utils'
+import { isValidHttpUrl } from 'core/libs/utils'
 import React, { ReactElement } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
 

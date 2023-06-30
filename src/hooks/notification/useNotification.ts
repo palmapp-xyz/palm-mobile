@@ -1,15 +1,16 @@
-import useAuth from 'hooks/auth/useAuth'
 import {
   backgroundMessageHandler,
   onForegroundAndroid,
   onForegroundIOS,
   onRemoteNotification,
-} from 'libs/notification'
+} from 'core/libs/notification'
+import useAuth from 'hooks/auth/useAuth'
 import { useEffect, useState } from 'react'
 
 import Notifee, { AuthorizationStatus } from '@notifee/react-native'
 import messaging from '@react-native-firebase/messaging'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+
 import useNotificationConf from './useNotificationConf'
 import useNotificationRegister from './useNotificationRegister'
 

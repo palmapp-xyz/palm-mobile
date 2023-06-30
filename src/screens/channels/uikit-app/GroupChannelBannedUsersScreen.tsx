@@ -8,7 +8,7 @@ import {
 
 import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
-import type { Routes } from 'libs/navigation'
+import type { Routes } from 'core/libs/navigation'
 
 const GroupChannelBannedUsersFragment = createGroupChannelBannedUsersFragment()
 const GroupChannelBannedUsersScreen = (): ReactElement => {

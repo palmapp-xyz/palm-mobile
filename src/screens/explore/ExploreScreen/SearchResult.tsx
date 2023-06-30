@@ -3,12 +3,12 @@ import Indicator from 'components/atoms/Indicator'
 import ChatCard from 'components/exploreTab/ChatCard'
 import UserCard from 'components/exploreTab/UserCard'
 import { COLOR } from 'core/consts'
+import { ChannelType } from 'core/types'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { ChannelType } from 'types'
 
 type TabType = 'chat' | 'user'
 

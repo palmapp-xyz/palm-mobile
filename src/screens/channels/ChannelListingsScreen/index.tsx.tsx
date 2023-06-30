@@ -1,9 +1,10 @@
 import { Container, FormText, Header } from 'components'
 import { COLOR } from 'core/consts'
+import { recordError } from 'core/libs/logger'
+import { Routes } from 'core/libs/navigation'
+import { FbListing } from 'core/types'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { recordError } from 'libs/logger'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -14,7 +15,6 @@ import {
   View,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { FbListing } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 

@@ -1,20 +1,20 @@
-import { Profile, ProfileMedia } from 'graphqls/__generated__/graphql'
-import useNetwork from 'hooks/complex/useNetwork'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import useLens from 'hooks/lens/useLens'
-import useLensProfile from 'hooks/lens/useLensProfile'
-import { fetchNftImage } from 'libs/fetchTokenUri'
-import { getProfileMediaImg } from 'libs/lens'
-import { recordError } from 'libs/logger'
-import { profilesDeepCompare } from 'libs/profile'
-import { filterUndefined } from 'libs/utils'
+import { Profile, ProfileMedia } from 'core/graphqls/__generated__/graphql'
+import { fetchNftImage } from 'core/libs/fetchTokenUri'
+import { getProfileMediaImg } from 'core/libs/lens'
+import { recordError } from 'core/libs/logger'
+import { profilesDeepCompare } from 'core/libs/profile'
+import { filterUndefined } from 'core/libs/utils'
 import {
   ContractAddr,
   FbProfile,
   Moralis,
   SupportedNetworkEnum,
   TrueOrErrReturn,
-} from 'types'
+} from 'core/types'
+import useNetwork from 'hooks/complex/useNetwork'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import useLens from 'hooks/lens/useLens'
+import useLensProfile from 'hooks/lens/useLensProfile'
 
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 import { useAsyncEffect } from '@sendbird/uikit-utils'

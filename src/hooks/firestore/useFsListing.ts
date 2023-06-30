@@ -1,6 +1,6 @@
+import { FbListing, FirestoreKeyEnum } from 'core/types'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import { useMemo } from 'react'
-import { FbListing, FirestoreKeyEnum } from 'types'
 
 import firestore, {
   FirebaseFirestoreTypes,

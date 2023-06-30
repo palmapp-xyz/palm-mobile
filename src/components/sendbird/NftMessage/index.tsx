@@ -1,5 +1,5 @@
 import { FormText, MediaRenderer } from 'components'
-import { parseMsgData } from 'libs/sendbird'
+import { parseMsgData } from 'core/libs/sendbird'
 import React, { ReactElement } from 'react'
 import { View } from 'react-native'
 

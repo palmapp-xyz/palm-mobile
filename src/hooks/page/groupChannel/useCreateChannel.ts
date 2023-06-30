@@ -1,18 +1,18 @@
 import { NETWORK } from 'core/consts'
-import useAuth from 'hooks/auth/useAuth'
-import useDevice from 'hooks/complex/useDevice'
-import useSendbird from 'hooks/sendbird/useSendbird'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import { getFsChannel } from 'libs/firebase'
-import { recordError } from 'libs/logger'
-import { Routes } from 'libs/navigation'
-import { useMemo, useState } from 'react'
+import { getFsChannel } from 'core/libs/firebase'
+import { recordError } from 'core/libs/logger'
+import { Routes } from 'core/libs/navigation'
 import {
   ChannelType,
   FbChannel,
   FbChannelGatingField,
   SupportedNetworkEnum,
-} from 'types'
+} from 'core/types'
+import useAuth from 'hooks/auth/useAuth'
+import useDevice from 'hooks/complex/useDevice'
+import useSendbird from 'hooks/sendbird/useSendbird'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { useMemo, useState } from 'react'
 
 import { FilePickerResponse } from '@sendbird/uikit-react-native'
 

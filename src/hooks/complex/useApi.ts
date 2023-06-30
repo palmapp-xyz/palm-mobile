@@ -1,16 +1,16 @@
 import * as axiosjs from 'axios'
-import useAuth from 'hooks/auth/useAuth'
-import { recordError } from 'libs/logger'
-import _ from 'lodash'
-import { useSetRecoilState } from 'recoil'
-import fetchApiStore from 'store/fetchApiStore'
+import { recordError } from 'core/libs/logger'
+import fetchApiStore from 'core/store/fetchApiStore'
 import {
   ApiEnum,
   ApiFetchResult,
   ApiParamFabricated,
   ApiParams,
   ApiResponse,
-} from 'types'
+} from 'core/types'
+import useAuth from 'hooks/auth/useAuth'
+import _ from 'lodash'
+import { useSetRecoilState } from 'recoil'
 
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 

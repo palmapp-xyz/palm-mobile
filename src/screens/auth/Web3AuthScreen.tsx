@@ -1,13 +1,13 @@
 import useWeb3Auth from 'hooks/independent/useWeb3Auth'
 import React, { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { Button, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
 
-import { useTranslation } from 'react-i18next'
 import Versions from '../../components/Versions'
 
-// import { Routes } from 'libs/navigation'
+// import { Routes } from 'core/libs/navigation'
 
 const Web3AuthScreen = (): ReactElement => {
   // const { navigation } = useAppNavigation()

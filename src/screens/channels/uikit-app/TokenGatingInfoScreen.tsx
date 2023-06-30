@@ -2,13 +2,19 @@ import images from 'assets/images'
 import { Container, FormImage, FormText, Header, Row } from 'components'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
+import {
+  FbChannelNFTGatingField,
+  FbChannelNativeGatingField,
+  NftType,
+  QueryKeyEnum,
+} from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useUserBalance from 'hooks/independent/useUserBalance'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -19,12 +25,6 @@ import {
   View,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import {
-  FbChannelNativeGatingField,
-  FbChannelNFTGatingField,
-  NftType,
-  QueryKeyEnum,
-} from 'types'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'

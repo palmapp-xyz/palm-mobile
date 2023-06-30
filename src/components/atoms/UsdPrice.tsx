@@ -1,10 +1,10 @@
 import { COLOR, UTIL } from 'core/consts'
+import { SupportedNetworkEnum, pToken } from 'core/types'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
-import { pToken, SupportedNetworkEnum } from 'types'
 
 import FormText from './FormText'
 

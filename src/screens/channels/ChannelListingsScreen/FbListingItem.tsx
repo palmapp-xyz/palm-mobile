@@ -1,17 +1,17 @@
 import { FormImage, FormText, NftRenderer, Row } from 'components'
 import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { Routes } from 'core/libs/navigation'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { FbListing, NftType, SupportedNetworkEnum, pToken } from 'core/types'
 import { format } from 'date-fns'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { Routes } from 'libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import _ from 'lodash'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { FbListing, NftType, pToken, SupportedNetworkEnum } from 'types'
 
 const FbListingItem = ({
   item,

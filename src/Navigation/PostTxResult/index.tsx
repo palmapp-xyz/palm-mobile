@@ -1,8 +1,8 @@
+import postTxStore from 'core/store/postTxStore'
+import { PostTxStatus, SupportedNetworkEnum } from 'core/types'
 import usePostTxStatusEffect from 'hooks/independent/usePostTxStatusEffect'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
-import postTxStore from 'store/postTxStore'
-import { PostTxStatus, SupportedNetworkEnum } from 'types'
 
 import TxStatus from './TxStatus'
 import TxStatusMini from './TxStatusMini'

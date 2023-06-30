@@ -3,9 +3,10 @@ import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import ProfileFooter from 'components/ProfileFooter'
 import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
 import UserTokensSheet from 'components/UserTokensSheet'
+import { recordError } from 'core/libs/logger'
+import { Moralis, SupportedNetworkEnum } from 'core/types'
 import useProfile from 'hooks/auth/useProfile'
 import useMyPageMain from 'hooks/page/myPage/useMyPageMain'
-import { recordError } from 'libs/logger'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -14,7 +15,6 @@ import {
   Platform,
   RefreshControl,
 } from 'react-native'
-import { Moralis, SupportedNetworkEnum } from 'types'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 

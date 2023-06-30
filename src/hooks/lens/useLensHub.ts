@@ -1,8 +1,8 @@
+import { SupportedNetworkEnum } from 'core/types'
 import { ethers } from 'ethers'
 import useEthers from 'hooks/complex/useEthers'
 import useNetwork from 'hooks/complex/useNetwork'
 import { useMemo, useState } from 'react'
-import { SupportedNetworkEnum } from 'types'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 

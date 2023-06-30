@@ -1,8 +1,8 @@
 import { COLOR } from 'core/consts'
+import { ThemeModeType } from 'core/types'
 import useSetting from 'hooks/independent/useSetting'
 import React, { ReactElement, useEffect, useState } from 'react'
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
-import { ThemeModeType } from 'types'
 
 const ThemeOptions = (): ReactElement => {
   const { setting, updateSetting } = useSetting()

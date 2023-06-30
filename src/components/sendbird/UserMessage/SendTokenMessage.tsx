@@ -2,13 +2,13 @@ import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import MoralisErc20Token from 'components/MoralisErc20Token'
 import { COLOR, UTIL } from 'core/consts'
+import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { pToken, SbSendTokenDataType, SupportedNetworkEnum } from 'core/types'
 import useExplorer from 'hooks/complex/useExplorer'
-import { chainIdToSupportedNetworkEnum } from 'libs/utils'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { pToken, SbSendTokenDataType, SupportedNetworkEnum } from 'types'
 
 const SendTokenMessage = ({
   data,

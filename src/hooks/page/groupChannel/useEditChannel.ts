@@ -1,14 +1,18 @@
 import { NETWORK } from 'core/consts'
+import { recordError } from 'core/libs/logger'
+import { Routes } from 'core/libs/navigation'
+import { filterUndefined } from 'core/libs/utils'
+import {
+  FbChannel,
+  FbChannelGatingField,
+  SupportedNetworkEnum,
+} from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import { recordError } from 'libs/logger'
-import { Routes } from 'libs/navigation'
-import { filterUndefined } from 'libs/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FbChannel, FbChannelGatingField, SupportedNetworkEnum } from 'types'
 
 import { MetaData } from '@sendbird/chat'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
