@@ -3,6 +3,7 @@ import UsdPrice from 'components/atoms/UsdPrice'
 import NftCard from 'components/channel/NftCard'
 import { COLOR, NETWORK, UTIL } from 'core/consts'
 import { Routes } from 'core/libs/navigation'
+import { getNetworkLogo } from 'core/libs/utils'
 import { Moralis, SupportedNetworkEnum, Token } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
@@ -83,10 +84,7 @@ const Contents = ({
                       borderRadius: 12,
                     }}
                   >
-                    <FormImage
-                      source={NETWORK.getNetworkLogo(chain)}
-                      size={20}
-                    />
+                    <FormImage source={getNetworkLogo(chain)} size={20} />
                     <FormText font={'B'} size={20}>
                       {NETWORK.nativeToken[chain]}
                     </FormText>

@@ -1,4 +1,5 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
+import images from 'assets/images'
 import { NETWORK, UTIL } from 'core/consts'
 import {
   ChainNetworkEnum,
@@ -179,4 +180,12 @@ export const getTokenBalanceInUSD = (
   return UTIL.toBn(amount as pToken)
     .multipliedBy(price.usdPrice)
     .toString(10) as pToken
+}
+
+export const getNetworkLogo = (chain: SupportedNetworkEnum): any => {
+  return chain === SupportedNetworkEnum.POLYGON
+    ? images.matic_logo
+    : chain === SupportedNetworkEnum.KLAYTN
+    ? images.klay_logo
+    : images.eth_logo
 }

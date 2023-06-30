@@ -1,4 +1,3 @@
-import images from 'assets/images'
 import {
   AddEthereumChainParameter,
   ChainNetworkEnum,
@@ -141,14 +140,6 @@ const chainParams: Record<
   },
 }
 
-const getNetworkLogo = (chain: SupportedNetworkEnum): any => {
-  return chain === SupportedNetworkEnum.POLYGON
-    ? images.matic_logo
-    : chain === SupportedNetworkEnum.KLAYTN
-    ? images.klay_logo
-    : images.eth_logo
-}
-
 const nativeToken = {
   [SupportedNetworkEnum.ETHEREUM]: TokenSymbolEnum.ETH,
   [SupportedNetworkEnum.KLAYTN]: TokenSymbolEnum.KLAY,
@@ -160,6 +151,5 @@ export default {
   chainParam,
   chainIds,
   chainParams,
-  getNetworkLogo,
   nativeToken,
 }

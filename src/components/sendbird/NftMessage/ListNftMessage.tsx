@@ -3,9 +3,9 @@ import FormButton from 'components/atoms/FormButton'
 import FormImage from 'components/atoms/FormImage'
 import FormText from 'components/atoms/FormText'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'core/consts'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { chainIdToSupportedNetworkEnum, getNetworkLogo } from 'core/libs/utils'
 import { SbListNftDataType, SupportedNetworkEnum, pToken } from 'core/types'
 import { format } from 'date-fns'
 import useExplorer from 'hooks/complex/useExplorer'
@@ -139,7 +139,7 @@ const ListNftMessage = ({
         <View style={{ padding: 16 }}>
           <View style={styles.priceBox}>
             <Row style={styles.priceRow}>
-              <FormImage source={NETWORK.getNetworkLogo(chain)} size={18} />
+              <FormImage source={getNetworkLogo(chain)} size={18} />
               <FormText font={'B'} size={18}>
                 {UTIL.formatAmountP((data.amount || '0') as pToken)}
               </FormText>

@@ -14,7 +14,7 @@ import { getProfileMediaImg } from 'core/libs/lens'
 import { Routes } from 'core/libs/navigation'
 import { nftUriFetcher } from 'core/libs/nft'
 import { stringifyMsgData } from 'core/libs/sendbird'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { chainIdToSupportedNetworkEnum, getNetworkLogo } from 'core/libs/utils'
 import {
   FbProfile,
   Moralis,
@@ -213,7 +213,7 @@ const ConfirmModal = ({
               }}
             >
               <FormText>{t('Nft.SendNftConfirmModalOn')}</FormText>
-              <FormImage source={NETWORK.getNetworkLogo(chain)} />
+              <FormImage source={getNetworkLogo(chain)} />
               <FormText>{_.capitalize(chain)}</FormText>
             </Row>
           </Row>

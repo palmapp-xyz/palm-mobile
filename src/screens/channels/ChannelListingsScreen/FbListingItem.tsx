@@ -1,7 +1,7 @@
 import { FormImage, FormText, NftRenderer, Row } from 'components'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, UTIL } from 'core/consts'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { chainIdToSupportedNetworkEnum, getNetworkLogo } from 'core/libs/utils'
 import { FbListing, NftType, SupportedNetworkEnum, pToken } from 'core/types'
 import { format } from 'date-fns'
 import useEthPrice from 'hooks/independent/useEthPrice'
@@ -81,7 +81,7 @@ const FbListingItem = ({
       </Row>
       <View style={styles.info}>
         <Row style={{ alignItems: 'center', columnGap: 4 }}>
-          <FormImage source={NETWORK.getNetworkLogo(chain)} size={14} />
+          <FormImage source={getNetworkLogo(chain)} size={14} />
           <FormText font={'B'}>
             {UTIL.formatAmountP(order.erc20TokenAmount as pToken)}
           </FormText>
