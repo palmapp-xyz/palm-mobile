@@ -1,8 +1,9 @@
 import { COLOR } from 'core/consts'
 import { Routes } from 'core/libs/navigation'
-import { FontSize, SbUserMetadata } from 'core/types'
+import { SbUserMetadata } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement } from 'react'
+import { FontSize } from 'types'
 
 import { useLocalization } from '@sendbird/uikit-react-native'
 

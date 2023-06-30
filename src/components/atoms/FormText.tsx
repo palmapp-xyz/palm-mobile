@@ -1,8 +1,8 @@
 import { FONT } from 'consts'
 import { COLOR } from 'core/consts'
-import { FontSize, FontType } from 'core/types'
 import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
+import { FontSize, FontType } from 'types'
 
 export type FormTextProps = {
   size?: FontSize
