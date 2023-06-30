@@ -1,11 +1,11 @@
+import useAuth from 'hooks/auth/useAuth'
+import { useEffect, useState } from 'react'
 import {
   backgroundMessageHandler,
   onForegroundAndroid,
   onForegroundIOS,
   onRemoteNotification,
-} from 'core/libs/notification'
-import useAuth from 'hooks/auth/useAuth'
-import { useEffect, useState } from 'react'
+} from 'reactnative/notification'
 
 import Notifee, { AuthorizationStatus } from '@notifee/react-native'
 import messaging from '@react-native-firebase/messaging'

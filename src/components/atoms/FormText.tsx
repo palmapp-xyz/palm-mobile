@@ -1,4 +1,5 @@
-import { COLOR, STYLE } from 'core/consts'
+import { FONT } from 'consts'
+import { COLOR } from 'core/consts'
 import { FontSize, FontType } from 'core/types'
 import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
@@ -18,7 +19,7 @@ const FormText = ({
   style,
   ...rest
 }: FormTextProps): ReactElement => {
-  const fontStyle = STYLE.getFontStyle(`${font}.${size}` as FontType)
+  const fontStyle = FONT.getFontStyle(`${font}.${size}` as FontType)
 
   return (
     <Text style={[{ color }, fontStyle, style]} children={children} {...rest} />

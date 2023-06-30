@@ -13,9 +13,12 @@ module.exports = function (api) {
         'core/consts': './src/core/consts',
         'core/graphqls': './src/core/graphqls',
         assets: './src/assets',
+        consts: './src/consts',
+        libs: './src/libs',
         config: './src/config',
         components: './src/components',
         hooks: './src/hooks',
+        reactnative: './src/reactnative',
       },
     },
   ]

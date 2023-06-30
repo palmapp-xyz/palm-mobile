@@ -73,6 +73,36 @@ class PKeyManager implements PKeyManagerInterface {
 
     return new Wallet(derivedHdNode)
   }
+
+  async savePin(pin: string): Promise<void> {
+    await setInternetCredentials(KeyChainEnum.PIN, KeyChainEnum.PIN, pin)
+  }
+
+  async saveNewPin(pin: string): Promise<void> {
+    await setInternetCredentials(
+      KeyChainEnum.NEW_PIN,
+      KeyChainEnum.NEW_PIN,
+      pin
+    )
+  }
+
+  async getPin(): Promise<string> {
+    const res = await getInternetCredentials(KeyChainEnum.PIN)
+    return res ? res.password : ''
+  }
+
+  async getNewPin(): Promise<string> {
+    const res = await getInternetCredentials(KeyChainEnum.NEW_PIN)
+    return res ? res.password : ''
+  }
+
+  async resetPin(): Promise<void> {
+    await resetInternetCredentials(KeyChainEnum.PIN)
+  }
+
+  async resetNewPin(): Promise<void> {
+    await resetInternetCredentials(KeyChainEnum.NEW_PIN)
+  }
 }
 
 export default new PKeyManager()

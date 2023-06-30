@@ -15,7 +15,6 @@ import {
   uToken,
 } from 'core/types'
 import _ from 'lodash'
-import { URL } from 'react-native-url-polyfill'
 
 const getContrastColor = (
   color:
@@ -64,20 +63,6 @@ const findColorNameFromPalette = (
     return 'NOT_FOUND'
   }
   return color[0]
-}
-
-const isValidHttpUrl = (src: string | undefined): boolean => {
-  if (!src) {
-    return false
-  }
-
-  let url
-  try {
-    url = new URL(src)
-  } catch {
-    return false
-  }
-  return url.protocol === 'http:' || url.protocol === 'https:'
 }
 
 const replaceAll = (str: string, search: string, replace: string): string => {
@@ -359,7 +344,6 @@ const toBoolean = (str: string): boolean => {
 export default {
   getContrastColor,
   findColorNameFromPalette,
-  isValidHttpUrl,
   replaceAll,
   unescape,
   formatHex,

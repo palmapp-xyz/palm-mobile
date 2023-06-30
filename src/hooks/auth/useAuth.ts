@@ -2,7 +2,6 @@ import { AuthenticationResult } from 'core/graphqls/__generated__/graphql'
 import { UTIL } from 'core/libs'
 import { getFsProfile } from 'core/libs/firebase'
 import { recordError } from 'core/libs/logger'
-import { resetNewPin, resetPin } from 'core/libs/pin'
 import appStore from 'core/store/appStore'
 import {
   AuthChallengeResult,
@@ -221,8 +220,8 @@ const useAuth = (): UseAuthReturn => {
       PkeyManager.removeKeys(),
       auth().signOut(),
       disconnect(),
-      resetPin(),
-      resetNewPin(),
+      PkeyManager.resetPin(),
+      PkeyManager.resetNewPin(),
     ])
 
     setCurrentUser(undefined)

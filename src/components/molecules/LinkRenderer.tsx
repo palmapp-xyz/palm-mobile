@@ -1,5 +1,4 @@
 import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
 import { fixTokenUri } from 'core/libs/ipfs'
 import React, { ReactElement } from 'react'
 import {
@@ -11,6 +10,7 @@ import {
   TextStyle,
   TouchableOpacity,
 } from 'react-native'
+import { isValidHttpUrl } from 'reactnative/utils'
 
 import { Maybe } from '@toruslabs/openlogin'
 
@@ -35,7 +35,7 @@ const LinkRenderer = ({
   return (
     <TouchableOpacity
       onPress={(): void => {
-        if (UTIL.isValidHttpUrl(fixedUrl)) {
+        if (isValidHttpUrl(fixedUrl)) {
           Linking.openURL(fixedUrl)
         }
       }}

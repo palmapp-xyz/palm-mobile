@@ -1,4 +1,6 @@
 import { COLOR } from 'core/consts'
+import { recordError } from 'core/libs/logger'
+import { navigationRef, Routes, runAfterAppReady } from 'core/libs/navigation'
 import { Platform } from 'react-native'
 import PushNotification, {
   ReceivedNotification,
@@ -18,9 +20,6 @@ import {
   NOOP,
   parseSendbirdNotification,
 } from '@sendbird/uikit-utils'
-
-import { recordError } from './logger'
-import { navigationRef, Routes, runAfterAppReady } from './navigation'
 
 export const onRemoteNotification: (event: Event) => Promise<void> = async ({
   type,

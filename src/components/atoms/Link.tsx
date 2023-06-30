@@ -1,7 +1,7 @@
 import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
 import React, { ReactElement } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
+import { isValidHttpUrl } from 'reactnative/utils'
 
 import FormText from './FormText'
 
@@ -9,7 +9,7 @@ const Link = ({ text, url }: { text: string; url: string }): ReactElement => {
   return (
     <TouchableOpacity
       onPress={(): void => {
-        if (UTIL.isValidHttpUrl(url)) {
+        if (isValidHttpUrl(url)) {
           Linking.openURL(url)
         }
       }}

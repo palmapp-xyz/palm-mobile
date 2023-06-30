@@ -3,16 +3,18 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "core/libs": ["./core/libs"],
       "core/libs/*": ["./core/libs/*"],
       "core/store/*": ["./core/store/*"],
       "core/types": ["./core/types"],
       "core/consts": ["./core/consts"],
       "core/graphqls/*": ["./core/graphqls/*"],
+      "consts": ["./consts"],
+      "libs/*": ["./libs/*"],
       "hooks/*": ["./hooks/*"],
       "assets/*": ["./assets/*"],
       "config": ["./config"],
-      "components": ["./components"]
+      "components": ["./components"],
+      "reactnative": ["./reactnative"]
     },
     "types": ["react-native", "jest", "styled-components-react-native"],
     "esModuleInterop": true,

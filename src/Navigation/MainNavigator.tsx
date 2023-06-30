@@ -1,9 +1,9 @@
 import { Routes } from 'core/libs/navigation'
-import { getPin } from 'core/libs/pin'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useNotification from 'hooks/notification/useNotification'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import PkeyManager from 'libs/PkeyManager'
 import React, { ReactElement, useEffect } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -54,7 +54,7 @@ const MainNavigator = (): ReactElement => {
 
   useEffect(() => {
     const checkPin = async (): Promise<void> => {
-      const isNotConfigurePin = (await getPin()) === ''
+      const isNotConfigurePin = (await PkeyManager.getPin()) === ''
 
       if (isNotConfigurePin) {
         navigation.push(Routes.Pin, {

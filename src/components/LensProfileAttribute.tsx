@@ -1,8 +1,8 @@
 import { FormText } from 'components'
 import { Attribute } from 'core/graphqls/__generated__/graphql'
-import { UTIL } from 'core/libs'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { isValidHttpUrl } from 'reactnative/utils'
 
 import Link from './atoms/Link'
 
@@ -24,7 +24,7 @@ const LensProfileAttribute = ({
       </FormText>
       {key === 'twitter' ? (
         <Link text={`@${value}`} url={`https://twitter.com/${value}`} />
-      ) : UTIL.isValidHttpUrl(value) ? (
+      ) : isValidHttpUrl(value) ? (
         <Link text={value} url={value} />
       ) : (
         <FormText>{value}</FormText>

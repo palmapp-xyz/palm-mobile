@@ -2,16 +2,10 @@ import images from 'assets/images'
 import { FormModal, FormText } from 'components'
 import { COLOR } from 'core/consts'
 import { Routes } from 'core/libs/navigation'
-import {
-  getNewPin,
-  getPin,
-  resetNewPin,
-  saveNewPin,
-  savePin,
-} from 'core/libs/pin'
 import { LocalStorageKey } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
+import PkeyManager from 'libs/PkeyManager'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -239,7 +233,7 @@ const PinScreen = (): ReactElement => {
 
   useEffect(() => {
     clearInputPin()
-    resetNewPin()
+    PkeyManager.resetNewPin()
     initPinTryCount()
   }, [])
 
@@ -256,7 +250,7 @@ const PinScreen = (): ReactElement => {
       switch (pinType) {
         case 'auth':
           if (inputPin.length === 4) {
-            const v = await getPin()
+            const v = await PkeyManager.getPin()
             const match = !v || inputPin === v
 
             match ? resetPinTryCount() : increasePinTryCount()
@@ -268,15 +262,15 @@ const PinScreen = (): ReactElement => {
         case 'reset':
         case 'set':
           if (inputPin.length === 4) {
-            const newPin = await getNewPin()
+            const newPin = await PkeyManager.getNewPin()
 
             if (newPin === '') {
-              await saveNewPin(inputPin)
+              await PkeyManager.saveNewPin(inputPin)
               setPinConfigurePhase('confirm')
             } else {
               if (newPin === inputPin) {
                 // match
-                await savePin(inputPin)
+                await PkeyManager.savePin(inputPin)
 
                 toast.show(t('Pin.PinSetupSuccessToast'), {
                   color: 'green',
@@ -297,7 +291,7 @@ const PinScreen = (): ReactElement => {
                 setPinConfigurePhase('input')
               }
 
-              resetNewPin()
+              PkeyManager.resetNewPin()
             }
 
             clearInputPin()

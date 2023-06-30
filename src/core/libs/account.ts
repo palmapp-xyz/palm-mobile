@@ -16,4 +16,16 @@ export interface PKeyManagerInterface {
   getPkeyPwd: () => Promise<string>
 
   generateEvmHdAccount: (mnemonic: string) => Wallet
+
+  savePin: (pin: string) => Promise<void>
+
+  saveNewPin: (pin: string) => Promise<void>
+
+  getPin: () => Promise<string>
+
+  getNewPin: () => Promise<string>
+
+  resetPin: () => Promise<void>
+
+  resetNewPin: () => Promise<void>
 }

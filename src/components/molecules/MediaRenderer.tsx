@@ -1,5 +1,4 @@
 import Card from 'components/atoms/Card'
-import { UTIL } from 'core/libs'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'core/libs/media'
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import React, { ReactElement, useCallback, useState } from 'react'
@@ -8,6 +7,7 @@ import FastImage, {
   ImageStyle as RNFastImageStyle,
 } from 'react-native-fast-image'
 import * as Progress from 'react-native-progress'
+import { isValidHttpUrl } from 'reactnative/utils'
 
 import FallbackMediaRenderer from '../atoms/FallbackMediaRenderer'
 import IframePlayer from '../atoms/IframeRenderer'
@@ -134,7 +134,7 @@ const MediaRenderer = ({
     )
   } else if (
     videoOrImageSrc.mimeType?.startsWith('image/') ||
-    UTIL.isValidHttpUrl(videoOrImageSrc.url)
+    isValidHttpUrl(videoOrImageSrc.url)
   ) {
     return (
       <FastImage
