@@ -1,3 +1,5 @@
+import useToast from 'hooks/useToast'
+
 import {
   FilePickerResponse,
   useLocalization,
@@ -8,7 +10,6 @@ import { useAlert } from '@sendbird/uikit-react-native-foundation'
 import SBUError from '@sendbird/uikit-react-native/src/libs/SBUError'
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
 import { isImage, shouldCompressImage } from '@sendbird/uikit-utils'
-import useToast from 'hooks/useToast'
 
 export type UseDeviceReturn = {
   getMediaFile: () => Promise<FilePickerResponse | undefined>

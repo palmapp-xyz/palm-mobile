@@ -1,6 +1,6 @@
 import { getPkey } from 'core/libs/account'
 import { QueryKeyEnum, SupportedNetworkEnum } from 'core/types'
-import { VoidSigner, ethers } from 'ethers'
+import { ethers, VoidSigner } from 'ethers'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 

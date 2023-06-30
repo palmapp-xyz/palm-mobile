@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { pToken, QueryKeyEnum } from 'core/types'
 import { useQuery } from 'react-query'
 

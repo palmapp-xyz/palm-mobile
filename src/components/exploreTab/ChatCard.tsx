@@ -1,6 +1,7 @@
 import { Card, FormText, Row, Tag } from 'components'
 import ChannelMembersPreview from 'components/sendbird/ChannelMembersPreview'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, NETWORK } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { ChannelType, FbChannel } from 'core/types'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'

@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
 import { serializeNftOrder } from 'core/libs/zx'
 import postTxStore from 'core/store/postTxStore'

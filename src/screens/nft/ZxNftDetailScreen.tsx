@@ -6,12 +6,12 @@ import {
   Header,
   Row,
 } from 'components'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, NETWORK } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { getFsProfile } from 'core/libs/firebase'
 import { Routes } from 'core/libs/navigation'
 import { nftUriFetcher } from 'core/libs/nft'
 import { stringifyMsgData } from 'core/libs/sendbird'
-import { getNetworkLogo } from 'core/libs/utils'
 import appStore from 'core/store/appStore'
 import {
   ContractAddr,
@@ -241,7 +241,7 @@ const ZxNftDetailScreen = (): ReactElement => {
       <Row style={styles.footer}>
         <View style={{ flex: 1 }}>
           <Row style={{ alignItems: 'center', columnGap: 4 }}>
-            <FormImage source={getNetworkLogo(chain)} size={14} />
+            <FormImage source={UTIL.getNetworkLogo(chain)} size={14} />
             <FormText font={'B'} size={18}>
               {UTIL.formatAmountP(erc20TokenAmount as pToken)}
             </FormText>

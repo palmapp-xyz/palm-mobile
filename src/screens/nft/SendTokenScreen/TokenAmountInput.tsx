@@ -1,7 +1,7 @@
 import images from 'assets/images'
 import { FormImage, FormInput, FormText, Row } from 'components'
-import { COLOR, UTIL } from 'core/consts'
-import { getTokenBalanceInUSD } from 'core/libs/utils'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Moralis, SupportedNetworkEnum, Token } from 'core/types'
 import React, { Dispatch, ReactElement, SetStateAction, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -21,7 +21,7 @@ const TokenAmountInput = ({
   const tokenValue = useMemo(
     () =>
       value
-        ? getTokenBalanceInUSD(UTIL.microfyP(value), item.price)
+        ? UTIL.getTokenBalanceInUSD(UTIL.microfyP(value), item.price)
         : undefined,
     [item, value]
   )

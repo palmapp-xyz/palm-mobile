@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { ChannelType, FbChannel, FbListing, FbProfile } from 'core/types'
 
 import firestore, {
@@ -6,8 +6,6 @@ import firestore, {
 } from '@react-native-firebase/firestore'
 import { MetaData } from '@sendbird/chat'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
-
-import { filterUndefined } from './utils'
 
 export const getFsChannel = async ({
   channelUrl,
@@ -23,7 +21,7 @@ export const getFsChannel = async ({
 
   if (!channelDoc.exists) {
     const metadata: MetaData = await channel.getAllMetaData()
-    const fbChannelField: FbChannel = filterUndefined<FbChannel>({
+    const fbChannelField: FbChannel = UTIL.filterUndefined<FbChannel>({
       url: channel.url,
       channelType: channel.customType as ChannelType,
       tags: metadata.tags

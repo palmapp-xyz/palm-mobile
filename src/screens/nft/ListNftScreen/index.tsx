@@ -1,6 +1,6 @@
 import { Container, Header } from 'components'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import selectNftStore from 'core/store/selectAssetStore'
 import { Moralis, SupportedNetworkEnum } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -20,7 +20,7 @@ const Body = ({
 }): ReactElement => {
   const [showBottomSheet, setShowBottomSheet] = useState(false)
   const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+    UTIL.chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const useZxListNftReturn = useZxListNft({

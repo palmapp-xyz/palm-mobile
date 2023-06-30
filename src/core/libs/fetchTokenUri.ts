@@ -1,6 +1,6 @@
 import images from 'assets/images'
 import axios from 'axios'
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { ContractAddr } from 'core/types'
 
 import { Maybe } from '@toruslabs/openlogin'

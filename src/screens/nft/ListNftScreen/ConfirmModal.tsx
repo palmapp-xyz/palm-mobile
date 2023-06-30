@@ -6,11 +6,11 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
 import { nftUriFetcher } from 'core/libs/nft'
 import { stringifyMsgData } from 'core/libs/sendbird'
-import { chainIdToSupportedNetworkEnum, getNetworkLogo } from 'core/libs/utils'
 import { Moralis, SbUserMetadata, SupportedNetworkEnum } from 'core/types'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useAuth from 'hooks/auth/useAuth'
@@ -43,7 +43,7 @@ const ConfirmModal = ({
   const { user } = useAuth()
   const { navigation } = useAppNavigation<Routes.SendNft>()
   const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+    UTIL.chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const { price, onClickConfirm } = useZxListNftReturn
@@ -146,7 +146,7 @@ const ConfirmModal = ({
               }}
             >
               <FormText>{t('Nft.ListNftConfirmModalOn')}</FormText>
-              <FormImage source={getNetworkLogo(chain)} />
+              <FormImage source={UTIL.getNetworkLogo(chain)} />
               <FormText>{_.capitalize(chain)}</FormText>
             </Row>
           </Row>

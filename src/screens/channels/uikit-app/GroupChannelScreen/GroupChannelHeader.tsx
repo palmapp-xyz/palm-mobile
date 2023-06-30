@@ -17,8 +17,8 @@ import {
   useLocalization,
 } from '@sendbird/uikit-react-native'
 import {
-  Header,
   createStyleSheet,
+  Header,
   useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
 

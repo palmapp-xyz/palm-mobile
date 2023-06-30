@@ -8,7 +8,8 @@ import {
   Row,
   Tag,
 } from 'components'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'

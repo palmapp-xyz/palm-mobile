@@ -1,7 +1,7 @@
 import Indicator from 'components/atoms/Indicator'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -65,7 +65,7 @@ const CollectionNftItems = ({
               tokenId: item.token_id,
               nftContractType: item.contract_type,
               chain:
-                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                 SupportedNetworkEnum.ETHEREUM,
               item,
             })

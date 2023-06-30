@@ -1,8 +1,8 @@
 import Loading from 'components/atoms/Loading'
+import useCodePush from 'hooks/useCodePush'
 import React, { ReactElement } from 'react'
 import { Keyboard, LogBox, TouchableWithoutFeedback } from 'react-native'
 
-import useCodePush from 'hooks/useCodePush'
 import Navigation from '../Navigation'
 import UpdateScreen from '../screens/UpdateScreen'
 import AppProviderWrapper from './AppProvider'

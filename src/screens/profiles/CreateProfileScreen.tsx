@@ -8,8 +8,8 @@ import {
 } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
 import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { recordError } from 'core/libs/logger'
-import { isMainnet } from 'core/libs/utils'
 import appStore from 'core/store/appStore'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
@@ -33,7 +33,7 @@ const CreateProfileScreen = (): ReactElement => {
     profileId: user?.auth?.profileId,
   })
   const { alert } = useAlert()
-  const testnet = !isMainnet()
+  const testnet = !UTIL.isMainnet()
 
   const maxBioLength = 300
 

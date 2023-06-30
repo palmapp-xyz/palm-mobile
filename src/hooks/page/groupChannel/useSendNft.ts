@@ -1,6 +1,6 @@
 // import useExplorer from 'hooks/complex/useExplorer'
+import { UTIL } from 'core/libs'
 import { navigationRef, Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import {
   ApiEnum,
   ContractAddr,
@@ -10,7 +10,7 @@ import {
   pToken,
   SupportedNetworkEnum,
 } from 'core/types'
-// import { UTIL } from 'core/consts'
+// import { UTIL } from 'core/libs'
 import useAuth from 'hooks/auth/useAuth'
 import usePostTx from 'hooks/complex/usePostTx'
 import useNft from 'hooks/contract/useNft'
@@ -45,14 +45,14 @@ const useSendNft = ({
   const { transferFromData } = useNft({
     nftContract: selectedNft?.token_address,
     chain:
-      chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+      UTIL.chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
       SupportedNetworkEnum.ETHEREUM,
   })
 
   const { getTxFee, postTx } = usePostTx({
     contractAddress: selectedNft.token_address,
     chain:
-      chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+      UTIL.chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
       SupportedNetworkEnum.ETHEREUM,
   })
 

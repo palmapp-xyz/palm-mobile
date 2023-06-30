@@ -1,10 +1,10 @@
 import { Container } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
+import { UTIL } from 'core/libs'
 import { getFsProfile } from 'core/libs/firebase'
 import { getProfileMediaImg } from 'core/libs/lens'
 import { recordError } from 'core/libs/logger'
 import { Routes } from 'core/libs/navigation'
-import { filterUndefined } from 'core/libs/utils'
 import appStore from 'core/store/appStore'
 import {
   ChannelType,
@@ -62,7 +62,7 @@ const LensFriendsScreen = (): ReactElement => {
 
     const userProfileId = await fetchUserProfileId(profile.ownedBy)
     const userProfile = await getFsProfile(userProfileId!)
-    const ret: FbProfile | undefined = filterUndefined<FbProfile>({
+    const ret: FbProfile | undefined = UTIL.filterUndefined<FbProfile>({
       ...userProfile!,
       bio: profile.bio || undefined,
       name: profile.name || undefined,

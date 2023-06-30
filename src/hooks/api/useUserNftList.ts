@@ -1,6 +1,6 @@
+import { UTIL } from 'core/libs'
 import apiV1Fabricator from 'core/libs/apiV1Fabricator'
 import { recordError } from 'core/libs/logger'
-import { isMainnet } from 'core/libs/utils'
 import {
   ApiEnum,
   ContractAddr,
@@ -80,7 +80,7 @@ const useUserNftList = ({
   const items = useMemo(
     () =>
       _.flatten(data?.pages.map(x => x.result)).filter(
-        x => !!x && !(isMainnet() && x.possible_spam === true)
+        x => !!x && !(UTIL.isMainnet() && x.possible_spam === true)
       ),
     [data]
   )

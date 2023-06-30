@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import apiV1Fabricator from 'core/libs/apiV1Fabricator'
 import {
   ApiEnum,

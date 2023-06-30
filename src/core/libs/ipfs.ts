@@ -1,7 +1,7 @@
 import { IPFS } from 'core/consts'
 import * as mime from 'mime'
 
-import { unescape } from './utils'
+import { UTIL } from './'
 
 export function resolveIpfsUri(
   uri: string,
@@ -55,7 +55,7 @@ export async function resolveMimeType(
 }
 
 export const fixTokenUri = (uri: string): string => {
-  let unescaped = unescape(uri)
+  let unescaped = UTIL.unescape(uri)
   try {
     unescaped = decodeURI(uri)
   } catch (e) {}

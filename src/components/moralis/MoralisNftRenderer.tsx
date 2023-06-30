@@ -1,6 +1,6 @@
 import MediaRenderer from 'components/molecules/MediaRenderer'
 import NftRenderer from 'components/molecules/NftRenderer'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
+import { UTIL } from 'core/libs'
 import { Moralis, SupportedNetworkEnum } from 'core/types'
 import React, { ReactElement } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
@@ -22,7 +22,7 @@ const MoralisNftRenderer = ({
   hideChain?: boolean
 }): ReactElement => {
   const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const previewUri =

@@ -1,6 +1,5 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { getFsChannel } from 'core/libs/firebase'
-import { filterUndefined } from 'core/libs/utils'
 import { ChannelType, FbChannel } from 'core/types'
 import _ from 'lodash'
 import { v5 as uuidv5 } from 'uuid'
@@ -110,7 +109,7 @@ const useSendbird = (): UseSendbirdReturn => {
       )
     }
 
-    const data: MetaData = filterUndefined<{
+    const data: MetaData = UTIL.filterUndefined<{
       [key: string]: string | undefined
     }>({
       desc,
@@ -124,14 +123,14 @@ const useSendbird = (): UseSendbirdReturn => {
       channel,
       channelUrl: channel.url,
     })
-    const updateParam: Partial<FbChannel> = filterUndefined<Partial<FbChannel>>(
-      {
-        name: channelName,
-        tags,
-        desc,
-        coverImage: channel.coverUrl,
-      }
-    )
+    const updateParam: Partial<FbChannel> = UTIL.filterUndefined<
+      Partial<FbChannel>
+    >({
+      name: channelName,
+      tags,
+      desc,
+      coverImage: channel.coverUrl,
+    })
     await fsChannel.update(updateParam)
 
     return channel

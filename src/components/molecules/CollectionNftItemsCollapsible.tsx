@@ -6,8 +6,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 

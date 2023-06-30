@@ -1,6 +1,6 @@
 import { FormText, Row } from 'components'
 import { COLOR } from 'core/consts'
-import { ContractAddr, Moralis, SupportedNetworkEnum, pToken } from 'core/types'
+import { ContractAddr, Moralis, pToken, SupportedNetworkEnum } from 'core/types'
 import useNativeToken from 'hooks/independent/useNativeToken'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'

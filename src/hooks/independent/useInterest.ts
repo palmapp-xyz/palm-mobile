@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { LocalStorageKey } from 'core/types'
 import { useQuery } from 'react-query'
 

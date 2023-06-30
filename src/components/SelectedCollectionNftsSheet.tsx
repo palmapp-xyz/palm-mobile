@@ -6,8 +6,8 @@ import {
   NftItemMenu,
 } from 'components'
 import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -47,8 +47,9 @@ const SelectedCollectionNftsSheet = ({
   const dim = size.width / 3.0 - 18
 
   const selectedNetwork =
-    chainIdToSupportedNetworkEnum(selectedCollectionNft.chainId || '0x1') ||
-    SupportedNetworkEnum.ETHEREUM
+    UTIL.chainIdToSupportedNetworkEnum(
+      selectedCollectionNft.chainId || '0x1'
+    ) || SupportedNetworkEnum.ETHEREUM
 
   const { items, loading, fetchNextPage, hasNextPage } = useCollectionNfts({
     selectedNetwork,
@@ -115,8 +116,9 @@ const SelectedCollectionNftsSheet = ({
                     tokenId: item.token_id,
                     nftContractType: item.contract_type,
                     chain:
-                      chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
-                      SupportedNetworkEnum.ETHEREUM,
+                      UTIL.chainIdToSupportedNetworkEnum(
+                        item.chainId || '0x1'
+                      ) || SupportedNetworkEnum.ETHEREUM,
                     item,
                   })
                 }}

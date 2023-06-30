@@ -1,3 +1,4 @@
+import useToast from 'hooks/useToast'
 import React, { forwardRef } from 'react'
 import {
   NativeSyntheticEvent,
@@ -16,16 +17,14 @@ import {
 } from '@sendbird/uikit-react-native'
 import {
   Button,
-  TextInput,
   createStyleSheet,
+  TextInput,
 } from '@sendbird/uikit-react-native-foundation'
 
 import type {
   SendbirdFileMessage,
   SendbirdUserMessage,
 } from '@sendbird/uikit-utils'
-import useToast from 'hooks/useToast'
-
 type EditInputProps = GroupChannelProps['Input'] & {
   text: string
   onChangeText: (val: string) => void

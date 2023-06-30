@@ -3,7 +3,8 @@ import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
 import NftAttributes from 'components/molecules/NftAttributes'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import {
   ContractAddr,
   Moralis,

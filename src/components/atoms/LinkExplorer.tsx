@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { SupportedNetworkEnum } from 'core/types'
 import useExplorer from 'hooks/complex/useExplorer'
 import React, { ReactElement, ReactNode } from 'react'

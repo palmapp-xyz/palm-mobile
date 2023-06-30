@@ -28,8 +28,8 @@ import {
   TransactionReceipt,
   UpdateProfileImageRequest,
 } from 'core/graphqls/__generated__/graphql'
+import { UTIL } from 'core/libs'
 import { recordError } from 'core/libs/logger'
-import { isMainnet } from 'core/libs/utils'
 import postTxStore from 'core/store/postTxStore'
 import {
   ContractAddr,
@@ -126,7 +126,7 @@ const useLens = (): UseLensReturn => {
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
   const { connectedNetworkIds } = useNetwork()
-  const lensEnv = isMainnet() ? Environment.mainnet : Environment.testnet
+  const lensEnv = UTIL.isMainnet() ? Environment.mainnet : Environment.testnet
 
   const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
 

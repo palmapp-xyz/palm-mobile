@@ -1,5 +1,6 @@
-import { COLOR, UTIL } from 'core/consts'
-import { SupportedNetworkEnum, pToken } from 'core/types'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
+import { pToken, SupportedNetworkEnum } from 'core/types'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'

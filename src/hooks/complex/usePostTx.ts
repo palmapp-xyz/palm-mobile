@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { getPkey } from 'core/libs/account'
 import postTxStore from 'core/store/postTxStore'
 import {

@@ -1,5 +1,5 @@
 import { ADDRESS_MAP, NETWORK } from 'core/consts'
-import { isMainnet } from 'core/libs/utils'
+import { UTIL } from 'core/libs'
 import {
   AddEthereumChainParameter,
   ContractMap,
@@ -18,7 +18,7 @@ const useNetwork = (): {
     AddEthereumChainParameter
   >
 } => {
-  const mainnet = isMainnet()
+  const mainnet = UTIL.isMainnet()
 
   const apiPath = Config.OEDI_API || ''
 

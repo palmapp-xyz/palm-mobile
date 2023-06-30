@@ -1,7 +1,7 @@
 import { NETWORK } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { recordError } from 'core/libs/logger'
 import { Routes } from 'core/libs/navigation'
-import { filterUndefined } from 'core/libs/utils'
 import {
   FbChannel,
   FbChannelGatingField,
@@ -133,7 +133,7 @@ const useEditChannel = ({
         }
         updates.push(
           channel.updateMetaData(
-            filterUndefined<{ [key: string]: string | undefined }>({
+            UTIL.filterUndefined<{ [key: string]: string | undefined }>({
               desc,
               tags: JSON.stringify(tags),
             }) as MetaData

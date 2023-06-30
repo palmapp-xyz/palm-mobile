@@ -1,9 +1,9 @@
 import FormText from 'components/atoms/FormText'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import { SbShareNftDataType, SupportedNetworkEnum } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement } from 'react'
@@ -19,7 +19,7 @@ const ShareNftMessage = ({
   const item = data.selectedNft
 
   const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   return (

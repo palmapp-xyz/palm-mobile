@@ -3,9 +3,9 @@ import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import {
   ContractAddr,
   NftType,
@@ -30,7 +30,7 @@ const BuyNftMessage = ({ data }: { data: SbBuyNftDataType }): ReactElement => {
 
   const item = data.selectedNft
   const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const { getLink } = useExplorer(chain)

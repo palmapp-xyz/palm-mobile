@@ -1,7 +1,8 @@
 import images from 'assets/images'
 import { Container, FormImage, FormText, Header, Row } from 'components'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, NETWORK } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
 import {
   FbChannelNFTGatingField,

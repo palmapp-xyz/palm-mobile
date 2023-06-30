@@ -1,7 +1,6 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import apiV1Fabricator from 'core/libs/apiV1Fabricator'
 import { recordError } from 'core/libs/logger'
-import { isMainnet } from 'core/libs/utils'
 import {
   ApiEnum,
   ContractAddr,
@@ -76,7 +75,7 @@ const useUserFtList = ({
     return _.flatten(
       ret.concat(
         data.result
-          .filter(x => !(x.possible_spam && isMainnet()))
+          .filter(x => !(x.possible_spam && UTIL.isMainnet()))
           .sort((a, b) => {
             if (!a.price && !b.price) {
               return a.balance >= b.balance ? -1 : 1

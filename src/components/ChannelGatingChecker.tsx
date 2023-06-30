@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import {
   FbChannelGatingField,
   FbChannelNativeGatingField,

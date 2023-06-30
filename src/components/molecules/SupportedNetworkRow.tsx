@@ -1,6 +1,6 @@
 import { FormImage, FormText, Row } from 'components'
 import { COLOR } from 'core/consts'
-import { getNetworkLogo } from 'core/libs/utils'
+import { UTIL } from 'core/libs'
 import { SupportedNetworkEnum } from 'core/types'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
@@ -34,7 +34,7 @@ const SupportedNetworkRow = ({
               ]}
               onPress={(): void => onNetworkSelected?.(network)}
             >
-              <FormImage source={getNetworkLogo(network)} size={16} />
+              <FormImage source={UTIL.getNetworkLogo(network)} size={16} />
               <FormText
                 font={'SB'}
                 color={selected ? COLOR.primary._400 : COLOR.black._400}

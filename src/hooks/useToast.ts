@@ -1,4 +1,6 @@
-import { useToast as useToastFromRnToastNotifications } from 'react-native-toast-notifications'
+import {
+  useToast as useToastFromRnToastNotifications,
+} from 'react-native-toast-notifications'
 import { ToastColorType, ToastIconType } from 'screens/ToastView'
 
 const useToast = (): {

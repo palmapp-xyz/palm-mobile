@@ -1,6 +1,6 @@
 import { NETWORK } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { getPkey } from 'core/libs/account'
-import { isMainnet } from 'core/libs/utils'
 import postTxStore from 'core/store/postTxStore'
 import {
   ChainNetworkEnum,
@@ -26,7 +26,7 @@ type UseWeb3Return = {
 }
 
 const useWeb3 = (chain: SupportedNetworkEnum): UseWeb3Return => {
-  const mainnet = isMainnet()
+  const mainnet = UTIL.isMainnet()
 
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 

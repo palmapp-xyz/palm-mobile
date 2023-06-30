@@ -3,9 +3,9 @@ import FormButton from 'components/atoms/FormButton'
 import FormImage from 'components/atoms/FormImage'
 import FormText from 'components/atoms/FormText'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum, getNetworkLogo } from 'core/libs/utils'
 import { SbListNftDataType, SupportedNetworkEnum, pToken } from 'core/types'
 import { format } from 'date-fns'
 import useExplorer from 'hooks/complex/useExplorer'
@@ -77,7 +77,7 @@ const ListNftMessage = ({
   const item = data.selectedNft
 
   const chain =
-    chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+    UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const { order } = useZxOrder({ nonce: data.nonce, chain })
@@ -139,7 +139,7 @@ const ListNftMessage = ({
         <View style={{ padding: 16 }}>
           <View style={styles.priceBox}>
             <Row style={styles.priceRow}>
-              <FormImage source={getNetworkLogo(chain)} size={18} />
+              <FormImage source={UTIL.getNetworkLogo(chain)} size={18} />
               <FormText font={'B'} size={18}>
                 {UTIL.formatAmountP((data.amount || '0') as pToken)}
               </FormText>
@@ -165,7 +165,7 @@ const ListNftMessage = ({
                     nonce: data.nonce,
                     channelUrl: params.channelUrl,
                     chain:
-                      chainIdToSupportedNetworkEnum(
+                      UTIL.chainIdToSupportedNetworkEnum(
                         item.chainId || data.selectedNft.chainId || '0x1'
                       ) || SupportedNetworkEnum.ETHEREUM,
                     item,

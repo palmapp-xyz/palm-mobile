@@ -1,9 +1,9 @@
 import { MessageRenderer } from 'components'
 import ChannelGatingChecker from 'components/ChannelGatingChecker'
+import { UTIL } from 'core/libs'
 import { getFsListing } from 'core/libs/firebase'
 import { Routes } from 'core/libs/navigation'
 import { parseMsgData } from 'core/libs/sendbird'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import { Moralis, SupportedNetworkEnum } from 'core/types'
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import useFsChannel from 'hooks/firestore/useFsChannel'
@@ -69,7 +69,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
     if (parsedData) {
       const item = parsedData.selectedNft
       const chain: SupportedNetworkEnum =
-        chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+        UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
         SupportedNetworkEnum.ETHEREUM
 
       switch (parsedData.type) {
@@ -80,7 +80,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
               nonce: parsedData.nonce,
               channelUrl: params.channelUrl,
               chain:
-                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                 SupportedNetworkEnum.ETHEREUM,
               item: item as Moralis.NftItem,
             })
@@ -103,7 +103,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
               nonce: (item as PostOrderResponsePayload).order.nonce,
               channelUrl: params.channelUrl,
               chain:
-                chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
+                UTIL.chainIdToSupportedNetworkEnum(item.chainId || '0x1') ||
                 SupportedNetworkEnum.ETHEREUM,
             })
           } else {

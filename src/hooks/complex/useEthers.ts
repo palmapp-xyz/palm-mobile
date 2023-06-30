@@ -1,6 +1,6 @@
 import { NETWORK } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { getPkey } from 'core/libs/account'
-import { isMainnet } from 'core/libs/utils'
 import { ChainNetworkEnum, SupportedNetworkEnum } from 'core/types'
 import { TypedDataDomain, Wallet, ethers } from 'ethers'
 import _ from 'lodash'
@@ -18,7 +18,7 @@ type UseEthersReturn = {
 }
 
 const useEthers = (): UseEthersReturn => {
-  const mainnet = isMainnet()
+  const mainnet = UTIL.isMainnet()
 
   const { providers } = useMemo(
     () => ({

@@ -1,5 +1,5 @@
 import { NETWORK } from 'core/consts'
-import { isMainnet } from 'core/libs/utils'
+import { UTIL } from 'core/libs'
 import { NetworkTypeEnum, SupportedNetworkEnum } from 'core/types'
 import { useCallback, useMemo } from 'react'
 
@@ -12,7 +12,7 @@ export type UseExplorerReturn = {
 }
 
 const useExplorer = (network: SupportedNetworkEnum): UseExplorerReturn => {
-  const mainnet = isMainnet()
+  const mainnet = UTIL.isMainnet()
 
   const endpoint = useMemo(
     () =>

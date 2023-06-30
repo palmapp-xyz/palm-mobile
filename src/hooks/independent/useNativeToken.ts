@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import {
   ContractAddr,
   Moralis,

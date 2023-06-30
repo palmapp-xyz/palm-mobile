@@ -1,6 +1,5 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { navigationRef, Routes } from 'core/libs/navigation'
-import { chainIdToSupportedNetworkEnum } from 'core/libs/utils'
 import {
   ApiEnum,
   ContractAddr,
@@ -46,14 +45,14 @@ const useSendToken = ({
   const { transferFrom } = useToken({
     tokenContract: selectedToken?.token_address,
     chain:
-      chainIdToSupportedNetworkEnum(selectedToken.chainId || '0x1') ||
+      UTIL.chainIdToSupportedNetworkEnum(selectedToken.chainId || '0x1') ||
       SupportedNetworkEnum.ETHEREUM,
   })
 
   const { getTxFee, postTx } = usePostTx({
     contractAddress: selectedToken.token_address,
     chain:
-      chainIdToSupportedNetworkEnum(selectedToken.chainId || '0x1') ||
+      UTIL.chainIdToSupportedNetworkEnum(selectedToken.chainId || '0x1') ||
       SupportedNetworkEnum.ETHEREUM,
   })
 

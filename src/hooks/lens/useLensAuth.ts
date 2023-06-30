@@ -5,8 +5,8 @@ import {
   RefreshDocument,
   VerifyDocument,
 } from 'core/graphqls/__generated__/graphql'
+import { UTIL } from 'core/libs'
 import { recordError } from 'core/libs/logger'
-import { parseJwt } from 'core/libs/utils'
 import { SupportedNetworkEnum, TrueOrErrReturn } from 'core/types'
 import useWeb3 from 'hooks/complex/useWeb3'
 
@@ -144,7 +144,7 @@ const useLensAuth = (): UseLensAuthReturn => {
       }
 
       const currTimeInMillisecs = new Date().getTime() / 1000
-      const parsed = parseJwt(authResult.accessToken)
+      const parsed = UTIL.parseJwt(authResult.accessToken)
       if (!parsed || parsed.iat > currTimeInMillisecs) {
         throw new Error(
           `useLens:refreshIfExpired invalid jwt parsed ${JSON.stringify(

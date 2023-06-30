@@ -8,13 +8,13 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
-import { COLOR, NETWORK, UTIL } from 'core/consts'
+import { COLOR, NETWORK } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { getFsProfile } from 'core/libs/firebase'
 import { getProfileMediaImg } from 'core/libs/lens'
 import { Routes } from 'core/libs/navigation'
 import { nftUriFetcher } from 'core/libs/nft'
 import { stringifyMsgData } from 'core/libs/sendbird'
-import { chainIdToSupportedNetworkEnum, getNetworkLogo } from 'core/libs/utils'
 import {
   FbProfile,
   Moralis,
@@ -55,7 +55,7 @@ const ConfirmModal = ({
   const { profile } = useProfile({ profileId: user?.auth?.profileId })
   const [receiver, setReceiver] = useState<FbProfile>()
   const chain: SupportedNetworkEnum =
-    chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
+    UTIL.chainIdToSupportedNetworkEnum(selectedNft.chainId || '0x1') ||
     SupportedNetworkEnum.ETHEREUM
 
   const { navigation } = useAppNavigation<Routes.SendNft>()
@@ -213,7 +213,7 @@ const ConfirmModal = ({
               }}
             >
               <FormText>{t('Nft.SendNftConfirmModalOn')}</FormText>
-              <FormImage source={getNetworkLogo(chain)} />
+              <FormImage source={UTIL.getNetworkLogo(chain)} />
               <FormText>{_.capitalize(chain)}</FormText>
             </Row>
           </Row>

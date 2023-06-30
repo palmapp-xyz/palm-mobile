@@ -1,5 +1,5 @@
 import { COLOR } from 'core/consts'
-import { isMainnet } from 'core/libs/utils'
+import { UTIL } from 'core/libs'
 import { Moralis, SupportedNetworkEnum } from 'core/types'
 import React, { ReactElement, useState } from 'react'
 import {
@@ -22,7 +22,7 @@ const NftItemMenu = ({
   triggerComponent?: ReactElement
 }): ReactElement => {
   const [nftMenuOpen, setNftMenuOpen] = useState<boolean>(false)
-  const mainnet = isMainnet()
+  const mainnet = UTIL.isMainnet()
   const disabled =
     !chainId ||
     (mainnet

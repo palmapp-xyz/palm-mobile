@@ -1,9 +1,9 @@
 import { Profile, ProfileMedia } from 'core/graphqls/__generated__/graphql'
+import { UTIL } from 'core/libs'
 import { fetchNftImage } from 'core/libs/fetchTokenUri'
 import { getProfileMediaImg } from 'core/libs/lens'
 import { recordError } from 'core/libs/logger'
 import { profilesDeepCompare } from 'core/libs/profile'
-import { filterUndefined } from 'core/libs/utils'
 import {
   ContractAddr,
   FbProfile,
@@ -71,7 +71,7 @@ const useProfile = ({
       return
     }
     if (profilesDeepCompare(fsProfileField, lensProfile) === false) {
-      const profileUpdate: Partial<FbProfile> = filterUndefined<
+      const profileUpdate: Partial<FbProfile> = UTIL.filterUndefined<
         Partial<FbProfile>
       >({
         handle: lensProfile.handle,
@@ -174,14 +174,15 @@ const useProfile = ({
         tokenUri: item.token_uri,
       })
 
-      const picture: ProfileMedia | undefined = filterUndefined<ProfileMedia>({
-        __typename: 'NftImage',
-        chainId: connectedNetworkIds[selectedNetwork]!,
-        contractAddress: item.token_address!,
-        tokenId: item.token_id!,
-        uri: image!,
-        verified: false,
-      })
+      const picture: ProfileMedia | undefined =
+        UTIL.filterUndefined<ProfileMedia>({
+          __typename: 'NftImage',
+          chainId: connectedNetworkIds[selectedNetwork]!,
+          contractAddress: item.token_address!,
+          tokenId: item.token_id!,
+          uri: image!,
+          verified: false,
+        })
       await fsProfile.update({ picture })
 
       return { success: true, value: txHash }
@@ -238,7 +239,7 @@ const useProfile = ({
     }
 
     try {
-      const profileUpdate: Partial<FbProfile> = filterUndefined<
+      const profileUpdate: Partial<FbProfile> = UTIL.filterUndefined<
         Partial<FbProfile>
       >({
         name: metadata.name,

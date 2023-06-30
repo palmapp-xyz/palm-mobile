@@ -1,6 +1,6 @@
 import { FormImage, FormText, Row } from 'components'
-import { COLOR, UTIL } from 'core/consts'
-import { getTokenBalanceInUSD } from 'core/libs/utils'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { Moralis, pToken } from 'core/types'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +18,7 @@ const MoralisErc20Token = ({
   style?: StyleProp<ViewStyle>
 }): ReactElement => {
   const tokenValue = useMemo(
-    () => getTokenBalanceInUSD(value, item.price),
+    () => UTIL.getTokenBalanceInUSD(value, item.price),
     [item]
   )
   const { t } = useTranslation()

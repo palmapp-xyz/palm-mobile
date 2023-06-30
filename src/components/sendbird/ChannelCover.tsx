@@ -4,7 +4,7 @@ import { View } from 'react-native'
 
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { Icon, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
-import { SendbirdBaseChannel, isDefaultCoverImage } from '@sendbird/uikit-utils'
+import { isDefaultCoverImage, SendbirdBaseChannel } from '@sendbird/uikit-utils'
 
 import Avatar from './Avatar'
 import ChannelMembersPreview from './ChannelMembersPreview'

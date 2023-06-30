@@ -1,6 +1,7 @@
 import { Card, FormText } from 'components'
 import Avatar from 'components/sendbird/Avatar'
-import { COLOR, UTIL } from 'core/consts'
+import { COLOR } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { getProfileMediaImg } from 'core/libs/lens'
 import { Routes } from 'core/libs/navigation'
 import { FbProfile } from 'core/types'

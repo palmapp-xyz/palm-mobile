@@ -1,3 +1,4 @@
+import { UTIL } from 'core/libs'
 import { asyncStorageProvider } from 'core/libs/asyncStorageProvider'
 import { navigationActions, Routes } from 'core/libs/navigation'
 import {
@@ -8,7 +9,6 @@ import {
   NotificationService,
   SetSendbirdSDK,
 } from 'core/libs/sendbird'
-import { isMainnet } from 'core/libs/utils'
 import { SupportedNetworkEnum } from 'core/types'
 import useWeb3Bindings from 'hooks/complex/useWeb3Bindings'
 import useSetting from 'hooks/independent/useSetting'
@@ -59,7 +59,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
 
   const isLightTheme = scheme === 'light'
 
-  const lensEnv = isMainnet() ? Environment.mainnet : Environment.testnet
+  const lensEnv = UTIL.isMainnet() ? Environment.mainnet : Environment.testnet
 
   const lensConfig: LensConfig = {
     bindings,

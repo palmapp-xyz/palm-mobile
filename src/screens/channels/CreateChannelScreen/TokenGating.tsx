@@ -9,7 +9,7 @@ import {
 } from 'components'
 import Indicator from 'components/atoms/Indicator'
 import { COLOR, NETWORK } from 'core/consts'
-import { getNetworkLogo } from 'core/libs/utils'
+import { UTIL } from 'core/libs'
 import { SupportedNetworkEnum } from 'core/types'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useAuth from 'hooks/auth/useAuth'
@@ -117,7 +117,7 @@ const TokenGating = ({
                 selected={selectedGatingToken.gatingType === 'Native'}
               />
               <FormImage
-                source={getNetworkLogo(gatingTokenNetwork)}
+                source={UTIL.getNetworkLogo(gatingTokenNetwork)}
                 size={40}
               />
               <View>

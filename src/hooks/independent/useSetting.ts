@@ -1,4 +1,4 @@
-import { UTIL } from 'core/consts'
+import { UTIL } from 'core/libs'
 import { LocalStorageKey, SettingStorageType } from 'core/types'
 import { useEffect, useState } from 'react'
 import RNRestart from 'react-native-restart'

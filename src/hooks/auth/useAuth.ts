@@ -1,5 +1,5 @@
-import { UTIL } from 'core/consts'
 import { AuthenticationResult } from 'core/graphqls/__generated__/graphql'
+import { UTIL } from 'core/libs'
 import {
   generateEvmHdAccount,
   removeKeys,

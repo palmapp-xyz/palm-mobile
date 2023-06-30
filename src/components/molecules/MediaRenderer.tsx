@@ -1,6 +1,6 @@
 import Card from 'components/atoms/Card'
+import { UTIL } from 'core/libs'
 import { shouldRenderAudioTag, shouldRenderVideoTag } from 'core/libs/media'
-import { isValidHttpUrl } from 'core/libs/utils'
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
 import React, { ReactElement, useCallback, useState } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
@@ -134,7 +134,7 @@ const MediaRenderer = ({
     )
   } else if (
     videoOrImageSrc.mimeType?.startsWith('image/') ||
-    isValidHttpUrl(videoOrImageSrc.url)
+    UTIL.isValidHttpUrl(videoOrImageSrc.url)
   ) {
     return (
       <FastImage

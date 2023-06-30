@@ -1,5 +1,5 @@
 import { COLOR } from 'core/consts'
-import { isValidHttpUrl } from 'core/libs/utils'
+import { UTIL } from 'core/libs'
 import React, { ReactElement } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
 
@@ -9,7 +9,7 @@ const Link = ({ text, url }: { text: string; url: string }): ReactElement => {
   return (
     <TouchableOpacity
       onPress={(): void => {
-        if (isValidHttpUrl(url)) {
+        if (UTIL.isValidHttpUrl(url)) {
           Linking.openURL(url)
         }
       }}
