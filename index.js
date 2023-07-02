@@ -10,8 +10,8 @@ import '@ethersproject/shims'
 // i18n
 import './i18n.config'
 
+import { configurePushNotification } from 'palm-react-native/notification'
 import { AppRegistry } from 'react-native'
-import { configurePushNotification } from 'reactnative/notification'
 import { name as appName } from './app.json'
 import App from './src/App'
 

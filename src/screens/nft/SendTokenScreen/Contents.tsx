@@ -7,11 +7,16 @@ import {
   MediaRenderer,
   Row,
 } from 'components'
-import { UTIL } from 'core/libs'
-import { getFsProfile } from 'core/libs/firebase'
-import { getProfileMediaImg } from 'core/libs/lens'
-import { FbProfile, Moralis, SupportedNetworkEnum, Token } from 'core/types'
 import useSendToken from 'hooks/page/groupChannel/useSendToken'
+import { UTIL } from 'palm-core/libs'
+import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileMediaImg } from 'palm-core/libs/lens'
+import {
+  FbProfile,
+  Moralis,
+  SupportedNetworkEnum,
+  Token,
+} from 'palm-core/types'
 import React, {
   Dispatch,
   ReactElement,

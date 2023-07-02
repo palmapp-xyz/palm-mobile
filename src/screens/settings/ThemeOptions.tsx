@@ -1,6 +1,6 @@
-import { COLOR } from 'core/consts'
-import { ThemeModeType } from 'core/types'
 import useSetting from 'hooks/independent/useSetting'
+import { COLOR } from 'palm-core/consts'
+import { ThemeModeType } from 'palm-core/types'
 import React, { ReactElement, useEffect, useState } from 'react'
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
 

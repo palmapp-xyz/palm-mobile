@@ -1,6 +1,6 @@
 import { MediaRendererProps } from 'components/molecules/MediaRenderer'
-import { ContractAddr, NftType, SupportedNetworkEnum } from 'core/types'
 import useNftImage from 'hooks/independent/useNftImage'
+import { ContractAddr, NftType, SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
 import { ImageStyle as RNFastImageStyle } from 'react-native-fast-image'

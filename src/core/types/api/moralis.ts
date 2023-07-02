@@ -1,5 +1,4 @@
-import { ContractAddr, NftType } from '../contracts'
-import { ItemsFetchResult } from './'
+import { ContractAddr, ItemsFetchResult, NftType } from 'palm-core/types'
 
 export namespace Moralis {
   export type TokenPrice = {

@@ -1,6 +1,14 @@
+// import { UTIL } from 'palm-core/libs'
+import useAuth from 'hooks/auth/useAuth'
+import usePostTx from 'hooks/complex/usePostTx'
+import useNft from 'hooks/contract/useNft'
+import usePostTxStatusEffect, {
+  EffectListType,
+} from 'hooks/independent/usePostTxStatusEffect'
+import { useAppNavigation } from 'hooks/useAppNavigation'
 // import useExplorer from 'hooks/complex/useExplorer'
-import { UTIL } from 'core/libs'
-import { navigationRef, Routes } from 'core/libs/navigation'
+import { UTIL } from 'palm-core/libs'
+import { navigationRef, Routes } from 'palm-core/libs/navigation'
 import {
   ApiEnum,
   ContractAddr,
@@ -9,15 +17,7 @@ import {
   PostTxStatus,
   pToken,
   SupportedNetworkEnum,
-} from 'core/types'
-// import { UTIL } from 'core/libs'
-import useAuth from 'hooks/auth/useAuth'
-import usePostTx from 'hooks/complex/usePostTx'
-import useNft from 'hooks/contract/useNft'
-import usePostTxStatusEffect, {
-  EffectListType,
-} from 'hooks/independent/usePostTxStatusEffect'
-import { useAppNavigation } from 'hooks/useAppNavigation'
+} from 'palm-core/types'
 import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
 

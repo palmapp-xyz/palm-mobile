@@ -1,4 +1,6 @@
-import { UTIL } from 'core/libs'
+import useAuth from 'hooks/auth/useAuth'
+import _ from 'lodash'
+import { UTIL } from 'palm-core/libs'
 import {
   ContractAddr,
   EncodedTxData,
@@ -6,11 +8,9 @@ import {
   PostTxStatus,
   pToken,
   SupportedNetworkEnum,
-} from 'core/types'
-import useAuth from 'hooks/auth/useAuth'
-import _ from 'lodash'
-import postTxStore from 'react/store/postTxStore'
-import PkeyManager from 'reactnative/app/pkeyManager'
+} from 'palm-core/types'
+import PkeyManager from 'palm-react-native/app/pkeyManager'
+import postTxStore from 'palm-react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
 
 import useWeb3 from './useWeb3'

@@ -1,6 +1,6 @@
-import { NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { NetworkTypeEnum, SupportedNetworkEnum } from 'core/types'
+import { NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { NetworkTypeEnum, SupportedNetworkEnum } from 'palm-core/types'
 import { useCallback, useMemo } from 'react'
 
 export type UseExplorerReturn = {

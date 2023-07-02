@@ -1,4 +1,4 @@
-import { COLOR } from 'core/consts'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement } from 'react'
 import {
   Modal,

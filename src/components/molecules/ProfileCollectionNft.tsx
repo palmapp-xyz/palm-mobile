@@ -1,10 +1,10 @@
 import Card from 'components/atoms/Card'
 import FormText from 'components/atoms/FormText'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { Moralis } from 'core/types'
 import _ from 'lodash'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { Moralis } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import {
   StyleSheet,

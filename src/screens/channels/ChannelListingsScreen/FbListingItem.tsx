@@ -1,13 +1,18 @@
 import { FormImage, FormText, NftRenderer, Row } from 'components'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { Routes } from 'core/libs/navigation'
-import { FbListing, NftType, SupportedNetworkEnum, pToken } from 'core/types'
 import { format } from 'date-fns'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { Routes } from 'palm-core/libs/navigation'
+import {
+  FbListing,
+  NftType,
+  pToken,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

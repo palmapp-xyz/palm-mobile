@@ -1,6 +1,6 @@
-import { PostTxStatus, StreamResultType } from 'core/types'
+import { PostTxStatus, StreamResultType } from 'palm-core/types'
+import postTxStore from 'palm-react/store/postTxStore'
 import { useEffect } from 'react'
-import postTxStore from 'react/store/postTxStore'
 import { useRecoilValue } from 'recoil'
 
 export type EffectListType = {

@@ -1,12 +1,12 @@
 import Config from 'config'
-import { ADDRESS_MAP, NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
+import { ADDRESS_MAP, NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
 import {
   AddEthereumChainParameter,
   ContractMap,
   NetworkTypeEnum,
   SupportedNetworkEnum,
-} from 'core/types'
+} from 'palm-core/types'
 import { useMemo } from 'react'
 
 const useNetwork = (): {

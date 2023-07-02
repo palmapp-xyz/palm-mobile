@@ -1,5 +1,5 @@
 import { FormText } from 'components'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 

@@ -1,5 +1,5 @@
-import { UTIL } from 'core/libs'
-import { LocalStorageKey, SettingStorageType } from 'core/types'
+import { UTIL } from 'palm-core/libs'
+import { LocalStorageKey, SettingStorageType } from 'palm-core/types'
 import { useEffect, useState } from 'react'
 import RNRestart from 'react-native-restart'
 import { useQuery } from 'react-query'

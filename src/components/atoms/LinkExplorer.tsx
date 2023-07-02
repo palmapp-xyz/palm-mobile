@@ -1,6 +1,6 @@
-import { UTIL } from 'core/libs'
-import { SupportedNetworkEnum } from 'core/types'
 import useExplorer from 'hooks/complex/useExplorer'
+import { UTIL } from 'palm-core/libs'
+import { SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement, ReactNode } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
 

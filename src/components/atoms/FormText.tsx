@@ -1,5 +1,5 @@
 import { FONT } from 'consts'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
 import { FontSize, FontType } from 'types'

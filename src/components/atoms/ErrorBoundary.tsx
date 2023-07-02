@@ -1,5 +1,5 @@
-import { recordError } from 'core/libs/logger'
 import i18n from 'i18next'
+import { recordError } from 'palm-core/libs/logger'
 import React, { ErrorInfo, ReactElement, ReactNode } from 'react'
 import { ImageStyle, StyleProp, Text, View } from 'react-native'
 

@@ -3,18 +3,18 @@ import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import NftRenderer, { NftRendererProp } from 'components/molecules/NftRenderer'
 import VerifiedWrapper from 'components/molecules/VerifiedWrapper'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { Routes } from 'core/libs/navigation'
+import useExplorer from 'hooks/complex/useExplorer'
+import useNft from 'hooks/contract/useNft'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { Routes } from 'palm-core/libs/navigation'
 import {
   ContractAddr,
   NftType,
   SbBuyNftDataType,
   SupportedNetworkEnum,
-} from 'core/types'
-import useExplorer from 'hooks/complex/useExplorer'
-import useNft from 'hooks/contract/useNft'
-import { useAppNavigation } from 'hooks/useAppNavigation'
+} from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'

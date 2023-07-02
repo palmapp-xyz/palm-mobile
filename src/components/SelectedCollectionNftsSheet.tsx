@@ -5,20 +5,20 @@ import {
   MoralisNftRenderer,
   NftItemMenu,
 } from 'components'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { Routes } from 'core/libs/navigation'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { Routes } from 'palm-core/libs/navigation'
+import { ContractAddr, Moralis, SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native'
 
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'

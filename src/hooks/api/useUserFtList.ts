@@ -1,15 +1,15 @@
-import { UTIL } from 'core/libs'
-import apiV1Fabricator from 'core/libs/apiV1Fabricator'
-import { recordError } from 'core/libs/logger'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useNativeToken from 'hooks/independent/useNativeToken'
+import _ from 'lodash'
+import { UTIL } from 'palm-core/libs'
+import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
+import { recordError } from 'palm-core/libs/logger'
 import {
   ApiEnum,
   ContractAddr,
   Moralis,
   SupportedNetworkEnum,
-} from 'core/types'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import useNativeToken from 'hooks/independent/useNativeToken'
-import _ from 'lodash'
+} from 'palm-core/types'
 import { useMemo } from 'react'
 
 import useApi from '../complex/useApi'

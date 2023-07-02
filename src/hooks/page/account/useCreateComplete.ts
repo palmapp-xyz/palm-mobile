@@ -1,6 +1,6 @@
-import { SupportedNetworkEnum } from 'core/types'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useWeb3 from 'hooks/complex/useWeb3'
+import { SupportedNetworkEnum } from 'palm-core/types'
 import { useEffect, useState } from 'react'
 import { Account } from 'web3-core'
 

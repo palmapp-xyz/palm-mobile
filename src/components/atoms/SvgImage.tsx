@@ -1,6 +1,6 @@
 // @flow
 
-import { UTIL } from 'core/libs'
+import { UTIL } from 'palm-core/libs'
 import React, { ReactElement, useEffect, useState } from 'react'
 import {
   ImageURISource,

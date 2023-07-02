@@ -1,21 +1,21 @@
-import { Routes } from 'core/libs/navigation'
-import { nftUriFetcher } from 'core/libs/nft'
-import { stringifyMsgData } from 'core/libs/sendbird'
-import {
-  ContractAddr,
-  Moralis,
-  SbShareNftDataType,
-  SbUserMetadata,
-  SupportedNetworkEnum,
-} from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useDevice from 'hooks/complex/useDevice'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import _ from 'lodash'
+import { Routes } from 'palm-core/libs/navigation'
+import { nftUriFetcher } from 'palm-core/libs/nft'
+import { stringifyMsgData } from 'palm-core/libs/sendbird'
+import {
+  ContractAddr,
+  Moralis,
+  SbShareNftDataType,
+  SbUserMetadata,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
+import selectAssetStore from 'palm-react/store/selectAssetStore'
 import { useMemo, useState } from 'react'
-import selectAssetStore from 'react/store/selectAssetStore'
 import { SetterOrUpdater, useRecoilState } from 'recoil'
 
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'

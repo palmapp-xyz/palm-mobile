@@ -3,18 +3,18 @@ import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
 import NftAttributes from 'components/molecules/NftAttributes'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useNft from 'hooks/contract/useNft'
+import useNftImage from 'hooks/independent/useNftImage'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
 import {
   ContractAddr,
   Moralis,
   NftType,
   QueryKeyEnum,
   SupportedNetworkEnum,
-} from 'core/types'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import useNft from 'hooks/contract/useNft'
-import useNftImage from 'hooks/independent/useNftImage'
+} from 'palm-core/types'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'

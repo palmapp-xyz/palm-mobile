@@ -1,7 +1,7 @@
 import { FormText, Row } from 'components'
-import { COLOR } from 'core/consts'
 import { UseExploreSearchReturn } from 'hooks/page/explore/useExploreSearch'
 import _ from 'lodash'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'

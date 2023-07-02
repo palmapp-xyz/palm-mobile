@@ -1,5 +1,7 @@
-import { PaginatedProfileResult } from 'core/graphqls/__generated__/graphql'
-import { ContractAddr, QueryKeyEnum } from 'core/types'
+import {
+  PaginatedProfileResult,
+} from 'palm-core/graphqls/__generated__/graphql'
+import { ContractAddr, QueryKeyEnum } from 'palm-core/types'
 import { useMemo } from 'react'
 import { useQuery, UseQueryResult } from 'react-query'
 

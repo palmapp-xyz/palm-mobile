@@ -1,10 +1,10 @@
 import images from 'assets/images'
 import { FormImage, MediaRenderer } from 'components'
-import { COLOR } from 'core/consts'
-import { getProfileMediaImg } from 'core/libs/lens'
-import { ContractAddr } from 'core/types'
 import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { COLOR } from 'palm-core/consts'
+import { getProfileMediaImg } from 'palm-core/libs/lens'
+import { ContractAddr } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import {
   ImageBackground,

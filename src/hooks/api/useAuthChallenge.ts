@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
+import useNetwork from 'hooks/complex/useNetwork'
 // import useApi from 'hooks/complex/useApi'
-import apiV1Fabricator from 'core/libs/apiV1Fabricator'
+import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
 import {
   ApiEnum,
   ApiResponse,
@@ -8,8 +9,7 @@ import {
   AuthChallengeResult,
   ContractAddr,
   SupportedNetworkEnum,
-} from 'core/types'
-import useNetwork from 'hooks/complex/useNetwork'
+} from 'palm-core/types'
 
 export type UseAuthChallengeReturn = {
   challengeRequest: (address: ContractAddr) => Promise<AuthChallengeInfo>

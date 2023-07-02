@@ -1,8 +1,8 @@
 import LoadingPage from 'components/atoms/LoadingPage'
-import { navigationRef, Routes } from 'core/libs/navigation'
 import useAuth from 'hooks/auth/useAuth'
 import useCrashlytics from 'hooks/independent/useCrashlytics'
 import useAppearance from 'hooks/useAppearance'
+import { navigationRef, Routes } from 'palm-core/libs/navigation'
 import React, { ReactElement } from 'react'
 
 import {

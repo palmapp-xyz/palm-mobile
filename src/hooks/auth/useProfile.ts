@@ -1,20 +1,20 @@
-import { Profile, ProfileMedia } from 'core/graphqls/__generated__/graphql'
-import { UTIL } from 'core/libs'
-import { fetchNftImage } from 'core/libs/fetchTokenUri'
-import { getProfileMediaImg } from 'core/libs/lens'
-import { recordError } from 'core/libs/logger'
-import { profilesDeepCompare } from 'core/libs/profile'
+import useNetwork from 'hooks/complex/useNetwork'
+import useFsProfile from 'hooks/firestore/useFsProfile'
+import useLens from 'hooks/lens/useLens'
+import useLensProfile from 'hooks/lens/useLensProfile'
+import { Profile, ProfileMedia } from 'palm-core/graphqls/__generated__/graphql'
+import { UTIL } from 'palm-core/libs'
+import { fetchNftImage } from 'palm-core/libs/fetchTokenUri'
+import { getProfileMediaImg } from 'palm-core/libs/lens'
+import { recordError } from 'palm-core/libs/logger'
+import { profilesDeepCompare } from 'palm-core/libs/profile'
 import {
   ContractAddr,
   FbProfile,
   Moralis,
   SupportedNetworkEnum,
   TrueOrErrReturn,
-} from 'core/types'
-import useNetwork from 'hooks/complex/useNetwork'
-import useFsProfile from 'hooks/firestore/useFsProfile'
-import useLens from 'hooks/lens/useLens'
-import useLensProfile from 'hooks/lens/useLensProfile'
+} from 'palm-core/types'
 
 import { ProfileMetadata } from '@lens-protocol/react-native-lens-ui-kit'
 import { useAsyncEffect } from '@sendbird/uikit-utils'

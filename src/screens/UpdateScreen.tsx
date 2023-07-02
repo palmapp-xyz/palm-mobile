@@ -1,6 +1,6 @@
 import { FormText } from 'components'
-import { COLOR } from 'core/consts'
 import Lottie from 'lottie-react-native'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'

@@ -1,5 +1,5 @@
-import { UTIL } from 'core/libs'
-import { LocalStorageKey } from 'core/types'
+import { UTIL } from 'palm-core/libs'
+import { LocalStorageKey } from 'palm-core/types'
 import { useQuery } from 'react-query'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'

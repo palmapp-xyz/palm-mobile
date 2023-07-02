@@ -1,8 +1,8 @@
 import axios from 'axios'
-import apiV1Fabricator from 'core/libs/apiV1Fabricator'
-import { resolveIpfsUri } from 'core/libs/ipfs'
-import { recordError } from 'core/libs/logger'
-import { ApiEnum, TrueOrErrReturn } from 'core/types'
+import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
+import { resolveIpfsUri } from 'palm-core/libs/ipfs'
+import { recordError } from 'palm-core/libs/logger'
+import { ApiEnum, TrueOrErrReturn } from 'palm-core/types'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 

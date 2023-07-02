@@ -1,6 +1,6 @@
 import Card from 'components/atoms/Card'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
+import { ContractAddr, Moralis, SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import {
   StyleSheet,

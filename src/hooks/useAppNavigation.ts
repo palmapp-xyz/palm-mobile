@@ -8,7 +8,7 @@ import type {
   Routes,
   ScreenPropsNavigation,
   ScreenPropsRoute,
-} from 'core/libs/navigation'
+} from 'palm-core/libs/navigation'
 
 export const useRouteParams = <T extends Routes>(): NonNullable<
   Readonly<RouteParams<T>> | undefined

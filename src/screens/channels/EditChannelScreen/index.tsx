@@ -8,14 +8,14 @@ import {
   Row,
   Tag,
 } from 'components'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { Routes } from 'core/libs/navigation'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useEditChannel from 'hooks/page/groupChannel/useEditChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { Routes } from 'palm-core/libs/navigation'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'

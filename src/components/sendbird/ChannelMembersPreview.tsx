@@ -1,7 +1,7 @@
 import { FormText, Row } from 'components'
-import { COLOR } from 'core/consts'
-import { ChannelType } from 'core/types'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
+import { COLOR } from 'palm-core/consts'
+import { ChannelType } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 

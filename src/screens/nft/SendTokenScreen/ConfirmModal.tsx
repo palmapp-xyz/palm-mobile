@@ -8,12 +8,18 @@ import {
   Row,
 } from 'components'
 import MoralisErc20Token from 'components/MoralisErc20Token'
-import { COLOR, NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { getFsProfile } from 'core/libs/firebase'
-import { getProfileMediaImg } from 'core/libs/lens'
-import { Routes } from 'core/libs/navigation'
-import { stringifyMsgData } from 'core/libs/sendbird'
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
+import useSendToken from 'hooks/page/groupChannel/useSendToken'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import useToast from 'hooks/useToast'
+import _ from 'lodash'
+import { COLOR, NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileMediaImg } from 'palm-core/libs/lens'
+import { Routes } from 'palm-core/libs/navigation'
+import { stringifyMsgData } from 'palm-core/libs/sendbird'
 import {
   FbProfile,
   Moralis,
@@ -21,13 +27,7 @@ import {
   SbUserMetadata,
   SupportedNetworkEnum,
   Token,
-} from 'core/types'
-import useAuth from 'hooks/auth/useAuth'
-import useProfile from 'hooks/auth/useProfile'
-import useSendToken from 'hooks/page/groupChannel/useSendToken'
-import { useAppNavigation } from 'hooks/useAppNavigation'
-import useToast from 'hooks/useToast'
-import _ from 'lodash'
+} from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

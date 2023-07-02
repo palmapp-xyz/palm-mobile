@@ -1,6 +1,6 @@
-import { getFsProfile } from 'core/libs/firebase'
-import { recordError } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
+import { getFsProfile } from 'palm-core/libs/firebase'
+import { recordError } from 'palm-core/libs/logger'
 import { Platform } from 'react-native'
 
 import firestore from '@react-native-firebase/firestore'

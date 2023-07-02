@@ -1,12 +1,12 @@
-import apiV1Fabricator from 'core/libs/apiV1Fabricator'
-import { recordError } from 'core/libs/logger'
+import _ from 'lodash'
+import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
+import { recordError } from 'palm-core/libs/logger'
 import {
   ApiEnum,
   ContractAddr,
   Moralis,
   SupportedNetworkEnum,
-} from 'core/types'
-import _ from 'lodash'
+} from 'palm-core/types'
 import { useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
 

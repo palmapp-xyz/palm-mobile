@@ -1,13 +1,16 @@
 import Card from 'components/atoms/Card'
-import { shouldRenderAudioTag, shouldRenderVideoTag } from 'core/libs/media'
 import { useResolvedMediaType } from 'hooks/complex/useResolvedMediaType'
+import {
+  shouldRenderAudioTag,
+  shouldRenderVideoTag,
+} from 'palm-core/libs/media'
+import { isValidHttpUrl } from 'palm-react-native/lib/utils'
 import React, { ReactElement, useCallback, useState } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
 import FastImage, {
   ImageStyle as RNFastImageStyle,
 } from 'react-native-fast-image'
 import * as Progress from 'react-native-progress'
-import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import FallbackMediaRenderer from '../atoms/FallbackMediaRenderer'
 import IframePlayer from '../atoms/IframeRenderer'

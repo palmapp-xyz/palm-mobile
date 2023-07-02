@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { UTIL } from 'core/libs'
-import { pToken, QueryKeyEnum } from 'core/types'
+import { UTIL } from 'palm-core/libs'
+import { pToken, QueryKeyEnum } from 'palm-core/types'
 import { useQuery } from 'react-query'
 
 export type UseEthPriceReturn = {

@@ -1,7 +1,7 @@
-import { COLOR } from 'core/consts'
+import { COLOR } from 'palm-core/consts'
+import { isValidHttpUrl } from 'palm-react-native/lib/utils'
 import React, { ReactElement } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
-import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import FormText from './FormText'
 

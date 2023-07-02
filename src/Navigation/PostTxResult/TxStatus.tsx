@@ -1,7 +1,8 @@
 import images from 'assets/images'
 import { Card, FormButton, FormImage, LinkExplorer } from 'components'
-import { PostTxStatus } from 'core/types'
 import _ from 'lodash'
+import { PostTxStatus } from 'palm-core/types'
+import postTxStore from 'palm-react/store/postTxStore'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -11,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import postTxStore from 'react/store/postTxStore'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 

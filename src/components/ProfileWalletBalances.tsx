@@ -1,7 +1,12 @@
 import { FormText, Row } from 'components'
-import { COLOR } from 'core/consts'
-import { ContractAddr, Moralis, pToken, SupportedNetworkEnum } from 'core/types'
 import useNativeToken from 'hooks/independent/useNativeToken'
+import { COLOR } from 'palm-core/consts'
+import {
+  ContractAddr,
+  Moralis,
+  pToken,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

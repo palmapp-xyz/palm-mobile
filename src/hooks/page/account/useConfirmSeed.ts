@@ -1,6 +1,6 @@
-import { recordError } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
 import _ from 'lodash'
+import { recordError } from 'palm-core/libs/logger'
 import { useEffect, useMemo, useState } from 'react'
 
 type WordListType = {

@@ -1,6 +1,6 @@
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { Moralis, SupportedNetworkEnum } from 'core/types'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { Moralis, SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import {
   Menu,

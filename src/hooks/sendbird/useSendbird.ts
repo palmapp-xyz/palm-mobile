@@ -1,7 +1,7 @@
-import { UTIL } from 'core/libs'
-import { getFsChannel } from 'core/libs/firebase'
-import { ChannelType, FbChannel } from 'core/types'
 import _ from 'lodash'
+import { UTIL } from 'palm-core/libs'
+import { getFsChannel } from 'palm-core/libs/firebase'
+import { ChannelType, FbChannel } from 'palm-core/types'
 import { v5 as uuidv5 } from 'uuid'
 
 import { FileCompat, MetaData } from '@sendbird/chat'

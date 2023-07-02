@@ -1,22 +1,24 @@
 import { Container, FormButton, FormInput, FormText, Row } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
 import UpdateProfileHeader from 'components/UpdateProfileHeader'
-import { COLOR } from 'core/consts'
-import { PublicationMetadataStatusType } from 'core/graphqls/__generated__/graphql'
-import { getAttributesData } from 'core/libs/lens'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { COLOR } from 'palm-core/consts'
+import { getAttributesData } from 'palm-core/libs/lens'
+import appStore from 'palm-react/store/appStore'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import appStore from 'react/store/appStore'
 import { useRecoilState } from 'recoil'
 
 import {
   AttributeData,
   ProfileMetadata,
 } from '@lens-protocol/react-native-lens-ui-kit'
+import {
+  PublicationMetadataStatusType,
+} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { useLocalization } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 

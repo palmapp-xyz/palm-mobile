@@ -1,14 +1,14 @@
-import apiV1Fabricator from 'core/libs/apiV1Fabricator'
-import { recordError } from 'core/libs/logger'
+import useApi from 'hooks/complex/useApi'
+import useNetwork from 'hooks/complex/useNetwork'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
+import { recordError } from 'palm-core/libs/logger'
 import {
   ApiEnum,
   ContractAddr,
   Moralis,
   SupportedNetworkEnum,
-} from 'core/types'
-import useApi from 'hooks/complex/useApi'
-import useNetwork from 'hooks/complex/useNetwork'
-import useReactQuery from 'hooks/complex/useReactQuery'
+} from 'palm-core/types'
 
 export type UseTokenPriceReturn = {
   price: Moralis.TokenPrice | undefined

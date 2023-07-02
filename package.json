@@ -76,6 +76,7 @@
     "ethers": "^5.7.1",
     "events": "^1.1.1",
     "evm-nft-swap": "^0.0.4",
+    "firebase": "^9.23.0",
     "graphql": "^16.6.0",
     "he": "^1.2.0",
     "https-browserify": "^0.0.1",

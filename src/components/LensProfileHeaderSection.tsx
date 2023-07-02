@@ -1,5 +1,5 @@
 import { FormText, Row } from 'components'
-import { Profile, ProfileStats } from 'core/graphqls/__generated__/graphql'
+import { Profile, ProfileStats } from 'palm-core/graphqls/__generated__/graphql'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'

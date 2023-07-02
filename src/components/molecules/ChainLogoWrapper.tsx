@@ -1,6 +1,6 @@
 import FormImage from 'components/atoms/FormImage'
-import { UTIL } from 'core/libs'
-import { SupportedNetworkEnum } from 'core/types'
+import { UTIL } from 'palm-core/libs'
+import { SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement, ReactNode } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 

@@ -1,7 +1,7 @@
 import ChannelCover from 'components/sendbird/ChannelCover'
 import GroupChannelPreview from 'components/sendbird/GroupChannelPreview'
-import { ChannelType } from 'core/types'
 import _ from 'lodash'
+import { ChannelType } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import { Pressable } from 'react-native'
 

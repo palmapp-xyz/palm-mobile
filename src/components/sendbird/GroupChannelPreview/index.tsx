@@ -1,6 +1,6 @@
 import FormText from 'components/atoms/FormText'
 import MediaRenderer from 'components/molecules/MediaRenderer'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement } from 'react'
 import { View } from 'react-native'
 

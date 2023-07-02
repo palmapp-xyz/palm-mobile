@@ -1,16 +1,16 @@
-import { recordError } from 'core/libs/logger'
-import {
-  AuthChallengeInfo,
-  ContractAddr,
-  SupportedNetworkEnum,
-} from 'core/types'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
 import useWeb3 from 'hooks/complex/useWeb3'
 import _ from 'lodash'
+import { recordError } from 'palm-core/libs/logger'
+import {
+  AuthChallengeInfo,
+  ContractAddr,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
+import appStore from 'palm-react/store/appStore'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import appStore from 'react/store/appStore'
 import { useSetRecoilState } from 'recoil'
 import { Account } from 'web3-core'
 

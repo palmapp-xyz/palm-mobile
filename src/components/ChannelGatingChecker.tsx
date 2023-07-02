@@ -1,15 +1,15 @@
-import { UTIL } from 'core/libs'
-import {
-  FbChannelGatingField,
-  FbChannelNativeGatingField,
-  FbChannelNFTGatingField,
-  QueryKeyEnum,
-} from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import useReactQuery from 'hooks/complex/useReactQuery'
 import useNft from 'hooks/contract/useNft'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useUserBalance from 'hooks/independent/useUserBalance'
+import { UTIL } from 'palm-core/libs'
+import {
+  FbChannelGatingField,
+  FbChannelNativeGatingField,
+  FbChannelNFTGatingField,
+  QueryKeyEnum,
+} from 'palm-core/types'
 import React, { ReactElement, useEffect, useMemo } from 'react'
 
 const NftChecker = ({

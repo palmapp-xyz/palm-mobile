@@ -1,8 +1,8 @@
 import { FormText } from 'components'
-import { Attribute } from 'core/graphqls/__generated__/graphql'
+import { Attribute } from 'palm-core/graphqls/__generated__/graphql'
+import { isValidHttpUrl } from 'palm-react-native/lib/utils'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import Link from './atoms/Link'
 

@@ -1,8 +1,11 @@
-import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'core/types'
 import useContract from 'hooks/complex/useContract'
+import erc20 from 'palm-core/abi/erc20.json'
+import {
+  ContractAddr,
+  EncodedTxData,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
 import { AbiItem } from 'web3-utils'
-
-import erc20 from '../../core/abi/erc20.json'
 
 export type UseTokenReturn = {
   name: () => Promise<string | undefined>

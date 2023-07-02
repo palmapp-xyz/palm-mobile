@@ -1,6 +1,6 @@
 import GroupChannelItem from 'components/GroupChannelItem'
-import { recordError } from 'core/libs/logger'
-import { ContractAddr, FbListing } from 'core/types'
+import { recordError } from 'palm-core/libs/logger'
+import { ContractAddr, FbListing } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleProp, Text, View, ViewStyle } from 'react-native'

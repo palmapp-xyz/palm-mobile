@@ -1,10 +1,14 @@
 import FormText from 'components/atoms/FormText'
 import UserMention from 'components/atoms/UserMention'
 import MoralisErc20Token from 'components/MoralisErc20Token'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { pToken, SbSendTokenDataType, SupportedNetworkEnum } from 'core/types'
 import useExplorer from 'hooks/complex/useExplorer'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import {
+  pToken,
+  SbSendTokenDataType,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'

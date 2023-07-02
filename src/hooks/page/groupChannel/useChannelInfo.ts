@@ -1,5 +1,5 @@
-import { ChannelType, FbChannelGatingField } from 'core/types'
 import useFsChannel from 'hooks/firestore/useFsChannel'
+import { ChannelType, FbChannelGatingField } from 'palm-core/types'
 import { useEffect, useState } from 'react'
 
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'

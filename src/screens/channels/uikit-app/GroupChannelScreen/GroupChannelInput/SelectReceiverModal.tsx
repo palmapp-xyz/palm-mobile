@@ -7,8 +7,8 @@ import {
   RadioIcon,
   Row,
 } from 'components'
-import { COLOR } from 'core/consts'
 import { UseGcInputReturn } from 'hooks/page/groupChannel/useGcInput'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

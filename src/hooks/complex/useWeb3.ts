@@ -1,15 +1,15 @@
-import { NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
+import { NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
 import {
   ChainNetworkEnum,
   ContractAddr,
   PostTxStatus,
   pToken,
   SupportedNetworkEnum,
-} from 'core/types'
+} from 'palm-core/types'
+import PkeyManager from 'palm-react-native/app/pkeyManager'
+import postTxStore from 'palm-react/store/postTxStore'
 import { useMemo } from 'react'
-import postTxStore from 'react/store/postTxStore'
-import PkeyManager from 'reactnative/app/pkeyManager'
 import { useSetRecoilState } from 'recoil'
 import Web3 from 'web3'
 import { Account, TransactionConfig, TransactionReceipt } from 'web3-core'

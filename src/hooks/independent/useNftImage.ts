@@ -1,13 +1,13 @@
-import { isENS } from 'core/libs/ens'
-import { fetchNftImage } from 'core/libs/fetchTokenUri'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import useNft from 'hooks/contract/useNft'
+import { isENS } from 'palm-core/libs/ens'
+import { fetchNftImage } from 'palm-core/libs/fetchTokenUri'
 import {
   ContractAddr,
   NftType,
   QueryKeyEnum,
   SupportedNetworkEnum,
-} from 'core/types'
-import useReactQuery from 'hooks/complex/useReactQuery'
-import useNft from 'hooks/contract/useNft'
+} from 'palm-core/types'
 
 import { Maybe } from '@toruslabs/openlogin'
 

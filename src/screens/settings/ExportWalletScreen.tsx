@@ -1,14 +1,14 @@
 import { Container, FormText, Header } from 'components'
-import { COLOR } from 'core/consts'
-import { Routes } from 'core/libs/navigation'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
+import { COLOR } from 'palm-core/consts'
+import { Routes } from 'palm-core/libs/navigation'
+import PkeyManager from 'palm-react-native/app/pkeyManager'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import PkeyManager from 'reactnative/app/pkeyManager'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 

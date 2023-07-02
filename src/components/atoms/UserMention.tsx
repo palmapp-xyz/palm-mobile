@@ -1,7 +1,7 @@
-import { COLOR } from 'core/consts'
-import { Routes } from 'core/libs/navigation'
-import { SbUserMetadata } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { COLOR } from 'palm-core/consts'
+import { Routes } from 'palm-core/libs/navigation'
+import { SbUserMetadata } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { FontSize } from 'types'
 

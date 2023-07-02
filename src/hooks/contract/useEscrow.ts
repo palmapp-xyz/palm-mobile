@@ -1,16 +1,15 @@
+import useContract from 'hooks/complex/useContract'
+import useNetwork from 'hooks/complex/useNetwork'
+import escrow from 'palm-core/abi/Escrow.json'
 import {
   ContractAddr,
   EncodedTxData,
   Escrow,
   pToken,
   SupportedNetworkEnum,
-} from 'core/types'
-import useContract from 'hooks/complex/useContract'
-import useNetwork from 'hooks/complex/useNetwork'
+} from 'palm-core/types'
 import { useMemo } from 'react'
 import { AbiItem } from 'web3-utils'
-
-import escrow from '../../core/abi/Escrow.json'
 
 export type UseNftReturn = {
   escrowContract: ContractAddr

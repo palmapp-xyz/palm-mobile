@@ -1,11 +1,11 @@
-import { getFsChannel } from 'core/libs/firebase'
+import useReactQuery from 'hooks/complex/useReactQuery'
+import { getFsChannel } from 'palm-core/libs/firebase'
 import {
   ContractAddr,
   FbChannel,
   FirestoreKeyEnum,
   SupportedNetworkEnum,
-} from 'core/types'
-import useReactQuery from 'hooks/complex/useReactQuery'
+} from 'palm-core/types'
 import { useMemo, useState } from 'react'
 
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'

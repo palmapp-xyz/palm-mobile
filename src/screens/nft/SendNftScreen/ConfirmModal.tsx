@@ -8,26 +8,26 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'components'
-import { COLOR, NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { getFsProfile } from 'core/libs/firebase'
-import { getProfileMediaImg } from 'core/libs/lens'
-import { Routes } from 'core/libs/navigation'
-import { nftUriFetcher } from 'core/libs/nft'
-import { stringifyMsgData } from 'core/libs/sendbird'
-import {
-  FbProfile,
-  Moralis,
-  PostTxReturn,
-  SbUserMetadata,
-  SupportedNetworkEnum,
-} from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useSendNft from 'hooks/page/groupChannel/useSendNft'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import _ from 'lodash'
+import { COLOR, NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileMediaImg } from 'palm-core/libs/lens'
+import { Routes } from 'palm-core/libs/navigation'
+import { nftUriFetcher } from 'palm-core/libs/nft'
+import { stringifyMsgData } from 'palm-core/libs/sendbird'
+import {
+  FbProfile,
+  Moralis,
+  PostTxReturn,
+  SbUserMetadata,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

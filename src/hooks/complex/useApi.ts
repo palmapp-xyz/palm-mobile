@@ -1,15 +1,15 @@
 import * as axiosjs from 'axios'
-import { recordError } from 'core/libs/logger'
+import useAuth from 'hooks/auth/useAuth'
+import _ from 'lodash'
+import { recordError } from 'palm-core/libs/logger'
 import {
   ApiEnum,
   ApiFetchResult,
   ApiParamFabricated,
   ApiParams,
   ApiResponse,
-} from 'core/types'
-import useAuth from 'hooks/auth/useAuth'
-import _ from 'lodash'
-import fetchApiStore from 'react/store/fetchApiStore'
+} from 'palm-core/types'
+import fetchApiStore from 'palm-react/store/fetchApiStore'
 import { useSetRecoilState } from 'recoil'
 
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'

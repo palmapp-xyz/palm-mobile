@@ -1,14 +1,14 @@
+import useWeb3 from 'hooks/complex/useWeb3'
 import {
   AuthenticateDocument,
   AuthenticationResult,
   ChallengeDocument,
   RefreshDocument,
   VerifyDocument,
-} from 'core/graphqls/__generated__/graphql'
-import { UTIL } from 'core/libs'
-import { recordError } from 'core/libs/logger'
-import { SupportedNetworkEnum, TrueOrErrReturn } from 'core/types'
-import useWeb3 from 'hooks/complex/useWeb3'
+} from 'palm-core/graphqls/__generated__/graphql'
+import { UTIL } from 'palm-core/libs'
+import { recordError } from 'palm-core/libs/logger'
+import { SupportedNetworkEnum, TrueOrErrReturn } from 'palm-core/types'
 
 import {
   ApolloQueryResult,

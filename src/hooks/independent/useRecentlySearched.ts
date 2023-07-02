@@ -1,6 +1,6 @@
-import { UTIL } from 'core/libs'
-import { LocalStorageKey, RecentlySearchItemStorageType } from 'core/types'
 import { format } from 'date-fns'
+import { UTIL } from 'palm-core/libs'
+import { LocalStorageKey, RecentlySearchItemStorageType } from 'palm-core/types'
 import { useQuery } from 'react-query'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'

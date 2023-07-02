@@ -1,5 +1,5 @@
-import { UTIL } from 'core/libs'
 import _ from 'lodash'
+import { UTIL } from 'palm-core/libs'
 import React, { ReactElement, useMemo } from 'react'
 import {
   FlatList,

@@ -1,8 +1,8 @@
 import { FormImage, FormText, Row } from 'components'
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { SupportedNetworkEnum } from 'core/types'
 import _ from 'lodash'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import {
   StyleProp,

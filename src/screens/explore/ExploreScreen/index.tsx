@@ -1,7 +1,7 @@
 import images from 'assets/images'
 import { Container, FormImage, FormInput, Row } from 'components'
-import { COLOR } from 'core/consts'
 import useExploreSearch from 'hooks/page/explore/useExploreSearch'
+import { COLOR } from 'palm-core/consts'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

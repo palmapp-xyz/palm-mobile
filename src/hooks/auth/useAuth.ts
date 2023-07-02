@@ -1,7 +1,9 @@
-import { AuthenticationResult } from 'core/graphqls/__generated__/graphql'
-import { UTIL } from 'core/libs'
-import { getFsProfile } from 'core/libs/firebase'
-import { recordError } from 'core/libs/logger'
+import useLensAuth from 'hooks/lens/useLensAuth'
+import _ from 'lodash'
+import { AuthenticationResult } from 'palm-core/graphqls/__generated__/graphql'
+import { UTIL } from 'palm-core/libs'
+import { getFsProfile } from 'palm-core/libs/firebase'
+import { recordError } from 'palm-core/libs/logger'
 import {
   AuthChallengeResult,
   AuthStorageType,
@@ -11,13 +13,11 @@ import {
   SbUserMetadata,
   TrueOrErrReturn,
   User,
-} from 'core/types'
-import useLensAuth from 'hooks/lens/useLensAuth'
-import _ from 'lodash'
+} from 'palm-core/types'
+import PkeyManager from 'palm-react-native/app/pkeyManager'
+import appStore from 'palm-react/store/appStore'
 import { useState } from 'react'
 import RNRestart from 'react-native-restart'
-import appStore from 'react/store/appStore'
-import PkeyManager from 'reactnative/app/pkeyManager'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'

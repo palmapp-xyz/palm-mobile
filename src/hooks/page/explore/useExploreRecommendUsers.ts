@@ -1,5 +1,5 @@
-import { FbProfile } from 'core/types'
 import useFsProfiles from 'hooks/firestore/useFsProfiles'
+import { FbProfile } from 'palm-core/types'
 
 export type UseExploreRecommendUsersReturn = {
   fsProfileList: FbProfile[]

@@ -1,5 +1,5 @@
-import { FbListing, FirestoreKeyEnum } from 'core/types'
 import useReactQuery from 'hooks/complex/useReactQuery'
+import { FbListing, FirestoreKeyEnum } from 'palm-core/types'
 import { useMemo } from 'react'
 
 import firestore, {

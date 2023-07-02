@@ -1,9 +1,9 @@
-import { COLOR } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { pToken, SupportedNetworkEnum } from 'core/types'
 import useEthPrice from 'hooks/independent/useEthPrice'
 import useKlayPrice from 'hooks/independent/useKlayPrice'
 import useMaticPrice from 'hooks/independent/useMaticPrice'
+import { COLOR } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { pToken, SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 

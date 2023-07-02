@@ -1,5 +1,7 @@
 import axios from 'axios'
-import { UTIL } from 'core/libs'
+import useNetwork from 'hooks/complex/useNetwork'
+import useWeb3 from 'hooks/complex/useWeb3'
+import { UTIL } from 'palm-core/libs'
 import {
   ContractAddr,
   Moralis,
@@ -7,9 +9,7 @@ import {
   QueryKeyEnum,
   SupportedNetworkEnum,
   Token,
-} from 'core/types'
-import useNetwork from 'hooks/complex/useNetwork'
-import useWeb3 from 'hooks/complex/useWeb3'
+} from 'palm-core/types'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 

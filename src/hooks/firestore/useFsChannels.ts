@@ -1,5 +1,5 @@
-import { recordError } from 'core/libs/logger'
-import { ChannelType, FbChannel } from 'core/types'
+import { recordError } from 'palm-core/libs/logger'
+import { ChannelType, FbChannel } from 'palm-core/types'
 import { useEffect, useState } from 'react'
 
 import firestore from '@react-native-firebase/firestore'

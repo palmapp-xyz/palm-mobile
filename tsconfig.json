@@ -3,14 +3,12 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "core/libs/*": ["./core/libs/*"],
-      "core/types": ["./core/types"],
-      "core/consts": ["./core/consts"],
-      "core/graphqls/*": ["./core/graphqls/*"],
+      "palm-core/*": ["./palm-core/*"],
+      "palm-core/types": ["./palm-core/types"],
+      "palm-core/consts": ["./palm-core/consts"],
 
-      "react/store/*": ["./react/store/*"],
-
-      "reactnative": ["./reactnative"],
+      "palm-react/*": ["./palm-react/*"],
+      "palm-react-native/*": ["./palm-react-native/*"],
 
       "consts": ["./consts"],
       "hooks/*": ["./hooks/*"],

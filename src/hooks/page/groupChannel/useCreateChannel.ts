@@ -1,17 +1,17 @@
-import { NETWORK } from 'core/consts'
-import { getFsChannel } from 'core/libs/firebase'
-import { recordError } from 'core/libs/logger'
-import { Routes } from 'core/libs/navigation'
+import useAuth from 'hooks/auth/useAuth'
+import useDevice from 'hooks/complex/useDevice'
+import useSendbird from 'hooks/sendbird/useSendbird'
+import { useAppNavigation } from 'hooks/useAppNavigation'
+import { NETWORK } from 'palm-core/consts'
+import { getFsChannel } from 'palm-core/libs/firebase'
+import { recordError } from 'palm-core/libs/logger'
+import { Routes } from 'palm-core/libs/navigation'
 import {
   ChannelType,
   FbChannel,
   FbChannelGatingField,
   SupportedNetworkEnum,
-} from 'core/types'
-import useAuth from 'hooks/auth/useAuth'
-import useDevice from 'hooks/complex/useDevice'
-import useSendbird from 'hooks/sendbird/useSendbird'
-import { useAppNavigation } from 'hooks/useAppNavigation'
+} from 'palm-core/types'
 import { useMemo, useState } from 'react'
 
 import { FilePickerResponse } from '@sendbird/uikit-react-native'

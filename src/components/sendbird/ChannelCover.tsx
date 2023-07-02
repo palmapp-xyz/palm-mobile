@@ -1,4 +1,4 @@
-import { ChannelType } from 'core/types'
+import { ChannelType } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { View } from 'react-native'
 

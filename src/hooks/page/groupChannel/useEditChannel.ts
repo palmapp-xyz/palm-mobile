@@ -1,16 +1,16 @@
-import { NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { recordError } from 'core/libs/logger'
-import { Routes } from 'core/libs/navigation'
-import {
-  FbChannel,
-  FbChannelGatingField,
-  SupportedNetworkEnum,
-} from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
 import useDevice from 'hooks/complex/useDevice'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { recordError } from 'palm-core/libs/logger'
+import { Routes } from 'palm-core/libs/navigation'
+import {
+  FbChannel,
+  FbChannelGatingField,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -1,5 +1,5 @@
-import { getProfileMediaImg } from 'core/libs/lens'
-import { ContractAddr, FbProfile, SbUserMetadata } from 'core/types'
+import { getProfileMediaImg } from 'palm-core/libs/lens'
+import { ContractAddr, FbProfile, SbUserMetadata } from 'palm-core/types'
 import { useEffect, useState } from 'react'
 
 import firestore, {

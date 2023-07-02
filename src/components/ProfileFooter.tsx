@@ -1,5 +1,5 @@
-import { Moralis } from 'core/types'
 import { UseUserAssetsReturn } from 'hooks/api/useUserNftList'
+import { Moralis } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

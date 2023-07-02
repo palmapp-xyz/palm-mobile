@@ -1,25 +1,25 @@
 import { Container } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
-import { UTIL } from 'core/libs'
-import { getFsProfile } from 'core/libs/firebase'
-import { getProfileMediaImg } from 'core/libs/lens'
-import { recordError } from 'core/libs/logger'
-import { Routes } from 'core/libs/navigation'
-import {
-  ChannelType,
-  ContractAddr,
-  FbProfile,
-  SbUserMetadata,
-} from 'core/types'
 import useAuthChallenge from 'hooks/api/useAuthChallenge'
 import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useIpfs from 'hooks/complex/useIpfs'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { UTIL } from 'palm-core/libs'
+import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileMediaImg } from 'palm-core/libs/lens'
+import { recordError } from 'palm-core/libs/logger'
+import { Routes } from 'palm-core/libs/navigation'
+import {
+  ChannelType,
+  ContractAddr,
+  FbProfile,
+  SbUserMetadata,
+} from 'palm-core/types'
+import appStore from 'palm-react/store/appStore'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
-import appStore from 'react/store/appStore'
 import { useSetRecoilState } from 'recoil'
 
 import {

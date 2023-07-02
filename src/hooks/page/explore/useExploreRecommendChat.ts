@@ -1,5 +1,5 @@
-import { FbChannel } from 'core/types'
 import useFsChannels from 'hooks/firestore/useFsChannels'
+import { FbChannel } from 'palm-core/types'
 
 export type UseExploreRecommendChatReturn = {
   fsChannelList: FbChannel[]

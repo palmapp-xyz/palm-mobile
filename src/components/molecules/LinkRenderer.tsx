@@ -1,5 +1,6 @@
-import { COLOR } from 'core/consts'
-import { fixTokenUri } from 'core/libs/ipfs'
+import { COLOR } from 'palm-core/consts'
+import { fixTokenUri } from 'palm-core/libs/ipfs'
+import { isValidHttpUrl } from 'palm-react-native/lib/utils'
 import React, { ReactElement } from 'react'
 import {
   ImageStyle,
@@ -10,7 +11,6 @@ import {
   TextStyle,
   TouchableOpacity,
 } from 'react-native'
-import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import { Maybe } from '@toruslabs/openlogin'
 

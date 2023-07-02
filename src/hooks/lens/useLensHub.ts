@@ -1,13 +1,12 @@
-import { SupportedNetworkEnum } from 'core/types'
 import { ethers } from 'ethers'
 import useEthers from 'hooks/complex/useEthers'
 import useNetwork from 'hooks/complex/useNetwork'
+import lensHubAbi from 'palm-core/abi/lens-hub-contract-abi.json'
+import lensPeripheryAbi from 'palm-core/abi/lens-periphery-data-provider.json'
+import { SupportedNetworkEnum } from 'palm-core/types'
 import { useMemo, useState } from 'react'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
-
-import lensHubAbi from '../../core/abi/lens-hub-contract-abi.json'
-import lensPeripheryAbi from '../../core/abi/lens-periphery-data-provider.json'
 
 export type UseLensHubReturn = {
   lensHub: ethers.Contract | undefined

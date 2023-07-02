@@ -8,13 +8,15 @@ import {
   SupportedNetworkRow,
 } from 'components'
 import Indicator from 'components/atoms/Indicator'
-import { COLOR, NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { SupportedNetworkEnum } from 'core/types'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import useAuth from 'hooks/auth/useAuth'
-import { UseCreateChannelReturn } from 'hooks/page/groupChannel/useCreateChannel'
+import {
+  UseCreateChannelReturn,
+} from 'hooks/page/groupChannel/useCreateChannel'
 import _ from 'lodash'
+import { COLOR, NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

@@ -7,14 +7,9 @@ module.exports = function (api) {
     {
       root: './',
       alias: {
-        'core/libs': './src/core/libs',
-        'core/types': './src/core/types',
-        'core/consts': './src/core/consts',
-        'core/graphqls': './src/core/graphqls',
-
-        'react/store': './src/react/store',
-
-        reactnative: './src/reactnative',
+        'palm-core': './src/palm-core',
+        'palm-react': './src/palm-react',
+        'palm-react-native': './src/palm-react-native',
 
         assets: './src/assets',
         consts: './src/consts',

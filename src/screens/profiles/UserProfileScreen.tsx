@@ -2,10 +2,10 @@ import { Container } from 'components'
 import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import ProfileFooter from 'components/ProfileFooter'
 import SelectedCollectionNftsSheet from 'components/SelectedCollectionNftsSheet'
-import { Routes } from 'core/libs/navigation'
-import { Moralis, SupportedNetworkEnum } from 'core/types'
 import useUserNftCollectionList from 'hooks/api/useUserNftCollectionList'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { Routes } from 'palm-core/libs/navigation'
+import { Moralis, SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import {
   FlatList,

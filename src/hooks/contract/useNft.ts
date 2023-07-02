@@ -1,8 +1,11 @@
-import { ContractAddr, EncodedTxData, SupportedNetworkEnum } from 'core/types'
 import useContract from 'hooks/complex/useContract'
+import nft from 'palm-core/abi/Nft.json'
+import {
+  ContractAddr,
+  EncodedTxData,
+  SupportedNetworkEnum,
+} from 'palm-core/types'
 import { AbiItem } from 'web3-utils'
-
-import nft from '../../core/abi/Nft.json'
 
 export type UseNftReturn = {
   name: () => Promise<string | undefined>

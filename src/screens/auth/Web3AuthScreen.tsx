@@ -7,7 +7,7 @@ import { Button, useUIKitTheme } from '@sendbird/uikit-react-native-foundation'
 
 import Versions from '../../components/Versions'
 
-// import { Routes } from 'core/libs/navigation'
+// import { Routes } from 'palm-core/libs/navigation'
 
 const Web3AuthScreen = (): ReactElement => {
   // const { navigation } = useAppNavigation()

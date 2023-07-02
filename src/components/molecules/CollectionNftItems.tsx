@@ -1,10 +1,10 @@
 import Indicator from 'components/atoms/Indicator'
 import MoralisNftRenderer from 'components/moralis/MoralisNftRenderer'
-import { UTIL } from 'core/libs'
-import { Routes } from 'core/libs/navigation'
-import { ContractAddr, Moralis, SupportedNetworkEnum } from 'core/types'
 import useCollectionNfts from 'hooks/api/useCollectionNfts'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { UTIL } from 'palm-core/libs'
+import { Routes } from 'palm-core/libs/navigation'
+import { ContractAddr, Moralis, SupportedNetworkEnum } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import {
   FlatList,

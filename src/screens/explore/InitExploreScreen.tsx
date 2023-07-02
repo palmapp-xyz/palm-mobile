@@ -1,10 +1,10 @@
 import images from 'assets/images'
 import { Container, FormButton, FormImage, FormText, Row } from 'components'
-import { COLOR } from 'core/consts'
 import useInterest from 'hooks/independent/useInterest'
 import useInitExplore, { InterestItem } from 'hooks/page/explore/useInitExplore'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
+import { COLOR } from 'palm-core/consts'
 import React, {
   ReactElement,
   useCallback,

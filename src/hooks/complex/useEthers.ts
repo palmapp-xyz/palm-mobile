@@ -1,10 +1,10 @@
-import { NETWORK } from 'core/consts'
-import { UTIL } from 'core/libs'
-import { ChainNetworkEnum, SupportedNetworkEnum } from 'core/types'
-import { TypedDataDomain, Wallet, ethers } from 'ethers'
+import { ethers, TypedDataDomain, Wallet } from 'ethers'
 import _ from 'lodash'
+import { NETWORK } from 'palm-core/consts'
+import { UTIL } from 'palm-core/libs'
+import { ChainNetworkEnum, SupportedNetworkEnum } from 'palm-core/types'
+import PkeyManager from 'palm-react-native/app/pkeyManager'
 import { useCallback, useMemo } from 'react'
-import PkeyManager from 'reactnative/app/pkeyManager'
 
 type UseEthersReturn = {
   providers: Record<SupportedNetworkEnum, ethers.providers.JsonRpcProvider>

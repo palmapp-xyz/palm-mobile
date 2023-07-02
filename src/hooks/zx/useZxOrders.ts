@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
-import { QueryKeyEnum, SupportedNetworkEnum } from 'core/types'
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import useReactQuery from 'hooks/complex/useReactQuery'
+import { QueryKeyEnum, SupportedNetworkEnum } from 'palm-core/types'
 
 import useNetwork from '../complex/useNetwork'
 

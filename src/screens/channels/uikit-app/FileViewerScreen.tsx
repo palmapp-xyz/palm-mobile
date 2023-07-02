@@ -6,7 +6,7 @@ import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
 import type { SendbirdFileMessage } from '@sendbird/uikit-utils'
 
-import type { Routes } from 'core/libs/navigation'
+import type { Routes } from 'palm-core/libs/navigation'
 
 const FileViewerScreen = (): ReactElement => {
   const { sdk } = useSendbirdChat()

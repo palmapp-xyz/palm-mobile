@@ -1,6 +1,6 @@
 import FormText from 'components/atoms/FormText'
 import Row from 'components/atoms/Row'
-import { COLOR } from 'core/consts'
+import { COLOR } from 'palm-core/consts'
 import React, { ReactElement } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 

@@ -8,7 +8,7 @@ import {
 
 import { useAppNavigation } from '../../../hooks/useAppNavigation'
 
-import type { Routes } from 'core/libs/navigation'
+import type { Routes } from 'palm-core/libs/navigation'
 
 const GroupChannelNotificationsFragment =
   createGroupChannelNotificationsFragment()

@@ -1,7 +1,7 @@
-import { PostTxStatus, SupportedNetworkEnum } from 'core/types'
 import usePostTxStatusEffect from 'hooks/independent/usePostTxStatusEffect'
+import { PostTxStatus, SupportedNetworkEnum } from 'palm-core/types'
+import postTxStore from 'palm-react/store/postTxStore'
 import React, { ReactElement, useMemo, useState } from 'react'
-import postTxStore from 'react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
 
 import TxStatus from './TxStatus'
