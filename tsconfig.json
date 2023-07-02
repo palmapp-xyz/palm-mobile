@@ -11,6 +11,7 @@
       "palm-react-native/*": ["./palm-react-native/*"],
 
       "consts": ["./consts"],
+      "types": ["./types"],
       "hooks/*": ["./hooks/*"],
       "assets/*": ["./assets/*"],
       "config": ["./config"],

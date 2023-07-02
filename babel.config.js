@@ -12,6 +12,7 @@ module.exports = function (api) {
         'palm-react-native': './src/palm-react-native',
 
         assets: './src/assets',
+        types: './src/types',
         consts: './src/consts',
         config: './src/config',
         components: './src/components',
