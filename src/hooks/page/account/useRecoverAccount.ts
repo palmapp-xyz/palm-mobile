@@ -1,10 +1,10 @@
 import { validateMnemonic } from 'bip39'
 import { recordError } from 'core/libs/logger'
 import useAuth from 'hooks/auth/useAuth'
-import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import PkeyManager from 'reactnative/app/pkeyManager'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'

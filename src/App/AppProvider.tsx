@@ -1,6 +1,5 @@
 import Config from 'config'
 import { UTIL } from 'core/libs'
-import { asyncStorageProvider } from 'core/libs/asyncStorageProvider'
 import { navigationActions, Routes } from 'core/libs/navigation'
 import { SetSendbirdSDK } from 'core/libs/sendbird'
 import { SupportedNetworkEnum } from 'core/types'
@@ -8,19 +7,20 @@ import useWeb3Bindings from 'hooks/complex/useWeb3Bindings'
 import useSetting from 'hooks/independent/useSetting'
 import useNotificationConf from 'hooks/notification/useNotificationConf'
 import useAppearance from 'hooks/useAppearance'
-import {
-  ClipboardService,
-  FileService,
-  GetTranslucent,
-  MediaService,
-  NotificationService,
-} from 'libs/sendbird'
 import React, { ReactElement, ReactNode, useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { MenuProvider } from 'react-native-popup-menu'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { asyncStorageProvider } from 'reactnative/app/asyncStorageProvider'
+import {
+  ClipboardService,
+  FileService,
+  GetTranslucent,
+  MediaService,
+  NotificationService,
+} from 'reactnative/sendbird'
 import { RecoilRoot } from 'recoil'
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'

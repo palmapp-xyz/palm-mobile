@@ -3,8 +3,8 @@ import useAuth from 'hooks/auth/useAuth'
 import useProfile from 'hooks/auth/useProfile'
 import useNotification from 'hooks/notification/useNotification'
 import { useAppNavigation } from 'hooks/useAppNavigation'
-import PkeyManager from 'libs/PkeyManager'
 import React, { ReactElement, useEffect } from 'react'
+import PkeyManager from 'reactnative/app/pkeyManager'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 

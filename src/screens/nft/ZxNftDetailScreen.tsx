@@ -12,7 +12,6 @@ import { getFsProfile } from 'core/libs/firebase'
 import { Routes } from 'core/libs/navigation'
 import { nftUriFetcher } from 'core/libs/nft'
 import { stringifyMsgData } from 'core/libs/sendbird'
-import appStore from 'core/store/appStore'
 import {
   ContractAddr,
   FbProfile,
@@ -39,6 +38,7 @@ import React, { ReactElement, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
+import appStore from 'react/store/appStore'
 import { useSetRecoilState } from 'recoil'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'

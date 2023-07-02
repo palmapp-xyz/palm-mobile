@@ -30,7 +30,6 @@ import {
 } from 'core/graphqls/__generated__/graphql'
 import { UTIL } from 'core/libs'
 import { recordError } from 'core/libs/logger'
-import postTxStore from 'core/store/postTxStore'
 import {
   ContractAddr,
   PostTxStatus,
@@ -42,6 +41,7 @@ import useEthers from 'hooks/complex/useEthers'
 import useIpfs from 'hooks/complex/useIpfs'
 import useNetwork from 'hooks/complex/useNetwork'
 import _ from 'lodash'
+import postTxStore from 'react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'
 

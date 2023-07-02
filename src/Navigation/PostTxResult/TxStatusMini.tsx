@@ -2,7 +2,6 @@ import images from 'assets/images'
 import { Card, FormImage, LinkExplorer } from 'components'
 import { COLOR } from 'core/consts'
 import { UTIL } from 'core/libs'
-import postTxStore from 'core/store/postTxStore'
 import { PostTxStatus } from 'core/types'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import postTxStore from 'react/store/postTxStore'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components/native'
 

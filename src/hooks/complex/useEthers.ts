@@ -2,9 +2,9 @@ import { NETWORK } from 'core/consts'
 import { UTIL } from 'core/libs'
 import { ChainNetworkEnum, SupportedNetworkEnum } from 'core/types'
 import { TypedDataDomain, Wallet, ethers } from 'ethers'
-import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
+import PkeyManager from 'reactnative/app/pkeyManager'
 
 type UseEthersReturn = {
   providers: Record<SupportedNetworkEnum, ethers.providers.JsonRpcProvider>

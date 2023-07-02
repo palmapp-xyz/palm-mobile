@@ -1,10 +1,10 @@
 import { Container, Header } from 'components'
 import { Routes } from 'core/libs/navigation'
-import selectAssetStore from 'core/store/selectAssetStore'
 import { Token } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement, useState } from 'react'
 import { StyleSheet } from 'react-native'
+import selectAssetStore from 'react/store/selectAssetStore'
 import { useRecoilValue } from 'recoil'
 
 import ConfirmModal from './ConfirmModal'

@@ -1,8 +1,8 @@
 import { QueryKeyEnum, SupportedNetworkEnum } from 'core/types'
 import { VoidSigner, ethers } from 'ethers'
-import PkeyManager from 'libs/PkeyManager'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
+import PkeyManager from 'reactnative/app/pkeyManager'
 
 import { IBindings } from '@lens-protocol/react'
 

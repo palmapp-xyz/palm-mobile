@@ -1,6 +1,5 @@
 import { NETWORK } from 'core/consts'
 import { UTIL } from 'core/libs'
-import postTxStore from 'core/store/postTxStore'
 import {
   ChainNetworkEnum,
   ContractAddr,
@@ -8,8 +7,9 @@ import {
   pToken,
   SupportedNetworkEnum,
 } from 'core/types'
-import PkeyManager from 'libs/PkeyManager'
 import { useMemo } from 'react'
+import postTxStore from 'react/store/postTxStore'
+import PkeyManager from 'reactnative/app/pkeyManager'
 import { useSetRecoilState } from 'recoil'
 import Web3 from 'web3'
 import { Account, TransactionConfig, TransactionReceipt } from 'web3-core'

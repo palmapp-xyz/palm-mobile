@@ -1,4 +1,5 @@
-import { IStorageProvider } from '@lens-protocol/react'
+import IStorageProvider from 'core/app/storage'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 class AsyncStorageProvider implements IStorageProvider {

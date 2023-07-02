@@ -5,7 +5,6 @@ import { getFsProfile } from 'core/libs/firebase'
 import { getProfileMediaImg } from 'core/libs/lens'
 import { recordError } from 'core/libs/logger'
 import { Routes } from 'core/libs/navigation'
-import appStore from 'core/store/appStore'
 import {
   ChannelType,
   ContractAddr,
@@ -20,6 +19,7 @@ import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
+import appStore from 'react/store/appStore'
 import { useSetRecoilState } from 'recoil'
 
 import {

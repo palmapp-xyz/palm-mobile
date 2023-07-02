@@ -1,7 +1,6 @@
 import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
 import { serializeNftOrder } from 'core/libs/zx'
-import postTxStore from 'core/store/postTxStore'
 import {
   ContractAddr,
   FbListing,
@@ -23,6 +22,7 @@ import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
 import { useMemo, useState } from 'react'
+import postTxStore from 'react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
 
 import firestore from '@react-native-firebase/firestore'

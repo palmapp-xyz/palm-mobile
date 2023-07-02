@@ -4,17 +4,19 @@
     "baseUrl": "src",
     "paths": {
       "core/libs/*": ["./core/libs/*"],
-      "core/store/*": ["./core/store/*"],
       "core/types": ["./core/types"],
       "core/consts": ["./core/consts"],
       "core/graphqls/*": ["./core/graphqls/*"],
+
+      "react/store/*": ["./react/store/*"],
+
+      "reactnative": ["./reactnative"],
+
       "consts": ["./consts"],
-      "libs/*": ["./libs/*"],
       "hooks/*": ["./hooks/*"],
       "assets/*": ["./assets/*"],
       "config": ["./config"],
-      "components": ["./components"],
-      "reactnative": ["./reactnative"]
+      "components": ["./components"]
     },
     "types": ["react-native", "jest", "styled-components-react-native"],
     "esModuleInterop": true,

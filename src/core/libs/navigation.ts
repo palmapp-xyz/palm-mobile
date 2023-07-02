@@ -17,7 +17,6 @@ import { GetSendbirdSDK } from './sendbird'
 
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
-import type { GroupChannelType } from '@sendbird/uikit-react-native'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
 export enum Routes {
   MainNavigator = 'MainNavigator',
@@ -205,7 +204,7 @@ type MainRouteParamsUnion =
     }
   | {
       route: Routes.GroupChannelCreate
-      params: { channelType: GroupChannelType }
+      params: { channelType: 'GROUP' }
     }
   | {
       route: Routes.GroupChannel

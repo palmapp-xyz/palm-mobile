@@ -1,5 +1,4 @@
 import { recordError } from 'core/libs/logger'
-import appStore from 'core/store/appStore'
 import {
   AuthChallengeInfo,
   ContractAddr,
@@ -11,6 +10,7 @@ import useWeb3 from 'hooks/complex/useWeb3'
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import appStore from 'react/store/appStore'
 import { useSetRecoilState } from 'recoil'
 import { Account } from 'web3-core'
 

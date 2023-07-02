@@ -2,7 +2,6 @@ import { AuthenticationResult } from 'core/graphqls/__generated__/graphql'
 import { UTIL } from 'core/libs'
 import { getFsProfile } from 'core/libs/firebase'
 import { recordError } from 'core/libs/logger'
-import appStore from 'core/store/appStore'
 import {
   AuthChallengeResult,
   AuthStorageType,
@@ -14,10 +13,11 @@ import {
   User,
 } from 'core/types'
 import useLensAuth from 'hooks/lens/useLensAuth'
-import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
 import { useState } from 'react'
 import RNRestart from 'react-native-restart'
+import appStore from 'react/store/appStore'
+import PkeyManager from 'reactnative/app/pkeyManager'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -58,11 +58,6 @@ const useAuth = (): UseAuthReturn => {
     if (user.auth && firebaseUser) {
       const authToken: string = await firebaseUser.getIdToken(true)
       await setAuth({ ...user.auth, authToken })
-
-      setUser({
-        ...user,
-        userCredential: { ...user.userCredential, user: firebaseUser },
-      })
     }
 
     if (!firebaseUser) {

@@ -1,5 +1,4 @@
 import { recordError } from 'core/libs/logger'
-import postTxStore from 'core/store/postTxStore'
 import {
   FbListing,
   PostTxStatus,
@@ -11,6 +10,7 @@ import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useFsListing from 'hooks/firestore/useFsListing'
 import _ from 'lodash'
+import postTxStore from 'react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
 
 import useZx from './useZx'

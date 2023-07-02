@@ -1,7 +1,5 @@
 import { AuthenticationResult } from 'core/graphqls/__generated__/graphql'
 
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
-
 import { ContractAddr } from './contracts'
 
 export type DeviceTokenSet = {
@@ -13,7 +11,6 @@ export type User = {
   address: ContractAddr
   lensAuth?: AuthenticationResult | null // if null, not a lens user
   auth?: AuthChallengeResult
-  userCredential?: FirebaseAuthTypes.UserCredential
 }
 
 export type AuthChallengeInfo = {

@@ -1,7 +1,7 @@
 import { COLOR } from 'core/consts'
 import React, { ReactElement } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
-import { isValidHttpUrl } from 'reactnative/utils'
+import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import FormText from './FormText'
 

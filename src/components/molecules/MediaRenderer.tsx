@@ -7,7 +7,7 @@ import FastImage, {
   ImageStyle as RNFastImageStyle,
 } from 'react-native-fast-image'
 import * as Progress from 'react-native-progress'
-import { isValidHttpUrl } from 'reactnative/utils'
+import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import FallbackMediaRenderer from '../atoms/FallbackMediaRenderer'
 import IframePlayer from '../atoms/IframeRenderer'

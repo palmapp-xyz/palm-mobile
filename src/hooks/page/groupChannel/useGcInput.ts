@@ -1,7 +1,6 @@
 import { Routes } from 'core/libs/navigation'
 import { nftUriFetcher } from 'core/libs/nft'
 import { stringifyMsgData } from 'core/libs/sendbird'
-import selectAssetStore from 'core/store/selectAssetStore'
 import {
   ContractAddr,
   Moralis,
@@ -16,6 +15,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
 import _ from 'lodash'
 import { useMemo, useState } from 'react'
+import selectAssetStore from 'react/store/selectAssetStore'
 import { SetterOrUpdater, useRecoilState } from 'recoil'
 
 import { GroupChannel, Member } from '@sendbird/chat/groupChannel'

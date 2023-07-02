@@ -5,7 +5,6 @@ import { Routes } from 'core/libs/navigation'
 import { LocalStorageKey } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
-import PkeyManager from 'libs/PkeyManager'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -16,6 +15,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import PkeyManager from 'reactnative/app/pkeyManager'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'

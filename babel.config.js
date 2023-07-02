@@ -8,17 +8,19 @@ module.exports = function (api) {
       root: './',
       alias: {
         'core/libs': './src/core/libs',
-        'core/store': './src/core/store',
         'core/types': './src/core/types',
         'core/consts': './src/core/consts',
         'core/graphqls': './src/core/graphqls',
+
+        'react/store': './src/react/store',
+
+        reactnative: './src/reactnative',
+
         assets: './src/assets',
         consts: './src/consts',
-        libs: './src/libs',
         config: './src/config',
         components: './src/components',
         hooks: './src/hooks',
-        reactnative: './src/reactnative',
       },
     },
   ]

@@ -10,7 +10,7 @@ import {
   TextStyle,
   TouchableOpacity,
 } from 'react-native'
-import { isValidHttpUrl } from 'reactnative/utils'
+import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import { Maybe } from '@toruslabs/openlogin'
 

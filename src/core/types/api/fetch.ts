@@ -3,6 +3,7 @@ import {
   AuthChallengeResult,
   FbChannel,
   FbProfile,
+  ItemsFetchResult,
 } from 'core/types'
 
 import { NominalType } from '../common'
@@ -123,33 +124,16 @@ export type ApiResponse = {
 
   [ApiEnum.ACCOUNTS]: Override<{ GET: Accounts.Item }>
   [ApiEnum.TOKENS]: Override<{
-    GET: {
-      result: Moralis.FtItem[]
-    }
+    GET: ItemsFetchResult<Moralis.FtItem>
   }>
   [ApiEnum.ASSETS]: Override<{
-    GET: {
-      page: number
-      page_size: number
-      cursor: string
-      result: Moralis.NftItem[]
-    }
+    GET: Moralis.NftItemsFetchResult
   }>
   [ApiEnum.COLLECTIONS]: Override<{
-    GET: {
-      page: number
-      page_size: number
-      cursor: string
-      result: Moralis.NftCollection[]
-    }
+    GET: Moralis.NftCollectionItemsFetchResult
   }>
   [ApiEnum.COLLECTION_ASSETS]: Override<{
-    GET: {
-      page: number
-      page_size: number
-      cursor: string
-      result: Moralis.NftItem[]
-    }
+    GET: Moralis.NftItemsFetchResult
   }>
 
   [ApiEnum.CHANNELS]: DefaultMethods

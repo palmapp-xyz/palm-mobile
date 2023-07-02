@@ -1,5 +1,4 @@
 import { UTIL } from 'core/libs'
-import postTxStore from 'core/store/postTxStore'
 import {
   ContractAddr,
   EncodedTxData,
@@ -9,8 +8,9 @@ import {
   SupportedNetworkEnum,
 } from 'core/types'
 import useAuth from 'hooks/auth/useAuth'
-import PkeyManager from 'libs/PkeyManager'
 import _ from 'lodash'
+import postTxStore from 'react/store/postTxStore'
+import PkeyManager from 'reactnative/app/pkeyManager'
 import { useSetRecoilState } from 'recoil'
 
 import useWeb3 from './useWeb3'

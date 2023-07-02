@@ -1,6 +1,5 @@
 import images from 'assets/images'
 import { Card, FormButton, FormImage, LinkExplorer } from 'components'
-import postTxStore from 'core/store/postTxStore'
 import { PostTxStatus } from 'core/types'
 import _ from 'lodash'
 import React, { ReactElement } from 'react'
@@ -12,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import postTxStore from 'react/store/postTxStore'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 

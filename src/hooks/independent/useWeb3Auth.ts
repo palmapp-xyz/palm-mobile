@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { web3auth } from 'reactnative/web3auth'
+import { web3auth } from 'reactnative/auth/web3auth'
 
 import { useAsyncLayoutEffect } from '@sendbird/uikit-utils'
 import { State } from '@web3auth/react-native-sdk'

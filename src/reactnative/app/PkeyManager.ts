@@ -1,5 +1,5 @@
 import { validateMnemonic } from 'bip39'
-import { PKeyManagerInterface } from 'core/libs/account'
+import { PKeyManagerInterface } from 'core/app/pkey'
 import { KeyChainEnum } from 'core/types'
 import { utils, Wallet } from 'ethers'
 import { mnemonicToSeed } from 'ethers/lib/utils'

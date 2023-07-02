@@ -1,9 +1,9 @@
 import { recordError } from 'core/libs/logger'
-import postTxStore from 'core/store/postTxStore'
 import { FbListing, PostTxStatus, SupportedNetworkEnum } from 'core/types'
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useFsListing from 'hooks/firestore/useFsListing'
+import postTxStore from 'react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
 
 import firestore from '@react-native-firebase/firestore'

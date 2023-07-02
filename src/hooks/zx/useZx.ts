@@ -2,8 +2,8 @@ import { QueryKeyEnum, SupportedNetworkEnum } from 'core/types'
 import { ethers } from 'ethers'
 import { NftSwapV4 } from 'evm-nft-swap'
 import useNetwork from 'hooks/complex/useNetwork'
-import PkeyManager from 'libs/PkeyManager'
 import { useQuery } from 'react-query'
+import PkeyManager from 'reactnative/app/pkeyManager'
 
 export type UseZxReturn = { nftSwapSdk?: NftSwapV4 }
 

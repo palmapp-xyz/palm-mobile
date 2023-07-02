@@ -4,11 +4,11 @@ import { Routes } from 'core/libs/navigation'
 import useAuth from 'hooks/auth/useAuth'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useToast from 'hooks/useToast'
-import PkeyManager from 'libs/PkeyManager'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import PkeyManager from 'reactnative/app/pkeyManager'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 

@@ -46,8 +46,10 @@ const GroupChannelListScreen = (): ReactElement => {
         </TouchableOpacity>
       </Row>
       <GroupChannelListFragment
-        onPressCreateChannel={(channelType): void => {
-          navigation.navigate(Routes.GroupChannelCreate, { channelType })
+        onPressCreateChannel={(_channelType): void => {
+          navigation.navigate(Routes.GroupChannelCreate, {
+            channelType: 'GROUP',
+          })
         }}
         onPressChannel={(channel): void => {
           navigation.navigate(Routes.GroupChannel, { channelUrl: channel.url })

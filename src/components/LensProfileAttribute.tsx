@@ -2,7 +2,7 @@ import { FormText } from 'components'
 import { Attribute } from 'core/graphqls/__generated__/graphql'
 import React, { ReactElement } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { isValidHttpUrl } from 'reactnative/utils'
+import { isValidHttpUrl } from 'reactnative/lib/utils'
 
 import Link from './atoms/Link'
 

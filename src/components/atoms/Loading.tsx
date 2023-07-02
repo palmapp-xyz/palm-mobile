@@ -1,7 +1,7 @@
 import { COLOR } from 'core/consts'
-import appStore from 'core/store/appStore'
 import React, { ReactElement, useEffect } from 'react'
 import Spinner, { SpinnerPropTypes } from 'react-native-loading-spinner-overlay'
+import appStore from 'react/store/appStore'
 import { useRecoilState } from 'recoil'
 
 const maxTimeout = 30000

@@ -1,11 +1,11 @@
 import { Container, Header } from 'components'
 import { UTIL } from 'core/libs'
 import { Routes } from 'core/libs/navigation'
-import selectNftStore from 'core/store/selectAssetStore'
 import { Moralis, SupportedNetworkEnum } from 'core/types'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import useZxListNft from 'hooks/zx/useZxListNft'
 import React, { ReactElement, useState } from 'react'
+import selectNftStore from 'react/store/selectAssetStore'
 import { useRecoilValue } from 'recoil'
 
 import ConfirmModal from './ConfirmModal'
