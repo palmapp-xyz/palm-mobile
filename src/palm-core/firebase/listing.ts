@@ -6,11 +6,14 @@ import {
   doc,
   DocSnapshotCallback,
   DocSnapshotReturn,
+  DocumentData,
   DocumentReference,
   firestore,
+  FirestoreDataConverter,
   getDocs,
   onDocSnapshot,
   query,
+  QueryDocumentSnapshot,
   where,
 } from './'
 
@@ -47,12 +50,19 @@ export const onListing = (
   nonce: string,
   callback: DocSnapshotCallback<FbListing>
 ): DocSnapshotReturn<FbListing> => {
-  const ref = doc<FbListing>(firestore as any, 'listings', nonce)
-  return onDocSnapshot<FbListing>(ref as any, {
+  return onDocSnapshot<FbListing>(listingRef(nonce), {
     callback,
   })
 }
 
+const listingConverter: FirestoreDataConverter<FbListing> = {
+  toFirestore: profile => profile,
+  fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>): FbListing =>
+    snapshot.data() as FbListing,
+}
+
 export const listingRef = (nonce: string): DocumentReference<FbListing> => {
-  return doc<FbListing>(firestore as any, 'listings', nonce)
+  return doc(firestore as any, 'listings', nonce).withConverter(
+    listingConverter
+  )
 }

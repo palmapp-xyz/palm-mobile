@@ -38,7 +38,6 @@ const useSign4Auth = (): UseSign4AuthReturn => {
     if (challenge && signer) {
       try {
         const signature = signer.sign(challenge.message).signature
-
         const result = await challengeVerify(signature, challenge.message)
         await appSignIn(result)
       } catch (e) {

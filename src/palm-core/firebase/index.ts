@@ -6,10 +6,10 @@ import {
   Query,
   QueryConstraint,
   QuerySnapshot,
+  getFirestore,
   onSnapshot,
   query,
 } from 'firebase/firestore'
-import { getFirestore } from 'firebase/firestore/lite'
 
 import config from './firebase.config.json'
 

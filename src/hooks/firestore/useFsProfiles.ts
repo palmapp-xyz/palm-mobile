@@ -21,14 +21,17 @@ const useFsProfiles = (): UseFsProfilesReturn => {
       return
     }
 
-    const { unsubscribe } = onExploreProfiles([user.auth?.profileId], 10, {
+    const { unsubscribe } = onExploreProfiles(10, {
       error: e => {
         setIsFetching(false)
         recordError(e, 'onExploreProfiles')
       },
       next: querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-          if (!documentSnapshot.exists) {
+          if (
+            !documentSnapshot.exists ||
+            documentSnapshot.data().profileId === user.auth?.profileId
+          ) {
             return
           }
           fsProfileList.filter((item: FbProfile) => {

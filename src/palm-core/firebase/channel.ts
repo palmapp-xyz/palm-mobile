@@ -10,11 +10,14 @@ import {
   doc,
   DocSnapshotCallback,
   DocSnapshotReturn,
+  DocumentData,
   DocumentReference,
   firestore,
+  FirestoreDataConverter,
   limit,
   onDocSnapshot,
   onQuerySnapshot,
+  QueryDocumentSnapshot,
   QuerySnapshotCallback,
   QuerySnapshotReturn,
   where,
@@ -39,8 +42,7 @@ export const onChannel = (
   channelUrl: string,
   callback: DocSnapshotCallback<FbChannel>
 ): DocSnapshotReturn<FbChannel> => {
-  const ref = doc<FbChannel>(firestore as any, 'channels', channelUrl)
-  return onDocSnapshot<FbChannel>(ref as any, {
+  return onDocSnapshot<FbChannel>(channelRef(channelUrl), {
     callback,
   })
 }
@@ -63,10 +65,18 @@ export const onChannelListings = (
   )
 }
 
+const listingConverter: FirestoreDataConverter<FbChannel> = {
+  toFirestore: profile => profile,
+  fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>): FbChannel =>
+    snapshot.data() as FbChannel,
+}
+
 export const channelRef = (
   channelUrl: string
 ): DocumentReference<FbChannel> => {
-  return doc<FbChannel>(firestore as any, 'channels', channelUrl)
+  return doc(firestore as any, 'channels', channelUrl).withConverter(
+    listingConverter
+  )
 }
 
 export const channelListingRef = (
@@ -74,10 +84,7 @@ export const channelListingRef = (
   nonce: string
 ): DocumentReference<FbListing> => {
   return doc<FbListing>(
-    firestore as any,
-    'channels',
-    channelUrl,
-    'listings',
+    collection(firestore, 'channels', channelUrl, 'listings') as any,
     nonce
   )
 }

@@ -5,24 +5,25 @@ import {
   doc,
   DocSnapshotCallback,
   DocSnapshotReturn,
+  DocumentData,
   DocumentReference,
   firestore,
+  FirestoreDataConverter,
   limit,
   onDocSnapshot,
   onQuerySnapshot,
+  QueryDocumentSnapshot,
   QuerySnapshotCallback,
   QuerySnapshotReturn,
   where,
 } from './'
 
 export const onExploreProfiles = (
-  filterIds: string[],
   max: number,
   callback: QuerySnapshotCallback<FbProfile>
 ): QuerySnapshotReturn<FbProfile> => {
   const queryConstraints = [
     where('verified', '==', true),
-    where('profileId', 'not-in', filterIds),
     where('handle', '!=', ''), // Not-equal (!=) and not-in queries exclude documents where the given field does not exist.
     limit(max),
   ]
@@ -36,12 +37,17 @@ export const onProfile = (
   profileId: string,
   callback: DocSnapshotCallback<FbProfile>
 ): DocSnapshotReturn<FbProfile> => {
-  const ref = doc<FbProfile>(firestore as any, 'profiles', profileId)
-  return onDocSnapshot<FbProfile>(ref as any, {
+  return onDocSnapshot<FbProfile>(profileRef(profileId), {
     callback,
   })
 }
 
+const profileConverter: FirestoreDataConverter<FbProfile> = {
+  toFirestore: profile => profile,
+  fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>): FbProfile =>
+    snapshot.data() as FbProfile,
+}
+
 export const profileRef = (profileId: string): DocumentReference<FbProfile> => {
-  return doc<FbProfile>(firestore as any, 'profiles', profileId)
+  return doc(firestore, 'profiles', profileId).withConverter(profileConverter)
 }
