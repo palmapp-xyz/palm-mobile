@@ -57,7 +57,7 @@ const MainNavigator = (): ReactElement => {
       const isNotConfigurePin = (await PkeyManager.getPin()) === ''
 
       if (isNotConfigurePin) {
-        navigation.push(Routes.Pin, {
+        navigation.navigate(Routes.Pin, {
           type: 'set',
           result: async (result: boolean): Promise<void> => {
             result && navigation.pop()

@@ -78,7 +78,7 @@ const RecoverAccountScreen = (): ReactElement => {
         })
       }
     } else {
-      navigation.push(Routes.Pin, {
+      navigation.navigate(Routes.Pin, {
         type: 'set',
         result: async (result: boolean): Promise<void> => {
           if (result === true) {

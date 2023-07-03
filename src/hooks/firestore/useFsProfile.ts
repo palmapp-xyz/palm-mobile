@@ -27,7 +27,7 @@ const useFsProfile = ({
       return
     }
     const { ref, unsubscribe } = onProfile(profileId, {
-      onNext: function (snapshot: DocumentSnapshot<FbProfile>): void {
+      next: (snapshot: DocumentSnapshot<FbProfile>): void => {
         setFsProfileField(snapshot.data() as FbProfile)
       },
     })

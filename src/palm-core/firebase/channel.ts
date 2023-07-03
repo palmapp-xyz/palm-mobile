@@ -65,8 +65,8 @@ export const onChannelListings = (
   )
 }
 
-const listingConverter: FirestoreDataConverter<FbChannel> = {
-  toFirestore: profile => profile,
+const channelConverter: FirestoreDataConverter<FbChannel> = {
+  toFirestore: channel => channel,
   fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>): FbChannel =>
     snapshot.data() as FbChannel,
 }
@@ -75,7 +75,7 @@ export const channelRef = (
   channelUrl: string
 ): DocumentReference<FbChannel> => {
   return doc(firestore as any, 'channels', channelUrl).withConverter(
-    listingConverter
+    channelConverter
   )
 }
 

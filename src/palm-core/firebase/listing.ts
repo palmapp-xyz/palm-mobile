@@ -56,7 +56,7 @@ export const onListing = (
 }
 
 const listingConverter: FirestoreDataConverter<FbListing> = {
-  toFirestore: profile => profile,
+  toFirestore: listing => listing,
   fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>): FbListing =>
     snapshot.data() as FbListing,
 }

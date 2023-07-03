@@ -27,7 +27,7 @@ const ConfirmSeedScreen = (): ReactElement => {
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
   const onPressConfirm = async (): Promise<void> => {
-    navigation.push(Routes.Pin, {
+    navigation.navigate(Routes.Pin, {
       type: 'set',
       result: async (result: boolean): Promise<void> => {
         if (result === true) {

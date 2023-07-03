@@ -1,12 +1,12 @@
 import { FormText, Row } from 'components'
 import useChannelInfo from 'hooks/page/groupChannel/useChannelInfo'
+import _ from 'lodash'
 import { COLOR } from 'palm-core/consts'
 import { ChannelType } from 'palm-core/types'
 import React, { ReactElement } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import Avatar from './Avatar'
-import ChannelCover from './ChannelCover'
 
 const ChannelMembersPreview = React.memo(
   ({
@@ -48,7 +48,7 @@ const ChannelMembersPreview = React.memo(
           )
         ) : (
           <View style={styles.userImg}>
-            <ChannelCover channel={channel} size={size} />
+            <Avatar uri={_.first(channelImages)} size={size} />
           </View>
         )}
 

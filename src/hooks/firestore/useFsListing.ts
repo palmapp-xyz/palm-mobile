@@ -23,7 +23,7 @@ const useFsListing = ({
     }
 
     const { ref, unsubscribe } = onListing(nonce, {
-      onNext: function (snapshot: DocumentSnapshot<FbListing>): void {
+      next: (snapshot: DocumentSnapshot<FbListing>): void => {
         setFsListingField(snapshot.data() as FbListing)
       },
     })

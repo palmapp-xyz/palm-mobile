@@ -200,7 +200,7 @@ const ConfirmModal = ({
           disabled={!profile}
           onPress={async (): Promise<void> => {
             Keyboard.dismiss()
-            navigation.push(Routes.Pin, {
+            navigation.navigate(Routes.Pin, {
               type: 'auth',
               result: async (result: boolean): Promise<void> => {
                 if (result) {

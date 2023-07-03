@@ -47,9 +47,9 @@ export type QuerySnapshotReturn<T> = Unsubscribe & {
 }
 
 export type DocSnapshotCallback<T> = {
-  onNext: (snapshot: DocumentSnapshot<T>) => void
-  onError?: (error: FirestoreError) => void
-  onCompletion?: () => void
+  next?: (snapshot: DocumentSnapshot<T>) => void
+  error?: (error: FirestoreError) => void
+  complete?: () => void
 }
 
 export const onDocSnapshot = <T>(
@@ -61,11 +61,9 @@ export const onDocSnapshot = <T>(
   }
 ): DocSnapshotReturn<T> => {
   const unsubscribe = onSnapshot(
-    ref as any,
+    ref,
     { includeMetadataChanges: false },
-    callback.onNext,
-    callback.onError,
-    callback.onCompletion
+    callback
   )
   return { ref, unsubscribe }
 }

@@ -258,7 +258,7 @@ const ConfirmModal = ({
           containerStyle={{ flex: 1 }}
           disabled={!receiver || !profile || isPosting || !isValidForm}
           onPress={async (): Promise<void> => {
-            navigation.push(Routes.Pin, {
+            navigation.navigate(Routes.Pin, {
               type: 'auth',
               result: async (result: boolean): Promise<void> => {
                 if (result) {

@@ -18,7 +18,7 @@ const useFsChannel = ({
 
   useEffect(() => {
     const { ref, unsubscribe } = onChannel(channelUrl, {
-      onNext: function (snapshot: DocumentSnapshot<FbChannel>): void {
+      next: (snapshot: DocumentSnapshot<FbChannel>): void => {
         setFsChannelField(snapshot.data())
       },
     })
