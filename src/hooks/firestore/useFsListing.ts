@@ -1,17 +1,13 @@
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { FbListing, FirestoreKeyEnum } from 'palm-core/types'
-import { useMemo } from 'react'
+import { DocumentReference, DocumentSnapshot } from 'palm-core/firebase'
+import { onListing } from 'palm-core/firebase/listing'
+import { FbListing } from 'palm-core/types'
+import { useEffect, useState } from 'react'
 
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore'
 import { Maybe } from '@toruslabs/openlogin'
 
 export type UseFsListingReturn = {
-  fsListing?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
-  fsListingField?: FbListing
-  isFetching: boolean
-  refetch: () => void
+  fsListing: DocumentReference<FbListing> | undefined
+  fsListingField: FbListing | undefined
 }
 
 const useFsListing = ({
@@ -19,59 +15,23 @@ const useFsListing = ({
 }: {
   nonce: Maybe<string>
 }): UseFsListingReturn => {
-  const {
-    data: fsListing,
-    refetch: refetchListing,
-    remove: removeListing,
-    isFetching: isFetchingListing,
-  } = useReactQuery(
-    [FirestoreKeyEnum.Listing, nonce],
-    async () => {
-      if (nonce) {
-        const _fsListing = firestore().collection('listings').doc(nonce)
-        const listingDoc = await _fsListing.get()
-
-        if (!listingDoc.exists) {
-          return undefined
-        }
-
-        return _fsListing
-      }
-    },
-    {
-      enabled: !!nonce,
+  const [fsListing, setFsListing] = useState<DocumentReference<FbListing>>()
+  const [fsListingField, setFsListingField] = useState<FbListing>()
+  useEffect(() => {
+    if (!nonce) {
+      return
     }
-  )
 
-  const {
-    data: fsListingField,
-    refetch: refetchField,
-    remove: removeField,
-    isFetching: isFetchingField,
-  } = useReactQuery(
-    [FirestoreKeyEnum.ListingField, fsListing?.id],
-    async () => {
-      if (fsListing) {
-        return (await fsListing?.get()).data() as FbListing
-      }
-    },
-    {
-      enabled: !!fsListing,
-    }
-  )
+    const { ref, unsubscribe } = onListing(nonce, {
+      onNext: function (snapshot: DocumentSnapshot<FbListing>): void {
+        setFsListingField(snapshot.data() as FbListing)
+      },
+    })
+    setFsListing(ref)
+    return unsubscribe
+  }, [nonce])
 
-  const isFetching = useMemo(
-    () => isFetchingListing || isFetchingField,
-    [isFetchingListing, isFetchingField]
-  )
-
-  const refetch = async (): Promise<void> => {
-    removeListing()
-    removeField()
-    await Promise.all([refetchListing(), refetchField()])
-  }
-
-  return { fsListing, fsListingField, refetch, isFetching }
+  return { fsListing, fsListingField }
 }
 
 export default useFsListing

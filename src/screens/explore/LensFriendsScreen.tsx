@@ -6,6 +6,8 @@ import useProfile from 'hooks/auth/useProfile'
 import useIpfs from 'hooks/complex/useIpfs'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
+import { setDoc } from 'palm-core/firebase'
+import { profileRef } from 'palm-core/firebase/profile'
 import { UTIL } from 'palm-core/libs'
 import { getFsProfile } from 'palm-core/libs/firebase'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
@@ -27,7 +29,6 @@ import {
   ProfileMetadata,
   Search,
 } from '@lens-protocol/react-native-lens-ui-kit'
-import firestore from '@react-native-firebase/firestore'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
@@ -44,7 +45,7 @@ const LensFriendsScreen = (): ReactElement => {
 
   const setLoading = useSetRecoilState(appStore.loading)
 
-  const { lensProfile } = useProfile({ profileId: user?.auth?.profileId })
+  const { lensProfile } = useProfile({ profileId: user?.auth?.profileId! })
   const { data: profileMetadata, loading } = useIpfs<ProfileMetadata>({
     uri: lensProfile?.metadata,
   })
@@ -74,10 +75,7 @@ const LensFriendsScreen = (): ReactElement => {
     })
     // not a palm user yet. populate with lens profile info for him/her
     if (ret && !userProfile!.handle) {
-      await firestore()
-        .collection('profiles')
-        .doc(userProfileId)
-        .set(ret, { merge: true })
+      await setDoc(profileRef(userProfileId!), ret, { merge: true })
     }
 
     // create sendbird user by connecting

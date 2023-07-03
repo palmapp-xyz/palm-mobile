@@ -26,7 +26,7 @@ import TokenGating from './TokenGating'
 const CreateChannelScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
   const { user } = useAuth()
-  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { profile } = useProfile({ profileId: user?.auth?.profileId! })
   const { t } = useTranslation()
   const useCreateChannelReturn = useCreateChannel()
   const {

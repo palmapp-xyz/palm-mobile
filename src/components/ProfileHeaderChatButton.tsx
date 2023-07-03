@@ -28,7 +28,7 @@ const ProfileHeaderChatButton = React.memo(
     const { alert } = useAlert()
     const { t } = useTranslation()
 
-    const { profile: userProfile } = useProfile({ profileId: userProfileId })
+    const { profile: userProfile } = useProfile({ profileId: userProfileId! })
 
     const { createGroupChat, getDistinctChatWithUser } = useSendbird()
 

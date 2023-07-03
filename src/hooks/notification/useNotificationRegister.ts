@@ -1,9 +1,10 @@
 import useAuth from 'hooks/auth/useAuth'
+import { updateDoc } from 'palm-core/firebase'
+import { profileRef } from 'palm-core/firebase/profile'
 import { getFsProfile } from 'palm-core/libs/firebase'
 import { recordError } from 'palm-core/libs/logger'
 import { Platform } from 'react-native'
 
-import firestore from '@react-native-firebase/firestore'
 import messaging from '@react-native-firebase/messaging'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
@@ -54,15 +55,12 @@ const useNotificationRegister = (): {
           Platform.OS === 'ios'
             ? sdk.registerAPNSPushTokenForCurrentUser(token)
             : sdk.registerFCMPushTokenForCurrentUser(token),
-          firestore()
-            .collection('profiles')
-            .doc(user.auth.profileId)
-            .update({
-              deviceTokens: {
-                ...fsProfileField?.deviceTokens,
-                [Platform.OS === 'ios' ? 'apns' : 'fcm']: tokens,
-              },
-            }),
+          updateDoc(profileRef(user.auth.profileId), {
+            deviceTokens: {
+              ...fsProfileField?.deviceTokens,
+              [Platform.OS === 'ios' ? 'apns' : 'fcm']: tokens,
+            },
+          }),
         ])
       }
 
@@ -103,15 +101,12 @@ const useNotificationRegister = (): {
           Platform.OS === 'ios'
             ? sdk.unregisterAPNSPushTokenForCurrentUser(token)
             : sdk.unregisterFCMPushTokenForCurrentUser(token),
-          firestore()
-            .collection('profiles')
-            .doc(user.auth.profileId)
-            .update({
-              deviceTokens: {
-                ...fsProfileField?.deviceTokens,
-                [Platform.OS === 'ios' ? 'apns' : 'fcm']: tokens,
-              },
-            }),
+          updateDoc(profileRef(user.auth.profileId), {
+            deviceTokens: {
+              ...fsProfileField?.deviceTokens,
+              [Platform.OS === 'ios' ? 'apns' : 'fcm']: tokens,
+            },
+          }),
         ])
       }
 

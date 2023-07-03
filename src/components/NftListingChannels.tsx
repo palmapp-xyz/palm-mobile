@@ -1,11 +1,10 @@
 import GroupChannelItem from 'components/GroupChannelItem'
-import { recordError } from 'palm-core/libs/logger'
+import { getActiveListings } from 'palm-core/firebase/listing'
 import { ContractAddr, FbListing } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleProp, Text, View, ViewStyle } from 'react-native'
 
-import firestore from '@react-native-firebase/firestore'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 const NftListingChannels = ({
@@ -23,30 +22,11 @@ const NftListingChannels = ({
   )
 
   useAsyncEffect(async (): Promise<void> => {
-    const activeListings: FbListing[] = []
-    try {
-      await firestore()
-        .collection('listings')
-        .where('nftContract', '==', nftContract)
-        .where('tokenId', '==', tokenId)
-        .get()
-        .then(ordersSnapshot => {
-          ordersSnapshot.forEach(orderSnapshot => {
-            const listing = orderSnapshot.data() as FbListing
-            if (
-              listing.order &&
-              listing.status === 'active' &&
-              listing.channelUrl
-            ) {
-              activeListings.push(listing)
-            }
-          })
-        })
-
-      setActiveListedChannels(activeListings)
-    } catch (e) {
-      recordError(e, 'getActingListings')
-    }
+    const activeListings: FbListing[] = await getActiveListings(
+      nftContract,
+      tokenId
+    )
+    setActiveListedChannels(activeListings)
   }, [nftContract])
 
   return activeListedChannels.length > 0 ? (

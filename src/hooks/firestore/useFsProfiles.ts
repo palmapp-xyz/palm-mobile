@@ -1,49 +1,57 @@
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { FbProfile, FirestoreKeyEnum } from 'palm-core/types'
+import { onExploreProfiles } from 'palm-core/firebase/profile'
+import { recordError } from 'palm-core/libs/logger'
+import { FbProfile } from 'palm-core/types'
 import appStore from 'palm-react/store/appStore'
+import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
-import firestore from '@react-native-firebase/firestore'
-
 export type UseFsProfilesReturn = {
+  isFetching: boolean
   fsProfileList: FbProfile[]
 }
 
 const useFsProfiles = (): UseFsProfilesReturn => {
   const [user] = useRecoilState(appStore.user)
-  const { data: fsProfileList = [] } = useReactQuery(
-    [FirestoreKeyEnum.Profiles],
-    async () => {
-      if (!user) {
-        return
-      }
+  const limit = 10
+  const [isFetching, setIsFetching] = useState<boolean>(true)
+  const [fsProfileList, setFsProfileList] = useState<FbProfile[]>([])
 
-      const list: FbProfile[] = []
-      await firestore()
-        .collection('profiles')
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            if (!documentSnapshot.exists) {
-              return
-            }
-            const profile: FbProfile = documentSnapshot.data() as FbProfile
-            if (
-              profile.verified &&
-              profile.profileId !== user.auth?.profileId &&
-              !!profile.handle
-            ) {
-              list.push(profile)
-            }
+  useEffect(() => {
+    if (!user?.auth?.profileId) {
+      return
+    }
+
+    const { unsubscribe } = onExploreProfiles([user.auth?.profileId], 10, {
+      error: e => {
+        setIsFetching(false)
+        recordError(e, 'onExploreProfiles')
+      },
+      next: querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          if (!documentSnapshot.exists) {
+            return
+          }
+          fsProfileList.filter((item: FbProfile) => {
+            item.profileId !== documentSnapshot.data().profileId
           })
-        })
 
-      return list
-    },
-    { enabled: !!user }
-  )
+          if (fsProfileList.length < limit) {
+            fsProfileList.push(documentSnapshot.data())
+          } else {
+            fsProfileList.slice(1).push(documentSnapshot.data())
+          }
+        })
+      },
+      complete: () => {
+        setIsFetching(false)
+        setFsProfileList(fsProfileList)
+      },
+    })
+    return unsubscribe
+  }, [])
 
   return {
+    isFetching,
     fsProfileList,
   }
 }

@@ -67,7 +67,7 @@ const useGcInput = ({
   channel: GroupChannel
 }): UseGcInputReturn => {
   const { user } = useAuth()
-  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { profile } = useProfile({ profileId: user?.auth?.profileId! })
 
   const [runningNextStep, setRunningNextStep] = useState(false)
   const [openSelectReceiver, setOpenSelectReceiver] = useState<

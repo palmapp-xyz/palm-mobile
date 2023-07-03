@@ -28,11 +28,11 @@ import {
   ContractAddr,
   FbProfile,
   NftType,
-  pToken,
   QueryKeyEnum,
   SbBuyNftDataType,
   SbUserMetadata,
   SupportedNetworkEnum,
+  pToken,
 } from 'palm-core/types'
 import appStore from 'palm-react/store/appStore'
 import React, { ReactElement, useEffect, useMemo, useState } from 'react'
@@ -84,7 +84,7 @@ const ZxNftDetailScreen = (): ReactElement => {
   } = useAppNavigation<Routes.ZxNftDetail>()
   const { order } = useZxOrder({ nonce, chain })
   const { user } = useAuth()
-  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { profile } = useProfile({ profileId: user?.auth?.profileId! })
   const [listingOwner, setListingOwner] = useState<FbProfile>()
   const { fetchUserProfileId } = useAuthChallenge()
   const setLoading = useSetRecoilState(appStore.loading)

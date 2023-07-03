@@ -28,7 +28,7 @@ const UpdateProfileHeader = React.memo(
   }: UpdateProfileHeaderProps): ReactElement => {
     const { navigation } = useAppNavigation()
 
-    const { profile } = useProfile({ profileId: userProfileId })
+    const { profile } = useProfile({ profileId: userProfileId! })
     const profileImg = getProfileMediaImg(profile?.picture)
 
     return (

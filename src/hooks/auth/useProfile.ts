@@ -2,6 +2,7 @@ import useNetwork from 'hooks/complex/useNetwork'
 import useFsProfile from 'hooks/firestore/useFsProfile'
 import useLens from 'hooks/lens/useLens'
 import useLensProfile from 'hooks/lens/useLensProfile'
+import { updateDoc } from 'palm-core/firebase'
 import { Profile, ProfileMedia } from 'palm-core/graphqls/__generated__/graphql'
 import { UTIL } from 'palm-core/libs'
 import { fetchNftImage } from 'palm-core/libs/fetchTokenUri'
@@ -44,11 +45,7 @@ export type UseProfileReturn = {
   >
 }
 
-const useProfile = ({
-  profileId,
-}: {
-  profileId?: string
-}): UseProfileReturn => {
+const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
   const { fsProfile, fsProfileField } = useFsProfile({ profileId })
   const { connectedNetworkIds } = useNetwork()
 
@@ -81,13 +78,7 @@ const useProfile = ({
         coverPicture: getProfileMediaImg(lensProfile.coverPicture) || undefined,
         attributes: lensProfile.attributes || undefined,
       })
-      await fsProfile.update(profileUpdate)
-
-      await fsProfile.update({
-        handle: lensProfile.handle,
-        bio: lensProfile.bio || undefined,
-        picture: lensProfile.picture || undefined,
-      } as Partial<FbProfile>)
+      await updateDoc(fsProfile, profileUpdate)
     }
   }, [fsProfileField, lensProfile])
 
@@ -120,8 +111,7 @@ const useProfile = ({
         return { success: false, errMsg: JSON.stringify(error) }
       }
     }
-
-    await fsProfile.update({ handle, bio } as FbProfile)
+    await updateDoc(fsProfile, { handle, bio } as FbProfile)
     return {
       success: true,
       value: { ...fsProfileField, handle, bio } as FbProfile,
@@ -183,7 +173,7 @@ const useProfile = ({
           uri: image!,
           verified: false,
         })
-      await fsProfile.update({ picture })
+      await updateDoc(fsProfile, { picture } as FbProfile)
 
       return { success: true, value: txHash }
     } catch (error) {
@@ -247,7 +237,7 @@ const useProfile = ({
         coverPicture: metadata.cover_picture,
         attributes: metadata.attributes,
       })
-      await fsProfile.update(profileUpdate)
+      await updateDoc(fsProfile, profileUpdate)
       return { success: true, value }
     } catch (error) {
       recordError(error, 'setMetadata:fsProfile.update')

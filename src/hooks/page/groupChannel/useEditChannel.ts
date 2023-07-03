@@ -3,6 +3,7 @@ import useDevice from 'hooks/complex/useDevice'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { NETWORK } from 'palm-core/consts'
+import { updateDoc } from 'palm-core/firebase'
 import { UTIL } from 'palm-core/libs'
 import { recordError } from 'palm-core/libs/logger'
 import { Routes } from 'palm-core/libs/navigation'
@@ -151,7 +152,7 @@ const useEditChannel = ({
         if (selectedGatingToken) {
           updateParam.gating = selectedGatingToken
         }
-        await fsChannel.update(updateParam)
+        await updateDoc(fsChannel, updateParam)
 
         alert({
           message: t('Channels.ChannelInfoUpdatedAlertMessage'),

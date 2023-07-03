@@ -16,9 +16,7 @@ import {
   AttributeData,
   ProfileMetadata,
 } from '@lens-protocol/react-native-lens-ui-kit'
-import {
-  PublicationMetadataStatusType,
-} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
+import { PublicationMetadataStatusType } from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { useLocalization } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
@@ -32,7 +30,7 @@ const UpdateProfileScreen = (): ReactElement => {
   const { STRINGS } = useLocalization()
 
   const { profile, setMetadata } = useProfile({
-    profileId: user?.auth?.profileId,
+    profileId: user?.auth?.profileId!,
   })
 
   const [name, setName] = useState<string>()
@@ -99,7 +97,7 @@ const UpdateProfileScreen = (): ReactElement => {
     setAttributes(getAttributesData(profile))
   }, [profile])
 
-  if (!profile) {
+  if (!user?.auth?.profileId || !profile) {
     return <LoadingPage />
   }
 

@@ -54,7 +54,7 @@ const ConfirmModal = ({
   setShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>
 }): ReactElement => {
   const { user } = useAuth()
-  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { profile } = useProfile({ profileId: user?.auth?.profileId! })
 
   const [receiver, setReceiver] = useState<FbProfile>()
   const chain: SupportedNetworkEnum =

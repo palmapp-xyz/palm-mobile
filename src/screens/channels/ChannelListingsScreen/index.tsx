@@ -1,11 +1,11 @@
 import { Container, FormText, Header } from 'components'
-import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { COLOR } from 'palm-core/consts'
+import { onChannelListings } from 'palm-core/firebase/channel'
 import { recordError } from 'palm-core/libs/logger'
 import { Routes } from 'palm-core/libs/navigation'
 import { FbListing } from 'palm-core/types'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FlatList,
@@ -16,45 +16,41 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { useAsyncEffect } from '@sendbird/uikit-utils'
-
 import FbListingItem from './FbListingItem'
 
 const Contents = ({ channelUrl }: { channelUrl: string }): ReactElement => {
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [channelListings, setChannelListings] = useState<FbListing[]>([])
 
-  const { navigation } = useAppNavigation<Routes.ChannelListings>()
-  const { fsChannel } = useFsChannel({ channelUrl })
   const { t } = useTranslation()
 
-  useAsyncEffect(async () => {
-    if (!fsChannel) {
-      return
-    }
-
-    try {
-      // add the new listing item to the corresponding channel doc firestore
-      const listings: FbListing[] = []
-      await fsChannel
-        .collection('listings')
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            const listing = documentSnapshot.data() as FbListing
-            if (listing.order && listing.status === 'active') {
-              listings.push(listing)
-            }
-          })
+  useEffect(() => {
+    const listings: FbListing[] = []
+    const { unsubscribe } = onChannelListings(channelUrl, 'active', {
+      error: e => {
+        setIsFetching(false)
+        recordError(e, 'getChannelListings')
+      },
+      next: querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          if (
+            !documentSnapshot.exists ||
+            documentSnapshot.data().status !== 'active'
+          ) {
+            return
+          }
+          listings.push(documentSnapshot.data())
         })
-      setChannelListings(listings)
-      setIsFetching(false)
-    } catch (e) {
-      recordError(e, 'getChannelListings')
-    }
-  }, [fsChannel, isFetching])
+      },
+      complete: () => {
+        setChannelListings(listings)
+        setIsFetching(false)
+      },
+    })
+    return unsubscribe
+  }, [])
 
-  if (!fsChannel || (!isFetching && channelListings.length === 0)) {
+  if (!isFetching && channelListings.length === 0) {
     return (
       <SafeAreaView style={styles.empty}>
         <Ionicons

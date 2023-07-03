@@ -27,7 +27,7 @@ const EditChannelScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.EditChannel>()
   const useEditChannelReturn = useEditChannel({ channelUrl: params.channelUrl })
   const { user } = useAuth()
-  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { profile } = useProfile({ profileId: user?.auth?.profileId! })
   const { t } = useTranslation()
 
   const {

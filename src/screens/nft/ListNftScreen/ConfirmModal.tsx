@@ -52,7 +52,7 @@ const ConfirmModal = ({
   const { channel } = useGroupChannel(sdk, channelUrl)
   const toast = useToast()
   const { t } = useTranslation()
-  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { profile } = useProfile({ profileId: user?.auth?.profileId! })
 
   const onSubmit = async (
     token_uri: string,

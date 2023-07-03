@@ -3,13 +3,15 @@ import { FbChannel } from 'palm-core/types'
 
 export type UseExploreRecommendChatReturn = {
   fsChannelList: FbChannel[]
+  isFetching: boolean
 }
 
 const useExploreRecommendChat = (): UseExploreRecommendChatReturn => {
-  const { channels } = useFsChannels()
+  const { isFetching, channels } = useFsChannels()
 
   return {
     fsChannelList: channels,
+    isFetching,
   }
 }
 

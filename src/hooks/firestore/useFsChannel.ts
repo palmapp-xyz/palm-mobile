@@ -1,25 +1,11 @@
-import useReactQuery from 'hooks/complex/useReactQuery'
-import { getFsChannel } from 'palm-core/libs/firebase'
-import {
-  ContractAddr,
-  FbChannel,
-  FirestoreKeyEnum,
-  SupportedNetworkEnum,
-} from 'palm-core/types'
-import { useMemo, useState } from 'react'
-
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { DocumentReference, DocumentSnapshot } from 'palm-core/firebase'
+import { onChannel } from 'palm-core/firebase/channel'
+import { FbChannel } from 'palm-core/types'
+import { useEffect, useState } from 'react'
 
 export type UseFsChannelReturn = {
-  fsChannel?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
-  fsChannelField?: FbChannel
-  updateGatingToken: (
-    gatingToken: ContractAddr,
-    chain: SupportedNetworkEnum
-  ) => Promise<void>
-  isFetching: boolean
+  fsChannel: DocumentReference<FbChannel> | undefined
+  fsChannelField: FbChannel | undefined
 }
 
 const useFsChannel = ({
@@ -27,55 +13,20 @@ const useFsChannel = ({
 }: {
   channelUrl: string
 }): UseFsChannelReturn => {
-  const [isUpdating, setIsUpdating] = useState(false)
+  const [fsChannel, setFsChannel] = useState<DocumentReference<FbChannel>>()
+  const [fsChannelField, setFsChannelField] = useState<FbChannel>()
 
-  const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl || '')
+  useEffect(() => {
+    const { ref, unsubscribe } = onChannel(channelUrl, {
+      onNext: function (snapshot: DocumentSnapshot<FbChannel>): void {
+        setFsChannelField(snapshot.data())
+      },
+    })
+    setFsChannel(ref)
+    return unsubscribe
+  }, [channelUrl])
 
-  const { data: fsChannel, isFetching: isFetchingChannel } = useReactQuery(
-    [FirestoreKeyEnum.Channel, channelUrl],
-    async () => {
-      if (channel && channelUrl) {
-        return getFsChannel({ channel, channelUrl })
-      }
-    },
-    {
-      enabled: !!channel && !!channelUrl,
-    }
-  )
-
-  const {
-    data: fsChannelField,
-    refetch: refetchField,
-    isFetching: isFetchingField,
-  } = useReactQuery(
-    [FirestoreKeyEnum.ChannelField, fsChannel?.id],
-    async () => {
-      if (fsChannel) {
-        return (await fsChannel?.get()).data() as FbChannel
-      }
-    },
-    {
-      enabled: !!fsChannel,
-    }
-  )
-
-  const isFetching = useMemo(
-    () => isUpdating || isFetchingChannel || isFetchingField,
-    [isUpdating, isFetchingChannel, isFetchingField]
-  )
-
-  const updateGatingToken = async (
-    gatingToken: ContractAddr,
-    chain: SupportedNetworkEnum
-  ): Promise<void> => {
-    setIsUpdating(true)
-    await fsChannel?.update({ gatingToken, gatingTokenChain: chain })
-    refetchField()
-    setIsUpdating(false)
-  }
-
-  return { fsChannel, fsChannelField, updateGatingToken, isFetching }
+  return { fsChannel, fsChannelField }
 }
 
 export default useFsChannel

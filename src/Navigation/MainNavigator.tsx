@@ -47,7 +47,7 @@ const MainStack = createNativeStackNavigator()
 
 const MainNavigator = (): ReactElement => {
   const { user } = useAuth()
-  const { profile } = useProfile({ profileId: user?.auth?.profileId })
+  const { profile } = useProfile({ profileId: user?.auth?.profileId! })
   const { navigation } = useAppNavigation()
 
   useNotification()

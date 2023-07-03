@@ -38,7 +38,7 @@ const ProfileHeader = React.memo(
     const { navigation } = useAppNavigation()
     const { t } = useTranslation()
 
-    const { profile, lensProfile } = useProfile({ profileId: userProfileId })
+    const { profile, lensProfile } = useProfile({ profileId: userProfileId! })
     const profileImg = getProfileMediaImg(profile?.picture)
 
     return (

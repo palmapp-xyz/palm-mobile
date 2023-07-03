@@ -33,7 +33,7 @@ const MyPageScreen = (): ReactElement => {
   const { t } = useTranslation()
 
   const { profile, updateProfileImage } = useProfile({
-    profileId: user?.auth?.profileId,
+    profileId: user?.auth?.profileId!,
   })
 
   const onNftMenuSelected = async (

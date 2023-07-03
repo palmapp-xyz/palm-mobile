@@ -10,6 +10,9 @@ import useReactQuery from 'hooks/complex/useReactQuery'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import _ from 'lodash'
+import { setDoc } from 'palm-core/firebase'
+import { channelListingRef } from 'palm-core/firebase/channel'
+import { listingRef } from 'palm-core/firebase/listing'
 import { UTIL } from 'palm-core/libs'
 import { Routes } from 'palm-core/libs/navigation'
 import { serializeNftOrder } from 'palm-core/libs/zx'
@@ -24,8 +27,6 @@ import {
 import postTxStore from 'palm-react/store/postTxStore'
 import { useMemo, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
-
-import firestore from '@react-native-firebase/firestore'
 
 import useZx from './useZx'
 
@@ -153,16 +154,12 @@ const useZxListNft = ({
       }
 
       // add the new listing item to the corresponding channel doc firestore
-      await fsChannel
-        .collection('listings')
-        .doc(postedOrder.order.nonce)
-        .set(listing)
-
+      await setDoc(
+        channelListingRef(channelUrl, postedOrder.order.nonce),
+        listing
+      )
       // also add to listings collection for keeping track of listed channels for the nft
-      await firestore()
-        .collection('listings')
-        .doc(postedOrder.order.nonce)
-        .set(listing)
+      await setDoc(listingRef(postedOrder.order.nonce), listing)
       return postedOrder
     }
 

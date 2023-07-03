@@ -3,13 +3,15 @@ import { FbProfile } from 'palm-core/types'
 
 export type UseExploreRecommendUsersReturn = {
   fsProfileList: FbProfile[]
+  isFetching: boolean
 }
 
 const useExploreRecommendUsers = (): UseExploreRecommendUsersReturn => {
-  const { fsProfileList } = useFsProfiles()
+  const { isFetching, fsProfileList } = useFsProfiles()
 
   return {
     fsProfileList,
+    isFetching,
   }
 }
 

@@ -1,39 +1,38 @@
+import { DocumentReference, DocumentSnapshot } from 'palm-core/firebase'
+import { onProfile } from 'palm-core/firebase/profile'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
 import { ContractAddr, FbProfile, SbUserMetadata } from 'palm-core/types'
 import { useEffect, useState } from 'react'
 
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
 export type UseFsProfileReturn = {
-  fsProfile?: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
-  fsProfileField?: FbProfile
+  fsProfile: DocumentReference<FbProfile> | undefined
+  fsProfileField: FbProfile | undefined
 }
 
 const useFsProfile = ({
   profileId,
 }: {
-  profileId?: string
+  profileId: string
 }): UseFsProfileReturn => {
-  const [fsProfileField, setFsProfileField] = useState<FbProfile | undefined>()
-
   const { currentUser, setCurrentUser, updateCurrentUserInfo } =
     useSendbirdChat()
 
-  const fsProfile = firestore().collection('profiles').doc(profileId)
+  const [fsProfile, setFsProfile] = useState<DocumentReference<FbProfile>>()
+  const [fsProfileField, setFsProfileField] = useState<FbProfile>()
 
   useEffect(() => {
     if (!profileId) {
       return
     }
-    const subscriber = fsProfile.onSnapshot(profileDocSnapshot => {
-      if (profileDocSnapshot.exists) {
-        setFsProfileField(profileDocSnapshot.data() as FbProfile)
-      }
+    const { ref, unsubscribe } = onProfile(profileId, {
+      onNext: function (snapshot: DocumentSnapshot<FbProfile>): void {
+        setFsProfileField(snapshot.data() as FbProfile)
+      },
     })
-    return () => subscriber()
+    setFsProfile(ref)
+    return unsubscribe
   }, [profileId])
 
   useEffect(() => {

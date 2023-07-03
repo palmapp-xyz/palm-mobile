@@ -3,6 +3,8 @@ import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useFsListing from 'hooks/firestore/useFsListing'
 import _ from 'lodash'
+import { setDoc, updateDoc } from 'palm-core/firebase'
+import { channelListingRef } from 'palm-core/firebase/channel'
 import { recordError } from 'palm-core/libs/logger'
 import {
   FbListing,
@@ -65,13 +67,12 @@ const useZxBuyNft = (
         try {
           if (fsChannel) {
             // add the new listing item to the corresponding channel doc firestore
-            await fsChannel
-              .collection('listings')
-              .doc(order.nonce)
-              .update({ status: 'completed' } as Partial<FbListing>)
+            await updateDoc(channelListingRef(channelUrl, order.nonce), {
+              status: 'completed',
+            })
           }
           if (fsListing) {
-            await fsListing.update({
+            await setDoc(fsListing, {
               status: 'completed',
             } as Partial<FbListing>)
           }

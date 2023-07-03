@@ -1,12 +1,12 @@
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useFsListing from 'hooks/firestore/useFsListing'
+import { updateDoc } from 'palm-core/firebase'
+import { channelListingRef } from 'palm-core/firebase/channel'
 import { recordError } from 'palm-core/libs/logger'
-import { FbListing, PostTxStatus, SupportedNetworkEnum } from 'palm-core/types'
+import { PostTxStatus, SupportedNetworkEnum } from 'palm-core/types'
 import postTxStore from 'palm-react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
-
-import firestore from '@react-native-firebase/firestore'
 
 import useZx from './useZx'
 
@@ -55,15 +55,14 @@ const useZxCancelNft = (
 
       try {
         if (fsChannel) {
-          await firestore()
-            .collection('channels')
-            .doc(channelUrl)
-            .collection('listings')
-            .doc(order.nonce)
-            .update({ status: 'cancelled' } as Partial<FbListing>)
+          await updateDoc(channelListingRef(channelUrl, order.nonce), {
+            status: 'cancelled',
+          })
         }
         if (fsListing) {
-          await fsListing.update({ status: 'cancelled' } as Partial<FbListing>)
+          await updateDoc(fsListing, {
+            status: 'cancelled',
+          })
         }
       } catch (e) {
         recordError(e, 'useZxCancelNft:fsChannel.collection(listings).update')
