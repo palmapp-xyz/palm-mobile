@@ -65,7 +65,7 @@ const useZxCancelNft = (
           })
         }
       } catch (e) {
-        recordError(e, 'useZxCancelNft:fsChannel.collection(listings).update')
+        recordError(e, 'useZxCancelNft:updateDoc')
       }
     }
   }

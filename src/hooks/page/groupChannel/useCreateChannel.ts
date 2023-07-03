@@ -3,12 +3,12 @@ import useDevice from 'hooks/complex/useDevice'
 import useSendbird from 'hooks/sendbird/useSendbird'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { NETWORK } from 'palm-core/consts'
-import { getFsChannel } from 'palm-core/libs/firebase'
+import { updateDoc } from 'palm-core/firebase'
+import { channelRef } from 'palm-core/firebase/channel'
 import { recordError } from 'palm-core/libs/logger'
 import { Routes } from 'palm-core/libs/navigation'
 import {
   ChannelType,
-  FbChannel,
   FbChannelGatingField,
   SupportedNetworkEnum,
 } from 'palm-core/types'
@@ -107,13 +107,9 @@ const useCreateChannel = (): UseCreateChannelReturn => {
         })
 
         if (selectedGatingToken) {
-          const fsChannel = await getFsChannel({
-            channel,
-            channelUrl: channel.url,
-          })
-          await fsChannel.update({
+          await updateDoc(channelRef(channel.url), {
             gating: selectedGatingToken,
-          } as Partial<FbChannel>)
+          })
         }
 
         navigation.replace(Routes.GroupChannel, {

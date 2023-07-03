@@ -9,7 +9,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation'
 import { setDoc } from 'palm-core/firebase'
 import { profileRef } from 'palm-core/firebase/profile'
 import { UTIL } from 'palm-core/libs'
-import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileDoc } from 'palm-core/libs/firebase'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
 import { recordError } from 'palm-core/libs/logger'
 import { Routes } from 'palm-core/libs/navigation'
@@ -62,7 +62,7 @@ const LensFriendsScreen = (): ReactElement => {
     }
 
     const userProfileId = await fetchUserProfileId(profile.ownedBy)
-    const userProfile = await getFsProfile(userProfileId!)
+    const userProfile = await getProfileDoc(userProfileId!)
     const ret: FbProfile | undefined = UTIL.filterUndefined<FbProfile>({
       ...userProfile!,
       bio: profile.bio || undefined,

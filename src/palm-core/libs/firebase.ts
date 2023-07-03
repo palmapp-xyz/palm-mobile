@@ -1,25 +1,22 @@
+import { getDoc, setDoc } from 'palm-core/firebase'
+import { channelRef } from 'palm-core/firebase/channel'
+import { listingRef } from 'palm-core/firebase/listing'
+import { profileRef } from 'palm-core/firebase/profile'
 import { UTIL } from 'palm-core/libs'
 import { ChannelType, FbChannel, FbListing, FbProfile } from 'palm-core/types'
 
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore'
 import { MetaData } from '@sendbird/chat'
 import { GroupChannel } from '@sendbird/chat/groupChannel'
 
-export const getFsChannel = async ({
+export const getChannelDoc = async ({
   channelUrl,
   channel,
 }: {
   channelUrl: string
   channel: GroupChannel
-}): Promise<
-  FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>
-> => {
-  const fsChannel = firestore().collection('channels').doc(channelUrl)
-  const channelDoc = await fsChannel.get()
-
-  if (!channelDoc.exists) {
+}): Promise<FbChannel> => {
+  let snapshot = await getDoc(channelRef(channelUrl))
+  if (!snapshot.exists) {
     const metadata: MetaData = await channel.getAllMetaData()
     const fbChannelField: FbChannel = UTIL.filterUndefined<FbChannel>({
       url: channel.url,
@@ -31,31 +28,22 @@ export const getFsChannel = async ({
       name: channel.name,
       updatedAt: new Date().getTime(),
     })
-    await fsChannel.set(fbChannelField)
+    await setDoc(channelRef(channelUrl), fbChannelField)
+    snapshot = await getDoc(channelRef(channelUrl))
   }
-
-  return fsChannel
+  return snapshot.data()!
 }
 
-export const getFsProfile = async (
+export const getProfileDoc = async (
   profileId: string
 ): Promise<FbProfile | undefined> => {
-  const fsProfile = await firestore()
-    .collection('profiles')
-    .doc(profileId)
-    .get()
-  if (!fsProfile.exists) {
-    return undefined
-  }
-  return fsProfile.data() as FbProfile
+  let snapshot = await getDoc(profileRef(profileId))
+  return snapshot.data()
 }
 
-export const getFsListing = async (
+export const getListingDoc = async (
   nonce: string
 ): Promise<FbListing | undefined> => {
-  const fsListing = await firestore().collection('listings').doc(nonce).get()
-  if (!fsListing.exists) {
-    return undefined
-  }
-  return fsListing.data() as FbListing
+  let snapshot = await getDoc(listingRef(nonce))
+  return snapshot.data()
 }

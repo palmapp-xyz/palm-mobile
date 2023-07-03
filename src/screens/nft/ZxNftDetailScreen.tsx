@@ -20,7 +20,7 @@ import useZxCancelNft from 'hooks/zx/useZxCancelNft'
 import useZxOrder from 'hooks/zx/useZxOrder'
 import { COLOR, NETWORK } from 'palm-core/consts'
 import { UTIL } from 'palm-core/libs'
-import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileDoc } from 'palm-core/libs/firebase'
 import { Routes } from 'palm-core/libs/navigation'
 import { nftUriFetcher } from 'palm-core/libs/nft'
 import { stringifyMsgData } from 'palm-core/libs/sendbird'
@@ -205,7 +205,7 @@ const ZxNftDetailScreen = (): ReactElement => {
       order.order.maker as ContractAddr
     )
     if (userProfileId) {
-      const _listingOwner = await getFsProfile(userProfileId)
+      const _listingOwner = await getProfileDoc(userProfileId)
       setLoading(false)
       setTimeout(() => {
         setListingOwner(_listingOwner)

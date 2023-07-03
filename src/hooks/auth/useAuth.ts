@@ -2,7 +2,7 @@ import useLensAuth from 'hooks/lens/useLensAuth'
 import _ from 'lodash'
 import { AuthenticationResult } from 'palm-core/graphqls/__generated__/graphql'
 import { UTIL } from 'palm-core/libs'
-import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileDoc } from 'palm-core/libs/firebase'
 import { recordError } from 'palm-core/libs/logger'
 import {
   AuthChallengeResult,
@@ -119,7 +119,7 @@ const useAuth = (): UseAuthReturn => {
 
   const appSignIn = async (authResult: AuthChallengeResult): Promise<User> => {
     // if user profile is deleted from the db, logout for re-authentication
-    await getFsProfile(authResult.profileId).then(
+    await getProfileDoc(authResult.profileId).then(
       (profile: FbProfile | undefined) => {
         if (!profile) {
           throw new Error(

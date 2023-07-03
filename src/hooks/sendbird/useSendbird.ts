@@ -1,6 +1,7 @@
 import _ from 'lodash'
+import { updateDoc } from 'palm-core/firebase'
+import { channelRef } from 'palm-core/firebase/channel'
 import { UTIL } from 'palm-core/libs'
-import { getFsChannel } from 'palm-core/libs/firebase'
 import { ChannelType, FbChannel } from 'palm-core/types'
 import { v5 as uuidv5 } from 'uuid'
 
@@ -119,10 +120,6 @@ const useSendbird = (): UseSendbirdReturn => {
       await channel.createMetaData(data)
     }
 
-    const fsChannel = await getFsChannel({
-      channel,
-      channelUrl: channel.url,
-    })
     const updateParam: Partial<FbChannel> = UTIL.filterUndefined<
       Partial<FbChannel>
     >({
@@ -131,7 +128,7 @@ const useSendbird = (): UseSendbirdReturn => {
       desc,
       coverImage: channel.coverUrl,
     })
-    await fsChannel.update(updateParam)
+    await updateDoc(channelRef(channel.url), updateParam)
 
     return channel
   }

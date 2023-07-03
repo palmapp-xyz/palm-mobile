@@ -1,7 +1,7 @@
 import images from 'assets/images'
 import { FormButton, FormImage, FormText, MediaRenderer, Row } from 'components'
 import NftCard from 'components/channel/NftCard'
-import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileDoc } from 'palm-core/libs/firebase'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
 import { FbProfile, Moralis } from 'palm-core/types'
 import React, { ReactElement, useState } from 'react'
@@ -25,7 +25,7 @@ const Contents = ({
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
 
   useAsyncEffect(async () => {
-    const _receiver = await getFsProfile(receiverId)
+    const _receiver = await getProfileDoc(receiverId)
     setReceiver(_receiver)
   }, [receiverId])
 

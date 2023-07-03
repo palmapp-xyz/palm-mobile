@@ -4,7 +4,7 @@ import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import { useAppNavigation } from 'hooks/useAppNavigation'
 import { UTIL } from 'palm-core/libs'
-import { getFsListing } from 'palm-core/libs/firebase'
+import { getListingDoc } from 'palm-core/libs/firebase'
 import { Routes } from 'palm-core/libs/navigation'
 import { parseMsgData } from 'palm-core/libs/sendbird'
 import { Moralis, SupportedNetworkEnum } from 'palm-core/types'
@@ -74,7 +74,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
 
       switch (parsedData.type) {
         case 'list':
-          const listing = await getFsListing(parsedData.nonce)
+          const listing = await getListingDoc(parsedData.nonce)
           if (listing?.status === 'active') {
             navigation.push(Routes.ZxNftDetail, {
               nonce: parsedData.nonce,
@@ -95,7 +95,7 @@ const Contents = ({ channel }: { channel: GroupChannel }): ReactElement => {
           }
           return
         case 'buy':
-          const fbListing = await getFsListing(
+          const fbListing = await getListingDoc(
             (item as PostOrderResponsePayload).order.nonce
           )
           if (fbListing?.status === 'active') {

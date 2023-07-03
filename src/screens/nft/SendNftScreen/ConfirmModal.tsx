@@ -16,7 +16,7 @@ import useToast from 'hooks/useToast'
 import _ from 'lodash'
 import { COLOR, NETWORK } from 'palm-core/consts'
 import { UTIL } from 'palm-core/libs'
-import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileDoc } from 'palm-core/libs/firebase'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
 import { Routes } from 'palm-core/libs/navigation'
 import { nftUriFetcher } from 'palm-core/libs/nft'
@@ -141,7 +141,7 @@ const ConfirmModal = ({
   }
 
   useAsyncEffect(async () => {
-    const _receiver = await getFsProfile(receiverId)
+    const _receiver = await getProfileDoc(receiverId)
     setReceiver(_receiver)
   }, [receiverId])
 

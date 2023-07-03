@@ -9,7 +9,7 @@ import {
 } from 'components'
 import useSendToken from 'hooks/page/groupChannel/useSendToken'
 import { UTIL } from 'palm-core/libs'
-import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileDoc } from 'palm-core/libs/firebase'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
 import {
   FbProfile,
@@ -50,7 +50,7 @@ const Contents = ({
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
 
   useAsyncEffect(async () => {
-    const _receiver = await getFsProfile(receiverId)
+    const _receiver = await getProfileDoc(receiverId)
     setReceiver(_receiver)
   }, [receiverId])
 

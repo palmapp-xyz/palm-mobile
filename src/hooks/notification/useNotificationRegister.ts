@@ -1,7 +1,7 @@
 import useAuth from 'hooks/auth/useAuth'
 import { updateDoc } from 'palm-core/firebase'
 import { profileRef } from 'palm-core/firebase/profile'
-import { getFsProfile } from 'palm-core/libs/firebase'
+import { getProfileDoc } from 'palm-core/libs/firebase'
 import { recordError } from 'palm-core/libs/logger'
 import { Platform } from 'react-native'
 
@@ -27,7 +27,7 @@ const useNotificationRegister = (): {
       return
     }
 
-    const fsProfileField = await getFsProfile(user.auth.profileId)
+    const fsProfileField = await getProfileDoc(user.auth.profileId)
     if (!fsProfileField) {
       return
     }
@@ -75,7 +75,7 @@ const useNotificationRegister = (): {
       return
     }
 
-    const fsProfileField = await getFsProfile(user.auth.profileId)
+    const fsProfileField = await getProfileDoc(user.auth.profileId)
     if (!fsProfileField) {
       return
     }

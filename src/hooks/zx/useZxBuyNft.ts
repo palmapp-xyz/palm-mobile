@@ -3,11 +3,10 @@ import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
 import useFsChannel from 'hooks/firestore/useFsChannel'
 import useFsListing from 'hooks/firestore/useFsListing'
 import _ from 'lodash'
-import { setDoc, updateDoc } from 'palm-core/firebase'
+import { updateDoc } from 'palm-core/firebase'
 import { channelListingRef } from 'palm-core/firebase/channel'
 import { recordError } from 'palm-core/libs/logger'
 import {
-  FbListing,
   PostTxStatus,
   SupportedNetworkEnum,
   TrueOrErrReturn,
@@ -72,12 +71,12 @@ const useZxBuyNft = (
             })
           }
           if (fsListing) {
-            await setDoc(fsListing, {
+            await updateDoc(fsListing, {
               status: 'completed',
-            } as Partial<FbListing>)
+            })
           }
         } catch (e) {
-          recordError(e, 'useZxBuyNft:fsChannel.collection(listings).update')
+          recordError(e, 'useZxBuyNft:updateDoc')
         }
         return { success: true, value: '' }
       } catch (error) {
