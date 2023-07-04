@@ -14,7 +14,7 @@ import {
   uToken,
 } from 'palm-core/types'
 import Config from 'palm-react-native/config'
-import images from 'palm-react-ui-kit/assets/images'
+import images from 'palm-ui-kit/assets/images'
 
 const getContrastColor = (
   color:

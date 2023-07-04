@@ -15,8 +15,8 @@ import {
   MediaRenderer,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
 import useSendToken from 'palm-react/hooks/page/groupChannel/useSendToken'
+import images from 'palm-ui-kit/assets/images'
 import React, {
   Dispatch,
   ReactElement,

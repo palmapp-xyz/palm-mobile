@@ -8,8 +8,8 @@ import {
   FormText,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

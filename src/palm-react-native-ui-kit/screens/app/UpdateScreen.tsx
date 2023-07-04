@@ -1,7 +1,7 @@
 import Lottie from 'lottie-react-native'
 import { COLOR } from 'palm-core/consts'
 import { FormText } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'

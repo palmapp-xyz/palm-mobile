@@ -14,10 +14,10 @@ import {
 import LoadingPage from 'palm-react-native-ui-kit/components/atoms/LoadingPage'
 import Avatar from 'palm-react-native-ui-kit/components/sendbird/Avatar'
 import ChannelMembersPreview from 'palm-react-native-ui-kit/components/sendbird/ChannelMembersPreview'
-import images from 'palm-react-ui-kit/assets/images'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useChannelInfo from 'palm-react/hooks/page/groupChannel/useChannelInfo'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

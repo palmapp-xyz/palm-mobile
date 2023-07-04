@@ -1,10 +1,10 @@
 import { COLOR } from 'palm-core/consts'
 import { FormImage, FormText, Row } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
 import {
   StepAfterSelectItemType,
   UseGcInputReturn,
 } from 'palm-react/hooks/page/groupChannel/useGcInput'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native'

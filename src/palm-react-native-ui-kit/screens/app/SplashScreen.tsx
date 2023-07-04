@@ -1,5 +1,5 @@
 import Lottie from 'lottie-react-native'
-import images from 'palm-react-ui-kit/assets/images'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement } from 'react'
 
 const SplashScreen = (): ReactElement => {

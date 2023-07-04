@@ -5,8 +5,8 @@ import {
   FormInput,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
 import useExploreSearch from 'palm-react/hooks/page/explore/useExploreSearch'
+import images from 'palm-ui-kit/assets/images'
 //import { useAppNavigation } from 'hooks/useAppNavigation'
 import React, { ReactElement, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

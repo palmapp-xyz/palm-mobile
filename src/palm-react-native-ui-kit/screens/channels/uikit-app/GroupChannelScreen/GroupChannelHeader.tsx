@@ -2,12 +2,12 @@ import { Routes } from 'palm-core/libs/navigation'
 import { ChannelType, SbUserMetadata } from 'palm-core/types'
 import { FormImage, Row } from 'palm-react-native-ui-kit/components'
 import Avatar from 'palm-react-native-ui-kit/components/sendbird/Avatar'
-import images from 'palm-react-ui-kit/assets/images'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import {
   SENDBIRD_STATIC_SAMPLE,
 } from 'palm-react/hooks/page/groupChannel/useChannelInfo'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useContext } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'

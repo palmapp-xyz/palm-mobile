@@ -11,11 +11,11 @@ import {
   Row,
   Tag,
 } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useEditChannel from 'palm-react/hooks/page/groupChannel/useEditChannel'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'

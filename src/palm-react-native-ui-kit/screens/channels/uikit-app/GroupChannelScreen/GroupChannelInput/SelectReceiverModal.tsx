@@ -7,8 +7,8 @@ import {
   RadioIcon,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
 import { UseGcInputReturn } from 'palm-react/hooks/page/groupChannel/useGcInput'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

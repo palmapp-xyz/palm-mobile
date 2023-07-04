@@ -6,8 +6,8 @@ import {
   FormImage,
   LinkExplorer,
 } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
 import postTxStore from 'palm-react/store/postTxStore'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

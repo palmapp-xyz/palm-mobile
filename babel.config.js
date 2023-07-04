@@ -8,9 +8,9 @@ module.exports = function (api) {
       root: './',
       alias: {
         'palm-core': './src/palm-core',
+        'palm-ui-kit': './src/palm-ui-kit',
         'palm-react': './src/palm-react',
         'palm-react-native': './src/palm-react-native',
-        'palm-react-ui-kit': './src/palm-react-ui-kit',
         'palm-react-native-ui-kit': './src/palm-react-native-ui-kit',
       },
     },

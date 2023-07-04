@@ -22,12 +22,12 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import MoralisErc20Token from 'palm-react-native-ui-kit/components/MoralisErc20Token'
-import images from 'palm-react-ui-kit/assets/images'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useToast from 'palm-react/hooks/app/useToast'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useSendToken from 'palm-react/hooks/page/groupChannel/useSendToken'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

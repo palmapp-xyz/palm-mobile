@@ -1,7 +1,7 @@
 import { recordError } from 'palm-core/libs/logger'
 import { Container, FormText } from 'palm-react-native-ui-kit/components'
-import LensLogo from 'palm-react-ui-kit/assets/LensLogo'
 import useAuth from 'palm-react/hooks/auth/useAuth'
+import LensLogo from 'palm-ui-kit/assets/LensLogo'
 import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

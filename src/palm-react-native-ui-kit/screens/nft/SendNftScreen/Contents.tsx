@@ -9,7 +9,7 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import NftCard from 'palm-react-native-ui-kit/components/channel/NftCard'
-import images from 'palm-react-ui-kit/assets/images'
+import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

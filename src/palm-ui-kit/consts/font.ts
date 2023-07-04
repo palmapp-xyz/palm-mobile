@@ -1,4 +1,4 @@
-import { FontType } from 'palm-react-ui-kit/types'
+import { FontType } from 'palm-ui-kit/types'
 import { StyleProp, TextStyle } from 'react-native'
 
 const getFontStyle = (fontType: FontType): StyleProp<TextStyle> => {

@@ -1,6 +1,6 @@
 import { COLOR } from 'palm-core/consts'
-import { FONT } from 'palm-react-ui-kit/consts'
-import { FontSize, FontType } from 'palm-react-ui-kit/types'
+import { FONT } from 'palm-ui-kit/consts'
+import { FontSize, FontType } from 'palm-ui-kit/types'
 import React, { ReactElement, ReactNode } from 'react'
 import { Text, TextProps } from 'react-native'
 

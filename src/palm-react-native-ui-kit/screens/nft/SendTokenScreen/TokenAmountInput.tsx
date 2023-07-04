@@ -7,7 +7,7 @@ import {
   FormText,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import images from 'palm-react-ui-kit/assets/images'
+import images from 'palm-ui-kit/assets/images'
 import React, { Dispatch, ReactElement, SetStateAction, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 
