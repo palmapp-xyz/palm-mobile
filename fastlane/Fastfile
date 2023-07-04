@@ -15,13 +15,14 @@ platform :ios do
   lane :bump_build_version do
     increment_build_number(xcodeproj: './ios/PalmApp.xcodeproj')
     commit_version_bump(message: 'Bump iOS build', xcodeproj: './ios/PalmApp.xcodeproj')
+    git_pull
+    push_to_git_remote
     add_git_tag(
       grouping: "fastlane-ios-release",
       includes_lane: false,
       prefix: "v",
     )
-    git_pull
-    push_to_git_remote
+    push_git_tags
   end
 
   desc 'Fetch certificates and provisioning profiles'
@@ -124,17 +125,19 @@ platform :android do
     repo_clean = `git status --porcelain`.empty?
     if !repo_clean
       git_commit(path: 'android/app/build.gradle', message: 'Bump android build')
-      add_git_tag(
-        grouping: "fastlane-android-release",
-        includes_lane: false,
-        prefix: "v",
-        build_number: versionCode + 1
-      )
     end
 
     git_pull
 
     push_to_git_remote
+
+    add_git_tag(
+      grouping: "fastlane-android-release",
+      includes_lane: false,
+      prefix: "v",
+      build_number: versionCode + 1
+    )
+    push_git_tags
   end
 
 
