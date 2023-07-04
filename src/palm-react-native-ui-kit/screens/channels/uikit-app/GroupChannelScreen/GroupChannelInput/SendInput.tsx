@@ -1,6 +1,6 @@
 import { COLOR } from 'palm-core/consts'
+import useToast from 'palm-react/hooks/app/useToast'
 import { UseGcInputReturn } from 'palm-react/hooks/page/groupChannel/useGcInput'
-import useToast from 'palm-react/hooks/useToast'
 import React, { forwardRef } from 'react'
 import {
   NativeSyntheticEvent,

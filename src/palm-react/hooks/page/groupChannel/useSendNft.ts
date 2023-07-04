@@ -11,13 +11,13 @@ import {
   SupportedNetworkEnum,
 } from 'palm-core/types'
 // import { UTIL } from 'palm-core/libs'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import usePostTx from 'palm-react/hooks/complex/usePostTx'
 import useNft from 'palm-react/hooks/contract/useNft'
 import usePostTxStatusEffect, {
   EffectListType,
 } from 'palm-react/hooks/independent/usePostTxStatusEffect'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
 

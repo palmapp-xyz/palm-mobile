@@ -5,7 +5,7 @@ import { SbShareNftDataType, SupportedNetworkEnum } from 'palm-core/types'
 import FormText from 'palm-react-native-ui-kit/components/atoms/FormText'
 import VerifiedWrapper from 'palm-react-native-ui-kit/components/molecules/VerifiedWrapper'
 import MoralisNftRenderer from 'palm-react-native-ui-kit/components/moralis/MoralisNftRenderer'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 

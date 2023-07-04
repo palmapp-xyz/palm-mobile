@@ -1,9 +1,8 @@
 import { Routes } from 'palm-core/libs/navigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 
 import { createGroupChannelCreateFragment } from '@sendbird/uikit-react-native'
-
-import { useAppNavigation } from '../../../../palm-react/hooks/useAppNavigation'
 
 import type { SendbirdUser } from '@sendbird/uikit-utils'
 

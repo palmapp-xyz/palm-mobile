@@ -3,8 +3,8 @@ import { getProfileMediaImg } from 'palm-core/libs/lens'
 import { ContractAddr } from 'palm-core/types'
 import { FormImage, MediaRenderer } from 'palm-react-native-ui-kit/components'
 import images from 'palm-react-ui-kit/assets/images'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useProfile from 'palm-react/hooks/auth/useProfile'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import React, { ReactElement } from 'react'
 import {
   ImageBackground,

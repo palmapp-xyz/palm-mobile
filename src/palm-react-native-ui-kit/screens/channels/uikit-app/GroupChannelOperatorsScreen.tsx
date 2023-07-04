@@ -1,4 +1,5 @@
 import { Routes } from 'palm-core/libs/navigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
@@ -6,8 +7,6 @@ import {
   createGroupChannelOperatorsFragment,
   useSendbirdChat,
 } from '@sendbird/uikit-react-native'
-
-import { useAppNavigation } from '../../../../palm-react/hooks/useAppNavigation'
 
 const GroupChannelOperatorsFragment = createGroupChannelOperatorsFragment()
 const GroupChannelOperatorsScreen = (): ReactElement => {

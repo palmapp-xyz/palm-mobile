@@ -1,6 +1,6 @@
 import {
   UseResolvedMediaTypeReturn,
-} from 'palm-react/hooks/complex/useResolvedMediaType'
+} from 'palm-react/hooks/independent/useResolvedMediaType'
 import React, { ReactElement, useEffect, useState } from 'react'
 import base64 from 'react-native-base64'
 

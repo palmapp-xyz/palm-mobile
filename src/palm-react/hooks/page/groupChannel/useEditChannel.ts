@@ -8,10 +8,10 @@ import {
   FbChannelGatingField,
   SupportedNetworkEnum,
 } from 'palm-core/types'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import useDevice from 'palm-react/hooks/app/useDevice'
 import useAuth from 'palm-react/hooks/auth/useAuth'
-import useDevice from 'palm-react/hooks/complex/useDevice'
 import useFsChannel from 'palm-react/hooks/firestore/useFsChannel'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

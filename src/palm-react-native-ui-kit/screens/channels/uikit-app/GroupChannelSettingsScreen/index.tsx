@@ -1,4 +1,5 @@
 import { Routes } from 'palm-core/libs/navigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -9,9 +10,6 @@ import {
 } from '@sendbird/uikit-react-native'
 import { MenuBarProps } from '@sendbird/uikit-react-native-foundation'
 
-import {
-  useAppNavigation,
-} from '../../../../../palm-react/hooks/useAppNavigation'
 import GroupChannelSettingsInfo from './GroupChannelSettingsInfo'
 
 const GroupChannelSettingsFragment = createGroupChannelSettingsFragment({

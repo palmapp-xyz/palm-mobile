@@ -4,7 +4,7 @@ import { ContractAddr, Moralis, SupportedNetworkEnum } from 'palm-core/types'
 import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
 import MoralisNftRenderer from 'palm-react-native-ui-kit/components/moralis/MoralisNftRenderer'
 import useCollectionNfts from 'palm-react/hooks/api/useCollectionNfts'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import {
   FlatList,

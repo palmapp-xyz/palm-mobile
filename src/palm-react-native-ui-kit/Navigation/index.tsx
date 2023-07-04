@@ -1,9 +1,9 @@
 import { navigationRef, Routes } from 'palm-core/libs/navigation'
 import LoadingPage from 'palm-react-native-ui-kit/components/atoms/LoadingPage'
 import PostTxResult from 'palm-react-native-ui-kit/components/PostTxResult'
+import useAppearance from 'palm-react/hooks/app/useAppearance'
+import useCrashlytics from 'palm-react/hooks/app/useCrashlytics'
 import useAuth from 'palm-react/hooks/auth/useAuth'
-import useCrashlytics from 'palm-react/hooks/independent/useCrashlytics'
-import useAppearance from 'palm-react/hooks/useAppearance'
 import React, { ReactElement } from 'react'
 
 import {

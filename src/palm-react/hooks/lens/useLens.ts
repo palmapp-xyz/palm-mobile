@@ -39,8 +39,8 @@ import {
   TrueOrErrReturn,
 } from 'palm-core/types'
 import useEthers from 'palm-react/hooks/complex/useEthers'
-import useIpfs from 'palm-react/hooks/complex/useIpfs'
 import useNetwork from 'palm-react/hooks/complex/useNetwork'
+import useIpfs from 'palm-react/hooks/independent/useIpfs'
 import postTxStore from 'palm-react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
 import { v4 as uuidv4 } from 'uuid'

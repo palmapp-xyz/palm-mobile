@@ -2,6 +2,7 @@ import { UTIL } from 'palm-core/libs'
 import { navigationActions, Routes } from 'palm-core/libs/navigation'
 import { SetSendbirdSDK } from 'palm-core/libs/sendbird'
 import { SupportedNetworkEnum } from 'palm-core/types'
+// eslint-disable-next-line prettier/prettier
 import {
   asyncStorageProvider,
 } from 'palm-react-native/app/asyncStorageProvider'
@@ -13,10 +14,10 @@ import {
   MediaService,
   NotificationService,
 } from 'palm-react-native/sendbird'
+import useAppearance from 'palm-react/hooks/app/useAppearance'
+import useSetting from 'palm-react/hooks/app/useSetting'
 import useWeb3Bindings from 'palm-react/hooks/complex/useWeb3Bindings'
-import useSetting from 'palm-react/hooks/independent/useSetting'
 import useNotificationConf from 'palm-react/hooks/notification/useNotificationConf'
-import useAppearance from 'palm-react/hooks/useAppearance'
 import React, { ReactElement, ReactNode, useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
@@ -40,7 +41,10 @@ import {
 } from '@sendbird/uikit-react-native-foundation'
 
 import { ErrorInfoScreen } from '../screens'
-import { defaultToastProviderOptions, renderToast } from '../screens/ToastView'
+import {
+  defaultToastProviderOptions,
+  renderToast,
+} from '../screens/app/ToastView'
 
 const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const { setting } = useSetting()

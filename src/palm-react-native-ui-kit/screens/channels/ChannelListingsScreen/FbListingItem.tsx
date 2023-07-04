@@ -15,9 +15,9 @@ import {
   NftRenderer,
   Row,
 } from 'palm-react-native-ui-kit/components'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useEthPrice from 'palm-react/hooks/independent/useEthPrice'
 import useKlayPrice from 'palm-react/hooks/independent/useKlayPrice'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

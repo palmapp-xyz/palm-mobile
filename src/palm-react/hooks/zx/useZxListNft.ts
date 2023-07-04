@@ -20,10 +20,10 @@ import {
   SupportedNetworkEnum,
   Token,
 } from 'palm-core/types'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useReactQuery from 'palm-react/hooks/complex/useReactQuery'
 import useFsChannel from 'palm-react/hooks/firestore/useFsChannel'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import postTxStore from 'palm-react/store/postTxStore'
 import { useMemo, useState } from 'react'
 import { useSetRecoilState } from 'recoil'

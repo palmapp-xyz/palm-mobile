@@ -1,7 +1,7 @@
 import { Routes } from 'palm-core/libs/navigation'
 import { Container, FormImage, Row } from 'palm-react-native-ui-kit/components'
 import images from 'palm-react-ui-kit/assets/images'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement, useEffect } from 'react'
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native'
 

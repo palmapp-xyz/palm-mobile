@@ -5,7 +5,7 @@ import { Routes } from 'palm-core/libs/navigation'
 import { FbProfile } from 'palm-core/types'
 import { Card, FormText } from 'palm-react-native-ui-kit/components'
 import Avatar from 'palm-react-native-ui-kit/components/sendbird/Avatar'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 

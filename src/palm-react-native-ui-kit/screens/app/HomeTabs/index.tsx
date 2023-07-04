@@ -1,6 +1,6 @@
 import { COLOR } from 'palm-core/consts'
 import { Routes } from 'palm-core/libs/navigation'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -8,9 +8,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useTotalUnreadMessageCount } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 
-import GroupChannelListScreen from '../channels/GroupChannelListScreen'
-import ExploreScreen from '../explore/ExploreScreen'
-import MyPageScreen from '../profiles/MyPageScreen'
+import GroupChannelListScreen from '../../channels/GroupChannelListScreen'
+import ExploreScreen from '../../explore/ExploreScreen'
+import MyPageScreen from '../../profiles/MyPageScreen'
 
 const Tab = createBottomTabNavigator()
 

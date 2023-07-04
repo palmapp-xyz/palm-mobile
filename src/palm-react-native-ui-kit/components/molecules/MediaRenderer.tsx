@@ -6,7 +6,7 @@ import Card from 'palm-react-native-ui-kit/components/atoms/Card'
 import { isValidHttpUrl } from 'palm-react-native/lib/utils'
 import {
   useResolvedMediaType,
-} from 'palm-react/hooks/complex/useResolvedMediaType'
+} from 'palm-react/hooks/independent/useResolvedMediaType'
 import React, { ReactElement, useCallback, useState } from 'react'
 import { FlexStyle, StyleProp } from 'react-native'
 import FastImage, {

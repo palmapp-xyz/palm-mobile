@@ -8,8 +8,8 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import Loading from 'palm-react-native-ui-kit/components/atoms/Loading'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useConfirmSeed from 'palm-react/hooks/page/account/useConfirmSeed'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import appStore from 'palm-react/store/appStore'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'

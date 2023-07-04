@@ -1,4 +1,4 @@
-import useVersions from 'palm-react/hooks/useVersions'
+import useVersions from 'palm-react/hooks/app/useVersions'
 import React, { ReactElement } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 

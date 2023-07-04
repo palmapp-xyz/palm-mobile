@@ -6,7 +6,7 @@ import { ApiEnum, TrueOrErrReturn } from 'palm-core/types'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 
-import useApi from './useApi'
+import useApi from '../complex/useApi'
 
 type UseIpfsReturn<T> = {
   data?: T | null

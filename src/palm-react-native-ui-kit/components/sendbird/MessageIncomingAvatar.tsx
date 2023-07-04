@@ -1,7 +1,7 @@
 import { Routes } from 'palm-core/libs/navigation'
 import { SbUserMetadata } from 'palm-core/types'
 import MediaRenderer from 'palm-react-native-ui-kit/components/molecules/MediaRenderer'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 

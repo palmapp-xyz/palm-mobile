@@ -8,8 +8,8 @@ import {
   Header,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
-import useToast from 'palm-react/hooks/useToast'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import useToast from 'palm-react/hooks/app/useToast'
 import React, { ReactElement, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'

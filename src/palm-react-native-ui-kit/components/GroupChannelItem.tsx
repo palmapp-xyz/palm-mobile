@@ -1,6 +1,6 @@
 import { COLOR } from 'palm-core/consts'
 import { Routes } from 'palm-core/libs/navigation'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 

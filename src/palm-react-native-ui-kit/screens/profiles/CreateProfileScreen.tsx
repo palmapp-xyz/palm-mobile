@@ -10,9 +10,9 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import LoadingPage from 'palm-react-native-ui-kit/components/atoms/LoadingPage'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import appStore from 'palm-react/store/appStore'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

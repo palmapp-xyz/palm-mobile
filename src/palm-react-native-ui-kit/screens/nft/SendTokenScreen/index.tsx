@@ -1,7 +1,7 @@
 import { Routes } from 'palm-core/libs/navigation'
 import { Token } from 'palm-core/types'
 import { Container, Header } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import selectAssetStore from 'palm-react/store/selectAssetStore'
 import React, { ReactElement, useState } from 'react'
 import { StyleSheet } from 'react-native'

@@ -14,9 +14,9 @@ import NftRenderer, {
   NftRendererProp,
 } from 'palm-react-native-ui-kit/components/molecules/NftRenderer'
 import VerifiedWrapper from 'palm-react-native-ui-kit/components/molecules/VerifiedWrapper'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useExplorer from 'palm-react/hooks/complex/useExplorer'
 import useNft from 'palm-react/hooks/contract/useNft'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'

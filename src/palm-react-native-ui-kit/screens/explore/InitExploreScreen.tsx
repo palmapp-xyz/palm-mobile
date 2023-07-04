@@ -8,11 +8,11 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import images from 'palm-react-ui-kit/assets/images'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useInterest from 'palm-react/hooks/independent/useInterest'
 import useInitExplore, {
   InterestItem,
 } from 'palm-react/hooks/page/explore/useInitExplore'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import React, {
   ReactElement,
   useCallback,

@@ -2,7 +2,7 @@ import { COLOR } from 'palm-core/consts'
 import { Routes } from 'palm-core/libs/navigation'
 import { SbUserMetadata } from 'palm-core/types'
 import { FontSize } from 'palm-react-ui-kit/types'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 
 import { useLocalization } from '@sendbird/uikit-react-native'

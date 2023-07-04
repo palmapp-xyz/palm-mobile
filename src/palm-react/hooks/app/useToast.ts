@@ -1,10 +1,8 @@
 import {
   ToastColorType,
   ToastIconType,
-} from 'palm-react-native-ui-kit/screens/ToastView'
-import {
-  useToast as useToastFromRnToastNotifications,
-} from 'react-native-toast-notifications'
+} from 'palm-react-native-ui-kit/screens/app/ToastView'
+import { useToast as useRNToast } from 'react-native-toast-notifications'
 
 const useToast = (): {
   show: (
@@ -19,7 +17,7 @@ const useToast = (): {
   hide: (id: string) => void
   hideAll: () => void
 } => {
-  const toast = useToastFromRnToastNotifications()
+  const toast = useRNToast()
 
   const show = (
     message: string | JSX.Element,

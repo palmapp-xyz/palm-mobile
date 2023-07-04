@@ -1,8 +1,7 @@
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement, useState } from 'react'
 
 import { FileViewer, useSendbirdChat } from '@sendbird/uikit-react-native'
-
-import { useAppNavigation } from '../../../../palm-react/hooks/useAppNavigation'
 
 import type { SendbirdFileMessage } from '@sendbird/uikit-utils'
 

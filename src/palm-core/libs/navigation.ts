@@ -4,10 +4,11 @@ import {
   NftType,
   SupportedNetworkEnum,
 } from 'palm-core/types'
+import { PinType } from 'palm-react-native-ui-kit/screens/app/PinScreen'
+// eslint-disable-next-line prettier/prettier
 import {
   RecoverAccountType,
 } from 'palm-react-native-ui-kit/screens/auth/RecoverAccountScreen'
-import { PinType } from 'palm-react-native-ui-kit/screens/PinScreen'
 
 import {
   createNavigationContainerRef,

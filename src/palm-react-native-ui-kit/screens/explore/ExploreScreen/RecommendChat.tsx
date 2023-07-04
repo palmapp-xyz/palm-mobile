@@ -4,11 +4,11 @@ import { Routes } from 'palm-core/libs/navigation'
 import { FbChannel } from 'palm-core/types'
 import { FormText } from 'palm-react-native-ui-kit/components'
 import ChatCard from 'palm-react-native-ui-kit/components/exploreTab/ChatCard'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useExploreRecommendChat from 'palm-react/hooks/page/explore/useExploreRecommendChat'
 import {
   UseExploreSearchReturn,
 } from 'palm-react/hooks/page/explore/useExploreSearch'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

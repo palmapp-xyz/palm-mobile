@@ -10,10 +10,10 @@ import {
   Tag,
 } from 'palm-react-native-ui-kit/components'
 import ChannelMembersPreview from 'palm-react-native-ui-kit/components/sendbird/ChannelMembersPreview'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import {
   UseExploreSearchReturn,
 } from 'palm-react/hooks/page/explore/useExploreSearch'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'

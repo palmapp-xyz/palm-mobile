@@ -18,12 +18,12 @@ import NftRenderer, {
   NftRendererProp,
 } from 'palm-react-native-ui-kit/components/molecules/NftRenderer'
 import images from 'palm-react-ui-kit/assets/images'
+import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useReactQuery from 'palm-react/hooks/complex/useReactQuery'
 import useNft from 'palm-react/hooks/contract/useNft'
 import useFsChannel from 'palm-react/hooks/firestore/useFsChannel'
 import useUserBalance from 'palm-react/hooks/independent/useUserBalance'
-import { useAppNavigation } from 'palm-react/hooks/useAppNavigation'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
