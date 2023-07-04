@@ -1,18 +1,19 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
 import {
   DocumentData,
   DocumentReference,
   DocumentSnapshot,
   FirestoreDataConverter,
   FirestoreError,
+  getFirestore,
+  onSnapshot,
   PartialWithFieldValue,
   Query,
+  query,
   QueryConstraint,
   QueryDocumentSnapshot,
   QuerySnapshot,
-  getFirestore,
-  onSnapshot,
-  query,
 } from 'firebase/firestore'
 
 import config from './firebase.config.json'
@@ -20,7 +21,9 @@ import config from './firebase.config.json'
 export const firebaseApp = initializeApp(config as FirebaseOptions)
 
 export const firestore = getFirestore(firebaseApp)
+export const appAuth = getAuth(firebaseApp)
 
+export * from 'firebase/auth'
 export * from 'firebase/firestore'
 
 export type QuerySnapshotCallback<T> = {

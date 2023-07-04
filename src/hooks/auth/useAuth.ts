@@ -1,5 +1,10 @@
 import useLensAuth from 'hooks/lens/useLensAuth'
 import _ from 'lodash'
+import {
+  appAuth,
+  signInWithCustomToken,
+  User as AuthUser,
+} from 'palm-core/firebase'
 import { AuthenticationResult } from 'palm-core/graphqls/__generated__/graphql'
 import { UTIL } from 'palm-core/libs'
 import { getProfileDoc } from 'palm-core/libs/firebase'
@@ -21,7 +26,6 @@ import RNRestart from 'react-native-restart'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { useConnection, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
@@ -49,7 +53,7 @@ const useAuth = (): UseAuthReturn => {
   const [restoreLoading, setRestoreLoading] = useState<boolean>(true)
 
   const onAuthStateChanged = async (
-    firebaseUser: FirebaseAuthTypes.User | null
+    firebaseUser: AuthUser | null
   ): Promise<void> => {
     if (!user) {
       return
@@ -100,7 +104,7 @@ const useAuth = (): UseAuthReturn => {
     }
     setRestoreLoading(false)
 
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    const subscriber = appAuth.onAuthStateChanged(onAuthStateChanged)
     return subscriber
   }, [])
 
@@ -131,13 +135,11 @@ const useAuth = (): UseAuthReturn => {
 
     const authSignIn = async (): Promise<void> => {
       try {
-        auth().currentUser
-          ? auth()
-              .currentUser?.getIdToken(true)
-              .then((authToken: string) => {
-                setAuth({ ...authResult, authToken })
-              })
-          : auth().signInWithCustomToken(authResult.authToken)
+        appAuth.currentUser
+          ? appAuth.currentUser.getIdToken(true).then((authToken: string) => {
+              setAuth({ ...authResult, authToken })
+            })
+          : signInWithCustomToken(appAuth, authResult.authToken)
       } catch (e) {
         recordError(e, `authSignIn:${authResult.authToken}`)
         throw e
@@ -213,7 +215,7 @@ const useAuth = (): UseAuthReturn => {
     await Promise.all([
       AsyncStorage.clear(),
       PkeyManager.removeKeys(),
-      auth().signOut(),
+      appAuth.signOut(),
       disconnect(),
       PkeyManager.resetPin(),
       PkeyManager.resetNewPin(),

@@ -1,6 +1,7 @@
 import * as axiosjs from 'axios'
 import useAuth from 'hooks/auth/useAuth'
 import _ from 'lodash'
+import { appAuth, User as AuthUser } from 'palm-core/firebase'
 import { recordError } from 'palm-core/libs/logger'
 import {
   ApiEnum,
@@ -11,8 +12,6 @@ import {
 } from 'palm-core/types'
 import fetchApiStore from 'palm-react/store/fetchApiStore'
 import { useSetRecoilState } from 'recoil'
-
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 import useNetwork from './useNetwork'
 
@@ -90,7 +89,7 @@ const useApi = (): UseApiReturn => {
   })
   axios.interceptors.request.use(async req => {
     try {
-      const currentUser: FirebaseAuthTypes.User | null = auth().currentUser
+      const currentUser: AuthUser | null = appAuth.currentUser
       if (currentUser) {
         await currentUser.getIdTokenResult(true)
       }
