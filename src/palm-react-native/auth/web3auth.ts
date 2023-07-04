@@ -1,4 +1,4 @@
-import Config from 'config'
+import Config from 'palm-react-native/config'
 import EncryptedStorage from 'react-native-encrypted-storage'
 
 import * as WebBrowser from '@toruslabs/react-native-web-browser'

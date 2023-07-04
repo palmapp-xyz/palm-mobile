@@ -9,13 +9,8 @@
 
       "palm-react/*": ["./palm-react/*"],
       "palm-react-native/*": ["./palm-react-native/*"],
-
-      "consts": ["./consts"],
-      "types": ["./types"],
-      "hooks/*": ["./hooks/*"],
-      "assets/*": ["./assets/*"],
-      "config": ["./config"],
-      "components": ["./components"]
+      "palm-react-ui-kit/*": ["./palm-react-ui-kit/*"],
+      "palm-react-native-ui-kit/*": ["./palm-react-native-ui-kit/*"]
     },
     "types": ["react-native", "jest", "styled-components-react-native"],
     "esModuleInterop": true,

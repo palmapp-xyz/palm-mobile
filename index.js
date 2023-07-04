@@ -13,7 +13,7 @@ import './i18n.config'
 import { configurePushNotification } from 'palm-react-native/notification'
 import { AppRegistry } from 'react-native'
 import { name as appName } from './app.json'
-import App from './src/App'
+import App from './src/palm-react-native-ui-kit/App'
 
 AppRegistry.registerComponent(appName, () => App)
 

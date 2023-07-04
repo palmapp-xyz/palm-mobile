@@ -1,6 +1,6 @@
 import axios, * as axiosjs from 'axios'
-import Config from 'config'
 import _ from 'lodash'
+import Config from 'palm-react-native/config'
 
 import {
   ApiEnum,

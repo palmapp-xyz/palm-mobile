@@ -10,13 +10,8 @@ module.exports = function (api) {
         'palm-core': './src/palm-core',
         'palm-react': './src/palm-react',
         'palm-react-native': './src/palm-react-native',
-
-        assets: './src/assets',
-        types: './src/types',
-        consts: './src/consts',
-        config: './src/config',
-        components: './src/components',
-        hooks: './src/hooks',
+        'palm-react-ui-kit': './src/palm-react-ui-kit',
+        'palm-react-native-ui-kit': './src/palm-react-native-ui-kit',
       },
     },
   ]

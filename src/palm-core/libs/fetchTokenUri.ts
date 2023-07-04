@@ -1,7 +1,7 @@
-import images from 'assets/images'
 import axios from 'axios'
 import { UTIL } from 'palm-core/libs'
 import { ContractAddr } from 'palm-core/types'
+import images from 'palm-react-ui-kit/assets/images'
 
 import { Maybe } from '@toruslabs/openlogin'
 

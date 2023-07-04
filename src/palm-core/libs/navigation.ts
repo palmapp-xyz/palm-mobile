@@ -4,8 +4,10 @@ import {
   NftType,
   SupportedNetworkEnum,
 } from 'palm-core/types'
-import { RecoverAccountType } from 'screens/auth/RecoverAccountScreen'
-import { PinType } from 'screens/PinScreen'
+import {
+  RecoverAccountType,
+} from 'palm-react-native-ui-kit/screens/auth/RecoverAccountScreen'
+import { PinType } from 'palm-react-native-ui-kit/screens/PinScreen'
 
 import {
   createNavigationContainerRef,

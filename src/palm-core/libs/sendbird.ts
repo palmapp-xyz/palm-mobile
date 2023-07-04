@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
-import Config from 'config'
 import { UTIL } from 'palm-core/libs'
 import { SbMsgDataType } from 'palm-core/types'
+import Config from 'palm-react-native/config'
 
 import { SendbirdChatSDK } from '@sendbird/uikit-utils'
 

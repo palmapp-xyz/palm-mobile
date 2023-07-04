@@ -1,7 +1,5 @@
 import type { UIKitPalette } from '@sendbird/uikit-react-native-foundation'
-import images from 'assets/images'
 import BigNumber from 'bignumber.js'
-import Config from 'config'
 import _ from 'lodash'
 import { NETWORK } from 'palm-core/consts'
 import {
@@ -15,6 +13,8 @@ import {
   Token,
   uToken,
 } from 'palm-core/types'
+import Config from 'palm-react-native/config'
+import images from 'palm-react-ui-kit/assets/images'
 
 const getContrastColor = (
   color:
