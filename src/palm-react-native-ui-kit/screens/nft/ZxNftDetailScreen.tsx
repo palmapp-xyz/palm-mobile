@@ -22,20 +22,18 @@ import {
   Header,
   Row,
 } from 'palm-react-native-ui-kit/components'
+import NativeTokenUSD from 'palm-react-native-ui-kit/components/molecules/NativeTokenUSD'
 import useAuthChallenge from 'palm-react/hooks/api/useAuthChallenge'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
-import useEthPrice from 'palm-react/hooks/independent/useEthPrice'
-import useKlayPrice from 'palm-react/hooks/independent/useKlayPrice'
-import useMaticPrice from 'palm-react/hooks/independent/useMaticPrice'
+import useNativeToken from 'palm-react/hooks/independent/useNativeToken'
 import useNftImage from 'palm-react/hooks/independent/useNftImage'
-import useUserBalance from 'palm-react/hooks/independent/useUserBalance'
 import useZxBuyNft from 'palm-react/hooks/zx/useZxBuyNft'
 import useZxCancelNft from 'palm-react/hooks/zx/useZxCancelNft'
 import useZxOrder from 'palm-react/hooks/zx/useZxOrder'
 import appStore from 'palm-react/store/appStore'
-import React, { ReactElement, useEffect, useMemo, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
@@ -89,24 +87,6 @@ const ZxNftDetailScreen = (): ReactElement => {
   const { fetchUserProfileId } = useAuthChallenge()
   const setLoading = useSetRecoilState(appStore.loading)
 
-  const { getEthPrice } = useEthPrice()
-  const { getKlayPrice } = useKlayPrice()
-  const { getMaticPrice } = useMaticPrice()
-
-  const userAddress = user?.address
-  const { balance: ethBalance } = useUserBalance({
-    address: userAddress,
-    chain: SupportedNetworkEnum.ETHEREUM,
-  })
-  const { balance: klayBalance } = useUserBalance({
-    address: userAddress,
-    chain: SupportedNetworkEnum.KLAYTN,
-  })
-  const { balance: maticBalance } = useUserBalance({
-    address: userAddress,
-    chain: SupportedNetworkEnum.POLYGON,
-  })
-
   const queryClient = useQueryClient()
 
   const isMine =
@@ -126,22 +106,12 @@ const ZxNftDetailScreen = (): ReactElement => {
 
   const erc20TokenAmount = order?.erc20TokenAmount
 
-  const myTargetBalance =
-    chain === SupportedNetworkEnum.ETHEREUM
-      ? ethBalance
-      : chain === SupportedNetworkEnum.KLAYTN
-      ? klayBalance
-      : maticBalance
+  const { nativeToken } = useNativeToken({
+    userAddress: user?.address,
+    network: chain,
+  })
 
-  const usdPrice = useMemo(
-    () =>
-      chain === SupportedNetworkEnum.ETHEREUM
-        ? getEthPrice(erc20TokenAmount as pToken)
-        : chain === SupportedNetworkEnum.KLAYTN
-        ? getKlayPrice(erc20TokenAmount as pToken)
-        : getMaticPrice(erc20TokenAmount as pToken),
-    [erc20TokenAmount]
-  )
+  const myTargetBalance = (nativeToken?.balance || '0') as pToken
 
   const onSubmit = async (): Promise<void> => {
     if (!order || !profile || !listingOwner) {
@@ -247,11 +217,10 @@ const ZxNftDetailScreen = (): ReactElement => {
             </FormText>
           </Row>
           <View>
-            <FormText color={COLOR.black._400}>
-              {t('Common.UsdPrice', {
-                price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
-              })}
-            </FormText>
+            <NativeTokenUSD
+              amount={erc20TokenAmount as pToken}
+              network={chain}
+            />
           </View>
         </View>
         <FormButton

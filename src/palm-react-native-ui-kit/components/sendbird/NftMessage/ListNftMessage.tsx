@@ -12,13 +12,11 @@ import { MoralisNftRenderer, Row } from 'palm-react-native-ui-kit/components'
 import FormButton from 'palm-react-native-ui-kit/components/atoms/FormButton'
 import FormImage from 'palm-react-native-ui-kit/components/atoms/FormImage'
 import FormText from 'palm-react-native-ui-kit/components/atoms/FormText'
+import NativeTokenUSD from 'palm-react-native-ui-kit/components/molecules/NativeTokenUSD'
 import VerifiedWrapper from 'palm-react-native-ui-kit/components/molecules/VerifiedWrapper'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useExplorer from 'palm-react/hooks/complex/useExplorer'
 import useFsListing from 'palm-react/hooks/firestore/useFsListing'
-import useEthPrice from 'palm-react/hooks/independent/useEthPrice'
-import useKlayPrice from 'palm-react/hooks/independent/useKlayPrice'
-import useMaticPrice from 'palm-react/hooks/independent/useMaticPrice'
 import useZxOrder from 'palm-react/hooks/zx/useZxOrder'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,49 +24,6 @@ import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import NftSoldTag from './NftSoldTag'
-
-const KlayPrice = ({ amount }: { amount: pToken }): ReactElement => {
-  const { getKlayPrice } = useKlayPrice()
-  const { t } = useTranslation()
-
-  return (
-    <FormText color={COLOR.black._400}>
-      {t('Common.UsdPrice', {
-        price: UTIL.formatAmountP(getKlayPrice(amount || ('0' as pToken)), {
-          toFix: 2,
-        }),
-      })}
-    </FormText>
-  )
-}
-const MaticPrice = ({ amount }: { amount: pToken }): ReactElement => {
-  const { getMaticPrice } = useMaticPrice()
-  const { t } = useTranslation()
-
-  return (
-    <FormText color={COLOR.black._400}>
-      {t('Common.UsdPrice', {
-        price: UTIL.formatAmountP(getMaticPrice(amount || ('0' as pToken)), {
-          toFix: 2,
-        }),
-      })}
-    </FormText>
-  )
-}
-const EthPrice = ({ amount }: { amount: pToken }): ReactElement => {
-  const { getEthPrice } = useEthPrice()
-  const { t } = useTranslation()
-
-  return (
-    <FormText color={COLOR.black._400}>
-      {t('Common.UsdPrice', {
-        price: UTIL.formatAmountP(getEthPrice(amount || ('0' as pToken)), {
-          toFix: 2,
-        }),
-      })}
-    </FormText>
-  )
-}
 
 const ListNftMessage = ({
   data,
@@ -149,15 +104,7 @@ const ListNftMessage = ({
               </FormText>
             </Row>
             <Row style={styles.priceRow}>
-              {chain === SupportedNetworkEnum.ETHEREUM && (
-                <EthPrice amount={data.amount} />
-              )}
-              {chain === SupportedNetworkEnum.KLAYTN && (
-                <KlayPrice amount={data.amount} />
-              )}
-              {chain === SupportedNetworkEnum.POLYGON && (
-                <MaticPrice amount={data.amount} />
-              )}
+              <NativeTokenUSD amount={data.amount} network={chain} />
             </Row>
           </View>
 

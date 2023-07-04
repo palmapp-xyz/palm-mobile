@@ -9,8 +9,8 @@ import {
   FormText,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import UsdPrice from 'palm-react-native-ui-kit/components/atoms/UsdPrice'
 import NftCard from 'palm-react-native-ui-kit/components/channel/NftCard'
+import NativeTokenUSD from 'palm-react-native-ui-kit/components/molecules/NativeTokenUSD'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import useToast from 'palm-react/hooks/app/useToast'
 import { UseZxListNftReturn } from 'palm-react/hooks/zx/useZxListNft'
@@ -96,7 +96,7 @@ const Contents = ({
                     </FormText>
                   </Row>
                 </Row>
-                <UsdPrice amount={UTIL.microfyP(price)} chain={chain} />
+                <NativeTokenUSD amount={UTIL.microfyP(price)} network={chain} />
               </>
             )}
           </View>

@@ -15,10 +15,9 @@ import {
   NftRenderer,
   Row,
 } from 'palm-react-native-ui-kit/components'
+import NativeTokenUSD from 'palm-react-native-ui-kit/components/molecules/NativeTokenUSD'
 import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
-import useEthPrice from 'palm-react/hooks/independent/useEthPrice'
-import useKlayPrice from 'palm-react/hooks/independent/useKlayPrice'
-import React, { ReactElement, useMemo } from 'react'
+import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -31,8 +30,6 @@ const FbListingItem = ({
   channelUrl: string
 }): ReactElement => {
   const { navigation } = useAppNavigation()
-  const { getEthPrice } = useEthPrice()
-  const { getKlayPrice } = useKlayPrice()
   const { t } = useTranslation()
 
   const order = item.order
@@ -43,16 +40,6 @@ const FbListingItem = ({
   const expire = format(
     new Date(_.toNumber(order.order.expiry) * 1000),
     'yyyy-MM-dd'
-  )
-
-  const usdPrice = useMemo(
-    () =>
-      chain === SupportedNetworkEnum.ETHEREUM
-        ? getEthPrice(order.erc20TokenAmount as pToken)
-        : chain === SupportedNetworkEnum.KLAYTN
-        ? getKlayPrice(order.erc20TokenAmount as pToken)
-        : ('0' as pToken),
-    []
   )
 
   return (
@@ -97,11 +84,10 @@ const FbListingItem = ({
           </FormText>
         </Row>
         <View>
-          <FormText color={COLOR.black._400}>
-            {t('Common.UsdPrice', {
-              price: UTIL.formatAmountP(usdPrice, { toFix: 2 }),
-            })}
-          </FormText>
+          <NativeTokenUSD
+            amount={order.erc20TokenAmount as pToken}
+            network={chain}
+          />
         </View>
         <View>
           <FormText color={COLOR.black._400}>
