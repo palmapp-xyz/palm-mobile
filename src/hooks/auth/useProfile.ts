@@ -64,7 +64,7 @@ const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
   } = useLens()
 
   useAsyncEffect(async () => {
-    if (!fsProfile || !fsProfileField || !lensProfile) {
+    if (!fsProfileField || !lensProfile) {
       return
     }
     if (profilesDeepCompare(fsProfileField, lensProfile) === false) {
@@ -78,7 +78,7 @@ const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
         coverPicture: getProfileMediaImg(lensProfile.coverPicture) || undefined,
         attributes: lensProfile.attributes || undefined,
       })
-      await updateDoc(fsProfile, profileUpdate)
+      await updateDoc(fsProfile!, profileUpdate)
     }
   }, [fsProfileField, lensProfile])
 

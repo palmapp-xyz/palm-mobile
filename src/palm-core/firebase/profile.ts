@@ -2,17 +2,15 @@ import { FbProfile } from 'palm-core/types'
 
 import {
   collection,
+  converter,
   doc,
   DocSnapshotCallback,
   DocSnapshotReturn,
-  DocumentData,
   DocumentReference,
   firestore,
-  FirestoreDataConverter,
   limit,
   onDocSnapshot,
   onQuerySnapshot,
-  QueryDocumentSnapshot,
   QuerySnapshotCallback,
   QuerySnapshotReturn,
   where,
@@ -42,12 +40,8 @@ export const onProfile = (
   })
 }
 
-const profileConverter: FirestoreDataConverter<FbProfile> = {
-  toFirestore: profile => profile,
-  fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>): FbProfile =>
-    snapshot.data() as FbProfile,
-}
-
 export const profileRef = (profileId: string): DocumentReference<FbProfile> => {
-  return doc(firestore, 'profiles', profileId).withConverter(profileConverter)
+  return doc(firestore, 'profiles', profileId).withConverter(
+    converter<FbProfile>()
+  )
 }

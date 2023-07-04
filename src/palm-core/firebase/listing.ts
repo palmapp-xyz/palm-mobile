@@ -3,17 +3,15 @@ import { ContractAddr, FbListing } from 'palm-core/types'
 
 import {
   collection,
+  converter,
   doc,
   DocSnapshotCallback,
   DocSnapshotReturn,
-  DocumentData,
   DocumentReference,
   firestore,
-  FirestoreDataConverter,
   getDocs,
   onDocSnapshot,
   query,
-  QueryDocumentSnapshot,
   where,
 } from './'
 
@@ -55,14 +53,8 @@ export const onListing = (
   })
 }
 
-const listingConverter: FirestoreDataConverter<FbListing> = {
-  toFirestore: listing => listing,
-  fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>): FbListing =>
-    snapshot.data() as FbListing,
-}
-
 export const listingRef = (nonce: string): DocumentReference<FbListing> => {
   return doc(firestore as any, 'listings', nonce).withConverter(
-    listingConverter
+    converter<FbListing>()
   )
 }

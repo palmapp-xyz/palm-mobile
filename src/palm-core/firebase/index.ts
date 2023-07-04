@@ -1,10 +1,14 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app'
 import {
+  DocumentData,
   DocumentReference,
   DocumentSnapshot,
+  FirestoreDataConverter,
   FirestoreError,
+  PartialWithFieldValue,
   Query,
   QueryConstraint,
+  QueryDocumentSnapshot,
   QuerySnapshot,
   getFirestore,
   onSnapshot,
@@ -75,3 +79,9 @@ export type DocSnapshotReturn<T> = Unsubscribe & {
 export type Unsubscribe = {
   unsubscribe: () => void
 }
+
+export const converter = <T>(): FirestoreDataConverter<T> => ({
+  toFirestore: (data: PartialWithFieldValue<T>): DocumentData =>
+    data as DocumentData,
+  fromFirestore: (snap: QueryDocumentSnapshot): T => snap.data() as T,
+})

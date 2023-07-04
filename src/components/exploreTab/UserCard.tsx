@@ -35,9 +35,11 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
             <FormText style={{ marginBottom: 4 }}>
               {UTIL.truncate(user.address)}
             </FormText>
-            <FormText numberOfLines={3} color={COLOR.black._300}>
-              {user.bio}
-            </FormText>
+            {user.bio && user.bio.trim().length > 0 && (
+              <FormText numberOfLines={3} color={COLOR.black._300}>
+                {user.bio}
+              </FormText>
+            )}
           </View>
         </View>
       </Pressable>

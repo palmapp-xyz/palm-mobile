@@ -12,7 +12,7 @@ export type UseFsProfilesReturn = {
 
 const useFsProfiles = (): UseFsProfilesReturn => {
   const [user] = useRecoilState(appStore.user)
-  const limit = 10
+  const limit = 100
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [fsProfileList, setFsProfileList] = useState<FbProfile[]>([])
 
