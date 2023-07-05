@@ -89,9 +89,6 @@ const SelectedCollectionNftsSheet = ({
       showBottomSheet={true}
       snapPoints={snapPoints}
       onClose={onClose}
-      backgroundStyle={{
-        backgroundColor: COLOR.black._10,
-      }}
     >
       <View style={{ flex: 1 }}>
         <View style={styles.body}>
