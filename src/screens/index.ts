@@ -14,6 +14,10 @@ export * from './channels/uikit-app'
 export { default as InitExploreScreen } from './explore/InitExploreScreen'
 export { default as ListNftScreen } from './nft/ListNftScreen'
 export { default as NftDetailScreen } from './nft/NftDetailScreen'
+export {
+  default as NftListScreen,
+  default as NftSelectScreen,
+} from './nft/NftSelectScreen'
 export { default as SendNftScreen } from './nft/SendNftScreen'
 export { default as SendTokenScreen } from './nft/SendTokenScreen'
 export { default as ZxNftDetailScreen } from './nft/ZxNftDetailScreen'

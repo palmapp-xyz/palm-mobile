@@ -2,6 +2,7 @@ import images from 'assets/images'
 import { FormImage, MediaRenderer } from 'components'
 import { COLOR } from 'core/consts'
 import { getProfileMediaImg } from 'core/libs/lens'
+import { Routes } from 'core/libs/navigation'
 import { ContractAddr } from 'core/types'
 import useProfile from 'hooks/auth/useProfile'
 import { useAppNavigation } from 'hooks/useAppNavigation'
@@ -84,7 +85,11 @@ const UpdateProfileHeader = React.memo(
             )}
             <TouchableOpacity
               style={styles.editButton}
-              onPress={(): void => {}}
+              onPress={(): void => {
+                navigation.navigate(Routes.NftSelect, {
+                  type: 'select-profile',
+                })
+              }}
             >
               <Icon name={'pencil'} size={14} />
             </TouchableOpacity>

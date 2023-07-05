@@ -36,7 +36,7 @@ export enum Routes {
   HomeTabs = 'HomeTabs',
   Explore = 'Explore',
   LensFriends = 'LensFriends',
-  NftList = 'NftList',
+  NftSelect = 'NftSelect',
   MyPage = 'MyPage',
   GroupChannelList = 'GroupChannelList',
 
@@ -132,8 +132,8 @@ type MainRouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.NftList
-      params: undefined
+      route: Routes.NftSelect
+      params: { type?: string }
     }
   | {
       route: Routes.InitExplore

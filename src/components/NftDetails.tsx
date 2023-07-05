@@ -1,4 +1,4 @@
-import { FormText, VerifiedWrapper } from 'components'
+import { FormButton, FormText, VerifiedWrapper } from 'components'
 import MediaRenderer, {
   MediaRendererProps,
 } from 'components/molecules/MediaRenderer'
@@ -20,6 +20,8 @@ import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
+import useAuth from 'hooks/auth/useAuth'
+import useProfile from 'hooks/auth/useProfile'
 
 const NftDetails = ({
   nftContract,
@@ -27,13 +29,19 @@ const NftDetails = ({
   type,
   chain,
   item,
+  isNftInfo,
 }: {
   nftContract: ContractAddr
   tokenId: string
   type: NftType
   chain: SupportedNetworkEnum
   item?: Moralis.NftItem
+  isNftInfo?: boolean
 }): ReactElement => {
+  const { user } = useAuth()
+  const { updateProfileImage } = useProfile({
+    profileId: user?.auth?.profileId,
+  })
   const { t } = useTranslation()
   const { ownerOf } = useNft({ nftContract, chain })
   const [tokenOwner, setTokenOwner] = useState<ContractAddr>()
@@ -78,6 +86,16 @@ const NftDetails = ({
     } catch {}
   }, [])
 
+  const checkProfileUpdateAvailable = (): boolean => {
+    return (
+      !chain &&
+      (UTIL.isMainnet()
+        ? chain === SupportedNetworkEnum.ETHEREUM ||
+          chain === SupportedNetworkEnum.POLYGON
+        : chain === SupportedNetworkEnum.POLYGON)
+    )
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -95,11 +113,19 @@ const NftDetails = ({
               style={{ alignSelf: 'flex-end' }}
               color={COLOR.black._400}
             >
-              {t('Components.NftDetails.ListedBy', {
-                owner: tokenOwner
-                  ? UTIL.truncate(tokenOwner)
-                  : t('Components.NftDetails.Unknown'),
-              })}
+              {isNftInfo
+                ? t('Components.NftDetails.Owned', {
+                    owner: tokenOwner
+                      ? tokenOwner === user?.address
+                        ? t('Components.NftDetails.Me')
+                        : UTIL.truncate(tokenOwner)
+                      : t('Components.NftDetails.Unknown'),
+                  })
+                : t('Components.NftDetails.ListedBy', {
+                    owner: tokenOwner
+                      ? UTIL.truncate(tokenOwner)
+                      : t('Components.NftDetails.Unknown'),
+                  })}
             </FormText>
           </View>
           <VerifiedWrapper style={{ left: 32 }}>
@@ -112,6 +138,30 @@ const NftDetails = ({
           </View>
         </View>
       </ScrollView>
+      {isNftInfo && tokenOwner === user?.address && (
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            bottom: 0,
+            paddingVertical: 20,
+            paddingHorizontal: 12,
+          }}
+        >
+          <FormButton
+            textStyle={{
+              fontWeight: '600',
+            }}
+            figure={'outline'}
+            onPress={(): void => {
+              item && updateProfileImage(item, chain)
+            }}
+            disabled={checkProfileUpdateAvailable() ? false : true}
+          >
+            {t('Components.NftDetails.SetAsTheProfileThumbnail')}
+          </FormButton>
+        </View>
+      )}
     </View>
   )
 }

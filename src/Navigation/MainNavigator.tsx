@@ -32,6 +32,7 @@ import {
   InitExploreScreen,
   ListNftScreen,
   NftDetailScreen,
+  NftSelectScreen,
   PinScreen,
   RecoverAccountScreen,
   SendNftScreen,
@@ -110,6 +111,10 @@ const MainNavigator = (): ReactElement => {
             component={SendTokenScreen}
           />
           <MainStack.Screen name={Routes.ListNft} component={ListNftScreen} />
+          <MainStack.Screen
+            name={Routes.NftSelect}
+            component={NftSelectScreen}
+          />
           <MainStack.Screen name={Routes.Setting} component={SettingScreen} />
           <MainStack.Screen
             name={Routes.ExportWallet}

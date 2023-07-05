@@ -2,9 +2,7 @@ import { Container, FormButton, FormInput, FormText, Row } from 'components'
 import LoadingPage from 'components/atoms/LoadingPage'
 import UpdateProfileHeader from 'components/UpdateProfileHeader'
 import { COLOR } from 'core/consts'
-import {
-  PublicationMetadataStatusType,
-} from 'core/graphqls/__generated__/graphql'
+import { PublicationMetadataStatusType } from 'core/graphqls/__generated__/graphql'
 import { getAttributesData } from 'core/libs/lens'
 import appStore from 'core/store/appStore'
 import useAuth from 'hooks/auth/useAuth'
