@@ -4,7 +4,7 @@ import {
   signInWithCustomToken,
   User as AuthUser,
 } from 'palm-core/firebase'
-import { AuthenticationResult } from 'palm-core/graphqls/__generated__/graphql'
+import { AuthenticationResult } from 'palm-core/graphqls'
 import { UTIL } from 'palm-core/libs'
 import { getProfileDoc } from 'palm-core/libs/firebase'
 import { recordError } from 'palm-core/libs/logger'

@@ -4,7 +4,7 @@ import {
   ChallengeDocument,
   RefreshDocument,
   VerifyDocument,
-} from 'palm-core/graphqls/__generated__/graphql'
+} from 'palm-core/graphqls'
 import { UTIL } from 'palm-core/libs'
 import { recordError } from 'palm-core/libs/logger'
 import { SupportedNetworkEnum, TrueOrErrReturn } from 'palm-core/types'

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { UTIL } from 'palm-core/libs'
+import { chainId, chainParam } from 'palm-core/libs/network'
 import {
   ContractAddr,
   Moralis,
@@ -8,7 +9,6 @@ import {
   SupportedNetworkEnum,
   Token,
 } from 'palm-core/types'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
 import useWeb3 from 'palm-react/hooks/complex/useWeb3'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
@@ -25,8 +25,8 @@ const useNativeToken = ({
   userAddress?: ContractAddr
   network: SupportedNetworkEnum
 }): UseNativeTokenReturn => {
-  const { connectedNetworkIds, connectedNetworkParams } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[network]
+  const connectedNetworkId = chainId(network)
+  const connectedNetworkParam = chainParam(network)
 
   const apiPath = useMemo(() => {
     const chain =
@@ -70,21 +70,19 @@ const useNativeToken = ({
 
   const getNativeToken = (_balance: pToken): Moralis.FtItem => ({
     token_address: '0x0' as ContractAddr,
-    ...connectedNetworkParams[network].nativeCurrency,
+    ...connectedNetworkParam.nativeCurrency,
     balance: _balance,
     chainId: connectedNetworkId,
     price: {
-      tokenName: connectedNetworkParams[network].nativeCurrency.name,
-      tokenSymbol: connectedNetworkParams[network].nativeCurrency.symbol,
-      tokenLogo: connectedNetworkParams[network].nativeCurrency.logo.source,
-      tokenDecimals: String(
-        connectedNetworkParams[network].nativeCurrency.decimals
-      ),
+      tokenName: connectedNetworkParam.nativeCurrency.name,
+      tokenSymbol: connectedNetworkParam.nativeCurrency.symbol,
+      tokenLogo: connectedNetworkParam.nativeCurrency.logo.source,
+      tokenDecimals: String(connectedNetworkParam.nativeCurrency.decimals),
       nativePrice: {
         value: UTIL.microfyP('1' as Token),
-        decimals: connectedNetworkParams[network].nativeCurrency.decimals,
-        name: connectedNetworkParams[network].nativeCurrency.name,
-        symbol: connectedNetworkParams[network].nativeCurrency.symbol,
+        decimals: connectedNetworkParam.nativeCurrency.decimals,
+        name: connectedNetworkParam.nativeCurrency.name,
+        symbol: connectedNetworkParam.nativeCurrency.symbol,
       },
       usdPrice: price,
       exchangeAddress: '0x0' as ContractAddr,

@@ -1,4 +1,4 @@
-import { AuthenticationResult } from 'palm-core/graphqls/__generated__/graphql'
+import { AuthenticationResult } from 'palm-core/graphqls'
 
 import { AuthChallengeResult } from './auth'
 import { ContractAddr } from './contracts'

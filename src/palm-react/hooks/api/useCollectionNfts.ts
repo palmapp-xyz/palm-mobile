@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
 import { recordError } from 'palm-core/libs/logger'
+import { chainId } from 'palm-core/libs/network'
 import {
   ApiEnum,
   ContractAddr,
@@ -11,7 +12,6 @@ import { useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
 
 import useApi from '../complex/useApi'
-import useNetwork from '../complex/useNetwork'
 
 export type UseCollectionNftsReturn = {
   items: Moralis.NftItem[]
@@ -36,8 +36,7 @@ const useCollectionNfts = ({
   limit?: number
   preload?: Moralis.NftItemsFetchResult | null | undefined
 }): UseCollectionNftsReturn => {
-  const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[selectedNetwork]
+  const connectedNetworkId = chainId(selectedNetwork)
   const { getApi } = useApi()
 
   const {
@@ -58,7 +57,7 @@ const useCollectionNfts = ({
     ],
     async ({ pageParam = '' }) => {
       if (userAddress) {
-        if (preload && pageParam == '') {
+        if (preload && pageParam === '') {
           return preload
         }
 

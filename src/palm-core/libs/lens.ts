@@ -1,7 +1,4 @@
-import {
-  Attribute,
-  ProfileMedia,
-} from 'palm-core/graphqls/__generated__/graphql'
+import { Attribute, ProfileMedia } from 'palm-core/graphqls'
 import { AttributeData } from 'palm-core/types/lens'
 
 import { Maybe } from '@toruslabs/openlogin'

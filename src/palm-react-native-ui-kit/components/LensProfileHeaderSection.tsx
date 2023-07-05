@@ -1,4 +1,4 @@
-import { Profile, ProfileStats } from 'palm-core/graphqls/__generated__/graphql'
+import { Profile, ProfileStats } from 'palm-core/graphqls'
 import { FormText, Row } from 'palm-react-native-ui-kit/components'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,4 +1,4 @@
-import { Attribute } from 'palm-core/graphqls/__generated__/graphql'
+import { Attribute } from 'palm-core/graphqls'
 import { FormText } from 'palm-react-native-ui-kit/components'
 import { isValidHttpUrl } from 'palm-react-native/lib/utils'
 import React, { ReactElement } from 'react'

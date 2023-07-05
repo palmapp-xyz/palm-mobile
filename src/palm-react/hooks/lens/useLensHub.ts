@@ -1,10 +1,10 @@
 import { ethers } from 'ethers'
 import lensHubAbi from 'palm-core/abi/lens-hub-contract-abi.json'
 import lensPeripheryAbi from 'palm-core/abi/lens-periphery-data-provider.json'
+import { contractMap } from 'palm-core/libs/network'
 import { SupportedNetworkEnum } from 'palm-core/types'
 import useEthers from 'palm-react/hooks/complex/useEthers'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
@@ -14,12 +14,11 @@ export type UseLensHubReturn = {
 }
 
 const useLensHub = (chain: SupportedNetworkEnum): UseLensHubReturn => {
-  const { contractMap } = useNetwork()
   const { getSigner } = useEthers()
-  const [lensHubContract, lensPeripheryContract] = useMemo(
-    () => [contractMap[chain].lens_hub!, contractMap[chain].lens_periphery!],
-    [contractMap]
-  )
+  const [lensHubContract, lensPeripheryContract] = [
+    contractMap(chain).lens_hub!,
+    contractMap(chain).lens_periphery!,
+  ]
   const [lensHub, setLensHub] = useState<ethers.Contract>()
   const [lensPeriphery, setLensPeriphery] = useState<ethers.Contract>()
 

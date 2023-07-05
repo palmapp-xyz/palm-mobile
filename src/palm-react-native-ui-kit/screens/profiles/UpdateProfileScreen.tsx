@@ -1,4 +1,5 @@
 import { COLOR } from 'palm-core/consts'
+import { PublicationMetadataStatusType } from 'palm-core/graphqls'
 import { getAttributesData } from 'palm-core/libs/lens'
 import {
   Container,
@@ -22,9 +23,6 @@ import {
   AttributeData,
   ProfileMetadata,
 } from '@lens-protocol/react-native-lens-ui-kit'
-import {
-  PublicationMetadataStatusType,
-} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { useLocalization } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 

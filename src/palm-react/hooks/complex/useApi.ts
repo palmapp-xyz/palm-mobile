@@ -1,5 +1,6 @@
 import * as axiosjs from 'axios'
 import _ from 'lodash'
+import { apiPath } from 'palm-core/consts'
 import { appAuth, User as AuthUser } from 'palm-core/firebase'
 import { recordError } from 'palm-core/libs/logger'
 import {
@@ -12,8 +13,6 @@ import {
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import fetchApiStore from 'palm-react/store/fetchApiStore'
 import { useSetRecoilState } from 'recoil'
-
-import useNetwork from './useNetwork'
 
 export type UseApiReturn = {
   getApi: <T extends ApiEnum>(props: {
@@ -68,7 +67,6 @@ const getFormData = <T extends ApiEnum>(
 }
 
 const useApi = (): UseApiReturn => {
-  const { apiPath } = useNetwork()
   const { user } = useAuth()
   const accessToken = user?.auth?.authToken
   const setIsFetchingPutApiStore = useSetRecoilState(

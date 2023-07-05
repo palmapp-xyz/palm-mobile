@@ -1,4 +1,4 @@
-import { Profile } from 'palm-core/graphqls/__generated__/graphql'
+import { Profile } from 'palm-core/graphqls'
 import { ContractAddr, FbProfile } from 'palm-core/types'
 
 import { getProfileMediaImg } from './lens'

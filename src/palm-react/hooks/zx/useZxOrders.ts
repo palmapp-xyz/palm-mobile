@@ -1,9 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
+import { chainId } from 'palm-core/libs/network'
 import { QueryKeyEnum, SupportedNetworkEnum } from 'palm-core/types'
 import useReactQuery from 'palm-react/hooks/complex/useReactQuery'
-
-import useNetwork from '../complex/useNetwork'
 
 export type UseZxOrdersReturn = {
   orderList: PostOrderResponsePayload[]
@@ -13,10 +12,10 @@ export type UseZxOrdersReturn = {
 }
 
 const useZxOrders = (chain: SupportedNetworkEnum): UseZxOrdersReturn => {
-  const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[chain]
+  const connectedNetworkId = chainId(chain)
 
-  const extApi = `https://api.trader.xyz/orderbook/orders?chainId=${connectedNetworkId}&nftType=erc721&erc20Token=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+  const token = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+  const extApi = `https://api.trader.xyz/orderbook/orders?chainId=${connectedNetworkId}&nftType=erc721&erc20Token=${token}`
 
   const {
     data: orderList = [],

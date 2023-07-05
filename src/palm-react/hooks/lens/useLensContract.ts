@@ -1,17 +1,14 @@
 import lensHub from 'palm-core/abi/lens-hub-contract-abi.json'
+import { Scalars } from 'palm-core/graphqls'
+import { contractMap } from 'palm-core/libs/network'
 import {
   ContractAddr,
   EncodedTxData,
   SupportedNetworkEnum,
 } from 'palm-core/types'
 import useContract from 'palm-react/hooks/complex/useContract'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
-import { useMemo } from 'react'
 import { AbiItem } from 'web3-utils'
 
-import {
-  Scalars,
-} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 import { Maybe } from '@toruslabs/openlogin'
 
 export type UseLensContractReturn = {
@@ -53,11 +50,7 @@ export type UseLensContractReturn = {
 const useLensContract = (
   chain: SupportedNetworkEnum
 ): UseLensContractReturn => {
-  const { contractMap } = useNetwork()
-  const lensHubContract = useMemo(
-    () => contractMap[chain].lens_hub!,
-    [contractMap]
-  )
+  const lensHubContract = contractMap(chain).lens_hub!
 
   const { callMethod, getEncodedTxData } = useContract({
     abi: lensHub as AbiItem[],

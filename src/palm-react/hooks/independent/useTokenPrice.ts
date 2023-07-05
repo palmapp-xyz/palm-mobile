@@ -1,5 +1,6 @@
 import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
 import { recordError } from 'palm-core/libs/logger'
+import { chainId } from 'palm-core/libs/network'
 import {
   ApiEnum,
   ContractAddr,
@@ -7,7 +8,6 @@ import {
   SupportedNetworkEnum,
 } from 'palm-core/types'
 import useApi from 'palm-react/hooks/complex/useApi'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
 import useReactQuery from 'palm-react/hooks/complex/useReactQuery'
 
 export type UseTokenPriceReturn = {
@@ -21,8 +21,7 @@ const useTokenPrice = ({
   tokenAddress: ContractAddr
   selectedNetwork: SupportedNetworkEnum
 }): UseTokenPriceReturn => {
-  const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[selectedNetwork]
+  const connectedNetworkId = chainId(selectedNetwork)
   const { getApi } = useApi()
 
   const { data: price } = useReactQuery(

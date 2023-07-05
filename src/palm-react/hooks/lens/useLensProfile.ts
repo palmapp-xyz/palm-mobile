@@ -1,13 +1,7 @@
-import {
-  PaginatedProfileResult,
-} from 'palm-core/graphqls/__generated__/graphql'
+import { PaginatedProfileResult, Profile } from 'palm-core/graphqls'
 import { ContractAddr, QueryKeyEnum } from 'palm-core/types'
 import { useMemo } from 'react'
 import { useQuery, UseQueryResult } from 'react-query'
-
-import {
-  Profile,
-} from '@lens-protocol/react-native-lens-ui-kit/dist/graphql/generated'
 
 import useLens from './useLens'
 

@@ -16,7 +16,7 @@ import {
 } from 'palm-react-native/sendbird'
 import useAppearance from 'palm-react/hooks/app/useAppearance'
 import useSetting from 'palm-react/hooks/app/useSetting'
-import useWeb3Bindings from 'palm-react/hooks/complex/useWeb3Bindings'
+import useWeb3Bindings from 'palm-react/hooks/lens/useWeb3Bindings'
 import useNotificationConf from 'palm-react/hooks/notification/useNotificationConf'
 import React, { ReactElement, ReactNode, useEffect, useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'

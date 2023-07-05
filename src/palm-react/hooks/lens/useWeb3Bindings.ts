@@ -1,12 +1,11 @@
 import { ethers, VoidSigner } from 'ethers'
+import { chainId, chainParam } from 'palm-core/libs/network'
 import { QueryKeyEnum, SupportedNetworkEnum } from 'palm-core/types'
 import PkeyManager from 'palm-react-native/app/pkeyManager'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 
 import { IBindings } from '@lens-protocol/react'
-
-import useNetwork from './useNetwork'
 
 type UseWeb3BindingsReturn = {
   provider: ethers.providers.JsonRpcProvider
@@ -16,9 +15,8 @@ type UseWeb3BindingsReturn = {
 const useWeb3Bindings = (
   chain: SupportedNetworkEnum
 ): UseWeb3BindingsReturn => {
-  const { connectedNetworkParams, connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[chain]
-  const connectedNetworkParam = connectedNetworkParams[chain]
+  const connectedNetworkId = chainId(chain)
+  const connectedNetworkParam = chainParam(chain)
 
   const provider = useMemo(
     () =>

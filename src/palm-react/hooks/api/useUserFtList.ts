@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { UTIL } from 'palm-core/libs'
 import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
 import { recordError } from 'palm-core/libs/logger'
+import { chainId } from 'palm-core/libs/network'
 import {
   ApiEnum,
   ContractAddr,
@@ -13,7 +14,6 @@ import useNativeToken from 'palm-react/hooks/independent/useNativeToken'
 import { useMemo } from 'react'
 
 import useApi from '../complex/useApi'
-import useNetwork from '../complex/useNetwork'
 
 export type UseUserFtListReturn = {
   items: Moralis.FtItem[]
@@ -30,8 +30,7 @@ const useUserFtList = ({
   selectedNetwork: SupportedNetworkEnum
   userAddress?: ContractAddr
 }): UseUserFtListReturn => {
-  const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[selectedNetwork]
+  const connectedNetworkId = chainId(selectedNetwork)
   const { getApi } = useApi()
 
   const { nativeToken } = useNativeToken({

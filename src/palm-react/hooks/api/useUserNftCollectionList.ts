@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { UTIL } from 'palm-core/libs'
 import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
 import { recordError } from 'palm-core/libs/logger'
+import { chainId } from 'palm-core/libs/network'
 import {
   ApiEnum,
   ContractAddr,
@@ -12,7 +13,6 @@ import { useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
 
 import useApi from '../complex/useApi'
-import useNetwork from '../complex/useNetwork'
 import { UseUserAssetsReturn } from './useUserNftList'
 
 const useUserNftCollectionList = ({
@@ -24,8 +24,7 @@ const useUserNftCollectionList = ({
   userAddress?: ContractAddr
   limit?: number
 }): UseUserAssetsReturn<Moralis.NftCollection> => {
-  const { connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[selectedNetwork]
+  const connectedNetworkId = chainId(selectedNetwork)
   const { getApi } = useApi()
 
   const {

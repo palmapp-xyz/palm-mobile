@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
+import { apiPath } from 'palm-core/consts'
 // import useApi from 'hooks/complex/useApi'
 import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
+import { chainId } from 'palm-core/libs/network'
 import {
   ApiEnum,
   ApiResponse,
@@ -9,7 +11,6 @@ import {
   ContractAddr,
   SupportedNetworkEnum,
 } from 'palm-core/types'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
 
 export type UseAuthChallengeReturn = {
   challengeRequest: (address: ContractAddr) => Promise<AuthChallengeInfo>
@@ -26,9 +27,7 @@ const useAuthChallenge = (
   chain?: SupportedNetworkEnum
 ): UseAuthChallengeReturn => {
   // const { postApi } = useApi()
-  const { apiPath, connectedNetworkIds } = useNetwork()
-  const connectedNetworkId =
-    connectedNetworkIds[chain ?? SupportedNetworkEnum.ETHEREUM]
+  const connectedNetworkId = chainId(chain ?? SupportedNetworkEnum.ETHEREUM)
 
   const fetchUserProfileId = async (
     userAddress: ContractAddr | undefined

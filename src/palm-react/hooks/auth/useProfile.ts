@@ -1,9 +1,10 @@
 import { updateDoc } from 'palm-core/firebase'
-import { Profile, ProfileMedia } from 'palm-core/graphqls/__generated__/graphql'
+import { Profile, ProfileMedia } from 'palm-core/graphqls'
 import { UTIL } from 'palm-core/libs'
 import { fetchNftImage } from 'palm-core/libs/fetchTokenUri'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
 import { recordError } from 'palm-core/libs/logger'
+import { chainId } from 'palm-core/libs/network'
 import { profilesDeepCompare } from 'palm-core/libs/profile'
 import {
   ContractAddr,
@@ -12,7 +13,6 @@ import {
   SupportedNetworkEnum,
   TrueOrErrReturn,
 } from 'palm-core/types'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
 import useFsProfile from 'palm-react/hooks/firestore/useFsProfile'
 import useLens from 'palm-react/hooks/lens/useLens'
 import useLensProfile from 'palm-react/hooks/lens/useLensProfile'
@@ -47,7 +47,6 @@ export type UseProfileReturn = {
 
 const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
   const { fsProfile, fsProfileField } = useFsProfile({ profileId })
-  const { connectedNetworkIds } = useNetwork()
 
   const {
     profile: lensProfile,
@@ -167,7 +166,7 @@ const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
       const picture: ProfileMedia | undefined =
         UTIL.filterUndefined<ProfileMedia>({
           __typename: 'NftImage',
-          chainId: connectedNetworkIds[selectedNetwork]!,
+          chainId: chainId(selectedNetwork),
           contractAddress: item.token_address!,
           tokenId: item.token_id!,
           uri: image!,

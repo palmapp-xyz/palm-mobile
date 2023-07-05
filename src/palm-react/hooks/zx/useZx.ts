@@ -1,16 +1,15 @@
 import { ethers } from 'ethers'
 import { NftSwapV4 } from 'evm-nft-swap'
+import { chainId, chainParam } from 'palm-core/libs/network'
 import { QueryKeyEnum, SupportedNetworkEnum } from 'palm-core/types'
 import PkeyManager from 'palm-react-native/app/pkeyManager'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
 import { useQuery } from 'react-query'
 
 export type UseZxReturn = { nftSwapSdk?: NftSwapV4 }
 
 const useZx = (chain: SupportedNetworkEnum): UseZxReturn => {
-  const { connectedNetworkParams, connectedNetworkIds } = useNetwork()
-  const connectedNetworkId = connectedNetworkIds[chain]
-  const connectedNetworkParam = connectedNetworkParams[chain]
+  const connectedNetworkId = chainId(chain)
+  const connectedNetworkParam = chainParam(chain)
 
   const { data: nftSwapSdk } = useQuery(
     [QueryKeyEnum.ZX_SWAP_SDK_V4, connectedNetworkParam, connectedNetworkId],

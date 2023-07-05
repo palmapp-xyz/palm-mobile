@@ -29,9 +29,10 @@ import {
   PublicationMetadataStatusType,
   TransactionReceipt,
   UpdateProfileImageRequest,
-} from 'palm-core/graphqls/__generated__/graphql'
+} from 'palm-core/graphqls'
 import { UTIL } from 'palm-core/libs'
 import { recordError } from 'palm-core/libs/logger'
+import { chainId } from 'palm-core/libs/network'
 import {
   ContractAddr,
   PostTxStatus,
@@ -39,7 +40,6 @@ import {
   TrueOrErrReturn,
 } from 'palm-core/types'
 import useEthers from 'palm-react/hooks/complex/useEthers'
-import useNetwork from 'palm-react/hooks/complex/useNetwork'
 import useIpfs from 'palm-react/hooks/independent/useIpfs'
 import postTxStore from 'palm-react/store/postTxStore'
 import { useSetRecoilState } from 'recoil'
@@ -125,7 +125,6 @@ const useLens = (): UseLensReturn => {
   const { uploadFolder } = useIpfs({})
   const setPostTxResult = useSetRecoilState(postTxStore.postTxResult)
 
-  const { connectedNetworkIds } = useNetwork()
   const lensEnv = UTIL.isMainnet() ? Environment.mainnet : Environment.testnet
 
   const { lensHub } = useLensHub(SupportedNetworkEnum.POLYGON)
@@ -269,17 +268,21 @@ const useLens = (): UseLensReturn => {
     profileId: string,
     contractAddress: ContractAddr,
     tokenId: string,
-    chainId: SupportedNetworkEnum
+    chain: SupportedNetworkEnum
   ): Promise<TrueOrErrReturn<string>> => {
-    const signer = await getEthersSigner(chainId)
+    const signer = await getEthersSigner(chain)
     if (signer && lensHub) {
       try {
         setPostTxResult({
           status: PostTxStatus.POST,
-          chain: chainId,
+          chain,
         })
         console.log(
-          `setting profile image uri nft signer ${signer.address} contract ${contractAddress} tokenId ${tokenId} chainId ${connectedNetworkIds[chainId]}`
+          `setting profile image uri nft signer ${
+            signer.address
+          } contract ${contractAddress} tokenId ${tokenId} chainId ${chainId(
+            chain
+          )}`
         )
         // prove ownership of the nft
         const challengeInfo = await nftOwnershipChallenge({
@@ -288,7 +291,7 @@ const useLens = (): UseLensReturn => {
             {
               contractAddress,
               tokenId,
-              chainId: connectedNetworkIds[chainId],
+              chainId: chainId(chain),
             },
           ],
         })
@@ -348,14 +351,14 @@ const useLens = (): UseLensReturn => {
         setPostTxResult({
           status: PostTxStatus.BROADCAST,
           transactionHash: tx.hash!,
-          chain: chainId,
+          chain,
         })
 
         const txReceipt = await tx.wait()
         setPostTxResult({
           status: PostTxStatus.DONE,
           value: txReceipt,
-          chain: chainId,
+          chain,
         })
 
         return {
@@ -366,7 +369,7 @@ const useLens = (): UseLensReturn => {
         setPostTxResult({
           status: PostTxStatus.ERROR,
           error,
-          chain: chainId,
+          chain,
         })
         return { success: false, errMsg: _.toString(error) }
       }

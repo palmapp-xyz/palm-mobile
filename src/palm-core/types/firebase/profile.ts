@@ -1,7 +1,4 @@
-import {
-  Attribute,
-  ProfileMedia,
-} from 'palm-core/graphqls/__generated__/graphql'
+import { Attribute, ProfileMedia } from 'palm-core/graphqls'
 import { ContractAddr, DeviceTokenSet } from 'palm-core/types'
 
 export type FbProfile = {
