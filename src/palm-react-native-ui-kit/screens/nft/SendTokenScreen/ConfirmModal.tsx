@@ -22,8 +22,8 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import MoralisErc20Token from 'palm-react-native-ui-kit/components/MoralisErc20Token'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
-import useToast from 'palm-react/hooks/app/useToast'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
+import useToast from 'palm-react-native/app/useToast'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useSendToken from 'palm-react/hooks/page/groupChannel/useSendToken'

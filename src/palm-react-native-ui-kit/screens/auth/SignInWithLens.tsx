@@ -5,6 +5,7 @@ import LensLogo from 'palm-ui-kit/assets/LensLogo'
 import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import RNRestart from 'react-native-restart'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
@@ -21,7 +22,7 @@ const SignInWithLens = (): ReactElement => {
           title: t('Auth.SignLensFailureAlertTitle'),
           message: res.errMsg,
         })
-        logout()
+        logout(() => RNRestart.restart())
       } else {
         if (res.value) {
           console.log('SignInWithLens:lensLogin', res.value)

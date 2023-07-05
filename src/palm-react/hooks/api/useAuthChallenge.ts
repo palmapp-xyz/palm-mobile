@@ -1,142 +1,49 @@
-import axios, { AxiosResponse } from 'axios'
-import { apiPath } from 'palm-core/consts'
-// import useApi from 'hooks/complex/useApi'
-import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
-import { chainId } from 'palm-core/libs/network'
+import { challengeRequest, challengeVerify } from 'palm-core/api/authChallenge'
+import { web3Accounts } from 'palm-core/consts/web3'
 import {
-  ApiEnum,
-  ApiResponse,
   AuthChallengeInfo,
   AuthChallengeResult,
   ContractAddr,
   SupportedNetworkEnum,
 } from 'palm-core/types'
+import { useState } from 'react'
+import { Account } from 'web3-core'
+
+import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 export type UseAuthChallengeReturn = {
-  challengeRequest: (address: ContractAddr) => Promise<AuthChallengeInfo>
-  challengeVerify: (
-    signature: string,
-    message: string
-  ) => Promise<AuthChallengeResult>
-  fetchUserProfileId: (
-    userAddress: ContractAddr | undefined
-  ) => Promise<string | undefined>
+  challenge?: AuthChallengeInfo
+  verify: () => Promise<AuthChallengeResult | undefined>
 }
 
-const useAuthChallenge = (
-  chain?: SupportedNetworkEnum
-): UseAuthChallengeReturn => {
-  // const { postApi } = useApi()
-  const connectedNetworkId = chainId(chain ?? SupportedNetworkEnum.ETHEREUM)
+const useAuthChallenge = (): UseAuthChallengeReturn => {
+  const [signer, setSigner] = useState<Account | undefined>()
+  const [challenge, setChallenge] = useState<AuthChallengeInfo>()
 
-  const fetchUserProfileId = async (
-    userAddress: ContractAddr | undefined
-  ): Promise<string | undefined> => {
-    if (!userAddress) {
-      return undefined
+  useAsyncEffect(async () => {
+    const account = await web3Accounts[
+      SupportedNetworkEnum.ETHEREUM
+    ].getSigner()
+    setSigner(account)
+    if (!account) {
+      return
     }
-    const result = await challengeRequest(userAddress)
-    return result.profileId
+
+    const _challenge = await challengeRequest(account.address as ContractAddr)
+    setChallenge(_challenge)
+  }, [])
+
+  const verify = async (): Promise<AuthChallengeResult | undefined> => {
+    if (!signer || !challenge) {
+      return
+    }
+    const signature = signer.sign(challenge.message).signature
+    return await challengeVerify(signature, challenge.message)
   }
-
-  const challengeRequest = async (
-    address: ContractAddr
-  ): Promise<AuthChallengeInfo> => {
-    const apiUrl = `${apiPath}${apiV1Fabricator[
-      ApiEnum.AUTH_CHALLENGE_REQUEST
-    ].post()}`
-
-    const params = {
-      address,
-      chainId: connectedNetworkId,
-    }
-
-    const fetchRes: AxiosResponse<
-      ApiResponse[ApiEnum.AUTH_CHALLENGE_REQUEST]['POST'],
-      any
-    > = await axios.post(apiUrl, params, {
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
-    })
-
-    if (fetchRes.status === 200) {
-      return fetchRes.data
-    } else {
-      throw new Error(fetchRes.statusText)
-    }
-  }
-
-  const challengeVerify = async (
-    signature: string,
-    message: string
-  ): Promise<AuthChallengeResult> => {
-    const apiUrl = `${apiPath}${apiV1Fabricator[
-      ApiEnum.AUTH_CHALLENGE_VERIFY
-    ].post()}`
-
-    const params = {
-      signature,
-      message,
-    }
-
-    const fetchRes: AxiosResponse<
-      ApiResponse[ApiEnum.AUTH_CHALLENGE_VERIFY]['POST'],
-      any
-    > = await axios.post(apiUrl, params, {
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
-    })
-
-    if (fetchRes.status === 200) {
-      return fetchRes.data
-    } else {
-      throw new Error(fetchRes.statusText)
-    }
-  }
-
-  // const challengeRequest = async (
-  //   address: ContractAddr
-  // ): Promise<AuthChallengeInfo> => {
-  //   const fetchRes = await postApi<ApiEnum.AUTH_CHALLENGE_REQUEST>({
-  //     path: apiV1Fabricator[ApiEnum.AUTH_CHALLENGE_REQUEST].post(),
-  //     params: {
-  //       address,
-  //       chainId: connectedNetworkId,
-  //     },
-  //   })
-
-  //   if (!fetchRes.success) {
-  //     throw new Error(fetchRes.errMsg)
-  //   }
-  //   return fetchRes.data
-  // }
-
-  // const challengeVerify = async (
-  //   signature: string,
-  //   message: string
-  // ): Promise<AuthChallengeResult> => {
-  //   const fetchRes = await postApi<ApiEnum.AUTH_CHALLENGE_VERIFY>({
-  //     path: apiV1Fabricator[ApiEnum.AUTH_CHALLENGE_VERIFY].post(),
-  //     params: {
-  //       signature,
-  //       message,
-  //     },
-  //   })
-
-  //   if (!fetchRes.success) {
-  //     throw new Error(fetchRes.errMsg)
-  //   }
-  //   return fetchRes.data
-  // }
 
   return {
-    challengeRequest,
-    challengeVerify,
-    fetchUserProfileId,
+    challenge,
+    verify,
   }
 }
 

@@ -11,7 +11,7 @@ import {
   SupportedNetworkEnum,
 } from 'palm-core/types'
 // import { UTIL } from 'palm-core/libs'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import usePostTx from 'palm-react/hooks/complex/usePostTx'
 import useNft from 'palm-react/hooks/contract/useNft'

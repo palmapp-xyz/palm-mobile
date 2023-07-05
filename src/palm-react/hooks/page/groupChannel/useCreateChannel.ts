@@ -8,8 +8,8 @@ import {
   FbChannelGatingField,
   SupportedNetworkEnum,
 } from 'palm-core/types'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
-import useDevice from 'palm-react/hooks/app/useDevice'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
+import useDevice from 'palm-react-native/app/useDevice'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useSendbird from 'palm-react/hooks/sendbird/useSendbird'
 import { useMemo, useState } from 'react'

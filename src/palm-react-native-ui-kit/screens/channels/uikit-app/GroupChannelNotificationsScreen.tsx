@@ -1,4 +1,4 @@
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 
 import { useGroupChannel } from '@sendbird/uikit-chat-hooks'

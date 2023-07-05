@@ -1,7 +1,5 @@
 import _ from 'lodash'
-import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
-import { recordError } from 'palm-core/libs/logger'
-import { chainId } from 'palm-core/libs/network'
+import { getUserCollectionNfts } from 'palm-core/api/userCollectionNfts'
 import {
   ApiEnum,
   ContractAddr,
@@ -10,8 +8,6 @@ import {
 } from 'palm-core/types'
 import { useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
-
-import useApi from '../complex/useApi'
 
 export type UseCollectionNftsReturn = {
   items: Moralis.NftItem[]
@@ -36,9 +32,6 @@ const useCollectionNfts = ({
   limit?: number
   preload?: Moralis.NftItemsFetchResult | null | undefined
 }): UseCollectionNftsReturn => {
-  const connectedNetworkId = chainId(selectedNetwork)
-  const { getApi } = useApi()
-
   const {
     data,
     fetchNextPage,
@@ -49,32 +42,20 @@ const useCollectionNfts = ({
     isLoading,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    [
-      ApiEnum.COLLECTION_ASSETS,
-      userAddress,
-      contractAddress,
-      connectedNetworkId,
-    ],
+    [ApiEnum.COLLECTION_ASSETS, userAddress, contractAddress, selectedNetwork],
     async ({ pageParam = '' }) => {
       if (userAddress) {
         if (preload && pageParam === '') {
           return preload
         }
 
-        const path = apiV1Fabricator[ApiEnum.COLLECTION_ASSETS].get({
+        return await getUserCollectionNfts({
+          selectedNetwork,
           userAddress,
           contractAddress,
-          connectedNetworkId,
           limit,
           cursor: pageParam,
         })
-        const fetchResult = await getApi<ApiEnum.COLLECTION_ASSETS>({ path })
-
-        if (fetchResult.success) {
-          return fetchResult.data
-        } else {
-          recordError(new Error(fetchResult.errMsg), 'useCollectionNfts')
-        }
       }
       return {
         page: 0,
@@ -89,10 +70,7 @@ const useCollectionNfts = ({
     }
   )
 
-  const items = useMemo(
-    () => _.flatten(data?.pages.map(x => x.result)).filter(x => !!x),
-    [data]
-  )
+  const items = useMemo(() => _.flatten(data?.pages.map(x => x.result)), [data])
 
   const loading = useMemo(
     () => isLoading || isFetchingNextPage,

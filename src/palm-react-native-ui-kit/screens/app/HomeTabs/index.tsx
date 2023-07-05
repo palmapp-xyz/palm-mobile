@@ -1,6 +1,6 @@
 import { COLOR } from 'palm-core/consts'
 import { Routes } from 'palm-core/libs/navigation'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 

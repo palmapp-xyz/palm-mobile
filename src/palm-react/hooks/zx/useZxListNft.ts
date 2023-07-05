@@ -20,7 +20,7 @@ import {
   SupportedNetworkEnum,
   Token,
 } from 'palm-core/types'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useReactQuery from 'palm-react/hooks/complex/useReactQuery'
 import useFsChannel from 'palm-react/hooks/firestore/useFsChannel'

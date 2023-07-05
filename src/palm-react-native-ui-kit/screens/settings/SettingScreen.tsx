@@ -6,9 +6,9 @@ import {
   FormText,
   Header,
 } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
-import useToast from 'palm-react/hooks/app/useToast'
-import useVersions from 'palm-react/hooks/app/useVersions'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
+import useToast from 'palm-react-native/app/useToast'
+import useVersions from 'palm-react-native/app/useVersions'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useNotificationConf from 'palm-react/hooks/notification/useNotificationConf'
 import useNotificationRegister from 'palm-react/hooks/notification/useNotificationRegister'
@@ -21,6 +21,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import RNRestart from 'react-native-restart'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const SettingItem = (props: {
@@ -269,7 +270,7 @@ const SettingScreen = (): ReactElement => {
         negative={{
           text: t('Components.Modal.SignOut.Negative'),
           callback: (): void => {
-            logout()
+            logout(() => RNRestart.restart())
           },
         }}
       />

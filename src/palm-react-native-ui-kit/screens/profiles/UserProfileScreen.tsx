@@ -4,8 +4,8 @@ import { Container } from 'palm-react-native-ui-kit/components'
 import ProfileCollectionNft from 'palm-react-native-ui-kit/components/molecules/ProfileCollectionNft'
 import ProfileFooter from 'palm-react-native-ui-kit/components/ProfileFooter'
 import SelectedCollectionNftsSheet from 'palm-react-native-ui-kit/components/SelectedCollectionNftsSheet'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useUserNftCollectionList from 'palm-react/hooks/api/useUserNftCollectionList'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement, useState } from 'react'
 import {
   FlatList,

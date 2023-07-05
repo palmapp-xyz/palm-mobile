@@ -1,8 +1,5 @@
 import _ from 'lodash'
-import { UTIL } from 'palm-core/libs'
-import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
-import { recordError } from 'palm-core/libs/logger'
-import { chainId } from 'palm-core/libs/network'
+import { getUserNfts } from 'palm-core/api/userNftList'
 import {
   ApiEnum,
   ContractAddr,
@@ -11,8 +8,6 @@ import {
 } from 'palm-core/types'
 import { useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
-
-import useApi from '../complex/useApi'
 
 export type UseUserAssetsReturn<T> = {
   items: T[]
@@ -33,9 +28,6 @@ const useUserNftList = ({
   userAddress?: ContractAddr
   limit?: number
 }): UseUserAssetsReturn<Moralis.NftItem> => {
-  const connectedNetworkId = chainId(selectedNetwork)
-  const { getApi } = useApi()
-
   const {
     data,
     fetchNextPage,
@@ -46,22 +38,15 @@ const useUserNftList = ({
     isRefetching,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    [ApiEnum.ASSETS, userAddress, connectedNetworkId],
+    [ApiEnum.ASSETS, userAddress, selectedNetwork],
     async ({ pageParam = '' }) => {
       if (userAddress) {
-        const path = apiV1Fabricator[ApiEnum.ASSETS].get({
+        return await getUserNfts({
+          selectedNetwork,
           userAddress,
-          connectedNetworkId,
           limit,
           cursor: pageParam,
         })
-        const fetchResult = await getApi<ApiEnum.ASSETS>({ path })
-
-        if (fetchResult.success) {
-          return fetchResult.data
-        } else {
-          recordError(new Error(fetchResult.errMsg), 'useUserNftList')
-        }
       }
       return {
         page: 0,
@@ -76,13 +61,7 @@ const useUserNftList = ({
     }
   )
 
-  const items = useMemo(
-    () =>
-      _.flatten(data?.pages.map(x => x.result)).filter(
-        x => !!x && !(UTIL.isMainnet() && x.possible_spam === true)
-      ),
-    [data]
-  )
+  const items = useMemo(() => _.flatten(data?.pages.map(x => x.result)), [data])
 
   const loading = useMemo(
     () => isLoading || isFetchingNextPage,

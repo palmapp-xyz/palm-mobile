@@ -5,7 +5,7 @@ import {
   FormButton,
   Header,
 } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useSign4Auth from 'palm-react/hooks/page/sign/useSign4Auth'
 import fetchApiStore from 'palm-react/store/fetchApiStore'
 import React, { ReactElement } from 'react'

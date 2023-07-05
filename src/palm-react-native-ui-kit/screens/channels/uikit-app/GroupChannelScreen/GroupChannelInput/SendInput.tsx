@@ -1,5 +1,5 @@
 import { COLOR } from 'palm-core/consts'
-import useToast from 'palm-react/hooks/app/useToast'
+import useToast from 'palm-react-native/app/useToast'
 import { UseGcInputReturn } from 'palm-react/hooks/page/groupChannel/useGcInput'
 import React, { forwardRef } from 'react'
 import {

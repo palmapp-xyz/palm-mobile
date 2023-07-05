@@ -11,7 +11,7 @@ import {
   Tag,
 } from 'palm-react-native-ui-kit/components'
 import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useCreateChannel from 'palm-react/hooks/page/groupChannel/useCreateChannel'

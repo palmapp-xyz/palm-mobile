@@ -3,6 +3,7 @@ import { ThemeModeType } from 'palm-core/types'
 import useSetting from 'palm-react/hooks/app/useSetting'
 import React, { ReactElement, useEffect, useState } from 'react'
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
+import RNRestart from 'react-native-restart'
 
 const ThemeOptions = (): ReactElement => {
   const { setting, updateSetting } = useSetting()
@@ -20,7 +21,7 @@ const ThemeOptions = (): ReactElement => {
       return
     }
     setting.themeMode = selected
-    updateSetting(setting)
+    updateSetting(setting).then(() => RNRestart.restart())
   }
 
   useEffect(() => {

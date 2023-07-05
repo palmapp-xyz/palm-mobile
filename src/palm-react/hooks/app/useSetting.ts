@@ -1,10 +1,8 @@
 import { UTIL } from 'palm-core/libs'
 import { LocalStorageKey, SettingStorageType } from 'palm-core/types'
+import { asyncStorageProvider } from 'palm-react-native/app'
 import { useEffect, useState } from 'react'
-import RNRestart from 'react-native-restart'
 import { useQuery } from 'react-query'
-
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type UseSettingReturn = {
   setting: SettingStorageType
@@ -21,7 +19,7 @@ const useSetting = (): UseSettingReturn => {
   const { isLoading, isError, data } = useQuery(
     [LocalStorageKey.SETTING],
     async () => {
-      const item = await AsyncStorage.getItem(LocalStorageKey.SETTING)
+      const item = await asyncStorageProvider.getItem(LocalStorageKey.SETTING)
       const r = UTIL.jsonTryParse<SettingStorageType>(item || '')
       if (!r) {
         return r
@@ -40,10 +38,11 @@ const useSetting = (): UseSettingReturn => {
   }, [data])
 
   const updateSetting = async (updated: SettingStorageType): Promise<void> => {
-    await AsyncStorage.setItem(LocalStorageKey.SETTING, JSON.stringify(updated))
+    await asyncStorageProvider.setItem(
+      LocalStorageKey.SETTING,
+      JSON.stringify(updated)
+    )
     setSetting(updated)
-
-    RNRestart.restart()
   }
 
   return { setting, updateSetting }

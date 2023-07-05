@@ -22,8 +22,8 @@ import {
   MoralisNftRenderer,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
-import useToast from 'palm-react/hooks/app/useToast'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
+import useToast from 'palm-react-native/app/useToast'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useSendNft from 'palm-react/hooks/page/groupChannel/useSendNft'

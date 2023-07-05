@@ -1,3 +1,4 @@
+import { fetchUserProfileId } from 'palm-core/api/authChallenge'
 import { setDoc } from 'palm-core/firebase'
 import { profileRef } from 'palm-core/firebase/profile'
 import { UTIL } from 'palm-core/libs'
@@ -13,8 +14,7 @@ import {
 } from 'palm-core/types'
 import { Container } from 'palm-react-native-ui-kit/components'
 import LoadingPage from 'palm-react-native-ui-kit/components/atoms/LoadingPage'
-import useAuthChallenge from 'palm-react/hooks/api/useAuthChallenge'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useIpfs from 'palm-react/hooks/independent/useIpfs'
@@ -38,7 +38,6 @@ const LensFriendsScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.LensFriends>()
   const { connect } = useConnection()
   const { user } = useAuth()
-  const { fetchUserProfileId } = useAuthChallenge()
   const { createGroupChat, getDistinctChatWithUser } = useSendbird()
   const { setCurrentUser, updateCurrentUserInfo } = useSendbirdChat()
   const { alert } = useAlert()

@@ -1,6 +1,6 @@
 import { Routes } from 'palm-core/libs/navigation'
 import { Container, Header } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'

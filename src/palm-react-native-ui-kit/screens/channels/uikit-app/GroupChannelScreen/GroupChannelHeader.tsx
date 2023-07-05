@@ -2,7 +2,7 @@ import { Routes } from 'palm-core/libs/navigation'
 import { ChannelType, SbUserMetadata } from 'palm-core/types'
 import { FormImage, Row } from 'palm-react-native-ui-kit/components'
 import Avatar from 'palm-react-native-ui-kit/components/sendbird/Avatar'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import {
   SENDBIRD_STATIC_SAMPLE,

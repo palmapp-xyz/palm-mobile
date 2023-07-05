@@ -11,7 +11,7 @@ import {
   Row,
   Tag,
 } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useEditChannel from 'palm-react/hooks/page/groupChannel/useEditChannel'

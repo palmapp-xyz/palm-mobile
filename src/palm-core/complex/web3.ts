@@ -20,6 +20,7 @@ class Web3Account {
   chain: SupportedNetworkEnum
   web3: Web3
   onPostTxResult?: (result: StreamResultType) => Promise<void>
+  signer?: Account
 
   constructor(
     chain: SupportedNetworkEnum,
@@ -47,11 +48,24 @@ class Web3Account {
     this.onPostTxResult = onPostTxResult
   }
 
+  setOnPostTxResult = (
+    onPostTxResult?: (result: StreamResultType) => Promise<void>
+  ): void => {
+    this.onPostTxResult = onPostTxResult
+  }
+
   getSigner = async (): Promise<Account | undefined> => {
-    const pKey = await PkeyManager.getPkey()
-    if (pKey) {
-      return this.web3.eth.accounts.privateKeyToAccount(pKey)
+    if (this.signer) {
+      return this.signer
     }
+
+    const pKey = await PkeyManager.getPkey()
+    let ret: Account | undefined
+    if (pKey) {
+      ret = await this.web3.eth.accounts.privateKeyToAccount(pKey)
+      this.signer = ret
+    }
+    return ret
   }
 
   getNonce = async (userAddress: ContractAddr): Promise<number> => {

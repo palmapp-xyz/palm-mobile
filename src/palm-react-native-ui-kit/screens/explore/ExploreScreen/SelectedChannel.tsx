@@ -10,7 +10,7 @@ import {
   Tag,
 } from 'palm-react-native-ui-kit/components'
 import ChannelMembersPreview from 'palm-react-native-ui-kit/components/sendbird/ChannelMembersPreview'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import {
   UseExploreSearchReturn,
 } from 'palm-react/hooks/page/explore/useExploreSearch'

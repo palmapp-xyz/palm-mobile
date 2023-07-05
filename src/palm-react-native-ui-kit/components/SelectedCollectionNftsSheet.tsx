@@ -9,8 +9,8 @@ import {
   MoralisNftRenderer,
   NftItemMenu,
 } from 'palm-react-native-ui-kit/components'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useCollectionNfts from 'palm-react/hooks/api/useCollectionNfts'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

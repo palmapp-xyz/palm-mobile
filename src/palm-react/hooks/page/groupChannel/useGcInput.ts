@@ -9,9 +9,9 @@ import {
   SbUserMetadata,
   SupportedNetworkEnum,
 } from 'palm-core/types'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
-import useDevice from 'palm-react/hooks/app/useDevice'
-import useToast from 'palm-react/hooks/app/useToast'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
+import useDevice from 'palm-react-native/app/useDevice'
+import useToast from 'palm-react-native/app/useToast'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import selectAssetStore from 'palm-react/store/selectAssetStore'

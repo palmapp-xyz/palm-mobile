@@ -61,38 +61,3 @@ export const getUserFtList = async ({
     return []
   }
 }
-
-export const getUserCollectionNfts = async ({
-  selectedNetwork,
-  userAddress,
-  contractAddress,
-  limit,
-  cursor,
-}: {
-  selectedNetwork: SupportedNetworkEnum
-  userAddress: ContractAddr
-  contractAddress: ContractAddr
-  limit?: number
-  cursor?: string
-}): Promise<Moralis.NftItemsFetchResult> => {
-  const path = apiV1Fabricator[ApiEnum.COLLECTION_ASSETS].get({
-    userAddress,
-    contractAddress,
-    connectedNetworkId: chainId(selectedNetwork),
-    limit,
-    cursor,
-  })
-  const fetchResult = await apiManager.get<ApiEnum.COLLECTION_ASSETS>({ path })
-
-  if (fetchResult.success) {
-    return fetchResult.data
-  } else {
-    recordError(new Error(fetchResult.errMsg), 'useCollectionNfts')
-    return {
-      page: 0,
-      page_size: 0,
-      cursor: null,
-      result: [] as Moralis.NftItem[],
-    } as Moralis.NftItemsFetchResult
-  }
-}

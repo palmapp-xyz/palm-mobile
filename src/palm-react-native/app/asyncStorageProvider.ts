@@ -2,7 +2,7 @@ import IStorageProvider from 'palm-core/app/storage'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-class AsyncStorageProvider implements IStorageProvider {
+export class AsyncStorageProvider implements IStorageProvider {
   constructor() {}
 
   async getItem(key: string): Promise<string | null> {
@@ -17,8 +17,4 @@ class AsyncStorageProvider implements IStorageProvider {
   async removeItem(key: string): Promise<void> {
     await AsyncStorage.removeItem(key)
   }
-}
-
-export function asyncStorageProvider(): IStorageProvider {
-  return new AsyncStorageProvider()
 }

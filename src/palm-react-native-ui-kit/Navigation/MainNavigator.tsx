@@ -1,6 +1,6 @@
 import { Routes } from 'palm-core/libs/navigation'
 import PkeyManager from 'palm-react-native/app/pkeyManager'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useNotification from 'palm-react/hooks/notification/useNotification'

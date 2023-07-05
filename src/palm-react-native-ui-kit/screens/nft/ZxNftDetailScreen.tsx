@@ -1,3 +1,4 @@
+import { fetchUserProfileId } from 'palm-core/api/authChallenge'
 import { COLOR, NETWORK } from 'palm-core/consts'
 import { UTIL } from 'palm-core/libs'
 import { getProfileDoc } from 'palm-core/libs/firebase'
@@ -23,8 +24,7 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import NativeTokenUSD from 'palm-react-native-ui-kit/components/molecules/NativeTokenUSD'
-import useAuthChallenge from 'palm-react/hooks/api/useAuthChallenge'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useNativeToken from 'palm-react/hooks/independent/useNativeToken'
@@ -84,7 +84,6 @@ const ZxNftDetailScreen = (): ReactElement => {
   const { user } = useAuth()
   const { profile } = useProfile({ profileId: user?.auth?.profileId! })
   const [listingOwner, setListingOwner] = useState<FbProfile>()
-  const { fetchUserProfileId } = useAuthChallenge()
   const setLoading = useSetRecoilState(appStore.loading)
 
   const queryClient = useQueryClient()

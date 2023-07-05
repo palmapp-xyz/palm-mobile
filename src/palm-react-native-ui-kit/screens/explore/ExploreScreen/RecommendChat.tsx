@@ -4,7 +4,7 @@ import { Routes } from 'palm-core/libs/navigation'
 import { FbChannel } from 'palm-core/types'
 import { FormText } from 'palm-react-native-ui-kit/components'
 import ChatCard from 'palm-react-native-ui-kit/components/exploreTab/ChatCard'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useExploreRecommendChat from 'palm-react/hooks/page/explore/useExploreRecommendChat'
 import {
   UseExploreSearchReturn,

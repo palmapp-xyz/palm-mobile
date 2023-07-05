@@ -22,7 +22,6 @@ import PkeyManager from 'palm-react-native/app/pkeyManager'
 import useLensAuth from 'palm-react/hooks/lens/useLensAuth'
 import appStore from 'palm-react/store/appStore'
 import { useState } from 'react'
-import RNRestart from 'react-native-restart'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -37,7 +36,7 @@ export type UseAuthReturn = {
   setAuth: (result: AuthChallengeResult) => Promise<User>
   setLensAuth: (lensAuth: AuthenticationResult) => Promise<void>
   appSignIn: (authResult: AuthChallengeResult) => Promise<User>
-  logout: () => Promise<void>
+  logout: (onLogout?: () => void) => Promise<void>
 }
 
 const useAuth = (): UseAuthReturn => {
@@ -211,7 +210,7 @@ const useAuth = (): UseAuthReturn => {
     setUser(lensUser)
   }
 
-  const logout = async (): Promise<void> => {
+  const logout = async (onLogout?: () => void): Promise<void> => {
     await Promise.all([
       AsyncStorage.clear(),
       PkeyManager.removeKeys(),
@@ -226,7 +225,7 @@ const useAuth = (): UseAuthReturn => {
     setUser(undefined)
 
     setLoading(true)
-    RNRestart.restart()
+    onLogout?.()
   }
 
   return {

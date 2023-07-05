@@ -1,4 +1,4 @@
-import useToast from 'palm-react/hooks/app/useToast'
+import useToast from 'palm-react-native/app/useToast'
 
 import {
   FilePickerResponse,

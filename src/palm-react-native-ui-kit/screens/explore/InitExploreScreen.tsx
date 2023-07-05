@@ -7,7 +7,7 @@ import {
   FormText,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useInterest from 'palm-react/hooks/independent/useInterest'
 import useInitExplore, {
   InterestItem,

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { apiPath } from 'palm-core/consts'
 import apiV1Fabricator from 'palm-core/libs/apiV1Fabricator'
 
 import {
@@ -10,25 +11,19 @@ import {
 } from '../types'
 
 export const fetchUserProfileId = async (
-  apiPath: string,
-  connectedNetworkId: number,
-  userAddress: ContractAddr | undefined
+  userAddress: ContractAddr | undefined,
+  connectedNetworkId?: number
 ): Promise<string | undefined> => {
   if (!userAddress) {
     return undefined
   }
-  const result = await challengeRequest(
-    apiPath,
-    connectedNetworkId,
-    userAddress
-  )
+  const result = await challengeRequest(userAddress, connectedNetworkId)
   return result.profileId
 }
 
 export const challengeRequest = async (
-  apiPath: string,
-  connectedNetworkId: number,
-  address: ContractAddr
+  address: ContractAddr,
+  connectedNetworkId?: number
 ): Promise<AuthChallengeInfo> => {
   const apiUrl = `${apiPath}${apiV1Fabricator[
     ApiEnum.AUTH_CHALLENGE_REQUEST
@@ -36,7 +31,7 @@ export const challengeRequest = async (
 
   const params = {
     address,
-    chainId: connectedNetworkId,
+    chainId: connectedNetworkId ?? 1 /* ethereum */,
   }
 
   const fetchRes: AxiosResponse<
@@ -57,7 +52,6 @@ export const challengeRequest = async (
 }
 
 export const challengeVerify = async (
-  apiPath: string,
   signature: string,
   message: string
 ): Promise<AuthChallengeResult> => {

@@ -16,7 +16,7 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import NativeTokenUSD from 'palm-react-native-ui-kit/components/molecules/NativeTokenUSD'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

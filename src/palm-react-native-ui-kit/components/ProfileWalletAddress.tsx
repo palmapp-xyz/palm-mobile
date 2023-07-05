@@ -1,7 +1,7 @@
 import { COLOR } from 'palm-core/consts'
 import { ContractAddr } from 'palm-core/types'
 import { FormText, Row } from 'palm-react-native-ui-kit/components'
-import useToast from 'palm-react/hooks/app/useToast'
+import useToast from 'palm-react-native/app/useToast'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'

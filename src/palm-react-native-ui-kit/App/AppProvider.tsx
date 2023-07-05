@@ -2,10 +2,8 @@ import { UTIL } from 'palm-core/libs'
 import { navigationActions, Routes } from 'palm-core/libs/navigation'
 import { SetSendbirdSDK } from 'palm-core/libs/sendbird'
 import { SupportedNetworkEnum } from 'palm-core/types'
-// eslint-disable-next-line prettier/prettier
-import {
-  asyncStorageProvider,
-} from 'palm-react-native/app/asyncStorageProvider'
+import { asyncStorageProvider } from 'palm-react-native/app'
+import useAppearance from 'palm-react-native/app/useAppearance'
 import Config from 'palm-react-native/config'
 import {
   ClipboardService,
@@ -14,7 +12,6 @@ import {
   MediaService,
   NotificationService,
 } from 'palm-react-native/sendbird'
-import useAppearance from 'palm-react/hooks/app/useAppearance'
 import useSetting from 'palm-react/hooks/app/useSetting'
 import useWeb3Bindings from 'palm-react/hooks/lens/useWeb3Bindings'
 import useNotificationConf from 'palm-react/hooks/notification/useNotificationConf'
@@ -70,7 +67,7 @@ const AppProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const lensConfig: LensConfig = {
     bindings,
     environment: production,
-    storage: asyncStorageProvider(),
+    storage: asyncStorageProvider,
   }
 
   const client = new ApolloClient({

@@ -8,7 +8,7 @@ import {
   Row,
 } from 'palm-react-native-ui-kit/components'
 import Loading from 'palm-react-native-ui-kit/components/atoms/Loading'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useConfirmSeed from 'palm-react/hooks/page/account/useConfirmSeed'
 import appStore from 'palm-react/store/appStore'
 import React, { ReactElement } from 'react'

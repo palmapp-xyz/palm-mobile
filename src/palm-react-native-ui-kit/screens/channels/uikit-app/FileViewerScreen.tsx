@@ -1,4 +1,4 @@
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import React, { ReactElement, useState } from 'react'
 
 import { FileViewer, useSendbirdChat } from '@sendbird/uikit-react-native'

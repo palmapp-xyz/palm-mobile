@@ -17,7 +17,7 @@ import {
 import NftRenderer, {
   NftRendererProp,
 } from 'palm-react-native-ui-kit/components/molecules/NftRenderer'
-import { useAppNavigation } from 'palm-react/hooks/app/useAppNavigation'
+import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useReactQuery from 'palm-react/hooks/complex/useReactQuery'
 import useNft from 'palm-react/hooks/contract/useNft'
