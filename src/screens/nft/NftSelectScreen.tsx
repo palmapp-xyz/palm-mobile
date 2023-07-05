@@ -7,6 +7,7 @@ import {
   MoralisNftRenderer,
   SupportedNetworkRow,
 } from 'components'
+import Indicator from 'components/atoms/Indicator'
 import ProfileCollectionNft from 'components/molecules/ProfileCollectionNft'
 import { COLOR } from 'core/consts'
 import { UTIL } from 'core/libs'
@@ -55,7 +56,7 @@ const NftSelectScreen = (): ReactElement => {
     selectedNetwork,
   })
 
-  const { items, fetchNextPage, hasNextPage } = useCollectionNfts({
+  const { items, loading, fetchNextPage, hasNextPage } = useCollectionNfts({
     selectedNetwork,
     userAddress: user?.address,
     contractAddress: selectedCollectionNft?.token_address,
@@ -77,6 +78,8 @@ const NftSelectScreen = (): ReactElement => {
         : selectedNetwork === SupportedNetworkEnum.POLYGON)
     )
   }
+
+  const loadingIndicator = loading ? <Indicator /> : null
 
   useEffect(() => {
     setSelectedCollectionNft(null)
@@ -137,15 +140,7 @@ const NftSelectScreen = (): ReactElement => {
       )}
 
       {selectedCollectionNft && (
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: 16,
-            gap: 8,
-            alignItems: 'center',
-            marginVertical: 12,
-          }}
-        >
+        <View style={styles.nftSubTitle}>
           <Pressable
             onPress={(): void => {
               setSelectedCollectionNft(null)
@@ -174,6 +169,7 @@ const NftSelectScreen = (): ReactElement => {
               fetchNextPage()
             }
           }}
+          ListFooterComponent={loadingIndicator}
           style={{ marginHorizontal: 16, marginBottom: layoutHeight }}
           renderItem={({ item }): ReactElement => (
             <TouchableOpacity
@@ -212,14 +208,7 @@ const NftSelectScreen = (): ReactElement => {
 
       {selectedCollectionNft && params?.type === 'select-profile' && (
         <View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            bottom: 0,
-            paddingVertical: 20,
-            paddingHorizontal: 12,
-            backgroundColor: 'white',
-          }}
+          style={styles.setProfileButton}
           onLayout={(e): void => {
             setLayoutHeight(e.nativeEvent.layout.height)
           }}
@@ -292,5 +281,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: 0,
     flex: 1,
+  },
+  nftSubTitle: {
+    flexDirection: 'row',
+    marginHorizontal: 16,
+    gap: 8,
+    alignItems: 'center',
+    marginVertical: 12,
+  },
+  setProfileButton: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    paddingVertical: 20,
+    paddingHorizontal: 12,
+    backgroundColor: 'white',
   },
 })
