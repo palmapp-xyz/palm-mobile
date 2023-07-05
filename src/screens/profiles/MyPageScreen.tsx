@@ -66,7 +66,7 @@ const MyPageScreen = (): ReactElement => {
     } else {
       recordError(`updateProfileImage error ${res.errMsg}`)
       alert({
-        message: t('Profiles.MyProfileUpdateImageSuccessAlertMessage', {
+        message: t('Profiles.MyProfileUpdateImageFailedAlertMessage', {
           errMsg: res.errMsg,
         }),
       })
