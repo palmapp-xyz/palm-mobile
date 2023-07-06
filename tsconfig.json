@@ -3,15 +3,14 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "core/libs": ["./core/libs"],
-      "core/libs/*": ["./core/libs/*"],
-      "core/store/*": ["./core/store/*"],
-      "core/types": ["./core/types"],
-      "core/consts": ["./core/consts"],
-      "core/graphqls/*": ["./core/graphqls/*"],
-      "hooks/*": ["./hooks/*"],
-      "assets/*": ["./assets/*"],
-      "components": ["./components"]
+      "palm-core/*": ["./palm-core/*"],
+      "palm-core/types": ["./palm-core/types"],
+      "palm-core/consts": ["./palm-core/consts"],
+      "palm-ui-kit/*": ["./palm-ui-kit/*"],
+
+      "palm-react/*": ["./palm-react/*"],
+      "palm-react-native/*": ["./palm-react-native/*"],
+      "palm-react-native-ui-kit/*": ["./palm-react-native-ui-kit/*"]
     },
     "types": ["react-native", "jest", "styled-components-react-native"],
     "esModuleInterop": true,

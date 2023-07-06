@@ -74,3 +74,5 @@ android/app/release/app-release.aab
 **/AppCenter-Config.plist
 
 **/*.cer
+
+src/palm-core/firebase/firebase.config.json

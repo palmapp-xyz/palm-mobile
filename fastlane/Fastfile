@@ -17,6 +17,12 @@ platform :ios do
     commit_version_bump(message: 'Bump iOS build', xcodeproj: './ios/PalmApp.xcodeproj')
     git_pull
     push_to_git_remote
+    add_git_tag(
+      grouping: "fastlane-ios-release",
+      includes_lane: false,
+      prefix: "v",
+    )
+    push_git_tags
   end
 
   desc 'Fetch certificates and provisioning profiles'
@@ -124,6 +130,14 @@ platform :android do
     git_pull
 
     push_to_git_remote
+
+    add_git_tag(
+      grouping: "fastlane-android-release",
+      includes_lane: false,
+      prefix: "v",
+      build_number: versionCode + 1
+    )
+    push_git_tags
   end
 
 

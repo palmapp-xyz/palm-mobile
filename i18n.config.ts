@@ -1,6 +1,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import { en } from './src/locales'
+
+import { en } from './src/palm-ui-kit/locales'
 
 const resources = {
   en: {

@@ -7,14 +7,11 @@ module.exports = function (api) {
     {
       root: './',
       alias: {
-        'core/libs': './src/core/libs',
-        'core/store': './src/core/store',
-        'core/types': './src/core/types',
-        'core/consts': './src/core/consts',
-        'core/graphqls': './src/core/graphqls',
-        assets: './src/assets',
-        components: './src/components',
-        hooks: './src/hooks',
+        'palm-core': './src/palm-core',
+        'palm-ui-kit': './src/palm-ui-kit',
+        'palm-react': './src/palm-react',
+        'palm-react-native': './src/palm-react-native',
+        'palm-react-native-ui-kit': './src/palm-react-native-ui-kit',
       },
     },
   ]

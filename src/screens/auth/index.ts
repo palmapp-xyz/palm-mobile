@@ -1,6 +1,0 @@
-export { default as PinScreen } from '../PinScreen'
-export { default as ConfirmSeedScreen } from './ConfirmSeedScreen'
-export { default as CreateCompleteScreen } from './CreateCompleteScreen'
-export { default as MainAccountScreen } from './MainAccountScreen'
-export { default as NewAccountScreen } from './NewAccountScreen'
-export { default as RecoverAccountScreen } from './RecoverAccountScreen'
