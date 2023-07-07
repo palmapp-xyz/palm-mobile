@@ -1,7 +1,7 @@
 import { PaginatedProfileResult, Profile } from 'palm-core/graphqls'
 import { ContractAddr, QueryKeyEnum } from 'palm-core/types'
 import { useMemo } from 'react'
-import { useQuery, UseQueryResult } from 'react-query'
+import { UseQueryResult, useQuery } from 'react-query'
 
 import useLens from './useLens'
 
@@ -49,7 +49,7 @@ const useLensProfile = ({
   }
 
   const profile = useMemo(() => {
-    return useDefaultProfileReturn.data || useProfilesReturn.data?.items?.[0]
+    return useProfilesReturn.data?.items?.[0] || useDefaultProfileReturn.data
   }, [useDefaultProfileReturn.data, useProfilesReturn.data?.items])
 
   return {
