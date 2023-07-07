@@ -24,6 +24,7 @@ export type UpdateProfileHeaderProps = {
 
 const UpdateProfileHeader = React.memo(
   ({
+    userAddress,
     userProfileId,
     onClickConfirm,
   }: UpdateProfileHeaderProps): ReactElement => {
@@ -86,9 +87,13 @@ const UpdateProfileHeader = React.memo(
             <TouchableOpacity
               style={styles.editButton}
               onPress={(): void => {
-                navigation.navigate(Routes.NftSelect, {
-                  type: 'select-profile',
-                })
+                userAddress &&
+                  userProfileId &&
+                  navigation.navigate(Routes.NftSelect, {
+                    type: 'select-profile',
+                    address: userAddress,
+                    profileId: userProfileId,
+                  })
               }}
             >
               <Icon name={'pencil'} size={14} />

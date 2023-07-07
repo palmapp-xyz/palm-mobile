@@ -7,7 +7,11 @@ import {
   QueryKeyEnum,
   SupportedNetworkEnum,
 } from 'palm-core/types'
-import { FormText, VerifiedWrapper } from 'palm-react-native-ui-kit/components'
+import {
+  FormButton,
+  FormText,
+  VerifiedWrapper,
+} from 'palm-react-native-ui-kit/components'
 import MediaRenderer, {
   MediaRendererProps,
 } from 'palm-react-native-ui-kit/components/molecules/MediaRenderer'

@@ -4,21 +4,18 @@ import { recordError } from 'palm-core/libs/logger'
 import { Routes } from 'palm-core/libs/navigation'
 import { Moralis, SupportedNetworkEnum } from 'palm-core/types'
 import {
-  ChainLogoWrapper,
   Container,
   FormButton,
   FormText,
   Header,
-  MoralisNftRenderer,
   SupportedNetworkRow,
 } from 'palm-react-native-ui-kit/components'
-import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
+import NftCollectionList from 'palm-react-native-ui-kit/components/molecules/NftCollectionList'
 import ProfileCollectionNft from 'palm-react-native-ui-kit/components/molecules/ProfileCollectionNft'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useToast from 'palm-react-native/app/useToast'
-import useCollectionNfts from 'palm-react/hooks/api/useCollectionNfts'
+import useUserNftCollectionList from 'palm-react/hooks/api/useUserNftCollectionList'
 import useProfile from 'palm-react/hooks/auth/useProfile'
-import useMyPageMain from 'palm-react/hooks/page/myPage/useMyPageMain'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -27,19 +24,15 @@ import {
   Pressable,
   RefreshControl,
   StyleSheet,
-  TouchableOpacity,
   View,
-  useWindowDimensions,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const NftSelectScreen = (): ReactElement => {
   const { navigation, params } = useAppNavigation<Routes.NftSelect>()
+  const { address, profileId } = params
   const { t } = useTranslation()
   const toast = useToast()
-
-  const size = useWindowDimensions()
-  const dim = size.width / 3.0 - 18
 
   const [layoutHeight, setLayoutHeight] = useState(0)
 
@@ -51,19 +44,13 @@ const NftSelectScreen = (): ReactElement => {
 
   const [selectedItem, setSelectedItem] = useState<Moralis.NftItem | null>(null)
 
-  const { user, useMyNftCollectionReturn } = useMyPageMain({
+  const useMyNftCollectionReturn = useUserNftCollectionList({
+    userAddress: address,
     selectedNetwork,
-  })
-
-  const { items, loading, fetchNextPage, hasNextPage } = useCollectionNfts({
-    selectedNetwork,
-    userAddress: user?.address,
-    contractAddress: selectedCollectionNft?.token_address!,
-    preload: selectedCollectionNft?.preload,
   })
 
   const { updateProfileImage } = useProfile({
-    profileId: user?.auth?.profileId!,
+    profileId: profileId,
   })
 
   const isCanBeUpdated = (): boolean => {
@@ -77,8 +64,6 @@ const NftSelectScreen = (): ReactElement => {
         : selectedNetwork === SupportedNetworkEnum.POLYGON)
     )
   }
-
-  const loadingIndicator = loading ? <Indicator /> : null
 
   useEffect(() => {
     setSelectedCollectionNft(null)
@@ -113,7 +98,7 @@ const NftSelectScreen = (): ReactElement => {
           }
           data={useMyNftCollectionReturn.items}
           keyExtractor={(item: Moralis.NftCollection): string =>
-            `${user?.address}:${item.token_address}`
+            `${address}:${item.token_address}`
           }
           onEndReached={async (): Promise<void> => {
             if (useMyNftCollectionReturn.hasNextPage) {
@@ -121,7 +106,7 @@ const NftSelectScreen = (): ReactElement => {
             }
           }}
           onEndReachedThreshold={0.5}
-          initialNumToRender={10}
+          initialNumToRender={12}
           numColumns={2}
           contentContainerStyle={{ paddingHorizontal: 8, gap: 4 }}
           columnWrapperStyle={{ gap: 8 }}
@@ -139,69 +124,30 @@ const NftSelectScreen = (): ReactElement => {
       )}
 
       {selectedCollectionNft && (
-        <View style={styles.nftSubTitle}>
-          <Pressable
-            onPress={(): void => {
-              setSelectedCollectionNft(null)
-              setSelectedItem(null)
-            }}
-          >
-            <Ionicons
-              name="ios-chevron-back"
-              color={COLOR.black._400}
-              size={16}
-            />
-          </Pressable>
+        <Pressable
+          style={styles.nftSubTitle}
+          onPress={(): void => {
+            setSelectedCollectionNft(null)
+            setSelectedItem(null)
+          }}
+        >
+          <Ionicons
+            name="ios-chevron-back"
+            color={COLOR.black._400}
+            size={16}
+          />
           <FormText>{selectedCollectionNft?.name}</FormText>
-        </View>
+        </Pressable>
       )}
 
       {selectedCollectionNft && (
-        <FlatList
-          data={items}
-          keyExtractor={(_, index): string => `select-user-ft-list-${index}`}
-          initialNumToRender={10}
-          contentContainerStyle={{ rowGap: 0 }}
-          numColumns={3}
-          onEndReached={(): void => {
-            if (hasNextPage) {
-              fetchNextPage()
-            }
-          }}
-          ListFooterComponent={loadingIndicator}
-          style={{ marginHorizontal: 16, marginBottom: layoutHeight }}
-          renderItem={({ item }): ReactElement => (
-            <TouchableOpacity
-              onPress={(): void => {
-                setSelectedItem(item)
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  margin: 2,
-                }}
-              >
-                <ChainLogoWrapper
-                  chain={selectedNetwork}
-                  containerStyle={{
-                    width: dim,
-                    height: dim,
-                    maxWidth: dim,
-                  }}
-                >
-                  <MoralisNftRenderer
-                    style={{ borderRadius: 12 }}
-                    item={item}
-                  />
-                  <View style={styles.nftTitle}>
-                    <FormText numberOfLines={1}>{`#${item.token_id}`}</FormText>
-                  </View>
-                </ChainLogoWrapper>
-              </View>
-            </TouchableOpacity>
-          )}
+        <NftCollectionList
+          selectedNetwork={selectedNetwork}
+          address={address}
+          selectedCollectionNft={selectedCollectionNft}
+          layoutHeight={layoutHeight}
+          setSelectedItem={setSelectedItem}
+          selectedItem={selectedItem}
         />
       )}
 
@@ -269,17 +215,6 @@ const styles = StyleSheet.create({
     color: 'gray',
     fontSize: 12,
     textAlign: 'center',
-  },
-  nftTitle: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    margin: 10,
-    alignSelf: 'center',
-    bottom: 0,
-    flex: 1,
   },
   nftSubTitle: {
     flexDirection: 'row',
