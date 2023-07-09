@@ -9,9 +9,10 @@ import {
 } from 'palm-react-native-ui-kit/components'
 import images from 'palm-ui-kit/assets/images'
 import React, { Dispatch, ReactElement, SetStateAction, useMemo } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 
 import { Icon } from '@sendbird/uikit-react-native-foundation'
+import { useTranslation } from 'react-i18next'
 
 const TokenAmountInput = ({
   item,
@@ -23,6 +24,8 @@ const TokenAmountInput = ({
   onSetValue?: Dispatch<SetStateAction<Token>>
   selectedNetwork: SupportedNetworkEnum
 }): ReactElement => {
+  const { t } = useTranslation()
+
   const tokenValue = useMemo(
     () =>
       value
@@ -48,6 +51,7 @@ const TokenAmountInput = ({
         <FormText font={'B'} size={16}>
           {item.symbol}
         </FormText>
+        <Image source={images.repeat} style={{ width: 20, height: 20 }} />
       </Row>
       <View style={styles.amount}>
         <FormInput
@@ -59,19 +63,17 @@ const TokenAmountInput = ({
             onSetValue?.(_value as Token)
           }}
           inputMode={'decimal'}
-          style={{
-            borderWidth: 0,
-            borderRadius: 0,
-            padding: 0,
-            paddingLeft: 0,
-            minHeight: 48,
-          }}
+          style={styles.amountInput}
         />
-        <FormText color={COLOR.black._400}>
-          {`(≈ $${
-            tokenValue ? UTIL.formatAmountP(tokenValue, { toFix: 2 }) : '?'
-          })`}
-        </FormText>
+        {
+          <FormText color={COLOR.black._400} style={{ opacity: value ? 1 : 0 }}>
+            {t('Common.UsdPrice', {
+              price: tokenValue
+                ? UTIL.formatAmountP(tokenValue, { toFix: 2 })
+                : '?',
+            })}
+          </FormText>
+        }
       </View>
     </View>
   )
@@ -81,6 +83,8 @@ export default TokenAmountInput
 
 const styles = StyleSheet.create({
   itemCard: {
+    alignSelf: 'flex-start',
+    alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 16,
     backgroundColor: COLOR.black._90005,
@@ -90,5 +94,12 @@ const styles = StyleSheet.create({
   },
   amount: {
     padding: 8,
+  },
+  amountInput: {
+    borderWidth: 0,
+    borderRadius: 0,
+    padding: 0,
+    paddingLeft: 0,
+    minHeight: 48,
   },
 })
