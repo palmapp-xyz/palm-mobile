@@ -26,7 +26,10 @@ const TokenAmountInput = ({
   const tokenValue = useMemo(
     () =>
       value
-        ? UTIL.getTokenBalanceInUSD(UTIL.microfyP(value), item.price)
+        ? UTIL.getTokenBalanceInUSD(
+            UTIL.microfyP(UTIL.removeCommasToNumber(value) as Token),
+            item.price
+          )
         : undefined,
     [item, value]
   )
@@ -51,7 +54,6 @@ const TokenAmountInput = ({
           font={'B'}
           size={24}
           placeholder="0"
-          maxLength={10}
           value={value}
           onChangeText={(_value): void => {
             onSetValue?.(_value as Token)

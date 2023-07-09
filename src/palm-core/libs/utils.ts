@@ -341,6 +341,15 @@ const toBoolean = (str: string): boolean => {
   return str.trim().toLowerCase() === 'true'
 }
 
+const addCommasToNumber = (number: string): string => {
+  const parts = number.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return parts.join('.')
+}
+const removeCommasToNumber = (number: string): string => {
+  return number.replace(/,/g, '')
+}
+
 export default {
   getContrastColor,
   findColorNameFromPalette,
@@ -378,4 +387,6 @@ export default {
   noUndefinedObj,
   isValidPrice,
   toBoolean,
+  addCommasToNumber,
+  removeCommasToNumber,
 }
