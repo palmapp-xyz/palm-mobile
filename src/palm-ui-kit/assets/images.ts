@@ -19,6 +19,7 @@ export default {
   no_img: require('./no_img.png'),
   spinner: require('./spinner.json'),
   splash: require('./splash.json'),
+  repeat: require('./repeat.png'),
   samples: [
     require('./temp/thumbs1.png'),
     require('./temp/thumbs2.png'),

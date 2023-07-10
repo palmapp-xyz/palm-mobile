@@ -52,7 +52,7 @@ export const onChannelListings = (
 ): QuerySnapshotReturn<FbListing> => {
   const queryConstraints = [
     where('status', '==', state),
-    where('order', '!=', null || undefined),
+    where('order', '!=', null),
   ]
   return onQuerySnapshot<FbListing>(
     collection(firestore, 'channels', channelUrl, 'listings') as any,

@@ -208,6 +208,12 @@
     "ChannelListingNoListedNft": "Oops!\nThere is no listed NFT.\nHow about listing NFTs\nfor the first time?",
     "ChannelListingListNFT": "List a NFT"
   },
+  "NftSelect": {
+    "Title": "List NFT",
+    "UpdateProfileSuccessToast": "Successfully set as the profile thumbnail.",
+    "UpdateProfileFailureToast": "Failed to set as the profile thumbnail.\nPlease try again.",
+    "Select": "Set as the profile thumbnail"
+  },
   "Profiles": {
     "CreateProfileTitle": "Fill out your profile",
     "CreateProfileTitleSub": "Please write a nice phrase\nthat describes you well",
@@ -287,8 +293,11 @@
       "NftList": "NFT List"
     },
     "NftDetails": {
+      "Owned": "Owned {{owner}}",
       "ListedBy": "Listed by {{owner}}",
-      "Unknown": "unknown"
+      "Me": "Me",
+      "Unknown": "unknown",
+      "SetAsTheProfileThumbnail": "Set as the profile thumbnail"
     },
     "ProfileHeaderChatButton": {
       "OneOnOneChat": "1:1 Chat"

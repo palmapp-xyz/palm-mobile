@@ -12,6 +12,7 @@ import {
   SbUserMetadata,
   SupportedNetworkEnum,
   Token,
+  pToken,
 } from 'palm-core/types'
 import {
   FormBottomSheet,
@@ -21,7 +22,6 @@ import {
   MediaRenderer,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import MoralisErc20Token from 'palm-react-native-ui-kit/components/MoralisErc20Token'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useToast from 'palm-react-native/app/useToast'
 import useAuth from 'palm-react/hooks/auth/useAuth'
@@ -66,6 +66,7 @@ const ConfirmModal = ({
   const { t } = useTranslation()
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
+  const senderProfileImg = getProfileMediaImg(profile?.picture)
   const { isPosting, isValidForm, onClickConfirm, estimatedTxFee } =
     useSendToken({
       selectedToken,
@@ -75,6 +76,28 @@ const ConfirmModal = ({
 
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl ?? receiverId)
+
+  const tokenSymbol = NETWORK.nativeToken[chain]
+  const txFee = UTIL.demicrofyP(estimatedTxFee)
+  const total = UTIL.toBn(value).plus(txFee).toString()
+  const valueToUsd = UTIL.formatAmountP(
+    UTIL.getTokenBalanceInUSD(
+      UTIL.microfyP(UTIL.delComma(value) as Token),
+      selectedToken.price
+    ) as pToken,
+    {
+      toFix: 2,
+    }
+  )
+  const totalToUsd = UTIL.formatAmountP(
+    UTIL.getTokenBalanceInUSD(
+      UTIL.microfyP(UTIL.delComma(total) as Token),
+      selectedToken.price
+    ) as pToken,
+    {
+      toFix: 2,
+    }
+  )
 
   const onSubmit = async (res: PostTxReturn | undefined): Promise<void> => {
     if (!res || !channel || !profile || !receiver) {
@@ -132,84 +155,86 @@ const ConfirmModal = ({
     >
       <View style={styles.body}>
         <View style={{ padding: 20 }}>
-          <View
-            style={{
-              paddingVertical: 12,
-              paddingHorizontal: 16,
-              backgroundColor: '#FF002E0d',
-              borderRadius: 14,
-            }}
-          >
+          <View style={styles.notice}>
             <FormText color={COLOR.error}>
               {t('Nft.SendTokenConfirmModalNotice')}
             </FormText>
           </View>
         </View>
         <View style={styles.itemInfo}>
-          <Row style={{ columnGap: 12, marginBottom: 24 }}>
-            <MoralisErc20Token
-              item={selectedToken}
-              value={UTIL.microfyP(value)}
-            />
-          </Row>
-          <Row
-            style={{
-              position: 'relative',
-              justifyContent: 'center',
-              marginBottom: 12,
-            }}
+          <View
+            style={{ flexDirection: 'column', columnGap: 12, marginBottom: 24 }}
           >
-            <View
-              style={{
-                position: 'absolute',
-                borderWidth: 0.5,
-                borderColor: COLOR.black._200,
-                width: '100%',
-                top: 12,
-              }}
-            />
-            <Row
-              style={{
-                alignItems: 'center',
-                columnGap: 4,
-                marginBottom: 12,
-                backgroundColor: COLOR.black._10,
-                paddingHorizontal: 20,
-              }}
-            >
-              <FormText>{t('Nft.SendTokenConfirmModalOn')}</FormText>
-              <FormImage source={UTIL.getNetworkLogo(chain)} />
-              <FormText>{_.capitalize(chain)}</FormText>
-            </Row>
-          </Row>
-          <Row
-            style={{ justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <View>
-              <View style={styles.fromTo}>
-                <FormText font={'SB'}>
-                  {t('Nft.SendTokenConfirmModalFrom')}
+            <Row style={styles.tokenRow}>
+              <FormText size={24} font="B">
+                {UTIL.setComma(value)}
+              </FormText>
+              <View style={styles.token}>
+                <FormImage
+                  source={{ uri: selectedToken.logo ?? images.palm_logo }}
+                  size={20}
+                />
+                <FormText size={20} font="B">
+                  {tokenSymbol}
                 </FormText>
               </View>
-              <FormText font={'B'} size={16}>
-                {t('Nft.SendTokenConfirmModalMe')}
+            </Row>
+            {valueToUsd && (
+              <FormText size={12} color={COLOR.black._400}>
+                {t('Common.UsdPrice', {
+                  price: valueToUsd,
+                })}
               </FormText>
-              <FormText>{`(${UTIL.truncate(user?.address || '')})`}</FormText>
+            )}
+          </View>
+          <Row style={styles.separateView}>
+            <View style={styles.separateLine} />
+            <Row style={styles.separateRow}>
+              <FormText color={COLOR.black._400}>
+                {t('Nft.SendTokenConfirmModalOn')}
+              </FormText>
+              <FormImage source={UTIL.getNetworkLogo(chain)} />
+              <FormText color={COLOR.black._400}>
+                {_.capitalize(chain)}
+              </FormText>
+            </Row>
+          </Row>
+          <Row style={styles.userRow}>
+            <View style={{ flex: 1 }}>
+              <Row style={styles.userImageRow}>
+                {senderProfileImg ? (
+                  <MediaRenderer
+                    src={senderProfileImg}
+                    width={20}
+                    height={20}
+                    style={{ borderRadius: 50 }}
+                  />
+                ) : (
+                  <FormImage
+                    source={images.profile_temp}
+                    size={20}
+                    style={{ borderRadius: 50 }}
+                  />
+                )}
+                <FormText font={'B'} size={16} numberOfLines={1}>
+                  {t('Nft.SendTokenConfirmModalMe')}
+                </FormText>
+              </Row>
+              <FormText color={COLOR.black._300}>{`(${UTIL.truncate(
+                user?.address || ''
+              )})`}</FormText>
             </View>
-            <View>
+
+            <View style={{ marginHorizontal: 12 }}>
               <Ionicons
                 name="arrow-forward"
                 size={28}
                 color={COLOR.black._200}
               />
             </View>
-            <View>
-              <View style={styles.fromTo}>
-                <FormText font={'SB'}>
-                  {t('Nft.SendTokenConfirmModalTo')}
-                </FormText>
-              </View>
-              <Row style={{ columnGap: 6 }}>
+
+            <View style={{ flex: 1, marginRight: 20 }}>
+              <Row style={styles.userImageRow}>
                 {receiverProfileImg ? (
                   <MediaRenderer
                     src={receiverProfileImg}
@@ -224,11 +249,11 @@ const ConfirmModal = ({
                     style={{ borderRadius: 50 }}
                   />
                 )}
-                <FormText font={'B'} size={16}>
+                <FormText font={'B'} size={16} numberOfLines={1}>
                   {receiver?.handle}
                 </FormText>
               </Row>
-              <FormText>
+              <FormText color={COLOR.black._300}>
                 {`(${UTIL.truncate(receiver?.address || '')})`}
               </FormText>
             </View>
@@ -239,14 +264,35 @@ const ConfirmModal = ({
             <FormText font={'B'}>
               {t('Nft.SendTokenConfirmModalEstGasFee')}
             </FormText>
-            <FormText>{`${UTIL.demicrofyP(estimatedTxFee)} ${
-              NETWORK.nativeToken[chain]
-            }`}</FormText>
+            <Row style={{ gap: 2 }}>
+              <FormText>{txFee}</FormText>
+              <FormText color={COLOR.black._300}>{tokenSymbol}</FormText>
+            </Row>
           </Row>
+          <Row style={{ justifyContent: 'space-between' }}>
+            <FormText font={'B'}>{t('Nft.Total')}</FormText>
+            <Row style={{ gap: 2 }}>
+              <FormText>{total}</FormText>
+              <FormText color={COLOR.black._300}>{tokenSymbol}</FormText>
+            </Row>
+          </Row>
+          {totalToUsd && (
+            <FormText
+              size={12}
+              color={COLOR.black._400}
+              style={{ alignSelf: 'flex-end' }}
+            >
+              {t('Common.UsdPrice', {
+                price: totalToUsd,
+              })}
+            </FormText>
+          )}
         </View>
       </View>
       <Row style={styles.footer}>
         <FormButton
+          font="B"
+          containerStyle={{ flex: 1 }}
           figure="outline"
           onPress={(): void => {
             setShowBottomSheet(false)
@@ -255,7 +301,8 @@ const ConfirmModal = ({
           {t('Common.Reject')}
         </FormButton>
         <FormButton
-          containerStyle={{ flex: 1 }}
+          font="B"
+          containerStyle={{ flex: 3 }}
           disabled={!receiver || !profile || isPosting || !isValidForm}
           onPress={async (): Promise<void> => {
             navigation.navigate(Routes.Pin, {
@@ -289,8 +336,14 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
+  notice: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: '#FF002E0d',
+    borderRadius: 14,
+  },
   itemInfo: { backgroundColor: COLOR.black._10, padding: 20 },
-  txInfo: { padding: 20 },
+  txInfo: { padding: 20, gap: 12 },
   footer: {
     borderTopWidth: 1,
     borderTopColor: COLOR.black._90010,
@@ -305,5 +358,36 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: 8,
     marginBottom: 12,
+  },
+  separateView: {
+    position: 'relative',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  separateLine: {
+    position: 'absolute',
+    borderWidth: 0.5,
+    borderColor: COLOR.black._200,
+    width: '100%',
+    top: 12,
+  },
+  separateRow: {
+    alignItems: 'center',
+    columnGap: 4,
+    marginBottom: 12,
+    backgroundColor: COLOR.black._10,
+    paddingHorizontal: 20,
+  },
+  tokenRow: { justifyContent: 'space-between', alignItems: 'center' },
+  userRow: { justifyContent: 'space-between', alignItems: 'center' },
+  userImageRow: { gap: 8, alignItems: 'center' },
+  token: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    gap: 6,
+    backgroundColor: COLOR.black._90005,
+    borderRadius: 12,
   },
 })

@@ -89,6 +89,7 @@ const BottomMenu = ({
         data={menuList}
         keyExtractor={(_, index): string => `menuList-${index}`}
         horizontal
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ gap: 8 }}
         renderItem={({ item }): ReactElement => {
           const selected = item.key === useGcInputReturn.stepAfterSelectItem

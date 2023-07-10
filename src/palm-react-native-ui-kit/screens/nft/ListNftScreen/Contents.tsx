@@ -13,6 +13,7 @@ import NftCard from 'palm-react-native-ui-kit/components/channel/NftCard'
 import NativeTokenUSD from 'palm-react-native-ui-kit/components/molecules/NativeTokenUSD'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useToast from 'palm-react-native/app/useToast'
+import useFormattedValue from 'palm-react/hooks/util/useFormattedNumber'
 import { UseZxListNftReturn } from 'palm-react/hooks/zx/useZxListNft'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -37,6 +38,12 @@ const Contents = ({
   useZxListNftReturn: UseZxListNftReturn
 }): ReactElement => {
   const { price, setPrice, isApproved, onClickApprove } = useZxListNftReturn
+
+  const { formattedValue, setValue: setUnformattedValue } = useFormattedValue(
+    (unformattedValue: Token) => {
+      setPrice(unformattedValue)
+    }
+  )
 
   const { navigation } = useAppNavigation<Routes.ListNft>()
   const toast = useToast()
@@ -66,10 +73,9 @@ const Contents = ({
                     font={'B'}
                     size={24}
                     placeholder={t('Nft.ListNftPricePlaceholder')}
-                    maxLength={10}
-                    value={price}
+                    value={formattedValue}
                     onChangeText={(value): void => {
-                      setPrice(value as Token)
+                      setUnformattedValue(value as Token)
                     }}
                     inputMode={'decimal'}
                     style={{

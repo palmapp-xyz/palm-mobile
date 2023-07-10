@@ -25,10 +25,11 @@ import React, {
   useState,
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
 
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import TokenAmountInput from './TokenAmountInput'
 
 const Contents = ({
@@ -46,6 +47,8 @@ const Contents = ({
 }): ReactElement => {
   const { t } = useTranslation()
   const [receiver, setReceiver] = useState<FbProfile>()
+
+  const { bottom } = useSafeAreaInsets()
 
   const receiverProfileImg = getProfileMediaImg(receiver?.picture)
 
@@ -70,51 +73,57 @@ const Contents = ({
   )
 
   return (
-    <Container style={styles.container}>
-      <View style={styles.body}>
-        <View style={{ height: '100%', rowGap: 8 }}>
-          <FormText font={'SB'} style={{ marginBottom: 8 }}>
-            {t('Nft.SendTokenTitle')}
-          </FormText>
-          <TokenAmountInput
-            item={selectedToken}
-            value={value}
-            onSetValue={onSetValue}
-            selectedNetwork={chain}
-          />
-          <Row style={{ padding: 8, columnGap: 8, marginTop: 8 }}>
-            <FormText font={'SB'} style={{ marginTop: 6 }}>
-              {t('Nft.SendTokenTo')}
+    <KeyboardAvoidingView
+      behavior={Platform.select({ ios: 'padding' })}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={bottom + 12}
+    >
+      <Container style={styles.container}>
+        <View style={styles.body}>
+          <View style={{ height: '100%', rowGap: 8 }}>
+            <FormText font={'SB'} style={{ marginBottom: 8 }}>
+              {t('Nft.SendTokenTitle')}
             </FormText>
-            {receiverProfileImg ? (
-              <MediaRenderer
-                src={receiverProfileImg}
-                width={32}
-                height={32}
-                style={{ borderRadius: 50 }}
-              />
-            ) : (
-              <FormImage
-                source={images.profile_temp}
-                size={32}
-                style={{ borderRadius: 50 }}
-              />
-            )}
-            <FormText font={'B'} size={16} style={{ marginTop: 4 }}>
-              {receiver?.handle}
-            </FormText>
-          </Row>
+            <TokenAmountInput
+              item={selectedToken}
+              value={value}
+              onSetValue={onSetValue}
+              selectedNetwork={chain}
+            />
+            <Row style={{ padding: 8, columnGap: 8, marginTop: 8 }}>
+              <FormText font={'SB'} style={{ marginTop: 6 }}>
+                {t('Nft.SendTokenTo')}
+              </FormText>
+              {receiverProfileImg ? (
+                <MediaRenderer
+                  src={receiverProfileImg}
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: 50 }}
+                />
+              ) : (
+                <FormImage
+                  source={images.profile_temp}
+                  size={32}
+                  style={{ borderRadius: 50 }}
+                />
+              )}
+              <FormText font={'B'} size={16} style={{ marginTop: 4 }}>
+                {receiver?.handle}
+              </FormText>
+            </Row>
+          </View>
+          <FormButton
+            disabled={!isValid}
+            onPress={(): void => {
+              setShowBottomSheet(true)
+            }}
+          >
+            {t('Nft.SendTokenSend')}
+          </FormButton>
         </View>
-        <FormButton
-          disabled={!isValid}
-          onPress={(): void => {
-            setShowBottomSheet(true)
-          }}
-        >
-          {t('Nft.SendTokenSend')}
-        </FormButton>
-      </View>
-    </Container>
+      </Container>
+    </KeyboardAvoidingView>
   )
 }
 

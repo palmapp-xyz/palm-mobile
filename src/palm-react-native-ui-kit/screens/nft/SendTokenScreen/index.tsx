@@ -1,5 +1,4 @@
 import { Routes } from 'palm-core/libs/navigation'
-import { Token } from 'palm-core/types'
 import { Container, Header } from 'palm-react-native-ui-kit/components'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import selectAssetStore from 'palm-react/store/selectAssetStore'
@@ -7,6 +6,7 @@ import React, { ReactElement, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { useRecoilValue } from 'recoil'
 
+import useFormattedValue from 'palm-react/hooks/util/useFormattedNumber'
 import ConfirmModal from './ConfirmModal'
 import Contents from './Contents'
 
@@ -16,7 +16,7 @@ const SendTokenScreen = (): ReactElement => {
 
   const selectedToken = useRecoilValue(selectAssetStore.selectedToken)
 
-  const [value, setValue] = useState<Token>('' as Token)
+  const { formattedValue, value, setValue } = useFormattedValue()
 
   return (
     <Container style={styles.container} keyboardAvoiding={true}>
@@ -25,7 +25,7 @@ const SendTokenScreen = (): ReactElement => {
         <>
           <Contents
             selectedToken={selectedToken}
-            value={value}
+            value={formattedValue}
             onSetValue={setValue}
             receiverId={params.receiverId}
             setShowBottomSheet={setShowBottomSheet}

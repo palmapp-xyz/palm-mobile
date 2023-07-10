@@ -5,10 +5,8 @@ import {
   SupportedNetworkEnum,
 } from 'palm-core/types'
 import { PinType } from 'palm-react-native-ui-kit/screens/app/PinScreen'
-// eslint-disable-next-line prettier/prettier
-import {
-  RecoverAccountType,
-} from 'palm-react-native-ui-kit/screens/auth/RecoverAccountScreen'
+
+import { RecoverAccountType } from 'palm-react-native-ui-kit/screens/auth/RecoverAccountScreen'
 
 import {
   createNavigationContainerRef,
@@ -38,7 +36,7 @@ export enum Routes {
   HomeTabs = 'HomeTabs',
   Explore = 'Explore',
   LensFriends = 'LensFriends',
-  NftList = 'NftList',
+  NftSelect = 'NftSelect',
   MyPage = 'MyPage',
   GroupChannelList = 'GroupChannelList',
 
@@ -134,8 +132,8 @@ type MainRouteParamsUnion =
       params: undefined
     }
   | {
-      route: Routes.NftList
-      params: undefined
+      route: Routes.NftSelect
+      params: { type?: string; address: ContractAddr; profileId: string }
     }
   | {
       route: Routes.InitExplore

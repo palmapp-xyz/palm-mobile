@@ -343,8 +343,8 @@ const useLens = (): UseLensReturn => {
               s,
               deadline: typedData.value.deadline,
             },
-          },
-          { gasLimit: 8000000, gasPrice: utils.parseUnits('90', 'gwei') }
+          }
+          // { gasLimit: 8000000, gasPrice: utils.parseUnits('90', 'gwei') }
         )
         console.log('set profile image uri normal: tx hash', tx.hash)
 

@@ -6,14 +6,14 @@ import {
   DocumentSnapshot,
   FirestoreDataConverter,
   FirestoreError,
-  getFirestore,
-  onSnapshot,
   PartialWithFieldValue,
   Query,
-  query,
   QueryConstraint,
   QueryDocumentSnapshot,
   QuerySnapshot,
+  getFirestore,
+  onSnapshot,
+  query,
 } from 'firebase/firestore'
 
 import config from './firebase.config.json'

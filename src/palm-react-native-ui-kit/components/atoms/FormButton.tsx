@@ -18,6 +18,7 @@ export type FormButtonProps = {
   onPress?: () => void
   figure?: 'primary' | 'outline' | 'error'
   size?: 'sm' | 'md' | 'lg'
+  font?: 'B' | 'R' | 'SB'
   containerStyle?: StyleProp<ViewStyle>
   textStyle?: StyleProp<TextStyle>
   rightIcon?: string
@@ -30,6 +31,7 @@ const FormButton = ({
   disabled,
   onPress,
   figure = 'primary',
+  font = 'R',
   size = 'md',
   containerStyle,
   textStyle,
@@ -66,6 +68,7 @@ const FormButton = ({
       onPress={onPress}
     >
       <FormText
+        font={font}
         size={size === 'sm' ? 14 : 16}
         style={[{ color: fontColor }, textStyle]}
       >
