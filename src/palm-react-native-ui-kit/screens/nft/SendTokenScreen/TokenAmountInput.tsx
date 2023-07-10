@@ -30,7 +30,7 @@ const TokenAmountInput = ({
     () =>
       value
         ? UTIL.getTokenBalanceInUSD(
-            UTIL.microfyP(UTIL.removeCommasToNumber(value) as Token),
+            UTIL.microfyP(UTIL.delComma(value) as Token),
             item.price
           )
         : undefined,

@@ -77,13 +77,12 @@ const ConfirmModal = ({
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl ?? receiverId)
 
-  const isMainnet = UTIL.isMainnet()
   const tokenSymbol = NETWORK.nativeToken[chain]
   const txFee = UTIL.demicrofyP(estimatedTxFee)
   const total = UTIL.toBn(value).plus(txFee).toString()
   const valueToUsd = UTIL.formatAmountP(
     UTIL.getTokenBalanceInUSD(
-      UTIL.microfyP(UTIL.removeCommasToNumber(value) as Token),
+      UTIL.microfyP(UTIL.delComma(value) as Token),
       selectedToken.price
     ) as pToken,
     {
@@ -92,7 +91,7 @@ const ConfirmModal = ({
   )
   const totalToUsd = UTIL.formatAmountP(
     UTIL.getTokenBalanceInUSD(
-      UTIL.microfyP(UTIL.removeCommasToNumber(total) as Token),
+      UTIL.microfyP(UTIL.delComma(total) as Token),
       selectedToken.price
     ) as pToken,
     {
@@ -168,7 +167,7 @@ const ConfirmModal = ({
           >
             <Row style={styles.tokenRow}>
               <FormText size={24} font="B">
-                {UTIL.addCommasToNumber(value)}
+                {UTIL.setComma(value)}
               </FormText>
               <View style={styles.token}>
                 <FormImage

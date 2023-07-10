@@ -13,9 +13,9 @@ const useFormattedValue = (
   const [value, setValue] = useState<Token>('' as Token)
 
   useEffect(() => {
-    const compareValue = UTIL.removeCommasToNumber(value.toString())
+    const compareValue = UTIL.delComma(value.toString())
     compareValue !== value.toString() && setValue(compareValue as Token)
-    setFormattedValue(UTIL.addCommasToNumber(value.toString()) as Token)
+    setFormattedValue(UTIL.setComma(value.toString()) as Token)
 
     onChangeValue?.(compareValue as Token)
   }, [value])
