@@ -195,9 +195,9 @@ const ConfirmModal = ({
                 {t('Nft.SendTokenConfirmModalOn')}
               </FormText>
               <FormImage source={UTIL.getNetworkLogo(chain)} />
-              <FormText color={COLOR.black._400}>{`${_.capitalize(chain)} ${
-                isMainnet ? 'MainNet' : 'TestNet'
-              }`}</FormText>
+              <FormText color={COLOR.black._400}>
+                {_.capitalize(chain)}
+              </FormText>
             </Row>
           </Row>
           <Row style={styles.userRow}>
