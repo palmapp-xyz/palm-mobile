@@ -104,7 +104,7 @@
     "ChannelInfoGatingTokenChainOrAddr": "{{chainOrAddress}}",
     "ChannelInfoGatingTokenRequiredToJoin": " required to join",
     "ChannelInfoMembers": "Members",
-    "ChannelInfoInvite": "+ Invite member",
+    "ChannelInfoInvite": "Invite member",
     "ChannelInfoNickname": "{{nickname}} {{me}}",
     "ChannelInfoNicknameIsMe": "(me)",
 

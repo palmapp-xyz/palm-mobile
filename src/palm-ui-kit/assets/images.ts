@@ -20,6 +20,7 @@ export default {
   spinner: require('./spinner.json'),
   splash: require('./splash.json'),
   repeat: require('./repeat.png'),
+  crown: require('./crown.png'),
   samples: [
     require('./temp/thumbs1.png'),
     require('./temp/thumbs2.png'),
