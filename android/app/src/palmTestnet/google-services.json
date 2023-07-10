@@ -48,6 +48,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882785746561:android:2d39c6ba8c4227540dd780",
+        "android_client_info": {
+          "package_name": "palmapp.xyz.testnet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882785746561-e3ars46eshqu5hpd1f35svqv8r9c4qm8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5R3EkVto0adUNi-H93W_aDSremYyIvVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882785746561-e3ars46eshqu5hpd1f35svqv8r9c4qm8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "882785746561-bigc516r6hlov4v7to4l46t6lpdpe75q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.palmapp.xyz.testnet"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

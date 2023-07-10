@@ -35,7 +35,7 @@ platform :ios do
       type: "adhoc",
       app_identifier: ENV["BUNDLE_ID"],
       username: ENV["FASTLANE_USERNAME"],
-      readonly: true
+      readonly: false
     )
   end
 

@@ -51,9 +51,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:219711213585:android:5e36688c962dd2489121b0",
+        "mobilesdk_app_id": "1:219711213585:android:5982d26e804357da9121b0",
         "android_client_info": {
-          "package_name": "com.palmmobile"
+          "package_name": "palmapp.xyz"
         }
       },
       "oauth_client": [

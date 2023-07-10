@@ -767,7 +767,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 6ALF5777EL;
+				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -797,7 +797,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 6ALF5777EL;
+				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				INFOPLIST_FILE = PalmAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -825,8 +825,8 @@
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 6ALF5777EL;
+				CURRENT_PROJECT_VERSION = 26;
+				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Palm;
@@ -840,7 +840,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz;
+				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz;
 				PRODUCT_NAME = PalmApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -858,8 +858,8 @@
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 6ALF5777EL;
+				CURRENT_PROJECT_VERSION = 26;
+				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Palm;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -872,7 +872,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz;
+				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz;
 				PRODUCT_NAME = PalmApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -889,8 +889,8 @@
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 6ALF5777EL;
+				CURRENT_PROJECT_VERSION = 26;
+				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Palm (Testnet)";
@@ -904,7 +904,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz.testnet;
+				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz.testnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -923,9 +923,9 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6ALF5777EL;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KW7NUT7GJK;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Palm (Testnet)";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -938,10 +938,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palmapp.xyz.testnet;
+				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz.testnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.palmapp.xyz.testnet";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc palmapp.xyz.testnet";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -1,4 +1,4 @@
-package com.palmapp.xyz;
+package palmapp.xyz;
 
 import android.os.Bundle;
 

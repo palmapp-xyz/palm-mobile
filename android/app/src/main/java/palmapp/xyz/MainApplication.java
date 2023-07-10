@@ -1,4 +1,4 @@
-package com.palmapp.xyz;
+package palmapp.xyz;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
