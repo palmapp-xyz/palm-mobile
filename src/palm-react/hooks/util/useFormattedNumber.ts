@@ -20,8 +20,6 @@ const useFormattedValue = (
     onChangeValue?.(compareValue as Token)
   }, [value])
 
-  console.log(value, formattedValue)
-
   return {
     formattedValue,
     value,
