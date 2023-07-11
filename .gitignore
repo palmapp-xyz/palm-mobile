@@ -72,7 +72,10 @@ android/app/release/app-release.aab
 
 **/GoogleService-Info.plist
 **/AppCenter-Config.plist
+**/google-services.json
 
 **/*.cer
+**/*.certSigningRequest
+**/*.p12
 
 src/palm-core/firebase/firebase.config.json
