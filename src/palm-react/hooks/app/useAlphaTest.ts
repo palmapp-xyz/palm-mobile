@@ -1,3 +1,4 @@
+import { UTIL } from 'palm-core/libs'
 import { useEffect, useState } from 'react'
 
 type AlphaConfig = {
@@ -41,7 +42,16 @@ const useAlphaTest = (): {
       )
 
       if (ret.ok) {
-        setConfig((await ret.json()) as AlphaConfig)
+        const alphaConfig = (await ret.json()) as {
+          testnet: { waitlist: boolean }
+          mainnet: { waitlist: boolean }
+        }
+
+        setConfig({
+          waitlist: UTIL.isMainnet()
+            ? alphaConfig.mainnet.waitlist
+            : alphaConfig.testnet.waitlist,
+        })
       } else {
         setConfig({ waitlist: false })
       }
@@ -49,8 +59,6 @@ const useAlphaTest = (): {
       setConfig({ waitlist: false })
       console.error(e)
     }
-
-    // setConfig({ waitlist: true })
   }
 
   const fetchWaitList = async (): Promise<void> => {
