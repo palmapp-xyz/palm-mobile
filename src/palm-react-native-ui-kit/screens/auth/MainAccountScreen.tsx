@@ -16,7 +16,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import BottomSheet from '@gorhom/bottom-sheet'
 import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
-import useAlphaTest from 'palm-react/hooks/app/useAlphaTest'
+import useWaitList from 'palm-react/hooks/app/useWaitList'
 
 const MainAccountScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -26,7 +26,7 @@ const MainAccountScreen = (): ReactElement => {
   const snapPoints = useMemo(() => ['25%'], [])
   const bottomSheetRef = useRef<BottomSheet>(null)
 
-  const alphaConfig = useAlphaTest()
+  const alphaConfig = useWaitList()
   if (alphaConfig.config?.waitlist === undefined) {
     return (
       <Container style={[styles.container, { justifyContent: 'center' }]}>
@@ -125,72 +125,6 @@ const MainAccountScreen = (): ReactElement => {
       </>
     )
   }
-
-  // return (
-  //   <>
-  //     <Container style={styles.container}>
-  //       <View style={styles.top}>
-  //         <FormImage source={images.palm_logo} size={88} />
-  //         <FormText font={'B'} size={24} style={{ textAlign: 'center' }}>
-  //           {t('Auth.MainTitle')}
-  //         </FormText>
-  //       </View>
-  //       <View style={styles.bottom}>
-  //         <FormButton
-  //           onPress={(): void => {
-  //             navigation.navigate(Routes.RecoverAccount, {
-  //               type: 'restoreWallet',
-  //             })
-  //           }}
-  //         >
-  //           {t('Auth.RestoreMyAccount')}
-  //         </FormButton>
-  //         <FormButton
-  //           figure="outline"
-  //           onPress={(): void => {
-  //             setShowBottomSheet(true)
-  //             bottomSheetRef?.current?.snapToIndex(1)
-  //           }}
-  //         >
-  //           {t('Auth.SignUpWithWallet')}
-  //         </FormButton>
-  //       </View>
-  //     </Container>
-  //     <FormBottomSheet
-  //       bottomSheetRef={bottomSheetRef}
-  //       showBottomSheet={showBottomSheet}
-  //       snapPoints={snapPoints}
-  //       onClose={(): void => setShowBottomSheet(false)}
-  //     >
-  //       <Row style={styles.bottomSheet}>
-  //         <TouchableOpacity
-  //           style={styles.bottomItem}
-  //           onPress={(): void => {
-  //             navigation.navigate(Routes.NewAccount)
-  //           }}
-  //         >
-  //           <FormImage source={images.plus} size={32} />
-  //           <FormText style={{ textAlign: 'center' }}>
-  //             {t('Auth.CreateNewWallet')}
-  //           </FormText>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity
-  //           style={styles.bottomItem}
-  //           onPress={(): void => {
-  //             navigation.navigate(Routes.RecoverAccount, {
-  //               type: 'importWallet',
-  //             })
-  //           }}
-  //         >
-  //           <FormImage source={images.import} size={32} />
-  //           <FormText style={{ textAlign: 'center' }}>
-  //             {t('Auth.ImportWallet')}
-  //           </FormText>
-  //         </TouchableOpacity>
-  //       </Row>
-  //     </FormBottomSheet>
-  //   </>
-  // )
 }
 
 export default MainAccountScreen

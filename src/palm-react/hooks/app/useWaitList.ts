@@ -10,7 +10,7 @@ type AlphaConfig = {
  * 2. fetch waitlist.json from github assets
  * 3. return config and waitlist
  */
-const useAlphaTest = (): {
+const useWaitList = (): {
   config: AlphaConfig | undefined
   waitList: string[] | undefined
 } => {
@@ -95,4 +95,4 @@ const useAlphaTest = (): {
   }
 }
 
-export default useAlphaTest
+export default useWaitList

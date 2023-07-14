@@ -32,7 +32,7 @@ import { useRecoilState } from 'recoil'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { ethers } from 'ethers'
 import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
-import useAlphaTest from 'palm-react/hooks/app/useAlphaTest'
+import useWaitList from 'palm-react/hooks/app/useWaitList'
 
 export type RecoverAccountType = 'importWallet' | 'restoreWallet' | 'resetPin'
 
@@ -56,7 +56,7 @@ const RecoverAccountScreen = (): ReactElement => {
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
-  const alphaConfig = useAlphaTest()
+  const alphaConfig = useWaitList()
   const [showWaitlistModal, setShowWaitlistModal] = useState(false)
   const [showWalletLoading, setShowWalletLoading] = useState(false)
 
@@ -124,71 +124,6 @@ const RecoverAccountScreen = (): ReactElement => {
       })
     }
   }
-
-  // const onPressConfirm = async (): Promise<void> => {
-  //   if (alphaConfig.config?.waitlist) {
-  //     const address = usePkey
-  //       ? new ethers.Wallet(privateKey).publicKey
-  //       : ethers.Wallet.fromMnemonic(seedPhrase.join(' ')).publicKey
-
-  //     const ret = alphaConfig.waitList?.includes(address.toLowerCase())
-  //     if (!ret) {
-  //       setShowWaitlistModal(true)
-  //       return
-  //     }
-  //   }
-
-  //   if (recoverType === 'resetPin') {
-  //     const k = usePkey
-  //       ? await PkeyManager.getPkey()
-  //       : (await PkeyManager.getMnemonic()).split(' ')
-
-  //     const match = usePkey
-  //       ? k === privateKey
-  //       : JSON.stringify(k) === JSON.stringify(seedPhrase)
-
-  //     if (match) {
-  //       toast.show(t('Auth.RecoverSeedVerifyPassToast'), {
-  //         color: 'blue',
-  //         icon: 'check',
-  //       })
-  //       navigation.replace(Routes.Pin, {
-  //         type: 'reset',
-  //         result: (result: boolean): Promise<void> => {
-  //           result && navigation.pop()
-  //           return Promise.resolve()
-  //         },
-  //         cancel: (): void => {
-  //           navigation.pop()
-  //         },
-  //       })
-  //     } else {
-  //       toast.show(t('Auth.RecoverSeedVerifyFailToast'), {
-  //         color: 'red',
-  //         icon: 'info',
-  //       })
-  //     }
-  //   } else {
-  //     navigation.navigate(Routes.Pin, {
-  //       type: 'set',
-  //       result: async (result: boolean): Promise<void> => {
-  //         if (result === true) {
-  //           setLoading(true)
-  //           setTimeout(async () => {
-  //             await onClickConfirm()
-  //             setLoading(false)
-  //             navigation.replace(Routes.Sign4Auth)
-  //           }, 100)
-  //         }
-
-  //         return Promise.resolve()
-  //       },
-  //       cancel: () => {
-  //         navigation.pop()
-  //       },
-  //     })
-  //   }
-  // }
 
   const getTitleText = (): string => {
     switch (recoverType) {
@@ -357,111 +292,6 @@ const RecoverAccountScreen = (): ReactElement => {
         ))}
     </>
   )
-
-  // return (
-  //   <Container style={styles.container} keyboardAvoiding={true}>
-  //     <Header left="back" onPressLeft={navigation.goBack} />
-  //     <View style={styles.body}>
-  //       <View style={{ rowGap: 8 }}>
-  //         <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
-  //           {getTitleText()}
-  //         </FormText>
-  //         {recoverType === 'restoreWallet' && (
-  //           <FormText color={COLOR.black._400}>
-  //             {t('Auth.RecoverRestoreWalletMessage')}
-  //           </FormText>
-  //         )}
-  //         {recoverType === 'resetPin' && (
-  //           <FormText color={COLOR.black._400}>
-  //             {t('Auth.RecoverResetPinMessage')}
-  //           </FormText>
-  //         )}
-  //       </View>
-  //       <Row
-  //         style={{
-  //           columnGap: 8,
-  //           paddingTop: 40,
-  //           paddingBottom: 28,
-  //           justifyContent: 'center',
-  //         }}
-  //       >
-  //         <MenuItem
-  //           value={true}
-  //           title={t('Common.EnterPrivateKey')}
-  //           selected={usePkey}
-  //           setSelected={setUsePkey}
-  //         />
-  //         <MenuItem
-  //           value={false}
-  //           title={t('Common.SeedPhrase')}
-  //           selected={!usePkey}
-  //           setSelected={setUsePkey}
-  //         />
-  //       </Row>
-  //       {usePkey ? (
-  //         <View style={{ rowGap: 12 }}>
-  //           <FormInput
-  //             placeholder={t('Common.PrivateKey')}
-  //             value={privateKey}
-  //             onChangeText={setPrivateKey}
-  //           />
-  //           <TouchableOpacity
-  //             onPress={(): void => {
-  //               Clipboard.getString().then(text => {
-  //                 setPrivateKey(text)
-  //               })
-  //             }}
-  //           >
-  //             <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
-  //               <Icon name="copy-outline" size={14} />
-  //               <FormText>{t('Common.PasteFromClipboard')}</FormText>
-  //             </Row>
-  //           </TouchableOpacity>
-  //         </View>
-  //       ) : (
-  //         <>
-  //           <FlatList
-  //             data={Array.from({ length: 12 })}
-  //             numColumns={2}
-  //             columnWrapperStyle={{ columnGap: 24 }}
-  //             contentContainerStyle={{ rowGap: 12 }}
-  //             keyExtractor={(item, index): string => `seedPhrase-${index}`}
-  //             renderItem={({ index }): ReactElement => {
-  //               const value = seedPhrase[index]
-
-  //               return (
-  //                 <Row style={styles.seedItem}>
-  //                   <FormText style={{ width: 20 }}>{index + 1}</FormText>
-  //                   <View style={{ flex: 1 }}>
-  //                     <FormInput
-  //                       value={value}
-  //                       onChangeText={(newValue: string): void =>
-  //                         updateSeedPhrase({ value: newValue, index })
-  //                       }
-  //                     />
-  //                   </View>
-  //                 </Row>
-  //               )
-  //             }}
-  //           />
-  //           <ErrorMessage message={mnemonicErrMsg} />
-  //         </>
-  //       )}
-  //     </View>
-
-  //     <View style={styles.footer}>
-  //       <FormButton
-  //         size="lg"
-  //         disabled={!isValidForm || loading}
-  //         onPress={onPressConfirm}
-  //       >
-  //         {recoverType === 'importWallet'
-  //           ? t('Auth.ImportTheWallet')
-  //           : t('Common.Verify')}
-  //       </FormButton>
-  //     </View>
-  //   </Container>
-  // )
 }
 
 export default RecoverAccountScreen
