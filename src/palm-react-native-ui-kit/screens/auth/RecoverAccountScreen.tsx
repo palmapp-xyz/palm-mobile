@@ -5,6 +5,7 @@ import {
   ErrorMessage,
   FormButton,
   FormInput,
+  FormModal,
   FormText,
   Header,
   MenuItem,
@@ -16,13 +17,22 @@ import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useToast from 'palm-react-native/app/useToast'
 import useRecoverAccount from 'palm-react/hooks/page/account/useRecoverAccount'
 import appStore from 'palm-react/store/appStore'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  FlatList,
+  Linking,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useRecoilState } from 'recoil'
 
 import Clipboard from '@react-native-clipboard/clipboard'
+import { ethers } from 'ethers'
+import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
+import useWaitList from 'palm-react/hooks/app/useWaitList'
 
 export type RecoverAccountType = 'importWallet' | 'restoreWallet' | 'resetPin'
 
@@ -46,7 +56,23 @@ const RecoverAccountScreen = (): ReactElement => {
 
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
+  const alphaConfig = useWaitList()
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
+  const [showWalletLoading, setShowWalletLoading] = useState(false)
+
   const onPressConfirm = async (): Promise<void> => {
+    if (alphaConfig.config?.waitlist) {
+      const address = usePkey
+        ? new ethers.Wallet(privateKey).publicKey
+        : ethers.Wallet.fromMnemonic(seedPhrase.join(' ')).address
+
+      const ret = alphaConfig.waitList?.includes(address.toLowerCase())
+      if (!ret) {
+        setShowWaitlistModal(true)
+        return
+      }
+    }
+
     if (recoverType === 'resetPin') {
       const k = usePkey
         ? await PkeyManager.getPkey()
@@ -115,108 +141,156 @@ const RecoverAccountScreen = (): ReactElement => {
   }
 
   return (
-    <Container style={styles.container} keyboardAvoiding={true}>
-      <Header left="back" onPressLeft={navigation.goBack} />
-      <View style={styles.body}>
-        <View style={{ rowGap: 8 }}>
-          <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
-            {getTitleText()}
-          </FormText>
-          {recoverType === 'restoreWallet' && (
-            <FormText color={COLOR.black._400}>
-              {t('Auth.RecoverRestoreWalletMessage')}
+    <>
+      <Container style={styles.container} keyboardAvoiding={true}>
+        <Header left="back" onPressLeft={navigation.goBack} />
+        <View style={styles.body}>
+          <View style={{ rowGap: 8 }}>
+            <FormText font={'B'} size={24} style={{ fontWeight: 'bold' }}>
+              {getTitleText()}
             </FormText>
-          )}
-          {recoverType === 'resetPin' && (
-            <FormText color={COLOR.black._400}>
-              {t('Auth.RecoverResetPinMessage')}
-            </FormText>
+            {recoverType === 'restoreWallet' && (
+              <FormText color={COLOR.black._400}>
+                {t('Auth.RecoverRestoreWalletMessage')}
+              </FormText>
+            )}
+            {recoverType === 'resetPin' && (
+              <FormText color={COLOR.black._400}>
+                {t('Auth.RecoverResetPinMessage')}
+              </FormText>
+            )}
+          </View>
+          <Row
+            style={{
+              columnGap: 8,
+              paddingTop: 40,
+              paddingBottom: 28,
+              justifyContent: 'center',
+            }}
+          >
+            <MenuItem
+              value={true}
+              title={t('Common.EnterPrivateKey')}
+              selected={usePkey}
+              setSelected={setUsePkey}
+            />
+            <MenuItem
+              value={false}
+              title={t('Common.SeedPhrase')}
+              selected={!usePkey}
+              setSelected={setUsePkey}
+            />
+          </Row>
+          {usePkey ? (
+            <View style={{ rowGap: 12 }}>
+              <FormInput
+                placeholder={t('Common.PrivateKey')}
+                value={privateKey}
+                onChangeText={setPrivateKey}
+              />
+              <TouchableOpacity
+                onPress={(): void => {
+                  Clipboard.getString().then(text => {
+                    setPrivateKey(text)
+                  })
+                }}
+              >
+                <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
+                  <Icon name="copy-outline" size={14} />
+                  <FormText>{t('Common.PasteFromClipboard')}</FormText>
+                </Row>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <>
+              <FlatList
+                data={Array.from({ length: 12 })}
+                numColumns={2}
+                columnWrapperStyle={{ columnGap: 24 }}
+                contentContainerStyle={{ rowGap: 12 }}
+                keyExtractor={(item, index): string => `seedPhrase-${index}`}
+                renderItem={({ index }): ReactElement => {
+                  const value = seedPhrase[index]
+
+                  return (
+                    <Row style={styles.seedItem}>
+                      <FormText style={{ width: 20 }}>{index + 1}</FormText>
+                      <View style={{ flex: 1 }}>
+                        <FormInput
+                          value={value}
+                          onChangeText={(newValue: string): void =>
+                            updateSeedPhrase({ value: newValue, index })
+                          }
+                        />
+                      </View>
+                    </Row>
+                  )
+                }}
+              />
+              <ErrorMessage message={mnemonicErrMsg} />
+            </>
           )}
         </View>
-        <Row
-          style={{
-            columnGap: 8,
-            paddingTop: 40,
-            paddingBottom: 28,
-            justifyContent: 'center',
+
+        <View style={styles.footer}>
+          <FormButton
+            size="lg"
+            disabled={!isValidForm || loading}
+            onPress={(): void => {
+              setShowWalletLoading(true)
+              setTimeout(async () => {
+                await onPressConfirm()
+                setShowWalletLoading(false)
+              }, 0)
+            }}
+          >
+            {recoverType === 'importWallet'
+              ? t('Auth.ImportTheWallet')
+              : t('Common.Verify')}
+          </FormButton>
+        </View>
+
+        <FormModal
+          visible={showWaitlistModal}
+          title={'Alpha Testing Underway!'}
+          message={
+            "We appreciate your interest in Palm!\n\nDuring our alpha testing phase, \nonly invited wallet addresses\ncan access Palm.\n\nJoin our waitlist or check back later\nfor our public launch.\nWe're excited to welcome\nyou to our community soon!"
+          }
+          positive={{
+            text: 'Join waitlist',
+            callback: (): void => {
+              try {
+                Linking.openURL('https://palmapp.xyz/')
+              } catch {}
+            },
           }}
-        >
-          <MenuItem
-            value={true}
-            title={t('Common.EnterPrivateKey')}
-            selected={usePkey}
-            setSelected={setUsePkey}
-          />
-          <MenuItem
-            value={false}
-            title={t('Common.SeedPhrase')}
-            selected={!usePkey}
-            setSelected={setUsePkey}
-          />
-        </Row>
-        {usePkey ? (
-          <View style={{ rowGap: 12 }}>
-            <FormInput
-              placeholder={t('Common.PrivateKey')}
-              value={privateKey}
-              onChangeText={setPrivateKey}
-            />
-            <TouchableOpacity
-              onPress={(): void => {
-                Clipboard.getString().then(text => {
-                  setPrivateKey(text)
-                })
-              }}
-            >
-              <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
-                <Icon name="copy-outline" size={14} />
-                <FormText>{t('Common.PasteFromClipboard')}</FormText>
-              </Row>
-            </TouchableOpacity>
+          negative={{
+            text: 'Later',
+            callback: (): void => {
+              setShowWaitlistModal(false)
+            },
+          }}
+        />
+      </Container>
+
+      {(alphaConfig.config?.waitlist !== false &&
+        alphaConfig.waitList === undefined) ||
+        (showWalletLoading && (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              backgroundColor: COLOR.black._90015,
+            }}
+          >
+            <Indicator />
           </View>
-        ) : (
-          <>
-            <FlatList
-              data={Array.from({ length: 12 })}
-              numColumns={2}
-              columnWrapperStyle={{ columnGap: 24 }}
-              contentContainerStyle={{ rowGap: 12 }}
-              keyExtractor={(item, index): string => `seedPhrase-${index}`}
-              renderItem={({ index }): ReactElement => {
-                const value = seedPhrase[index]
-
-                return (
-                  <Row style={styles.seedItem}>
-                    <FormText style={{ width: 20 }}>{index + 1}</FormText>
-                    <View style={{ flex: 1 }}>
-                      <FormInput
-                        value={value}
-                        onChangeText={(newValue: string): void =>
-                          updateSeedPhrase({ value: newValue, index })
-                        }
-                      />
-                    </View>
-                  </Row>
-                )
-              }}
-            />
-            <ErrorMessage message={mnemonicErrMsg} />
-          </>
-        )}
-      </View>
-
-      <View style={styles.footer}>
-        <FormButton
-          size="lg"
-          disabled={!isValidForm || loading}
-          onPress={onPressConfirm}
-        >
-          {recoverType === 'importWallet'
-            ? t('Auth.ImportTheWallet')
-            : t('Common.Verify')}
-        </FormButton>
-      </View>
-    </Container>
+        ))}
+    </>
   )
 }
 
