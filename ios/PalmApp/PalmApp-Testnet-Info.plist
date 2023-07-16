@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>28</string>
+	<string>30</string>
 	<key>CodePushDeploymentKey</key>
 	<string>8UovpBCdo798K8_OioQ2vMMQ69j4ioEhdrv7O</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -52,6 +52,8 @@
 	<string>Access the media library from the image picker.</string>
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>Access Downloads folder from Palm.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access Microphone for camera usage.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Access the photo library for saving photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
