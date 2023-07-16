@@ -117,7 +117,7 @@ const useCreateChannel = (): UseCreateChannelReturn => {
         })
       } catch (error) {
         console.error(JSON.stringify(error))
-        recordError(error, 'useEditChannel:onClickConfirm')
+        recordError(error, 'useCreateChannel:onClickConfirm')
       }
     }
     setIsLoading(false)

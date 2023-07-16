@@ -16,7 +16,7 @@ export const getChannelDoc = async ({
   channel: GroupChannel
 }): Promise<FbChannel> => {
   let snapshot = await getDoc(channelRef(channelUrl))
-  if (!snapshot.exists) {
+  if (!snapshot.exists()) {
     const metadata: MetaData = await channel.getAllMetaData()
     const fbChannelField: FbChannel = UTIL.filterUndefined<FbChannel>({
       url: channel.url,
