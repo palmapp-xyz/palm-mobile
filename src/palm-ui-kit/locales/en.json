@@ -95,7 +95,7 @@
     "ChatRoomEditTokenGating": "Edit Token Gating",
     "ChatRoomTokenGatingSelect": "Select a Token or NFT",
     "ChatRoomTokenGatingSelectStep1": "Please select a Token or NFT group",
-    "ChatRoomTokenGatingSelectStep2": "How many does someone need to enter?",
+    "ChatRoomTokenGatingSelectStep2": "How many does\nsomeone need to enter?",
 
     "ChannelInfoNotRetrieveAlertMessage": "Could not retrieve channel info data. Please try again later.",
     "ChannelInfoMemberAndDate": "{{memberCount}} Members ∙ {{createAt}} Created",
