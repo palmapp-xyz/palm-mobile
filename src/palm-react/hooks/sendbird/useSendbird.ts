@@ -14,6 +14,7 @@ import {
   QueryType,
 } from '@sendbird/chat/groupChannel'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import { getChannelDoc } from 'palm-core/libs/firebase'
 
 export type CreateGroupChatParam = {
   channelUrl?: string
@@ -120,6 +121,10 @@ const useSendbird = (): UseSendbirdReturn => {
       await channel.createMetaData(data)
     }
 
+    await getChannelDoc({
+      channel,
+      channelUrl: channel.url,
+    })
     const updateParam: Partial<FbChannel> = UTIL.filterUndefined<
       Partial<FbChannel>
     >({
