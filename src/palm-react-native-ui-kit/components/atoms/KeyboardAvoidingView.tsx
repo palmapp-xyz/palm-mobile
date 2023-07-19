@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode, useCallback } from 'react'
-import { ScrollView, StyleProp, ViewStyle } from 'react-native'
+import { Platform, ScrollView, StyleProp, ViewStyle } from 'react-native'
 import { AvoidSoftInput } from 'react-native-avoid-softinput'
 
 import { useFocusEffect } from '@react-navigation/native'
@@ -13,7 +13,7 @@ const KeyboardAvoidingView = ({
   style?: StyleProp<ViewStyle>
 }): ReactElement => {
   const onFocusEffect = useCallback(() => {
-    AvoidSoftInput.setAdjustNothing()
+    Platform.OS === 'ios' && AvoidSoftInput.setAdjustNothing()
     AvoidSoftInput.setEnabled(true)
     return () => {
       AvoidSoftInput.setEnabled(false)
