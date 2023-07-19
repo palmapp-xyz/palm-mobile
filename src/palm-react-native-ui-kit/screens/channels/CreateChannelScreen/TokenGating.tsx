@@ -60,7 +60,7 @@ const TokenGating = ({
     limit: 30,
   })
 
-  const userBalances = useUserBalance({
+  const userBalance = useUserBalance({
     address: user?.address!,
     chain: gatingTokenNetwork,
   })
@@ -72,7 +72,7 @@ const TokenGating = ({
   const [enableDoneButton, setEnableDoneButton] = useState(false)
 
   useEffect(() => {
-    if (step !== 2 || userBalances.isLoading || userNfts.loading) {
+    if (step !== 2 || userBalance.isLoading || userNfts.loading) {
       return
     }
 
@@ -91,12 +91,12 @@ const TokenGating = ({
       setEnableDoneButton(input > 0 && count >= input)
     } else {
       // Native
-      const balance = UTIL.toBn(userBalances.balance)
+      const balance = UTIL.toBn(userBalance.balance)
       const input = UTIL.toBn(UTIL.microfyP(gatingTokenAmount as Token))
 
       setEnableDoneButton(!input.isZero() && balance.gte(input))
     }
-  }, [gatingTokenAmount, userBalances, userNfts])
+  }, [gatingTokenAmount, userBalance, userNfts])
 
   return (
     <Container style={styles.container}>
