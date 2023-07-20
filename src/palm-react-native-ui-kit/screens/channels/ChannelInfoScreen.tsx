@@ -22,6 +22,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FlatList,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -102,12 +103,12 @@ const ChannelInfoScreen = (): ReactElement => {
               containerStyle={{ marginTop: -88, marginBottom: 22 }}
             />
             <View style={{ paddingBottom: 8 }}>
-              <FormText font={'B'} size={16}>
+              <FormText font={'B'} size={18}>
                 {channelName}
               </FormText>
             </View>
             <View style={styles.section}>
-              <FormText>
+              <FormText color={COLOR.black._400}>
                 {t('Channels.ChannelInfoMemberAndDate', {
                   memberCount: channel.memberCount,
                   createAt: format(new Date(channel.createdAt), 'yy.MM.dd'),
@@ -115,11 +116,14 @@ const ChannelInfoScreen = (): ReactElement => {
               </FormText>
             </View>
             <View style={styles.section}>
-              <FormText>{desc}</FormText>
+              <FormText color={COLOR.black._300}>{desc}</FormText>
             </View>
 
             {gatingToken && Number(gatingToken.amount) > 0 && (
               <View style={styles.section}>
+                <FormText font="SB" style={{ marginBottom: 8 }}>
+                  Token Gating
+                </FormText>
                 <Row style={styles.gatingTokeBox}>
                   <Ionicons
                     color={COLOR.black._100}
@@ -174,7 +178,7 @@ const ChannelInfoScreen = (): ReactElement => {
             <Row
               style={{ alignItems: 'center', justifyContent: 'space-between' }}
             >
-              <FormText font={'SB'}>
+              <FormText font={'SB'} color={COLOR.black._900}>
                 {t('Channels.ChannelInfoMembers')}
               </FormText>
               {channel.customType !== ChannelType.DIRECT && (
@@ -182,8 +186,16 @@ const ChannelInfoScreen = (): ReactElement => {
                   onPress={(): void => {
                     navigation.navigate(Routes.GroupChannelInvite, params)
                   }}
+                  style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}
                 >
-                  <FormText>{t('Channels.ChannelInfoInvite')}</FormText>
+                  <Ionicons
+                    name="add-outline"
+                    size={16}
+                    color={COLOR.black._900}
+                  />
+                  <FormText color={COLOR.black._500}>
+                    {t('Channels.ChannelInfoInvite')}
+                  </FormText>
                 </TouchableOpacity>
               )}
             </Row>
@@ -225,6 +237,13 @@ const ChannelInfoScreen = (): ReactElement => {
                               : '',
                           })}
                         </FormText>
+                        {channel.customType !== ChannelType.DIRECT &&
+                          item.role === 'operator' && (
+                            <Image
+                              source={images.crown}
+                              style={{ width: 16, height: 16 }}
+                            />
+                          )}
                       </Row>
                     </Pressable>
                   )
@@ -247,9 +266,17 @@ const ChannelInfoScreen = (): ReactElement => {
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity onPress={toggleMute}>
               {isMute ? (
-                <Ionicons name={'notifications-off-outline'} size={24} />
+                <Ionicons
+                  name={'notifications-off-outline'}
+                  size={24}
+                  color={COLOR.black._500}
+                />
               ) : (
-                <Ionicons name={'notifications-outline'} size={24} />
+                <Ionicons
+                  name={'notifications-outline'}
+                  size={24}
+                  color={COLOR.black._900}
+                />
               )}
             </TouchableOpacity>
             {channel.customType !== ChannelType.DIRECT &&
@@ -260,7 +287,11 @@ const ChannelInfoScreen = (): ReactElement => {
                   }}
                   style={{ marginStart: 20 }}
                 >
-                  <Ionicons name="settings-outline" size={24} />
+                  <Ionicons
+                    name="settings-outline"
+                    size={24}
+                    color={COLOR.black._500}
+                  />
                 </TouchableOpacity>
               )}
           </View>
@@ -299,9 +330,9 @@ const styles = StyleSheet.create({
   },
   gatingTokeBox: {
     padding: 12,
-    borderWidth: 1,
+    borderWidth: 0,
     borderRadius: 12,
-    borderColor: COLOR.black._90010,
+    backgroundColor: COLOR.black._90005,
     columnGap: 8,
     alignItems: 'center',
   },

@@ -109,19 +109,35 @@ const ExploreScreen = (): ReactElement => {
             <View
               style={{ position: 'absolute', right: 10, top: 8, zIndex: 1 }}
             >
-              <TouchableOpacity
-                disabled={isSearching}
-                onPress={(): void => {
-                  inputRef.current?.blur()
-                  onClickConfirm()
-                }}
-              >
-                <Ionicon
-                  name="ios-search"
-                  size={20}
-                  color={isSearching ? COLOR.black._100 : COLOR.black._300}
-                />
-              </TouchableOpacity>
+              {inputSearch.length > 0 ? (
+                <TouchableOpacity
+                  disabled={isSearching}
+                  onPress={(): void => {
+                    inputRef.current?.blur()
+                    setInputSearch('')
+                  }}
+                >
+                  <Ionicon
+                    name="close-outline"
+                    size={20}
+                    color={isSearching ? COLOR.black._100 : COLOR.black._300}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  disabled={isSearching}
+                  onPress={(): void => {
+                    inputRef.current?.blur()
+                    onClickConfirm()
+                  }}
+                >
+                  <Ionicon
+                    name="ios-search"
+                    size={20}
+                    color={isSearching ? COLOR.black._100 : COLOR.black._300}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>

@@ -20,8 +20,7 @@ import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-import TokenGating from './TokenGating'
+import TokenGating from '../TokenGating'
 
 const CreateChannelScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -208,7 +207,7 @@ const CreateChannelScreen = (): ReactElement => {
       </Container>
       {showTokenGating && (
         <View style={{ position: 'absolute', width: '100%', height: '100%' }}>
-          <TokenGating useCreateChannelReturn={useCreateChannelReturn} />
+          <TokenGating useChannelReturn={useCreateChannelReturn} />
         </View>
       )}
     </>
