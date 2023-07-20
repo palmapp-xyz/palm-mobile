@@ -328,7 +328,7 @@
       "EndOfList": "End of List"
     },
     "SendTokenMessage": {
-      "Sent": " sent ",
+      "Sent": "Sent ",
       "Token": "{{amount}} {{symbol}} ",
       "Type": "({{type}}) ",
       "To": "to ",

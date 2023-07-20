@@ -1,10 +1,6 @@
 import { COLOR } from 'palm-core/consts'
 import { UTIL } from 'palm-core/libs'
-import {
-  pToken,
-  SbSendTokenDataType,
-  SupportedNetworkEnum,
-} from 'palm-core/types'
+import { SbSendTokenDataType, SupportedNetworkEnum } from 'palm-core/types'
 import FormText from 'palm-react-native-ui-kit/components/atoms/FormText'
 import UserMention from 'palm-react-native-ui-kit/components/atoms/UserMention'
 import MoralisErc20Token from 'palm-react-native-ui-kit/components/MoralisErc20Token'
@@ -38,19 +34,7 @@ const SendTokenMessage = ({
             paddingHorizontal: 12,
           }}
         >
-          <UserMention userMetadata={data.from} />
-          <FormText>{t('Components.SendTokenMessage.Sent')}</FormText>
-          <FormText font={'B'} style={{ color: COLOR.primary._400 }}>
-            {t('Components.SendTokenMessage.Token', {
-              amount: UTIL.formatAmountP(data.value as pToken, { toFix: 2 }),
-              symbol: data.selectedToken.symbol,
-            })}
-          </FormText>
-          <FormText>
-            {t('Components.SendTokenMessage.Type', {
-              type: item.token_address === '0x0' ? 'Native' : 'ERC20',
-            })}
-          </FormText>
+          <FormText font="B">{t('Components.SendTokenMessage.Sent')}</FormText>
           {t('Components.SendTokenMessage.To')}
           <UserMention userMetadata={data.to} />
         </FormText>
