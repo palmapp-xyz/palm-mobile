@@ -21,6 +21,8 @@ export default {
   splash: require('./splash.json'),
   repeat: require('./repeat.png'),
   crown: require('./crown.png'),
+  checkbox_on: require('./checkbox_on.png'),
+  checkbox_off: require('./checkbox_off.png'),
   samples: [
     require('./temp/thumbs1.png'),
     require('./temp/thumbs2.png'),

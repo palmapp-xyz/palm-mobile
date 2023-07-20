@@ -108,6 +108,10 @@
     "ChannelInfoNickname": "{{nickname}} {{me}}",
     "ChannelInfoNicknameIsMe": "(me)",
 
+    "ChannelInviteFailToast": "Failed to invite the users.\nPlease try again.",
+    "ChannelInviteUsersAreSelected": " users are selected",
+    "ChannelInviteSearchPlaceholder": "Search by username",
+
     "ChannelSettingTitle": "Channel Info",
     "ChannelSettingEditChannel": "Edit Channel",
     "ChannelSettingModeration": "Moderation",
