@@ -15,10 +15,14 @@ import {
   onSnapshot,
   query,
 } from 'firebase/firestore'
+import { UTIL } from 'palm-core/libs'
 
-import config from './firebase.config.json'
+import mainnetConfig from './firebase-mainnet.config.json'
+import testnetConfig from './firebase-testnet.config.json'
 
-export const firebaseApp = initializeApp(config as FirebaseOptions)
+export const firebaseApp = initializeApp(
+  (UTIL.isMainnet() ? mainnetConfig : testnetConfig) as FirebaseOptions
+)
 
 export const firestore = getFirestore(firebaseApp)
 export const appAuth = getAuth(firebaseApp)
