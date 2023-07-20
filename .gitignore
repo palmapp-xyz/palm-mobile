@@ -82,4 +82,5 @@ android/app/release/app-release.aab
 **/*.certSigningRequest
 **/*.p12
 
-src/palm-core/firebase/firebase.config.json
+src/palm-core/firebase/firebase-testnet.config.json
+src/palm-core/firebase/firebase-mainnet.config.json
