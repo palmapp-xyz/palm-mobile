@@ -14,6 +14,7 @@ import {
   FormText,
   Header,
   Row,
+  Title,
 } from 'palm-react-native-ui-kit/components'
 import Avatar from 'palm-react-native-ui-kit/components/sendbird/Avatar'
 import useToast from 'palm-react-native/app/useToast'
@@ -62,23 +63,8 @@ const operatorUserCardStyles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
     marginBottom: 16,
-    // paddingHorizontal: 20,
   },
 })
-
-const Title = ({ title }: { title: string }): ReactElement => {
-  return (
-    <View>
-      <FormText
-        style={{ marginVertical: 12, marginHorizontal: 20 }}
-        color={COLOR.black._300}
-      >
-        {title}
-      </FormText>
-      <View style={{ height: 1, backgroundColor: COLOR.black._90005 }} />
-    </View>
-  )
-}
 
 const GroupChannelOperatorsScreen = (): ReactElement => {
   const { navigation, params } =
@@ -94,10 +80,14 @@ const GroupChannelOperatorsScreen = (): ReactElement => {
   const rowRefs = useRef<{ [userId: string]: Swipeable | null }[]>([])
   const [currentRow, setCurrentRow] = useState<Member>()
 
-  useEffect(() => {
+  const getOperators = (): void => {
     setOperators(
       channel?.members.filter(member => member.role === 'operator') ?? []
     )
+  }
+
+  useEffect(() => {
+    getOperators()
   }, [channel?.members])
 
   if (!channel) {
@@ -116,6 +106,10 @@ const GroupChannelOperatorsScreen = (): ReactElement => {
         channel
           .removeOperators([currentRow.userId])
           .then(() => {
+            setOperators(prev =>
+              prev.filter(i => i.userId !== currentRow.userId)
+            )
+
             toast.show(t('Channels.ChannelOperatorsRemoveSuccessToast'), {
               icon: 'check',
               color: 'green',
@@ -201,7 +195,9 @@ const GroupChannelOperatorsScreen = (): ReactElement => {
           font="SB"
           figure="outline"
           onPress={(): void => {
-            // todo - select view
+            navigation.navigate(Routes.GroupChannelRegisterOperator, {
+              channelUrl: params.channelUrl,
+            })
           }}
           containerStyle={{ marginHorizontal: 20 }}
         >

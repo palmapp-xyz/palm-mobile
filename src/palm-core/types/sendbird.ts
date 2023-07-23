@@ -1,5 +1,7 @@
 import { PostOrderResponsePayload } from 'evm-nft-swap/dist/sdk/v4/orderbook'
 
+import { User } from '@sendbird/chat'
+import { Member } from '@sendbird/chat/groupChannel'
 import { Moralis } from './api'
 import { ContractAddr } from './contracts'
 import { pToken } from './currencies'
@@ -55,3 +57,6 @@ export type SbUserMetadata = {
   handle?: string
   address: ContractAddr
 }
+
+export type SbUserWithSelected = User & { selected?: boolean }
+export type SbMemberWithSelected = Member & { selected?: boolean }

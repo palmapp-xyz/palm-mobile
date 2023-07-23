@@ -114,8 +114,12 @@
 
     "ChannelOperatorsTitle": "Operators",
     "ChannelOperatorsAddOperators": "Add Operators",
-    "ChannelOperatorsRemoveSuccessToast": "Sucessfully removed.",
+    "ChannelOperatorsRemoveSuccessToast": "Successfully removed.",
     "ChannelOperatorsRemoveFailedToast": "Failed to remove the users from the list.\nPlease try again.",
+
+    "ChannelRegisterOperatorSuccessToast": "Successfully added.",
+    "ChannelRegisterOperatorFailedToast": "Failed to add the users as operator.\nPlease try again.",
+    "ChannelRegisterOperatorUsersAreSelected": " users are selected",
 
     "ChannelSettingTitle": "Channel Info",
     "ChannelSettingEditChannel": "Edit Channel",
