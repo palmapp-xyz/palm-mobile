@@ -112,6 +112,11 @@
     "ChannelInviteUsersAreSelected": " users are selected",
     "ChannelInviteSearchPlaceholder": "Search by username",
 
+    "ChannelOperatorsTitle": "Operators",
+    "ChannelOperatorsAddOperators": "Add Operators",
+    "ChannelOperatorsRemoveSuccessToast": "Sucessfully removed.",
+    "ChannelOperatorsRemoveFailedToast": "Failed to remove the users from the list.\nPlease try again.",
+
     "ChannelSettingTitle": "Channel Info",
     "ChannelSettingEditChannel": "Edit Channel",
     "ChannelSettingModeration": "Moderation",
