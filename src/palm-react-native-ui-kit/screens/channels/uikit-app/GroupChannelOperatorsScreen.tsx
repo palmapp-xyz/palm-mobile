@@ -185,7 +185,9 @@ const GroupChannelOperatorsScreen = (): ReactElement => {
                 <OperatorUserCard
                   handle={item.nickname}
                   picture={item.profileUrl}
-                  onPress={(): void => {}}
+                  onPress={(): void => {
+                    // do nothing
+                  }}
                 />
               </Swipeable>
             )

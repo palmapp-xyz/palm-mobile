@@ -9,12 +9,18 @@ import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 
 import Avatar from './Avatar'
 
+import { GroupChannel } from '@sendbird/chat/groupChannel'
 import type { SendbirdMessage } from '@sendbird/uikit-utils'
 type Props = {
   message: SendbirdMessage
   grouping: boolean
+  channel: GroupChannel
 }
-const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
+const MessageIncomingAvatar = ({
+  message,
+  grouping,
+  channel,
+}: Props): ReactElement => {
   const { navigation } = useAppNavigation()
   if (grouping) {
     return <View style={styles.avatar} />
@@ -28,6 +34,7 @@ const MessageIncomingAvatar = ({ message, grouping }: Props): ReactElement => {
             navigation.push(Routes.UserProfile, {
               address: (sender.metaData as SbUserMetadata).address,
               profileId: sender.userId,
+              channel: channel,
             })
           }}
         >

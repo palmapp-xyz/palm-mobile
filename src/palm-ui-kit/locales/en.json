@@ -151,6 +151,14 @@
     "UiKitTokenGatingRequired": "Required",
     "UiKitTokenGatingMyBalance": "My balance"
   },
+  "GroupChannelManageUser": {
+    "RemoveFromTheList": "Remove from the list",
+    "ManageList": "Manage List",
+    "SuccessToast": "Successfully removed.",
+    "FailedToast": "Failed to remove the users from the list.\nPlease try again.",
+    "BannedMembersTitle": "Banned Members",
+    "MutedMembersTitle": "Muted Members"
+  },
   "Explore": {
     "InitExploreTitleStep1": "Hi, there!\nWelcome to Palm.",
     "InitExploreTitleStep2": "Tell us what you\ninterested in.",
@@ -248,6 +256,17 @@
 
     "MyProfileUpdateImageSuccessAlertMessage": "Profile image updated",
     "MyProfileUpdateImageFailedAlertMessage": "Update profile image failed: {{errMsg}}"
+  },
+  "UserProfile": {
+    "MuteThisUserTitle": "Mute this user",
+    "BanThisUserTitle": "Ban from the current chat room",
+    "AreYouSureThisUser": "Are you sure to\n{{type}} this user?",
+    "BanWarning": "The banned user will not be able to join this chat room, including sending a joinning request.",
+    "MuteWarning": "The muted user will not be able to send any message in this chat room.",
+    "BanToast": "{{user}} is banned.",
+    "MuteToast": "{{user}} is muted.",
+    "BanButton": "Ban this User",
+    "MuteButton": "Mute this User"
   },
   "Settings": {
     "HeaderTitle": "Setting",

@@ -8,9 +8,7 @@ import {
 } from '@sendbird/uikit-react-native'
 import { createStyleSheet } from '@sendbird/uikit-react-native-foundation'
 // eslint-disable-next-line prettier/prettier
-import {
-  DEFAULT_LONG_PRESS_DELAY,
-} from '@sendbird/uikit-react-native/src/constants'
+import { DEFAULT_LONG_PRESS_DELAY } from '@sendbird/uikit-react-native/src/constants'
 import {
   calcMessageGrouping,
   conditionChaining,
@@ -173,7 +171,11 @@ const MessageRenderer: GroupChannelProps['Fragment']['renderMessage'] = ({
             </View>
           )}
           {isIncoming && (
-            <MessageIncomingAvatar message={message} grouping={groupWithNext} />
+            <MessageIncomingAvatar
+              message={message}
+              grouping={groupWithNext}
+              channel={channel}
+            />
           )}
           <View style={styles.bubbleContainer}>
             {isIncoming && (

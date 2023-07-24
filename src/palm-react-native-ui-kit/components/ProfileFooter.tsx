@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     gap: 20,
     padding: 10,
     height: 70,
+    paddingHorizontal: 8,
   },
   text: {
     color: 'gray',

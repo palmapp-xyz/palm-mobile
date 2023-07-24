@@ -17,7 +17,7 @@ import {
 import { GetSendbirdSDK } from './sendbird'
 
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
-
+import SendbirdGroupChannel from '@sendbird/chat/groupChannel'
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
 export enum Routes {
   MainNavigator = 'MainNavigator',
@@ -148,6 +148,7 @@ type MainRouteParamsUnion =
       params: {
         address: ContractAddr
         profileId: string
+        channel?: SendbirdGroupChannel.GroupChannel
       }
     }
   | {
