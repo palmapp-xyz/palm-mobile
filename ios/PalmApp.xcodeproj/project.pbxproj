@@ -825,7 +825,7 @@
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
@@ -859,7 +859,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KW7NUT7GJK;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
@@ -892,7 +892,7 @@
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
@@ -926,7 +926,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KW7NUT7GJK;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
