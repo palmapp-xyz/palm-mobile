@@ -5,25 +5,31 @@ import { ContractAddr, SupportedNetworkEnum } from 'palm-core/types'
 import { FormText, Row } from 'palm-react-native-ui-kit/components'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useProfile from 'palm-react/hooks/auth/useProfile'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import LensProfileHeaderSection from './LensProfileHeaderSection'
-import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
 import ProfileWalletAddress from './ProfileWalletAddress'
 import ProfileWalletBalances from './ProfileWalletBalances'
+import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import Avatar from './sendbird/Avatar'
 
+import { GroupChannel } from '@sendbird/chat/groupChannel'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr
   userProfileId?: string
   isMyPage: boolean
+  channel?: GroupChannel
   selectedNetwork: SupportedNetworkEnum
   onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
   onToggleShowUserTokensSheet?: () => void
+  onToggleChannelUserControl?: () => void
 }
 
 const ProfileHeader = React.memo(
@@ -31,26 +37,52 @@ const ProfileHeader = React.memo(
     userAddress,
     userProfileId,
     isMyPage,
+    channel,
     selectedNetwork,
     onNetworkSelected,
     onToggleShowUserTokensSheet,
+    onToggleChannelUserControl,
   }: ProfileHeaderProps): ReactElement => {
     const { navigation } = useAppNavigation()
     const { t } = useTranslation()
 
+    const { sdk } = useSendbirdChat()
+
+    const [isOperator, setIsOperator] = React.useState<boolean>(false)
+    useEffect(() => {
+      const checkOperator = channel?.members.find(member => {
+        return (
+          member.role === 'operator' &&
+          member.userId === sdk?.currentUser?.userId
+        )
+      })
+      if (checkOperator) {
+        setIsOperator(true)
+      }
+    }, [])
+
     const { profile, lensProfile } = useProfile({ profileId: userProfileId! })
     const profileImg = getProfileMediaImg(profile?.picture)
 
+    const { top } = useSafeAreaInsets()
+
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View
+          style={[
+            styles.header,
+            {
+              height: 168 + top,
+            },
+          ]}
+        >
           <ImageBackground
             source={{ uri: profile?.coverPicture }}
             resizeMode="cover"
             style={{ flex: 1 }}
           >
             {isMyPage ? (
-              <View style={{ alignItems: 'flex-end' }}>
+              <View style={{ marginTop: top, alignItems: 'flex-end' }}>
                 <Row style={styles.headerButtons}>
                   <Pressable
                     style={styles.headerButton}
@@ -58,7 +90,7 @@ const ProfileHeader = React.memo(
                       navigation.navigate(Routes.UpdateProfile)
                     }}
                   >
-                    <Icon name={'pencil'} size={24} />
+                    <Ionicons name={'pencil'} size={28} />
                   </Pressable>
                   <Pressable
                     style={styles.headerButton}
@@ -66,24 +98,44 @@ const ProfileHeader = React.memo(
                       navigation.navigate(Routes.Setting)
                     }}
                   >
-                    <Icon name={'settings-outline'} size={24} />
+                    <Ionicons name={'settings-outline'} size={28} />
                   </Pressable>
                 </Row>
               </View>
             ) : (
-              <View style={{ alignItems: 'flex-start' }}>
+              <View
+                style={{
+                  marginTop: top,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <Pressable
                   style={styles.headerButton}
                   onPress={(): void => {
                     navigation.goBack()
                   }}
                 >
-                  <Icon
+                  <Ionicons
                     name="ios-chevron-back"
                     color={COLOR.black._800}
-                    size={24}
+                    size={28}
                   />
                 </Pressable>
+                {isOperator && (
+                  <Pressable
+                    style={styles.headerButton}
+                    onPress={(): void => {
+                      onToggleChannelUserControl?.()
+                    }}
+                  >
+                    <MaterialIcons
+                      name="more-horiz"
+                      color={COLOR.black._800}
+                      size={28}
+                    />
+                  </Pressable>
+                )}
               </View>
             )}
           </ImageBackground>
@@ -151,7 +203,6 @@ export default ProfileHeader
 const styles = StyleSheet.create({
   container: { backgroundColor: 'white' },
   header: {
-    height: 168,
     backgroundColor: COLOR.black._90010,
   },
   profileImgBox: {

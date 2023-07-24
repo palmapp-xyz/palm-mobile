@@ -10,23 +10,19 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import KeyboardAvoidingView from './KeyboardAvoidingView'
 
-const Container = ({
-  children,
+const ContainerComponent = ({
   style,
-  safeAreaBackgroundColor,
+  children,
   keyboardAvoiding,
   scrollable,
 }: {
   children: ReactNode
   style?: StyleProp<ViewStyle>
-  safeAreaBackgroundColor?: ColorValue
   keyboardAvoiding?: boolean
   scrollable?: boolean
 }): ReactElement => {
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}
-    >
+    <>
       {keyboardAvoiding ? (
         <KeyboardAvoidingView>
           <View style={style}>{children}</View>
@@ -44,6 +40,48 @@ const Container = ({
       ) : (
         <View style={style}>{children}</View>
       )}
+    </>
+  )
+}
+
+const Container = ({
+  children,
+  style,
+  safeAreaBackgroundColor,
+  keyboardAvoiding,
+  scrollable,
+  disableSafeArea,
+}: {
+  children: ReactNode
+  style?: StyleProp<ViewStyle>
+  safeAreaBackgroundColor?: ColorValue
+  keyboardAvoiding?: boolean
+  scrollable?: boolean
+  disableSafeArea?: boolean
+}): ReactElement => {
+  return disableSafeArea ? (
+    <View
+      style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}
+    >
+      <ContainerComponent
+        style={style}
+        scrollable={scrollable}
+        keyboardAvoiding={keyboardAvoiding}
+      >
+        {children}
+      </ContainerComponent>
+    </View>
+  ) : (
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}
+    >
+      <ContainerComponent
+        style={style}
+        scrollable={scrollable}
+        keyboardAvoiding={keyboardAvoiding}
+      >
+        {children}
+      </ContainerComponent>
     </SafeAreaView>
   )
 }
