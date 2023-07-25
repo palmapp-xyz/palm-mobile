@@ -225,6 +225,7 @@
     "SendTokenConfirmModalMe": "Me",
     "SendTokenConfirmModalTo": "To",
     "SendTokenConfirmModalEstGasFee": "Est. Gas Fee",
+    "SendTokenConfirmModalTotal": "Total",
 
     "ChannelListingNoListedNft": "Oops!\nThere is no listed NFT.\nHow about listing NFTs\nfor the first time?",
     "ChannelListingListNFT": "List a NFT"

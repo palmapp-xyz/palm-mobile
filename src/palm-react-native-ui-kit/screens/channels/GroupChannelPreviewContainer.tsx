@@ -12,21 +12,19 @@ import {
 } from '@sendbird/uikit-chat-hooks'
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import {
-  createStyleSheet,
   Icon,
   LoadingSpinner,
+  createStyleSheet,
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
+import { DEFAULT_LONG_PRESS_DELAY } from '@sendbird/uikit-react-native/src/constants'
 import {
-  DEFAULT_LONG_PRESS_DELAY,
-} from '@sendbird/uikit-react-native/src/constants'
-import {
+  SendbirdGroupChannel,
+  SendbirdUser,
   getFileExtension,
   getFileType,
   isDifferentChannel,
   isMyMessage,
-  SendbirdGroupChannel,
-  SendbirdUser,
   useIIFE,
   useUniqHandlerId,
 } from '@sendbird/uikit-utils'

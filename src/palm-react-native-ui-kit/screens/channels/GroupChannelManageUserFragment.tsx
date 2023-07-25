@@ -3,6 +3,7 @@ import {
   Container,
   FormButton,
   Header,
+  NoResult,
   Title,
   UserCard,
 } from 'palm-react-native-ui-kit/components'
@@ -41,6 +42,7 @@ const GroupChannelManageUserFragment = ({
       <View style={{ flex: 1 }}>
         <FlatList
           data={members}
+          ListEmptyComponent={<NoResult />}
           renderItem={({ item }): ReactElement => {
             return (
               <View style={{ marginTop: 16 }}>

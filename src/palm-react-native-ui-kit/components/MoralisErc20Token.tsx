@@ -38,9 +38,11 @@ const MoralisErc20Token = ({
                 toFix: 4,
               })}{' '}
             </FormText>
-            <FormText style={{ marginTop: 3 }}>{item.symbol}</FormText>
+            <FormText size={14} style={{ marginTop: 3 }}>
+              {item.symbol}
+            </FormText>
           </Row>
-          <FormText size={12} color={COLOR.black._400}>
+          <FormText size={14} color={COLOR.black._400}>
             {t('Common.UsdPrice', {
               price: tokenValue
                 ? UTIL.formatAmountP(tokenValue, { toFix: 2 })
