@@ -31,7 +31,9 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+import { useIsFocused } from '@react-navigation/native'
 import { PushTriggerOption } from '@sendbird/chat'
+import { Member } from '@sendbird/chat/groupChannel'
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
@@ -45,8 +47,26 @@ const ChannelInfoScreen = (): ReactElement => {
   const { channel, channelName, tags, desc, gatingToken, loading } =
     useChannelInfo({ channelUrl: params.channelUrl })
 
-  const channelMembers =
-    channel?.members.sort(a => (a.profileUrl ? -1 : 1)) || []
+  const [channelMembers, setChannelMembers] = useState<Member[]>([])
+
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    if (isFocused) {
+      channel?.refresh()
+    }
+  }, [isFocused])
+
+  useEffect(() => {
+    if (channel?.members) {
+      const sortedMembers = channel.members.sort(a => (a.profileUrl ? -1 : 1))
+      const moveToFirstMembers = UTIL.moveToFirstOfArray(
+        sortedMembers,
+        member => (member.metaData as SbUserMetadata).address === user?.address
+      )
+      setChannelMembers(moveToFirstMembers)
+    }
+  }, [channel?.members])
 
   const [isMute, setMute] = useState<boolean>()
 
@@ -302,8 +322,6 @@ const ChannelInfoScreen = (): ReactElement => {
   )
 }
 
-export default ChannelInfoScreen
-
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLOR.black._10 },
   section: {
@@ -338,3 +356,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
+
+export default ChannelInfoScreen
