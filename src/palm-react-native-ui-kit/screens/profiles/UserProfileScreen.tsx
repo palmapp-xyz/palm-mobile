@@ -14,7 +14,6 @@ import useUserNftCollectionList from 'palm-react/hooks/api/useUserNftCollectionL
 import React, { ReactElement, useState } from 'react'
 import {
   FlatList,
-  LayoutChangeEvent,
   ListRenderItemInfo,
   Platform,
   RefreshControl,
@@ -30,6 +29,7 @@ import useToast from 'palm-react-native/app/useToast'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import ProfileHeader from '../../components/ProfileHeader'
 
 const UserControlItem = ({
@@ -62,25 +62,6 @@ const UserControlDivider = ({ height }: { height?: number }): ReactElement => (
   />
 )
 
-const useFormBottomSheetSnapPoints = (): {
-  snapPoints: (string | number)[]
-  handleOnLayout: (event: LayoutChangeEvent) => void
-} => {
-  const [contentHeight, setContentHeight] = useState(0)
-
-  const handleOnLayout = ({ nativeEvent: { layout } }): void => {
-    setContentHeight(layout.height)
-  }
-  return {
-    snapPoints: [
-      contentHeight > 0
-        ? contentHeight * (Platform.OS === 'ios' ? 1.7 : 1.5)
-        : '25%',
-    ],
-    handleOnLayout,
-  }
-}
-
 const SimpleUserProfile = ({
   profile,
 }: {
@@ -89,12 +70,31 @@ const SimpleUserProfile = ({
   const profileImg = getProfileMediaImg(profile?.picture)
 
   return (
-    <View style={{}}>
-      <Avatar uri={profileImg} size={56} />
-      <FormText font="B" size={20} color={COLOR.black._900}>
-        {profile?.handle}
-      </FormText>
-      <FormText color={COLOR.black._300}>{profile?.bio}</FormText>
+    <View
+      style={{
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: COLOR.black._90010,
+        marginBottom: 20,
+      }}
+    >
+      <View style={{ backgroundColor: COLOR.black._90005, height: 80 }}>
+        <View style={{ position: 'absolute', left: 20, bottom: -12 }}>
+          <Avatar uri={profileImg} size={56} />
+        </View>
+      </View>
+      <View style={{ margin: 20 }}>
+        <FormText font="B" size={20} color={COLOR.black._900}>
+          {profile?.handle}
+        </FormText>
+        <FormText
+          color={COLOR.black._300}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {profile?.bio}
+        </FormText>
+      </View>
     </View>
   )
 }
@@ -119,7 +119,9 @@ const ChannelUserControl = ({
     undefined
   )
 
-  const { snapPoints, handleOnLayout } = useFormBottomSheetSnapPoints()
+  const snapPoints = selected ? ['60%'] : ['30%']
+
+  const { bottom } = useSafeAreaInsets()
 
   return (
     <FormBottomSheet
@@ -133,9 +135,10 @@ const ChannelUserControl = ({
     >
       <BottomSheetView
         style={{
-          marginTop: 40,
+          flex: 1,
+          justifyContent: 'flex-end',
+          marginBottom: Platform.select({ ios: bottom + 20 }),
         }}
-        onLayout={handleOnLayout}
       >
         {selected === undefined ? (
           <View>
@@ -190,6 +193,7 @@ const ChannelUserControl = ({
                   selected === 'ban' ? COLOR.red : COLOR.primary._400,
                 marginHorizontal: 20,
                 marginTop: 12,
+                marginBottom: Platform.select({ android: 20 }),
               }}
               onPress={(): void => {
                 selected === 'ban'
