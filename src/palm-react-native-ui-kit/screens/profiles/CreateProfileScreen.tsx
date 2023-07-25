@@ -84,7 +84,9 @@ const CreateProfileScreen = (): ReactElement => {
         </View>
         <View style={{ rowGap: 12 }}>
           <View style={styles.rowSection}>
-            <FormText>{t('Profiles.CreateProfileUsername')}</FormText>
+            <FormText color={COLOR.black._400}>
+              {t('Profiles.CreateProfileUsername')}
+            </FormText>
             <FormInput
               value={handle}
               onChangeText={setHandle}
@@ -93,14 +95,16 @@ const CreateProfileScreen = (): ReactElement => {
               autoCapitalize="none"
               style={{ marginVertical: 2 }}
             />
-            <FormText color={COLOR.yellow}>
+            <FormText size={12} color={COLOR.black._300}>
               {t('Profiles.CreateProfileUsernameHint')}
             </FormText>
           </View>
           <View style={styles.rowSection}>
-            <Row>
-              <FormText>{t('Profiles.CreateProfileDescription')}</FormText>
-              <FormText>
+            <Row style={{ justifyContent: 'space-between' }}>
+              <FormText color={COLOR.black._400}>
+                {t('Profiles.CreateProfileDescription')}
+              </FormText>
+              <FormText size={12} color={COLOR.black._200}>
                 ({bio.length}/{maxBioLength})
               </FormText>
             </Row>

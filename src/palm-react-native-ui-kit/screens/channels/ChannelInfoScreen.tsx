@@ -114,7 +114,7 @@ const ChannelInfoScreen = (): ReactElement => {
               </FormText>
             </View>
             <View style={styles.section}>
-              <FormText color={COLOR.black._400}>
+              <FormText color={COLOR.black._300}>
                 {t('Channels.ChannelInfoMemberAndDate', {
                   memberCount: channel.memberCount,
                   createAt: format(new Date(channel.createdAt), 'yy.MM.dd'),

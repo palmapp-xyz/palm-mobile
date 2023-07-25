@@ -11,6 +11,7 @@ import {
   Container,
   FormText,
   Header,
+  NoResult,
   SelectedUser,
   UserCard,
   UserSearch,
@@ -168,6 +169,7 @@ const GroupChannelRegisterOperatorScreen = (): ReactElement => {
             data={members}
             onEndReached={async (): Promise<void> => {}}
             onEndReachedThreshold={0.5}
+            ListEmptyComponent={<NoResult />}
             renderItem={({ item }): ReactElement | null => {
               if (
                 item.nickname === undefined ||

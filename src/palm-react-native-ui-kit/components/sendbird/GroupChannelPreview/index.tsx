@@ -98,7 +98,7 @@ const GroupChannelPreview = ({
             >
               {title}
             </FormText>
-            {Boolean(memberCount) && (
+            {false && Boolean(memberCount) && (
               <Text
                 caption1
                 style={styles.channelInfoMemberCount}
@@ -124,10 +124,10 @@ const GroupChannelPreview = ({
             )}
           </View>
           <View style={styles.titleCaptionContainer}>
-            {titleCaptionLeft}
+            {false && titleCaptionLeft}
             <Text
-              caption2
-              color={color.default.none.textTitleCaption}
+              // caption2
+              color={COLOR.black._400}
               style={styles.titleCaptionText}
             >
               {titleCaption}
@@ -195,7 +195,7 @@ const Separator = ({ color }: SeparatorProps): ReactElement => (
 
 const styles = createStyleSheet({
   container: {
-    height: 76,
+    height: 78,
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
@@ -218,6 +218,7 @@ const styles = createStyleSheet({
   rightTopSection: {
     flexDirection: 'row',
     marginBottom: 4,
+    alignItems: 'center',
   },
   channelInfoContainer: {
     flex: 1,
@@ -232,6 +233,7 @@ const styles = createStyleSheet({
     flexShrink: 1,
     marginRight: 4,
     marginTop: 4,
+    textAlignVertical: 'center',
   },
   channelInfoMemberCount: {
     paddingTop: 2,

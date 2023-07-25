@@ -8,9 +8,9 @@ import {
   useUserProfile,
 } from '@sendbird/uikit-react-native'
 import {
-  createStyleSheet,
   RegexText,
   Text,
+  createStyleSheet,
   useUIKitTheme,
 } from '@sendbird/uikit-react-native-foundation'
 import SBUUtils from '@sendbird/uikit-react-native/src/libs/SBUUtils'
