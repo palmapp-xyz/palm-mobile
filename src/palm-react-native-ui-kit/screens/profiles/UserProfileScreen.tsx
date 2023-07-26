@@ -56,7 +56,7 @@ const UserProfileScreen = (): ReactElement => {
   return (
     <Container
       style={{ flex: 1, marginBottom: Platform.select({ ios: -30 }) }}
-      disableSafeArea
+      safeArea={false}
     >
       <FlatList
         refreshControl={

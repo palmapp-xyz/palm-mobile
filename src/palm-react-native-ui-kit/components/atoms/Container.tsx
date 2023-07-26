@@ -50,28 +50,16 @@ const Container = ({
   safeAreaBackgroundColor,
   keyboardAvoiding,
   scrollable,
-  disableSafeArea,
+  safeArea = true,
 }: {
   children: ReactNode
   style?: StyleProp<ViewStyle>
   safeAreaBackgroundColor?: ColorValue
   keyboardAvoiding?: boolean
   scrollable?: boolean
-  disableSafeArea?: boolean
+  safeArea?: boolean
 }): ReactElement => {
-  return disableSafeArea ? (
-    <View
-      style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}
-    >
-      <ContainerComponent
-        style={style}
-        scrollable={scrollable}
-        keyboardAvoiding={keyboardAvoiding}
-      >
-        {children}
-      </ContainerComponent>
-    </View>
-  ) : (
+  return safeArea ? (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}
     >
@@ -83,6 +71,18 @@ const Container = ({
         {children}
       </ContainerComponent>
     </SafeAreaView>
+  ) : (
+    <View
+      style={{ flex: 1, backgroundColor: safeAreaBackgroundColor || 'white' }}
+    >
+      <ContainerComponent
+        style={style}
+        scrollable={scrollable}
+        keyboardAvoiding={keyboardAvoiding}
+      >
+        {children}
+      </ContainerComponent>
+    </View>
   )
 }
 
