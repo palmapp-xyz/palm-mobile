@@ -34,7 +34,8 @@ const MessageIncomingAvatar = ({
             navigation.push(Routes.UserProfile, {
               address: (sender.metaData as SbUserMetadata).address,
               profileId: sender.userId,
-              channel: channel,
+              channelUrl: channel.url,
+              isNavigationPerformedByOperator: channel.myRole === 'operator',
             })
           }}
         >

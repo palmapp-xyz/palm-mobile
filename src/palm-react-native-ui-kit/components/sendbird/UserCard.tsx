@@ -13,7 +13,7 @@ const UserCard = React.memo(
     handle,
     handleHighlight,
     picture,
-    showSelectedState,
+    showSelectedState = true,
     selected,
     onPress,
   }: {

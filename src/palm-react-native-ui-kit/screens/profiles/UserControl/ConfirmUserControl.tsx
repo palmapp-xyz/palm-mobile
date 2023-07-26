@@ -1,5 +1,5 @@
-import { useProfile } from '@lens-protocol/react'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
+import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
+import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { COLOR } from 'palm-core/consts'
 import { Routes } from 'palm-core/libs/navigation'
 import {
@@ -9,6 +9,7 @@ import {
 } from 'palm-react-native-ui-kit/components'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useToast from 'palm-react-native/app/useToast'
+import useProfile from 'palm-react/hooks/auth/useProfile'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, View } from 'react-native'
@@ -18,18 +19,21 @@ const ConfirmUserControl = React.memo(
   ({
     controlType,
     profileId,
-    channel,
+    channelUrl,
     setShowChannelUserControl,
   }: {
     controlType?: 'ban' | 'mute'
     profileId: string
-    channel: GroupChannel | undefined
+    channelUrl: string
     setShowChannelUserControl: React.Dispatch<React.SetStateAction<boolean>>
   }): ReactElement => {
     const { navigation } = useAppNavigation<Routes.UserProfile>()
     const toast = useToast()
     const { t } = useTranslation()
     const { profile } = useProfile({ profileId })
+
+    const { sdk } = useSendbirdChat()
+    const { channel } = useGroupChannel(sdk, channelUrl)
 
     const banUser = (): void => {
       channel

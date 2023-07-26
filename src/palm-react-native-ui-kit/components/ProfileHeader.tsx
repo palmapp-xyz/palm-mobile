@@ -5,7 +5,7 @@ import { ContractAddr, SupportedNetworkEnum } from 'palm-core/types'
 import { FormText, Row } from 'palm-react-native-ui-kit/components'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useProfile from 'palm-react/hooks/auth/useProfile'
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -19,13 +19,11 @@ import ProfileWalletBalances from './ProfileWalletBalances'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import Avatar from './sendbird/Avatar'
 
-import { GroupChannel } from '@sendbird/chat/groupChannel'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
 export type ProfileHeaderProps = {
   userAddress?: ContractAddr
   userProfileId?: string
   isMyPage: boolean
-  channel?: GroupChannel
+  isNavigationPerformedByOperator?: boolean
   selectedNetwork: SupportedNetworkEnum
   onNetworkSelected?: (selectedNetwork: SupportedNetworkEnum) => void
   onToggleShowUserTokensSheet?: () => void
@@ -37,7 +35,7 @@ const ProfileHeader = React.memo(
     userAddress,
     userProfileId,
     isMyPage,
-    channel,
+    isNavigationPerformedByOperator,
     selectedNetwork,
     onNetworkSelected,
     onToggleShowUserTokensSheet,
@@ -45,21 +43,6 @@ const ProfileHeader = React.memo(
   }: ProfileHeaderProps): ReactElement => {
     const { navigation } = useAppNavigation()
     const { t } = useTranslation()
-
-    const { sdk } = useSendbirdChat()
-
-    const [isOperator, setIsOperator] = React.useState<boolean>(false)
-    useEffect(() => {
-      const checkOperator = channel?.members.find(member => {
-        return (
-          member.role === 'operator' &&
-          member.userId === sdk?.currentUser?.userId
-        )
-      })
-      if (checkOperator) {
-        setIsOperator(true)
-      }
-    }, [])
 
     const { profile, lensProfile } = useProfile({ profileId: userProfileId! })
     const profileImg = getProfileMediaImg(profile?.picture)
@@ -122,7 +105,7 @@ const ProfileHeader = React.memo(
                     size={28}
                   />
                 </Pressable>
-                {isOperator && (
+                {isNavigationPerformedByOperator && (
                   <Pressable
                     style={styles.headerButton}
                     onPress={(): void => {
