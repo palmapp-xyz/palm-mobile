@@ -10,7 +10,7 @@ import useSign4Auth from 'palm-react/hooks/page/sign/useSign4Auth'
 import fetchApiStore from 'palm-react/store/fetchApiStore'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import RenderHtml from 'react-native-render-html'
 import { useRecoilValue } from 'recoil'
 

@@ -4,11 +4,11 @@ import { ApiEnum, ApiParamFabricated, ContractAddr } from 'palm-core/types'
 export default {
   [ApiEnum.AUTH_CHALLENGE_REQUEST]: {
     post: (): ApiParamFabricated =>
-      '/auth/legacy/challenge/request' as ApiParamFabricated,
+      '/auth/challenge/request' as ApiParamFabricated,
   },
   [ApiEnum.AUTH_CHALLENGE_VERIFY]: {
     post: (): ApiParamFabricated =>
-      '/auth/legacy/challenge/verify' as ApiParamFabricated,
+      '/auth/challenge/verify' as ApiParamFabricated,
   },
 
   [ApiEnum.TOKENS]: {
