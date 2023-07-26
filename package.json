@@ -188,5 +188,8 @@
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
     "stream": "stream-browserify"
+  },
+  "overrides": {
+    "react-devtools-core": "~4.25.0"
   }
 }
