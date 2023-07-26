@@ -13,14 +13,14 @@ const UserCard = React.memo(
     handle,
     handleHighlight,
     picture,
-    showSelected,
+    showSelectedState,
     selected,
     onPress,
   }: {
     handle?: string
     handleHighlight?: string
     picture?: ProfileMedia | string
-    showSelected?: boolean
+    showSelectedState?: boolean
     selected?: boolean
     onPress: () => void
   }): ReactElement => {
@@ -45,7 +45,7 @@ const UserCard = React.memo(
               </FormText>
             )}
           </View>
-          {showSelected && (
+          {showSelectedState && (
             <>
               {selected ? (
                 <Image source={images.checkbox_on} style={styles.image} />
