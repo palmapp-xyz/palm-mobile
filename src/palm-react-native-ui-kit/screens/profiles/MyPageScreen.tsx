@@ -96,7 +96,7 @@ const MyPageScreen = (): ReactElement => {
   return (
     <Container
       style={{ marginBottom: Platform.select({ ios: -30 }) }}
-      disableSafeArea
+      safeArea={false}
     >
       <FlatList
         refreshControl={
