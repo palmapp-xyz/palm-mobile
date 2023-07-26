@@ -33,7 +33,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { useIsFocused } from '@react-navigation/native'
 import { PushTriggerOption } from '@sendbird/chat'
-import { Member } from '@sendbird/chat/groupChannel'
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
 
@@ -47,8 +46,6 @@ const ChannelInfoScreen = (): ReactElement => {
   const { channel, channelName, tags, desc, gatingToken, loading } =
     useChannelInfo({ channelUrl: params.channelUrl })
 
-  const [channelMembers, setChannelMembers] = useState<Member[]>([])
-
   const isFocused = useIsFocused()
 
   useEffect(() => {
@@ -56,17 +53,6 @@ const ChannelInfoScreen = (): ReactElement => {
       channel?.refresh()
     }
   }, [isFocused])
-
-  useEffect(() => {
-    if (channel?.members) {
-      const sortedMembers = channel.members.sort(a => (a.profileUrl ? -1 : 1))
-      const moveToFirstMembers = UTIL.moveToFirstOfArray(
-        sortedMembers,
-        member => (member.metaData as SbUserMetadata).address === user?.address
-      )
-      setChannelMembers(moveToFirstMembers)
-    }
-  }, [channel?.members])
 
   const [isMute, setMute] = useState<boolean>()
 
@@ -221,7 +207,7 @@ const ChannelInfoScreen = (): ReactElement => {
             </Row>
             <View style={{ paddingTop: 16 }}>
               <FlatList
-                data={channelMembers}
+                data={channel?.members}
                 scrollEnabled={false}
                 keyExtractor={(item, index): string => `attributes-${index}`}
                 contentContainerStyle={{ gap: 10 }}
