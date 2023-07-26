@@ -50,7 +50,7 @@ const GroupChannelManageUserFragment = ({
                   onPress={(): void => {
                     onPressItem(item)
                   }}
-                  showSelected={isManageList}
+                  showSelectedState={isManageList}
                   selected={selectedMembers.includes(item)}
                 />
               </View>
