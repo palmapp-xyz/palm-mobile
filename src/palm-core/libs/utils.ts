@@ -345,11 +345,13 @@ const moveToFirstOfArray = <T>(
   array: T[],
   condition: (item: T) => boolean
 ): T[] => {
-  const findItem = array.find(condition)
-  if (findItem) {
-    const filteredArray = array.filter(item => item !== findItem)
-    filteredArray.unshift(findItem)
-    return filteredArray
+  for (let i = 0; i < array.length; i++) {
+    const item = array[i]
+    if (condition(item)) {
+      const newArray = array.splice(i, 1)
+      newArray.unshift(item)
+      return newArray
+    }
   }
 
   return array
