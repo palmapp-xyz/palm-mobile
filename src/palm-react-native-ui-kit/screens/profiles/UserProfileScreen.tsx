@@ -19,7 +19,12 @@ import ChannelUserControl from './UserControl/ChannelUserControl'
 
 const UserProfileScreen = (): ReactElement => {
   const { params } = useAppNavigation<Routes.UserProfile>()
-  const { address: userAddress, profileId, channelUrl } = params
+  const {
+    address: userAddress,
+    profileId,
+    channelUrl,
+    isNavigationPerformedByOperator,
+  } = params
 
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
@@ -38,7 +43,7 @@ const UserProfileScreen = (): ReactElement => {
   const profileHeader = (
     <ProfileHeader
       isMyPage={false}
-      channelUrl={channelUrl}
+      isNavigationPerformedByOperator={isNavigationPerformedByOperator}
       userProfileId={profileId}
       userAddress={userAddress}
       selectedNetwork={selectedNetwork}

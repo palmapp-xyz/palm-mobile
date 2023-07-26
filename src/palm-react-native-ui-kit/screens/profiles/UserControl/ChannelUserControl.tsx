@@ -1,6 +1,4 @@
 import { BottomSheetView } from '@gorhom/bottom-sheet'
-import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
-import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { FormBottomSheet } from 'palm-react-native-ui-kit/components'
 import React, { ReactElement, useState } from 'react'
 import { Platform, StyleSheet } from 'react-native'
@@ -23,9 +21,6 @@ const ChannelUserControl = ({
     undefined
   )
 
-  const { sdk } = useSendbirdChat()
-  const { channel } = useGroupChannel(sdk, channelUrl)
-
   const snapPoints = selected ? ['60%'] : ['30%']
 
   const { bottom } = useSafeAreaInsets()
@@ -33,7 +28,6 @@ const ChannelUserControl = ({
   return (
     <FormBottomSheet
       showBottomSheet={showChannelUserControl}
-      // snapPoints={['auto']}
       snapPoints={snapPoints}
       onClose={(): void => {
         setSelected(undefined)
@@ -54,7 +48,7 @@ const ChannelUserControl = ({
         ) : (
           <ConfirmUserControl
             profileId={profileId}
-            channel={channel}
+            channelUrl={channelUrl}
             controlType={selected}
             setShowChannelUserControl={setShowChannelUserControl}
           />

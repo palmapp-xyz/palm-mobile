@@ -51,7 +51,9 @@ const GroupChannelHeader = ({
                 navigation.push(Routes.UserProfile, {
                   address: (otherDMUser.metaData as SbUserMetadata).address,
                   profileId: otherDMUser.userId,
-                  channel: channel,
+                  channelUrl: channel.url,
+                  isNavigationPerformedByOperator:
+                    channel.myRole === 'operator',
                 })
               }}
             >
