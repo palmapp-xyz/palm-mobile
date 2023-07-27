@@ -14,8 +14,8 @@ import {
   RefreshControl,
 } from 'react-native'
 
+import ChannelUserControl from '../../components/channel/ChannelUserControl/ChannelUserControl'
 import ProfileHeader from '../../components/ProfileHeader'
-import ChannelUserControl from './UserControl/ChannelUserControl'
 
 const UserProfileScreen = (): ReactElement => {
   const { params } = useAppNavigation<Routes.UserProfile>()

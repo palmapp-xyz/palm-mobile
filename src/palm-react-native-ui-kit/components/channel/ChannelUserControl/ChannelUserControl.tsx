@@ -3,8 +3,8 @@ import { FormBottomSheet } from 'palm-react-native-ui-kit/components'
 import React, { ReactElement, useState } from 'react'
 import { Platform, StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import ConfirmUserControl from './ConfirmUserControl'
-import UserControlMenu from './UserControlMenu'
+import UserControlMenu from './ChannelUserControlMenu'
+import ConfirmUserControl from './ConfirmChannelUserControl'
 
 const ChannelUserControl = ({
   showChannelUserControl,
