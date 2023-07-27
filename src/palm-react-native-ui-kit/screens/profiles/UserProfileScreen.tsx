@@ -14,7 +14,7 @@ import {
   RefreshControl,
 } from 'react-native'
 
-import ChannelUserControl from '../../components/channel/ChannelUserControl/ChannelUserControl'
+import { ChannelUserControl } from 'palm-react-native-ui-kit/components/channel/ChannelUserControl'
 import ProfileHeader from '../../components/ProfileHeader'
 
 const UserProfileScreen = (): ReactElement => {

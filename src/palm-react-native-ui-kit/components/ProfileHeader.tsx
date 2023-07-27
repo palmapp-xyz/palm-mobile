@@ -10,12 +10,12 @@ import { useTranslation } from 'react-i18next'
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import ChannelUserControlButton from 'palm-react-native-ui-kit/components/channel/ChannelUserControl/ChannelUserControlButton'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import LensProfileHeaderSection from './LensProfileHeaderSection'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
 import ProfileWalletAddress from './ProfileWalletAddress'
 import ProfileWalletBalances from './ProfileWalletBalances'
+import { ChannelUserControlButton } from './channel/ChannelUserControl'
 import SupportedNetworkRow from './molecules/SupportedNetworkRow'
 import Avatar from './sendbird/Avatar'
 
