@@ -6,9 +6,7 @@ import { FormText } from 'palm-react-native-ui-kit/components'
 import ChatCard from 'palm-react-native-ui-kit/components/exploreTab/ChatCard'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useExploreRecommendChat from 'palm-react/hooks/page/explore/useExploreRecommendChat'
-import {
-  UseExploreSearchReturn,
-} from 'palm-react/hooks/page/explore/useExploreSearch'
+import { UseExploreSearchReturn } from 'palm-react/hooks/page/explore/useExploreSearch'
 import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -37,11 +35,11 @@ const RecommendChat = ({
           navigation.navigate(Routes.GroupChannel, {
             channelUrl,
           })
+        } else {
+          setSelectedChannel(chat)
         }
-        return
       } catch {}
     }
-    setSelectedChannel(chat)
   }
 
   return (
