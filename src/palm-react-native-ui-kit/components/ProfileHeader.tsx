@@ -9,8 +9,8 @@ import React, { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+import ChannelUserControlButton from 'palm-react-native-ui-kit/components/channel/ChannelUserControl/ChannelUserControlButton'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import LensProfileHeaderSection from './LensProfileHeaderSection'
 import ProfileHeaderChatButton from './ProfileHeaderChatButton'
@@ -106,18 +106,10 @@ const ProfileHeader = React.memo(
                   />
                 </Pressable>
                 {isNavigationPerformedByOperator && (
-                  <Pressable
+                  <ChannelUserControlButton
                     style={styles.headerButton}
-                    onPress={(): void => {
-                      onToggleChannelUserControl?.()
-                    }}
-                  >
-                    <MaterialIcons
-                      name="more-horiz"
-                      color={COLOR.black._800}
-                      size={28}
-                    />
-                  </Pressable>
+                    onToggleChannelUserControl={onToggleChannelUserControl}
+                  />
                 )}
               </View>
             )}
