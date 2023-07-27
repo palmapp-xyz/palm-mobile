@@ -50,7 +50,7 @@ const ProfileHeaderChatButton = React.memo(
           channel = await createGroupChat({
             channelName: userProfile!.handle!,
             coverImage: getProfileMediaImg(userProfile),
-            invitedUserIds: [],
+            invitedUserIds: [userProfile!.profileId],
             operatorUserIds: [],
             channelType: ChannelType.DIRECT,
           })
