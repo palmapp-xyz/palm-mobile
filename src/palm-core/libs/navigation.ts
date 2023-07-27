@@ -17,7 +17,6 @@ import {
 import { GetSendbirdSDK } from './sendbird'
 
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
-
 import type { SendbirdChatSDK } from '@sendbird/uikit-utils'
 export enum Routes {
   MainNavigator = 'MainNavigator',
@@ -148,6 +147,8 @@ type MainRouteParamsUnion =
       params: {
         address: ContractAddr
         profileId: string
+        channelUrl?: string
+        isNavigationPerformedByOperator?: boolean
       }
     }
   | {

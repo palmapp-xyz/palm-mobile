@@ -17,8 +17,7 @@ import {
 } from 'react-native'
 
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
-
-import ProfileHeader from '../../components/ProfileHeader'
+import ProfileHeader from 'palm-react-native-ui-kit/components/ProfileHeader'
 
 const MyPageScreen = (): ReactElement => {
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
@@ -95,7 +94,10 @@ const MyPageScreen = (): ReactElement => {
   )
 
   return (
-    <Container style={{ marginBottom: Platform.select({ ios: -30 }) }}>
+    <Container
+      style={{ marginBottom: Platform.select({ ios: -30 }) }}
+      safeArea={false}
+    >
       <FlatList
         refreshControl={
           <RefreshControl
@@ -127,7 +129,7 @@ const MyPageScreen = (): ReactElement => {
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         numColumns={2}
-        contentContainerStyle={{ paddingHorizontal: 8, gap: 4 }}
+        contentContainerStyle={{ gap: 4 }}
         columnWrapperStyle={{ gap: 8 }}
         renderItem={({
           item,

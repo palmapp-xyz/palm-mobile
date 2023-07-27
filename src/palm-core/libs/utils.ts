@@ -341,6 +341,22 @@ const toBoolean = (str: string): boolean => {
   return str.trim().toLowerCase() === 'true'
 }
 
+const moveToFirstOfArray = <T>(
+  array: T[],
+  condition: (item: T) => boolean
+): T[] => {
+  for (let i = 0; i < array.length; i++) {
+    const item = array[i]
+    if (condition(item)) {
+      const newArray = array.splice(i, 1)
+      newArray.unshift(item)
+      return newArray
+    }
+  }
+
+  return array
+}
+
 export default {
   getContrastColor,
   findColorNameFromPalette,
@@ -378,4 +394,5 @@ export default {
   noUndefinedObj,
   isValidPrice,
   toBoolean,
+  moveToFirstOfArray,
 }

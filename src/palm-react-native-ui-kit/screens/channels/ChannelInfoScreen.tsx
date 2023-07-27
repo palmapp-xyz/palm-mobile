@@ -31,6 +31,7 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+import { useIsFocused } from '@react-navigation/native'
 import { PushTriggerOption } from '@sendbird/chat'
 import { useLocalization, useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAlert } from '@sendbird/uikit-react-native-foundation'
@@ -45,8 +46,13 @@ const ChannelInfoScreen = (): ReactElement => {
   const { channel, channelName, tags, desc, gatingToken, loading } =
     useChannelInfo({ channelUrl: params.channelUrl })
 
-  const channelMembers =
-    channel?.members.sort(a => (a.profileUrl ? -1 : 1)) || []
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    if (isFocused) {
+      channel?.refresh()
+    }
+  }, [isFocused])
 
   const [isMute, setMute] = useState<boolean>()
 
@@ -108,7 +114,7 @@ const ChannelInfoScreen = (): ReactElement => {
               </FormText>
             </View>
             <View style={styles.section}>
-              <FormText color={COLOR.black._400}>
+              <FormText color={COLOR.black._300}>
                 {t('Channels.ChannelInfoMemberAndDate', {
                   memberCount: channel.memberCount,
                   createAt: format(new Date(channel.createdAt), 'yy.MM.dd'),
@@ -201,7 +207,7 @@ const ChannelInfoScreen = (): ReactElement => {
             </Row>
             <View style={{ paddingTop: 16 }}>
               <FlatList
-                data={channelMembers}
+                data={channel?.members}
                 scrollEnabled={false}
                 keyExtractor={(item, index): string => `attributes-${index}`}
                 contentContainerStyle={{ gap: 10 }}
@@ -224,6 +230,9 @@ const ChannelInfoScreen = (): ReactElement => {
                         navigation.push(Routes.UserProfile, {
                           address: targetAddress,
                           profileId: item.userId,
+                          channelUrl: channel.url,
+                          isNavigationPerformedByOperator:
+                            channel.myRole === 'operator',
                         })
                       }}
                     >
@@ -301,8 +310,6 @@ const ChannelInfoScreen = (): ReactElement => {
   )
 }
 
-export default ChannelInfoScreen
-
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLOR.black._10 },
   section: {
@@ -337,3 +344,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
+
+export default ChannelInfoScreen

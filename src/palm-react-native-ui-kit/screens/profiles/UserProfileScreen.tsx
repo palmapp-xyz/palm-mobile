@@ -14,11 +14,17 @@ import {
   RefreshControl,
 } from 'react-native'
 
+import { ChannelUserControl } from 'palm-react-native-ui-kit/components/channel/ChannelUserControl'
 import ProfileHeader from '../../components/ProfileHeader'
 
 const UserProfileScreen = (): ReactElement => {
   const { params } = useAppNavigation<Routes.UserProfile>()
-  const { address: userAddress, profileId } = params
+  const {
+    address: userAddress,
+    profileId,
+    channelUrl,
+    isNavigationPerformedByOperator,
+  } = params
 
   const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetworkEnum>(
     SupportedNetworkEnum.ETHEREUM
@@ -31,13 +37,20 @@ const UserProfileScreen = (): ReactElement => {
     selectedNetwork,
   })
 
+  const [showChannelUserControl, setShowChannelUserControl] =
+    useState<boolean>(false)
+
   const profileHeader = (
     <ProfileHeader
       isMyPage={false}
+      isNavigationPerformedByOperator={isNavigationPerformedByOperator}
       userProfileId={profileId}
       userAddress={userAddress}
       selectedNetwork={selectedNetwork}
       onNetworkSelected={setSelectedNetwork}
+      onToggleChannelUserControl={(): void => {
+        setShowChannelUserControl(true)
+      }}
     />
   )
 
@@ -46,7 +59,10 @@ const UserProfileScreen = (): ReactElement => {
   )
 
   return (
-    <Container style={{ marginBottom: Platform.select({ ios: -30 }) }}>
+    <Container
+      style={{ flex: 1, marginBottom: Platform.select({ ios: -30 }) }}
+      safeArea={false}
+    >
       <FlatList
         refreshControl={
           <RefreshControl
@@ -71,7 +87,7 @@ const UserProfileScreen = (): ReactElement => {
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         numColumns={2}
-        contentContainerStyle={{ paddingHorizontal: 8, gap: 4 }}
+        contentContainerStyle={{ gap: 4 }}
         columnWrapperStyle={{ gap: 8 }}
         renderItem={({
           item,
@@ -83,6 +99,7 @@ const UserProfileScreen = (): ReactElement => {
             />
           )
         }}
+        style={{ flex: 1 }}
       />
 
       {selectedCollectionNft && (
@@ -90,6 +107,15 @@ const UserProfileScreen = (): ReactElement => {
           userAddress={userAddress!}
           selectedCollectionNft={selectedCollectionNft}
           onClose={(): void => setSelectedCollectionNft(null)}
+        />
+      )}
+
+      {channelUrl && (
+        <ChannelUserControl
+          showChannelUserControl={showChannelUserControl}
+          setShowChannelUserControl={setShowChannelUserControl}
+          profileId={profileId}
+          channelUrl={channelUrl}
         />
       )}
     </Container>

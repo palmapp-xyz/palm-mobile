@@ -270,7 +270,9 @@ const ConfirmModal = ({
             </Row>
           </Row>
           <Row style={{ justifyContent: 'space-between' }}>
-            <FormText font={'B'}>{t('Nft.Total')}</FormText>
+            <FormText font={'B'}>
+              {t('Nft.SendTokenConfirmModalTotal')}
+            </FormText>
             <Row style={{ gap: 2 }}>
               <FormText>{total}</FormText>
               <FormText color={COLOR.black._300}>{tokenSymbol}</FormText>

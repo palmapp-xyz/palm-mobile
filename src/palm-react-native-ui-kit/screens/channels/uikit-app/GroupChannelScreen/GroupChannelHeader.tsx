@@ -4,9 +4,7 @@ import { FormImage, Row } from 'palm-react-native-ui-kit/components'
 import Avatar from 'palm-react-native-ui-kit/components/sendbird/Avatar'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
-import {
-  SENDBIRD_STATIC_SAMPLE,
-} from 'palm-react/hooks/page/groupChannel/useChannelInfo'
+import { SENDBIRD_STATIC_SAMPLE } from 'palm-react/hooks/page/groupChannel/useChannelInfo'
 import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useContext } from 'react'
 import { TouchableOpacity, View } from 'react-native'
@@ -19,8 +17,8 @@ import {
   useLocalization,
 } from '@sendbird/uikit-react-native'
 import {
-  createStyleSheet,
   Header,
+  createStyleSheet,
   useHeaderStyle,
 } from '@sendbird/uikit-react-native-foundation'
 
@@ -53,6 +51,9 @@ const GroupChannelHeader = ({
                 navigation.push(Routes.UserProfile, {
                   address: (otherDMUser.metaData as SbUserMetadata).address,
                   profileId: otherDMUser.userId,
+                  channelUrl: channel.url,
+                  isNavigationPerformedByOperator:
+                    channel.myRole === 'operator',
                 })
               }}
             >

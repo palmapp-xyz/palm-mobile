@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 8,
   },
   headerTextBox: {
     borderRadius: 16,
