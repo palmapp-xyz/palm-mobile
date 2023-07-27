@@ -594,9 +594,6 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (5.7.1):
-    - React-Core
-    - Sentry/HybridSDK (= 8.8.0)
   - RNSound (0.11.2):
     - React-Core
     - RNSound/Core (= 0.11.2)
@@ -610,9 +607,6 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry/HybridSDK (8.8.0):
-    - SentryPrivate (= 8.8.0)
-  - SentryPrivate (8.8.0)
   - SSZipArchive (2.2.3)
   - Yoga (1.14.0)
   - ZIPFoundation (0.9.11)
@@ -700,7 +694,6 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -729,8 +722,6 @@ SPEC REPOS:
     - PromisesSwift
     - SDWebImage
     - SDWebImageWebPCoder
-    - Sentry
-    - SentryPrivate
     - SSZipArchive
     - ZIPFoundation
 
@@ -893,8 +884,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNSentry:
-    :path: "../node_modules/@sentry/react-native"
   RNSound:
     :path: "../node_modules/react-native-sound"
   RNSVG:
@@ -1002,17 +991,14 @@ SPEC CHECKSUMS:
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNReanimated: c931b356bda56c0196110bdc462e48e4c2668dc3
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSentry: 4e4fc87b53002c015f644cb7207d4b598bc3703f
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 927dfb29d18a14d924229a59cc2ad149f43349f2
-  SentryPrivate: 4350d865f898224ab9fa02b37d6ee7fbb623f47e
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   Yoga: 5ed1699acbba8863755998a4245daa200ff3817b
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
 PODFILE CHECKSUM: 228d747db9e40a4fb1d7a401cb0906ba1af96576
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.11.3

@@ -85,5 +85,3 @@ android/app/release/app-release.aab
 
 src/palm-core/firebase/firebase-testnet.config.json
 src/palm-core/firebase/firebase-mainnet.config.json
-
-**/sentry.properties
