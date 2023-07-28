@@ -9,11 +9,11 @@ import {
   ContractAddr,
   FbProfile,
   NftType,
-  pToken,
   QueryKeyEnum,
   SbBuyNftDataType,
   SbUserMetadata,
   SupportedNetworkEnum,
+  pToken,
 } from 'palm-core/types'
 import {
   Container,
@@ -35,7 +35,7 @@ import useZxOrder from 'palm-react/hooks/zx/useZxOrder'
 import appStore from 'palm-react/store/appStore'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useSetRecoilState } from 'recoil'
 
@@ -43,6 +43,7 @@ import { useGroupChannel } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
+import useToast from 'palm-react-native/app/useToast'
 import NftDetails from '../../components/NftDetails'
 
 const InitNftUri = ({
@@ -95,6 +96,7 @@ const ZxNftDetailScreen = (): ReactElement => {
   const { sdk } = useSendbirdChat()
   const { channel } = useGroupChannel(sdk, channelUrl)
   const { t } = useTranslation()
+  const toast = useToast()
 
   const { onClickConfirm: onClickCancel } = useZxCancelNft(
     channelUrl,
@@ -124,12 +126,12 @@ const ZxNftDetailScreen = (): ReactElement => {
         myTargetBalance
       )
       if (hasEnoughBalance === false) {
-        Alert.alert(
-          t('Nft.ZxNftDetailInsufficientBalanceAlertTitle'),
-          t('Nft.ZxNftDetailInsufficientBalanceAlertMessage', {
+        toast.show(
+          t('Nft.ZxNftDetailInsufficientBalanceToast', {
             balance: UTIL.formatAmountP(myTargetBalance),
             token: NETWORK.nativeToken[chain],
-          })
+          }),
+          { icon: 'info', color: 'red' }
         )
         return
       }

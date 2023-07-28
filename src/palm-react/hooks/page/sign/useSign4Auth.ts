@@ -5,10 +5,9 @@ import useAuthChallenge from 'palm-react/hooks/api/useAuthChallenge'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import appStore from 'palm-react/store/appStore'
 import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useSetRecoilState } from 'recoil'
 
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'palm-react-native/app/useToast'
 
 export type UseSign4AuthReturn = {
   challenge?: AuthChallengeInfo
@@ -19,24 +18,20 @@ const useSign4Auth = (): UseSign4AuthReturn => {
   const { appSignIn } = useAuth()
   const setLoading = useSetRecoilState(appStore.loading)
   const { challenge, verify } = useAuthChallenge()
-  const { alert } = useAlert()
-  const { t } = useTranslation()
+  const toast = useToast()
 
   const signChallenge = async (): Promise<void> => {
     setLoading(true)
-    if (challenge) {
-      try {
+    try {
+      if (challenge) {
         const result = await verify()
         await appSignIn(result!)
-      } catch (e) {
-        recordError(e, 'signChallenge')
-        alert({
-          title: t('Auth.Sign4AuthFailureAlertTitle'),
-          message: _.toString(e),
-        })
-      } finally {
-        setLoading(false)
       }
+    } catch (e) {
+      recordError(e, 'signChallenge')
+      toast.show(_.toString(e), { icon: 'info', color: 'red' })
+    } finally {
+      setLoading(false)
     }
   }
 

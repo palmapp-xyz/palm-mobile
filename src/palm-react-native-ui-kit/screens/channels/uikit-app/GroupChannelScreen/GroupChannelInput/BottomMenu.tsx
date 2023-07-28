@@ -1,5 +1,6 @@
 import { COLOR } from 'palm-core/consts'
 import { FormImage, FormText, Row } from 'palm-react-native-ui-kit/components'
+import useToast from 'palm-react-native/app/useToast'
 import {
   StepAfterSelectItemType,
   UseGcInputReturn,
@@ -16,6 +17,7 @@ const BottomMenu = ({
 }): ReactElement => {
   const { receiverList, setOpenSelectReceiver } = useGcInputReturn
   const { t } = useTranslation()
+  const toast = useToast()
 
   const menuList: {
     key: StepAfterSelectItemType
@@ -67,7 +69,7 @@ const BottomMenu = ({
               receiverId: receiverList[0].userId,
             })
           } else {
-            Alert.alert('No one to send token')
+            toast.show('No one to send token', { icon: 'info', color: 'red' })
           }
         },
         title: 'Send Token',

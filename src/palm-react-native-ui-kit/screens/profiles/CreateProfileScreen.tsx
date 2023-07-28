@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useRecoilState } from 'recoil'
 
-import { useAlert } from '@sendbird/uikit-react-native-foundation'
+import useToast from 'palm-react-native/app/useToast'
 
 const CreateProfileScreen = (): ReactElement => {
   const { navigation } = useAppNavigation()
@@ -32,7 +32,8 @@ const CreateProfileScreen = (): ReactElement => {
   const { profile, createProfile } = useProfile({
     profileId: user?.auth?.profileId!,
   })
-  const { alert } = useAlert()
+  const toast = useToast()
+
   const testnet = !UTIL.isMainnet()
 
   const maxBioLength = 300
@@ -47,15 +48,26 @@ const CreateProfileScreen = (): ReactElement => {
       createProfile(handle, bio, testnet)
         .then(res => {
           if (!res.success) {
-            recordError(new Error(res.errMsg), 'createProfile:onClickConfirm')
-            alert({ message: res.errMsg })
+            recordError(
+              new Error(res.errMsg),
+              'createProfile:onClickConfirm:fail'
+            )
+
+            const errorMessage = UTIL.jsonTryParse<any>(res.errMsg)
+            toast.show(
+              errorMessage?.networkError?.result?.errors[0]?.message ??
+                errorMessage?.message,
+              { icon: 'info', color: 'red' }
+            )
           }
         })
         .catch(error => {
-          recordError(error, 'createProfile:onClickConfirm')
-          alert({ message: JSON.stringify(error) })
+          recordError(error, 'createProfile:onClickConfirm:catch')
+          toast.show(error, { icon: 'info', color: 'red' })
         })
-        .finally(() => setLoading(false))
+        .finally(() => {
+          setLoading(false)
+        })
     }, 300)
   }
 
