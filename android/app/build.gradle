@@ -110,7 +110,7 @@ android {
 
     namespace "palmapp.xyz"
 
-    def buildNumber = 34
+    def buildNumber = 35
     project.ext.set("versionCode", buildNumber)
 
     defaultConfig {
