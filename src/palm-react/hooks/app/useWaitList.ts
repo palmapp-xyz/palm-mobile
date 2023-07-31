@@ -38,7 +38,7 @@ const useWaitList = (): {
   const fetchConfig = async (): Promise<void> => {
     try {
       const ret = await fetchWithTimeout(
-        'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/config.json?cache=0',
+        'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/config_v2.json?cache=0',
         5000
       )
 
