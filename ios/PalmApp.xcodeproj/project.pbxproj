@@ -840,7 +840,7 @@
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
@@ -874,7 +874,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KW7NUT7GJK;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Mainnet-Info.plist";
@@ -892,7 +892,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz;
 				PRODUCT_NAME = PalmApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc palmapp.xyz";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Palm Mainnet - appstore";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -907,7 +907,7 @@
 				CODE_SIGN_ENTITLEMENTS = PalmApp/PalmApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_TEAM = KW7NUT7GJK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
@@ -941,7 +941,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KW7NUT7GJK;
 				INFOPLIST_FILE = "PalmApp/PalmApp-Testnet-Info.plist";
@@ -959,7 +959,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz.testnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc palmapp.xyz.testnet";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Palm Testnet - appstore";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
