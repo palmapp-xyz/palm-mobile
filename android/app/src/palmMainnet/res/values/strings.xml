@@ -2,5 +2,5 @@
     <string name="app_name">Palm</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
-    <string name="CodePushDeploymentKey" moduleConfig="true" translatable="false">Gk0m4GjyfwRMtxfrECQf2-C54jOZenilEcu1K</string>
+    <string name="CodePushDeploymentKey" moduleConfig="true" translatable="false">4cf7W83BVQmWo07oDjOlntLu5AdXV1tZYARzJ</string>
 </resources>
