@@ -89,7 +89,7 @@ platform :ios do
     if options[:bump]
       bump_build_version
     end
-    build(export_method: "ad-hoc", export_type: "adhoc")
+    build(export_method: "app-store", export_type: "appstore")
 
     version = get_version_number(
       xcodeproj: "./ios/PalmApp.xcodeproj",
