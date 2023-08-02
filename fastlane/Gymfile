@@ -18,6 +18,6 @@ output_directory("./ios/build")
 
 output_name("#{ENV['FASTLANE_APP_NAME']}.ipa")
 
-include_symbols(false)
+include_symbols(true)
 
-include_bitcode(false)
+include_bitcode(true)

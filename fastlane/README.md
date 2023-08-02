@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios app_store_connect
+
+```sh
+[bundle exec] fastlane ios app_store_connect
+```
+
+
+
 ### ios bump_build_version
 
 ```sh
@@ -54,6 +62,14 @@ Fetch certificates, build and upload to App Center.
 ```
 
 Codepush: Fetch certificates, build and upload to App Center.
+
+### ios prod
+
+```sh
+[bundle exec] fastlane ios prod
+```
+
+Fetch certificates, build and upload to Testflight.
 
 ----
 

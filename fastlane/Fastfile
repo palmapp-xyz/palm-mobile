@@ -12,6 +12,14 @@ platform :ios do
     end
   end
 
+  lane :app_store_connect do
+    app_store_connect_api_key(
+      key_id: ENV["FASTLANE_APP_STORE_CONNECT_API_KEY_ID"],
+      issuer_id: ENV["FASTLANE_APP_STORE_CONNECT_API_KEY_ISSUER_ID"],
+      key_filepath: ENV["FASTLANE_APP_STORE_CONNECT_API_KEY_FILE"]
+    )
+  end
+
   lane :bump_build_version do
     increment_build_number(xcodeproj: './ios/PalmApp.xcodeproj')
     commit_version_bump(message: 'Bump iOS build', xcodeproj: './ios/PalmApp.xcodeproj')
@@ -26,14 +34,14 @@ platform :ios do
   end
 
   desc 'Fetch certificates and provisioning profiles'
-  lane :certificates do
+  lane :certificates do |options|
     cert(
       username: ENV["FASTLANE_USERNAME"],
       team_id: ENV["FASTLANE_TEAM_ID"],
       team_name: ENV["FASTLANE_TEAM_NAME"],
     )
     match(
-      type: "adhoc",
+      type: options[:export_type],
       app_identifier: ENV["BUNDLE_ID"],
       username: ENV["FASTLANE_USERNAME"],
       git_url: ENV["FASTLANE_MATCH_GIT_URL"],
@@ -44,9 +52,19 @@ platform :ios do
   end
 
   desc 'Fetch certificates. Build the iOS application.'
-  lane :build do
-    certificates
-    gym
+  lane :build do |options|
+    puts options
+    certificates(export_type: options[:export_type])
+    gym(
+      scheme: "#{ENV['FASTLANE_APP_NAME']}",
+      clean: true,
+      workspace: "./ios/PalmApp.xcworkspace",
+      export_method: options[:export_method],
+      output_directory: "./ios/build",
+      output_name: "#{ENV['FASTLANE_APP_NAME']}.ipa",
+      include_symbols: true,
+      include_bitcode: true
+    )
   end
 
   desc 'Fetch certificates, build and upload to App Center.'
@@ -54,7 +72,7 @@ platform :ios do
     if options[:bump]
       bump_build_version
     end
-    build
+    build(export_method: "ad-hoc", export_type: "adhoc")
     appcenter_upload(
       api_token: ENV["APPCENTER_IOS_API_TOKEN"],
       owner_name: ENV["APPCENTER_OWNER_NAME"],
@@ -71,7 +89,7 @@ platform :ios do
     if options[:bump]
       bump_build_version
     end
-    build
+    build(export_method: "ad-hoc", export_type: "adhoc")
 
     version = get_version_number(
       xcodeproj: "./ios/PalmApp.xcodeproj",
@@ -98,6 +116,18 @@ platform :ios do
       target_binary_version: "#{version}"
     )
     # codepush_logout
+  end
+
+  desc 'Fetch certificates, build and upload to Testflight.'
+  lane :prod do |options|
+    if options[:bump]
+      bump_build_version
+    end
+    build(export_method: "app-store", export_type: "appstore")
+    pilot(
+      distribute_external: true,
+      groups: ["internal", "Alpha test"],
+    )
   end
 
 end
