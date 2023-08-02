@@ -125,6 +125,7 @@ platform :ios do
     end
     build(export_method: "app-store", export_type: "appstore")
     pilot(
+      username: ENV['FASTLANE_USERNAME'],
       distribute_external: true,
       groups: ["internal", "Alpha test"],
     )
