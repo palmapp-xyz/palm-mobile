@@ -1,4 +1,6 @@
 // import useExplorer from 'hooks/complex/useExplorer'
+import { logEvent } from 'firebase/analytics'
+import { analytics } from 'palm-core/firebase'
 import { UTIL } from 'palm-core/libs'
 import { navigationRef, Routes } from 'palm-core/libs/navigation'
 import {
@@ -71,6 +73,7 @@ const useSendNft = ({
   }, [user?.address, receiver])
 
   const onClickConfirm = async (): Promise<PostTxReturn | undefined> => {
+    logEvent(analytics, 'send_nft_confirm')
     return postTx({ data: postData })
   }
 

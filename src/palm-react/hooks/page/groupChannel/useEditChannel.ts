@@ -1,5 +1,6 @@
+import { logEvent } from 'firebase/analytics'
 import { NETWORK } from 'palm-core/consts'
-import { updateDoc } from 'palm-core/firebase'
+import { analytics, updateDoc } from 'palm-core/firebase'
 import { UTIL } from 'palm-core/libs'
 import { recordError } from 'palm-core/libs/logger'
 import { Routes } from 'palm-core/libs/navigation'
@@ -150,9 +151,11 @@ const useEditChannel = ({
         }
 
         if (selectedGatingToken) {
+          logEvent(analytics, 'edit_channel_token_gating')
           updateParam.gating = selectedGatingToken
         }
         await updateDoc(fsChannel, updateParam)
+        logEvent(analytics, 'edit_channel')
 
         alert({
           message: t('Channels.ChannelInfoUpdatedAlertMessage'),

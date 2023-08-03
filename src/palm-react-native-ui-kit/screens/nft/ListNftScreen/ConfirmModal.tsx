@@ -1,6 +1,8 @@
 import { SignedNftOrderV4Serialized } from 'evm-nft-swap'
+import { logEvent } from 'firebase/analytics'
 import _ from 'lodash'
 import { COLOR } from 'palm-core/consts'
+import { analytics } from 'palm-core/firebase'
 import { UTIL } from 'palm-core/libs'
 import { Routes } from 'palm-core/libs/navigation'
 import { nftUriFetcher } from 'palm-core/libs/nft'
@@ -75,6 +77,7 @@ const ConfirmModal = ({
         address: profile.address,
       } as SbUserMetadata,
     })
+    logEvent(analytics, 'list_nft_confirm')
     channel.sendFileMessage(imgInfo)
   }
 

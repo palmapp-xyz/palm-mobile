@@ -1,4 +1,5 @@
-import { updateDoc } from 'palm-core/firebase'
+import { logEvent } from 'firebase/analytics'
+import { analytics, updateDoc } from 'palm-core/firebase'
 import { Profile, ProfileMedia } from 'palm-core/graphqls'
 import { UTIL } from 'palm-core/libs'
 import { fetchNftImage } from 'palm-core/libs/fetchTokenUri'
@@ -90,6 +91,8 @@ const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
       return { success: false, errMsg: 'user does not exist.' }
     }
 
+    logEvent(analytics, 'create_profile')
+
     if (createOnLens) {
       try {
         const res = await createLensProfile({
@@ -131,6 +134,8 @@ const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
         errMsg: `updateProfileImage: invalid nft item ${item}`,
       }
     }
+
+    logEvent(analytics, 'update_profile_image')
 
     let txHash: string | undefined
 
@@ -208,6 +213,8 @@ const useProfile = ({ profileId }: { profileId: string }): UseProfileReturn => {
         errMsg: `setMetadata: unsupported metadata field included ${metadata}`,
       }
     }
+
+    logEvent(analytics, 'update_profile_metadata')
 
     let value:
       | {

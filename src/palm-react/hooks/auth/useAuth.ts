@@ -1,8 +1,10 @@
+import { setUserId, setUserProperties } from 'firebase/analytics'
 import _ from 'lodash'
 import {
+  User as AuthUser,
+  analytics,
   appAuth,
   signInWithCustomToken,
-  User as AuthUser,
 } from 'palm-core/firebase'
 import { AuthenticationResult } from 'palm-core/graphqls'
 import { UTIL } from 'palm-core/libs'
@@ -158,6 +160,11 @@ const useAuth = (): UseAuthReturn => {
       await sbUser.createMetaData(data)
     }
     setCurrentUser(sbUser)
+
+    setUserId(analytics, authResult.profileId)
+    setUserProperties(analytics, {
+      address: authResult.address as ContractAddr,
+    })
 
     console.log(
       'App signed in as',

@@ -1,3 +1,4 @@
+import { getAnalytics } from 'firebase/analytics'
 import { FirebaseOptions, initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import {
@@ -25,6 +26,7 @@ export const firebaseApp = initializeApp(
 )
 
 export const firestore = getFirestore(firebaseApp)
+export const analytics = getAnalytics(firebaseApp)
 export const appAuth = getAuth(firebaseApp)
 
 export * from 'firebase/auth'

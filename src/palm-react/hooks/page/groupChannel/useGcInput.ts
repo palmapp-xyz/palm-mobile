@@ -1,4 +1,6 @@
+import { logEvent } from 'firebase/analytics'
 import _ from 'lodash'
+import { analytics } from 'palm-core/firebase'
 import { Routes } from 'palm-core/libs/navigation'
 import { nftUriFetcher } from 'palm-core/libs/nft'
 import { stringifyMsgData } from 'palm-core/libs/sendbird'
@@ -176,13 +178,16 @@ const useGcInput = ({
             return imgInfo
           })
         )
+        logEvent(analytics, 'share_nft')
         channel.sendFileMessages(fileMessages)
         onChangeNetwork(SupportedNetworkEnum.ETHEREUM)
       } else if (_stepAfterSelectItem === 'list') {
+        logEvent(analytics, 'list_nft_click')
         navigation.navigate(Routes.ListNft, { channelUrl: channel.url })
         setSelectedNetwork(SupportedNetworkEnum.ETHEREUM)
         setSelectedCollection(undefined)
       } else if (_stepAfterSelectItem === 'send-nft') {
+        logEvent(analytics, 'send_nft_click')
         navigation.navigate(Routes.SendNft, {
           receiverId: assetReceiverId,
           channelUrl: channel.url,
@@ -192,6 +197,7 @@ const useGcInput = ({
       }
     } else if (selectedToken) {
       if (_stepAfterSelectItem === 'send-token') {
+        logEvent(analytics, 'send_token_click')
         navigation.navigate(Routes.SendToken, {
           receiverId: assetReceiverId,
           channelUrl: channel.url,

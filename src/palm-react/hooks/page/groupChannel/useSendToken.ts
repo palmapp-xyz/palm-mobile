@@ -1,3 +1,5 @@
+import { logEvent } from 'firebase/analytics'
+import { analytics } from 'palm-core/firebase'
 import { UTIL } from 'palm-core/libs'
 import { navigationRef, Routes } from 'palm-core/libs/navigation'
 import {
@@ -80,6 +82,7 @@ const useSendToken = ({
   }, [user?.address, receiver, value])
 
   const onClickConfirm = async (): Promise<PostTxReturn | undefined> => {
+    logEvent(analytics, 'send_token_confirm')
     return postTx({ data: postData, to: receiver, value })
   }
 
