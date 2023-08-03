@@ -8,7 +8,7 @@ import {
 import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 
 const BottomMenu = ({
   useGcInputReturn,
@@ -50,8 +50,9 @@ const BottomMenu = ({
               receiverId: receiverList[0].userId,
             })
           } else {
-            Alert.alert(
-              t('Channels.UiKitBottomMenuSendNftNoOneToSendAlertTitle')
+            toast.show(
+              t('Channels.UiKitBottomMenuSendNftNoOneToSendNftToast'),
+              { icon: 'info', color: 'red' }
             )
           }
         },
@@ -69,7 +70,10 @@ const BottomMenu = ({
               receiverId: receiverList[0].userId,
             })
           } else {
-            toast.show('No one to send token', { icon: 'info', color: 'red' })
+            toast.show(
+              t('Channels.UiKitBottomMenuSendNftNoOneToSendTokenToast'),
+              { icon: 'info', color: 'red' }
+            )
           }
         },
         title: 'Send Token',

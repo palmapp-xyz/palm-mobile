@@ -892,7 +892,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz;
 				PRODUCT_NAME = PalmApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc palmapp.xyz";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Palm Mainnet - appstore";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -959,7 +959,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = palmapp.xyz.testnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc palmapp.xyz.testnet";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Palm Testnet - appstore";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

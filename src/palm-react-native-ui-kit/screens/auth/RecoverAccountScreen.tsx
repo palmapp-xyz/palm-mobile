@@ -195,14 +195,38 @@ const RecoverAccountScreen = (): ReactElement => {
                   })
                 }}
               >
-                <Row style={{ alignItems: 'center', alignSelf: 'center' }}>
+                <Row
+                  style={{ alignItems: 'center', alignSelf: 'center', gap: 4 }}
+                >
                   <Icon name="copy-outline" size={14} />
-                  <FormText>{t('Common.PasteFromClipboard')}</FormText>
+                  <FormText color={COLOR.black._500}>
+                    {t('Common.PasteFromClipboard')}
+                  </FormText>
                 </Row>
               </TouchableOpacity>
             </View>
           ) : (
-            <>
+            <View style={{ rowGap: 20 }}>
+              <TouchableOpacity
+                onPress={(): void => {
+                  Clipboard.getString().then(text => {
+                    updateSeedPhrase({ value: text, index: 0 })
+                  })
+                }}
+              >
+                <Row
+                  style={{
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    gap: 4,
+                  }}
+                >
+                  <Icon name="copy-outline" size={14} />
+                  <FormText color={COLOR.black._500}>
+                    {t('Common.PasteFromClipboard')}
+                  </FormText>
+                </Row>
+              </TouchableOpacity>
               <FlatList
                 data={Array.from({ length: 12 })}
                 numColumns={2}
@@ -228,7 +252,7 @@ const RecoverAccountScreen = (): ReactElement => {
                 }}
               />
               <ErrorMessage message={mnemonicErrMsg} />
-            </>
+            </View>
           )}
         </View>
 

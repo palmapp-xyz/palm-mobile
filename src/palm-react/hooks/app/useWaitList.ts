@@ -1,5 +1,6 @@
 import { UTIL } from 'palm-core/libs'
 import { useEffect, useState } from 'react'
+import { Platform } from 'react-native'
 
 type AlphaConfig = {
   waitlist: boolean
@@ -37,20 +38,22 @@ const useWaitList = (): {
   const fetchConfig = async (): Promise<void> => {
     try {
       const ret = await fetchWithTimeout(
-        'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/config.json',
+        'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/config_v2.json?cache=0',
         5000
       )
 
       if (ret.ok) {
         const alphaConfig = (await ret.json()) as {
-          testnet: { waitlist: boolean }
-          mainnet: { waitlist: boolean }
+          testnet: { waitlist: { ios: boolean; android: boolean } }
+          mainnet: { waitlist: { ios: boolean; android: boolean } }
         }
 
+        const net = UTIL.isMainnet()
+          ? alphaConfig.mainnet.waitlist
+          : alphaConfig.testnet.waitlist
+
         setConfig({
-          waitlist: UTIL.isMainnet()
-            ? alphaConfig.mainnet.waitlist
-            : alphaConfig.testnet.waitlist,
+          waitlist: Platform.OS === 'ios' ? net.ios : net.android,
         })
       } else {
         setConfig({ waitlist: false })
@@ -64,7 +67,7 @@ const useWaitList = (): {
   const fetchWaitList = async (): Promise<void> => {
     try {
       const ret = await fetchWithTimeout(
-        'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/waitlist.json',
+        'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/waitlist.json?cache=0',
         5000
       )
 

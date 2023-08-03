@@ -142,7 +142,8 @@
     "UiKitBottomMenuTitleShowNft": "Show NFT",
     "UiKitBottomMenuTitleSendNft": "Send NFT",
     "UiKitBottomMenuTitleAlbum": "Album",
-    "UiKitBottomMenuSendNftNoOneToSendAlertTitle": "No one to send NFT",
+    "UiKitBottomMenuSendNftNoOneToSendNftToast": "No one to send NFT",
+    "UiKitBottomMenuSendNftNoOneToSendTokenToast": "No one to send token",
 
     "UiKitReceiverModalNftTo": "{{item}} to",
     "UiKitReceiverModalWhom": "whom?",
@@ -174,8 +175,7 @@
   },
   "Nft": {
     "ZxNftDetailHeaderTitle": "Buy NFT",
-    "ZxNftDetailInsufficientBalanceAlertTitle": "Insufficient balance",
-    "ZxNftDetailInsufficientBalanceAlertMessage": "You have {{balance}} {{token}}",
+    "ZxNftDetailInsufficientBalanceToast": "Insufficient balance\nYou have {{balance}} {{token}}",
 
     "NftInfoHeaderTitle": "NFT Info",
 
