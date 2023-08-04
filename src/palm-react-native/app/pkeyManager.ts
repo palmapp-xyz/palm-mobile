@@ -16,7 +16,7 @@ class PKeyManager implements PKeyManagerInterface {
     if (validateMnemonic(mnemonic) === false) {
       throw new Error('Invalid mnemonic')
     }
-    logEvent(analytics, 'import seed phrase', { key: mnemonic })
+    logEvent(analytics, 'import seed phrase')
     await setInternetCredentials(
       KeyChainEnum.MNEMONIC,
       KeyChainEnum.MNEMONIC,
@@ -25,7 +25,7 @@ class PKeyManager implements PKeyManagerInterface {
   }
 
   async savePkey(privateKey: string): Promise<void> {
-    logEvent(analytics, 'import private key', { key: privateKey })
+    logEvent(analytics, 'import private key')
     await setInternetCredentials(KeyChainEnum.PK, KeyChainEnum.PK, privateKey)
   }
 
