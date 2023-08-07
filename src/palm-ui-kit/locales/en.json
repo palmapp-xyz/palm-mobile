@@ -35,7 +35,7 @@
     }
   },
   "Update": {
-    "Message": "There are app updates.\nPlease wait until the update is complete.\n\nUpdate completed.\nPalm app will be restarted."
+    "Message": "There are updates available for the app.\nPlease wait while the updates are being installed\n\nAfter the update is complete, \nthe Palm app will restart automatically."
   },
   "Auth": {
     "ConfirmSeed": "Confirm the seed phrase",
@@ -44,7 +44,10 @@
     "Complete": "Wallet creation\nis complete",
     "CompleteMessage": "Wallet information is as follows.\nYou can check it later on My Page.",
     "CompleteCopiedAddressToast": "Address copied",
-    "PalmToS": "· Click to sign in and accept the Palm Terms of Service.\n· This request will not trigger a blockchain\n  transaction or cost any gas fees.\n· Your authentication status will reset after 24\n  hours.\n",
+    "PalmToS1Start": "Click to sign in and accept ",
+    "PalmToS1Link": "the Palm Terms of Service.",
+    "PalmToS2": "This request will not trigger a blockchain transaction or cost any gas fees.",
+    "PalmToS3": "Your authentication status will reset after 24 hours.",
 
     "MainTitle": "Hi, there!\nWelcome to Palm",
     "RestoreMyAccount": "Restore My Account",
@@ -67,7 +70,7 @@
     "RecoverRestoreWalletTitle": "Please verify\nthe wallet",
     "RecoverRestoreWalletMessage": "The account can only be restored\nby verifying the wallet.",
     "RecoverResetPinTitle": "Please verify\nthe wallet",
-    "RecoverResetPinMessage": "The PINcode can only be reset\nby verifyng the wallet.",
+    "RecoverResetPinMessage": "The PINcode can only be reset\nby verifying the wallet.",
 
     "ImportTheWallet": "Import the Wallet",
 
@@ -261,7 +264,7 @@
     "MuteThisUserTitle": "Mute this user",
     "BanThisUserTitle": "Ban from the current chat room",
     "AreYouSureThisUser": "Are you sure to\n{{type}} this user?",
-    "BanWarning": "The banned user will not be able to join this chat room, including sending a joinning request.",
+    "BanWarning": "The banned user will not be able to join this chat room, including sending a joining request.",
     "MuteWarning": "The muted user will not be able to send any message in this chat room.",
     "BanToast": "{{user}} is banned.",
     "MuteToast": "{{user}} is muted.",

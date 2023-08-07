@@ -2,6 +2,7 @@ import { COLOR } from 'palm-core/consts'
 import { Routes } from 'palm-core/libs/navigation'
 import {
   Container,
+  DotListItemText,
   FormButton,
   FormText,
   Header,
@@ -18,6 +19,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useRecoilState } from 'recoil'
 
 import Clipboard from '@react-native-clipboard/clipboard'
+import { PALM_TERMS_OF_SERVICE_URL } from 'palm-core/consts/url'
 
 const CreateCompleteScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.CreateComplete>()
@@ -69,7 +71,14 @@ const CreateCompleteScreen = (): ReactElement => {
           </View>
           <View style={styles.rowSection}>
             <View style={styles.infoBox}>
-              <FormText>{t('Auth.PalmToS')}</FormText>
+              <DotListItemText
+                startText={t('Auth.PalmToS1Start')}
+                endText=""
+                linkText={t('Auth.PalmToS1Link')}
+                linkUrl={PALM_TERMS_OF_SERVICE_URL}
+              />
+              <DotListItemText text={t('Auth.PalmToS2')} />
+              <DotListItemText text={t('Auth.PalmToS3')} />
             </View>
           </View>
         </View>

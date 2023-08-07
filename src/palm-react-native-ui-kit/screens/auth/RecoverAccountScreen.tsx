@@ -31,6 +31,7 @@ import { useRecoilState } from 'recoil'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import { ethers } from 'ethers'
+import { PALM_HOMEPAGE_URL } from 'palm-core/consts/url'
 import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
 import useWaitList from 'palm-react/hooks/app/useWaitList'
 
@@ -284,7 +285,7 @@ const RecoverAccountScreen = (): ReactElement => {
             text: 'Join waitlist',
             callback: (): void => {
               try {
-                Linking.openURL('https://palmapp.xyz/')
+                Linking.openURL(PALM_HOMEPAGE_URL)
               } catch {}
             },
           }}
