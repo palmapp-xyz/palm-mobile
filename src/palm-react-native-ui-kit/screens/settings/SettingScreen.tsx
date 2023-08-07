@@ -1,4 +1,8 @@
 import { COLOR } from 'palm-core/consts'
+import {
+  PALM_PRIVACY_POLICY_URL,
+  PALM_TERMS_OF_SERVICE_URL,
+} from 'palm-core/consts/url'
 import { Routes } from 'palm-core/libs/navigation'
 import {
   Container,
@@ -15,6 +19,7 @@ import useNotificationRegister from 'palm-react/hooks/notification/useNotificati
 import React, { ReactElement, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  Linking,
   Platform,
   StyleSheet,
   Switch,
@@ -162,7 +167,7 @@ const SettingScreen = (): ReactElement => {
     >
       <View style={styles.body}>
         <Header
-          left="close"
+          left="back"
           onPressLeft={navigation.goBack}
           containerStyle={{ backgroundColor: 'transparent' }}
         />
@@ -211,19 +216,19 @@ const SettingScreen = (): ReactElement => {
           />
         </View>
         <View style={styles.itemGroup}>
-          {/* <SettingItem
+          <SettingItem
             name={t('Settings.ServiceAgreement')}
             onPress={(): void => {
-              Linking.openURL(URL_SERVICE_AGREEMENT)
+              Linking.openURL(PALM_TERMS_OF_SERVICE_URL)
             }}
           />
           <SettingItem
             name={t('Settings.Privacy')}
             onPress={(): void => {
-              Linking.openURL(URL_PRIVACY)
+              Linking.openURL(PALM_PRIVACY_POLICY_URL)
             }}
           />
-          <SettingItem
+          {/*<SettingItem
             name={t('Settings.Contact')}
             onPress={(): void => {
               Linking.openURL(URL_CONTACT)
@@ -284,10 +289,9 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   body: {
     flex: 1,
-    padding: 10,
-    rowGap: 20,
+    rowGap: 12,
   },
-  itemGroup: { backgroundColor: 'white', borderRadius: 15 },
+  itemGroup: { backgroundColor: 'white' },
   item: {
     paddingVertical: 16,
     paddingHorizontal: 20,

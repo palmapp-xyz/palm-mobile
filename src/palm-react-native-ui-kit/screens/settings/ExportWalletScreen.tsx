@@ -24,7 +24,7 @@ const ExportWalletScreen = (): ReactElement => {
   const toast = useToast()
   const { t } = useTranslation()
 
-  const displayKey = mnemonic || privateKey
+  const displayKey = mnemonic ? mnemonic : privateKey
 
   useEffect(() => {
     PkeyManager.getPkey().then(key => setPrivateKey(key))
@@ -53,14 +53,21 @@ const ExportWalletScreen = (): ReactElement => {
         </View>
 
         <FormText size={12} color={COLOR.black._400}>
-          {t('Settings.ExportWalletPrivateKey')}
+          {displayKey === mnemonic
+            ? t('Settings.ExportWalletSeed')
+            : t('Settings.ExportWalletPrivateKey')}
         </FormText>
         <TouchableOpacity
           onPress={(): void => {
-            toast.show(t('Settings.ExportWalletCopiedPrivateKeyToast'), {
-              color: 'green',
-              icon: 'check',
-            })
+            toast.show(
+              displayKey === mnemonic
+                ? t('Settings.ExportWalletCopiedSeedToast')
+                : t('Settings.ExportWalletCopiedPrivateKeyToast'),
+              {
+                color: 'green',
+                icon: 'check',
+              }
+            )
             Clipboard.setString(displayKey)
           }}
         >
@@ -69,7 +76,7 @@ const ExportWalletScreen = (): ReactElement => {
               color={COLOR.black._900}
               style={{ flex: 1, paddingRight: 16 }}
             >
-              {privateKey}
+              {displayKey === mnemonic ? mnemonic : privateKey}
             </FormText>
             <MaterialIcons
               name="content-copy"

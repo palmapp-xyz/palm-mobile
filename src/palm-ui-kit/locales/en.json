@@ -35,7 +35,7 @@
     }
   },
   "Update": {
-    "Message": "There are updates available for the app.\nPlease wait while the updates are being installed\n\nAfter the update is complete, \nthe Palm app will restart automatically."
+    "Message": "There are updates available for the app.\nPlease wait while the updates are being installed.\n\nAfter the update is complete, \nthe Palm app will restart automatically."
   },
   "Auth": {
     "ConfirmSeed": "Confirm the seed phrase",
@@ -284,9 +284,11 @@
     "SignOut": "Sign Out",
 
     "ExportWalletHeaderTitle": "Export Wallet",
+    "ExportWalletSeed": "Seed",
     "ExportWalletPrivateKey": "Private key",
     "ExportWalletWalletAddress": "Wallet Address",
     "ExportWalletCopiedPrivateKeyToast": "Private key copied",
+    "ExportWalletCopiedSeedToast": "Seed copied",
     "ExportWalletNeverDisclose": "Never disclose this key. Anyone with your private keys can steal any assets held in your account."
   },
   "Pin": {
