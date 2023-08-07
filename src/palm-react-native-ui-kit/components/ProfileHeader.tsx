@@ -143,7 +143,7 @@ const ProfileHeader = React.memo(
             <ProfileHeaderChatButton userProfileId={userProfileId} />
           )}
 
-          <ProfileWalletAddress userAddress={userAddress} />
+          {!isMyPage && <ProfileWalletAddress userAddress={userAddress} />}
 
           {isMyPage && (
             <ProfileWalletBalances

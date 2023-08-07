@@ -344,6 +344,7 @@
     "ProfileWalletBalances": {
       "WalletBalances": "Wallet Balances",
       "OnlyVisibleToYou": "Only visible to you",
+      "MyWallet": "My Wallet",
       "SeeAll": "See All"
     },
     "ChatCard": {
