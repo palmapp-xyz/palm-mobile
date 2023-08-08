@@ -1,5 +1,6 @@
 import { COLOR } from 'palm-core/consts'
 import {
+  ISSUE_REPORTING_URL,
   PALM_PRIVACY_POLICY_URL,
   PALM_TERMS_OF_SERVICE_URL,
 } from 'palm-core/consts/url'
@@ -233,13 +234,13 @@ const SettingScreen = (): ReactElement => {
             onPress={(): void => {
               Linking.openURL(URL_CONTACT)
             }}
-          />
+          />*/}
           <SettingItem
             name={t('Settings.GiveUsFeedback')}
             onPress={(): void => {
-              Linking.openURL(URL_GIVE_US_FEEDBACK)
+              Linking.openURL(ISSUE_REPORTING_URL)
             }}
-          /> */}
+          />
           <SettingTextItem
             name={t('Settings.Version')}
             text={
