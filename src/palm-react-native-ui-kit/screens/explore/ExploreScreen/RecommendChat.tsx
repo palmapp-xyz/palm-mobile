@@ -62,7 +62,11 @@ const RecommendChat = ({
                 onClick={onChatCardClick}
               />
             ) : (
-              <SkeletonView height={170} borderRadius={20} />
+              <SkeletonView
+                key={`fsChannelListSkeleton-${index}`}
+                height={170}
+                borderRadius={20}
+              />
             )
           })}
         </View>

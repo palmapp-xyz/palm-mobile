@@ -36,7 +36,7 @@ const ChatCard = ({
         </View>
         {!!chat.gating?.amount && (
           <View style={styles.section}>
-            <Row style={styles.gatingTokeBox}>
+            <Row style={styles.gatingTokenBox}>
               <Icon color={COLOR.black._100} size={16} name="alert-circle" />
               {/* <FormImage source={chat.gating.img} size={40} /> */}
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 8,
   },
-  gatingTokeBox: {
+  gatingTokenBox: {
     padding: 12,
     borderWidth: 1,
     borderRadius: 12,
