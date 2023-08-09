@@ -13,7 +13,6 @@ import {
   DocSnapshotReturn,
   DocumentReference,
   firestore,
-  limit,
   onDocSnapshot,
   onQuerySnapshot,
   QuerySnapshotCallback,
@@ -22,13 +21,11 @@ import {
 } from './'
 
 export const onExploreChannels = (
-  max: number,
   callback: QuerySnapshotCallback<FbChannel>
 ): QuerySnapshotReturn<FbChannel> => {
   const queryConstraints = [
     where('channelType', '==', ChannelType.GROUP),
     where('name', '!=', ''),
-    limit(max),
   ]
   return onQuerySnapshot<FbChannel>(collection(firestore, 'channels') as any, {
     callback,

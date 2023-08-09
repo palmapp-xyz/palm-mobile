@@ -1,4 +1,7 @@
+import { RECOMMENDED_CHANNELS_URL } from 'palm-core/consts/url'
 import { onExploreChannels } from 'palm-core/firebase/channel'
+import { UTIL } from 'palm-core/libs'
+import fetchWithTimeout from 'palm-core/libs/fetchWithTimeout'
 import { recordError } from 'palm-core/libs/logger'
 import { FbChannel } from 'palm-core/types'
 import { useEffect, useState } from 'react'
@@ -10,12 +13,45 @@ export type UseFsChannelsReturn = {
 
 const useFsChannels = (): UseFsChannelsReturn => {
   const limit = 5
-
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [channels, setChannels] = useState<FbChannel[]>([])
 
+  const [recommendedChannelUrls, setRecommendedChannelUrls] = useState<
+    string[] | undefined
+  >(undefined)
+
+  const fetchRecommendedChatUrls = async (): Promise<void> => {
+    try {
+      const ret = await fetchWithTimeout(RECOMMENDED_CHANNELS_URL, 5000)
+      if (ret.ok) {
+        const urls = (await ret.json()) as {
+          testnet: string[]
+          mainnet: string[]
+        }
+        setRecommendedChannelUrls(
+          UTIL.isMainnet() ? urls.mainnet : urls.testnet
+        )
+      } else {
+        setRecommendedChannelUrls([])
+      }
+    } catch (e) {
+      setRecommendedChannelUrls([])
+      console.error(e)
+    }
+  }
+
   useEffect(() => {
-    const { unsubscribe } = onExploreChannels(limit, {
+    fetchRecommendedChatUrls()
+    setChannels([])
+  }, [])
+
+  useEffect(() => {
+    if (!recommendedChannelUrls) {
+      return
+    }
+
+    setIsFetching(true)
+    const { unsubscribe } = onExploreChannels({
       error: e => {
         setIsFetching(false)
         recordError(e, 'onExploreChannels')
@@ -28,14 +64,15 @@ const useFsChannels = (): UseFsChannelsReturn => {
           ) {
             return
           }
-          channels.filter((item: FbChannel) => {
-            item.url !== (documentSnapshot.data() as FbChannel).url
-          })
 
-          if (channels.length < limit) {
-            channels.push(documentSnapshot.data() as FbChannel)
+          const channel = documentSnapshot.data() as FbChannel
+
+          if (recommendedChannelUrls.length > 0) {
+            recommendedChannelUrls.forEach(url => {
+              url === channel.url && setChannels(prev => [...prev, channel])
+            })
           } else {
-            channels.slice(1).push(documentSnapshot.data() as FbChannel)
+            channels.length < limit && setChannels(prev => [...prev, channel])
           }
         })
       },
@@ -45,7 +82,7 @@ const useFsChannels = (): UseFsChannelsReturn => {
       },
     })
     return unsubscribe
-  }, [])
+  }, [recommendedChannelUrls])
 
   return {
     isFetching,
