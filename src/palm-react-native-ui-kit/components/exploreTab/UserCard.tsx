@@ -13,10 +13,7 @@ const UserCard = ({ user }: { user: FbProfile }): ReactElement => {
   const { navigation } = useAppNavigation()
 
   return (
-    <Card
-      borderRound={true}
-      style={{ backgroundColor: `${COLOR.black._200}${COLOR.opacity._10}` }}
-    >
+    <Card borderRound={true} style={{ backgroundColor: COLOR.white }}>
       <Pressable
         style={styles.userBox}
         onPress={(): void => {

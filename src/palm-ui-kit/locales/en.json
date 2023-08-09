@@ -169,8 +169,8 @@
     "InitExploreAllDone": "It's all done",
 
     "ExploreSearchPlaceholder": "Search by username, tag, chat room name...",
-    "ExploreChannelsToJoin": "Explore\nchannels to Join",
-    "ExploreChatWithOthersDirectly": "or Chat with\nothers directly",
+    "ExploreChannelsToJoin": "How about to join\na chat room?",
+    "ExploreChatWithOthersDirectly": "What about users\nwith similar tastes?",
     "ExploreSelectedChannelRequiredToJoin": " required to join",
 
     "SearchResultItemChatRoom": "Chat Room",

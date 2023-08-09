@@ -152,7 +152,7 @@ const ExploreScreen = (): ReactElement => {
       ) : (
         <ScrollView
           style={{
-            backgroundColor: 'white',
+            backgroundColor: COLOR.black._90005,
             paddingTop: HEADER_HEIGHT + 60,
           }}
           scrollEventThrottle={16}
