@@ -35,7 +35,7 @@
     }
   },
   "Update": {
-    "Message": "There are app updates.\nPlease wait until the update is complete.\n\nUpdate completed.\nPalm app will be restarted."
+    "Message": "Please wait for the app to update."
   },
   "Auth": {
     "ConfirmSeed": "Confirm the seed phrase",
@@ -169,8 +169,8 @@
     "InitExploreAllDone": "It's all done",
 
     "ExploreSearchPlaceholder": "Search by username, tag, chat room name...",
-    "ExploreChannelsToJoin": "How about to join\na chat room?",
-    "ExploreChatWithOthersDirectly": "What about users\nwith similar tastes?",
+    "ExploreChannelsToJoin": "Explore group chats to join",
+    "ExploreChatWithOthersDirectly": "Or chat with others",
     "ExploreSelectedChannelRequiredToJoin": " required to join",
 
     "SearchResultItemChatRoom": "Chat Room",
