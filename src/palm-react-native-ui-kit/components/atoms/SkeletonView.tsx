@@ -2,6 +2,17 @@ import { COLOR } from 'palm-core/consts'
 import React, { ReactElement } from 'react'
 import { Animated, Easing } from 'react-native'
 
+/**
+ * SkeletonView
+ * Displays a skeleton view with a shimmering effect to indicate loading.
+ * @param props.height - The height of the skeleton view.
+ * @param props.borderRadius - The border radius of the skeleton view.
+ * @returns Component
+ * @example
+ * ```tsx
+ * <SkeletonView height={40} borderRadius={14} />
+ * ```
+ */
 const SkeletonView = (props: {
   height?: number
   borderRadius?: number
