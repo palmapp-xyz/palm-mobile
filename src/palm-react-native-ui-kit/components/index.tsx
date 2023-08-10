@@ -1,3 +1,4 @@
+export { default as BalloonMessage } from './atoms/BalloonMessage'
 export { default as Card } from './atoms/Card'
 export { default as Container } from './atoms/Container'
 export { default as DotListItemText } from './atoms/DotListItemText'

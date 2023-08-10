@@ -9,6 +9,7 @@ import { useSendbirdChat } from '@sendbird/uikit-react-native'
 import { COLOR } from 'palm-core/consts'
 import { getProfileMediaImg } from 'palm-core/libs/lens'
 import {
+  BalloonMessage,
   Container,
   FormButton,
   FormText,
@@ -22,6 +23,7 @@ import { useTranslation } from 'react-i18next'
 import {
   Animated,
   FlatList,
+  Platform,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
@@ -45,7 +47,7 @@ const OperatorUserCard = React.memo(
 
     return (
       <TouchableWithoutFeedback onPress={onPress}>
-        <Row style={operatorUserCardStyles.row}>
+        <Row style={styles.operatorUserCardRow}>
           <Avatar uri={profileImg} size={40} />
           <View style={{ flex: 1 }}>
             <FormText numberOfLines={1} ellipsizeMode="tail">
@@ -57,14 +59,6 @@ const OperatorUserCard = React.memo(
     )
   }
 )
-const operatorUserCardStyles = StyleSheet.create({
-  row: {
-    height: 40,
-    gap: 12,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-})
 
 const GroupChannelOperatorsScreen = (): ReactElement => {
   const { navigation, params } =
@@ -160,13 +154,21 @@ const GroupChannelOperatorsScreen = (): ReactElement => {
       <View style={{ flex: 1 }}>
         <FlatList
           data={operators}
+          ListFooterComponent={
+            <View style={styles.listFooterContainer}>
+              <BalloonMessage
+                text="Swipe left to remove an operator"
+                showOnceKey="operator"
+              />
+            </View>
+          }
           renderItem={({ item }): ReactElement => {
             return (
               <Swipeable
                 ref={(ref): void => {
                   rowRefs.current[item.userId] = ref
                 }}
-                containerStyle={{ marginTop: 16, paddingHorizontal: 20 }}
+                containerStyle={styles.listItemContainer}
                 renderRightActions={(progress): ReactElement | null => {
                   if (sdk.currentUser.userId === item.userId) {
                     return null
@@ -201,7 +203,10 @@ const GroupChannelOperatorsScreen = (): ReactElement => {
               channelUrl: params.channelUrl,
             })
           }}
-          containerStyle={{ marginHorizontal: 20 }}
+          containerStyle={{
+            marginHorizontal: 20,
+            marginBottom: Platform.select({ android: 20 }),
+          }}
         >
           {t('Channels.ChannelOperatorsAddOperators')}
         </FormButton>
@@ -209,5 +214,16 @@ const GroupChannelOperatorsScreen = (): ReactElement => {
     </Container>
   )
 }
+
+const styles = StyleSheet.create({
+  listItemContainer: { marginTop: 16, paddingHorizontal: 20 },
+  listFooterContainer: { height: 60, marginHorizontal: 20 },
+  operatorUserCardRow: {
+    height: 40,
+    gap: 12,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+})
 
 export default GroupChannelOperatorsScreen
