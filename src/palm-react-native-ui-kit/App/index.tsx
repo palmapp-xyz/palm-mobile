@@ -6,6 +6,7 @@ import useCodePush from 'palm-react-native/app/useCodePush'
 import Config from 'palm-react-native/config'
 import React, { ReactElement } from 'react'
 import { Keyboard, LogBox, TouchableWithoutFeedback } from 'react-native'
+import CodePush from 'react-native-code-push'
 import AppProviderWrapper from './AppProvider'
 
 !__DEV__ &&
@@ -35,4 +36,6 @@ const App = (): ReactElement => {
   )
 }
 
-export default Sentry.wrap(App)
+export default CodePush({
+  checkFrequency: CodePush.CheckFrequency.MANUAL,
+})(Sentry.wrap(App))
