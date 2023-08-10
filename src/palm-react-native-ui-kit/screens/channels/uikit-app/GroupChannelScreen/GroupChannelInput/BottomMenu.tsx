@@ -26,12 +26,12 @@ const BottomMenu = ({
     title: string
   }[] = useMemo(
     () => [
-      {
-        key: 'list',
-        icon: <FormImage source={images.list} />,
-        onPress: useGcInputReturn.onPressList,
-        title: t('Channels.UiKitBottomMenuTitleListNft'),
-      },
+      // {
+      //   key: 'list',
+      //   icon: <FormImage source={images.list} />,
+      //   onPress: useGcInputReturn.onPressList,
+      //   title: t('Channels.UiKitBottomMenuTitleListNft'),
+      // },
       {
         key: 'share',
         icon: <FormImage source={images.NFT} />,
