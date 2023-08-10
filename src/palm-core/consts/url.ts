@@ -7,3 +7,5 @@ export const WAITLIST_URL =
   'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/config_v2.json?cache=0'
 export const RECOMMENDED_CHANNELS_URL =
   'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/recommended-chat.json?cache=0'
+export const RECOMMENDED_USERS_URL =
+  'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/recommended-user.json?cache=0'

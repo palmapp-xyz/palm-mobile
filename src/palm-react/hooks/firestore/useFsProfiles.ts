@@ -10,7 +10,11 @@ export type UseFsProfilesReturn = {
   fsProfileList: FbProfile[]
 }
 
-const useFsProfiles = (): UseFsProfilesReturn => {
+const useFsProfiles = ({
+  recommendedUsers,
+}: {
+  recommendedUsers?: string[]
+}): UseFsProfilesReturn => {
   const [user] = useRecoilState(appStore.user)
   const limit = 100
   const [isFetching, setIsFetching] = useState<boolean>(true)
@@ -20,28 +24,38 @@ const useFsProfiles = (): UseFsProfilesReturn => {
     if (!user?.auth?.profileId) {
       return
     }
+    setFsProfileList([])
 
-    const { unsubscribe } = onExploreProfiles(10, {
+    let count = 0
+    const { unsubscribe } = onExploreProfiles(limit, {
       error: e => {
         setIsFetching(false)
         recordError(e, 'onExploreProfiles')
       },
       next: querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
+          const documentUser = documentSnapshot.data()
           if (
             !documentSnapshot.exists ||
-            documentSnapshot.data().profileId === user.auth?.profileId
+            documentUser.profileId === user.auth?.profileId
           ) {
             return
           }
-          fsProfileList.filter((item: FbProfile) => {
-            item.profileId !== documentSnapshot.data().profileId
-          })
 
-          if (fsProfileList.length < limit) {
-            fsProfileList.push(documentSnapshot.data())
-          } else {
-            fsProfileList.slice(1).push(documentSnapshot.data())
+          if (
+            recommendedUsers &&
+            recommendedUsers.length > 0 &&
+            recommendedUsers.length > count
+          ) {
+            recommendedUsers.forEach(userProfileId => {
+              if (userProfileId === documentUser.profileId) {
+                setFsProfileList(prev => [...prev, documentUser])
+                count++
+              }
+            })
+          } else if (count < 10) {
+            setFsProfileList(prev => [...prev, documentUser])
+            count++
           }
         })
       },
@@ -51,7 +65,7 @@ const useFsProfiles = (): UseFsProfilesReturn => {
       },
     })
     return unsubscribe
-  }, [])
+  }, [recommendedUsers])
 
   return {
     isFetching,
