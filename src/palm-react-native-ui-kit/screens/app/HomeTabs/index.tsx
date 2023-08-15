@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useTotalUnreadMessageCount } from '@sendbird/uikit-chat-hooks'
 import { useSendbirdChat } from '@sendbird/uikit-react-native'
+import PkeyManager from 'palm-react-native/app/pkeyManager'
 
 import Notifee from '@notifee/react-native'
 import GroupChannelListScreen from '../../channels/GroupChannelListScreen'
@@ -26,10 +27,27 @@ const TabIcon =
     )
 
 const HomeTabs = (): ReactElement => {
-  const { params } = useAppNavigation<Routes.HomeTabs>()
+  const { params, navigation } = useAppNavigation<Routes.HomeTabs>()
 
   const { sdk } = useSendbirdChat()
   const totalUnreadMessages = useTotalUnreadMessageCount(sdk)
+
+  useEffect(() => {
+    const checkPin = async (): Promise<void> => {
+      const isPinConfigured = (await PkeyManager.getPin()) !== ''
+
+      if (!isPinConfigured) {
+        navigation.navigate(Routes.Pin, {
+          type: 'set',
+          result: async (result: boolean): Promise<void> => {
+            result && navigation.pop()
+            return Promise.resolve()
+          },
+        })
+      }
+    }
+    setTimeout(checkPin, 100)
+  }, [])
 
   useEffect(() => {
     const badgeCount = parseInt(totalUnreadMessages, 10)

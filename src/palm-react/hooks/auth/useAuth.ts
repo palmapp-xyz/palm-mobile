@@ -14,7 +14,6 @@ import {
   AuthChallengeResult,
   AuthStorageType,
   ContractAddr,
-  FbProfile,
   LocalStorageKey,
   SbUserMetadata,
   TrueOrErrReturn,
@@ -124,15 +123,17 @@ const useAuth = (): UseAuthReturn => {
 
   const appSignIn = async (authResult: AuthChallengeResult): Promise<User> => {
     // if user profile is deleted from the db, logout for re-authentication
-    await getProfileDoc(authResult.profileId).then(
-      (profile: FbProfile | undefined) => {
-        if (!profile) {
-          throw new Error(
-            `User with profide Id ${authResult.profileId} does not exist.`
-          )
-        }
+    try {
+      const profile = await getProfileDoc(authResult.profileId)
+
+      if (!profile) {
+        throw new Error(
+          `User with profile Id ${authResult.profileId} does not exist.`
+        )
       }
-    )
+    } catch (e) {
+      recordError(e)
+    }
 
     const authSignIn = async (): Promise<void> => {
       try {

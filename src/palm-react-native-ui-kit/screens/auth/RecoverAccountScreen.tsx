@@ -11,12 +11,10 @@ import {
   MenuItem,
   Row,
 } from 'palm-react-native-ui-kit/components'
-import Loading from 'palm-react-native-ui-kit/components/atoms/Loading'
 import PkeyManager from 'palm-react-native/app/pkeyManager'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useToast from 'palm-react-native/app/useToast'
 import useRecoverAccount from 'palm-react/hooks/page/account/useRecoverAccount'
-import appStore from 'palm-react/store/appStore'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -27,13 +25,13 @@ import {
   View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { useRecoilState } from 'recoil'
 
 import Clipboard from '@react-native-clipboard/clipboard'
 import { ethers } from 'ethers'
 import { PALM_HOMEPAGE_URL } from 'palm-core/consts/url'
 import Indicator from 'palm-react-native-ui-kit/components/atoms/Indicator'
 import useWaitList from 'palm-react/hooks/app/useWaitList'
+import AuthBottomSheet from './AuthBottomSheet'
 
 export type RecoverAccountType = 'importWallet' | 'restoreWallet' | 'resetPin'
 
@@ -55,11 +53,11 @@ const RecoverAccountScreen = (): ReactElement => {
   const toast = useToast()
   const { t } = useTranslation()
 
-  const [loading, setLoading] = useRecoilState(appStore.loading)
-
   const alphaConfig = useWaitList()
   const [showWaitlistModal, setShowWaitlistModal] = useState(false)
   const [showWalletLoading, setShowWalletLoading] = useState(false)
+  const [showAuthenticateBottomSheet, setShowAuthenticateBottomSheet] =
+    useState(false)
 
   const onPressConfirm = async (): Promise<void> => {
     if (alphaConfig.config?.waitlist) {
@@ -105,24 +103,8 @@ const RecoverAccountScreen = (): ReactElement => {
         })
       }
     } else {
-      navigation.navigate(Routes.Pin, {
-        type: 'set',
-        result: async (result: boolean): Promise<void> => {
-          if (result === true) {
-            setLoading(true)
-            setTimeout(async () => {
-              await onClickConfirm()
-              setLoading(false)
-              navigation.replace(Routes.Sign4Auth)
-            }, 100)
-          }
-
-          return Promise.resolve()
-        },
-        cancel: () => {
-          navigation.pop()
-        },
-      })
+      await onClickConfirm()
+      setShowAuthenticateBottomSheet(true)
     }
   }
 
@@ -135,10 +117,6 @@ const RecoverAccountScreen = (): ReactElement => {
       case 'resetPin':
         return t('Auth.RecoverResetPinTitle')
     }
-  }
-
-  if (loading) {
-    return <Loading />
   }
 
   return (
@@ -260,7 +238,7 @@ const RecoverAccountScreen = (): ReactElement => {
         <View style={styles.footer}>
           <FormButton
             size="lg"
-            disabled={!isValidForm || loading}
+            disabled={!isValidForm}
             onPress={(): void => {
               setShowWalletLoading(true)
               setTimeout(async () => {
@@ -274,6 +252,15 @@ const RecoverAccountScreen = (): ReactElement => {
               : t('Common.Verify')}
           </FormButton>
         </View>
+
+        {showAuthenticateBottomSheet && (
+          <AuthBottomSheet
+            type={recoverType === 'importWallet' ? 'imported' : 'verified'}
+            show={showAuthenticateBottomSheet}
+            setShow={setShowAuthenticateBottomSheet}
+            onPress={(): void => {}}
+          />
+        )}
 
         <FormModal
           visible={showWaitlistModal}

@@ -14,12 +14,13 @@ import { Animated, Easing } from 'react-native'
  * ```
  */
 const SkeletonView = (props: {
+  width?: number
   height?: number
   borderRadius?: number
 }): ReactElement => {
   const animation = new Animated.Value(0)
-  const startColor = `${COLOR.white}FF`
-  const endColor = `${COLOR.white}4C`
+  const startColor = `${COLOR.white}`
+  const endColor = `${COLOR.black._10}`
 
   Animated.loop(
     Animated.sequence([
@@ -48,6 +49,7 @@ const SkeletonView = (props: {
       style={{
         borderRadius: props.borderRadius,
         backgroundColor: backgroundColor,
+        width: props.width,
         height: props.height,
       }}
     />

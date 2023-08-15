@@ -12,6 +12,7 @@ import { Account } from 'web3-core'
 import { useAsyncEffect } from '@sendbird/uikit-utils'
 
 export type UseAuthChallengeReturn = {
+  tryChallenge: () => Promise<void>
   challenge?: AuthChallengeInfo
   verify: () => Promise<AuthChallengeResult | undefined>
 }
@@ -20,7 +21,7 @@ const useAuthChallenge = (): UseAuthChallengeReturn => {
   const [signer, setSigner] = useState<Account | undefined>()
   const [challenge, setChallenge] = useState<AuthChallengeInfo>()
 
-  useAsyncEffect(async () => {
+  const tryChallenge = async (): Promise<void> => {
     const account = await web3Accounts[
       SupportedNetworkEnum.ETHEREUM
     ].getSigner()
@@ -31,6 +32,10 @@ const useAuthChallenge = (): UseAuthChallengeReturn => {
 
     const _challenge = await challengeRequest(account.address as ContractAddr)
     setChallenge(_challenge)
+  }
+
+  useAsyncEffect(async () => {
+    tryChallenge()
   }, [])
 
   const verify = async (): Promise<AuthChallengeResult | undefined> => {
@@ -42,6 +47,7 @@ const useAuthChallenge = (): UseAuthChallengeReturn => {
   }
 
   return {
+    tryChallenge,
     challenge,
     verify,
   }
