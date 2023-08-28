@@ -64,6 +64,7 @@
     "@types/mime": "^3.0.1",
     "@types/styled-components-react-native": "^5.2.1",
     "@web3auth/react-native-sdk": "^3.5.0",
+    "@zerodev/sdk": "^4.0.9",
     "appcenter": "4.4.5",
     "appcenter-analytics": "4.4.5",
     "appcenter-crashes": "4.4.5",
@@ -164,7 +165,7 @@
     "metro-react-native-babel-preset": "0.73.7",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
-    "typescript": "^4.8.4"
+    "typescript": "^5.2.2"
   },
   "jest": {
     "preset": "react-native"
