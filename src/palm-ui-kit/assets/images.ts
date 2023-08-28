@@ -18,6 +18,7 @@ export default {
   pin_delete: require('./pin_delete.png'),
   no_img: require('./no_img.png'),
   spinner: require('./spinner.json'),
+  button_spinner: require('./button_spinner.json'),
   splash: require('./splash.json'),
   repeat: require('./repeat.png'),
   crown: require('./crown.png'),

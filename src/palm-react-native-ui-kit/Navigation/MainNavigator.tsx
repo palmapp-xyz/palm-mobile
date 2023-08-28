@@ -1,10 +1,8 @@
 import { Routes } from 'palm-core/libs/navigation'
-import PkeyManager from 'palm-react-native/app/pkeyManager'
-import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import useProfile from 'palm-react/hooks/auth/useProfile'
 import useNotification from 'palm-react/hooks/notification/useNotification'
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -49,26 +47,8 @@ const MainStack = createNativeStackNavigator()
 const MainNavigator = (): ReactElement => {
   const { user } = useAuth()
   const { profile } = useProfile({ profileId: user?.auth?.profileId! })
-  const { navigation } = useAppNavigation()
 
   useNotification()
-
-  useEffect(() => {
-    const checkPin = async (): Promise<void> => {
-      const isNotConfigurePin = (await PkeyManager.getPin()) === ''
-
-      if (isNotConfigurePin) {
-        navigation.navigate(Routes.Pin, {
-          type: 'set',
-          result: async (result: boolean): Promise<void> => {
-            result && navigation.pop()
-            return Promise.resolve()
-          },
-        })
-      }
-    }
-    checkPin()
-  }, [])
 
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>

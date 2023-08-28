@@ -60,14 +60,14 @@ const GroupChannelSettingsScreen = (): ReactElement => {
           })
         }
 
-        items.unshift({
-          icon: 'archive',
-          name: 'Listings',
-          actionItem: <Icon name={'chevron-forward-outline'} size={28} />,
-          onPress: () => {
-            navigation.push(Routes.ChannelListings, params)
-          },
-        })
+        // items.unshift({
+        //   icon: 'archive',
+        //   name: 'Listings',
+        //   actionItem: <Icon name={'chevron-forward-outline'} size={28} />,
+        //   onPress: () => {
+        //     navigation.push(Routes.ChannelListings, params)
+        //   },
+        // })
         return items
       }}
     />

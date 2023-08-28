@@ -8,6 +8,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import Clipboard from '@react-native-clipboard/clipboard'
+import { UTIL } from 'palm-core/libs'
 
 export type ProfileWalletAddressProps = {
   userAddress: ContractAddr | undefined
@@ -20,37 +21,39 @@ const ProfileWalletAddress = React.memo(
 
     return (
       <View style={styles.walletAddressBox}>
-        <FormText font={'B'}>
-          {t('Components.ProfileWalletAddress.WalletAddress')}
-        </FormText>
+        {userAddress && (
+          <>
+            <FormText font={'B'}>
+              {t('Components.ProfileWalletAddress.WalletAddress')}
+            </FormText>
 
-        <View style={{ rowGap: 8, marginTop: 12 }}>
-          <TouchableOpacity
-            onPress={(): void => {
-              if (!userAddress) {
-                return
-              }
-              toast.show(t('Components.ProfileWalletAddress.AddressCopied'), {
-                color: 'green',
-                icon: 'check',
-              })
-              Clipboard.setString(userAddress)
-            }}
-          >
-            <Row
-              style={[styles.itemCard, { alignItems: 'center', columnGap: 12 }]}
+            <TouchableOpacity
+              onPress={(): void => {
+                if (!userAddress) {
+                  return
+                }
+                toast.show(t('Components.ProfileWalletAddress.AddressCopied'), {
+                  color: 'green',
+                  icon: 'check',
+                })
+                Clipboard.setString(userAddress)
+              }}
             >
-              <Icon name="wallet" color={COLOR.primary._400} size={20} />
-              <FormText
-                numberOfLines={1}
-                ellipsizeMode="middle"
-                style={{ flex: 1 }}
+              <Row
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 4,
+                }}
               >
-                {userAddress}
-              </FormText>
-            </Row>
-          </TouchableOpacity>
-        </View>
+                <FormText color={COLOR.black._500}>
+                  {UTIL.truncate(userAddress.toString(), [6, 4])}
+                </FormText>
+                <Icon name="copy-outline" color={COLOR.black._500} size={14} />
+              </Row>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     )
   }
@@ -59,11 +62,11 @@ const ProfileWalletAddress = React.memo(
 export default ProfileWalletAddress
 
 const styles = StyleSheet.create({
-  walletAddressBox: { paddingTop: 24 },
-  itemCard: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    backgroundColor: COLOR.black._90005,
-    borderRadius: 16,
+  walletAddressBox: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 32,
+    paddingBottom: 24,
   },
 })

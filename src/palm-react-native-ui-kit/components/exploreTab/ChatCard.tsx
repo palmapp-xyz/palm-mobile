@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { COLOR, NETWORK } from 'palm-core/consts'
-import { UTIL } from 'palm-core/libs'
 import { ChannelType, FbChannel } from 'palm-core/types'
 import { Card, FormText, Row, Tag } from 'palm-react-native-ui-kit/components'
 import ChannelMembersPreview from 'palm-react-native-ui-kit/components/sendbird/ChannelMembersPreview'
@@ -22,10 +21,7 @@ const ChatCard = ({
   }
 
   return (
-    <Card
-      borderRound={true}
-      style={{ backgroundColor: `${COLOR.black._200}${COLOR.opacity._10}` }}
-    >
+    <Card borderRound={true} style={{ backgroundColor: COLOR.white }}>
       <Pressable onPress={(): void => onClick(chat)}>
         <ChannelMembersPreview channelUrl={chat.url} size={56} />
         <View style={styles.section}>
@@ -40,7 +36,7 @@ const ChatCard = ({
         </View>
         {!!chat.gating?.amount && (
           <View style={styles.section}>
-            <Row style={styles.gatingTokeBox}>
+            <Row style={styles.gatingTokenBox}>
               <Icon color={COLOR.black._100} size={16} name="alert-circle" />
               {/* <FormImage source={chat.gating.img} size={40} /> */}
 
@@ -59,9 +55,7 @@ const ChatCard = ({
                   </View>
                 ) : (
                   <View>
-                    <FormText font={'B'}>
-                      {UTIL.truncate(chat.gating.tokenAddress)}
-                    </FormText>
+                    <FormText font={'B'}>{` ${chat.gating.name}`}</FormText>
                   </View>
                 )}
                 <FormText>{t('Components.ChatCard.RequiredToJoin')}</FormText>
@@ -86,7 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 8,
   },
-  gatingTokeBox: {
+  gatingTokenBox: {
     padding: 12,
     borderWidth: 1,
     borderRadius: 12,

@@ -8,34 +8,41 @@ export type UseFsChannelsReturn = {
   channels: FbChannel[]
 }
 
-const useFsChannels = (): UseFsChannelsReturn => {
-  const limit = 5
-
+const useFsChannels = ({
+  limit = 5,
+  recommendedChannelUrls,
+}: {
+  limit?: number
+  recommendedChannelUrls?: string[]
+}): UseFsChannelsReturn => {
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [channels, setChannels] = useState<FbChannel[]>([])
 
   useEffect(() => {
-    const { unsubscribe } = onExploreChannels(limit, {
+    setChannels([])
+    setIsFetching(true)
+    const { unsubscribe } = onExploreChannels({
       error: e => {
         setIsFetching(false)
         recordError(e, 'onExploreChannels')
       },
       next: querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
+          const channel = documentSnapshot.data() as FbChannel
+
           if (
             !documentSnapshot.exists ||
-            (documentSnapshot.data() as FbChannel).url?.includes('pushtesttool')
+            channel.url?.includes('pushtesttool')
           ) {
             return
           }
-          channels.filter((item: FbChannel) => {
-            item.url !== (documentSnapshot.data() as FbChannel).url
-          })
 
-          if (channels.length < limit) {
-            channels.push(documentSnapshot.data() as FbChannel)
+          if (recommendedChannelUrls && recommendedChannelUrls.length > 0) {
+            recommendedChannelUrls.forEach(url => {
+              url === channel.url && setChannels(prev => [...prev, channel])
+            })
           } else {
-            channels.slice(1).push(documentSnapshot.data() as FbChannel)
+            channels.length < limit && setChannels(prev => [...prev, channel])
           }
         })
       },
@@ -45,7 +52,7 @@ const useFsChannels = (): UseFsChannelsReturn => {
       },
     })
     return unsubscribe
-  }, [])
+  }, [recommendedChannelUrls])
 
   return {
     isFetching,

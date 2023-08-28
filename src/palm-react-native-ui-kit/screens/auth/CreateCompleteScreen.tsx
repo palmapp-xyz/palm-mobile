@@ -2,6 +2,7 @@ import { COLOR } from 'palm-core/consts'
 import { Routes } from 'palm-core/libs/navigation'
 import {
   Container,
+  DotListItemText,
   FormButton,
   FormText,
   Header,
@@ -11,13 +12,15 @@ import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useToast from 'palm-react-native/app/useToast'
 import useCreateComplete from 'palm-react/hooks/page/account/useCreateComplete'
 import appStore from 'palm-react/store/appStore'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useRecoilState } from 'recoil'
 
 import Clipboard from '@react-native-clipboard/clipboard'
+import { PALM_TERMS_OF_SERVICE_URL } from 'palm-core/consts/url'
+import AuthBottomSheet from './AuthBottomSheet'
 
 const CreateCompleteScreen = (): ReactElement => {
   const { navigation } = useAppNavigation<Routes.CreateComplete>()
@@ -27,8 +30,11 @@ const CreateCompleteScreen = (): ReactElement => {
 
   const [loading] = useRecoilState(appStore.loading)
 
+  const [showAuthenticateBottomSheet, setShowAuthenticateBottomSheet] =
+    useState(false)
+
   const onPressConfirm = async (): Promise<void> => {
-    navigation.replace(Routes.Sign4Auth)
+    setShowAuthenticateBottomSheet(true)
   }
 
   if (loading) {
@@ -69,11 +75,27 @@ const CreateCompleteScreen = (): ReactElement => {
           </View>
           <View style={styles.rowSection}>
             <View style={styles.infoBox}>
-              <FormText>{t('Auth.PalmToS')}</FormText>
+              <DotListItemText
+                startText={t('Auth.PalmToS1Start')}
+                endText=""
+                linkText={t('Auth.PalmToS1Link')}
+                linkUrl={PALM_TERMS_OF_SERVICE_URL}
+              />
+              <DotListItemText text={t('Auth.PalmToS2')} />
+              <DotListItemText text={t('Auth.PalmToS3')} />
             </View>
           </View>
         </View>
       </View>
+
+      {showAuthenticateBottomSheet && (
+        <AuthBottomSheet
+          type={'imported'}
+          show={showAuthenticateBottomSheet}
+          setShow={setShowAuthenticateBottomSheet}
+          onPress={(): void => {}}
+        />
+      )}
 
       <View style={styles.footer}>
         <FormButton size="lg" disabled={loading} onPress={onPressConfirm}>

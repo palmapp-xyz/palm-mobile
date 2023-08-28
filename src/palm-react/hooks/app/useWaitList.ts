@@ -1,4 +1,6 @@
+import { WAITLIST_URL } from 'palm-core/consts/url'
 import { UTIL } from 'palm-core/libs'
+import fetchWithTimeout from 'palm-core/libs/fetchWithTimeout'
 import { useEffect, useState } from 'react'
 import { Platform } from 'react-native'
 
@@ -18,29 +20,9 @@ const useWaitList = (): {
   const [config, setConfig] = useState<AlphaConfig | undefined>(undefined)
   const [waitList, setWaitList] = useState<string[] | undefined>(undefined)
 
-  const fetchWithTimeout = async (
-    url: string,
-    timeout: number
-  ): Promise<Response> => {
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), timeout)
-
-    try {
-      const response = await fetch(url, { signal: controller.signal })
-      clearTimeout(timeoutId)
-      return response
-    } catch (error) {
-      clearTimeout(timeoutId)
-      throw error
-    }
-  }
-
   const fetchConfig = async (): Promise<void> => {
     try {
-      const ret = await fetchWithTimeout(
-        'https://raw.githubusercontent.com/palmapp-xyz/assets/main/mobile/alpha/config_v2.json?cache=0',
-        5000
-      )
+      const ret = await fetchWithTimeout(WAITLIST_URL, 5000)
 
       if (ret.ok) {
         const alphaConfig = (await ret.json()) as {

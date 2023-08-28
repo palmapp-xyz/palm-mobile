@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { COLOR } from 'palm-core/consts'
 import { FormText } from 'palm-react-native-ui-kit/components'
 import UserCard from 'palm-react-native-ui-kit/components/exploreTab/UserCard'
 import useExploreRecommendUsers from 'palm-react/hooks/page/explore/useExploreRecommendUsers'
@@ -34,7 +35,11 @@ export default RecommendUsers
 
 const styles = StyleSheet.create({
   container: { paddingTop: 16 },
-  header: { paddingHorizontal: 20 },
+  header: {
+    backgroundColor: COLOR.white,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+  },
   title: {},
   optionItem: { borderRadius: 8, overflow: 'hidden' },
   body: {

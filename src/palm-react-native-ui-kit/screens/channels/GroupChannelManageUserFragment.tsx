@@ -9,7 +9,7 @@ import {
 } from 'palm-react-native-ui-kit/components'
 import React, { ReactElement, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View } from 'react-native'
+import { FlatList, Platform, View } from 'react-native'
 
 const GroupChannelManageUserFragment = ({
   title,
@@ -70,7 +70,10 @@ const GroupChannelManageUserFragment = ({
           setSelectedMembers([])
           setIsManageList(prev => !prev)
         }}
-        containerStyle={{ marginHorizontal: 20 }}
+        containerStyle={{
+          marginHorizontal: 20,
+          marginBottom: Platform.select({ android: 20 }),
+        }}
       >
         {isManageList
           ? t('GroupChannelManageUser.RemoveFromTheList')

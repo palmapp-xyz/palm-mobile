@@ -33,24 +33,12 @@ const ConfirmSeedScreen = (): ReactElement => {
   const [loading, setLoading] = useRecoilState(appStore.loading)
 
   const onPressConfirm = async (): Promise<void> => {
-    navigation.navigate(Routes.Pin, {
-      type: 'set',
-      result: async (result: boolean): Promise<void> => {
-        if (result === true) {
-          setLoading(true)
-          setTimeout(async () => {
-            await onClickConfirm()
-            setLoading(false)
-            navigation.replace(Routes.CreateComplete)
-          }, 100)
-        }
-
-        return Promise.resolve()
-      },
-      cancel: () => {
-        navigation.pop()
-      },
-    })
+    setLoading(true)
+    setTimeout(async () => {
+      await onClickConfirm()
+      setLoading(false)
+      navigation.replace(Routes.CreateComplete)
+    }, 100)
   }
 
   if (loading) {

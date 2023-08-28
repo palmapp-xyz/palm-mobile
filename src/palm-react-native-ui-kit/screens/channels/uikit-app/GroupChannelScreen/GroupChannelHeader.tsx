@@ -5,7 +5,6 @@ import Avatar from 'palm-react-native-ui-kit/components/sendbird/Avatar'
 import { useAppNavigation } from 'palm-react-native/app/useAppNavigation'
 import useAuth from 'palm-react/hooks/auth/useAuth'
 import { SENDBIRD_STATIC_SAMPLE } from 'palm-react/hooks/page/groupChannel/useChannelInfo'
-import images from 'palm-ui-kit/assets/images'
 import React, { ReactElement, useContext } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -87,13 +86,13 @@ const GroupChannelHeader = ({
       onPressLeft={onPressHeaderLeft}
       right={
         <Row style={{ columnGap: 16 }}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={(): void => {
               navigation.push(Routes.ChannelListings, params)
             }}
           >
             <FormImage source={images.NFT_black} size={28} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={(): void => {
               navigation.navigate(Routes.ChannelInfo, params)

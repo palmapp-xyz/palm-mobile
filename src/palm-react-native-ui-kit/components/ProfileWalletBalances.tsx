@@ -13,6 +13,9 @@ import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 
+import Clipboard from '@react-native-clipboard/clipboard'
+import { UTIL } from 'palm-core/libs'
+import useToast from 'palm-react-native/app/useToast'
 import MoralisErc20Token from './MoralisErc20Token'
 
 export type ProfileWalletBalancesProps = {
@@ -26,6 +29,7 @@ const ProfileWalletBalances = React.memo(
     onToggleShowUserTokensSheet,
   }: ProfileWalletBalancesProps): ReactElement => {
     const { t } = useTranslation()
+    const toast = useToast()
 
     const { nativeToken: eth } = useNativeToken({
       userAddress,
@@ -55,11 +59,28 @@ const ProfileWalletBalances = React.memo(
             }}
           >
             <FormText font={'B'}>
-              {t('Components.ProfileWalletBalances.WalletBalances')}
+              {t('Components.ProfileWalletBalances.MyWallet')}
             </FormText>
-            <FormText size={12} color={COLOR.black._200}>
-              {t('Components.ProfileWalletBalances.OnlyVisibleToYou')}
-            </FormText>
+            {userAddress && (
+              <TouchableOpacity
+                style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}
+                onPress={(): void => {
+                  toast.show(
+                    t('Components.ProfileWalletAddress.AddressCopied'),
+                    {
+                      color: 'green',
+                      icon: 'check',
+                    }
+                  )
+                  Clipboard.setString(userAddress)
+                }}
+              >
+                <FormText color={COLOR.black._500}>
+                  {UTIL.truncate(userAddress.toString(), [6, 4])}
+                </FormText>
+                <Icon name="copy-outline" color={COLOR.black._500} size={14} />
+              </TouchableOpacity>
+            )}
           </Row>
 
           <View style={{ rowGap: 8 }}>
