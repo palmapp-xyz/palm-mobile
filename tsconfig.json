@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "strict": true,
     "baseUrl": "src",
     "paths": {
       "palm-core/*": ["./palm-core/*"],
